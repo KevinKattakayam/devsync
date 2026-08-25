@@ -1,183 +1,53 @@
 import { Request, Response, NextFunction } from 'express';
-import { PrismaClient } from '@prisma/client';
 import { z } from 'zod';
-import { hashPassword, comparePassword } from '../utils/hash';
-import { generateAccessToken, generateRefreshToken, verifyRefreshToken } from '../utils/jwt';
-import { BadRequestError, UnauthorizedError, ConflictError } from '../utils/errors';
+import { UnauthorizedError } from '../utils/errors';
+import { prisma } from '../lib/prisma';
+import { syncClerkUser } from '../middleware/auth.middleware';
 
-const prisma = new PrismaClient();
+import { getAuth } from '@clerk/express';
+import { verifyToken } from '@clerk/backend';
 
-export const registerSchema = z.object({
-  name: z.string().min(2).max(50),
-  email: z.string().email(),
-  password: z.string().min(6).max(100),
+export const updateMeSchema = z.object({
+  name: z.string().min(2).max(50).optional(),
+  avatar: z.string().url().optional().nullable(),
 });
 
-export const loginSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(1),
-});
-
-export async function register(req: Request, res: Response, next: NextFunction) {
+export async function syncMe(req: Request, res: Response, next: NextFunction) {
   try {
-    const { name, email, password } = req.body;
+    let clerkId: string | null = null;
+    try {
+      const auth = getAuth(req);
+      if (auth?.userId) clerkId = auth.userId;
+    } catch {}
 
-    const existing = await prisma.user.findUnique({ where: { email } });
-    if (existing) {
-      throw new ConflictError('Email already registered');
+    if (!clerkId) {
+      const token = req.headers.authorization?.replace(/^Bearer\s+/i, '');
+      if (token) {
+        const claims = await verifyToken(token, { secretKey: process.env.CLERK_SECRET_KEY });
+        if (claims.sub) clerkId = String(claims.sub);
+      }
     }
 
-    const hashedPassword = await hashPassword(password);
-    const user = await prisma.user.create({
-      data: { name, email, password: hashedPassword },
-      select: { id: true, name: true, email: true, avatar: true, createdAt: true },
-    });
-
-    const accessToken = generateAccessToken({ userId: user.id, email: user.email });
-    const refreshToken = generateRefreshToken({ userId: user.id, email: user.email });
-
-    await prisma.user.update({
-      where: { id: user.id },
-      data: { refreshToken },
-    });
-
-    res.status(201).json({
-      user,
-      accessToken,
-      refreshToken,
-    });
-  } catch (error) {
-    next(error);
-  }
-}
-
-export async function login(req: Request, res: Response, next: NextFunction) {
-  try {
-    const { email, password } = req.body;
-
-    const user = await prisma.user.findUnique({ where: { email } });
-    if (!user || !user.password) {
-      throw new UnauthorizedError('Invalid credentials');
-    }
-
-    const valid = await comparePassword(password, user.password);
-    if (!valid) {
-      throw new UnauthorizedError('Invalid credentials');
-    }
-
-    const accessToken = generateAccessToken({ userId: user.id, email: user.email });
-    const refreshToken = generateRefreshToken({ userId: user.id, email: user.email });
-
-    await prisma.user.update({
-      where: { id: user.id },
-      data: { refreshToken },
-    });
-
-    res.json({
-      user: {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        avatar: user.avatar,
-      },
-      accessToken,
-      refreshToken,
-    });
-  } catch (error) {
-    next(error);
-  }
-}
-
-export async function refreshTokens(req: Request, res: Response, next: NextFunction) {
-  try {
-    const { refreshToken } = req.body;
-    if (!refreshToken) {
-      throw new BadRequestError('Refresh token required');
-    }
-
-    const payload = verifyRefreshToken(refreshToken);
-
-    const user = await prisma.user.findUnique({
-      where: { id: payload.userId },
-    });
-
-    if (!user || user.refreshToken !== refreshToken) {
-      throw new UnauthorizedError('Invalid refresh token');
-    }
-
-    // Token rotation — issue new pair
-    const newAccessToken = generateAccessToken({ userId: user.id, email: user.email });
-    const newRefreshToken = generateRefreshToken({ userId: user.id, email: user.email });
-
-    await prisma.user.update({
-      where: { id: user.id },
-      data: { refreshToken: newRefreshToken },
-    });
-
-    res.json({
-      accessToken: newAccessToken,
-      refreshToken: newRefreshToken,
-    });
-  } catch (error) {
-    next(new UnauthorizedError('Invalid refresh token'));
-  }
-}
-
-export async function logout(req: Request, res: Response, next: NextFunction) {
-  try {
-    const userId = req.user?.userId;
-    if (userId) {
-      await prisma.user.update({
-        where: { id: userId },
-        data: { refreshToken: null },
-      });
-    }
-    res.json({ message: 'Logged out successfully' });
-  } catch (error) {
-    next(error);
-  }
+    if (!clerkId) throw new UnauthorizedError('Authentication required');
+    const user = await syncClerkUser(clerkId);
+    res.json(user);
+  } catch (error) { next(error); }
 }
 
 export async function getMe(req: Request, res: Response, next: NextFunction) {
   try {
     const user = await prisma.user.findUnique({
       where: { id: req.user!.userId },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        avatar: true,
-        createdAt: true,
-        memberships: {
-          include: {
-            workspace: {
-              select: { id: true, name: true, slug: true, icon: true },
-            },
-          },
-        },
-      },
+      select: { id: true, clerkId: true, name: true, email: true, avatar: true, createdAt: true, memberships: { include: { workspace: { select: { id: true, name: true, slug: true, icon: true } } } } },
     });
-
-    if (!user) {
-      throw new UnauthorizedError('User not found');
-    }
-
+    if (!user) throw new UnauthorizedError('User not found');
     res.json(user);
-  } catch (error) {
-    next(error);
-  }
+  } catch (error) { next(error); }
 }
 
 export async function updateMe(req: Request, res: Response, next: NextFunction) {
   try {
-    const { name, avatar } = req.body;
-    const user = await prisma.user.update({
-      where: { id: req.user!.userId },
-      data: { ...(name && { name }), ...(avatar && { avatar }) },
-      select: { id: true, name: true, email: true, avatar: true },
-    });
+    const user = await prisma.user.update({ where: { id: req.user!.userId }, data: req.body, select: { id: true, name: true, email: true, avatar: true } });
     res.json(user);
-  } catch (error) {
-    next(error);
-  }
+  } catch (error) { next(error); }
 }

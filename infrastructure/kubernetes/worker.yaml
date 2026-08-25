@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: worker, namespace: devsync }
+spec:
+  replicas: 2
+  selector: { matchLabels: { app: devsync-worker } }
+  template:
+    metadata: { labels: { app: devsync-worker } }
+    spec:
+      terminationGracePeriodSeconds: 60
+      containers:
+        - name: worker
+          image: ghcr.io/kevinbastin/devsync-api:main
+          command: ["npm", "run", "worker"]
+          envFrom: [{ secretRef: { name: devsync-runtime } }]
+          resources: { requests: { cpu: 250m, memory: 512Mi }, limits: { cpu: "2", memory: 2Gi } }

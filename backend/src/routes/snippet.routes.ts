@@ -1,12 +1,15 @@
 import { Router } from 'express';
 import { authMiddleware } from '../middleware/auth.middleware';
-import { updateSnippet, deleteSnippet } from '../controllers/snippet.controller';
+import { validate } from '../middleware/validate.middleware';
+import { updateSnippet, deleteSnippet, updateSnippetSchema, executeSnippet } from '../controllers/snippet.controller';
 
 const router = Router();
 
 router.use(authMiddleware);
 
-router.patch('/:snippetId', updateSnippet);
+router.post('/execute', executeSnippet);
+router.patch('/:snippetId', validate(updateSnippetSchema), updateSnippet);
 router.delete('/:snippetId', deleteSnippet);
 
 export default router;
+

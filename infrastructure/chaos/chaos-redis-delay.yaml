@@ -1,0 +1,23 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: NetworkChaos
+metadata:
+  name: redis-500ms-latency
+  namespace: devsync
+  labels: { app.kubernetes.io/part-of: devsync, compliance.devsync.io/test: resilience }
+spec:
+  action: delay
+  mode: all
+  selector:
+    namespaces: [devsync]
+    labelSelectors: { app.kubernetes.io/name: redis }
+  delay:
+    latency: 500ms
+    correlation: '100'
+    jitter: 0ms
+  duration: 5m
+  direction: to
+  target:
+    mode: all
+    selector:
+      namespaces: [devsync]
+      labelSelectors: { app: devsync-worker }

@@ -1,83 +1,42 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
-import api from '@/lib/api';
+import React, { createContext, useContext, useEffect, useMemo } from 'react';
+import { useAuth as useClerkAuth, useClerk, useUser } from '@clerk/nextjs';
+import api, { setTokenGetter } from '@/lib/api';
 import { User } from '@/types';
 
 interface AuthContextType {
   user: User | null;
   isLoading: boolean;
-  login: (email: string, password: string) => Promise<void>;
-  register: (name: string, email: string, password: string) => Promise<void>;
-  logout: () => void;
   isAuthenticated: boolean;
+  getToken: () => Promise<string | null>;
+  logout: () => Promise<void>;
 }
 
-const AuthContext = createContext<AuthContextType>({
-  user: null,
-  isLoading: true,
-  login: async () => {},
-  register: async () => {},
-  logout: () => {},
-  isAuthenticated: false,
-});
+const AuthContext = createContext<AuthContextType>({ user: null, isLoading: true, isAuthenticated: false, getToken: async () => null, logout: async () => {} });
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const router = useRouter();
-
-  const fetchUser = useCallback(async () => {
-    try {
-      const token = localStorage.getItem('accessToken');
-      if (!token) {
-        setIsLoading(false);
-        return;
-      }
-      const { data } = await api.get('/auth/me');
-      setUser(data);
-    } catch {
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
+  const { user, isLoaded } = useUser();
+  const { isSignedIn, getToken } = useClerkAuth();
+  const { signOut } = useClerk();
 
   useEffect(() => {
-    fetchUser();
-  }, [fetchUser]);
+    setTokenGetter(getToken);
+    if (isSignedIn) {
+      getToken().then(token => token ? api.post('/auth/sync', undefined, { headers: { Authorization: `Bearer ${token}` } }) : null).catch(() => {});
+    }
+    return () => setTokenGetter(null);
+  }, [getToken, isSignedIn]);
 
-  const login = async (email: string, password: string) => {
-    const { data } = await api.post('/auth/login', { email, password });
-    localStorage.setItem('accessToken', data.accessToken);
-    localStorage.setItem('refreshToken', data.refreshToken);
-    setUser(data.user);
-    router.push('/dashboard');
-  };
+  const value = useMemo<AuthContextType>(() => ({
+    user: user ? { id: user.id, name: user.fullName || user.username || user.primaryEmailAddress?.emailAddress || 'Member', email: user.primaryEmailAddress?.emailAddress || '', avatar: user.imageUrl } : null,
+    isLoading: !isLoaded,
+    isAuthenticated: !!isSignedIn,
+    getToken: async () => (await getToken()) || null,
+    logout: () => signOut({ redirectUrl: '/login' }),
+  }), [getToken, isLoaded, isSignedIn, signOut, user]);
 
-  const register = async (name: string, email: string, password: string) => {
-    const { data } = await api.post('/auth/register', { name, email, password });
-    localStorage.setItem('accessToken', data.accessToken);
-    localStorage.setItem('refreshToken', data.refreshToken);
-    setUser(data.user);
-    router.push('/dashboard');
-  };
-
-  const logout = () => {
-    api.post('/auth/logout').catch(() => {});
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
-    setUser(null);
-    router.push('/login');
-  };
-
-  return (
-    <AuthContext.Provider value={{ user, isLoading, login, register, logout, isAuthenticated: !!user }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 export const useAuth = () => useContext(AuthContext);

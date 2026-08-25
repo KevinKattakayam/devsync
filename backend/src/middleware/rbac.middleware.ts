@@ -1,8 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import { PrismaClient, Role } from '@prisma/client';
+import { Role } from '@prisma/client';
 import { ForbiddenError, NotFoundError } from '../utils/errors';
-
-const prisma = new PrismaClient();
+import { prisma } from '../lib/prisma';
 
 export function requireRole(...roles: Role[]) {
   return async (req: Request, _res: Response, next: NextFunction): Promise<void> => {

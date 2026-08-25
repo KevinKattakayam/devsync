@@ -1,9 +1,47 @@
 import { Request, Response, NextFunction } from 'express';
-import { PrismaClient } from '@prisma/client';
 import { z } from 'zod';
-import { NotFoundError } from '../utils/errors';
+import { NotFoundError, ForbiddenError } from '../utils/errors';
+import { prisma } from '../lib/prisma';
+import { queueEmbedding } from '../services/embedding.service';
+import { getQueue, QueueNames } from '../lib/queue';
+import { isRedisAvailable } from '../lib/redis';
 
-const prisma = new PrismaClient();
+async function checkTaskEditorRole(userId: string, columnId?: string, taskId?: string) {
+  let workspaceId: string | null = null;
+  if (columnId) {
+    const col = await prisma.column.findUnique({
+      where: { id: columnId },
+      include: { board: true },
+    });
+    if (!col) throw new NotFoundError('Column not found');
+    workspaceId = col.board.workspaceId;
+  } else if (taskId) {
+    const task = await prisma.task.findUnique({
+      where: { id: taskId },
+      include: { column: { include: { board: true } } },
+    });
+    if (!task) throw new NotFoundError('Task not found');
+    workspaceId = task.column.board.workspaceId;
+  }
+
+  if (workspaceId) {
+    const member = await prisma.workspaceMember.findUnique({
+      where: { userId_workspaceId: { userId, workspaceId } },
+    });
+    if (!member || member.role === 'VIEWER') {
+      throw new ForbiddenError('Requires EDITOR or OWNER role');
+    }
+  }
+}
+
+async function requireSameWorkspace(taskId: string, targetColumnId: string) {
+  const [task, target] = await Promise.all([
+    prisma.task.findUnique({ where: { id: taskId }, include: { column: { include: { board: true } } } }),
+    prisma.column.findUnique({ where: { id: targetColumnId }, include: { board: true } }),
+  ]);
+  if (!task) throw new NotFoundError('Task not found');
+  if (!target || task.column.board.workspaceId !== target.board.workspaceId) throw new ForbiddenError('Tasks cannot be moved across workspaces');
+}
 
 export const createBoardSchema = z.object({
   name: z.string().min(1).max(100),
@@ -13,8 +51,13 @@ export const createColumnSchema = z.object({
   name: z.string().min(1).max(100),
 });
 
+export const updateColumnSchema = z.object({
+  name: z.string().min(1).max(100),
+});
+
 export const createTaskSchema = z.object({
   title: z.string().min(1).max(200),
+  taskKey: z.string().regex(/^[A-Z][A-Z0-9]+-\d+$/).optional(),
   description: z.string().max(2000).optional(),
   priority: z.enum(['LOW', 'MEDIUM', 'HIGH', 'URGENT']).optional(),
   assigneeId: z.string().optional(),
@@ -23,12 +66,18 @@ export const createTaskSchema = z.object({
 
 export const updateTaskSchema = z.object({
   title: z.string().min(1).max(200).optional(),
+  taskKey: z.string().regex(/^[A-Z][A-Z0-9]+-\d+$/).nullable().optional(),
   description: z.string().max(2000).optional(),
   priority: z.enum(['LOW', 'MEDIUM', 'HIGH', 'URGENT']).optional(),
   assigneeId: z.string().nullable().optional(),
   dueDate: z.string().datetime().nullable().optional(),
   position: z.number().optional(),
   columnId: z.string().optional(),
+});
+
+export const moveTaskSchema = z.object({
+  columnId: z.string().min(1),
+  position: z.number().int().min(0),
 });
 
 export async function getBoards(req: Request, res: Response, next: NextFunction) {
@@ -105,6 +154,7 @@ export async function createColumn(req: Request, res: Response, next: NextFuncti
 export async function updateColumn(req: Request, res: Response, next: NextFunction) {
   try {
     const columnId = String(req.params.columnId);
+    await checkTaskEditorRole(req.user!.userId, columnId);
     const column = await prisma.column.update({
       where: { id: columnId },
       data: { name: req.body.name },
@@ -118,6 +168,7 @@ export async function updateColumn(req: Request, res: Response, next: NextFuncti
 export async function deleteColumn(req: Request, res: Response, next: NextFunction) {
   try {
     const columnId = String(req.params.columnId);
+    await checkTaskEditorRole(req.user!.userId, columnId);
     await prisma.column.delete({ where: { id: columnId } });
     res.json({ message: 'Column deleted' });
   } catch (error) {
@@ -128,7 +179,10 @@ export async function deleteColumn(req: Request, res: Response, next: NextFuncti
 export async function createTask(req: Request, res: Response, next: NextFunction) {
   try {
     const columnId = String(req.params.columnId);
-    const { title, description, priority, assigneeId, dueDate } = req.body;
+    if (req.user?.userId) {
+      await checkTaskEditorRole(req.user.userId, columnId);
+    }
+    const { title, taskKey, description, priority, assigneeId, dueDate } = req.body;
 
     const maxPos = await prisma.task.findFirst({
       where: { columnId },
@@ -139,6 +193,7 @@ export async function createTask(req: Request, res: Response, next: NextFunction
     const task = await prisma.task.create({
       data: {
         title,
+        taskKey,
         description,
         priority: priority || 'MEDIUM',
         position: (maxPos?.position ?? -1) + 1,
@@ -175,6 +230,7 @@ export async function createTask(req: Request, res: Response, next: NextFunction
     }
 
     res.status(201).json(task);
+    queueEmbedding('task', task.id);
   } catch (error) {
     next(error);
   }
@@ -183,12 +239,17 @@ export async function createTask(req: Request, res: Response, next: NextFunction
 export async function updateTask(req: Request, res: Response, next: NextFunction) {
   try {
     const taskId = String(req.params.taskId);
-    const { title, description, priority, assigneeId, dueDate, position, columnId } = req.body;
+    if (req.user?.userId) {
+      await checkTaskEditorRole(req.user.userId, undefined, taskId);
+    }
+    const { title, taskKey, description, priority, assigneeId, dueDate, position, columnId } = req.body;
+    if (columnId) await requireSameWorkspace(taskId, columnId);
 
     const task = await prisma.task.update({
       where: { id: taskId },
       data: {
         ...(title !== undefined && { title }),
+        ...(taskKey !== undefined && { taskKey }),
         ...(description !== undefined && { description }),
         ...(priority !== undefined && { priority }),
         ...(assigneeId !== undefined && { assigneeId }),
@@ -203,6 +264,7 @@ export async function updateTask(req: Request, res: Response, next: NextFunction
     });
 
     res.json(task);
+    queueEmbedding('task', task.id);
   } catch (error) {
     next(error);
   }
@@ -211,6 +273,9 @@ export async function updateTask(req: Request, res: Response, next: NextFunction
 export async function deleteTask(req: Request, res: Response, next: NextFunction) {
   try {
     const taskId = String(req.params.taskId);
+    if (req.user?.userId) {
+      await checkTaskEditorRole(req.user.userId, undefined, taskId);
+    }
     await prisma.task.delete({ where: { id: taskId } });
     res.json({ message: 'Task deleted' });
   } catch (error) {
@@ -222,6 +287,17 @@ export async function moveTask(req: Request, res: Response, next: NextFunction) 
   try {
     const { columnId, position } = req.body;
     const taskId = String(req.params.taskId);
+    if (req.user?.userId) {
+      await checkTaskEditorRole(req.user.userId, undefined, taskId);
+    }
+    await requireSameWorkspace(taskId, columnId);
+
+    // Get source column for socket event
+    const existingTask = await prisma.task.findUnique({
+      where: { id: taskId },
+      select: { columnId: true },
+    });
+    const fromColumnId = existingTask?.columnId || '';
 
     // Update positions of other tasks in target column
     await prisma.task.updateMany({
@@ -240,8 +316,47 @@ export async function moveTask(req: Request, res: Response, next: NextFunction) 
       include: {
         assignee: { select: { id: true, name: true, avatar: true } },
         labels: true,
+        column: { select: { name: true, board: { select: { workspaceId: true } } } },
       },
     });
+
+    // Dispatch task-completion agent if task moved to "Done"
+    const targetColumn = await prisma.column.findUnique({
+      where: { id: columnId },
+      select: { name: true },
+    });
+
+    if (targetColumn?.name.toLowerCase() === 'done') {
+      const redisUp = await isRedisAvailable();
+      if (redisUp) {
+        await getQueue(QueueNames.TASK_COMPLETION).add(
+          'task-completed',
+          {
+            taskId: task.id,
+            taskTitle: task.title,
+            taskKey: task.taskKey,
+            columnName: targetColumn.name,
+            workspaceId: task.column.board.workspaceId,
+          },
+          { jobId: `task-done-${task.id}-${Date.now()}` },
+        );
+      }
+    }
+
+    // Emit real-time event for Kanban board
+    try {
+      const { io } = await import('../server');
+      const workspaceId = task.column.board.workspaceId;
+      io.to(`workspace:${workspaceId}`).emit('kanban:task-moved', {
+        taskId: task.id,
+        fromColumnId,
+        toColumnId: columnId,
+        position,
+        task,
+      });
+    } catch {
+      // Socket emission is non-critical
+    }
 
     res.json(task);
   } catch (error) {

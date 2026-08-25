@@ -1,4 +1,8 @@
 import axios from 'axios';
+import { browserTraceId } from './tracing';
+
+let tokenGetter: (() => Promise<string | null>) | null = null;
+export const setTokenGetter = (getter: (() => Promise<string | null>) | null) => { tokenGetter = getter; };
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 
@@ -9,60 +13,25 @@ const api = axios.create({
 });
 
 // Request interceptor — attach token
-api.interceptors.request.use((config) => {
-  if (typeof window !== 'undefined') {
-    const token = localStorage.getItem('accessToken');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-  }
+api.interceptors.request.use(async (config) => {
+  const token = await tokenGetter?.();
+  if (token) config.headers.Authorization = `Bearer ${token}`;
+  config.headers.trace_id = browserTraceId();
   return config;
 });
 
-// Response interceptor — refresh on 401
-api.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    const originalRequest = error.config;
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-      try {
-        const refreshToken = localStorage.getItem('refreshToken');
-        if (refreshToken) {
-          const { data } = await axios.post(`${API_URL}/auth/refresh`, { refreshToken });
-          localStorage.setItem('accessToken', data.accessToken);
-          localStorage.setItem('refreshToken', data.refreshToken);
-          originalRequest.headers.Authorization = `Bearer ${data.accessToken}`;
-          return api(originalRequest);
-        }
-      } catch {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
-        if (typeof window !== 'undefined') {
-          window.location.href = '/login';
-        }
-      }
-    }
-    return Promise.reject(error);
-  }
-);
+api.interceptors.response.use((response) => response, (error) => Promise.reject(error));
 
 export default api;
 
 // Auth API
-export const authApi = {
-  register: (data: { name: string; email: string; password: string }) =>
-    api.post('/auth/register', data),
-  login: (data: { email: string; password: string }) =>
-    api.post('/auth/login', data),
-  logout: () => api.post('/auth/logout'),
-  getMe: () => api.get('/auth/me'),
-};
+export const authApi = { getMe: () => api.get('/auth/me') };
 
 // Workspace API
 export const workspaceApi = {
   list: () => api.get('/workspaces'),
   get: (id: string) => api.get(`/workspaces/${id}`),
+  getActivities: (id: string) => api.get(`/workspaces/${id}/activities`),
   create: (data: { name: string; description?: string; icon?: string }) =>
     api.post('/workspaces', data),
   update: (id: string, data: any) => api.patch(`/workspaces/${id}`, data),
@@ -71,6 +40,8 @@ export const workspaceApi = {
     api.post(`/workspaces/${id}/invite`, data),
   removeMember: (id: string, memberId: string) =>
     api.delete(`/workspaces/${id}/members/${memberId}`),
+  search: (id: string, query: string, limit = 10) =>
+    api.get(`/workspaces/${id}/search`, { params: { q: query, limit } }),
 };
 
 // Document API
@@ -104,6 +75,13 @@ export const taskApi = {
     api.patch(`/tasks/tasks/${taskId}/move`, data),
 };
 
+export const githubRepositoryApi = {
+  list: (workspaceId: string) => api.get(`/workspaces/${workspaceId}/github-repositories`),
+  connect: (workspaceId: string, data: { repositoryId: string; owner: string; name: string; webhookSecret: string; installationId?: string; prOpenedColumnId?: string | null; prMergedColumnId?: string | null }) => api.post(`/workspaces/${workspaceId}/github-repositories`, data),
+  update: (workspaceId: string, repositoryId: string, data: Record<string, unknown>) => api.patch(`/workspaces/${workspaceId}/github-repositories/${repositoryId}`, data),
+  disconnect: (workspaceId: string, repositoryId: string) => api.delete(`/workspaces/${workspaceId}/github-repositories/${repositoryId}`),
+};
+
 // Snippet API
 export const snippetApi = {
   list: (workspaceId: string) => api.get(`/workspaces/${workspaceId}/snippets`),
@@ -111,17 +89,23 @@ export const snippetApi = {
     api.post(`/workspaces/${workspaceId}/snippets`, data),
   update: (id: string, data: any) => api.patch(`/snippets/${id}`, data),
   delete: (id: string) => api.delete(`/snippets/${id}`),
+  execute: (data: { language: string; code: string; stdin?: string; env?: Record<string, string> }) =>
+    api.post('/snippets/execute', data),
 };
 
 // AI API
 export const aiApi = {
-  complete: (data: { prompt: string; context?: string; action?: string }) =>
-    fetch(`${API_URL}/ai/complete`, {
+  complete: async (data: { prompt: string; context?: string; action?: string; workspaceId: string }) =>
+    (async () => {
+      const response = await fetch(`${API_URL}/ai/complete`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        Authorization: `Bearer ${(await tokenGetter?.()) || ''}`,
       },
       body: JSON.stringify(data),
-    }),
+      });
+      if (!response.ok) throw Object.assign(new Error(`AI request failed (${response.status})`), { status: response.status });
+      return response;
+    })(),
 };

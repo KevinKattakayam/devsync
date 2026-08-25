@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: devsync
+resources:
+  - namespace.yaml
+  - rollout-analysis.yaml
+  - api.yaml
+  - web.yaml
+  - worker.yaml
+  - keda-bullmq-scaledobject.yaml
+images:
+  - name: ghcr.io/kevinbastin/devsync-api
+    newName: ghcr.io/kevinbastin/devsync-api
+    newTag: main
+  - name: ghcr.io/kevinbastin/devsync-web
+    newName: ghcr.io/kevinbastin/devsync-web
+    newTag: main

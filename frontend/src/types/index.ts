@@ -61,6 +61,7 @@ export interface Column {
 export interface Task {
   id: string;
   title: string;
+  taskKey?: string;
   description?: string;
   priority: 'LOW' | 'MEDIUM' | 'HIGH' | 'URGENT';
   position: number;

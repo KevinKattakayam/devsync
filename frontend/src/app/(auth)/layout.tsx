@@ -1,4 +1,5 @@
 import { Zap } from "lucide-react";
+import { AuthErrorBoundary } from "@/components/auth-error-boundary";
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -36,9 +37,13 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
       </div>
 
       {/* Right panel */}
-      <div className="flex-1 flex items-center justify-center p-8 bg-background">
-        <div className="w-full max-w-sm animate-fade-in">
-          {children}
+      <div className="flex-1 flex items-center justify-center p-6 lg:p-12 bg-background relative overflow-hidden">
+        <div className="absolute top-1/4 -right-20 w-80 h-80 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-1/4 -left-20 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="w-full max-w-md animate-fade-in relative z-10 flex justify-center">
+          <AuthErrorBoundary>
+            {children}
+          </AuthErrorBoundary>
         </div>
       </div>
     </div>

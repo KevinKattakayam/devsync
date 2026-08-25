@@ -4,6 +4,8 @@ import { ThemeProvider } from "@/providers/theme-provider";
 import { AuthProvider } from "@/providers/auth-provider";
 import { SocketProvider } from "@/providers/socket-provider";
 import { Toaster } from "sonner";
+import { ClerkProvider } from '@clerk/nextjs';
+import { SyncStatusManager } from '@/components/sync-status-manager';
 
 export const metadata: Metadata = {
   title: "DevSync — Real-Time Collaborative Developer Workspace",
@@ -19,6 +21,13 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="min-h-screen">
+        <ClerkProvider
+          appearance={{
+            variables: {
+              colorPrimary: "#6366f1",
+            },
+          }}
+        >
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
@@ -28,6 +37,7 @@ export default function RootLayout({
           <AuthProvider>
             <SocketProvider>
               {children}
+              <SyncStatusManager />
               <Toaster
                 position="bottom-right"
                 toastOptions={{
@@ -41,6 +51,7 @@ export default function RootLayout({
             </SocketProvider>
           </AuthProvider>
         </ThemeProvider>
+        </ClerkProvider>
       </body>
     </html>
   );

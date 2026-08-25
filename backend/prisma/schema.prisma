@@ -9,117 +9,238 @@ datasource db {
 }
 
 model User {
-  id           String   @id @default(cuid())
-  email        String   @unique
+  id           String            @id @default(cuid())
+  clerkId      String            @unique
+  email        String            @unique
   name         String?
-  password     String?
   avatar       String?
-  githubId     String?  @unique
-  refreshToken String?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-
-  memberships WorkspaceMember[]
-  documents   Document[]
-  tasks       Task[]
-  snippets    Snippet[]
-  activities  Activity[]
+  isActive     Boolean           @default(true)
+  systemRole   SystemRole        @default(USER)
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  activities   Activity[]
+  documents    Document[]
+  snippets     Snippet[]
+  tasks        Task[]
+  memberships  WorkspaceMember[]
+  scimExternalIdentities ScimExternalIdentity[]
 }
 
 model Workspace {
-  id          String   @id @default(cuid())
+  id          String            @id @default(cuid())
   name        String
-  slug        String   @unique
+  slug        String            @unique
   description String?
-  icon        String?  @default("💻")
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  icon        String?           @default("💻")
+  clerkOrganizationId String?   @unique
+  ssoEnabled  Boolean           @default(false)
+  samlConnectionId String?      @unique
+  samlMetadata Json?
+  stripeCustomerId String?       @unique
+  stripeSubscriptionId String?   @unique
+  monthlyTokenLimit Int          @default(100000)
+  billingStatus String           @default("inactive")
+  suspendedAt DateTime?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  activities  Activity[]
+  boards      Board[]
+  documents   Document[]
+  snippets    Snippet[]
+  members     WorkspaceMember[]
+  githubRepositories GitHubRepository[]
+  scimTokens  ScimProvisioningToken[]
+  scimExternalIdentities ScimExternalIdentity[]
+  tokenUsage TokenUsage[]
+}
 
-  members    WorkspaceMember[]
-  documents  Document[]
-  boards     Board[]
-  snippets   Snippet[]
-  activities Activity[]
+model TokenUsage {
+  id          String    @id @default(cuid())
+  workspaceId String
+  requestId   String    @unique
+  tokens      Int
+  source      String
+  stripeMeterEventId String?
+  createdAt   DateTime  @default(now())
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@index([workspaceId, createdAt])
 }
 
 model WorkspaceMember {
-  id       String   @id @default(cuid())
-  role     Role     @default(EDITOR)
-  joinedAt DateTime @default(now())
-
+  id          String    @id @default(cuid())
+  role        Role      @default(EDITOR)
+  joinedAt    DateTime  @default(now())
   userId      String
-  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   workspaceId String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
 
   @@unique([userId, workspaceId])
 }
 
-enum Role {
-  OWNER
-  EDITOR
-  VIEWER
+model ScimProvisioningToken {
+  id          String    @id @default(cuid())
+  workspaceId String
+  tokenHash   String    @unique
+  createdAt   DateTime  @default(now())
+  revokedAt   DateTime?
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@index([workspaceId])
+}
+
+model ScimExternalIdentity {
+  id         String    @id @default(cuid())
+  externalId String
+  userId     String
+  workspaceId String
+  createdAt  DateTime  @default(now())
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  workspace  Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@unique([workspaceId, externalId])
+  @@index([userId])
 }
 
 model Document {
-  id          String   @id @default(cuid())
-  title       String   @default("Untitled")
+  id          String     @id @default(cuid())
+  title       String     @default("Untitled")
   content     Json?
-  icon        String?  @default("📄")
-  isPublished Boolean  @default(false)
-  isArchived  Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
+  yjsState    Bytes?
+  embedding   Unsupported("vector(1536)")?
+  embeddingHash String?
+  icon        String?    @default("📄")
+  isPublished Boolean    @default(false)
+  isArchived  Boolean    @default(false)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
   authorId    String
-  author      User      @relation(fields: [authorId], references: [id])
   workspaceId String
-  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-
-  parentId String?
-  parent   Document?  @relation("DocHierarchy", fields: [parentId], references: [id])
-  children Document[] @relation("DocHierarchy")
+  parentId    String?
+  author      User       @relation(fields: [authorId], references: [id])
+  parent      Document?  @relation("DocHierarchy", fields: [parentId], references: [id])
+  children    Document[] @relation("DocHierarchy")
+  workspace   Workspace  @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
 }
 
 model Board {
-  id        String   @id @default(cuid())
-  name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
+  id          String    @id @default(cuid())
+  name        String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
   workspaceId String
   workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-
-  columns Column[]
+  columns     Column[]
 }
 
 model Column {
   id       String @id @default(cuid())
   name     String
   position Int
-
-  boardId String
-  board   Board  @relation(fields: [boardId], references: [id], onDelete: Cascade)
-
-  tasks Task[]
+  boardId  String
+  board    Board  @relation(fields: [boardId], references: [id], onDelete: Cascade)
+  tasks    Task[]
 }
 
 model Task {
-  id          String    @id @default(cuid())
+  id          String      @id @default(cuid())
   title       String
+  taskKey     String?     @unique
   description String?
-  priority    Priority  @default(MEDIUM)
+  embedding   Unsupported("vector(1536)")?
+  embeddingHash String?
+  priority    Priority    @default(MEDIUM)
   position    Int
   dueDate     DateTime?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  columnId    String
+  assigneeId  String?
+  assignee    User?       @relation(fields: [assigneeId], references: [id])
+  column      Column      @relation(fields: [columnId], references: [id], onDelete: Cascade)
+  labels      TaskLabel[]
+}
+
+model TaskLabel {
+  id     String @id @default(cuid())
+  name   String
+  color  String
+  taskId String
+  task   Task   @relation(fields: [taskId], references: [id], onDelete: Cascade)
+}
+
+model Snippet {
+  id          String    @id @default(cuid())
+  title       String
+  code        String
+  language    String
+  description String?
+  embedding   Unsupported("vector(1536)")?
+  embeddingHash String?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+  authorId    String
+  workspaceId String
+  author      User      @relation(fields: [authorId], references: [id])
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+}
 
-  columnId   String
-  column     Column @relation(fields: [columnId], references: [id], onDelete: Cascade)
-  assigneeId String?
-  assignee   User?  @relation(fields: [assigneeId], references: [id])
+model GitHubRepository {
+  id              String    @id @default(cuid())
+  workspaceId     String
+  installationId  String?
+  repositoryId    String    @unique
+  owner           String
+  name            String
+  webhookSecret   String
+  prOpenedColumnId String?
+  prMergedColumnId String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  workspace       Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
 
-  labels TaskLabel[]
+  @@unique([workspaceId, owner, name])
+}
+
+model GitHubWebhookDelivery {
+  id          String   @id @default(cuid())
+  deliveryId  String   @unique
+  event       String
+  receivedAt  DateTime @default(now())
+}
+
+model EmbeddingJob {
+  id           String   @id @default(cuid())
+  resourceType String
+  resourceId   String
+  status       String   @default("pending")
+  attempts     Int      @default(0)
+  lastError    String?
+  runAfter     DateTime @default(now())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([resourceType, resourceId])
+  @@index([status, runAfter])
+}
+
+model Activity {
+  id          String    @id @default(cuid())
+  type        String
+  message     String
+  metadata    Json?
+  createdAt   DateTime  @default(now())
+  userId      String
+  workspaceId String
+  user        User      @relation(fields: [userId], references: [id])
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+}
+
+enum Role {
+  OWNER
+  EDITOR
+  VIEWER
 }
 
 enum Priority {
@@ -129,39 +250,7 @@ enum Priority {
   URGENT
 }
 
-model TaskLabel {
-  id    String @id @default(cuid())
-  name  String
-  color String
-
-  taskId String
-  task   Task   @relation(fields: [taskId], references: [id], onDelete: Cascade)
-}
-
-model Snippet {
-  id          String   @id @default(cuid())
-  title       String
-  code        String
-  language    String
-  description String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  authorId    String
-  author      User      @relation(fields: [authorId], references: [id])
-  workspaceId String
-  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-}
-
-model Activity {
-  id        String   @id @default(cuid())
-  type      String
-  message   String
-  metadata  Json?
-  createdAt DateTime @default(now())
-
-  userId      String
-  user        User      @relation(fields: [userId], references: [id])
-  workspaceId String
-  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+enum SystemRole {
+  USER
+  SUPER_ADMIN
 }

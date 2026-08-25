@@ -1,0 +1,13 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: PodChaos
+metadata:
+  name: redis-random-pod-kill
+  namespace: devsync
+spec:
+  action: pod-kill
+  mode: one
+  selector:
+    namespaces: [devsync]
+    labelSelectors: { app.kubernetes.io/name: redis }
+  scheduler:
+    cron: '*/5 * * * *'

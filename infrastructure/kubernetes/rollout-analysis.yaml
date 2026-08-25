@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata: { name: otel-http-success-rate, namespace: devsync }
+spec:
+  args: [{ name: service }]
+  metrics:
+    - name: http-success-rate
+      interval: 1m
+      count: 5
+      failureLimit: 1
+      successCondition: result[0] >= 0.995
+      provider:
+        prometheus:
+          address: http://prometheus-operated.monitoring.svc.cluster.local:9090
+          query: |
+            sum(rate(http_server_duration_count{service="{{args.service}}",http_response_status_code=~"2..|3.."}[5m]))
+            /
+            clamp_min(sum(rate(http_server_duration_count{service="{{args.service}}"}[5m])), 1)

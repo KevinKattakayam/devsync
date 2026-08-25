@@ -1,0 +1,30 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata: { name: devsync-bullmq-worker, namespace: devsync }
+spec:
+  scaleTargetRef: { name: worker }
+  minReplicaCount: 0
+  maxReplicaCount: 100
+  pollingInterval: 10
+  cooldownPeriod: 120
+  triggers:
+    - type: redis
+      metadata:
+        address: redis-master.devsync.svc.cluster.local:6379
+        listName: bull:devsync:agent:pr-summary:wait
+        listLength: '1'
+        enableTLS: 'true'
+      authenticationRef: { name: devsync-redis-keda-auth }
+    - type: redis
+      metadata:
+        address: redis-master.devsync.svc.cluster.local:6379
+        listName: bull:devsync:agent:task-completion:wait
+        listLength: '1'
+        enableTLS: 'true'
+      authenticationRef: { name: devsync-redis-keda-auth }
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata: { name: devsync-redis-keda-auth, namespace: devsync }
+spec:
+  secretTargetRef: [{ parameter: password, name: devsync-runtime, key: REDIS_PASSWORD }]

@@ -20,15 +20,15 @@ export function SocketProvider({ children }: { children: React.ReactNode }) {
   const [socket, setSocket] = useState<Socket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
   const [onlineUsers, setOnlineUsers] = useState<any[]>([]);
-  const { user, isAuthenticated } = useAuth();
+  const { isAuthenticated, getToken } = useAuth();
 
   useEffect(() => {
     if (!isAuthenticated) return;
 
-    const token = localStorage.getItem('accessToken');
-    if (!token) return;
-
-    const newSocket = io(process.env.NEXT_PUBLIC_SOCKET_URL || 'http://localhost:5000', {
+    let newSocket: Socket | undefined;
+    getToken().then((token) => {
+      if (!token) return;
+      newSocket = io(process.env.NEXT_PUBLIC_SOCKET_URL || 'http://localhost:5000', {
       auth: { token },
       transports: ['websocket', 'polling'],
     });
@@ -47,12 +47,13 @@ export function SocketProvider({ children }: { children: React.ReactNode }) {
       setOnlineUsers(users);
     });
 
-    setSocket(newSocket);
+      setSocket(newSocket);
+    });
 
     return () => {
-      newSocket.close();
+      newSocket?.close();
     };
-  }, [isAuthenticated]);
+  }, [getToken, isAuthenticated]);
 
   return (
     <SocketContext.Provider value={{ socket, isConnected, onlineUsers }}>

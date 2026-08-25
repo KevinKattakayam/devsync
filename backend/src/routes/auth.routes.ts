@@ -1,16 +1,14 @@
 import { Router } from 'express';
-import { register, login, refreshTokens, logout, getMe, updateMe, registerSchema, loginSchema } from '../controllers/auth.controller';
 import { authMiddleware } from '../middleware/auth.middleware';
+import { syncMe, getMe, updateMe, updateMeSchema } from '../controllers/auth.controller';
 import { validate } from '../middleware/validate.middleware';
-import { authLimiter } from '../middleware/rate-limit.middleware';
 
 const router = Router();
 
-router.post('/register', authLimiter, validate(registerSchema), register);
-router.post('/login', authLimiter, validate(loginSchema), login);
-router.post('/refresh', refreshTokens);
-router.post('/logout', authMiddleware, logout);
+// OAuth, MFA, SAML and session lifecycle are owned by Clerk. This API only syncs
+// the verified identity into DevSync's authorization database.
+router.post('/sync', syncMe);
 router.get('/me', authMiddleware, getMe);
-router.patch('/me', authMiddleware, updateMe);
+router.patch('/me', authMiddleware, validate(updateMeSchema), updateMe);
 
 export default router;

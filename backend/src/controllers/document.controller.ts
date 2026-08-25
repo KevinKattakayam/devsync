@@ -1,9 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
-import { PrismaClient } from '@prisma/client';
 import { z } from 'zod';
-import { NotFoundError } from '../utils/errors';
-
-const prisma = new PrismaClient();
+import { NotFoundError, ForbiddenError } from '../utils/errors';
+import { prisma } from '../lib/prisma';
+import { queueEmbedding } from '../services/embedding.service';
 
 export const createDocumentSchema = z.object({
   title: z.string().max(200).optional(),
@@ -19,10 +18,18 @@ export const updateDocumentSchema = z.object({
   isArchived: z.boolean().optional(),
 });
 
+async function requireDocumentAccess(userId: string, documentId: string, write = false) {
+  const document = await prisma.document.findUnique({ where: { id: documentId }, select: { workspaceId: true } });
+  if (!document) throw new NotFoundError('Document not found');
+  const member = await prisma.workspaceMember.findUnique({ where: { userId_workspaceId: { userId, workspaceId: document.workspaceId } } });
+  if (!member || (write && member.role === 'VIEWER')) throw new ForbiddenError(write ? 'Requires EDITOR or OWNER role' : 'Not a workspace member');
+  return document;
+}
+
 export async function getDocuments(req: Request, res: Response, next: NextFunction) {
   try {
     const workspaceId = String(req.params.workspaceId || req.params.id);
-    const documents = await prisma.document.findMany({
+    const documents = await prisma.withTenantTransaction(workspaceId, (tx) => tx.document.findMany({
       where: { workspaceId, isArchived: false, parentId: null },
       include: {
         author: { select: { id: true, name: true, avatar: true } },
@@ -39,7 +46,7 @@ export async function getDocuments(req: Request, res: Response, next: NextFuncti
         },
       },
       orderBy: { updatedAt: 'desc' },
-    });
+    }));
     res.json(documents);
   } catch (error) {
     next(error);
@@ -49,6 +56,7 @@ export async function getDocuments(req: Request, res: Response, next: NextFuncti
 export async function getDocument(req: Request, res: Response, next: NextFunction) {
   try {
     const documentId = String(req.params.docId || req.params.id);
+    await requireDocumentAccess(req.user!.userId, documentId);
     const document = await prisma.document.findUnique({
       where: { id: documentId },
       include: {
@@ -76,7 +84,7 @@ export async function createDocument(req: Request, res: Response, next: NextFunc
     const workspaceId = String(req.params.workspaceId || req.params.id);
     const { title, parentId, icon } = req.body;
 
-    const document = await prisma.document.create({
+    const document = await prisma.withTenantTransaction(workspaceId, (tx) => tx.document.create({
       data: {
         title: title || 'Untitled',
         icon: icon || '📄',
@@ -87,7 +95,7 @@ export async function createDocument(req: Request, res: Response, next: NextFunc
       include: {
         author: { select: { id: true, name: true, avatar: true } },
       },
-    });
+    }));
 
     await prisma.activity.create({
       data: {
@@ -99,6 +107,7 @@ export async function createDocument(req: Request, res: Response, next: NextFunc
     });
 
     res.status(201).json(document);
+    queueEmbedding('document', document.id);
   } catch (error) {
     next(error);
   }
@@ -107,6 +116,7 @@ export async function createDocument(req: Request, res: Response, next: NextFunc
 export async function updateDocument(req: Request, res: Response, next: NextFunction) {
   try {
     const documentId = String(req.params.docId || req.params.id);
+    await requireDocumentAccess(req.user!.userId, documentId, true);
     const { title, content, icon, isPublished, isArchived } = req.body;
 
     const document = await prisma.document.update({
@@ -124,6 +134,7 @@ export async function updateDocument(req: Request, res: Response, next: NextFunc
     });
 
     res.json(document);
+    if (title !== undefined || content !== undefined) queueEmbedding('document', document.id);
   } catch (error) {
     next(error);
   }
@@ -132,6 +143,7 @@ export async function updateDocument(req: Request, res: Response, next: NextFunc
 export async function deleteDocument(req: Request, res: Response, next: NextFunction) {
   try {
     const documentId = String(req.params.docId || req.params.id);
+    await requireDocumentAccess(req.user!.userId, documentId, true);
     // Soft delete
     await prisma.document.update({
       where: { id: documentId },

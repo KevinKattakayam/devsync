@@ -1,9 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
-import { PrismaClient, Role } from '@prisma/client';
+import { Role } from '@prisma/client';
 import { z } from 'zod';
 import { BadRequestError, NotFoundError, ForbiddenError } from '../utils/errors';
-
-const prisma = new PrismaClient();
+import { prisma } from '../lib/prisma';
 
 export const createWorkspaceSchema = z.object({
   name: z.string().min(2).max(50),
@@ -11,9 +10,19 @@ export const createWorkspaceSchema = z.object({
   icon: z.string().max(10).optional(),
 });
 
+export const updateWorkspaceSchema = z.object({
+  name: z.string().min(2).max(50).optional(),
+  description: z.string().max(500).optional(),
+  icon: z.string().max(10).optional(),
+});
+
 export const inviteMemberSchema = z.object({
   email: z.string().email(),
   role: z.enum(['EDITOR', 'VIEWER']).default('EDITOR'),
+});
+
+export const updateMemberRoleSchema = z.object({
+  role: z.enum(['OWNER', 'EDITOR', 'VIEWER']),
 });
 
 function generateSlug(name: string): string {
@@ -35,6 +44,7 @@ export async function createWorkspace(req: Request, res: Response, next: NextFun
         slug: generateSlug(name),
         description,
         icon: icon || '💻',
+        billingStatus: 'active',
         members: {
           create: {
             userId,
@@ -240,6 +250,21 @@ export async function removeMember(req: Request, res: Response, next: NextFuncti
 
     await prisma.workspaceMember.delete({ where: { id: memberId } });
     res.json({ message: 'Member removed' });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function getActivities(req: Request, res: Response, next: NextFunction) {
+  try {
+    const workspaceId = String(req.params.id);
+    const activities = await prisma.activity.findMany({
+      where: { workspaceId },
+      take: 20,
+      orderBy: { createdAt: 'desc' },
+      include: { user: { select: { id: true, name: true, avatar: true } } },
+    });
+    res.json(activities);
   } catch (error) {
     next(error);
   }
