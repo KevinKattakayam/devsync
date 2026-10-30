@@ -1,16 +1,20 @@
-# Before UI captures
+# Original-main BEFORE capture — partial UI coverage
 
-Captured against the unmodified source in a runtime copy on 2026-10-31 using system Google Chrome via Playwright, viewport widths 1440 and 390, height 1000, fullPage enabled. No authentication was bypassed. Placeholder IDs select dynamic route shapes, not real data.
+Captured from detached original `main` commit `9deffe2` in the separate `.worktrees/phase1b-main` worktree, without modifying its application code. Viewports: 1440×1000 and 390×1000, full-page screenshots, system Chrome driven by Playwright. Existing ignored Clerk configuration was supplied; no login/session authorization was bypassed. The temporary worktree/processes were lost during a session restart, so captures were completed again in the persistent workspace worktree.
 
-Public landing/login/signup/sign-in/sign-up pages rendered. Every dashboard/workspace/billing/superadmin route redirected to login because no authenticated seeded account was available. Their files are **login access-state evidence**, not screenshots of the intended authenticated UI. Interior coverage is deferred until isolated Clerk identities and seeded workspace/document IDs are supplied. Exact HTTP/final URLs/page errors: `../../audit-evidence/ui-results.json`.
+All 14 page route shapes were attempted at both widths. Eight public authentication-page captures rendered; 18 protected-route captures redirected to login. Landing-page requests to 127.0.0.1 timed out after 25 seconds at each width; a separate localhost retry returned HTTP500 and `Internal Server Error`, which is what the two home images now show. The runtime log records `Failed to proxy http://localhost:3100/ Error: socket hang up` / `ECONNRESET`. Root cause is **unverified**; reproduce with this original commit and inspect middleware/proxy/Clerk handling. No working landing UI is claimed.
 
-| Requested route | Width | Capture | Result |
+**Authenticated interior screenshots remain blocked.** Original main's `db:seed` command targets absent `backend/prisma/seed.ts` (I09). The current branch's seed is tested against disposable PostgreSQL, but no three real Clerk test identities/credentials were provided for browser fixtures. Placeholder route IDs therefore represent route shapes, not seeded data. These screenshots replace access-state captures, not the requested populated interiors. The scope is incomplete; do not treat login images as workspace/editor/Kanban evidence.
+
+Exact attempts, final URLs, status and page errors: [route manifest](../../phase1b-evidence/original-main-ui-results.json), [landing retry](../../phase1b-evidence/original-main-home-retry.json). Original runtime/install/capture/seed logs are in `docs/phase1b-evidence/`. No production data or credentials were added to these artifacts.
+
+| Route | Width | Capture | Actual result |
 |---|---:|---|---|
-| `/` | 1440 | [home-1440.png](home-1440.png) | 200 |
-| `/login` | 1440 | [login-1440.png](login-1440.png) | 200 |
-| `/signup` | 1440 | [signup-1440.png](signup-1440.png) | 200 |
-| `/sign-in` | 1440 | [sign-in-1440.png](sign-in-1440.png) | 200 |
-| `/sign-up` | 1440 | [sign-up-1440.png](sign-up-1440.png) | 200 |
+| `/` | 1440 | [home-1440.png](home-1440.png) | HTTP500 error page |
+| `/login` | 1440 | [login-1440.png](login-1440.png) | HTTP200 public authentication page |
+| `/signup` | 1440 | [signup-1440.png](signup-1440.png) | HTTP200 public authentication page |
+| `/sign-in` | 1440 | [sign-in-1440.png](sign-in-1440.png) | HTTP200 public authentication page |
+| `/sign-up` | 1440 | [sign-up-1440.png](sign-up-1440.png) | HTTP200 public authentication page |
 | `/dashboard` | 1440 | [dashboard-1440.png](dashboard-1440.png) | Login redirect; interior blocked |
 | `/settings/billing` | 1440 | [settings-billing-1440.png](settings-billing-1440.png) | Login redirect; interior blocked |
 | `/workspace/audit-placeholder` | 1440 | [workspace-audit-placeholder-1440.png](workspace-audit-placeholder-1440.png) | Login redirect; interior blocked |
@@ -20,11 +24,11 @@ Public landing/login/signup/sign-in/sign-up pages rendered. Every dashboard/work
 | `/workspace/audit-placeholder/snippets` | 1440 | [workspace-audit-placeholder-snippets-1440.png](workspace-audit-placeholder-snippets-1440.png) | Login redirect; interior blocked |
 | `/workspace/audit-placeholder/settings` | 1440 | [workspace-audit-placeholder-settings-1440.png](workspace-audit-placeholder-settings-1440.png) | Login redirect; interior blocked |
 | `/superadmin` | 1440 | [superadmin-1440.png](superadmin-1440.png) | Login redirect; interior blocked |
-| `/` | 390 | [home-390.png](home-390.png) | 200 |
-| `/login` | 390 | [login-390.png](login-390.png) | 200 |
-| `/signup` | 390 | [signup-390.png](signup-390.png) | 200 |
-| `/sign-in` | 390 | [sign-in-390.png](sign-in-390.png) | 200 |
-| `/sign-up` | 390 | [sign-up-390.png](sign-up-390.png) | 200 |
+| `/` | 390 | [home-390.png](home-390.png) | HTTP500 error page |
+| `/login` | 390 | [login-390.png](login-390.png) | HTTP200 public authentication page |
+| `/signup` | 390 | [signup-390.png](signup-390.png) | HTTP200 public authentication page |
+| `/sign-in` | 390 | [sign-in-390.png](sign-in-390.png) | HTTP200 public authentication page |
+| `/sign-up` | 390 | [sign-up-390.png](sign-up-390.png) | HTTP200 public authentication page |
 | `/dashboard` | 390 | [dashboard-390.png](dashboard-390.png) | Login redirect; interior blocked |
 | `/settings/billing` | 390 | [settings-billing-390.png](settings-billing-390.png) | Login redirect; interior blocked |
 | `/workspace/audit-placeholder` | 390 | [workspace-audit-placeholder-390.png](workspace-audit-placeholder-390.png) | Login redirect; interior blocked |

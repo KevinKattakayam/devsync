@@ -1,0 +1,4 @@
+const {chromium}=require('../../backend/node_modules/playwright');
+const fs=require('fs');
+(async()=>{const browser=await chromium.launch({executablePath:'/usr/bin/google-chrome',headless:true,args:['--no-sandbox']});const results=[];
+for(const width of [1440,390]){const page=await browser.newPage({viewport:{width,height:1000}});try{const response=await page.goto('http://localhost:3100/',{waitUntil:'domcontentloaded',timeout:60000});await page.waitForTimeout(1500);await page.screenshot({path:`docs/ui/before/home-${width}.png`,fullPage:true});results.push({route:'/',width,status:response.status(),finalURL:page.url(),file:`home-${width}.png`});}catch(error){results.push({route:'/',width,error:String(error)});}fs.writeFileSync('docs/phase1b-evidence/original-main-home-retry.json',JSON.stringify(results,null,2));console.log(JSON.stringify(results[results.length-1]));await page.close();}await browser.close();})().catch(error=>{console.error(error);process.exitCode=1});

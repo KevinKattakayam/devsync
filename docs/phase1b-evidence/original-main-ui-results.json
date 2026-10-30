@@ -1,0 +1,222 @@
+[
+  {
+    "route": "/",
+    "width": 1440,
+    "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3100/\", waiting until \"domcontentloaded\"\u001b[22m\n",
+    "errors": []
+  },
+  {
+    "route": "/login",
+    "width": 1440,
+    "status": 200,
+    "finalURL": "http://127.0.0.1:3100/login",
+    "file": "login-1440.png",
+    "errors": []
+  },
+  {
+    "route": "/signup",
+    "width": 1440,
+    "status": 200,
+    "finalURL": "http://127.0.0.1:3100/signup",
+    "file": "signup-1440.png",
+    "errors": []
+  },
+  {
+    "route": "/sign-in",
+    "width": 1440,
+    "status": 200,
+    "finalURL": "http://127.0.0.1:3100/sign-in",
+    "file": "sign-in-1440.png",
+    "errors": []
+  },
+  {
+    "route": "/sign-up",
+    "width": 1440,
+    "status": 200,
+    "finalURL": "http://127.0.0.1:3100/sign-up",
+    "file": "sign-up-1440.png",
+    "errors": []
+  },
+  {
+    "route": "/dashboard",
+    "width": 1440,
+    "status": 200,
+    "finalURL": "http://127.0.0.1:3100/login?redirect_url=http%3A%2F%2F127.0.0.1%3A3100%2Fdashboard",
+    "file": "dashboard-1440.png",
+    "errors": []
+  },
+  {
+    "route": "/settings/billing",
+    "width": 1440,
+    "status": 200,
+    "finalURL": "http://127.0.0.1:3100/login?redirect_url=http%3A%2F%2F127.0.0.1%3A3100%2Fsettings%2Fbilling",
+    "file": "settings-billing-1440.png",
+    "errors": []
+  },
+  {
+    "route": "/workspace/audit-placeholder",
+    "width": 1440,
+    "status": 200,
+    "finalURL": "http://127.0.0.1:3100/login?redirect_url=http%3A%2F%2F127.0.0.1%3A3100%2Fworkspace%2Faudit-placeholder",
+    "file": "workspace-audit-placeholder-1440.png",
+    "errors": []
+  },
+  {
+    "route": "/workspace/audit-placeholder/docs",
+    "width": 1440,
+    "status": 200,
+    "finalURL": "http://127.0.0.1:3100/login?redirect_url=http%3A%2F%2F127.0.0.1%3A3100%2Fworkspace%2Faudit-placeholder%2Fdocs",
+    "file": "workspace-audit-placeholder-docs-1440.png",
+    "errors": []
+  },
+  {
+    "route": "/workspace/audit-placeholder/docs/audit-document",
+    "width": 1440,
+    "status": 200,
+    "finalURL": "http://127.0.0.1:3100/login?redirect_url=http%3A%2F%2F127.0.0.1%3A3100%2Fworkspace%2Faudit-placeholder%2Fdocs%2Faudit-document",
+    "file": "workspace-audit-placeholder-docs-audit-document-1440.png",
+    "errors": []
+  },
+  {
+    "route": "/workspace/audit-placeholder/kanban",
+    "width": 1440,
+    "status": 200,
+    "finalURL": "http://127.0.0.1:3100/login?redirect_url=http%3A%2F%2F127.0.0.1%3A3100%2Fworkspace%2Faudit-placeholder%2Fkanban",
+    "file": "workspace-audit-placeholder-kanban-1440.png",
+    "errors": []
+  },
+  {
+    "route": "/workspace/audit-placeholder/snippets",
+    "width": 1440,
+    "status": 200,
+    "finalURL": "http://127.0.0.1:3100/login?redirect_url=http%3A%2F%2F127.0.0.1%3A3100%2Fworkspace%2Faudit-placeholder%2Fsnippets",
+    "file": "workspace-audit-placeholder-snippets-1440.png",
+    "errors": []
+  },
+  {
+    "route": "/workspace/audit-placeholder/settings",
+    "width": 1440,
+    "status": 200,
+    "finalURL": "http://127.0.0.1:3100/login?redirect_url=http%3A%2F%2F127.0.0.1%3A3100%2Fworkspace%2Faudit-placeholder%2Fsettings",
+    "file": "workspace-audit-placeholder-settings-1440.png",
+    "errors": []
+  },
+  {
+    "route": "/superadmin",
+    "width": 1440,
+    "status": 200,
+    "finalURL": "http://127.0.0.1:3100/login?redirect_url=http%3A%2F%2F127.0.0.1%3A3100%2Fsuperadmin",
+    "file": "superadmin-1440.png",
+    "errors": []
+  },
+  {
+    "route": "/",
+    "width": 390,
+    "error": "page.goto: Timeout 25000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:3100/\", waiting until \"domcontentloaded\"\u001b[22m\n",
+    "errors": []
+  },
+  {
+    "route": "/login",
+    "width": 390,
+    "status": 200,
+    "finalURL": "http://127.0.0.1:3100/login",
+    "file": "login-390.png",
+    "errors": []
+  },
+  {
+    "route": "/signup",
+    "width": 390,
+    "status": 200,
+    "finalURL": "http://127.0.0.1:3100/signup",
+    "file": "signup-390.png",
+    "errors": []
+  },
+  {
+    "route": "/sign-in",
+    "width": 390,
+    "status": 200,
+    "finalURL": "http://127.0.0.1:3100/sign-in",
+    "file": "sign-in-390.png",
+    "errors": []
+  },
+  {
+    "route": "/sign-up",
+    "width": 390,
+    "status": 200,
+    "finalURL": "http://127.0.0.1:3100/sign-up",
+    "file": "sign-up-390.png",
+    "errors": []
+  },
+  {
+    "route": "/dashboard",
+    "width": 390,
+    "status": 200,
+    "finalURL": "http://127.0.0.1:3100/login?redirect_url=http%3A%2F%2F127.0.0.1%3A3100%2Fdashboard",
+    "file": "dashboard-390.png",
+    "errors": []
+  },
+  {
+    "route": "/settings/billing",
+    "width": 390,
+    "status": 200,
+    "finalURL": "http://127.0.0.1:3100/login?redirect_url=http%3A%2F%2F127.0.0.1%3A3100%2Fsettings%2Fbilling",
+    "file": "settings-billing-390.png",
+    "errors": []
+  },
+  {
+    "route": "/workspace/audit-placeholder",
+    "width": 390,
+    "status": 200,
+    "finalURL": "http://127.0.0.1:3100/login?redirect_url=http%3A%2F%2F127.0.0.1%3A3100%2Fworkspace%2Faudit-placeholder",
+    "file": "workspace-audit-placeholder-390.png",
+    "errors": []
+  },
+  {
+    "route": "/workspace/audit-placeholder/docs",
+    "width": 390,
+    "status": 200,
+    "finalURL": "http://127.0.0.1:3100/login?redirect_url=http%3A%2F%2F127.0.0.1%3A3100%2Fworkspace%2Faudit-placeholder%2Fdocs",
+    "file": "workspace-audit-placeholder-docs-390.png",
+    "errors": []
+  },
+  {
+    "route": "/workspace/audit-placeholder/docs/audit-document",
+    "width": 390,
+    "status": 200,
+    "finalURL": "http://127.0.0.1:3100/login?redirect_url=http%3A%2F%2F127.0.0.1%3A3100%2Fworkspace%2Faudit-placeholder%2Fdocs%2Faudit-document",
+    "file": "workspace-audit-placeholder-docs-audit-document-390.png",
+    "errors": []
+  },
+  {
+    "route": "/workspace/audit-placeholder/kanban",
+    "width": 390,
+    "status": 200,
+    "finalURL": "http://127.0.0.1:3100/login?redirect_url=http%3A%2F%2F127.0.0.1%3A3100%2Fworkspace%2Faudit-placeholder%2Fkanban",
+    "file": "workspace-audit-placeholder-kanban-390.png",
+    "errors": []
+  },
+  {
+    "route": "/workspace/audit-placeholder/snippets",
+    "width": 390,
+    "status": 200,
+    "finalURL": "http://127.0.0.1:3100/login?redirect_url=http%3A%2F%2F127.0.0.1%3A3100%2Fworkspace%2Faudit-placeholder%2Fsnippets",
+    "file": "workspace-audit-placeholder-snippets-390.png",
+    "errors": []
+  },
+  {
+    "route": "/workspace/audit-placeholder/settings",
+    "width": 390,
+    "status": 200,
+    "finalURL": "http://127.0.0.1:3100/login?redirect_url=http%3A%2F%2F127.0.0.1%3A3100%2Fworkspace%2Faudit-placeholder%2Fsettings",
+    "file": "workspace-audit-placeholder-settings-390.png",
+    "errors": []
+  },
+  {
+    "route": "/superadmin",
+    "width": 390,
+    "status": 200,
+    "finalURL": "http://127.0.0.1:3100/login?redirect_url=http%3A%2F%2F127.0.0.1%3A3100%2Fsuperadmin",
+    "file": "superadmin-390.png",
+    "errors": []
+  }
+]
