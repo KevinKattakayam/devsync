@@ -3,13 +3,18 @@ import OpenAI from 'openai';
 import { Prisma } from '@prisma/client';
 import { prisma } from '../lib/prisma';
 
-const client = process.env.OPENAI_API_KEY ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY }) : null;
+const client = process.env.OPENAI_API_KEY
+  ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+  : null;
 const model = process.env.EMBEDDING_MODEL || 'text-embedding-3-small';
 
 function textFromJson(value: unknown): string {
   if (typeof value === 'string') return value;
   if (Array.isArray(value)) return value.map(textFromJson).join(' ');
-  if (value && typeof value === 'object') return Object.values(value as Record<string, unknown>).map(textFromJson).join(' ');
+  if (value && typeof value === 'object')
+    return Object.values(value as Record<string, unknown>)
+      .map(textFromJson)
+      .join(' ');
   return '';
 }
 
@@ -19,12 +24,17 @@ async function embed(text: string) {
     const result = await client.embeddings.create({ model, input: text.slice(0, 30000) });
     return result.data[0]?.embedding ?? null;
   } catch (error) {
-    console.warn('[Embedding] Failed to generate embedding (graceful fallback):', (error as any)?.message || error);
+    console.warn(
+      '[Embedding] Failed to generate embedding (graceful fallback):',
+      (error as any)?.message || error,
+    );
     return null;
   }
 }
 
-function vector(values: number[]) { return Prisma.raw(`'[${values.join(',')}]'::vector`); }
+function vector(values: number[]) {
+  return Prisma.raw(`'[${values.join(',')}]'::vector`);
+}
 
 export async function queueEmbedding(kind: 'document' | 'snippet' | 'task', id: string) {
   await prisma.$executeRaw`INSERT INTO "EmbeddingJob" ("id", "resourceType", "resourceId", "status", "attempts", "runAfter", "createdAt", "updatedAt") VALUES (${`${kind}:${id}`}, ${kind}, ${id}, 'pending', 0, NOW(), NOW(), NOW()) ON CONFLICT ("resourceType", "resourceId") DO UPDATE SET "status" = 'pending', "runAfter" = NOW(), "lastError" = NULL, "updatedAt" = NOW()`;
@@ -35,7 +45,9 @@ export async function processEmbeddingJobs() {
   if (workerRunning || !client) return;
   workerRunning = true;
   try {
-    const jobs = await prisma.$queryRaw<{ id: string; resourceType: string; resourceId: string; attempts: number }[]>`SELECT "id", "resourceType", "resourceId", "attempts" FROM "EmbeddingJob" WHERE "status" = 'pending' AND "runAfter" <= NOW() ORDER BY "runAfter" ASC LIMIT 10`;
+    const jobs = await prisma.$queryRaw<
+      { id: string; resourceType: string; resourceId: string; attempts: number }[]
+    >`SELECT "id", "resourceType", "resourceId", "attempts" FROM "EmbeddingJob" WHERE "status" = 'pending' AND "runAfter" <= NOW() ORDER BY "runAfter" ASC LIMIT 10`;
     for (const job of jobs) {
       await prisma.$executeRaw`UPDATE "EmbeddingJob" SET "status" = 'processing', "attempts" = "attempts" + 1, "updatedAt" = NOW() WHERE "id" = ${job.id}`;
       try {
@@ -46,7 +58,9 @@ export async function processEmbeddingJobs() {
         await prisma.$executeRaw`UPDATE "EmbeddingJob" SET "status" = 'pending', "lastError" = ${error instanceof Error ? error.message.slice(0, 1000) : 'Unknown error'}, "runAfter" = ${new Date(Date.now() + delay * 60_000)}, "updatedAt" = NOW() WHERE "id" = ${job.id}`;
       }
     }
-  } finally { workerRunning = false; }
+  } finally {
+    workerRunning = false;
+  }
 }
 
 export async function refreshEmbedding(kind: 'document' | 'snippet' | 'task', id: string) {
@@ -57,7 +71,8 @@ export async function refreshEmbedding(kind: 'document' | 'snippet' | 'task', id
     const text = `${item.title}\n${textFromJson(item.content)}`.trim();
     const hash = createHash('sha256').update(text).digest('hex');
     if (hash === item.embeddingHash) return;
-    const values = await embed(text); if (!values) return;
+    const values = await embed(text);
+    if (!values) return;
     await prisma.$executeRaw`UPDATE "Document" SET "embedding" = ${vector(values)}, "embeddingHash" = ${hash} WHERE "id" = ${id}`;
   } else if (kind === 'snippet') {
     const item = await prisma.snippet.findUnique({ where: { id } });
@@ -65,7 +80,8 @@ export async function refreshEmbedding(kind: 'document' | 'snippet' | 'task', id
     const text = `${item.title}\n${item.description || ''}\n${item.language}\n${item.code}`.trim();
     const hash = createHash('sha256').update(text).digest('hex');
     if (hash === item.embeddingHash) return;
-    const values = await embed(text); if (!values) return;
+    const values = await embed(text);
+    if (!values) return;
     await prisma.$executeRaw`UPDATE "Snippet" SET "embedding" = ${vector(values)}, "embeddingHash" = ${hash} WHERE "id" = ${id}`;
   } else {
     const item = await prisma.task.findUnique({ where: { id } });
@@ -73,7 +89,8 @@ export async function refreshEmbedding(kind: 'document' | 'snippet' | 'task', id
     const text = `${item.taskKey || ''} ${item.title}\n${item.description || ''}`.trim();
     const hash = createHash('sha256').update(text).digest('hex');
     if (hash === item.embeddingHash) return;
-    const values = await embed(text); if (!values) return;
+    const values = await embed(text);
+    if (!values) return;
     await prisma.$executeRaw`UPDATE "Task" SET "embedding" = ${vector(values)}, "embeddingHash" = ${hash} WHERE "id" = ${id}`;
   }
 }
@@ -95,7 +112,10 @@ export async function semanticWorkspaceContext(workspaceId: string, query: strin
         WHERE b."workspaceId" = ${workspaceId} AND t.embedding IS NOT NULL
       ) context ORDER BY score DESC LIMIT ${limit}`;
   } catch (error) {
-    console.warn('[Embedding] Semantic workspace context query skipped:', (error as any)?.message || error);
+    console.warn(
+      '[Embedding] Semantic workspace context query skipped:',
+      (error as any)?.message || error,
+    );
     return [];
   }
 }

@@ -12,7 +12,11 @@ declare global {
 }
 
 /** Resolves a verified Clerk session to DevSync's local authorization principal. */
-export async function authMiddleware(req: Request, _res: Response, next: NextFunction): Promise<void> {
+export async function authMiddleware(
+  req: Request,
+  _res: Response,
+  next: NextFunction,
+): Promise<void> {
   try {
     const auth = getAuth(req);
     if (!auth.userId) throw new UnauthorizedError('Authentication required');
@@ -25,12 +29,20 @@ export async function authMiddleware(req: Request, _res: Response, next: NextFun
     req.user = { userId: user.id, clerkId: user.clerkId, email: user.email };
     next();
   } catch (error) {
-    next(error instanceof UnauthorizedError ? error : new UnauthorizedError('Invalid or expired session'));
+    next(
+      error instanceof UnauthorizedError
+        ? error
+        : new UnauthorizedError('Invalid or expired session'),
+    );
   }
 }
 
 /** Clerk already validates any supplied session; anonymous requests continue normally. */
-export async function optionalAuth(req: Request, _res: Response, next: NextFunction): Promise<void> {
+export async function optionalAuth(
+  req: Request,
+  _res: Response,
+  next: NextFunction,
+): Promise<void> {
   try {
     const auth = getAuth(req);
     if (auth.userId) {
@@ -50,8 +62,12 @@ export async function optionalAuth(req: Request, _res: Response, next: NextFunct
 export async function syncClerkUser(clerkId: string) {
   const clerkUser = await clerkClient.users.getUser(clerkId);
   const email = clerkUser.primaryEmailAddress?.emailAddress;
-  if (!email) throw new UnauthorizedError('Your identity provider did not provide an email address');
-  const name = [clerkUser.firstName, clerkUser.lastName].filter(Boolean).join(' ') || clerkUser.username || null;
+  if (!email)
+    throw new UnauthorizedError('Your identity provider did not provide an email address');
+  const name =
+    [clerkUser.firstName, clerkUser.lastName].filter(Boolean).join(' ') ||
+    clerkUser.username ||
+    null;
 
   return prisma.user.upsert({
     where: { clerkId },

@@ -1,0 +1,35 @@
+backend/src/routes/ingestion.routes.ts:34:        ) as any,
+backend/src/routes/scim.routes.ts:26:    const record = await (prisma as any).scimProvisioningToken.findFirst({
+backend/src/routes/scim.routes.ts:67:    const result = await prisma.$transaction(async (tx: any) => {
+backend/src/routes/scim.routes.ts:77:      } as any);
+backend/src/routes/scim.routes.ts:99:    const identity = await (prisma as any).scimExternalIdentity.findUnique({
+backend/src/routes/scim.routes.ts:116:    } as any);
+backend/src/routes/scim.routes.ts:124:    res.json(scimUser(user as any, identity.externalId));
+backend/src/routes/scim.routes.ts:132:    const identity = await (prisma as any).scimExternalIdentity.findUnique({
+backend/src/routes/scim.routes.ts:145:      (prisma as any).scimExternalIdentity.delete({ where: { id: identity.id } }),
+backend/src/agents/task-completion.agent.ts:19: * 1. Fetches the task and any linked snippets/docs
+backend/src/routes/github-webhook.routes.ts:35:    const payload: any = githubEnvelopeSchema.parse(req.body);
+backend/src/routes/github-webhook.routes.ts:39:    const raw = (req as any).rawBody as Buffer | undefined;
+backend/src/routes/stripe.webhook.ts:27:          await (prisma as any).workspace.update({
+backend/src/routes/stripe.webhook.ts:41:          await (prisma as any).workspace.updateMany({
+backend/src/routes/stripe.webhook.ts:49:        await (prisma as any).workspace.updateMany({
+backend/src/routes/superadmin.routes.ts:36:      (prisma as any).workspace.count({ where: { suspendedAt: null } }),
+backend/src/routes/superadmin.routes.ts:37:      (prisma as any).workspace.count({ where: { billingStatus: 'active' } }),
+backend/src/routes/superadmin.routes.ts:38:      (prisma as any).tokenUsage.aggregate({
+backend/src/routes/superadmin.routes.ts:61:    const workspace = await (prisma as any).workspace.update({
+backend/src/openapi.ts:54:                schema: z.toJSONSchema(schema, { unrepresentable: 'any', io: 'input' }),
+backend/src/controllers/document.controller.ts:15:  content: z.any().optional(),
+backend/src/middleware/auth.middleware.ts:40:/** Clerk already validates any supplied session; anonymous requests continue normally. */
+backend/src/services/ingestion.service.ts:151:  const parser = new (PDFParse as any)({ data: buffer });
+backend/src/services/ingestion.service.ts:227:      content: tiptapContent as any,
+backend/src/services/embedding.service.ts:29:      (error as any)?.message || error,
+backend/src/services/embedding.service.ts:117:      (error as any)?.message || error,
+backend/src/socket/index.ts:66:    const originalOnevent = (socket as any).onevent;
+backend/src/socket/index.ts:67:    (socket as any).onevent = function (packet: any) {
+backend/src/services/billing.service.ts:13:  const workspace = await (prisma as any).workspace.findUnique({
+backend/src/services/billing.service.ts:27:  const usage = await (prisma as any).tokenUsage.aggregate({
+backend/src/services/billing.service.ts:44:  let usage: any;
+backend/src/services/billing.service.ts:46:    usage = await (prisma as any).tokenUsage.create({
+backend/src/services/billing.service.ts:49:  } catch (error: any) {
+backend/src/services/billing.service.ts:53:  const workspace = await (prisma as any).workspace.findUnique({
+backend/src/services/billing.service.ts:63:  await (prisma as any).tokenUsage.update({

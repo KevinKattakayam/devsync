@@ -99,4 +99,9 @@ export interface Activity {
   user: User;
 }
 
-export interface PresenceUser { id: string; socketId: string; name: string; avatar?: string; }
+export interface PresenceUser {
+  id: string;
+  socketId: string;
+  name: string;
+  avatar?: string;
+}

@@ -10,14 +10,11 @@ export function markdownToHtml(markdown: string): string {
 
   // 2. Protect and extract code blocks before line-by-line processing
   const codeBlocks: string[] = [];
-  
+
   // Match both closed ```code``` and unclosed streaming ```code
   text = text.replace(/```([a-zA-Z0-9_-]*)\n?([\s\S]*?)(?:```|$)/g, (_match, lang, code) => {
     const language = lang.trim() || 'typescript';
-    const escapedCode = code
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
+    const escapedCode = code.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     const placeholder = `§§DSCB${codeBlocks.length}§§`;
     codeBlocks.push(`<pre><code class="language-${language}">${escapedCode.trim()}</code></pre>`);
     return `\n\n${placeholder}\n\n`;
@@ -60,66 +57,124 @@ export function markdownToHtml(markdown: string): string {
 
     // Check for code block placeholder
     if (line.startsWith('§§DSCB') && line.endsWith('§§')) {
-      if (inUl) { output.push('</ul>'); inUl = false; }
-      if (inOl) { output.push('</ol>'); inOl = false; }
-      if (inTable) { output.push('</tbody></table>'); inTable = false; }
+      if (inUl) {
+        output.push('</ul>');
+        inUl = false;
+      }
+      if (inOl) {
+        output.push('</ol>');
+        inOl = false;
+      }
+      if (inTable) {
+        output.push('</tbody></table>');
+        inTable = false;
+      }
       output.push(line);
       continue;
     }
 
     if (!line) {
-      if (inUl) { output.push('</ul>'); inUl = false; }
-      if (inOl) { output.push('</ol>'); inOl = false; }
-      if (inTable) { output.push('</tbody></table>'); inTable = false; }
+      if (inUl) {
+        output.push('</ul>');
+        inUl = false;
+      }
+      if (inOl) {
+        output.push('</ol>');
+        inOl = false;
+      }
+      if (inTable) {
+        output.push('</tbody></table>');
+        inTable = false;
+      }
       continue;
     }
 
     // Unordered List
     if (/^[\*\-\+] (.*)/.test(line)) {
-      if (inOl) { output.push('</ol>'); inOl = false; }
-      if (inTable) { output.push('</tbody></table>'); inTable = false; }
-      if (!inUl) { output.push('<ul>'); inUl = true; }
+      if (inOl) {
+        output.push('</ol>');
+        inOl = false;
+      }
+      if (inTable) {
+        output.push('</tbody></table>');
+        inTable = false;
+      }
+      if (!inUl) {
+        output.push('<ul>');
+        inUl = true;
+      }
       output.push(line.replace(/^[\*\-\+] (.*)/, '<li>$1</li>'));
       continue;
     }
 
     // Ordered List
     if (/^\d+\. (.*)/.test(line)) {
-      if (inUl) { output.push('</ul>'); inUl = false; }
-      if (inTable) { output.push('</tbody></table>'); inTable = false; }
-      if (!inOl) { output.push('<ol>'); inOl = true; }
+      if (inUl) {
+        output.push('</ul>');
+        inUl = false;
+      }
+      if (inTable) {
+        output.push('</tbody></table>');
+        inTable = false;
+      }
+      if (!inOl) {
+        output.push('<ol>');
+        inOl = true;
+      }
       output.push(line.replace(/^\d+\. (.*)/, '<li>$1</li>'));
       continue;
     }
 
     // Markdown Table Rows (e.g. | col1 | col2 |)
     if (line.startsWith('|') && line.endsWith('|')) {
-      if (inUl) { output.push('</ul>'); inUl = false; }
-      if (inOl) { output.push('</ol>'); inOl = false; }
+      if (inUl) {
+        output.push('</ul>');
+        inUl = false;
+      }
+      if (inOl) {
+        output.push('</ol>');
+        inOl = false;
+      }
 
       // Skip separator rows (|---|---|)
       if (/^\|[\s\-:|]+\|$/.test(line)) {
         continue;
       }
 
-      const cells = line.slice(1, -1).split('|').map(c => c.trim());
+      const cells = line
+        .slice(1, -1)
+        .split('|')
+        .map((c) => c.trim());
       if (!inTable) {
-        output.push('<table class="border-collapse border border-white/20 my-2 w-full text-xs"><thead><tr>');
-        cells.forEach(c => output.push(`<th class="border border-white/20 p-1.5 bg-white/5 font-bold">${c}</th>`));
+        output.push(
+          '<table class="border-collapse border border-white/20 my-2 w-full text-xs"><thead><tr>',
+        );
+        cells.forEach((c) =>
+          output.push(`<th class="border border-white/20 p-1.5 bg-white/5 font-bold">${c}</th>`),
+        );
         output.push('</tr></thead><tbody>');
         inTable = true;
       } else {
         output.push('<tr>');
-        cells.forEach(c => output.push(`<td class="border border-white/20 p-1.5">${c}</td>`));
+        cells.forEach((c) => output.push(`<td class="border border-white/20 p-1.5">${c}</td>`));
         output.push('</tr>');
       }
       continue;
     }
 
     // Normal text / HTML element
-    if (inUl) { output.push('</ul>'); inUl = false; }
-    if (inOl) { output.push('</ol>'); inOl = false; }
-    if (inTable) { output.push('</tbody></table>'); inTable = false; }
+    if (inUl) {
+      output.push('</ul>');
+      inUl = false;
+    }
+    if (inOl) {
+      output.push('</ol>');
+      inOl = false;
+    }
+    if (inTable) {
+      output.push('</tbody></table>');
+      inTable = false;
+    }
 
     if (line.startsWith('<h') || line.startsWith('<blockquote') || line.startsWith('</')) {
       output.push(line);

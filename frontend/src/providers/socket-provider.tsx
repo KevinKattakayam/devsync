@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import type { PresenceUser } from '@/types';
 
@@ -31,23 +31,23 @@ export function SocketProvider({ children }: { children: React.ReactNode }) {
     getToken().then((token) => {
       if (!token) return;
       newSocket = io(process.env.NEXT_PUBLIC_SOCKET_URL || 'http://localhost:5000', {
-      auth: { token },
-      transports: ['websocket', 'polling'],
-    });
+        auth: { token },
+        transports: ['websocket', 'polling'],
+      });
 
-    newSocket.on('connect', () => {
-      setIsConnected(true);
-      console.log('[Socket] Connected');
-    });
+      newSocket.on('connect', () => {
+        setIsConnected(true);
+        console.log('[Socket] Connected');
+      });
 
-    newSocket.on('disconnect', () => {
-      setIsConnected(false);
-      console.log('[Socket] Disconnected');
-    });
+      newSocket.on('disconnect', () => {
+        setIsConnected(false);
+        console.log('[Socket] Disconnected');
+      });
 
-    newSocket.on('workspace:users', (users: PresenceUser[]) => {
-      setOnlineUsers(users);
-    });
+      newSocket.on('workspace:users', (users: PresenceUser[]) => {
+        setOnlineUsers(users);
+      });
 
       setSocket(newSocket);
     });

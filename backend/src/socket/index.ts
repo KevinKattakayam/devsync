@@ -26,16 +26,18 @@ export function setupSocket(httpServer: HttpServer) {
 
   // ── Redis adapter for horizontal scaling ─────────────────────
   // Gracefully degrade to single-instance if Redis is unavailable
-  isRedisAvailable().then((available) => {
-    if (available) {
-      io.adapter(createAdapter(redis, redisSubscriber));
-      console.log('[Socket.io] Redis adapter attached — horizontal scaling enabled');
-    } else {
-      console.warn('[Socket.io] Redis not available — running in single-instance mode');
-    }
-  }).catch(() => {
-    console.warn('[Socket.io] Redis adapter setup failed — running in single-instance mode');
-  });
+  isRedisAvailable()
+    .then((available) => {
+      if (available) {
+        io.adapter(createAdapter(redis, redisSubscriber));
+        console.log('[Socket.io] Redis adapter attached — horizontal scaling enabled');
+      } else {
+        console.warn('[Socket.io] Redis not available — running in single-instance mode');
+      }
+    })
+    .catch(() => {
+      console.warn('[Socket.io] Redis adapter setup failed — running in single-instance mode');
+    });
 
   // ── Auth middleware ──────────────────────────────────────────
   io.use(async (socket: AuthenticatedSocket, next) => {

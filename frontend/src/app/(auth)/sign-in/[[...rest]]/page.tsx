@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { SignIn } from '@clerk/nextjs';
 
@@ -12,8 +12,8 @@ export default function SignInAliasPage() {
         forceRedirectUrl="/dashboard"
         appearance={{
           elements: {
-            rootBox: "w-full shadow-2xl rounded-2xl",
-            card: "bg-card border border-white/10 shadow-2xl rounded-2xl",
+            rootBox: 'w-full shadow-2xl rounded-2xl',
+            card: 'bg-card border border-white/10 shadow-2xl rounded-2xl',
           },
         }}
       />

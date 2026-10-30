@@ -1,8 +1,19 @@
 > Phase1a status: D01/D02/E01 and D03–D08 application boundaries are repaired and regression-tested; D08 also has a tested composite database constraint. This matrix is not a claim that full Phase1a centralization is complete. C01 session revocation, G01 tenant-context coverage, SCIM identity linking, D09 assignments and D10 owner invariants remain open. See PROGRESS.md for the complete scope ledger.
 
-# Authorization matrix — updated during Phase 1a
+# Authorization matrix — updated during Phase 1b
 
-Static route-by-route review of every registered REST route and every Socket.io input event. This is not a passing integration-test report. OWNER/EDITOR/VIEWER are database workspace roles; there is no per-document ownership ACL beyond membership. Authz checks do not overcome RLS context failures (G01). Every REST route passes Helmet, configured CORS, parsing, trace and global IP limiter; global limiting is skipped outside production.
+Static route-by-route review of every registered REST route and every Socket.io input event. This is not a passing integration-test report. OWNER/EDITOR/VIEWER are database workspace roles; there is no per-document ownership ACL beyond membership. Authz checks do not overcome RLS context failures (G01). Protected application routers retain Helmet, configured CORS, parsing, request correlation and the production global IP limiter. Operational health/readiness and metrics are mounted before parsing/auth/rate limiting. Legacy route evidence line offsets below describe the pre-format Phase1a tree (0cee996); permission behavior remains as listed, with new transport/operational exceptions documented below.
+
+## Phase1b aliases and operational exceptions
+
+Every application `/api/...` router below is also mounted at `/api/v1/...` with the same authorization middleware and handlers. Legacy aliases remain supported; see API_OPERATIONS.md. SCIM keeps `/scim/v2`.
+
+| Route | Authority and checks | Evidence |
+|---|---|---|
+| `GET /api/health`, `/api/v1/health` | Anonymous liveness, no workspace data | backend/src/routes/health.routes.ts |
+| `GET /api/ready`, `/api/v1/ready` | Anonymous bounded DB/Redis/config readiness; 503 while draining | backend/src/routes/health.routes.ts |
+| `GET /api/docs` | Anonymous route/body contract metadata; no workspace records | backend/src/app.ts, backend/src/openapi.ts |
+| `GET /metrics` | Exact private bearer secret, at least32 characters; 404 when disabled, 403 on mismatch | backend/src/observability/metrics.ts |
 
 ## REST and Next route handlers
 

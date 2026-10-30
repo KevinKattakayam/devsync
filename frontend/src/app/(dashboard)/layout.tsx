@@ -1,23 +1,36 @@
-"use client";
+'use client';
 
-import { useAuth } from "@/providers/auth-provider";
-import { useRouter, usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import Link from "next/link";
-import { useSocket } from "@/providers/socket-provider";
+import { useAuth } from '@/providers/auth-provider';
+import { useRouter, usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { useSocket } from '@/providers/socket-provider';
 import {
-  Zap, LayoutDashboard, FileText, Kanban, Code2, Settings,
-  ChevronLeft, ChevronRight, Plus, Search, Bell, Moon, Sun,
-  LogOut, User, Loader2, Menu, Sparkles
-} from "lucide-react";
-import { useTheme } from "next-themes";
-import { getInitials, generateColor } from "@/lib/utils";
-import { CommandPalette } from "@/components/command-palette";
-import { AiCopilotDrawer } from "@/components/ai-copilot-drawer";
+  Zap,
+  LayoutDashboard,
+  FileText,
+  Kanban,
+  Code2,
+  Settings,
+  ChevronLeft,
+  ChevronRight,
+  Plus,
+  Search,
+  Bell,
+  Moon,
+  Sun,
+  LogOut,
+  Loader2,
+  Menu,
+} from 'lucide-react';
+import { useTheme } from 'next-themes';
+import { getInitials, generateColor } from '@/lib/utils';
+import { CommandPalette } from '@/components/command-palette';
+import { AiCopilotDrawer } from '@/components/ai-copilot-drawer';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const { user, isLoading, isAuthenticated, logout } = useAuth();
-  const { isConnected, onlineUsers } = useSocket();
+  const { isConnected } = useSocket();
   const router = useRouter();
   const pathname = usePathname();
   const { theme, setTheme } = useTheme();
@@ -49,14 +62,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         { href: `/workspace/${workspaceId}/snippets`, icon: Code2, label: 'Code Snippets' },
         { href: `/workspace/${workspaceId}/settings`, icon: Settings, label: 'Settings' },
       ]
-    : [
-        { href: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
-      ];
+    : [{ href: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' }];
 
   return (
     <div className="min-h-screen flex bg-background text-foreground selection:bg-primary/30 selection:text-foreground">
       {/* Glass Sidebar */}
-      <aside className={`${sidebarOpen ? 'w-60' : 'w-16'} glass border-r border-white/10 flex flex-col transition-all duration-300 relative group z-30`}>
+      <aside
+        className={`${sidebarOpen ? 'w-60' : 'w-16'} glass border-r border-white/10 flex flex-col transition-all duration-300 relative group z-30`}
+      >
         {/* Logo Header */}
         <div className="h-16 flex items-center gap-3 px-4 border-b border-white/10">
           <div className="w-8 h-8 rounded-xl gradient-primary flex items-center justify-center flex-shrink-0 shadow-lg glow-sm">
@@ -79,7 +92,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           onClick={() => setSidebarOpen(!sidebarOpen)}
           className="absolute -right-3 top-20 w-6 h-6 rounded-full bg-card border border-white/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-secondary text-muted-foreground hover:text-foreground z-40 shadow-md"
         >
-          {sidebarOpen ? <ChevronLeft className="w-3.5 h-3.5" /> : <ChevronRight className="w-3.5 h-3.5" />}
+          {sidebarOpen ? (
+            <ChevronLeft className="w-3.5 h-3.5" />
+          ) : (
+            <ChevronRight className="w-3.5 h-3.5" />
+          )}
         </button>
 
         {/* Navigation Items */}
@@ -96,7 +113,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     : 'text-muted-foreground hover:text-foreground hover:bg-white/[0.05]'
                 }`}
               >
-                <item.icon className={`w-4 h-4 flex-shrink-0 ${isActive ? 'text-white' : 'text-slate-400'}`} />
+                <item.icon
+                  className={`w-4 h-4 flex-shrink-0 ${isActive ? 'text-white' : 'text-slate-400'}`}
+                />
                 {sidebarOpen && <span>{item.label}</span>}
               </Link>
             );
@@ -114,9 +133,15 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
         {/* Real-time Socket Connection Banner */}
         <div className="p-3 border-t border-white/10 bg-black/20">
-          <div className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-[11px] font-medium ${isConnected ? 'text-emerald-400 bg-emerald-500/10' : 'text-slate-400 bg-slate-500/10'}`}>
-            <span className={`w-2 h-2 rounded-full ${isConnected ? 'bg-emerald-400 animate-pulse' : 'bg-rose-500'}`} />
-            {sidebarOpen && <span>{isConnected ? 'Real-Time Sync Ready' : 'Connecting to Server...'}</span>}
+          <div
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-[11px] font-medium ${isConnected ? 'text-emerald-400 bg-emerald-500/10' : 'text-slate-400 bg-slate-500/10'}`}
+          >
+            <span
+              className={`w-2 h-2 rounded-full ${isConnected ? 'bg-emerald-400 animate-pulse' : 'bg-rose-500'}`}
+            />
+            {sidebarOpen && (
+              <span>{isConnected ? 'Real-Time Sync Ready' : 'Connecting to Server...'}</span>
+            )}
           </div>
         </div>
       </aside>
@@ -126,7 +151,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         {/* Glass Top Header */}
         <header className="h-16 glass border-b border-white/10 flex items-center justify-between px-6 z-20">
           <div className="flex items-center gap-4">
-            <button onClick={() => setSidebarOpen(!sidebarOpen)} className="lg:hidden text-muted-foreground hover:text-foreground">
+            <button
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+              className="lg:hidden text-muted-foreground hover:text-foreground"
+            >
               <Menu className="w-5 h-5" />
             </button>
             <div className="relative hidden sm:block">
@@ -145,7 +173,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               className="w-9 h-9 rounded-xl glass flex items-center justify-center hover:border-primary/40 transition-colors text-muted-foreground hover:text-foreground"
               title="Toggle theme"
             >
-              {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-indigo-400" />}
+              {theme === 'dark' ? (
+                <Sun className="w-4 h-4 text-amber-400" />
+              ) : (
+                <Moon className="w-4 h-4 text-indigo-400" />
+              )}
             </button>
 
             <button className="w-9 h-9 rounded-xl glass flex items-center justify-center hover:border-primary/40 transition-colors text-muted-foreground hover:text-foreground relative">
@@ -166,7 +198,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 >
                   {getInitials(user?.name || 'U')}
                 </div>
-                {user?.name && <span className="text-xs font-semibold hidden md:block text-foreground pr-1">{user.name}</span>}
+                {user?.name && (
+                  <span className="text-xs font-semibold hidden md:block text-foreground pr-1">
+                    {user.name}
+                  </span>
+                )}
               </button>
 
               {userMenuOpen && (
@@ -177,7 +213,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                       <p className="text-xs font-bold text-foreground">{user?.name}</p>
                       <p className="text-[11px] text-muted-foreground truncate">{user?.email}</p>
                     </div>
-                    <button onClick={logout} className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium text-rose-400 hover:bg-rose-500/10 transition-colors">
+                    <button
+                      onClick={logout}
+                      className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium text-rose-400 hover:bg-rose-500/10 transition-colors"
+                    >
                       <LogOut className="w-4 h-4" /> Sign Out
                     </button>
                   </div>

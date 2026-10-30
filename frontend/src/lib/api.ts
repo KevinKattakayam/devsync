@@ -3,7 +3,9 @@ import axios from 'axios';
 import { browserTraceId } from './tracing';
 
 let tokenGetter: (() => Promise<string | null>) | null = null;
-export const setTokenGetter = (getter: (() => Promise<string | null>) | null) => { tokenGetter = getter; };
+export const setTokenGetter = (getter: (() => Promise<string | null>) | null) => {
+  tokenGetter = getter;
+};
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 
@@ -21,7 +23,10 @@ api.interceptors.request.use(async (config) => {
   return config;
 });
 
-api.interceptors.response.use((response) => response, (error) => Promise.reject(error));
+api.interceptors.response.use(
+  (response) => response,
+  (error) => Promise.reject(error),
+);
 
 export default api;
 
@@ -35,7 +40,8 @@ export const workspaceApi = {
   getActivities: (id: string) => api.get(`/workspaces/${id}/activities`),
   create: (data: { name: string; description?: string; icon?: string }) =>
     api.post('/workspaces', data),
-  update: (id: string, data: Partial<Pick<Workspace, 'name' | 'description' | 'icon'>>) => api.patch(`/workspaces/${id}`, data),
+  update: (id: string, data: Partial<Pick<Workspace, 'name' | 'description' | 'icon'>>) =>
+    api.patch(`/workspaces/${id}`, data),
   delete: (id: string) => api.delete(`/workspaces/${id}`),
   invite: (id: string, data: { email: string; role: string }) =>
     api.post(`/workspaces/${id}/invite`, data),
@@ -51,7 +57,10 @@ export const documentApi = {
   get: (id: string) => api.get(`/documents/${id}`),
   create: (workspaceId: string, data?: { title?: string; parentId?: string }) =>
     api.post(`/workspaces/${workspaceId}/documents`, data || {}),
-  update: (id: string, data: Partial<Pick<Document, 'title' | 'content' | 'icon' | 'isPublished' | 'isArchived'>>) => api.patch(`/documents/${id}`, data),
+  update: (
+    id: string,
+    data: Partial<Pick<Document, 'title' | 'content' | 'icon' | 'isPublished' | 'isArchived'>>,
+  ) => api.patch(`/documents/${id}`, data),
   delete: (id: string) => api.delete(`/documents/${id}`),
 };
 
@@ -78,35 +87,65 @@ export const taskApi = {
 
 export const githubRepositoryApi = {
   list: (workspaceId: string) => api.get(`/workspaces/${workspaceId}/github-repositories`),
-  connect: (workspaceId: string, data: { repositoryId: string; owner: string; name: string; webhookSecret: string; installationId?: string; prOpenedColumnId?: string | null; prMergedColumnId?: string | null }) => api.post(`/workspaces/${workspaceId}/github-repositories`, data),
-  update: (workspaceId: string, repositoryId: string, data: Record<string, unknown>) => api.patch(`/workspaces/${workspaceId}/github-repositories/${repositoryId}`, data),
-  disconnect: (workspaceId: string, repositoryId: string) => api.delete(`/workspaces/${workspaceId}/github-repositories/${repositoryId}`),
+  connect: (
+    workspaceId: string,
+    data: {
+      repositoryId: string;
+      owner: string;
+      name: string;
+      webhookSecret: string;
+      installationId?: string;
+      prOpenedColumnId?: string | null;
+      prMergedColumnId?: string | null;
+    },
+  ) => api.post(`/workspaces/${workspaceId}/github-repositories`, data),
+  update: (workspaceId: string, repositoryId: string, data: Record<string, unknown>) =>
+    api.patch(`/workspaces/${workspaceId}/github-repositories/${repositoryId}`, data),
+  disconnect: (workspaceId: string, repositoryId: string) =>
+    api.delete(`/workspaces/${workspaceId}/github-repositories/${repositoryId}`),
 };
 
 // Snippet API
 export const snippetApi = {
   list: (workspaceId: string) => api.get(`/workspaces/${workspaceId}/snippets`),
-  create: (workspaceId: string, data: Pick<Snippet, 'title' | 'code' | 'language'> & Partial<Pick<Snippet, 'description'>>) =>
-    api.post(`/workspaces/${workspaceId}/snippets`, data),
-  update: (id: string, data: Partial<Pick<Snippet, 'title' | 'code' | 'language' | 'description'>>) => api.patch(`/snippets/${id}`, data),
+  create: (
+    workspaceId: string,
+    data: Pick<Snippet, 'title' | 'code' | 'language'> & Partial<Pick<Snippet, 'description'>>,
+  ) => api.post(`/workspaces/${workspaceId}/snippets`, data),
+  update: (
+    id: string,
+    data: Partial<Pick<Snippet, 'title' | 'code' | 'language' | 'description'>>,
+  ) => api.patch(`/snippets/${id}`, data),
   delete: (id: string) => api.delete(`/snippets/${id}`),
-  execute: (data: { language: string; code: string; stdin?: string; env?: Record<string, string> }) =>
-    api.post('/snippets/execute', data),
+  execute: (data: {
+    language: string;
+    code: string;
+    stdin?: string;
+    env?: Record<string, string>;
+  }) => api.post('/snippets/execute', data),
 };
 
 // AI API
 export const aiApi = {
-  complete: async (data: { prompt: string; context?: string; action?: string; workspaceId: string }) =>
+  complete: async (data: {
+    prompt: string;
+    context?: string;
+    action?: string;
+    workspaceId: string;
+  }) =>
     (async () => {
       const response = await fetch(`${API_URL}/ai/complete`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${(await tokenGetter?.()) || ''}`,
-      },
-      body: JSON.stringify(data),
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${(await tokenGetter?.()) || ''}`,
+        },
+        body: JSON.stringify(data),
       });
-      if (!response.ok) throw Object.assign(new Error(`AI request failed (${response.status})`), { status: response.status });
+      if (!response.ok)
+        throw Object.assign(new Error(`AI request failed (${response.status})`), {
+          status: response.status,
+        });
       return response;
     })(),
 };

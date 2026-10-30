@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { Workspace } from "@/types";
-import { FileText, Kanban, Code2, Users, CheckCircle2, TrendingUp } from "lucide-react";
-import { getInitials, generateColor } from "@/lib/utils";
+import { Workspace } from '@/types';
+import { FileText, Kanban, Code2, Users, TrendingUp } from 'lucide-react';
+import { getInitials, generateColor } from '@/lib/utils';
 
 interface WorkspaceStatsProps {
   workspace: Workspace;
@@ -77,10 +77,10 @@ export function WorkspaceStats({ workspace }: WorkspaceStatsProps) {
                 <div
                   key={m.id}
                   className="w-6 h-6 rounded-full border border-background flex items-center justify-center text-[9px] font-bold text-white shadow-sm"
-                  style={{ backgroundColor: generateColor(m.user.email || "") }}
+                  style={{ backgroundColor: generateColor(m.user.email || '') }}
                   title={m.user.name || m.user.email}
                 >
-                  {getInitials(m.user.name || "?")}
+                  {getInitials(m.user.name || '?')}
                 </div>
               ))}
             </div>

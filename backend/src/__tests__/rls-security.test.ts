@@ -32,28 +32,55 @@ describe('PostgreSQL RLS tenant kernel isolation', () => {
       CREATE POLICY task_tenant ON "Task" FOR ALL USING (EXISTS (SELECT 1 FROM "Column" c JOIN "Board" b ON b.id=c."boardId" WHERE c.id="Task"."columnId" AND b."workspaceId"=current_setting('app.current_tenant_id', true))) WITH CHECK (EXISTS (SELECT 1 FROM "Column" c JOIN "Board" b ON b.id=c."boardId" WHERE c.id="Task"."columnId" AND b."workspaceId"=current_setting('app.current_tenant_id', true)));
       GRANT SELECT, INSERT, UPDATE ON ALL TABLES IN SCHEMA public TO app_user;
     `);
-    app = new Client({ host: container.getHost(), port: container.getPort(), database: container.getDatabase(), user: 'app_user', password: 'app_password' });
+    app = new Client({
+      host: container.getHost(),
+      port: container.getPort(),
+      database: container.getDatabase(),
+      user: 'app_user',
+      password: 'app_password',
+    });
     await app.connect();
   });
 
-  afterAll(async () => { await app.end(); await admin.end(); await container.stop(); });
+  afterAll(async () => {
+    await app.end();
+    await admin.end();
+    await container.stop();
+  });
 
   async function asTenant<T>(tenantId: string, operation: () => Promise<T>): Promise<T> {
     await app.query('BEGIN');
-    try { await app.query(`SELECT set_config('app.current_tenant_id', $1, true)`, [tenantId]); const result = await operation(); await app.query('COMMIT'); return result; }
-    catch (error) { await app.query('ROLLBACK'); throw error; }
+    try {
+      await app.query(`SELECT set_config('app.current_tenant_id', $1, true)`, [tenantId]);
+      const result = await operation();
+      await app.query('COMMIT');
+      return result;
+    } catch (error) {
+      await app.query('ROLLBACK');
+      throw error;
+    }
   }
 
   it('permits only same-tenant Document, Snippet, and Task reads', async () => {
     await asTenant('tenant-a', async () => {
-      await expect(app.query('SELECT id FROM "Document" ORDER BY id')).resolves.toMatchObject({ rows: [{ id: 'doc-a' }] });
-      await expect(app.query('SELECT id FROM "Snippet" ORDER BY id')).resolves.toMatchObject({ rows: [{ id: 'snippet-a' }] });
-      await expect(app.query('SELECT id FROM "Task" ORDER BY id')).resolves.toMatchObject({ rows: [{ id: 'task-a' }] });
+      await expect(app.query('SELECT id FROM "Document" ORDER BY id')).resolves.toMatchObject({
+        rows: [{ id: 'doc-a' }],
+      });
+      await expect(app.query('SELECT id FROM "Snippet" ORDER BY id')).resolves.toMatchObject({
+        rows: [{ id: 'snippet-a' }],
+      });
+      await expect(app.query('SELECT id FROM "Task" ORDER BY id')).resolves.toMatchObject({
+        rows: [{ id: 'task-a' }],
+      });
     });
   });
 
   it('blocks cross-tenant writes and resets LOCAL tenant state at commit', async () => {
-    await expect(asTenant('tenant-a', () => app.query(`INSERT INTO "Document" VALUES ('forbidden','tenant-b','no')`))).rejects.toMatchObject({ code: '42501' });
+    await expect(
+      asTenant('tenant-a', () =>
+        app.query(`INSERT INTO "Document" VALUES ('forbidden','tenant-b','no')`),
+      ),
+    ).rejects.toMatchObject({ code: '42501' });
     await expect(app.query('SELECT id FROM "Document"')).resolves.toMatchObject({ rows: [] });
   });
 });

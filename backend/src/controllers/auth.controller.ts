@@ -7,10 +7,12 @@ import { syncClerkUser } from '../middleware/auth.middleware';
 import { getAuth } from '@clerk/express';
 import { verifyToken } from '@clerk/backend';
 
-export const updateMeSchema = z.object({
-  name: z.string().min(2).max(50).optional(),
-  avatar: z.string().url().max(2048).optional().nullable(),
-}).strict();
+export const updateMeSchema = z
+  .object({
+    name: z.string().min(2).max(50).optional(),
+    avatar: z.string().url().max(2048).optional().nullable(),
+  })
+  .strict();
 
 export async function syncMe(req: Request, res: Response, next: NextFunction) {
   try {
@@ -31,23 +33,43 @@ export async function syncMe(req: Request, res: Response, next: NextFunction) {
     if (!clerkId) throw new UnauthorizedError('Authentication required');
     const user = await syncClerkUser(clerkId);
     res.json(user);
-  } catch (error) { next(error); }
+  } catch (error) {
+    next(error);
+  }
 }
 
 export async function getMe(req: Request, res: Response, next: NextFunction) {
   try {
     const user = await prisma.user.findUnique({
       where: { id: req.user!.userId },
-      select: { id: true, clerkId: true, name: true, email: true, avatar: true, createdAt: true, memberships: { include: { workspace: { select: { id: true, name: true, slug: true, icon: true } } } } },
+      select: {
+        id: true,
+        clerkId: true,
+        name: true,
+        email: true,
+        avatar: true,
+        createdAt: true,
+        memberships: {
+          include: { workspace: { select: { id: true, name: true, slug: true, icon: true } } },
+        },
+      },
     });
     if (!user) throw new UnauthorizedError('User not found');
     res.json(user);
-  } catch (error) { next(error); }
+  } catch (error) {
+    next(error);
+  }
 }
 
 export async function updateMe(req: Request, res: Response, next: NextFunction) {
   try {
-    const user = await prisma.user.update({ where: { id: req.user!.userId }, data: updateMeSchema.parse(req.body), select: { id: true, name: true, email: true, avatar: true } });
+    const user = await prisma.user.update({
+      where: { id: req.user!.userId },
+      data: updateMeSchema.parse(req.body),
+      select: { id: true, name: true, email: true, avatar: true },
+    });
     res.json(user);
-  } catch (error) { next(error); }
+  } catch (error) {
+    next(error);
+  }
 }

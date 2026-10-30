@@ -9,18 +9,25 @@ import { z } from 'zod';
 
 const router = Router();
 
-const githubEnvelopeSchema = z.object({
-  repository: z.object({ id: z.union([z.string(), z.number()]) }).passthrough(),
-}).passthrough();
+const githubEnvelopeSchema = z
+  .object({
+    repository: z.object({ id: z.union([z.string(), z.number()]) }).passthrough(),
+  })
+  .passthrough();
 
 function matchesSignature(raw: Buffer, signature: string | undefined, secret: string) {
   if (!signature?.startsWith('sha256=')) return false;
   const expected = `sha256=${createHmac('sha256', secret).update(raw).digest('hex')}`;
-  return expected.length === signature.length && timingSafeEqual(Buffer.from(expected), Buffer.from(signature));
+  return (
+    expected.length === signature.length &&
+    timingSafeEqual(Buffer.from(expected), Buffer.from(signature))
+  );
 }
 
 function taskKeys(text: string) {
-  return [...text.matchAll(/(?:fixe?[sd]?|close[sd]?|resolve[sd]?)\s+([A-Z][A-Z0-9]+-\d+)/gi)].map(match => match[1].toUpperCase());
+  return [...text.matchAll(/(?:fixe?[sd]?|close[sd]?|resolve[sd]?)\s+([A-Z][A-Z0-9]+-\d+)/gi)].map(
+    (match) => match[1].toUpperCase(),
+  );
 }
 
 router.post('/', async (req, res, next) => {
@@ -30,21 +37,33 @@ router.post('/', async (req, res, next) => {
     const repository = await prisma.gitHubRepository.findUnique({ where: { repositoryId } });
     if (!repository) return res.status(202).json({ ignored: 'Repository is not connected' });
     const raw = (req as any).rawBody as Buffer | undefined;
-    if (!raw || !matchesSignature(raw, req.header('x-hub-signature-256'), decryptSecret(repository.webhookSecret))) return res.status(401).json({ error: 'Invalid webhook signature' });
+    if (
+      !raw ||
+      !matchesSignature(
+        raw,
+        req.header('x-hub-signature-256'),
+        decryptSecret(repository.webhookSecret),
+      )
+    )
+      return res.status(401).json({ error: 'Invalid webhook signature' });
 
     const deliveryId = req.header('x-github-delivery');
     const event = req.header('x-github-event') || 'unknown';
     if (!deliveryId) return res.status(400).json({ error: 'Missing delivery ID' });
-    const idempotent = await withIdempotencyKey(`github:${repositoryId}:${deliveryId}`, async () => {
-      try {
-        await prisma.gitHubWebhookDelivery.create({ data: { deliveryId, event } });
-        return true;
-      } catch (error: unknown) {
-        if ((error as { code?: string }).code === 'P2002') return false;
-        throw error;
-      }
-    });
-    if (idempotent.duplicate || !idempotent.value) return res.status(202).json({ ignored: 'Duplicate delivery' });
+    const idempotent = await withIdempotencyKey(
+      `github:${repositoryId}:${deliveryId}`,
+      async () => {
+        try {
+          await prisma.gitHubWebhookDelivery.create({ data: { deliveryId, event } });
+          return true;
+        } catch (error: unknown) {
+          if ((error as { code?: string }).code === 'P2002') return false;
+          throw error;
+        }
+      },
+    );
+    if (idempotent.duplicate || !idempotent.value)
+      return res.status(202).json({ ignored: 'Duplicate delivery' });
 
     // ── Handle push events ─────────────────────────────────
     if (event === 'push') {
@@ -83,7 +102,9 @@ router.post('/', async (req, res, next) => {
           type: 'github_push',
           message: `${pusher} pushed ${commitCount} commit(s) to ${branch}`,
         });
-      } catch { /* Socket emit is non-critical */ }
+      } catch {
+        /* Socket emit is non-critical */
+      }
 
       return res.status(200).json({ processed: 'push event recorded' });
     }
@@ -124,18 +145,25 @@ router.post('/', async (req, res, next) => {
           type: `github_issue_${issueAction}`,
           message: `${issueAuthor} ${issueAction} issue "${issueTitle}"`,
         });
-      } catch { /* Socket emit is non-critical */ }
+      } catch {
+        /* Socket emit is non-critical */
+      }
 
       return res.status(200).json({ processed: `issue ${issueAction} event recorded` });
     }
 
     // ── Handle PR events (existing + enhanced) ─────────────
-    if (event !== 'pull_request' || !['opened', 'closed'].includes(payload.action) || (payload.action === 'closed' && !payload.pull_request?.merged)) {
+    if (
+      event !== 'pull_request' ||
+      !['opened', 'closed'].includes(payload.action) ||
+      (payload.action === 'closed' && !payload.pull_request?.merged)
+    ) {
       return res.status(202).json({ ignored: 'Event does not transition tasks' });
     }
 
     const prAction = payload.action === 'opened' ? 'opened' : 'merged';
-    const targetColumnId = payload.action === 'opened' ? repository.prOpenedColumnId : repository.prMergedColumnId;
+    const targetColumnId =
+      payload.action === 'opened' ? repository.prOpenedColumnId : repository.prMergedColumnId;
 
     // Dispatch PR summary agent via BullMQ
     const redisUp = await isRedisAvailable();
@@ -151,7 +179,9 @@ router.post('/', async (req, res, next) => {
           repositoryOwner: repository.owner,
           repositoryName: repository.name,
           workspaceId: repository.workspaceId,
-          taskKeys: taskKeys(`${payload.pull_request?.title || ''}\n${payload.pull_request?.body || ''}`),
+          taskKeys: taskKeys(
+            `${payload.pull_request?.title || ''}\n${payload.pull_request?.body || ''}`,
+          ),
           author: payload.pull_request?.user?.login || 'unknown',
         },
         { jobId: `pr-${prAction}-${deliveryId}` },
@@ -159,20 +189,37 @@ router.post('/', async (req, res, next) => {
     }
 
     if (!targetColumnId) return res.status(202).json({ ignored: 'No workflow column configured' });
-    const target = await prisma.column.findUnique({ where: { id: targetColumnId }, include: { board: true } });
-    if (!target || target.board.workspaceId !== repository.workspaceId) return res.status(409).json({ error: 'Configured workflow column is invalid' });
-
-    const keys = taskKeys(`${payload.pull_request?.title || ''}\n${payload.pull_request?.body || ''}`);
-    if (!keys.length) return res.status(202).json({ ignored: 'No task reference found' });
-    const { tasks, moved } = await prisma.withTenantTransaction(repository.workspaceId, async tx => {
-      const tenant = { column: { board: { workspaceId: repository.workspaceId } } };
-      const tasks = await tx.task.findMany({ where: { ...tenant, taskKey: { in: keys } }, select: { id: true, taskKey: true, columnId: true } });
-      const moved = [];
-      for (const [index, task] of tasks.entries()) {
-        moved.push(await tx.task.update({ where: { id: task.id, ...tenant }, data: { columnId: targetColumnId, position: index } }));
-      }
-      return { tasks, moved };
+    const target = await prisma.column.findUnique({
+      where: { id: targetColumnId },
+      include: { board: true },
     });
+    if (!target || target.board.workspaceId !== repository.workspaceId)
+      return res.status(409).json({ error: 'Configured workflow column is invalid' });
+
+    const keys = taskKeys(
+      `${payload.pull_request?.title || ''}\n${payload.pull_request?.body || ''}`,
+    );
+    if (!keys.length) return res.status(202).json({ ignored: 'No task reference found' });
+    const { tasks, moved } = await prisma.withTenantTransaction(
+      repository.workspaceId,
+      async (tx) => {
+        const tenant = { column: { board: { workspaceId: repository.workspaceId } } };
+        const tasks = await tx.task.findMany({
+          where: { ...tenant, taskKey: { in: keys } },
+          select: { id: true, taskKey: true, columnId: true },
+        });
+        const moved = [];
+        for (const [index, task] of tasks.entries()) {
+          moved.push(
+            await tx.task.update({
+              where: { id: task.id, ...tenant },
+              data: { columnId: targetColumnId, position: index },
+            }),
+          );
+        }
+        return { tasks, moved };
+      },
+    );
 
     // Emit real-time Kanban events for each moved task
     try {
@@ -190,10 +237,14 @@ router.post('/', async (req, res, next) => {
         type: `pr_${prAction}`,
         message: `PR #${payload.pull_request?.number} "${payload.pull_request?.title}" ${prAction} — moved ${moved.length} task(s)`,
       });
-    } catch { /* Socket emit is non-critical */ }
+    } catch {
+      /* Socket emit is non-critical */
+    }
 
-    res.status(200).json({ moved: moved.length, taskKeys: tasks.map(task => task.taskKey) });
-  } catch (error) { next(error); }
+    res.status(200).json({ moved: moved.length, taskKeys: tasks.map((task) => task.taskKey) });
+  } catch (error) {
+    next(error);
+  }
 });
 
 export default router;

@@ -1,4 +1,4 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next';
 
 const backendUrl = process.env.BACKEND_URL || 'http://localhost:5000';
 

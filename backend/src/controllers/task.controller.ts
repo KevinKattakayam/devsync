@@ -31,11 +31,15 @@ async function checkTaskEditorRole(userId: string, columnId?: string, taskId?: s
 
 async function requireSameWorkspace(taskId: string, targetColumnId: string) {
   const [task, target] = await Promise.all([
-    prisma.task.findUnique({ where: { id: taskId }, include: { column: { include: { board: true } } } }),
+    prisma.task.findUnique({
+      where: { id: taskId },
+      include: { column: { include: { board: true } } },
+    }),
     prisma.column.findUnique({ where: { id: targetColumnId }, include: { board: true } }),
   ]);
   if (!task) throw new NotFoundError('Task not found');
-  if (!target || task.column.board.workspaceId !== target.board.workspaceId) throw new ForbiddenError('Tasks cannot be moved across workspaces');
+  if (!target || task.column.board.workspaceId !== target.board.workspaceId)
+    throw new ForbiddenError('Tasks cannot be moved across workspaces');
 }
 
 export const createBoardSchema = z.object({
@@ -52,7 +56,10 @@ export const updateColumnSchema = z.object({
 
 export const createTaskSchema = z.object({
   title: z.string().min(1).max(200),
-  taskKey: z.string().regex(/^[A-Z][A-Z0-9]+-\d+$/).optional(),
+  taskKey: z
+    .string()
+    .regex(/^[A-Z][A-Z0-9]+-\d+$/)
+    .optional(),
   description: z.string().max(2000).optional(),
   priority: z.enum(['LOW', 'MEDIUM', 'HIGH', 'URGENT']).optional(),
   assigneeId: z.string().optional(),
@@ -61,7 +68,11 @@ export const createTaskSchema = z.object({
 
 export const updateTaskSchema = z.object({
   title: z.string().min(1).max(200).optional(),
-  taskKey: z.string().regex(/^[A-Z][A-Z0-9]+-\d+$/).nullable().optional(),
+  taskKey: z
+    .string()
+    .regex(/^[A-Z][A-Z0-9]+-\d+$/)
+    .nullable()
+    .optional(),
   description: z.string().max(2000).optional(),
   priority: z.enum(['LOW', 'MEDIUM', 'HIGH', 'URGENT']).optional(),
   assigneeId: z.string().nullable().optional(),
@@ -127,7 +138,10 @@ export async function createBoard(req: Request, res: Response, next: NextFunctio
 export async function createColumn(req: Request, res: Response, next: NextFunction) {
   try {
     const boardId = String(req.params.boardId);
-    const board = await prisma.board.findUnique({ where: { id: boardId }, select: { workspaceId: true } });
+    const board = await prisma.board.findUnique({
+      where: { id: boardId },
+      select: { workspaceId: true },
+    });
     if (!board) throw new NotFoundError('Board not found');
     await authorizeWorkspace(req.user!.userId, board.workspaceId, WRITE_ROLES);
     const maxPos = await prisma.column.findFirst({
@@ -240,7 +254,8 @@ export async function updateTask(req: Request, res: Response, next: NextFunction
     if (req.user?.userId) {
       await checkTaskEditorRole(req.user.userId, undefined, taskId);
     }
-    const { title, taskKey, description, priority, assigneeId, dueDate, position, columnId } = req.body;
+    const { title, taskKey, description, priority, assigneeId, dueDate, position, columnId } =
+      req.body;
     if (columnId) await requireSameWorkspace(taskId, columnId);
 
     const task = await prisma.task.update({

@@ -5,5 +5,14 @@ import tseslint from 'typescript-eslint';
 export default tseslint.config({
   files: ['src/**/*.ts', 'prisma/**/*.ts'],
   languageOptions: { parser: tseslint.parser },
-  rules: { 'constructor-super': 'error', 'no-unreachable': 'error', 'no-constant-condition': 'error', 'no-debugger': 'error', 'no-dupe-args': 'error', 'no-dupe-else-if': 'error', 'no-unsafe-finally': 'error', 'valid-typeof': 'error' },
+  rules: {
+    'constructor-super': 'error',
+    'no-unreachable': 'error',
+    'no-constant-condition': 'error',
+    'no-debugger': 'error',
+    'no-dupe-args': 'error',
+    'no-dupe-else-if': 'error',
+    'no-unsafe-finally': 'error',
+    'valid-typeof': 'error',
+  },
 });

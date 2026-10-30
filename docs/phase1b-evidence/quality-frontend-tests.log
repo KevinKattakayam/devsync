@@ -1,0 +1,53 @@
+
+> frontend@0.1.0 test
+> node --test tests/*.test.mjs && vitest run
+
+TAP version 13
+# Subtest: I01 Next meets the current critical advisory remediation floor
+ok 1 - I01 Next meets the current critical advisory remediation floor
+  ---
+  duration_ms: 1.072206
+  type: 'test'
+  ...
+# Subtest: I01 unused NextAuth is absent from the installed frontend
+ok 2 - I01 unused NextAuth is absent from the installed frontend
+  ---
+  duration_ms: 0.823658
+  type: 'test'
+  ...
+# Subtest: code blocks and inline code escape HTML
+ok 3 - code blocks and inline code escape HTML
+  ---
+  duration_ms: 1.085243
+  type: 'test'
+  ...
+# Subtest: E02 treats ordinary HTML, handlers and malformed tags as inert text
+ok 4 - E02 treats ordinary HTML, handlers and malformed tags as inert text
+  ---
+  duration_ms: 0.359045
+  type: 'test'
+  ...
+# Subtest: E02 escapes HTML inside headings, lists and table cells
+ok 5 - E02 escapes HTML inside headings, lists and table cells
+  ---
+  duration_ms: 0.222878
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 438.153446
+
+ RUN  v5.0.5 /home/kevin/devsync/frontend
+
+
+ Test Files  2 passed (2)
+      Tests  4 passed (4)
+   Start at  02:39:11
+   Duration  1.66s (environment 72%, tests 13%, import 12%, transform 3%)
+

@@ -4,7 +4,8 @@ const PREFIX = 'enc:v1:';
 
 function key() {
   const value = process.env.ENCRYPTION_KEY;
-  if (!value || !/^[0-9a-f]{64}$/i.test(value)) throw new Error('ENCRYPTION_KEY must be a 32-byte hexadecimal value');
+  if (!value || !/^[0-9a-f]{64}$/i.test(value))
+    throw new Error('ENCRYPTION_KEY must be a 32-byte hexadecimal value');
   return Buffer.from(value, 'hex');
 }
 
@@ -21,5 +22,8 @@ export function decryptSecret(value: string) {
   const [, , ivValue, tagValue, payload] = value.split(':');
   const decipher = createDecipheriv('aes-256-gcm', key(), Buffer.from(ivValue, 'base64url'));
   decipher.setAuthTag(Buffer.from(tagValue, 'base64url'));
-  return Buffer.concat([decipher.update(Buffer.from(payload, 'base64url')), decipher.final()]).toString('utf8');
+  return Buffer.concat([
+    decipher.update(Buffer.from(payload, 'base64url')),
+    decipher.final(),
+  ]).toString('utf8');
 }

@@ -24,7 +24,10 @@ const leavePayload = z.object({
 const cursorPayload = z.object({
   workspaceId: z.string().min(1).max(191),
   documentId: z.string().min(1).max(191),
-  cursor: z.object({ anchor: z.number().int().min(0).max(10000000).optional(), head: z.number().int().min(0).max(10000000).optional() }),
+  cursor: z.object({
+    anchor: z.number().int().min(0).max(10000000).optional(),
+    head: z.number().int().min(0).max(10000000).optional(),
+  }),
 });
 
 // ── Redis key builders ───────────────────────────────────────
@@ -40,7 +43,9 @@ interface PresenceUser {
   avatar?: string;
 }
 
-async function getRedisPresence(workspaceId: string): Promise<{ id: string; socketId: string; name: string; avatar?: string }[]> {
+async function getRedisPresence(
+  workspaceId: string,
+): Promise<{ id: string; socketId: string; name: string; avatar?: string }[]> {
   try {
     const data = await redis.hgetall(PRESENCE_KEY(workspaceId));
     return Object.entries(data).map(([userId, json]) => {
@@ -56,7 +61,9 @@ async function getRedisPresence(workspaceId: string): Promise<{ id: string; sock
 
 const inMemoryPresence = new Map<string, Map<string, PresenceUser>>();
 
-function getMemoryPresence(workspaceId: string): { id: string; socketId: string; name: string; avatar?: string }[] {
+function getMemoryPresence(
+  workspaceId: string,
+): { id: string; socketId: string; name: string; avatar?: string }[] {
   const users = inMemoryPresence.get(workspaceId);
   if (!users) return [];
   return Array.from(users.entries()).map(([id, data]) => ({ id, ...data }));
@@ -78,8 +85,12 @@ export function setupPresenceHandlers(io: Server, socket: AuthenticatedSocket) {
     const userId = socket.userId!;
     const roomKey = `workspace:${workspaceId}`;
 
-    try { await authorizeWorkspace(userId, workspaceId); }
-    catch { socket.emit('error', { code: 'FORBIDDEN', message: 'Access denied' }); return; }
+    try {
+      await authorizeWorkspace(userId, workspaceId);
+    } catch {
+      socket.emit('error', { code: 'FORBIDDEN', message: 'Access denied' });
+      return;
+    }
     socket.join(roomKey);
 
     // Track socket → workspace mapping for disconnect cleanup
@@ -114,8 +125,13 @@ export function setupPresenceHandlers(io: Server, socket: AuthenticatedSocket) {
     const userId = socket.userId!;
     const roomKey = `workspace:${workspaceId}`;
 
-    try { await authorizeWorkspace(userId, workspaceId); }
-    catch { socket.leave(roomKey); socket.emit('error', { code: 'FORBIDDEN', message: 'Access denied' }); return; }
+    try {
+      await authorizeWorkspace(userId, workspaceId);
+    } catch {
+      socket.leave(roomKey);
+      socket.emit('error', { code: 'FORBIDDEN', message: 'Access denied' });
+      return;
+    }
     socket.leave(roomKey);
     socketWorkspaces.get(socket.id)?.delete(workspaceId);
 
@@ -138,9 +154,18 @@ export function setupPresenceHandlers(io: Server, socket: AuthenticatedSocket) {
     const { workspaceId, documentId, cursor } = parsed.data;
     try {
       await authorizeWorkspace(socket.userId!, workspaceId);
-      const document = await prisma.withTenantTransaction(workspaceId, tx => tx.document.findUnique({ where: { id: documentId }, select: { workspaceId: true, isArchived: true } }));
-      if (!document || document.workspaceId !== workspaceId || document.isArchived) throw new Error('Access denied');
-    } catch { socket.emit('error', { code: 'FORBIDDEN', message: 'Access denied' }); return; }
+      const document = await prisma.withTenantTransaction(workspaceId, (tx) =>
+        tx.document.findUnique({
+          where: { id: documentId },
+          select: { workspaceId: true, isArchived: true },
+        }),
+      );
+      if (!document || document.workspaceId !== workspaceId || document.isArchived)
+        throw new Error('Access denied');
+    } catch {
+      socket.emit('error', { code: 'FORBIDDEN', message: 'Access denied' });
+      return;
+    }
     socket.to(`document:${documentId}`).emit('cursor:updated', {
       userId: socket.userId,
       cursor,

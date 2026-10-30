@@ -10,7 +10,11 @@ import * as Y from 'yjs';
 
 export const documentExtensions = [StarterKit, TaskList, TaskItem, Highlight, Image, TableKit];
 export function legacyDocument(content: unknown): Y.Doc {
-  return TiptapTransformer.toYdoc(content ?? { type: 'doc', content: [{ type: 'paragraph' }] }, 'default', documentExtensions);
+  return TiptapTransformer.toYdoc(
+    content ?? { type: 'doc', content: [{ type: 'paragraph' }] },
+    'default',
+    documentExtensions,
+  );
 }
 export function projectDocument(document: Y.Doc): Prisma.InputJsonValue {
   return TiptapTransformer.fromYdoc(document, 'default') as Prisma.InputJsonValue;

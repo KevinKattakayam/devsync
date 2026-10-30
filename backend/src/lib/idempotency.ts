@@ -7,7 +7,11 @@ export type IdempotencyResult<T> = { duplicate: true } | { duplicate: false; val
 
 /** Atomically reserves a webhook delivery.  Redis outages fail closed so an
  * event is never processed twice merely because the deduplication store died. */
-export async function withIdempotencyKey<T>(key: string, handler: () => Promise<T>, ttlSeconds = 86_400): Promise<IdempotencyResult<T>> {
+export async function withIdempotencyKey<T>(
+  key: string,
+  handler: () => Promise<T>,
+  ttlSeconds = 86_400,
+): Promise<IdempotencyResult<T>> {
   const redisKey = `${PREFIX}${createHash('sha256').update(key).digest('hex')}`;
   const reserved = await redis.set(redisKey, 'processing', 'EX', ttlSeconds, 'NX');
   if (reserved !== 'OK') return { duplicate: true };

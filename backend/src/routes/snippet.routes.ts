@@ -1,7 +1,12 @@
 import { Router } from 'express';
 import { authMiddleware } from '../middleware/auth.middleware';
 import { validate } from '../middleware/validate.middleware';
-import { updateSnippet, deleteSnippet, updateSnippetSchema, executeSnippet } from '../controllers/snippet.controller';
+import {
+  updateSnippet,
+  deleteSnippet,
+  updateSnippetSchema,
+  executeSnippet,
+} from '../controllers/snippet.controller';
 
 const router = Router();
 
@@ -12,4 +17,3 @@ router.patch('/:snippetId', validate(updateSnippetSchema), updateSnippet);
 router.delete('/:snippetId', deleteSnippet);
 
 export default router;
-

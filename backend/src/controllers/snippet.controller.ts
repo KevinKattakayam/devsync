@@ -8,10 +8,16 @@ import { ForbiddenError, NotFoundError } from '../utils/errors';
 const SNIPPET_CACHE_TTL = 300; // 5 minutes
 
 async function requireSnippetEditor(userId: string, snippetId: string) {
-  const snippet = await prisma.snippet.findUnique({ where: { id: snippetId }, select: { workspaceId: true } });
+  const snippet = await prisma.snippet.findUnique({
+    where: { id: snippetId },
+    select: { workspaceId: true },
+  });
   if (!snippet) throw new NotFoundError('Snippet not found');
-  const member = await prisma.workspaceMember.findUnique({ where: { userId_workspaceId: { userId, workspaceId: snippet.workspaceId } } });
-  if (!member || member.role === 'VIEWER') throw new ForbiddenError('Requires EDITOR or OWNER role');
+  const member = await prisma.workspaceMember.findUnique({
+    where: { userId_workspaceId: { userId, workspaceId: snippet.workspaceId } },
+  });
+  if (!member || member.role === 'VIEWER')
+    throw new ForbiddenError('Requires EDITOR or OWNER role');
   return snippet;
 }
 
@@ -41,29 +47,40 @@ export async function getSnippets(req: Request, res: Response, next: NextFunctio
       return;
     }
 
-    const snippets = await prisma.withTenantTransaction(workspaceId, (tx) => tx.snippet.findMany({
-      where: { workspaceId },
-      include: { author: { select: { id: true, name: true, avatar: true } } },
-      orderBy: { updatedAt: 'desc' },
-    }));
+    const snippets = await prisma.withTenantTransaction(workspaceId, (tx) =>
+      tx.snippet.findMany({
+        where: { workspaceId },
+        include: { author: { select: { id: true, name: true, avatar: true } } },
+        orderBy: { updatedAt: 'desc' },
+      }),
+    );
 
     // Populate cache
     await cache.set(cacheKey, snippets, SNIPPET_CACHE_TTL);
 
     res.json(snippets);
-  } catch (error) { next(error); }
+  } catch (error) {
+    next(error);
+  }
 }
 
 export async function createSnippet(req: Request, res: Response, next: NextFunction) {
   try {
     const workspaceId = String(req.params.workspaceId || req.params.id);
     const { title, code, language, description } = req.body;
-    const snippet = await prisma.withTenantTransaction(workspaceId, (tx) => tx.snippet.create({
-      data: { title, code, language, description, authorId: req.user!.userId, workspaceId },
-      include: { author: { select: { id: true, name: true, avatar: true } } },
-    }));
+    const snippet = await prisma.withTenantTransaction(workspaceId, (tx) =>
+      tx.snippet.create({
+        data: { title, code, language, description, authorId: req.user!.userId, workspaceId },
+        include: { author: { select: { id: true, name: true, avatar: true } } },
+      }),
+    );
     await prisma.activity.create({
-      data: { type: 'snippet_created', message: `added snippet "${title}"`, userId: req.user!.userId, workspaceId },
+      data: {
+        type: 'snippet_created',
+        message: `added snippet "${title}"`,
+        userId: req.user!.userId,
+        workspaceId,
+      },
     });
 
     // Invalidate workspace snippet list cache
@@ -71,7 +88,9 @@ export async function createSnippet(req: Request, res: Response, next: NextFunct
 
     res.status(201).json(snippet);
     queueEmbedding('snippet', snippet.id);
-  } catch (error) { next(error); }
+  } catch (error) {
+    next(error);
+  }
 }
 
 export async function updateSnippet(req: Request, res: Response, next: NextFunction) {
@@ -81,7 +100,12 @@ export async function updateSnippet(req: Request, res: Response, next: NextFunct
     const { title, code, language, description } = req.body;
     const snippet = await prisma.snippet.update({
       where: { id: snippetId },
-      data: { ...(title && { title }), ...(code && { code }), ...(language && { language }), ...(description !== undefined && { description }) },
+      data: {
+        ...(title && { title }),
+        ...(code && { code }),
+        ...(language && { language }),
+        ...(description !== undefined && { description }),
+      },
       include: { author: { select: { id: true, name: true, avatar: true } } },
     });
 
@@ -93,7 +117,9 @@ export async function updateSnippet(req: Request, res: Response, next: NextFunct
 
     res.json(snippet);
     queueEmbedding('snippet', snippet.id);
-  } catch (error) { next(error); }
+  } catch (error) {
+    next(error);
+  }
 }
 
 export async function deleteSnippet(req: Request, res: Response, next: NextFunction) {
@@ -109,7 +135,9 @@ export async function deleteSnippet(req: Request, res: Response, next: NextFunct
     ]);
 
     res.json({ message: 'Snippet deleted' });
-  } catch (error) { next(error); }
+  } catch (error) {
+    next(error);
+  }
 }
 
 /** E01: retain the endpoint contract, fail closed until an isolated executor exists. */

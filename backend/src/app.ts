@@ -32,7 +32,14 @@ app.use(cors({ origin: process.env.FRONTEND_URL || 'http://localhost:3000', cred
 app.use('/api/v1', healthRoutes);
 app.use('/api', healthRoutes);
 app.get('/metrics', metricsEndpoint);
-app.use(express.json({ limit: '10mb', verify: (req, _res, buffer) => { (req as express.Request).rawBody = buffer; } }));
+app.use(
+  express.json({
+    limit: '10mb',
+    verify: (req, _res, buffer) => {
+      (req as express.Request).rawBody = buffer;
+    },
+  }),
+);
 app.use(express.urlencoded({ extended: true }));
 if (process.env.NODE_ENV !== 'test') app.use(clerkMiddleware());
 app.use(generalLimiter);
@@ -42,10 +49,14 @@ const mounts: ApiMount[] = [{ prefix: '/api/v1', router: healthRoutes, security:
 function mountApi(path: string, router: express.Router, security?: ApiMount['security']) {
   mounts.push({ prefix: `/api/v1${path}`, router, security });
   app.use(`/api/v1${path}`, router);
-  app.use(`/api${path}`, (_req: express.Request, res: express.Response, next: express.NextFunction) => {
-    res.setHeader('Deprecation', `@${Date.parse('2026-11-01T00:00:00Z') / 1000}`);
-    next();
-  }, router);
+  app.use(
+    `/api${path}`,
+    (_req: express.Request, res: express.Response, next: express.NextFunction) => {
+      res.setHeader('Deprecation', `@${Date.parse('2026-11-01T00:00:00Z') / 1000}`);
+      next();
+    },
+    router,
+  );
 }
 mountApi('/auth', authRoutes);
 mountApi('/workspaces', workspaceRoutes);
@@ -60,8 +71,12 @@ mountApi('', ingestionRoutes);
 app.use('/scim/v2', scimRoutes);
 mounts.push({ prefix: '/scim/v2', router: scimRoutes, security: [{ ScimToken: [] }] });
 export const apiDocument = generateOpenApi(mounts);
-app.get('/api/docs', (_req, res) => { res.json(apiDocument); });
-app.use((_req, res) => { res.status(404).json({ error: 'Endpoint not found' }); });
+app.get('/api/docs', (_req, res) => {
+  res.json(apiDocument);
+});
+app.use((_req, res) => {
+  res.status(404).json({ error: 'Endpoint not found' });
+});
 app.use(errorMiddleware);
 
 export default app;

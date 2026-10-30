@@ -2,8 +2,18 @@ import { Router } from 'express';
 import { authMiddleware } from '../middleware/auth.middleware';
 import { validate } from '../middleware/validate.middleware';
 import {
-  createColumn, updateColumn, deleteColumn, createTask, updateTask, deleteTask, moveTask,
-  createColumnSchema, updateColumnSchema, createTaskSchema, updateTaskSchema, moveTaskSchema,
+  createColumn,
+  updateColumn,
+  deleteColumn,
+  createTask,
+  updateTask,
+  deleteTask,
+  moveTask,
+  createColumnSchema,
+  updateColumnSchema,
+  createTaskSchema,
+  updateTaskSchema,
+  moveTaskSchema,
 } from '../controllers/task.controller';
 
 const router = Router();

@@ -12,7 +12,13 @@ afterEach(cleanup);
 describe('document editor surface with real TipTap and Yjs', () => {
   it('writes through the collaboration extension and applies server-authorized read-only changes', () => {
     const document = new Y.Doc();
-    const editor = new Editor({ element: documentElement(), extensions: [StarterKit.configure({ undoRedo: false }), Collaboration.configure({ document })] });
+    const editor = new Editor({
+      element: documentElement(),
+      extensions: [
+        StarterKit.configure({ undoRedo: false }),
+        Collaboration.configure({ document }),
+      ],
+    });
     try {
       const view = render(<EditorSurface editor={editor} canWrite />);
       editor.commands.insertContent('Concurrent paragraph');
@@ -22,10 +28,15 @@ describe('document editor surface with real TipTap and Yjs', () => {
       expect(editor.isEditable).toBe(false);
       expect(screen.getByLabelText('Document content').getAttribute('aria-readonly')).toBe('true');
       view.unmount();
-    } finally { editor.destroy(); document.destroy(); }
+    } finally {
+      editor.destroy();
+      document.destroy();
+    }
   });
 });
-function documentElement() { return window.document.createElement('div'); }
+function documentElement() {
+  return window.document.createElement('div');
+}
 
 it('announces pending and offline state instead of claiming unacknowledged changes are saved', () => {
   const view = render(<DocumentSyncStatus status="connected" pending canWrite />);

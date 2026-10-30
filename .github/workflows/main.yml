@@ -20,8 +20,35 @@ env:
 
 jobs:
   quality:
-    name: Lint and unit test
+    name: Install, lint, format, types, tests, contracts and build
     runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: devsync_test
+          POSTGRES_PASSWORD: ci-only-test-password
+          POSTGRES_DB: devsync_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U devsync_test -d devsync_test"
+          --health-interval 5s --health-timeout 3s --health-retries 10
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s --health-timeout 3s --health-retries 10
+    env:
+      DATABASE_URL: postgresql://devsync_test:ci-only-test-password@localhost:5432/devsync_test?connect_timeout=3
+      REDIS_URL: redis://localhost:6379
+      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ vars.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
+      CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
+      OTEL_SDK_DISABLED: 'true'
     strategy:
       fail-fast: false
       matrix:
@@ -37,9 +64,19 @@ jobs:
           cache: npm
           cache-dependency-path: ${{ matrix.service }}/package-lock.json
       - run: npm ci
-      - run: npm run lint --if-present
-      - run: npm test --if-present
+      - run: npm run lint
+      - run: npm run format:check
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run openapi:check
+        if: matrix.service == 'backend'
       - run: npm run build
+      - uses: actions/upload-artifact@v4
+        if: always() && matrix.service == 'backend'
+        with:
+          name: backend-coverage-${{ github.sha }}
+          path: backend/coverage/
+          if-no-files-found: warn
 
   image-security:
     name: Build, scan, SBOM, and publish

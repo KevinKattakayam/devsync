@@ -67,7 +67,10 @@ function textToTiptapJson(text: string): PMNode {
     if (line.includes('|') && line.split('|').length >= 3) {
       const tableRows: string[][] = [];
       while (i < lines.length && lines[i].includes('|')) {
-        const row = lines[i].split('|').map((cell) => cell.trim()).filter(Boolean);
+        const row = lines[i]
+          .split('|')
+          .map((cell) => cell.trim())
+          .filter(Boolean);
         // Skip separator rows (---+--- or ---|---)
         if (!row.every((cell) => /^[-:]+$/.test(cell))) {
           tableRows.push(row);
@@ -124,7 +127,12 @@ function textToTiptapJson(text: string): PMNode {
     // Regular paragraph — accumulate consecutive non-empty lines
     let paragraph = line;
     i++;
-    while (i < lines.length && lines[i].trim() && !lines[i].includes('|') && !/^[\-\•\*\d]/.test(lines[i].trim())) {
+    while (
+      i < lines.length &&
+      lines[i].trim() &&
+      !lines[i].includes('|') &&
+      !/^[\-\•\*\d]/.test(lines[i].trim())
+    ) {
       paragraph += ' ' + lines[i].trim();
       i++;
     }
@@ -177,10 +185,16 @@ export async function ingestDocument(
   // Determine source type
   const isPDF = mimeType === 'application/pdf';
   const isImage = mimeType.startsWith('image/');
-  const isText = mimeType.startsWith('text/') || mimeType === 'application/json' || originalFilename.endsWith('.md') || originalFilename.endsWith('.txt');
+  const isText =
+    mimeType.startsWith('text/') ||
+    mimeType === 'application/json' ||
+    originalFilename.endsWith('.md') ||
+    originalFilename.endsWith('.txt');
 
   if (!isPDF && !isImage && !isText) {
-    throw new Error(`Unsupported file type: ${mimeType}. Supported: PDF, PNG, JPG, TIFF, Markdown, Text.`);
+    throw new Error(
+      `Unsupported file type: ${mimeType}. Supported: PDF, PNG, JPG, TIFF, Markdown, Text.`,
+    );
   }
 
   // Extract text
@@ -203,7 +217,7 @@ export async function ingestDocument(
   // Generate title from filename
   const title = originalFilename
     .replace(/\.[^.]+$/, '') // Remove extension
-    .replace(/[_-]+/g, ' ')  // Replace separators with spaces
+    .replace(/[_-]+/g, ' ') // Replace separators with spaces
     .replace(/\b\w/g, (c) => c.toUpperCase()); // Title case
 
   // Create document

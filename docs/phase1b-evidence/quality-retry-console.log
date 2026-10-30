@@ -1,0 +1,34 @@
+backend install: 0
+backend lint: 0
+
+> devsync-backend@1.0.0 lint
+> eslint src prisma
+
+
+backend format: 0
+
+> devsync-backend@1.0.0 format:check
+> prettier --check . --ignore-unknown
+
+Checking formatting...
+All matched files use Prettier code style!
+
+backend typecheck: 0
+
+> devsync-backend@1.0.0 typecheck
+> tsc --noEmit && tsc -p tsconfig.seed.json
+
+
+backend tests: 1
+ 93.33 |        0 |   83.33 |   93.33 |                                                                                                                         
+  errors.ts                       |   93.33 |        0 |   83.33 |   93.33 | 39                                                                                                                      
+----------------------------------|---------|----------|---------|---------|-------------------------------------------------------------------------------------------------------------------------
+Jest: Coverage for lines (41.89%) does not meet "global" threshold (42%)
+Jest: Coverage for lines (73.4%) does not meet "./src/services/collaboration-server.ts" threshold (80%)
+
+Test Suites: 1 failed, 12 passed, 13 total
+Tests:       1 failed, 74 passed, 75 total
+Snapshots:   0 total
+Time:        52.11 s, estimated 67 s
+Ran all test suites.
+

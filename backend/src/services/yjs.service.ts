@@ -10,7 +10,9 @@ export function getHocuspocus() {
 }
 export function setupHocuspocusServer(http: HttpServer) {
   runtime = createCollaborationServer(http, {
-    db: prisma, redisUrl: process.env.REDIS_URL, reconcile: reconcileOfflineAiActions,
+    db: prisma,
+    redisUrl: process.env.REDIS_URL,
+    reconcile: reconcileOfflineAiActions,
     async identify(token) {
       const claims = await verifyToken(token, { secretKey: process.env.CLERK_SECRET_KEY });
       let user = await prisma.user.findUnique({ where: { clerkId: String(claims.sub) } });
@@ -24,4 +26,10 @@ export function setupHocuspocusServer(http: HttpServer) {
   });
   return runtime.hocuspocus;
 }
-export async function destroyHocuspocus(): Promise<void> { if (runtime) { const current = runtime; runtime = null; await current.stop(); } }
+export async function destroyHocuspocus(): Promise<void> {
+  if (runtime) {
+    const current = runtime;
+    runtime = null;
+    await current.stop();
+  }
+}

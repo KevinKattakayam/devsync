@@ -19,34 +19,42 @@ export const updateDocumentSchema = z.object({
 });
 
 async function requireDocumentAccess(userId: string, documentId: string, write = false) {
-  const document = await prisma.document.findUnique({ where: { id: documentId }, select: { workspaceId: true } });
+  const document = await prisma.document.findUnique({
+    where: { id: documentId },
+    select: { workspaceId: true },
+  });
   if (!document) throw new NotFoundError('Document not found');
-  const member = await prisma.workspaceMember.findUnique({ where: { userId_workspaceId: { userId, workspaceId: document.workspaceId } } });
-  if (!member || (write && member.role === 'VIEWER')) throw new ForbiddenError(write ? 'Requires EDITOR or OWNER role' : 'Not a workspace member');
+  const member = await prisma.workspaceMember.findUnique({
+    where: { userId_workspaceId: { userId, workspaceId: document.workspaceId } },
+  });
+  if (!member || (write && member.role === 'VIEWER'))
+    throw new ForbiddenError(write ? 'Requires EDITOR or OWNER role' : 'Not a workspace member');
   return document;
 }
 
 export async function getDocuments(req: Request, res: Response, next: NextFunction) {
   try {
     const workspaceId = String(req.params.workspaceId || req.params.id);
-    const documents = await prisma.withTenantTransaction(workspaceId, (tx) => tx.document.findMany({
-      where: { workspaceId, isArchived: false, parentId: null },
-      include: {
-        author: { select: { id: true, name: true, avatar: true } },
-        children: {
-          where: { isArchived: false, workspaceId },
-          include: {
-            author: { select: { id: true, name: true, avatar: true } },
-            children: {
-              where: { isArchived: false, workspaceId },
-              select: { id: true, title: true, icon: true },
+    const documents = await prisma.withTenantTransaction(workspaceId, (tx) =>
+      tx.document.findMany({
+        where: { workspaceId, isArchived: false, parentId: null },
+        include: {
+          author: { select: { id: true, name: true, avatar: true } },
+          children: {
+            where: { isArchived: false, workspaceId },
+            include: {
+              author: { select: { id: true, name: true, avatar: true } },
+              children: {
+                where: { isArchived: false, workspaceId },
+                select: { id: true, title: true, icon: true },
+              },
             },
+            orderBy: { createdAt: 'desc' },
           },
-          orderBy: { createdAt: 'desc' },
         },
-      },
-      orderBy: { updatedAt: 'desc' },
-    }));
+        orderBy: { updatedAt: 'desc' },
+      }),
+    );
     res.json(documents);
   } catch (error) {
     next(error);
@@ -84,22 +92,30 @@ export async function createDocument(req: Request, res: Response, next: NextFunc
     const workspaceId = String(req.params.workspaceId || req.params.id);
     const { title, parentId, icon } = req.body;
     if (parentId) {
-      const parent = await prisma.withTenantTransaction(workspaceId, tx => tx.document.findUnique({ where: { id: parentId }, select: { workspaceId: true, isArchived: true } }));
-      if (!parent || parent.workspaceId !== workspaceId || parent.isArchived) throw new ForbiddenError('Access denied');
+      const parent = await prisma.withTenantTransaction(workspaceId, (tx) =>
+        tx.document.findUnique({
+          where: { id: parentId },
+          select: { workspaceId: true, isArchived: true },
+        }),
+      );
+      if (!parent || parent.workspaceId !== workspaceId || parent.isArchived)
+        throw new ForbiddenError('Access denied');
     }
 
-    const document = await prisma.withTenantTransaction(workspaceId, (tx) => tx.document.create({
-      data: {
-        title: title || 'Untitled',
-        icon: icon || '📄',
-        authorId: req.user!.userId,
-        workspaceId,
-        parentId,
-      },
-      include: {
-        author: { select: { id: true, name: true, avatar: true } },
-      },
-    }));
+    const document = await prisma.withTenantTransaction(workspaceId, (tx) =>
+      tx.document.create({
+        data: {
+          title: title || 'Untitled',
+          icon: icon || '📄',
+          authorId: req.user!.userId,
+          workspaceId,
+          parentId,
+        },
+        include: {
+          author: { select: { id: true, name: true, avatar: true } },
+        },
+      }),
+    );
 
     await prisma.activity.create({
       data: {

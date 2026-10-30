@@ -2,7 +2,7 @@
 import concurrent.futures,json,pathlib,subprocess,sys,os,signal
 root=pathlib.Path(__file__).resolve().parents[2]
 group=sys.argv[1]
-steps=[('install',['npm','ci','--no-audit']),('lint',['npm','run','lint']),('typecheck',['npm','run','typecheck']),('tests',['npm','test']),('build',['npm','run','build'])]
+steps=[('install',['npm','ci','--no-audit']),('lint',['npm','run','lint']),('format',['npm','run','format:check']),('typecheck',['npm','run','typecheck']),('tests',['npm','test']),('build',['npm','run','build'])]
 def service(name):
  results=[]
  for step,cmd in steps:
@@ -18,7 +18,7 @@ def service(name):
     code='timeout240'
   results.append({'step':step,'command':cmd,'exit':code})
   print(f'{name} {step}: {code}',flush=True)
-  if step in ['lint','typecheck','tests','build']:
+  if step in ['lint','format','typecheck','tests','build']:
    print(target.read_text(errors='replace')[-900:],flush=True)
   if code!=0:break
  return name,results

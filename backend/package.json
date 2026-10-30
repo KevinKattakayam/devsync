@@ -16,6 +16,8 @@
     "db:crdt": "tsx prisma/migrate-crdt.ts",
     "db:studio": "npx prisma studio",
     "lint": "eslint src prisma",
+    "format": "prettier --write . --ignore-unknown",
+    "format:check": "prettier --check . --ignore-unknown",
     "typecheck": "tsc --noEmit && tsc -p tsconfig.seed.json",
     "openapi:generate": "NODE_ENV=test tsx src/scripts/openapi.ts --write",
     "openapi:check": "NODE_ENV=test tsx src/scripts/openapi.ts --check",
@@ -85,6 +87,7 @@
     "jest": "^30.4.2",
     "jest-mock-extended": "^4.0.1",
     "pg": "^8.23.0",
+    "prettier": "^3.9.10",
     "prisma": "^5.22.0",
     "supertest": "^7.2.2",
     "testcontainers": "^12.2.1",
@@ -92,5 +95,8 @@
     "tsx": "^4.19.0",
     "typescript": "^5.6.0",
     "typescript-eslint": "^8.72.1"
+  },
+  "engines": {
+    "node": "^22.12.0 || ^24.0.0 || >=26.0.0"
   }
 }

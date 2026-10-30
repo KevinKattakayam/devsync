@@ -28,7 +28,11 @@ const upload = multer({
     if (ALLOWED_MIMES.includes(file.mimetype)) {
       cb(null, true);
     } else {
-      cb(new BadRequestError(`Unsupported file type: ${file.mimetype}. Accepted: PDF, PNG, JPG, TIFF, WebP.`) as any);
+      cb(
+        new BadRequestError(
+          `Unsupported file type: ${file.mimetype}. Accepted: PDF, PNG, JPG, TIFF, WebP.`,
+        ) as any,
+      );
     }
   },
 });

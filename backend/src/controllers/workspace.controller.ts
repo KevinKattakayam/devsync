@@ -27,11 +27,14 @@ export const updateMemberRoleSchema = z.object({
 });
 
 function generateSlug(name: string): string {
-  return name
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-|-$/g, '')
-    + '-' + Math.random().toString(36).substring(2, 8);
+  return (
+    name
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-|-$/g, '') +
+    '-' +
+    Math.random().toString(36).substring(2, 8)
+  );
 }
 
 export async function createWorkspace(req: Request, res: Response, next: NextFunction) {

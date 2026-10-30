@@ -5,13 +5,12 @@ const globalForPrisma = globalThis as unknown as { prisma: TenantPrismaClient | 
 
 export const prisma =
   globalForPrisma.prisma ??
-  createTenantPrismaClient(new PrismaClient({
-    log:
-      process.env.NODE_ENV === 'development'
-        ? ['warn', 'error']
-        : ['warn', 'error'],
-    datasourceUrl: process.env.DATABASE_URL,
-  }));
+  createTenantPrismaClient(
+    new PrismaClient({
+      log: process.env.NODE_ENV === 'development' ? ['warn', 'error'] : ['warn', 'error'],
+      datasourceUrl: process.env.DATABASE_URL,
+    }),
+  );
 
 // Prevent hot-reload from creating new PrismaClient instances in development
 if (process.env.NODE_ENV !== 'production') {

@@ -11,13 +11,18 @@ export function useCRDTGarbageCollector(document: Y.Doc, intervalMs = 30 * 60 * 
     const collect = (): void => {
       const activities = document.getMap<string>('record:resolved-activities');
       const cutoff = Date.now() - SEVEN_DAYS;
-      document.transact(() => activities.forEach((value, key) => {
-        try {
-          const activity = JSON.parse(value) as { resolvedAt?: number };
-          if (activity.resolvedAt && activity.resolvedAt < cutoff) activities.delete(key);
-        }
-        catch { activities.delete(key); }
-      }), 'devsync-gc');
+      document.transact(
+        () =>
+          activities.forEach((value, key) => {
+            try {
+              const activity = JSON.parse(value) as { resolvedAt?: number };
+              if (activity.resolvedAt && activity.resolvedAt < cutoff) activities.delete(key);
+            } catch {
+              activities.delete(key);
+            }
+          }),
+        'devsync-gc',
+      );
     };
     collect();
     const timer = window.setInterval(collect, intervalMs);

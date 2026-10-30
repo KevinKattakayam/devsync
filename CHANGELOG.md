@@ -1,3 +1,9 @@
+# Phase 1b — quality gates and evidence (partial delivery)
+
+- I02/B04: retain coverage thresholds and add real admission, token renewal/expiry, local eviction, ephemeral viewer and reconciliation cases; 83 backend tests pass. AsyncLocalStorage preserves pino request correlation.
+- I02: warning-free frontend lint, shared Prettier configuration and formatting across both apps, measured global/critical coverage floors, Node engine alignment and stricter cached CI quality steps with PostgreSQL/Redis services. Existing tests are retained; authenticated E2E is deferred.
+- I09: refresh original-main route captures and record missing seed source, login redirects and HTTP500 landing evidence without claiming populated UI coverage. Full remaining scope and human actions are in docs/PROGRESS.md.
+
 # Phase 1b — API reliability and telemetry group (2026-11-01)
 
 - Phase 1b: versioned API aliases, correlated safe errors, bounded PostgreSQL/Redis readiness and shutdown, protected metrics, optional sanitized tracing/error reporting and pino HTTP logs.

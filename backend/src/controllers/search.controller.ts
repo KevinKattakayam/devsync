@@ -19,14 +19,41 @@ export async function workspaceSearch(req: Request, res: Response, next: NextFun
 
     const contains = { contains: q, mode: 'insensitive' as const };
     const [documents, snippets, tasks] = await Promise.all([
-      prisma.document.findMany({ where: { workspaceId, isArchived: false, OR: [{ title: contains }, { content: { string_contains: q } }] }, select: { id: true, title: true, updatedAt: true }, take: limit }),
-      prisma.snippet.findMany({ where: { workspaceId, OR: [{ title: contains }, { description: contains }, { code: contains }] }, select: { id: true, title: true, description: true, updatedAt: true }, take: limit }),
-      prisma.task.findMany({ where: { column: { board: { workspaceId } }, OR: [{ title: contains }, { taskKey: contains }, { description: contains }] }, select: { id: true, title: true, taskKey: true, updatedAt: true }, take: limit }),
+      prisma.document.findMany({
+        where: {
+          workspaceId,
+          isArchived: false,
+          OR: [{ title: contains }, { content: { string_contains: q } }],
+        },
+        select: { id: true, title: true, updatedAt: true },
+        take: limit,
+      }),
+      prisma.snippet.findMany({
+        where: {
+          workspaceId,
+          OR: [{ title: contains }, { description: contains }, { code: contains }],
+        },
+        select: { id: true, title: true, description: true, updatedAt: true },
+        take: limit,
+      }),
+      prisma.task.findMany({
+        where: {
+          column: { board: { workspaceId } },
+          OR: [{ title: contains }, { taskKey: contains }, { description: contains }],
+        },
+        select: { id: true, title: true, taskKey: true, updatedAt: true },
+        take: limit,
+      }),
     ]);
-    res.json({ mode: 'keyword', results: [
-      ...documents.map(item => ({ type: 'document', ...item })),
-      ...snippets.map(item => ({ type: 'snippet', ...item })),
-      ...tasks.map(item => ({ type: 'task', ...item })),
-    ].slice(0, limit) });
-  } catch (error) { next(error); }
+    res.json({
+      mode: 'keyword',
+      results: [
+        ...documents.map((item) => ({ type: 'document', ...item })),
+        ...snippets.map((item) => ({ type: 'snippet', ...item })),
+        ...tasks.map((item) => ({ type: 'task', ...item })),
+      ].slice(0, limit),
+    });
+  } catch (error) {
+    next(error);
+  }
 }

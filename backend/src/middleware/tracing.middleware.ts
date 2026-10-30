@@ -1,7 +1,13 @@
 import { NextFunction, Request, Response } from 'express';
 import { activeTraceId } from '../observability/telemetry';
 
-declare global { namespace Express { interface Request { traceId?: string; } } }
+declare global {
+  namespace Express {
+    interface Request {
+      traceId?: string;
+    }
+  }
+}
 
 export function traceContext(req: Request, res: Response, next: NextFunction): void {
   const incoming = req.header('trace_id');

@@ -1,47 +1,76 @@
-"use client";
+'use client';
 
 import { errorMessage } from '@/lib/errors';
 
-import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
-import { snippetApi, aiApi } from "@/lib/api";
-import { Snippet } from "@/types";
-import { formatRelativeTime, getInitials, generateColor } from "@/lib/utils";
+import { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
+import { snippetApi, aiApi } from '@/lib/api';
+import { Snippet } from '@/types';
+import { formatRelativeTime, getInitials, generateColor } from '@/lib/utils';
 import {
-  Code2, Plus, Loader2, Search, Copy, Trash2, X, Check,
-  Sparkles, Play, Terminal, HelpCircle, RefreshCw, Wand2
-} from "lucide-react";
-import { toast } from "sonner";
+  Code2,
+  Plus,
+  Loader2,
+  Search,
+  Copy,
+  Trash2,
+  X,
+  Check,
+  Sparkles,
+  Play,
+  Terminal,
+  Wand2,
+} from 'lucide-react';
+import { toast } from 'sonner';
 
-const LANGUAGES = ['typescript', 'javascript', 'python', 'go', 'rust', 'sql', 'bash', 'html', 'css', 'json', 'yaml', 'docker'];
+const LANGUAGES = [
+  'typescript',
+  'javascript',
+  'python',
+  'go',
+  'rust',
+  'sql',
+  'bash',
+  'html',
+  'css',
+  'json',
+  'yaml',
+  'docker',
+];
 
 export default function SnippetsPage() {
   const { id } = useParams<{ id: string }>();
   const [snippets, setSnippets] = useState<Snippet[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [search, setSearch] = useState("");
-  const [selectedLang, setSelectedLang] = useState<string>("all");
+  const [search, setSearch] = useState('');
+  const [selectedLang, setSelectedLang] = useState<string>('all');
   const [showCreate, setShowCreate] = useState(false);
-  const [form, setForm] = useState({ title: '', code: '', language: 'typescript', description: '' });
+  const [form, setForm] = useState({
+    title: '',
+    code: '',
+    language: 'typescript',
+    description: '',
+  });
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
   // Execution & AI States
   const [runningId, setRunningId] = useState<string | null>(null);
-  const [runOutputs, setRunOutputs] = useState<Record<string, { output: string; timeMs: number }>>({});
+  const [runOutputs, setRunOutputs] = useState<Record<string, { output: string; timeMs: number }>>(
+    {},
+  );
   const [stdinInputs, setStdinInputs] = useState<Record<string, string>>({});
   const [activeStdinId, setActiveStdinId] = useState<string | null>(null);
   const [aiAnalyzingId, setAiAnalyzingId] = useState<string | null>(null);
   const [aiExplanations, setAiExplanations] = useState<Record<string, string>>({});
   const [isAiGenerating, setIsAiGenerating] = useState(false);
-  const [aiGenPrompt, setAiGenPrompt] = useState("");
-
+  const [aiGenPrompt, setAiGenPrompt] = useState('');
 
   const loadSnippets = async () => {
     try {
       const { data } = await snippetApi.list(id);
       setSnippets(data);
     } catch {
-      toast.error("Failed to load code snippets");
+      toast.error('Failed to load code snippets');
     } finally {
       setIsLoading(false);
     }
@@ -49,12 +78,21 @@ export default function SnippetsPage() {
 
   useEffect(() => {
     let disposed = false;
-    snippetApi.list(id).then(({ data }) => { if (!disposed) setSnippets(data); })
-      .catch(() => { if (!disposed) toast.error("Failed to load workspace data"); })
-      .finally(() => { if (!disposed) setIsLoading(false); });
-    return () => { disposed = true; };
+    snippetApi
+      .list(id)
+      .then(({ data }) => {
+        if (!disposed) setSnippets(data);
+      })
+      .catch(() => {
+        if (!disposed) toast.error('Failed to load workspace data');
+      })
+      .finally(() => {
+        if (!disposed) setIsLoading(false);
+      });
+    return () => {
+      disposed = true;
+    };
   }, [id]);
-
 
   const createSnippet = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,16 +101,16 @@ export default function SnippetsPage() {
       setShowCreate(false);
       setForm({ title: '', code: '', language: 'typescript', description: '' });
       loadSnippets();
-      toast.success("Code snippet saved successfully");
+      toast.success('Code snippet saved successfully');
     } catch {
-      toast.error("Failed to save code snippet");
+      toast.error('Failed to save code snippet');
     }
   };
 
   const generateSnippetWithAi = async () => {
     if (!aiGenPrompt.trim()) return;
     setIsAiGenerating(true);
-    const toastId = toast.loading("AI Generating Code Snippet...");
+    const toastId = toast.loading('AI Generating Code Snippet...');
     try {
       const res = await aiApi.complete({
         prompt: `Generate a production-ready code snippet for: "${aiGenPrompt}". Format purely as:
@@ -88,14 +126,14 @@ Description: <1-sentence description>
       });
 
       const reader = res.body?.getReader();
-      if (!reader) throw new Error("No stream");
+      if (!reader) throw new Error('No stream');
       const decoder = new TextDecoder();
       let full = '';
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
         const chunk = decoder.decode(value);
-        const lines = chunk.split('\n').filter(l => l.startsWith('data: '));
+        const lines = chunk.split('\n').filter((l) => l.startsWith('data: '));
         for (const line of lines) {
           try {
             const parsed = JSON.parse(line.slice(6));
@@ -117,10 +155,10 @@ Description: <1-sentence description>
         language: LANGUAGES.includes(lang) ? lang : 'typescript',
         description: descMatch ? descMatch[1].trim() : `AI-generated snippet for ${aiGenPrompt}`,
       });
-      setAiGenPrompt("");
-      toast.success("Snippet generated!", { id: toastId });
-    } catch (err: unknown) {
-      toast.error("AI Generation failed", { id: toastId });
+      setAiGenPrompt('');
+      toast.success('Snippet generated!', { id: toastId });
+    } catch {
+      toast.error('AI Generation failed', { id: toastId });
     } finally {
       setIsAiGenerating(false);
     }
@@ -134,18 +172,18 @@ Description: <1-sentence description>
         code: snippet.code,
         stdin: stdinInputs[snippet.id],
       });
-      setRunOutputs(prev => ({
+      setRunOutputs((prev) => ({
         ...prev,
-        [snippet.id]: { output: data.output, timeMs: data.timeMs }
+        [snippet.id]: { output: data.output, timeMs: data.timeMs },
       }));
       toast.success(`Executed ${snippet.language} in ${data.timeMs}ms`);
     } catch (err: unknown) {
-      const errorMsg = errorMessage(err, "Execution failed");
-      setRunOutputs(prev => ({
+      const errorMsg = errorMessage(err, 'Execution failed');
+      setRunOutputs((prev) => ({
         ...prev,
-        [snippet.id]: { output: `❌ Error: ${errorMsg}`, timeMs: 0 }
+        [snippet.id]: { output: `❌ Error: ${errorMsg}`, timeMs: 0 },
       }));
-      toast.error("Execution failed");
+      toast.error('Execution failed');
     } finally {
       setRunningId(null);
     }
@@ -162,14 +200,14 @@ Description: <1-sentence description>
       });
 
       const reader = res.body?.getReader();
-      if (!reader) throw new Error("No stream");
+      if (!reader) throw new Error('No stream');
       const decoder = new TextDecoder();
       let full = '';
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
         const chunk = decoder.decode(value);
-        const lines = chunk.split('\n').filter(l => l.startsWith('data: '));
+        const lines = chunk.split('\n').filter((l) => l.startsWith('data: '));
         for (const line of lines) {
           try {
             const parsed = JSON.parse(line.slice(6));
@@ -177,9 +215,9 @@ Description: <1-sentence description>
           } catch {}
         }
       }
-      setAiExplanations(prev => ({ ...prev, [snippet.id]: full }));
+      setAiExplanations((prev) => ({ ...prev, [snippet.id]: full }));
     } catch {
-      toast.error("AI explanation failed");
+      toast.error('AI explanation failed');
     } finally {
       setAiAnalyzingId(null);
     }
@@ -190,9 +228,9 @@ Description: <1-sentence description>
     try {
       await snippetApi.delete(snippetId);
       loadSnippets();
-      toast.success("Snippet deleted");
+      toast.success('Snippet deleted');
     } catch {
-      toast.error("Failed to delete snippet");
+      toast.error('Failed to delete snippet');
     }
   };
 
@@ -200,14 +238,16 @@ Description: <1-sentence description>
     navigator.clipboard.writeText(code);
     setCopiedId(snippetId);
     setTimeout(() => setCopiedId(null), 2000);
-    toast.success("Code copied to clipboard!");
+    toast.success('Code copied to clipboard!');
   };
 
-  const filtered = snippets.filter(s => {
-    const matchesSearch = s.title.toLowerCase().includes(search.toLowerCase()) ||
+  const filtered = snippets.filter((s) => {
+    const matchesSearch =
+      s.title.toLowerCase().includes(search.toLowerCase()) ||
       s.language.toLowerCase().includes(search.toLowerCase()) ||
       (s.description && s.description.toLowerCase().includes(search.toLowerCase()));
-    const matchesLang = selectedLang === "all" || s.language.toLowerCase() === selectedLang.toLowerCase();
+    const matchesLang =
+      selectedLang === 'all' || s.language.toLowerCase() === selectedLang.toLowerCase();
     return matchesSearch && matchesLang;
   });
 
@@ -243,7 +283,9 @@ Description: <1-sentence description>
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-xl font-bold tracking-tight text-foreground">Code Snippet Vault</h1>
+              <h1 className="text-xl font-bold tracking-tight text-foreground">
+                Code Snippet Vault
+              </h1>
               <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
                 {snippets.length} saved
               </span>
@@ -277,11 +319,11 @@ Description: <1-sentence description>
 
         <div className="flex items-center gap-1.5 overflow-x-auto w-full md:w-auto pb-1 md:pb-0">
           <button
-            onClick={() => setSelectedLang("all")}
+            onClick={() => setSelectedLang('all')}
             className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
-              selectedLang === "all"
-                ? "bg-primary text-white shadow-md shadow-primary/20"
-                : "bg-white/[0.04] text-muted-foreground hover:text-foreground hover:bg-white/[0.08]"
+              selectedLang === 'all'
+                ? 'bg-primary text-white shadow-md shadow-primary/20'
+                : 'bg-white/[0.04] text-muted-foreground hover:text-foreground hover:bg-white/[0.08]'
             }`}
           >
             All ({snippets.length})
@@ -294,8 +336,8 @@ Description: <1-sentence description>
                 onClick={() => setSelectedLang(lang)}
                 className={`px-2.5 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all ${
                   selectedLang === lang
-                    ? "bg-white/20 text-foreground border border-white/30"
-                    : "bg-white/[0.03] text-muted-foreground hover:text-foreground hover:bg-white/[0.06]"
+                    ? 'bg-white/20 text-foreground border border-white/30'
+                    : 'bg-white/[0.03] text-muted-foreground hover:text-foreground hover:bg-white/[0.06]'
                 }`}
               >
                 {lang} {count > 0 && `(${count})`}
@@ -309,8 +351,12 @@ Description: <1-sentence description>
       {filtered.length === 0 ? (
         <div className="glass-card p-12 text-center">
           <Code2 className="w-12 h-12 text-muted-foreground/30 mx-auto mb-3" />
-          <h3 className="text-sm font-semibold mb-1">{search ? "No matching snippets found" : "Vault is currently empty"}</h3>
-          <p className="text-xs text-muted-foreground mb-4">Save reusable helpers, SQL queries, or Docker configurations.</p>
+          <h3 className="text-sm font-semibold mb-1">
+            {search ? 'No matching snippets found' : 'Vault is currently empty'}
+          </h3>
+          <p className="text-xs text-muted-foreground mb-4">
+            Save reusable helpers, SQL queries, or Docker configurations.
+          </p>
           <button
             onClick={() => setShowCreate(true)}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-xl gradient-primary text-white text-xs font-semibold"
@@ -321,7 +367,9 @@ Description: <1-sentence description>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {filtered.map((snippet) => {
-            const colorClass = langColors[snippet.language.toLowerCase()] || "text-slate-400 bg-slate-400/10 border-slate-400/20";
+            const colorClass =
+              langColors[snippet.language.toLowerCase()] ||
+              'text-slate-400 bg-slate-400/10 border-slate-400/20';
             const runData = runOutputs[snippet.id];
             const explanation = aiExplanations[snippet.id];
 
@@ -336,7 +384,9 @@ Description: <1-sentence description>
                       {snippet.title}
                     </h3>
                     <div className="flex items-center gap-1.5">
-                      <span className={`px-2 py-0.5 text-[10px] font-bold uppercase rounded-md border ${colorClass}`}>
+                      <span
+                        className={`px-2 py-0.5 text-[10px] font-bold uppercase rounded-md border ${colorClass}`}
+                      >
                         {snippet.language}
                       </span>
                       <button
@@ -344,7 +394,11 @@ Description: <1-sentence description>
                         className="p-1.5 rounded-lg hover:bg-white/10 text-muted-foreground hover:text-foreground transition-colors"
                         title="Copy Code"
                       >
-                        {copiedId === snippet.id ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                        {copiedId === snippet.id ? (
+                          <Check className="w-3.5 h-3.5 text-emerald-400" />
+                        ) : (
+                          <Copy className="w-3.5 h-3.5" />
+                        )}
                       </button>
                       <button
                         onClick={(e) => deleteSnippet(snippet.id, e)}
@@ -376,34 +430,51 @@ Description: <1-sentence description>
                       disabled={runningId === snippet.id}
                       className="px-2.5 py-1 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-500/30 text-[11px] font-semibold flex items-center gap-1.5 transition-all"
                     >
-                      {runningId === snippet.id ? <Loader2 className="w-3 h-3 animate-spin" /> : <Play className="w-3 h-3 fill-current" />} Run
+                      {runningId === snippet.id ? (
+                        <Loader2 className="w-3 h-3 animate-spin" />
+                      ) : (
+                        <Play className="w-3 h-3 fill-current" />
+                      )}{' '}
+                      Run
                     </button>
                     <button
-                      onClick={() => setActiveStdinId(activeStdinId === snippet.id ? null : snippet.id)}
+                      onClick={() =>
+                        setActiveStdinId(activeStdinId === snippet.id ? null : snippet.id)
+                      }
                       className={`px-2.5 py-1 rounded-lg border text-[11px] font-semibold flex items-center gap-1.5 transition-all ${
                         activeStdinId === snippet.id || stdinInputs[snippet.id]
-                          ? "bg-amber-500/20 text-amber-300 border-amber-500/40"
-                          : "bg-white/[0.04] text-muted-foreground hover:text-foreground border-white/10 hover:bg-white/[0.08]"
+                          ? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
+                          : 'bg-white/[0.04] text-muted-foreground hover:text-foreground border-white/10 hover:bg-white/[0.08]'
                       }`}
                     >
-                      <Terminal className="w-3 h-3" /> Stdin / Input {stdinInputs[snippet.id] && "•"}
+                      <Terminal className="w-3 h-3" /> Stdin / Input{' '}
+                      {stdinInputs[snippet.id] && '•'}
                     </button>
                     <button
                       onClick={() => handleAiExplain(snippet)}
                       disabled={aiAnalyzingId === snippet.id}
                       className="px-2.5 py-1 rounded-lg bg-primary/15 hover:bg-primary/25 text-primary border border-primary/30 text-[11px] font-semibold flex items-center gap-1.5 transition-all"
                     >
-                      {aiAnalyzingId === snippet.id ? <Loader2 className="w-3 h-3 animate-spin" /> : <Sparkles className="w-3 h-3" />} AI Explain
+                      {aiAnalyzingId === snippet.id ? (
+                        <Loader2 className="w-3 h-3 animate-spin" />
+                      ) : (
+                        <Sparkles className="w-3 h-3" />
+                      )}{' '}
+                      AI Explain
                     </button>
                   </div>
 
                   {/* Stdin Drawer */}
                   {activeStdinId === snippet.id && (
                     <div className="p-2.5 rounded-xl bg-slate-900/90 border border-amber-500/30 mb-2 animate-fade-in">
-                      <label className="text-[10px] font-bold text-amber-400 mb-1 block">Standard Input (stdin):</label>
+                      <label className="text-[10px] font-bold text-amber-400 mb-1 block">
+                        Standard Input (stdin):
+                      </label>
                       <textarea
-                        value={stdinInputs[snippet.id] || ""}
-                        onChange={(e) => setStdinInputs((prev) => ({ ...prev, [snippet.id]: e.target.value }))}
+                        value={stdinInputs[snippet.id] || ''}
+                        onChange={(e) =>
+                          setStdinInputs((prev) => ({ ...prev, [snippet.id]: e.target.value }))
+                        }
                         placeholder="Provide standard input lines for input(), scanf(), etc..."
                         rows={2}
                         className="w-full bg-black/60 border border-white/10 rounded-lg p-2 text-[11px] font-mono text-slate-200 outline-none focus:border-amber-400/50 resize-none placeholder:text-muted-foreground/50"
@@ -415,7 +486,9 @@ Description: <1-sentence description>
                   {runData && (
                     <div className="p-3 rounded-xl bg-black/80 border border-emerald-500/30 text-[11px] font-mono text-emerald-400 mb-2 animate-fade-in">
                       <div className="flex items-center justify-between text-[10px] text-muted-foreground border-b border-emerald-500/20 pb-1 mb-1.5">
-                        <span className="flex items-center gap-1"><Terminal className="w-3 h-3 text-emerald-400" /> Console Output</span>
+                        <span className="flex items-center gap-1">
+                          <Terminal className="w-3 h-3 text-emerald-400" /> Console Output
+                        </span>
                         <span>{runData.timeMs}ms</span>
                       </div>
                       <pre className="whitespace-pre-wrap">{runData.output}</pre>
@@ -437,11 +510,11 @@ Description: <1-sentence description>
                   <div className="flex items-center gap-1.5">
                     <div
                       className="w-4 h-4 rounded-full flex items-center justify-center text-[8px] text-white font-bold"
-                      style={{ backgroundColor: generateColor(snippet.author?.name || "") }}
+                      style={{ backgroundColor: generateColor(snippet.author?.name || '') }}
                     >
-                      {getInitials(snippet.author?.name || "?")}
+                      {getInitials(snippet.author?.name || '?')}
                     </div>
-                    <span>{snippet.author?.name || "Author"}</span>
+                    <span>{snippet.author?.name || 'Author'}</span>
                   </div>
                   <span>{formatRelativeTime(snippet.createdAt)}</span>
                 </div>
@@ -453,13 +526,22 @@ Description: <1-sentence description>
 
       {/* Create Snippet Modal */}
       {showCreate && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-fade-in" onClick={() => setShowCreate(false)}>
-          <div className="bg-slate-950 border border-white/10 rounded-2xl w-full max-w-xl p-6 shadow-2xl animate-scale-in" onClick={(e) => e.stopPropagation()}>
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-fade-in"
+          onClick={() => setShowCreate(false)}
+        >
+          <div
+            className="bg-slate-950 border border-white/10 rounded-2xl w-full max-w-xl p-6 shadow-2xl animate-scale-in"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-base font-bold text-foreground flex items-center gap-2">
                 <Code2 className="w-5 h-5 text-primary" /> Save Code Snippet
               </h2>
-              <button onClick={() => setShowCreate(false)} className="p-1 rounded-lg hover:bg-white/10 text-muted-foreground">
+              <button
+                onClick={() => setShowCreate(false)}
+                className="p-1 rounded-lg hover:bg-white/10 text-muted-foreground"
+              >
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -472,7 +554,9 @@ Description: <1-sentence description>
                 onChange={(e) => setAiGenPrompt(e.target.value)}
                 placeholder="Ask AI to generate snippet (e.g. 'PostgreSQL transaction helper in Go')..."
                 className="w-full bg-transparent text-xs text-foreground outline-none placeholder:text-muted-foreground"
-                onKeyDown={(e) => { if (e.key === 'Enter') generateSnippetWithAi(); }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') generateSnippetWithAi();
+                }}
               />
               <button
                 type="button"
@@ -480,13 +564,20 @@ Description: <1-sentence description>
                 disabled={!aiGenPrompt.trim() || isAiGenerating}
                 className="px-3 py-1.5 rounded-lg gradient-primary text-white text-xs font-semibold flex items-center gap-1.5 hover:opacity-90 disabled:opacity-40 whitespace-nowrap"
               >
-                {isAiGenerating ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Wand2 className="w-3.5 h-3.5" />} AI Generate
+                {isAiGenerating ? (
+                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                ) : (
+                  <Wand2 className="w-3.5 h-3.5" />
+                )}{' '}
+                AI Generate
               </button>
             </div>
 
             <form onSubmit={createSnippet} className="space-y-4">
               <div>
-                <label className="text-xs font-semibold text-muted-foreground mb-1 block">Snippet Title</label>
+                <label className="text-xs font-semibold text-muted-foreground mb-1 block">
+                  Snippet Title
+                </label>
                 <input
                   type="text"
                   required
@@ -499,19 +590,25 @@ Description: <1-sentence description>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs font-semibold text-muted-foreground mb-1 block">Language</label>
+                  <label className="text-xs font-semibold text-muted-foreground mb-1 block">
+                    Language
+                  </label>
                   <select
                     value={form.language}
                     onChange={(e) => setForm({ ...form, language: e.target.value })}
                     className="w-full px-3 py-2 rounded-xl bg-slate-900 border border-white/10 text-xs text-foreground outline-none"
                   >
                     {LANGUAGES.map((l) => (
-                      <option key={l} value={l} className="bg-slate-950">{l}</option>
+                      <option key={l} value={l} className="bg-slate-950">
+                        {l}
+                      </option>
                     ))}
                   </select>
                 </div>
                 <div>
-                  <label className="text-xs font-semibold text-muted-foreground mb-1 block">Description (Optional)</label>
+                  <label className="text-xs font-semibold text-muted-foreground mb-1 block">
+                    Description (Optional)
+                  </label>
                   <input
                     type="text"
                     value={form.description}
@@ -523,7 +620,9 @@ Description: <1-sentence description>
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-muted-foreground mb-1 block">Code Content</label>
+                <label className="text-xs font-semibold text-muted-foreground mb-1 block">
+                  Code Content
+                </label>
                 <textarea
                   required
                   rows={8}

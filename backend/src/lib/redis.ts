@@ -5,7 +5,7 @@ const REDIS_URL = process.env.REDIS_URL || 'redis://localhost:6379';
 function createClient(role: string): Redis {
   const isTest = process.env.NODE_ENV === 'test';
   const client = new Redis(REDIS_URL, {
-    maxRetriesPerRequest: null,     // Required by BullMQ
+    maxRetriesPerRequest: null, // Required by BullMQ
     enableReadyCheck: !isTest,
     lazyConnect: isTest,
     retryStrategy(times) {
@@ -48,10 +48,21 @@ export async function isRedisAvailable(): Promise<boolean> {
 
 /** Graceful shutdown — disconnect both clients. */
 export async function disconnectRedis(): Promise<void> {
-  await Promise.allSettled([redis, redisSubscriber].map(async client => {
-    let timer: ReturnType<typeof setTimeout> | undefined;
-    try {
-      if (client.status === 'ready') await Promise.race([client.quit(), new Promise<void>(resolve => { timer = setTimeout(resolve, 1000); })]);
-    } finally { if (timer) clearTimeout(timer); client.disconnect(); }
-  }));
+  await Promise.allSettled(
+    [redis, redisSubscriber].map(async (client) => {
+      let timer: ReturnType<typeof setTimeout> | undefined;
+      try {
+        if (client.status === 'ready')
+          await Promise.race([
+            client.quit(),
+            new Promise<void>((resolve) => {
+              timer = setTimeout(resolve, 1000);
+            }),
+          ]);
+      } finally {
+        if (timer) clearTimeout(timer);
+        client.disconnect();
+      }
+    }),
+  );
 }

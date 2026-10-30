@@ -1,7 +1,12 @@
 import { Router } from 'express';
 import { authMiddleware } from '../middleware/auth.middleware';
 import { validate } from '../middleware/validate.middleware';
-import { getDocument, updateDocument, deleteDocument, updateDocumentSchema } from '../controllers/document.controller';
+import {
+  getDocument,
+  updateDocument,
+  deleteDocument,
+  updateDocumentSchema,
+} from '../controllers/document.controller';
 
 const router = Router();
 

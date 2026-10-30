@@ -28,9 +28,16 @@ const groq = process.env.GROQ_API_KEY ? new Groq({ apiKey: process.env.GROQ_API_
  */
 async function processPRSummary(job: Job<PRSummaryJobData>): Promise<void> {
   const {
-    action, prTitle, prBody, prNumber, prUrl,
-    repositoryOwner, repositoryName,
-    workspaceId, taskKeys, author,
+    action,
+    prTitle,
+    prBody,
+    prNumber,
+    prUrl,
+    repositoryOwner,
+    repositoryName,
+    workspaceId,
+    taskKeys,
+    author,
   } = job.data;
 
   const repoFullName = `${repositoryOwner}/${repositoryName}`;
@@ -46,7 +53,8 @@ async function processPRSummary(job: Job<PRSummaryJobData>): Promise<void> {
         messages: [
           {
             role: 'system',
-            content: 'You are a concise technical summarizer for a developer workspace. Generate a 2-3 sentence summary of a GitHub pull request. Focus on what changed and its impact. Be factual.',
+            content:
+              'You are a concise technical summarizer for a developer workspace. Generate a 2-3 sentence summary of a GitHub pull request. Focus on what changed and its impact. Be factual.',
           },
           {
             role: 'user',
@@ -70,7 +78,9 @@ async function processPRSummary(job: Job<PRSummaryJobData>): Promise<void> {
   });
 
   if (!ownerMember) {
-    console.warn(`[Agent:PRSummary] No owner found for workspace ${workspaceId}, skipping activity`);
+    console.warn(
+      `[Agent:PRSummary] No owner found for workspace ${workspaceId}, skipping activity`,
+    );
     return;
   }
 
@@ -98,9 +108,5 @@ async function processPRSummary(job: Job<PRSummaryJobData>): Promise<void> {
 }
 
 export function startPRSummaryWorker() {
-  return createWorker<PRSummaryJobData>(
-    QueueNames.PR_SUMMARY,
-    processPRSummary,
-    2,
-  );
+  return createWorker<PRSummaryJobData>(QueueNames.PR_SUMMARY, processPRSummary, 2);
 }
