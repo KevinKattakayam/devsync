@@ -77,14 +77,20 @@ All connections require a Clerk token and local user lookup; isActive is not che
 
 Outbound-only notifications: workspace:users, cursor:updated, activity:new, workspace:suspended, error, plus the four relayed kanban:task-* events. Socket.io connection/disconnect are framework events. No document:join/write event remains on Socket.io; cursor:update targets document:<id> but no corresponding Socket.io document join handler exists. Server joins user:<localUserId> automatically for SCIM disconnects.
 
-## Hocuspocus protocol
+## Hocuspocus protocol — Phase 1b
 
-| Room / operation | Authentication | Membership/role/resource check | Evidence |
+All rows below use production Clerk JWT verification. Factory-injected identity functions are used only by test fixtures. The cookie/token replacement listed as unfinished in Phase 1a was not silently introduced.
+
+| Room / operation | Connection check | Every inbound message / write | Passive revocation / persistence |
 |---|---|---|---|
-| document:<workspace>:<document>, read/update/awareness | Clerk token | Compares actual document workspace to room prefix; membership+active user/tenant; viewer read-only (D02/D07 fixed) | backend/src/services/yjs.service.ts:52 |
-| bare document ID, read/update | Clerk token | Rejects missing/archived document; resolves membership; viewer read-only. RLS-safe ID resolution still pending G01 | backend/src/services/yjs.service.ts:81 |
-| kanban:<workspace>, workspace:<workspace> | Clerk token | Membership+active user/tenant; viewer read-only; no durable server store for these room types | backend/src/services/yjs.service.ts:92 |
-| Existing connection after revoke/expiry/suspend | Initial Clerk token | No ongoing expiry/membership/active-user enforcement or cross-transport eviction | backend/src/services/yjs.service.ts:57 |
+| `document:<workspace>:<document>` | Strict room syntax, active user, unsuspended workspace, membership, actual document/workspace match, not archived, token expiry | Same shared policy and document checks on every frame. Owner/editor updates commit under tenant RLS before acknowledgement; viewer sync mutations rejected by protocol | Local removal/role-change eviction plus one-second DB sweep on every instance; durable journal/snapshot |
+| Bare document ID | Resolve through user's memberships using tenant transactions; same checks | Same checks and viewer enforcement | Durable journal; legacy room-name fanout limitation in CRDT_OPERATIONS.md |
+| `kanban:<workspace>`, `workspace:<workspace>` | Same user/workspace/membership/expiry checks | Same policy per frame, viewer read-only | Swept/evicted; whole-JSON ephemeral state remains, not task-level persistence |
+| Awareness/query/stateless/auth-renew/close | Authenticated document connection | Shared per-frame policy; awareness display name/color replaced with verified identity; renewed token must identify same local user | Hocuspocus disconnect/stale awareness cleanup; size/rate/admission ceilings |
+| Removed/downgraded member, inactive user, suspended workspace, archived document or expired token | Reconnection reauthenticates | Fail closed; revoked transport closes | Sweep (one second plus DB latency), immediate local member-change notification |
+| Internal Redis relay / server reconciliation | Private server Redis channel or server callback, no browser identity bypass | No public client path to internal Redis opcodes; reconciliation updates journaled before broadcast | Same committed PostgreSQL state; Redis is fanout only |
+
+Implementation: `backend/src/services/collaboration-server.ts`, `crdt-journal.ts`, `yjs.service.ts`, `security/workspace-policy.ts`. Real protocol/tenant-role tests: `backend/src/__tests__/collaboration.integration.test.ts`; prior D02/D07 hook regressions retained. A message-size limit and a pre-queue frame-rate limit bound incoming work. Socket.io rows above remain their previous state; do not infer Hocuspocus eviction also implements Socket.io eviction.
 
 ## Interpretation
 

@@ -5,15 +5,19 @@ import { errorMessage } from '@/lib/errors';
 import type { ReactNode } from "react";
 import type { Doc } from "yjs";
 import type { HocuspocusProvider } from "@hocuspocus/provider";
-import { useEffect, useState, useCallback, useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useParams } from "next/navigation";
 import { documentApi, aiApi } from "@/lib/api";
 import { useAuth } from "@/providers/auth-provider";
 import { Document } from "@/types";
-import { useEditor, EditorContent } from "@tiptap/react";
+import { useEditor } from "@tiptap/react";
+import { EditorSurface } from '@/components/workspace/editor-surface';
+import { DocumentSyncStatus } from '@/components/workspace/document-sync-status';
 import StarterKit from "@tiptap/starter-kit";
 import Placeholder from "@tiptap/extension-placeholder";
 import Highlight from "@tiptap/extension-highlight";
+import Image from '@tiptap/extension-image';
+import { TableKit } from '@tiptap/extension-table';
 import TaskList from "@tiptap/extension-task-list";
 import TaskItem from "@tiptap/extension-task-item";
 import LinkExt from "@tiptap/extension-link";
@@ -21,14 +25,13 @@ import Collaboration from '@tiptap/extension-collaboration';
 import { CollaborationCursor } from '@/lib/tiptap-collaboration-cursor';
 import { useLocalFirstYDoc } from '@/lib/local-first-yjs';
 import { useCRDTGarbageCollector } from '@/hooks/use-crdt-garbage-collector';
-import { useSyncHealthStore } from '@/stores/sync-health.store';
 import { markdownToHtml } from "@/lib/markdown";
 import {
   Bold, Italic, Strikethrough, Code, List, ListOrdered,
   Heading1, Heading2, Heading3, Quote, Minus, Undo, Redo,
-  Sparkles, Loader2, CheckSquare, Link as LinkIcon, Save,
+  Sparkles, Loader2, CheckSquare,
   Users, CornerDownLeft, RefreshCw, Copy, Trash2, Send,
-  History, Clock, RotateCcw, FileCheck, X
+  History, Clock, RotateCcw, X
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -50,12 +53,12 @@ function getCursorColor(name: string): string {
 }
 
 interface EditorInnerProps {
+  canWrite: boolean;
   ydoc: Doc;
   provider: HocuspocusProvider | null;
   userName: string;
   cursorColor: string;
   workspaceId: string;
-  doc: Document | null;
   onAiSources: (sources: { type: string; title: string; score: number }[]) => void;
 }
 
@@ -71,12 +74,12 @@ const ToolBtn = ({ onClick, active, children, title: t }: { onClick: () => unkno
 
 
 function EditorInner({
+  canWrite,
   ydoc,
   provider,
   userName,
   cursorColor,
   workspaceId,
-  doc,
   onAiSources,
 }: EditorInnerProps) {
   const [aiLoading, setAiLoading] = useState(false);
@@ -92,6 +95,8 @@ function EditorInner({
     StarterKit.configure({ undoRedo: false, link: false }),
     Placeholder.configure({ placeholder: 'Start writing... Press / for AI commands' }),
     Highlight,
+    Image,
+    TableKit,
     TaskList,
     TaskItem.configure({ nested: true }),
     LinkExt.configure({ openOnClick: false }),
@@ -105,6 +110,7 @@ function EditorInner({
   ], [ydoc, provider, userName, cursorColor]);
 
   const editor = useEditor({
+    editable: canWrite,
     immediatelyRender: false,
     extensions,
     editorProps: {
@@ -136,16 +142,12 @@ function EditorInner({
     };
   }, [editor]);
 
-  // Import legacy JSON once if not yet in Yjs
-  useEffect(() => {
-    if (editor && doc?.content && !doc.yjsState) {
-      editor.commands.setContent(doc.content);
-    }
-  }, [editor, doc]);
+  // Legacy JSON is initialized once by the server under the document row lock.
+  // Loading it here creates duplicate paragraphs when two clients arrive together.
 
   const handleAiAction = async (action: string, label: string, promptOverride?: string) => {
     setShowAiMenu(false);
-    if (!editor) return;
+    if (!editor || !canWrite) return;
 
     // Check if the user had selected text
     const currentSelection = editor.state.selection;
@@ -199,7 +201,7 @@ function EditorInner({
   };
 
   const handleInsertBelow = () => {
-    if (!editor || !aiStreamingText) return;
+    if (!editor || !canWrite || !aiStreamingText) return;
     const html = markdownToHtml(aiStreamingText);
     editor.chain().focus().insertContent(html).run();
     setAiStreamingText('');
@@ -208,7 +210,7 @@ function EditorInner({
   };
 
   const handleReplaceSelection = () => {
-    if (!editor || !aiStreamingText) return;
+    if (!editor || !canWrite || !aiStreamingText) return;
     const html = markdownToHtml(aiStreamingText);
     if (selectedTextRange) {
       editor.chain().focus().setTextSelection({ from: selectedTextRange.from, to: selectedTextRange.to }).deleteSelection().insertContent(html).run();
@@ -230,7 +232,7 @@ function EditorInner({
   return (
     <>
       {/* Toolbar */}
-      {editor && (
+      {editor && canWrite && (
         <div className="glass-card px-2 py-1.5 mb-4 flex items-center gap-0.5 flex-wrap sticky top-0 z-10">
           <ToolBtn onClick={() => editor.chain().focus().toggleBold().run()} active={editor.isActive('bold')} title="Bold"><Bold className="w-4 h-4" /></ToolBtn>
           <ToolBtn onClick={() => editor.chain().focus().toggleItalic().run()} active={editor.isActive('italic')} title="Italic"><Italic className="w-4 h-4" /></ToolBtn>
@@ -397,7 +399,7 @@ function EditorInner({
 
       {/* Editor */}
       <div className="glass-card p-6 min-h-[500px]">
-        <EditorContent editor={editor} />
+        <EditorSurface editor={editor} canWrite={canWrite} />
       </div>
 
       {/* Version History Drawer */}
@@ -464,11 +466,17 @@ export default function DocEditorPage() {
 
   // ── Yjs + Hocuspocus provider setup ────────────────────────
 
-  const { document: ydoc, provider, localReady, syncStatus } = useLocalFirstYDoc(`document:${workspaceId}:${docId}`, getToken);
+  const { document: ydoc, provider, localReady, syncStatus, canWrite, pending } = useLocalFirstYDoc(`document:${workspaceId}:${docId}`, getToken, user?.id);
   useCRDTGarbageCollector(ydoc);
 
   const connectionStatus = syncStatus;
-  const saving = !localReady;
+  useEffect(() => {
+    const awareness = provider?.awareness;
+    if (!awareness) return;
+    const update = () => setConnectedUsers([...awareness.getStates()].filter(([id, state]) => id !== ydoc.clientID && state.user).length);
+    awareness.on('change', update); update();
+    return () => { awareness.off('change', update); };
+  }, [provider, ydoc]);
 
   const userName = user?.name || 'Anonymous';
   const cursorColor = getCursorColor(userName);
@@ -484,6 +492,7 @@ export default function DocEditorPage() {
   }, [docId]);
 
   const saveTitle = async () => {
+    if (!canWrite) return;
     try {
       await documentApi.update(docId, { title });
     } catch { }
@@ -493,6 +502,7 @@ export default function DocEditorPage() {
     <div className="max-w-4xl mx-auto px-6 py-8 animate-fade-in">
       {/* Title */}
       <input
+        readOnly={!canWrite}
         type="text"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
@@ -501,10 +511,7 @@ export default function DocEditorPage() {
         placeholder="Untitled"
       />
       <div className="flex items-center gap-3 mb-6 text-xs text-muted-foreground">
-        {saving
-          ? <span className="flex items-center gap-1"><Loader2 className="w-3 h-3 animate-spin" />Syncing...</span>
-          : <span className="flex items-center gap-1"><Save className="w-3 h-3" />Saved</span>
-        }
+        <DocumentSyncStatus status={syncStatus} pending={pending || !localReady} canWrite={canWrite} />
         {doc?.author && <span>by {doc.author.name}</span>}
         {connectedUsers > 0 && (
           <span className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-success/10 text-success text-[10px] font-medium">
@@ -518,14 +525,15 @@ export default function DocEditorPage() {
         }`} title={`Connection: ${connectionStatus}`} />
       </div>
 
-      {localReady ? (
+      {localReady && (provider?.synced || ydoc.getXmlFragment('default').length > 0) ? (
         <EditorInner
+          key={`${workspaceId}:${docId}:${user?.id}`}
+          canWrite={canWrite}
           ydoc={ydoc}
           provider={provider}
           userName={userName}
           cursorColor={cursorColor}
           workspaceId={workspaceId}
-          doc={doc}
           onAiSources={setAiSources}
         />
       ) : (

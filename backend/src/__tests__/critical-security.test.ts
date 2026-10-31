@@ -24,6 +24,7 @@ const errors: ErrorRequestHandler = (error: unknown, _req, res, _next) => { res.
 app.use(errors);
 beforeEach(() => {
   jest.clearAllMocks();
+  db.withTenantTransaction.mockImplementation(async (_tenant, operation) => operation(prisma));
   db.user.findUnique.mockResolvedValue({ id: 'user-a', name: 'A', email: 'a@example.test', isActive: true } as Awaited<ReturnType<typeof prisma.user.findUnique>>);
   db.user.update.mockResolvedValue({ id: 'user-a', name: 'A' } as Awaited<ReturnType<typeof prisma.user.update>>);
   db.workspaceMember.findUnique.mockResolvedValue({ userId: 'user-a', workspaceId: 'workspace-a', role: 'EDITOR' } as Awaited<ReturnType<typeof prisma.workspaceMember.findUnique>>);

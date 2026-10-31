@@ -1,0 +1,38 @@
+
+> frontend@0.1.0 test
+> node --test tests/*.test.mjs && vitest run
+
+TAP version 13
+# Subtest: tests/dependency-policy.test.mjs
+ok 1 - tests/dependency-policy.test.mjs
+  ---
+  duration_ms: 48.066988
+  type: 'test'
+  ...
+# Subtest: tests/markdown.test.mjs
+ok 2 - tests/markdown.test.mjs
+  ---
+  duration_ms: 390.227155
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 399.680688
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vitest.config.ts:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v5.0.5 /home/kevin/devsync/frontend
+
+
+ Test Files  2 passed (2)
+      Tests  4 passed (4)
+   Start at  23:23:26
+   Duration  1.04s (environment 55%, tests 20%, import 19%, transform 5%)
+

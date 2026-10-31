@@ -1,3 +1,4 @@
+import { notifyCollaborationAclChange } from '../services/collaboration-acl';
 import { Request, Response, NextFunction } from 'express';
 import { Role } from '@prisma/client';
 import { z } from 'zod';
@@ -230,6 +231,7 @@ export async function updateMemberRole(req: Request, res: Response, next: NextFu
       data: { role: role as Role },
       include: { user: { select: { id: true, name: true, email: true, avatar: true } } },
     });
+    notifyCollaborationAclChange(workspaceId, member.userId);
     res.json(member);
   } catch (error) {
     next(error);
@@ -255,6 +257,7 @@ export async function removeMember(req: Request, res: Response, next: NextFuncti
     }
 
     await prisma.workspaceMember.delete({ where: { id: memberId, workspaceId } });
+    notifyCollaborationAclChange(workspaceId, member.userId);
     res.json({ message: 'Member removed' });
   } catch (error) {
     next(error);

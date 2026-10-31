@@ -1,0 +1,7 @@
+
+> frontend@0.1.0 typecheck
+> tsc --noEmit
+
+src/lib/local-first-yjs.ts(65,9): error TS2322: Type '() => Promise<string | null>' is not assignable to type 'string | (() => string) | (() => Promise<string>) | null | undefined'.
+  Type '() => Promise<string | null>' is not assignable to type '() => string'.
+    Type 'Promise<string | null>' is not assignable to type 'string'.

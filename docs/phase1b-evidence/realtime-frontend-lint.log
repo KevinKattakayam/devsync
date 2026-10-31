@@ -1,0 +1,98 @@
+
+> frontend@0.1.0 lint
+> eslint
+
+
+/home/kevin/devsync/frontend/src/app/(auth)/login/[[...rest]]/page.tsx
+  7:5  warning  Do not use `window.location.href` to navigate to internal Next.js pages. Use `redirect()` in the render phase, or `useRouter().push()` in Client Components' event handlers instead. See: https://nextjs.org/docs/messages/no-location-assign-relative-destination  @next/next/no-location-assign-relative-destination
+
+/home/kevin/devsync/frontend/src/app/(dashboard)/dashboard/page.tsx
+  11:34  warning  'Users' is defined but never used       @typescript-eslint/no-unused-vars
+  11:62  warning  'Sparkles' is defined but never used    @typescript-eslint/no-unused-vars
+  11:72  warning  'TrendingUp' is defined but never used  @typescript-eslint/no-unused-vars
+
+/home/kevin/devsync/frontend/src/app/(dashboard)/layout.tsx
+  11:11  warning  'User' is defined but never used                  @typescript-eslint/no-unused-vars
+  11:32  warning  'Sparkles' is defined but never used              @typescript-eslint/no-unused-vars
+  20:24  warning  'onlineUsers' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/home/kevin/devsync/frontend/src/app/(dashboard)/settings/billing/page.tsx
+  4:43  warning  'Shield' is defined but never used  @typescript-eslint/no-unused-vars
+  4:51  warning  'Cpu' is defined but never used     @typescript-eslint/no-unused-vars
+  4:56  warning  'Users' is defined but never used   @typescript-eslint/no-unused-vars
+
+/home/kevin/devsync/frontend/src/app/(dashboard)/workspace/[id]/docs/[docId]/page.tsx
+    8:31  warning  'useCallback' is defined but never used                 @typescript-eslint/no-unused-vars
+   28:10  warning  'useSyncHealthStore' is defined but never used          @typescript-eslint/no-unused-vars
+   33:43  warning  'LinkIcon' is defined but never used                    @typescript-eslint/no-unused-vars
+   33:53  warning  'Save' is defined but never used                        @typescript-eslint/no-unused-vars
+   35:30  warning  'FileCheck' is defined but never used                   @typescript-eslint/no-unused-vars
+   85:3   warning  'doc' is defined but never used                         @typescript-eslint/no-unused-vars
+  467:26  warning  'setConnectedUsers' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/home/kevin/devsync/frontend/src/app/(dashboard)/workspace/[id]/docs/page.tsx
+  12:21  warning  'BookOpen' is defined but never used                  @typescript-eslint/no-unused-vars
+  12:31  warning  'Layers' is defined but never used                    @typescript-eslint/no-unused-vars
+  12:39  warning  'ShieldAlert' is defined but never used               @typescript-eslint/no-unused-vars
+  12:52  warning  'Cpu' is defined but never used                       @typescript-eslint/no-unused-vars
+  12:57  warning  'FileUp' is defined but never used                    @typescript-eslint/no-unused-vars
+  80:10  warning  'showUploadModal' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/home/kevin/devsync/frontend/src/app/(dashboard)/workspace/[id]/kanban/page.tsx
+   8:25  warning  'GripVertical' is defined but never used                                                                                                                                                         @typescript-eslint/no-unused-vars
+   8:39  warning  'Calendar' is defined but never used                                                                                                                                                             @typescript-eslint/no-unused-vars
+  28:9   warning  The 'boards' logical expression could make the dependencies of useCallback Hook (at line 60) change on every render. To fix this, wrap the initialization of 'boards' in its own useMemo() Hook  react-hooks/exhaustive-deps
+  45:6   warning  React Hook useEffect has a missing dependency: 'localBoards'. Either include it or remove the dependency array                                                                                   react-hooks/exhaustive-deps
+
+/home/kevin/devsync/frontend/src/app/(dashboard)/workspace/[id]/settings/page.tsx
+  6:11  warning  'id' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/home/kevin/devsync/frontend/src/app/(dashboard)/workspace/[id]/snippets/page.tsx
+   12:29  warning  'HelpCircle' is defined but never used  @typescript-eslint/no-unused-vars
+   12:41  warning  'RefreshCw' is defined but never used   @typescript-eslint/no-unused-vars
+  122:14  warning  'err' is defined but never used         @typescript-eslint/no-unused-vars
+
+/home/kevin/devsync/frontend/src/components/ai-copilot-drawer.tsx
+   7:17  warning  'documentApi' is defined but never used   @typescript-eslint/no-unused-vars
+   7:30  warning  'snippetApi' is defined but never used    @typescript-eslint/no-unused-vars
+   7:42  warning  'boardApi' is defined but never used      @typescript-eslint/no-unused-vars
+  10:9   warning  'ChevronDown' is defined but never used   @typescript-eslint/no-unused-vars
+  10:29  warning  'Terminal' is defined but never used      @typescript-eslint/no-unused-vars
+  10:39  warning  'ExternalLink' is defined but never used  @typescript-eslint/no-unused-vars
+
+/home/kevin/devsync/frontend/src/components/auth-error-boundary.tsx
+  32:5  warning  Do not use `window.location.href` to navigate to internal Next.js pages. Use `redirect()` in the render phase, or `useRouter().push()` in Client Components' event handlers instead. See: https://nextjs.org/docs/messages/no-location-assign-relative-destination  @next/next/no-location-assign-relative-destination
+
+/home/kevin/devsync/frontend/src/components/command-palette.tsx
+   3:31  warning  'useCallback' is defined but never used   @typescript-eslint/no-unused-vars
+   5:10  warning  'useAuth' is defined but never used       @typescript-eslint/no-unused-vars
+   9:36  warning  'Sparkles' is defined but never used      @typescript-eslint/no-unused-vars
+  10:9   warning  'ArrowRight' is defined but never used    @typescript-eslint/no-unused-vars
+  11:17  warning  'Folder' is defined but never used        @typescript-eslint/no-unused-vars
+  11:25  warning  'ExternalLink' is defined but never used  @typescript-eslint/no-unused-vars
+  11:39  warning  'X' is defined but never used             @typescript-eslint/no-unused-vars
+  11:42  warning  'Terminal' is defined but never used      @typescript-eslint/no-unused-vars
+
+/home/kevin/devsync/frontend/src/components/sprint-analytics-modal.tsx
+   3:17  warning  'Task' is defined but never used                    @typescript-eslint/no-unused-vars
+   5:43  warning  'Clock' is defined but never used                   @typescript-eslint/no-unused-vars
+   6:3   warning  'AlertTriangle' is defined but never used           @typescript-eslint/no-unused-vars
+  20:9   warning  'backlogColumn' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/home/kevin/devsync/frontend/src/components/workspace/activity-feed.tsx
+   7:57  warning  'FolderPlus' is defined but never used                                                                                                               @typescript-eslint/no-unused-vars
+   7:95  warning  'Filter' is defined but never used                                                                                                                   @typescript-eslint/no-unused-vars
+  37:6   warning  React Hook useEffect has missing dependencies: 'fetchActivities' and 'initialActivities.length'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+/home/kevin/devsync/frontend/src/components/workspace/presence-bar.tsx
+  5:16  warning  'Sparkles' is defined but never used  @typescript-eslint/no-unused-vars
+
+/home/kevin/devsync/frontend/src/components/workspace/workspace-stats.tsx
+  4:42  warning  'CheckCircle2' is defined but never used  @typescript-eslint/no-unused-vars
+
+/home/kevin/devsync/frontend/src/proxy.ts
+  2:10  warning  'NextResponse' is defined but never used  @typescript-eslint/no-unused-vars
+  3:15  warning  'NextRequest' is defined but never used   @typescript-eslint/no-unused-vars
+
+✖ 57 problems (0 errors, 57 warnings)
+

@@ -21,8 +21,8 @@ const priorityConfig: Record<string, { color: string; bg: string; label: string 
 
 export default function KanbanPage() {
   const { id } = useParams<{ id: string }>();
-  const { getToken } = useAuth();
-  const boardSync = useLocalFirstYDoc(`kanban:${id}`, getToken);
+  const { getToken, user } = useAuth();
+  const boardSync = useLocalFirstYDoc(`kanban:${id}`, getToken, user?.id);
   useCRDTGarbageCollector(boardSync.document);
   const localBoards = useLocalFirstRecord<Board[]>(boardSync.document, 'boards');
   const boards = localBoards.value ?? [];

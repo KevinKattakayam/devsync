@@ -1,5 +1,5 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": { "rootDir": ".", "noEmit": true },
-  "include": ["prisma/seed.ts", "src/lib/tenant-prisma.ts"]
+  "include": ["prisma/*.ts", "src/lib/tenant-prisma.ts"]
 }

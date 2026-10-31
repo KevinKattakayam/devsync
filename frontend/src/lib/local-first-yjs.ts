@@ -1,6 +1,6 @@
 'use client';
 
-import { HocuspocusProvider } from '@hocuspocus/provider';
+import { HocuspocusProvider, HocuspocusProviderWebsocket } from '@hocuspocus/provider';
 import { IndexeddbPersistence } from 'y-indexeddb';
 import * as Y from 'yjs';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -13,7 +13,13 @@ export interface LocalFirstYDoc {
   provider: HocuspocusProvider | null;
   localReady: boolean;
   syncStatus: SyncStatus;
+  canWrite: boolean;
+  pending: boolean;
 }
+
+// StrictMode briefly releases then reacquires the same document. Defer disposal
+// until the effect cycle completes; room/account changes own independent replicas.
+const leases = new WeakMap<Y.Doc, number>();
 
 /**
  * IndexedDB is the write-ahead durable store. Hocuspocus is deliberately
@@ -22,36 +28,56 @@ export interface LocalFirstYDoc {
 export function useLocalFirstYDoc(
   room: string,
   getToken: () => Promise<string | null>,
+  principal: string | undefined,
 ): LocalFirstYDoc {
-  const [document] = useState(() => new Y.Doc());
-  const [localReady, setLocalReady] = useState(false);
+  const document = useMemo(() => new Y.Doc({ guid: `devsync:${principal ?? 'anonymous'}:${room}` }), [room, principal]);
+  const [readyDocument, setReadyDocument] = useState<Y.Doc | null>(null);
   const [syncStatus, setSyncStatus] = useState<SyncStatus>('offline');
   const [provider, setProvider] = useState<HocuspocusProvider | null>(null);
+  const [writableDocument, setWritableDocument] = useState<Y.Doc | null>(null);
+  const [pending, setPending] = useState(false);
   const setHealth = useSyncHealthStore((state) => state.setStatus);
 
   useEffect(() => {
+    if (!principal) return;
+    leases.set(document, (leases.get(document) ?? 0) + 1);
     let disposed = false;
-    const persistence = new IndexeddbPersistence(`devsync:${room}`, document);
+    const persistence = new IndexeddbPersistence(`devsync:${principal}:${room}`, document);
     void persistence.whenSynced.then(() => {
       if (!disposed) {
-        setLocalReady(true);
+        setReadyDocument(document);
       }
-    });
+    }).catch(() => { if (!disposed) setHealth('offline'); });
 
     let remote: HocuspocusProvider | null = null;
+    let socket: HocuspocusProviderWebsocket | null = null;
     void getToken().then((token) => {
       if (!token || disposed) return;
       const endpoint = (process.env.NEXT_PUBLIC_YJS_URL || process.env.NEXT_PUBLIC_SOCKET_URL || 'ws://localhost:5000').replace(/^http/, 'ws');
-      remote = new HocuspocusProvider({
+      socket = new HocuspocusProviderWebsocket({
         url: `${endpoint}/yjs`,
+        delay: 1000, minDelay: 1000, maxDelay: 30000, factor: 2, jitter: true,
+      });
+      remote = new HocuspocusProvider({
+        websocketProvider: socket,
         name: room,
         document,
-        token,
-        onStatus: ({ status }) => {
+        token: async () => {
+          const current = await getToken();
+          if (!current) throw new Error('Authentication required');
+          return current;
+        },
+        onAuthenticated: ({ scope }) => {
+          if (!disposed) setWritableDocument(scope === 'read-write' ? document : null);
+        },
+        onUnsyncedChanges: ({ number }) => { if (!disposed) setPending(number > 0); },
+        onAuthenticationFailed: () => {
+          if (!disposed) { setWritableDocument(null); setSyncStatus('offline'); }
+        },
+        onStatus: () => {
           if (!disposed) {
-            const next = status === 'connected' ? 'connected' : 'connecting';
-            setSyncStatus(next);
-            setHealth(next === 'connected' ? 'synced' : 'reconnecting');
+            setSyncStatus('connecting');
+            setHealth('reconnecting');
           }
         },
         onSynced: ({ state }) => {
@@ -60,13 +86,15 @@ export function useLocalFirstYDoc(
             setHealth('synced');
           }
         },
-        onDisconnect: () => {
+        onDisconnect: ({ event }) => {
           if (!disposed) {
+            if (event.code === 4403) setWritableDocument(null);
             setSyncStatus('offline');
             setHealth('offline');
           }
         },
       });
+      remote.attach();
       if (!disposed) setProvider(remote);
     }).catch(() => {
       if (!disposed) {
@@ -87,12 +115,15 @@ export function useLocalFirstYDoc(
     return () => {
       disposed = true;
       remote?.destroy();
-      persistence.destroy();
+      socket?.destroy();
+      void persistence.destroy();
       actions.unobserve(detectPaymentBlock);
+      leases.set(document, (leases.get(document) ?? 1) - 1);
+      queueMicrotask(() => { if (!leases.get(document)) document.destroy(); });
     };
-  }, [document, getToken, room, setHealth]);
+  }, [document, getToken, principal, room, setHealth]);
 
-  return { document, provider, localReady, syncStatus };
+  return { document, provider: provider?.document === document ? provider : null, localReady: readyDocument === document, syncStatus, canWrite: writableDocument === document, pending };
 }
 
 export interface LocalFirstRecord<T> {

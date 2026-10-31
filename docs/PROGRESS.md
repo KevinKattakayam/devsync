@@ -1,3 +1,15 @@
+# Phase 1b session — in progress (2026-11-01)
+
+- Baseline: both installs, lint commands, type-checks, tests and builds passed. Frontend had 55 warnings. Evidence: `phase1a-evidence/phase1b-baseline-*` (runner location retained from Phase 1a).
+- Read audit, authorization matrix, fix order, prior progress and ADRs. Root AGENTS.md and docs/MASTER_PROMPT.md were absent; followed the user-supplied AGENTS.md and frontend/AGENTS.md. ADR007 was written before realtime implementation.
+- Current group: durable authorized document CRDT journal, Redis fanout, safe conversion/rollback, offline client lifecycle and real regression tests. Ten collaboration integration scenarios pass in isolation and in the full backend suite. First full gate exposed a revocation race, mock-hook teardown and nullable token callback error; those were fixed without removing/weaking assertions. Failed outputs are retained.
+- Frontend retry gate: install, lint, type-check, tests and production build pass; remaining warnings are reported in raw logs. Backend retry gate passes: 10 suites / 65 tests, plus clean install/lint/type-check/build. Frontend has four new component tests plus retained original unit tests; lint has 0 errors / 50 warnings. Outputs: `phase1b-evidence/realtime-frontend-results.json` and `realtime-retry-results.json` (backend).
+- Outstanding Phase 1b: API reliability/versioning/idempotency/OpenAPI, full observability, Socket.io expiry/revocation cleanup, E2E, coverage/CI/format gates, original-main screenshots. G06 REST/agent projections, legacy alias cross-topic fanout and large offline-batch UX remain open. See CRDT_OPERATIONS.md.
+- Requires human action: provision private authenticated Redis and persistent WebSocket hosting, adopt new migrations with separate non-bypass runtime credentials, take and rehearse restoring a production backup, plan maintenance migration; provide real Clerk test identities for authenticated browser fixtures/screenshots. No push, deployment or key rotation performed.
+- Phase 1a's historical unfinished items below remain truthful; the new user assertion that 1a is complete does not match this ledger. Clerk authentication and prior security tests are retained.
+
+---
+
 # Progress — Phase 1a partial delivery
 
 Updated 2026-10-31. Branch `upgrade/enterprise`. No push, deployment, production database mutation, key rotation or real identity provisioning. Phase 1a is **not complete**; do not treat this branch as production-ready. Root AGENTS.md and docs/MASTER_PROMPT.md were absent; the user's supplied session rules were followed. Phase 0 evidence remains in AUDIT.md and audit-evidence/.

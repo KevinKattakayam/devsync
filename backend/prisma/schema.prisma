@@ -106,6 +106,8 @@ model ScimExternalIdentity {
 }
 
 model Document {
+  updates DocumentUpdate[]
+  crdtBackup DocumentCrdtBackup?
   id          String     @id @default(cuid())
   title       String     @default("Untitled")
   content     Json?
@@ -270,4 +272,28 @@ enum Priority {
 enum SystemRole {
   USER
   SUPER_ADMIN
+}
+
+model DocumentUpdate {
+  id BigInt @id @default(autoincrement())
+  documentId String
+  workspaceId String
+  digest String
+  update Bytes
+  createdAt DateTime @default(now())
+  document Document @relation(fields: [documentId, workspaceId], references: [id, workspaceId], onDelete: Cascade, onUpdate: Restrict)
+  @@unique([documentId, digest])
+  @@index([workspaceId, documentId, id])
+}
+
+model DocumentCrdtBackup {
+  documentId String @id
+  workspaceId String
+  originalContent Json?
+  originalState Bytes?
+  convertedState Bytes
+  createdAt DateTime @default(now())
+  restoredAt DateTime?
+  document Document @relation(fields: [documentId, workspaceId], references: [id, workspaceId], onDelete: Restrict, onUpdate: Restrict)
+  @@unique([documentId, workspaceId])
 }

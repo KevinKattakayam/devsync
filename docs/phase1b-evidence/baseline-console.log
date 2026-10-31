@@ -1,0 +1,141 @@
+frontend install: 0
+backend install: 0
+frontend lint: 0
+                                                                         @typescript-eslint/no-unused-vars
+  37:6   warning  React Hook useEffect has missing dependencies: 'fetchActivities' and 'initialActivities.length'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+/home/kevin/devsync/frontend/src/components/workspace/presence-bar.tsx
+  5:16  warning  'Sparkles' is defined but never used  @typescript-eslint/no-unused-vars
+
+/home/kevin/devsync/frontend/src/components/workspace/workspace-stats.tsx
+  4:42  warning  'CheckCircle2' is defined but never used  @typescript-eslint/no-unused-vars
+
+/home/kevin/devsync/frontend/src/proxy.ts
+  2:10  warning  'NextResponse' is defined but never used  @typescript-eslint/no-unused-vars
+  3:15  warning  'NextRequest' is defined but never used   @typescript-eslint/no-unused-vars
+
+✖ 55 problems (0 errors, 55 warnings)
+
+
+backend lint: 0
+
+> devsync-backend@1.0.0 lint
+> eslint src prisma
+
+
+frontend typecheck: 0
+
+> frontend@0.1.0 typecheck
+> tsc --noEmit
+
+
+frontend tests: 0
+dvisory remediation floor
+  ---
+  duration_ms: 1.727282
+  type: 'test'
+  ...
+# Subtest: I01 unused NextAuth is absent from the installed frontend
+ok 2 - I01 unused NextAuth is absent from the installed frontend
+  ---
+  duration_ms: 1.010881
+  type: 'test'
+  ...
+# Subtest: code blocks and inline code escape HTML
+ok 3 - code blocks and inline code escape HTML
+  ---
+  duration_ms: 1.33444
+  type: 'test'
+  ...
+# Subtest: E02 treats ordinary HTML, handlers and malformed tags as inert text
+ok 4 - E02 treats ordinary HTML, handlers and malformed tags as inert text
+  ---
+  duration_ms: 0.458668
+  type: 'test'
+  ...
+# Subtest: E02 escapes HTML inside headings, lists and table cells
+ok 5 - E02 escapes HTML inside headings, lists and table cells
+  ---
+  duration_ms: 0.263737
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 502.324322
+
+backend typecheck: 0
+
+> devsync-backend@1.0.0 typecheck
+> tsc --noEmit && tsc -p tsconfig.seed.json
+
+
+frontend build: 0
+Finished TypeScript in 3.3s ...
+  Collecting page data using 7 workers ...
+  Generating static pages using 7 workers (0/8) ...
+  Generating static pages using 7 workers (2/8) 
+  Generating static pages using 7 workers (4/8) 
+  Generating static pages using 7 workers (6/8) 
+✓ Generating static pages using 7 workers (8/8) in 394ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /api/auth/reset
+├ ƒ /api/superadmin/workspaces/[workspaceId]/kill-switch
+├ ○ /dashboard
+├ ƒ /login/[[...rest]]
+├ ○ /settings/billing
+├ ƒ /sign-in/[[...rest]]
+├ ƒ /sign-up/[[...rest]]
+├ ƒ /signup/[[...rest]]
+├ ƒ /superadmin
+├ ƒ /workspace/[id]
+├ ƒ /workspace/[id]/docs
+├ ƒ /workspace/[id]/docs/[docId]
+├ ƒ /workspace/[id]/kanban
+├ ƒ /workspace/[id]/settings
+└ ƒ /workspace/[id]/snippets
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+
+backend tests: 0
+
+> devsync-backend@1.0.0 test
+> jest --runInBand
+
+GET /api/health 200 2.050 ms - 54
+
+Test Suites: 9 passed, 9 total
+Tests:       55 passed, 55 total
+Snapshots:   0 total
+Time:        21.492 s, estimated 42 s
+Ran all test suites.
+
+backend build: 0
+
+> devsync-backend@1.0.0 build
+> prisma generate && tsc
+
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+
+✔ Generated Prisma Client (v5.22.0) to ./node_modules/@prisma/client in 2.31s
+
+Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
+
+Tip: Easily identify and fix slow SQL queries in your app. Optimize helps you enhance your visibility: https://pris.ly/--optimize
+
+
