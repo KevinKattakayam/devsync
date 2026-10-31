@@ -1,0 +1,110 @@
+{
+  "backend-audit": {
+    "command": [
+      "npm",
+      "audit",
+      "--json"
+    ],
+    "exit": 1
+  },
+  "frontend-audit": {
+    "command": [
+      "npm",
+      "audit",
+      "--json"
+    ],
+    "exit": 1
+  },
+  "backend-tests": {
+    "command": [
+      "npm",
+      "test"
+    ],
+    "exit": 1
+  },
+  "frontend-tests": {
+    "command": [
+      "npm",
+      "test"
+    ],
+    "exit": 1
+  },
+  "backend-lint": {
+    "command": [
+      "npm",
+      "run",
+      "lint"
+    ],
+    "exit": 1
+  },
+  "frontend-lint": {
+    "command": [
+      "npm",
+      "run",
+      "lint"
+    ],
+    "exit": 1
+  },
+  "backend-typecheck": {
+    "command": [
+      "npx",
+      "--no-install",
+      "tsc",
+      "--noEmit"
+    ],
+    "exit": 2
+  },
+  "frontend-typecheck": {
+    "command": [
+      "npx",
+      "--no-install",
+      "tsc",
+      "--noEmit"
+    ],
+    "exit": 0
+  },
+  "backend-build": {
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "exit": 1
+  },
+  "frontend-build": {
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "exit": 1
+  },
+  "backend-e2e": {
+    "command": [
+      "npm",
+      "run",
+      "test:e2e"
+    ],
+    "exit": 0
+  },
+  "backend-dev": {
+    "command": [
+      "timeout",
+      "20s",
+      "npm",
+      "run",
+      "dev"
+    ],
+    "exit": 1
+  },
+  "frontend-dev": {
+    "command": [
+      "timeout",
+      "30s",
+      "npm",
+      "run",
+      "dev"
+    ],
+    "exit": 1
+  }
+}

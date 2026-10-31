@@ -1,0 +1,20 @@
+{
+  "backend-install-escalated": 0,
+  "frontend-install": 0,
+  "backend-audit-escalated": 1,
+  "frontend-audit-escalated": 1,
+  "backend-build-escalated": 0,
+  "frontend-build-escalated": 0,
+  "backend-tests-escalated": 1,
+  "backend-typecheck-final": 0,
+  "frontend-typecheck": 0,
+  "frontend-lint": 1,
+  "backend-lint": "missing script",
+  "frontend-tests": "missing script",
+  "backend-e2e": {
+    "exit": 0,
+    "skipped": 2,
+    "executed": 0
+  },
+  "ui-capture": 0
+}

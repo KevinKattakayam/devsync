@@ -1,0 +1,10 @@
+{
+  "tracked_file_count": 153,
+  "nested_worktree_differences": [],
+  "excluded": [
+    ".git internal objects",
+    "node_modules generated dependencies",
+    "ignored local credential values (not copied into evidence)",
+    "runtime build outputs"
+  ]
+}

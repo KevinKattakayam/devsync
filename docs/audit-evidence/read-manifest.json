@@ -1,0 +1,769 @@
+[
+  {
+    "path": ".github/workflows/deploy.yml",
+    "lines": 23,
+    "kind": "text"
+  },
+  {
+    "path": ".github/workflows/main.yml",
+    "lines": 118,
+    "kind": "text"
+  },
+  {
+    "path": ".gitignore",
+    "lines": 8,
+    "kind": "text"
+  },
+  {
+    "path": ".vscode/settings.json",
+    "lines": 3,
+    "kind": "json"
+  },
+  {
+    "path": "DEPLOYMENT.md",
+    "lines": 95,
+    "kind": "text"
+  },
+  {
+    "path": "ENTERPRISE_WALKTHROUGH.md",
+    "lines": 47,
+    "kind": "text"
+  },
+  {
+    "path": "README.md",
+    "lines": 74,
+    "kind": "text"
+  },
+  {
+    "path": "backend/.dockerignore",
+    "lines": 6,
+    "kind": "text"
+  },
+  {
+    "path": "backend/.env.example",
+    "lines": 29,
+    "kind": "text"
+  },
+  {
+    "path": "backend/Dockerfile",
+    "lines": 26,
+    "kind": "text"
+  },
+  {
+    "path": "backend/e2e/offline-sync-billing.spec.ts",
+    "lines": 38,
+    "kind": "text"
+  },
+  {
+    "path": "backend/e2e/workspace-flow.spec.ts",
+    "lines": 32,
+    "kind": "text"
+  },
+  {
+    "path": "backend/jest.config.js",
+    "lines": 7,
+    "kind": "text"
+  },
+  {
+    "path": "backend/package-lock.json",
+    "lines": 11867,
+    "kind": "json",
+    "locked_packages": 886
+  },
+  {
+    "path": "backend/package.json",
+    "lines": 74,
+    "kind": "json"
+  },
+  {
+    "path": "backend/playwright.config.ts",
+    "lines": 17,
+    "kind": "text"
+  },
+  {
+    "path": "backend/prisma/migrations/20260729180000_enterprise_platform/migration.sql",
+    "lines": 65,
+    "kind": "text"
+  },
+  {
+    "path": "backend/prisma/migrations/20260815000000_phase_3_tenant_rls/migration.sql",
+    "lines": 51,
+    "kind": "text"
+  },
+  {
+    "path": "backend/prisma/migrations/20260815001000_scim_provisioning/migration.sql",
+    "lines": 20,
+    "kind": "text"
+  },
+  {
+    "path": "backend/prisma/migrations/20260815002000_commercial_billing/migration.sql",
+    "lines": 20,
+    "kind": "text"
+  },
+  {
+    "path": "backend/prisma/schema.prisma",
+    "lines": 256,
+    "kind": "text"
+  },
+  {
+    "path": "backend/railway.json",
+    "lines": 12,
+    "kind": "json"
+  },
+  {
+    "path": "backend/src/__tests__/health.test.ts",
+    "lines": 10,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/__tests__/queue-resilience.test.ts",
+    "lines": 40,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/__tests__/rls-security.test.ts",
+    "lines": 59,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/__tests__/secret.service.test.ts",
+    "lines": 19,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/agents/pr-summary.agent.ts",
+    "lines": 106,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/agents/task-completion.agent.ts",
+    "lines": 115,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/app.ts",
+    "lines": 128,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/controllers/ai.controller.ts",
+    "lines": 68,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/controllers/auth.controller.ts",
+    "lines": 53,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/controllers/document.controller.ts",
+    "lines": 156,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/controllers/github-repository.controller.ts",
+    "lines": 49,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/controllers/search.controller.ts",
+    "lines": 32,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/controllers/snippet.controller.ts",
+    "lines": 239,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/controllers/task.controller.ts",
+    "lines": 365,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/controllers/workspace.controller.ts",
+    "lines": 271,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/lib/cache.ts",
+    "lines": 70,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/lib/idempotency.ts",
+    "lines": 25,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/lib/prisma.ts",
+    "lines": 24,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/lib/queue.ts",
+    "lines": 115,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/lib/redis.ts",
+    "lines": 52,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/lib/tenant-prisma.ts",
+    "lines": 33,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/middleware/auth.middleware.ts",
+    "lines": 61,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/middleware/billing.middleware.ts",
+    "lines": 22,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/middleware/rate-limit.middleware.ts",
+    "lines": 30,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/middleware/rbac.middleware.ts",
+    "lines": 50,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/middleware/tracing.middleware.ts",
+    "lines": 11,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/middleware/validate.middleware.ts",
+    "lines": 19,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/observability/telemetry.ts",
+    "lines": 24,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/routes/ai.routes.ts",
+    "lines": 12,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/routes/auth.routes.ts",
+    "lines": 14,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/routes/document.routes.ts",
+    "lines": 14,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/routes/github-webhook.routes.ts",
+    "lines": 192,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/routes/ingestion.routes.ts",
+    "lines": 81,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/routes/scim.routes.ts",
+    "lines": 79,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/routes/snippet.routes.ts",
+    "lines": 15,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/routes/stripe.webhook.ts",
+    "lines": 41,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/routes/superadmin.routes.ts",
+    "lines": 48,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/routes/task.routes.ts",
+    "lines": 24,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/routes/workspace.routes.ts",
+    "lines": 61,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/server.ts",
+    "lines": 57,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/services/ai-gateway.service.ts",
+    "lines": 72,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/services/billing.service.ts",
+    "lines": 43,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/services/cloudinary.service.ts",
+    "lines": 32,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/services/crdt-sync.service.ts",
+    "lines": 47,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/services/embedding.service.ts",
+    "lines": 101,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/services/ingestion.service.ts",
+    "lines": 244,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/services/secret.service.ts",
+    "lines": 25,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/services/yjs.service.ts",
+    "lines": 192,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/socket/index.ts",
+    "lines": 100,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/socket/kanban.handler.ts",
+    "lines": 102,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/socket/presence.handler.ts",
+    "lines": 162,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/socket/rate-limiter.ts",
+    "lines": 79,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/utils/errors.ts",
+    "lines": 41,
+    "kind": "text"
+  },
+  {
+    "path": "backend/src/worker.ts",
+    "lines": 75,
+    "kind": "text"
+  },
+  {
+    "path": "backend/tsconfig.json",
+    "lines": 23,
+    "kind": "json"
+  },
+  {
+    "path": "docker-compose.yml",
+    "lines": 62,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/.gitignore",
+    "lines": 41,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/AGENTS.md",
+    "lines": 5,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/CLAUDE.md",
+    "lines": 1,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/Dockerfile",
+    "lines": 49,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/README.md",
+    "lines": 36,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/eslint.config.mjs",
+    "lines": 18,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/next.config.ts",
+    "lines": 23,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/nixpacks.toml",
+    "lines": 14,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/package-lock.json",
+    "lines": 9225,
+    "kind": "json",
+    "locked_packages": 633
+  },
+  {
+    "path": "frontend/package.json",
+    "lines": 72,
+    "kind": "json"
+  },
+  {
+    "path": "frontend/postcss.config.mjs",
+    "lines": 7,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/public/file.svg",
+    "lines": 1,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/public/globe.svg",
+    "lines": 1,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/public/next.svg",
+    "lines": 1,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/public/vercel.svg",
+    "lines": 1,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/public/window.svg",
+    "lines": 1,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/app/(auth)/layout.tsx",
+    "lines": 51,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/app/(auth)/login/[[...rest]]/page.tsx",
+    "lines": 26,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/app/(auth)/sign-in/[[...rest]]/page.tsx",
+    "lines": 22,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/app/(auth)/sign-up/[[...rest]]/page.tsx",
+    "lines": 22,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/app/(auth)/signup/[[...rest]]/page.tsx",
+    "lines": 16,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/app/(dashboard)/dashboard/page.tsx",
+    "lines": 159,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/app/(dashboard)/layout.tsx",
+    "lines": 197,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/app/(dashboard)/settings/billing/page.tsx",
+    "lines": 140,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/app/(dashboard)/workspace/[id]/docs/[docId]/page.tsx",
+    "lines": 550,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/app/(dashboard)/workspace/[id]/docs/page.tsx",
+    "lines": 314,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/app/(dashboard)/workspace/[id]/kanban/page.tsx",
+    "lines": 203,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/app/(dashboard)/workspace/[id]/page.tsx",
+    "lines": 360,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/app/(dashboard)/workspace/[id]/settings/page.tsx",
+    "lines": 28,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/app/(dashboard)/workspace/[id]/snippets/page.tsx",
+    "lines": 548,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/app/(superadmin)/layout.tsx",
+    "lines": 8,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/app/(superadmin)/superadmin/page.tsx",
+    "lines": 15,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/app/api/auth/reset/route.ts",
+    "lines": 44,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/app/api/superadmin/workspaces/[workspaceId]/kill-switch/route.ts",
+    "lines": 15,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/app/error.tsx",
+    "lines": 10,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/app/favicon.ico",
+    "kind": "binary",
+    "bytes": 25931
+  },
+  {
+    "path": "frontend/src/app/globals.css",
+    "lines": 353,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/app/layout.tsx",
+    "lines": 58,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/app/page.tsx",
+    "lines": 495,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/components/ai-copilot-drawer.tsx",
+    "lines": 230,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/components/auth-error-boundary.tsx",
+    "lines": 60,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/components/command-palette.tsx",
+    "lines": 276,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/components/sprint-analytics-modal.tsx",
+    "lines": 178,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/components/sync-status-manager.tsx",
+    "lines": 42,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/components/workspace/activity-feed.tsx",
+    "lines": 142,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/components/workspace/presence-bar.tsx",
+    "lines": 40,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/components/workspace/workspace-stats.tsx",
+    "lines": 92,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/hooks/use-crdt-garbage-collector.ts",
+    "lines": 27,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/instrumentation.node.ts",
+    "lines": 7,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/instrumentation.ts",
+    "lines": 7,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/lib/api.ts",
+    "lines": 111,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/lib/local-first-yjs.ts",
+    "lines": 122,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/lib/markdown.ts",
+    "lines": 139,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/lib/tiptap-collaboration-cursor.ts",
+    "lines": 54,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/lib/tracing.ts",
+    "lines": 10,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/lib/utils.ts",
+    "lines": 47,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/providers/auth-provider.tsx",
+    "lines": 42,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/providers/socket-provider.tsx",
+    "lines": 65,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/providers/theme-provider.tsx",
+    "lines": 8,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/proxy.ts",
+    "lines": 26,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/stores/sync-health.store.ts",
+    "lines": 7,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/src/types/index.ts",
+    "lines": 97,
+    "kind": "text"
+  },
+  {
+    "path": "frontend/tsconfig.json",
+    "lines": 34,
+    "kind": "json"
+  },
+  {
+    "path": "infrastructure/argocd/argocd-app.yaml",
+    "lines": 27,
+    "kind": "text"
+  },
+  {
+    "path": "infrastructure/chaos/chaos-redis-delay.yaml",
+    "lines": 23,
+    "kind": "text"
+  },
+  {
+    "path": "infrastructure/chaos/pod-kill-redis.yaml",
+    "lines": 13,
+    "kind": "text"
+  },
+  {
+    "path": "infrastructure/kubernetes/api.yaml",
+    "lines": 54,
+    "kind": "text"
+  },
+  {
+    "path": "infrastructure/kubernetes/keda-bullmq-scaledobject.yaml",
+    "lines": 30,
+    "kind": "text"
+  },
+  {
+    "path": "infrastructure/kubernetes/kustomization.yaml",
+    "lines": 17,
+    "kind": "text"
+  },
+  {
+    "path": "infrastructure/kubernetes/namespace.yaml",
+    "lines": 4,
+    "kind": "text"
+  },
+  {
+    "path": "infrastructure/kubernetes/rollout-analysis.yaml",
+    "lines": 18,
+    "kind": "text"
+  },
+  {
+    "path": "infrastructure/kubernetes/web.yaml",
+    "lines": 54,
+    "kind": "text"
+  },
+  {
+    "path": "infrastructure/kubernetes/worker.yaml",
+    "lines": 16,
+    "kind": "text"
+  },
+  {
+    "path": "infrastructure/terraform/main.tf",
+    "lines": 123,
+    "kind": "text"
+  },
+  {
+    "path": "infrastructure/terraform/variables.tf",
+    "lines": 15,
+    "kind": "text"
+  }
+]

@@ -1,0 +1,42 @@
+
+> devsync-backend@1.0.0 test
+> jest --runInBand
+
+FAIL src/__tests__/rls-security.test.ts
+  ● Test suite failed to run
+
+    [96msrc/__tests__/rls-security.test.ts[0m:[93m2[0m:[93m10[0m - [91merror[0m[90m TS2305: [0mModule '"testcontainers"' has no exported member 'PostgreSqlContainer'.
+
+    [7m2[0m import { PostgreSqlContainer, StartedPostgreSqlContainer } from 'testcontainers';
+    [7m [0m [91m         ~~~~~~~~~~~~~~~~~~~[0m
+    [96msrc/__tests__/rls-security.test.ts[0m:[93m2[0m:[93m31[0m - [91merror[0m[90m TS2724: [0m'"testcontainers"' has no exported member named 'StartedPostgreSqlContainer'. Did you mean 'StartedTestContainer'?
+
+    [7m2[0m import { PostgreSqlContainer, StartedPostgreSqlContainer } from 'testcontainers';
+    [7m [0m [91m                              ~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+FAIL src/__tests__/queue-resilience.test.ts
+  ● Test suite failed to run
+
+    [96msrc/__tests__/queue-resilience.test.ts[0m:[93m17[0m:[93m5[0m - [91merror[0m[90m TS2322: [0mType 'Worker<{ id: string; }, never, string, RedisQueueBackend>' is not assignable to type 'Worker<{ id: string; }, any, string, RedisQueueBackend>'.
+      Types of property 'processFn' are incompatible.
+        Type 'Processor<{ id: string; }, never, string>' is not assignable to type 'Processor<{ id: string; }, any, string>'.
+          Types of parameters 'job' and 'job' are incompatible.
+            Type 'Job<{ id: string; }, any, string>' is not assignable to type 'Job<{ id: string; }, never, string>'.
+              Type 'any' is not assignable to type 'never'.
+
+    [7m17[0m     worker = new Worker('resilience-source', async () => { throw new Error('simulated redis dependent service outage'); }, { connection });
+    [7m  [0m [91m    ~~~~~~[0m
+
+FAIL src/__tests__/health.test.ts
+  ● Test suite failed to run
+
+    [96msrc/app.ts[0m:[93m63[0m:[93m18[0m - [91merror[0m[90m TS2339: [0mProperty '$queryRaw' does not exist on type 'TenantPrismaClient'.
+
+    [7m63[0m     await prisma.$queryRaw`SELECT 1`;
+    [7m  [0m [91m                 ~~~~~~~~~[0m
+
+Test Suites: 3 failed, 1 passed, 4 total
+Tests:       2 passed, 2 total
+Snapshots:   0 total
+Time:        13.38 s
+Ran all test suites.

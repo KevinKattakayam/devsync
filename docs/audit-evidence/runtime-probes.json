@@ -1,0 +1,52 @@
+[
+  {
+    "name": "health",
+    "command": [
+      "curl",
+      "--max-time",
+      "15",
+      "-i",
+      "http://localhost:5000/api/health"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "ready",
+    "command": [
+      "curl",
+      "--max-time",
+      "15",
+      "-i",
+      "http://localhost:5000/api/ready"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "docker",
+    "command": [
+      "docker",
+      "info",
+      "--format",
+      "{{.ServerVersion}}"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "compose",
+    "command": [
+      "docker",
+      "compose",
+      "config",
+      "--quiet"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "terraform",
+    "command": [
+      "terraform",
+      "version"
+    ],
+    "error": "[Errno 2] No such file or directory: 'terraform'"
+  }
+]

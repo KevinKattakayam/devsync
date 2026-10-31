@@ -1,0 +1,64 @@
+
+> devsync-backend@1.0.0 test
+> jest --runInBand
+
+FAIL src/__tests__/rls-security.test.ts
+  ● Test suite failed to run
+
+    [96msrc/__tests__/rls-security.test.ts[0m:[93m2[0m:[93m10[0m - [91merror[0m[90m TS2305: [0mModule '"testcontainers"' has no exported member 'PostgreSqlContainer'.
+
+    [7m2[0m import { PostgreSqlContainer, StartedPostgreSqlContainer } from 'testcontainers';
+    [7m [0m [91m         ~~~~~~~~~~~~~~~~~~~[0m
+    [96msrc/__tests__/rls-security.test.ts[0m:[93m2[0m:[93m31[0m - [91merror[0m[90m TS2724: [0m'"testcontainers"' has no exported member named 'StartedPostgreSqlContainer'. Did you mean 'StartedTestContainer'?
+
+    [7m2[0m import { PostgreSqlContainer, StartedPostgreSqlContainer } from 'testcontainers';
+    [7m [0m [91m                              ~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+FAIL src/__tests__/queue-resilience.test.ts
+  ● Test suite failed to run
+
+    [96msrc/__tests__/queue-resilience.test.ts[0m:[93m17[0m:[93m5[0m - [91merror[0m[90m TS2322: [0mType 'Worker<{ id: string; }, never, string, RedisQueueBackend>' is not assignable to type 'Worker<{ id: string; }, any, string, RedisQueueBackend>'.
+      Types of property 'processFn' are incompatible.
+        Type 'Processor<{ id: string; }, never, string>' is not assignable to type 'Processor<{ id: string; }, any, string>'.
+          Types of parameters 'job' and 'job' are incompatible.
+            Type 'Job<{ id: string; }, any, string>' is not assignable to type 'Job<{ id: string; }, never, string>'.
+              Type 'any' is not assignable to type 'never'.
+
+    [7m17[0m     worker = new Worker('resilience-source', async () => { throw new Error('simulated redis dependent service outage'); }, { connection });
+    [7m  [0m [91m    ~~~~~~[0m
+
+node:events:497
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EPERM: operation not permitted 0.0.0.0
+    at Server.setupListenHandle [as _listen2] (node:net:1919:21)
+    at listenInCluster (node:net:1998:12)
+    at Server.listen (node:net:2103:7)
+    at Test.serverAddress (/home/kevin/devsync/docs/audit-evidence/runtime/backend/node_modules/supertest/lib/test.js:63:35)
+    at new Test (/home/kevin/devsync/docs/audit-evidence/runtime/backend/node_modules/supertest/lib/test.js:49:14)
+    at Object.obj.<computed> [as get] (/home/kevin/devsync/docs/audit-evidence/runtime/backend/node_modules/supertest/index.js:40:18)
+    at Object.<anonymous> (/home/kevin/devsync/docs/audit-evidence/runtime/backend/src/__tests__/health.test.ts:10:72)
+    at Promise.finally.completed (/home/kevin/devsync/docs/audit-evidence/runtime/backend/node_modules/jest-circus/build/jestAdapterInit.js:1561:28)
+    at new Promise (<anonymous>)
+    at callAsyncCircusFn (/home/kevin/devsync/docs/audit-evidence/runtime/backend/node_modules/jest-circus/build/jestAdapterInit.js:1501:10)
+    at _callCircusTest (/home/kevin/devsync/docs/audit-evidence/runtime/backend/node_modules/jest-circus/build/jestAdapterInit.js:1011:40)
+    at _runTest (/home/kevin/devsync/docs/audit-evidence/runtime/backend/node_modules/jest-circus/build/jestAdapterInit.js:951:3)
+    at /home/kevin/devsync/docs/audit-evidence/runtime/backend/node_modules/jest-circus/build/jestAdapterInit.js:853:7
+    at _runTestsForDescribeBlock (/home/kevin/devsync/docs/audit-evidence/runtime/backend/node_modules/jest-circus/build/jestAdapterInit.js:866:11)
+    at _runTestsForDescribeBlock (/home/kevin/devsync/docs/audit-evidence/runtime/backend/node_modules/jest-circus/build/jestAdapterInit.js:861:11)
+    at run (/home/kevin/devsync/docs/audit-evidence/runtime/backend/node_modules/jest-circus/build/jestAdapterInit.js:765:3)
+    at runAndTransformResultsToJestFormat (/home/kevin/devsync/docs/audit-evidence/runtime/backend/node_modules/jest-circus/build/jestAdapterInit.js:1993:21)
+    at jestAdapter (/home/kevin/devsync/docs/audit-evidence/runtime/backend/node_modules/jest-circus/build/runner.js:111:19)
+    at runTestInternal (/home/kevin/devsync/docs/audit-evidence/runtime/backend/node_modules/jest-runner/build/index.js:276:16)
+    at runTest (/home/kevin/devsync/docs/audit-evidence/runtime/backend/node_modules/jest-runner/build/index.js:344:7)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1977:8)
+    at processTicksAndRejections (node:internal/process/task_queues:89:21) {
+  code: 'EPERM',
+  errno: -1,
+  syscall: 'listen',
+  address: '0.0.0.0'
+}
+
+Node.js v22.23.2
