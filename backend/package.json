@@ -17,6 +17,8 @@
     "db:studio": "npx prisma studio",
     "lint": "eslint src prisma",
     "typecheck": "tsc --noEmit && tsc -p tsconfig.seed.json",
+    "openapi:generate": "NODE_ENV=test tsx src/scripts/openapi.ts --write",
+    "openapi:check": "NODE_ENV=test tsx src/scripts/openapi.ts --check",
     "db:migrate:dev": "prisma migrate dev"
   },
   "dependencies": {
@@ -31,6 +33,8 @@
     "@opentelemetry/exporter-trace-otlp-http": "^0.221.0",
     "@opentelemetry/sdk-node": "^0.221.0",
     "@prisma/client": "^5.22.0",
+    "@prometheus-io/client": "^0.16.1",
+    "@sentry/node": "^11.10.0",
     "@socket.io/redis-adapter": "^8.3.0",
     "@tiptap/extension-highlight": "^3.32.2",
     "@tiptap/extension-image": "^3.32.2",
@@ -53,6 +57,8 @@
     "openai": "^6.49.0",
     "opossum": "^9.0.0",
     "pdf-parse": "^2.4.5",
+    "pino": "^10.4.0",
+    "pino-http": "^11.0.0",
     "socket.io": "^4.8.0",
     "stripe": "^18.5.0",
     "tesseract.js": "^7.0.0",

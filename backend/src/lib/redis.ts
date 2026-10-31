@@ -48,5 +48,10 @@ export async function isRedisAvailable(): Promise<boolean> {
 
 /** Graceful shutdown — disconnect both clients. */
 export async function disconnectRedis(): Promise<void> {
-  await Promise.allSettled([redis.quit(), redisSubscriber.quit()]);
+  await Promise.allSettled([redis, redisSubscriber].map(async client => {
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    try {
+      if (client.status === 'ready') await Promise.race([client.quit(), new Promise<void>(resolve => { timer = setTimeout(resolve, 1000); })]);
+    } finally { if (timer) clearTimeout(timer); client.disconnect(); }
+  }));
 }

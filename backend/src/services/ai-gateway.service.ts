@@ -2,6 +2,8 @@ import CircuitBreaker from 'opossum';
 import Groq from 'groq-sdk';
 import OpenAI from 'openai';
 import { z } from 'zod';
+import { observeAi } from '../observability/ai';
+import { logger } from '../observability/logger';
 
 const aiRequestSchema = z.object({
   system: z.string().min(1).max(8_000),
@@ -24,23 +26,23 @@ function isRateLimit(error: unknown): boolean {
 
 async function callGroq(request: AiRequest): Promise<AiResponse> {
   if (!groq) throw new Error('Groq is not configured');
-  const response = await groq.chat.completions.create({
+  const response = await observeAi('groq', () => groq.chat.completions.create({
     model: process.env.GROQ_MODEL || 'openai/gpt-oss-20b',
     messages: [{ role: 'system', content: request.system }, { role: 'user', content: request.prompt }],
     max_tokens: request.maxTokens,
     temperature: request.temperature,
-  }, { timeout: 10_000 });
+  }, { timeout: 10_000 }));
   return aiResponseSchema.parse({ content: response.choices[0]?.message?.content?.trim(), provider: 'groq' });
 }
 
 async function callOpenAI(request: AiRequest): Promise<AiResponse> {
   if (!openai) throw new Error('OpenAI fallback is not configured');
-  const response = await openai.chat.completions.create({
+  const response = await observeAi('openai', () => openai.chat.completions.create({
     model: process.env.OPENAI_MODEL || 'gpt-4o-mini',
     messages: [{ role: 'system', content: request.system }, { role: 'user', content: request.prompt }],
     max_tokens: request.maxTokens,
     temperature: request.temperature,
-  });
+  }));
   return aiResponseSchema.parse({ content: response.choices[0]?.message?.content?.trim(), provider: 'openai' });
 }
 
@@ -52,7 +54,7 @@ const primary = new CircuitBreaker(callGroq, {
   // Rate limits and timeouts must open the circuit; application validation does not.
   errorFilter: (error: unknown) => !isRateLimit(error) && !(error instanceof Error && /timed? out/i.test(error.message)),
 });
-primary.on('open', () => console.warn('[AI Gateway] Groq circuit opened; routing to OpenAI'));
+primary.on('open', () => logger.warn('Groq circuit opened; routing to fallback'));
 
 /** Provider-neutral completion. A failed primary immediately invokes fallback. */
 export async function completeWithFallback(input: z.input<typeof aiRequestSchema>): Promise<AiResponse> {

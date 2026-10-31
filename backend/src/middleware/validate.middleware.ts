@@ -3,7 +3,7 @@ import { ZodSchema, ZodError } from 'zod';
 import { BadRequestError } from '../utils/errors';
 
 export function validate(schema: ZodSchema) {
-  return (req: Request, _res: Response, next: NextFunction): void => {
+  const middleware = (req: Request, _res: Response, next: NextFunction): void => {
     try {
       req.body = schema.parse(req.body);
       next();
@@ -16,4 +16,5 @@ export function validate(schema: ZodSchema) {
       }
     }
   };
+  return Object.assign(middleware, { requestSchema: schema });
 }

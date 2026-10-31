@@ -189,14 +189,17 @@ export function createCollaborationServer(http: HttpServer, options: Collaborati
   http.on('upgrade', upgrade);
   async function stop(compact = true) {
     closing = true; clearInterval(sweep); collaborationAcl.off('revoke', revoke); http.off('upgrade', upgrade);
-    if (compact) for (const [name, room] of rooms) if (hocuspocus.documents.has(name)) await journal.compact(room);
+    let failure: unknown;
+    try { if (compact) for (const [name, room] of rooms) if (hocuspocus.documents.has(name)) await journal.compact(room); }
+    catch (error) { failure = error; }
     hocuspocus.closeConnections(); hocuspocus.flushPendingStores();
     for (const client of websocket.clients) client.terminate();
     await new Promise<void>(resolve => websocket.close(() => resolve()));
     const deadline = Date.now() + 5000;
     while (hocuspocus.documents.size && Date.now() < deadline) await new Promise(resolve => setTimeout(resolve, 10));
-    if (hocuspocus.documents.size) throw new Error('Collaboration drain timeout');
+    if (hocuspocus.documents.size) failure ??= new Error('Collaboration drain timeout');
     await hocuspocus.hooks('onDestroy', { instance: hocuspocus });
+    if (failure) throw failure;
   }
   return { hocuspocus, journal, stop, connections };
 }

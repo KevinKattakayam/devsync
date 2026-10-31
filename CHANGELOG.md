@@ -1,3 +1,8 @@
+# Phase 1b — API reliability and telemetry group (2026-11-01)
+
+- Phase 1b: versioned API aliases, correlated safe errors, bounded PostgreSQL/Redis readiness and shutdown, protected metrics, optional sanitized tracing/error reporting and pino HTTP logs.
+- I02: checked-in route/Zod-generated partial OpenAPI with drift checks; real readiness-outage and OTLP-collector tests; enforced critical collaboration coverage floors. Full gates pass with 75 backend tests. Known remaining scope is explicit in docs/PROGRESS.md.
+
 # Changelog
 
 ## Phase 1a — partial delivery (2026-10-31)

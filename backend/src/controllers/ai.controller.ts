@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import Groq from 'groq-sdk';
+import { observeAi } from '../observability/ai';
 import { BadRequestError } from '../utils/errors';
 import { ForbiddenError } from '../utils/errors';
 import { prisma } from '../lib/prisma';
@@ -36,6 +37,7 @@ export async function aiComplete(req: Request, res: Response, next: NextFunction
     // even if a streamed completion is interrupted.
     res.write(`data: ${JSON.stringify({ sources: semanticContext.map(({ type, title, score }) => ({ type, title, score: Number(score.toFixed(3)) })) })}\n\n`);
 
+    await observeAi('groq', async () => {
     const stream = await groq.chat.completions.create({
       model: process.env.GROQ_MODEL || 'openai/gpt-oss-20b',
       messages: [
@@ -55,13 +57,14 @@ export async function aiComplete(req: Request, res: Response, next: NextFunction
       }
     }
 
+    });
     res.write(`data: ${JSON.stringify({ done: true })}\n\n`);
     res.end();
-  } catch (error: any) {
+  } catch (error: unknown) {
     if (!res.headersSent) {
       next(error);
     } else {
-      res.write(`data: ${JSON.stringify({ error: error.message })}\n\n`);
+      res.write(`data: ${JSON.stringify({ error: 'AI request failed', code: 'AI_FAILED', requestId: req.requestId })}\n\n`);
       res.end();
     }
   }
