@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useEffect, useMemo } from 'react';
+import React, { createContext, useContext, useEffect, useMemo, useCallback } from 'react';
 import { useAuth as useClerkAuth, useClerk, useUser } from '@clerk/nextjs';
 import api, { setTokenGetter } from '@/lib/api';
 import { User } from '@/types';
@@ -9,7 +9,7 @@ interface AuthContextType {
   user: User | null;
   isLoading: boolean;
   isAuthenticated: boolean;
-  getToken: () => Promise<string | null>;
+  getToken: (options?: { skipCache?: boolean }) => Promise<string | null>;
   logout: () => Promise<void>;
 }
 
@@ -40,6 +40,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return () => setTokenGetter(null);
   }, [getToken, isSignedIn]);
 
+  const accessToken = useCallback(
+    async (options?: { skipCache?: boolean }) => (await getToken(options)) || null,
+    [getToken],
+  );
+
   const value = useMemo<AuthContextType>(
     () => ({
       user: user
@@ -53,10 +58,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         : null,
       isLoading: !isLoaded,
       isAuthenticated: !!isSignedIn,
-      getToken: async () => (await getToken()) || null,
+      getToken: accessToken,
       logout: () => signOut({ redirectUrl: '/login' }),
     }),
-    [getToken, isLoaded, isSignedIn, signOut, user],
+    [accessToken, isLoaded, isSignedIn, signOut, user],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

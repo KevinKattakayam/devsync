@@ -1,0 +1,63 @@
+frontend install: 0
+backend install: 0
+backend lint: 0
+
+> devsync-backend@1.0.0 lint
+> eslint src prisma
+
+
+frontend lint: 1
+
+> frontend@0.1.0 lint
+> eslint --max-warnings=0
+
+
+/home/kevin/devsync/frontend/tests/socket-provider.test.tsx
+  1:8  warning  'React' is defined but never used  @typescript-eslint/no-unused-vars
+
+✖ 1 problem (0 errors, 1 warning)
+
+ESLint found too many warnings (maximum: 0).
+
+backend format: 0
+
+> devsync-backend@1.0.0 format:check
+> prettier --check . --ignore-unknown
+
+Checking formatting...
+All matched files use Prettier code style!
+
+backend typecheck: 0
+
+> devsync-backend@1.0.0 typecheck
+> tsc --noEmit && tsc -p tsconfig.seed.json
+
+
+backend tests: 0
+-limiter.ts                 |      96 |     87.5 |     100 |      96 | 66                                                                           
+  server.ts                       |   88.34 |    75.82 |   83.87 |   90.47 | 75,78,88,124,140-141,148-149,152-153,162,164,179,204                         
+ src/utils                        |   93.33 |        0 |   83.33 |   93.33 |                                                                              
+  errors.ts                       |   93.33 |        0 |   83.33 |   93.33 | 39                                                                           
+----------------------------------|---------|----------|---------|---------|------------------------------------------------------------------------------
+
+Test Suites: 14 passed, 14 total
+Tests:       87 passed, 87 total
+Snapshots:   0 total
+Time:        59.126 s
+Ran all test suites.
+
+backend build: 0
+
+> devsync-backend@1.0.0 build
+> prisma generate && tsc
+
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+
+✔ Generated Prisma Client (v5.22.0) to ./node_modules/@prisma/client in 245ms
+
+Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
+
+Tip: Want to react to database changes in your app as they happen? Discover how with Pulse: https://pris.ly/tip-1-pulse
+
+

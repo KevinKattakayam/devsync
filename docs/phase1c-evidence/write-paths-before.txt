@@ -1,0 +1,125 @@
+backend/src/routes/snippet.routes.ts:17:router.delete('/:snippetId', deleteSnippet);
+backend/src/routes/scim.routes.ts:17:  return createHash('sha256').update(token).digest('hex');
+backend/src/routes/scim.routes.ts:68:      const user = await tx.user.upsert({
+backend/src/routes/scim.routes.ts:78:      await tx.workspaceMember.upsert({
+backend/src/routes/scim.routes.ts:83:      await tx.scimExternalIdentity.upsert({
+backend/src/routes/scim.routes.ts:109:    const user = await prisma.user.update({
+backend/src/routes/scim.routes.ts:118:      await prisma.workspaceMember.deleteMany({
+backend/src/routes/scim.routes.ts:130:router.delete('/Users/:externalId', async (req, res, next) => {
+backend/src/routes/scim.routes.ts:142:      prisma.workspaceMember.deleteMany({
+backend/src/routes/scim.routes.ts:145:      (prisma as any).scimExternalIdentity.delete({ where: { id: identity.id } }),
+backend/src/routes/workspace.routes.ts:69:router.delete('/:id', requireOwner(), deleteWorkspace);
+backend/src/routes/workspace.routes.ts:79:router.delete('/:id/members/:memberId', requireOwner(), removeMember);
+backend/src/routes/workspace.routes.ts:95:router.delete('/:id/github-repositories/:repositoryId', requireOwner(), disconnectRepository);
+backend/src/routes/github-webhook.routes.ts:20:  const expected = `sha256=${createHmac('sha256', secret).update(raw).digest('hex')}`;
+backend/src/routes/github-webhook.routes.ts:57:          await prisma.gitHubWebhookDelivery.create({ data: { deliveryId, event } });
+backend/src/routes/github-webhook.routes.ts:81:        await prisma.activity.create({
+backend/src/routes/github-webhook.routes.ts:124:        await prisma.activity.create({
+backend/src/routes/github-webhook.routes.ts:214:            await tx.task.update({
+backend/src/routes/stripe.webhook.ts:27:          await (prisma as any).workspace.update({
+backend/src/routes/stripe.webhook.ts:41:          await (prisma as any).workspace.updateMany({
+backend/src/routes/stripe.webhook.ts:49:        await (prisma as any).workspace.updateMany({
+backend/src/routes/superadmin.routes.ts:19:    const rows = await prisma.$queryRaw<
+backend/src/routes/superadmin.routes.ts:61:    const workspace = await (prisma as any).workspace.update({
+backend/src/routes/health.routes.ts:33:          await tx.$executeRaw`SET LOCAL statement_timeout = '1000ms'`;
+backend/src/routes/health.routes.ts:34:          await tx.$queryRaw`SELECT 1`;
+backend/src/routes/document.routes.ts:17:router.delete('/:id', deleteDocument);
+backend/src/routes/task.routes.ts:26:router.delete('/columns/:columnId', deleteColumn);
+backend/src/routes/task.routes.ts:31:router.delete('/tasks/:taskId', deleteTask);
+backend/src/controllers/auth.controller.ts:66:    const user = await prisma.user.update({
+backend/src/controllers/ai.controller.ts:57:      const stream = await groq.chat.completions.create({
+backend/src/controllers/snippet.controller.ts:72:      tx.snippet.create({
+backend/src/controllers/snippet.controller.ts:77:    await prisma.activity.create({
+backend/src/controllers/snippet.controller.ts:101:    const snippet = await prisma.snippet.update({
+backend/src/controllers/snippet.controller.ts:129:    await prisma.snippet.delete({ where: { id: snippetId } });
+backend/src/controllers/task.controller.ts:118:    const board = await prisma.board.create({
+backend/src/controllers/task.controller.ts:153:    const column = await prisma.column.create({
+backend/src/controllers/task.controller.ts:170:    const column = await prisma.column.update({
+backend/src/controllers/task.controller.ts:184:    await prisma.column.delete({ where: { id: columnId } });
+backend/src/controllers/task.controller.ts:205:    const task = await prisma.task.create({
+backend/src/controllers/task.controller.ts:234:      await prisma.activity.create({
+backend/src/controllers/task.controller.ts:261:    const task = await prisma.task.update({
+backend/src/controllers/task.controller.ts:292:    await prisma.task.delete({ where: { id: taskId } });
+backend/src/controllers/task.controller.ts:316:    await prisma.task.updateMany({
+backend/src/controllers/task.controller.ts:326:    const task = await prisma.task.update({
+backend/src/controllers/workspace.controller.ts:45:    const workspace = await prisma.workspace.create({
+backend/src/controllers/workspace.controller.ts:82:    await prisma.activity.create({
+backend/src/controllers/workspace.controller.ts:159:    const workspace = await prisma.workspace.update({
+backend/src/controllers/workspace.controller.ts:176:    await prisma.workspace.delete({ where: { id: workspaceId } });
+backend/src/controllers/workspace.controller.ts:201:    const member = await prisma.workspaceMember.create({
+backend/src/controllers/workspace.controller.ts:210:    await prisma.activity.create({
+backend/src/controllers/workspace.controller.ts:232:    const member = await prisma.workspaceMember.update({
+backend/src/controllers/workspace.controller.ts:262:    await prisma.workspaceMember.delete({ where: { id: memberId, workspaceId } });
+backend/src/controllers/github-repository.controller.ts:64:    const repository = await prisma.gitHubRepository.create({
+backend/src/controllers/github-repository.controller.ts:80:    const repository = await prisma.gitHubRepository.update({
+backend/src/controllers/github-repository.controller.ts:98:    await prisma.gitHubRepository.delete({ where: { id: repositoryId } });
+backend/src/controllers/document.controller.ts:106:      tx.document.create({
+backend/src/controllers/document.controller.ts:120:    await prisma.activity.create({
+backend/src/controllers/document.controller.ts:142:    const document = await prisma.document.update({
+backend/src/controllers/document.controller.ts:168:    await prisma.document.update({
+backend/src/agents/task-completion.agent.ts:109:    if (document) await tx.document.update({ where: { id: document.id }, data: { content } });
+backend/src/agents/task-completion.agent.ts:111:      await tx.document.create({
+backend/src/agents/task-completion.agent.ts:116:  await prisma.activity.create({
+backend/src/agents/pr-summary.agent.ts:51:      const completion = await groq.chat.completions.create({
+backend/src/agents/pr-summary.agent.ts:88:  await prisma.activity.create({
+backend/src/services/crdt-journal.ts:16:    const rows = await tx.$queryRaw<
+backend/src/services/crdt-journal.ts:34:        await tx.documentCrdtBackup.upsert({
+backend/src/services/crdt-journal.ts:44:        await tx.document.update({ where: { id: record.id }, data: { yjsState: state } });
+backend/src/services/crdt-journal.ts:47:      for (const update of updates) Y.applyUpdate(document, update.update);
+backend/src/services/crdt-journal.ts:66:    const digest = createHash('sha256').update(update).digest('hex');
+backend/src/services/crdt-journal.ts:73:        await tx.documentUpdate.upsert({
+backend/src/services/crdt-journal.ts:79:          await tx.document.update({
+backend/src/services/crdt-journal.ts:87:          await tx.documentUpdate.deleteMany({ where: room });
+backend/src/services/crdt-journal.ts:99:        await tx.document.update({
+backend/src/services/crdt-journal.ts:108:          await tx.documentUpdate.deleteMany({
+backend/src/services/ai-gateway.service.ts:35:    groq.chat.completions.create(
+backend/src/services/ai-gateway.service.ts:57:    openai.chat.completions.create({
+backend/src/services/secret.service.ts:15:  const encrypted = Buffer.concat([cipher.update(value, 'utf8'), cipher.final()]);
+backend/src/services/secret.service.ts:26:    decipher.update(Buffer.from(payload, 'base64url')),
+backend/src/services/billing.service.ts:46:    usage = await (prisma as any).tokenUsage.create({
+backend/src/services/billing.service.ts:58:  const meter = await stripe.billing.meterEvents.create({
+backend/src/services/billing.service.ts:63:  await (prisma as any).tokenUsage.update({
+backend/src/services/ingestion.service.ts:224:  const document = await prisma.document.create({
+backend/src/services/ingestion.service.ts:235:  await prisma.activity.create({
+backend/src/services/collaboration-server.ts:177:        connections.delete(connection);
+backend/src/services/collaboration-server.ts:230:        rooms.delete(documentName);
+backend/src/services/collaboration-server.ts:231:        admitted.delete(documentName);
+backend/src/services/collaboration-server.ts:259:          connections.delete(connection);
+backend/src/services/collaboration-server.ts:261:        admitted.delete(documentName);
+backend/src/services/collaboration-server.ts:262:        rooms.delete(documentName);
+backend/src/services/collaboration-server.ts:266:      rooms.delete(documentName);
+backend/src/services/collaboration-server.ts:267:      admitted.delete(documentName);
+backend/src/services/collaboration-server.ts:280:        admitted.delete(name);
+backend/src/services/collaboration-server.ts:281:        rooms.delete(name);
+backend/src/services/collaboration-server.ts:288:          connections.delete(connection);
+backend/src/services/collaboration-server.ts:301:        connections.delete(connection);
+backend/src/services/crdt-migration.ts:18:    const rows = await tx.$queryRaw<
+backend/src/services/crdt-migration.ts:34:      await tx.document.update({
+backend/src/services/crdt-migration.ts:38:      await tx.documentCrdtBackup.update({
+backend/src/services/crdt-migration.ts:58:        await tx.documentCrdtBackup.update({
+backend/src/services/crdt-migration.ts:63:        await tx.documentCrdtBackup.create({
+backend/src/services/crdt-migration.ts:72:      await tx.document.update({ where: { id: record.id }, data: { yjsState: convertedState } });
+backend/src/lib/idempotency.ts:15:  const redisKey = `${PREFIX}${createHash('sha256').update(key).digest('hex')}`;
+backend/src/services/embedding.service.ts:24:    const result = await client.embeddings.create({ model, input: text.slice(0, 30000) });
+backend/src/services/embedding.service.ts:40:  await prisma.$executeRaw`INSERT INTO "EmbeddingJob" ("id", "resourceType", "resourceId", "status", "attempts", "runAfter", "createdAt", "updatedAt") VALUES (${`${kind}:${id}`}, ${kind}, ${id}, 'pending', 0, NOW(), NOW(), NOW()) ON CONFLICT ("resourceType", "resourceId") DO UPDATE SET "status" = 'pending', "runAfter" = NOW(), "lastError" = NULL, "updatedAt" = NOW()`;
+backend/src/services/embedding.service.ts:48:    const jobs = await prisma.$queryRaw<
+backend/src/services/embedding.service.ts:52:      await prisma.$executeRaw`UPDATE "EmbeddingJob" SET "status" = 'processing', "attempts" = "attempts" + 1, "updatedAt" = NOW() WHERE "id" = ${job.id}`;
+backend/src/services/embedding.service.ts:55:        await prisma.$executeRaw`DELETE FROM "EmbeddingJob" WHERE "id" = ${job.id}`;
+backend/src/services/embedding.service.ts:58:        await prisma.$executeRaw`UPDATE "EmbeddingJob" SET "status" = 'pending', "lastError" = ${error instanceof Error ? error.message.slice(0, 1000) : 'Unknown error'}, "runAfter" = ${new Date(Date.now() + delay * 60_000)}, "updatedAt" = NOW() WHERE "id" = ${job.id}`;
+backend/src/services/embedding.service.ts:72:    const hash = createHash('sha256').update(text).digest('hex');
+backend/src/services/embedding.service.ts:76:    await prisma.$executeRaw`UPDATE "Document" SET "embedding" = ${vector(values)}, "embeddingHash" = ${hash} WHERE "id" = ${id}`;
+backend/src/services/embedding.service.ts:81:    const hash = createHash('sha256').update(text).digest('hex');
+backend/src/services/embedding.service.ts:85:    await prisma.$executeRaw`UPDATE "Snippet" SET "embedding" = ${vector(values)}, "embeddingHash" = ${hash} WHERE "id" = ${id}`;
+backend/src/services/embedding.service.ts:90:    const hash = createHash('sha256').update(text).digest('hex');
+backend/src/services/embedding.service.ts:94:    await prisma.$executeRaw`UPDATE "Task" SET "embedding" = ${vector(values)}, "embeddingHash" = ${hash} WHERE "id" = ${id}`;
+backend/src/services/embedding.service.ts:102:    return await prisma.$queryRaw<{ type: string; title: string; body: string; score: number }[]>`
+backend/src/lib/tenant-prisma.ts:37:                await tx.$executeRaw(
+backend/src/middleware/auth.middleware.ts:72:  return prisma.user.upsert({
+backend/src/socket/presence.handler.ts:82:        workspaces.delete(workspaceId);
+backend/src/socket/presence.handler.ts:89:      workspaces.delete(workspaceId);
+backend/src/socket/rate-limiter.ts:75:    this.buckets.delete(socketId);
+backend/src/socket/server.ts:179:      forgetWorkspace: (workspaceId) => session.roles.delete(workspaceId),
+backend/src/socket/server.ts:207:      sessions.delete(socket);
+backend/src/socket/presence-store.ts:26:      .finally(() => this.pending.delete(pending));
+backend/src/socket/presence-store.ts:51:    memory?.delete(field);
+backend/src/socket/presence-store.ts:52:    if (!memory?.size) this.memory.delete(workspaceId);

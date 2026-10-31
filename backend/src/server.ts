@@ -11,7 +11,7 @@ startReporting();
 
 import { createServer } from 'http';
 import app from './app';
-import { setupSocket } from './socket/index';
+import { setupSocket, destroySocket } from './socket/index';
 import { setupHocuspocusServer, destroyHocuspocus } from './services/yjs.service';
 import { processEmbeddingJobs } from './services/embedding.service';
 import { disconnectRedis } from './lib/redis';
@@ -56,7 +56,7 @@ function shutdown(signal: string): Promise<void> {
         httpServer.closeIdleConnections();
       }),
     collaboration: destroyHocuspocus,
-    sockets: () => new Promise<void>((resolve) => io.close(() => resolve())),
+    sockets: destroySocket,
     redis: disconnectRedis,
     database: () => prisma.$disconnect(),
     telemetry: async () => {

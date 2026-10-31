@@ -1,3 +1,8 @@
+# Phase1c — realtime revocation group
+
+- C01/D03/D07/B05: shared Clerk realtime identity, per-packet and bounded passive Socket.io policy checks, role/member/expiry eviction across backend instances; retain and bound Hocuspocus checks. Public Socket.io middleware replaces the private untyped packet override.
+- B05/H03: socket-scoped aggregated presence, fresh renewal/reconnect tokens, no late-token orphan and no prior-account state reuse. Real PostgreSQL/Redis/Socket.io/Hocuspocus revocation tests and frontend lifecycle regressions added; 87 backend tests and all quality gates pass.
+
 # Phase 1b — quality gates and evidence (partial delivery)
 
 - I02/B04: retain coverage thresholds and add real admission, token renewal/expiry, local eviction, ephemeral viewer and reconciliation cases; 83 backend tests pass. AsyncLocalStorage preserves pino request correlation.

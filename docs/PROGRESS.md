@@ -1,3 +1,15 @@
+# Phase1c — in progress
+
+Branch upgrade/enterprise; no push. Root AGENTS.md and docs/MASTER_PROMPT.md remain absent; supplied AGENTS rules and frontend/AGENTS.md apply. Read audit/matrix/fix-order/ADRs. Baseline install/lint/format/types/tests/build passes both apps (phase1c-evidence/baseline-results.json); authentication is Clerk, not custom refresh rotation. Local key variables are populated but the read-only development admin API check returns HTTP403 text/plain without a provider JSON error. Validity is unverified; identity fixture IDs/credentials are absent. Required provider setup was explained; an isolated production-excluded test harness is planned under the user's explicit fallback authorization, not yet implemented.
+
+Priority1 completed: Socket.io connection/packet/passive policy checks, token expiry/renewal, immediate local and independently polled cross-instance workspace revocation; Hocuspocus retains per-frame checks with bounded audits and post-load reauthorization. Redis credentials are decoded correctly and tested against a password containing reserved URL characters. Presence is per socket and aggregated by user, preserving other tabs. Frontend uses fresh reconnect/renewal tokens, disposes late auth work and hides previous account state.
+
+Verification: backend **14 suites / 87 tests**, frontend **5 Node tests + 6 component tests**, both install/lint/format/type-check/build gates pass. Backend source: phase1c-evidence/revocation-results.json; frontend final retry: revocation-retry-results.json. First frontend run correctly failed on a new unused test import; it was removed without rule suppression. Real revocation tests use separate HTTP servers and local buses, actual Redis adapter/Hocuspocus fanout and migrated PostgreSQL with a non-bypass role. No CRDT/protocol mocks. Detailed decision: ADR010. Canonical mutation/authorization inventory recorded in phase1c-evidence/write-paths-before.txt.
+
+Next: priority2 central mutation/service authorization and canonical REST/agent CRDT writes, then atomic create idempotency, authenticated E2E/original-main worktree capture, complete contracts/no-any and local CI verification. These items remain unfinished; historical Phase1a/1b limitations below remain until explicitly closed.
+
+---
+
 # Progress — Phase 1b partial delivery
 
 Branch: `upgrade/enterprise`. No push, deployment, production data change, key rotation or Phase2 work. Phase1b is **not complete** and is not a production-readiness certification. Historical Phase1a gaps are retained below; its ledger did not match the assertion that it was complete.

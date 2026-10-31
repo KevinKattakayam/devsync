@@ -8,6 +8,8 @@ import { TenantPrismaClient } from '../lib/tenant-prisma';
 import { authorizeWorkspace } from '../security/workspace-policy';
 import { CrdtJournal, DocumentRoom } from './crdt-journal';
 import { collaborationAcl } from './collaboration-acl';
+import { EventEmitter } from 'events';
+import { withPolicyDeadline } from '../security/policy-deadline';
 
 export interface Identity {
   id: string;
@@ -31,6 +33,8 @@ export interface CollaborationOptions {
   maxClientsPerRoom?: number;
   sweepMs?: number;
   storeDebounceMs?: number;
+  acl?: EventEmitter;
+  auditTimeoutMs?: number;
   reconcile?(document: Y.Doc, workspaceId: string): Promise<void>;
 }
 const idPattern = /^[a-zA-Z0-9_-]{1,191}$/;
@@ -54,6 +58,7 @@ export function createCollaborationServer(http: HttpServer, options: Collaborati
   const admitted = new Map<string, number>();
   const connections = new Set<Connection<Context>>();
   const maxRooms = options.maxRooms ?? 100;
+  const acl = options.acl ?? collaborationAcl;
   let closing = false;
   async function authorize(context: Context) {
     if (!context?.user || context.user.expiresAt <= Date.now()) throw new Error('Session expired');
@@ -77,7 +82,7 @@ export function createCollaborationServer(http: HttpServer, options: Collaborati
   }
   async function enforce(context: Context, connection?: Connection<Context>) {
     try {
-      await authorize(context);
+      await withPolicyDeadline(authorize(context), options.auditTimeoutMs ?? 2000);
     } catch (error) {
       connection?.webSocket.close(4403, 'Access revoked');
       throw error;
@@ -90,8 +95,8 @@ export function createCollaborationServer(http: HttpServer, options: Collaborati
           host: redisAddress.hostname,
           port: Number(redisAddress.port || 6379),
           options: {
-            username: redisAddress.username || undefined,
-            password: redisAddress.password || undefined,
+            username: redisAddress.username ? decodeURIComponent(redisAddress.username) : undefined,
+            password: redisAddress.password ? decodeURIComponent(redisAddress.password) : undefined,
             tls: redisAddress.protocol === 'rediss:' ? {} : undefined,
             maxRetriesPerRequest: 1,
             connectTimeout: 3000,
@@ -214,11 +219,13 @@ export function createCollaborationServer(http: HttpServer, options: Collaborati
       const color = `#${Buffer.from(context.user.id).toString('hex').padEnd(6, '6').slice(0, 6)}`;
       for (const state of states.values()) state.user = { name: context.user.name, color };
     },
-    async onLoadDocument({ documentName, document }) {
+    async onLoadDocument({ documentName, document, context }) {
       const room = rooms.get(documentName);
       if (!room) return;
       try {
-        Y.applyUpdate(document, await journal.load(room));
+        const state = await journal.load(room);
+        await withPolicyDeadline(authorize(context), options.auditTimeoutMs ?? 2000);
+        Y.applyUpdate(document, state);
       } catch (error) {
         rooms.delete(documentName);
         admitted.delete(documentName);
@@ -276,7 +283,7 @@ export function createCollaborationServer(http: HttpServer, options: Collaborati
     void Promise.all(
       [...connections].map(async (connection) => {
         try {
-          await authorize(connection.context);
+          await withPolicyDeadline(authorize(connection.context), options.auditTimeoutMs ?? 2000);
         } catch {
           connections.delete(connection);
           connection.close({ code: 4403, reason: 'Access revoked' });
@@ -296,7 +303,7 @@ export function createCollaborationServer(http: HttpServer, options: Collaborati
         connection.webSocket.close(4403, 'Access revoked');
       }
   };
-  collaborationAcl.on('revoke', revoke);
+  acl.on('revoke', revoke);
   const websocket = new WebSocketServer({ noServer: true, maxPayload: 65536 });
   const upgrade = (
     request: import('http').IncomingMessage,
@@ -349,7 +356,7 @@ export function createCollaborationServer(http: HttpServer, options: Collaborati
   async function stop(compact = true) {
     closing = true;
     clearInterval(sweep);
-    collaborationAcl.off('revoke', revoke);
+    acl.off('revoke', revoke);
     http.off('upgrade', upgrade);
     let failure: unknown;
     try {

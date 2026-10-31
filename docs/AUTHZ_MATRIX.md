@@ -1,6 +1,6 @@
 > Phase1a status: D01/D02/E01 and D03–D08 application boundaries are repaired and regression-tested; D08 also has a tested composite database constraint. This matrix is not a claim that full Phase1a centralization is complete. C01 session revocation, G01 tenant-context coverage, SCIM identity linking, D09 assignments and D10 owner invariants remain open. See PROGRESS.md for the complete scope ledger.
 
-# Authorization matrix — updated during Phase 1b
+# Authorization matrix — updated during Phase 1c
 
 Static route-by-route review of every registered REST route and every Socket.io input event. This is not a passing integration-test report. OWNER/EDITOR/VIEWER are database workspace roles; there is no per-document ownership ACL beyond membership. Authz checks do not overcome RLS context failures (G01). Protected application routers retain Helmet, configured CORS, parsing, request correlation and the production global IP limiter. Operational health/readiness and metrics are mounted before parsing/auth/rate limiting. Legacy route evidence line offsets below describe the pre-format Phase1a tree (0cee996); permission behavior remains as listed, with new transport/operational exceptions documented below.
 
@@ -71,7 +71,7 @@ Every application `/api/...` router below is also mounted at `/api/v1/...` with 
 
 ## Socket.io input events
 
-All connections require a Clerk token and local user lookup; isActive is not checked. Event rate buckets are per socket/event type, not per tenant/user. Only the following client events are registered.
+Both transports use the shared production Clerk verifier, finite unexpired JWT and active local user. Socket.io uses public packet middleware, a bounded event allowlist and workspace-role snapshots; every incoming event and passive one-second audit checks the central policy. Audit failures time out and close access. Per-node local member-change notifications evict immediately; other instances independently audit Postgres. A changed role closes the old session; a reconnect receives its current role. An unrelated workspace-only connection survives. Event rate buckets remain per socket/event type; subscriptions are bounded to32 per connection.
 
 | Event | Membership | Role/resource binding | Validation | Evidence |
 |---|---|---|---|---|
@@ -83,7 +83,8 @@ All connections require a Clerk token and local user lookup; isActive is not che
 | `kanban:task-created` | Shared workspace policy, active user/tenant | OWNER/EDITOR; task/column bound to workspace; canonical data relay | Bounded Zod ID/position envelope | `backend/src/socket/kanban.handler.ts:21` |
 | `kanban:task-updated` | Shared workspace policy, active user/tenant | OWNER/EDITOR; task/column bound to workspace; canonical data relay | Bounded Zod ID/position envelope | `backend/src/socket/kanban.handler.ts:21` |
 | `kanban:task-deleted` | Shared workspace policy, active user/tenant | OWNER/EDITOR; task/column bound to workspace; canonical data relay | Bounded Zod ID/position envelope | `backend/src/socket/kanban.handler.ts:21` |
-| `error` | Not applicable | Logs incoming error only | No payload domain schema | `backend/src/socket/index.ts:89` |
+| `session:refresh` | Shared identity and all tracked workspace policies | Same principal only; role changes cannot be hidden by renewal | Strict bounded token schema | `backend/src/socket/server.ts` |
+| `error` | Active verified principal and session expiry | No domain mutation; payload not logged | Frame/rate limits | `backend/src/socket/server.ts` |
 | `disconnect` | Not applicable | Disconnect cleans buckets/presence; no authz needed | No payload domain schema | `backend/src/socket/index.ts:93` |
 
 Outbound-only notifications: workspace:users, cursor:updated, activity:new, workspace:suspended, error, plus the four relayed kanban:task-* events. Socket.io connection/disconnect are framework events. No document:join/write event remains on Socket.io; cursor:update targets document:<id> but no corresponding Socket.io document join handler exists. Server joins user:<localUserId> automatically for SCIM disconnects.
@@ -101,7 +102,7 @@ All rows below use production Clerk JWT verification. Factory-injected identity 
 | Removed/downgraded member, inactive user, suspended workspace, archived document or expired token | Reconnection reauthenticates | Fail closed; revoked transport closes | Sweep (one second plus DB latency), immediate local member-change notification |
 | Internal Redis relay / server reconciliation | Private server Redis channel or server callback, no browser identity bypass | No public client path to internal Redis opcodes; reconciliation updates journaled before broadcast | Same committed PostgreSQL state; Redis is fanout only |
 
-Implementation: `backend/src/services/collaboration-server.ts`, `crdt-journal.ts`, `yjs.service.ts`, `security/workspace-policy.ts`. Real protocol/tenant-role tests: `backend/src/__tests__/collaboration.integration.test.ts`; prior D02/D07 hook regressions retained. A message-size limit and a pre-queue frame-rate limit bound incoming work. Socket.io rows above remain their previous state; do not infer Hocuspocus eviction also implements Socket.io eviction.
+Implementation: `backend/src/services/collaboration-server.ts`, `crdt-journal.ts`, `yjs.service.ts`, `security/workspace-policy.ts`. Real protocol/tenant-role tests: `backend/src/__tests__/collaboration.integration.test.ts`; prior D02/D07 hook regressions retained. A message-size limit and a pre-queue frame-rate limit bound incoming work. Phase1c Socket.io and Hocuspocus eviction are independently integration-tested with separate local event buses, real Redis and non-bypass PostgreSQL. Presence uses verified server names and per-socket records aggregated into the existing per-user DTO. Additional outbound auth lifecycle events are session:refresh-required and session:updated; existing event names remain supported. See ADR010 and realtime-revocation.integration.test.ts.
 
 ## Interpretation
 

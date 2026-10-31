@@ -2,6 +2,7 @@ import { Server, Socket } from 'socket.io';
 import { z } from 'zod';
 import { prisma } from '../lib/prisma';
 import { authorizeWorkspace, WRITE_ROLES } from '../security/workspace-policy';
+import { TenantPrismaClient } from '../lib/tenant-prisma';
 
 interface AuthenticatedSocket extends Socket {
   userId?: string;
@@ -24,16 +25,20 @@ const schemas = {
 type KanbanEvent = keyof typeof schemas;
 
 /** Existing event names retained; never forward untrusted task objects. */
-export function setupKanbanHandlers(_io: Server, socket: AuthenticatedSocket) {
+export function setupKanbanHandlers(
+  _io: Server,
+  socket: AuthenticatedSocket,
+  db: TenantPrismaClient = prisma,
+) {
   for (const event of Object.keys(schemas) as KanbanEvent[]) {
     socket.on(event, async (payload: unknown) => {
       try {
         const input = schemas[event].parse(payload);
         const move =
           event === 'kanban:task-moved' ? schemas['kanban:task-moved'].parse(payload) : null;
-        await authorizeWorkspace(socket.userId!, input.workspaceId, WRITE_ROLES);
+        await authorizeWorkspace(socket.userId!, input.workspaceId, WRITE_ROLES, db);
         const taskId = 'taskId' in input ? input.taskId : input.task.id;
-        const task = await prisma.withTenantTransaction(input.workspaceId, (tx) =>
+        const task = await db.withTenantTransaction(input.workspaceId, (tx) =>
           tx.task.findUnique({
             where: { id: taskId },
             include: {
@@ -47,7 +52,7 @@ export function setupKanbanHandlers(_io: Server, socket: AuthenticatedSocket) {
           throw new Error('Access denied');
         if (move) {
           for (const columnId of [move.fromColumnId, move.toColumnId]) {
-            const column = await prisma.column.findUnique({
+            const column = await db.column.findUnique({
               where: { id: columnId },
               include: { board: true },
             });
@@ -70,7 +75,10 @@ export function setupKanbanHandlers(_io: Server, socket: AuthenticatedSocket) {
                   position: task.position,
                 }
               : { task };
-        socket.to(`workspace:${input.workspaceId}`).emit(event, { userId: socket.userId, ...data });
+        if (socket.connected !== false)
+          socket
+            .to(`workspace:${input.workspaceId}`)
+            .emit(event, { userId: socket.userId, ...data });
       } catch {
         socket.emit('error', { code: 'FORBIDDEN', message: 'Event rejected' });
       }
