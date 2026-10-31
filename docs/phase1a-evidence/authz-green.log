@@ -1,0 +1,17 @@
+
+> devsync-backend@1.0.0 test
+> jest --runInBand --runTestsByPath src/__tests__/authorization-boundaries.test.ts
+
+FAIL src/__tests__/authorization-boundaries.test.ts
+  ● Test suite failed to run
+
+    [96msrc/controllers/document.controller.ts[0m:[93m65[0m:[93m39[0m - [91merror[0m[90m TS18004: [0mNo value exists in scope for the shorthand property 'workspaceId'. Either declare one or provide an initializer.
+
+    [7m65[0m           where: { isArchived: false, workspaceId },
+    [7m  [0m [91m                                      ~~~~~~~~~~~[0m
+
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        8.676 s, estimated 9 s
+Ran all test suites within paths "src/__tests__/authorization-boundaries.test.ts".

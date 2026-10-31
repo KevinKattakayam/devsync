@@ -5,6 +5,7 @@ import { prisma } from '../lib/prisma';
 import { queueEmbedding } from '../services/embedding.service';
 import { getQueue, QueueNames } from '../lib/queue';
 import { isRedisAvailable } from '../lib/redis';
+import { authorizeWorkspace, WRITE_ROLES } from '../security/workspace-policy';
 
 async function checkTaskEditorRole(userId: string, columnId?: string, taskId?: string) {
   let workspaceId: string | null = null;
@@ -24,14 +25,8 @@ async function checkTaskEditorRole(userId: string, columnId?: string, taskId?: s
     workspaceId = task.column.board.workspaceId;
   }
 
-  if (workspaceId) {
-    const member = await prisma.workspaceMember.findUnique({
-      where: { userId_workspaceId: { userId, workspaceId } },
-    });
-    if (!member || member.role === 'VIEWER') {
-      throw new ForbiddenError('Requires EDITOR or OWNER role');
-    }
-  }
+  if (!workspaceId) throw new ForbiddenError('Access denied');
+  await authorizeWorkspace(userId, workspaceId, WRITE_ROLES);
 }
 
 async function requireSameWorkspace(taskId: string, targetColumnId: string) {
@@ -132,6 +127,9 @@ export async function createBoard(req: Request, res: Response, next: NextFunctio
 export async function createColumn(req: Request, res: Response, next: NextFunction) {
   try {
     const boardId = String(req.params.boardId);
+    const board = await prisma.board.findUnique({ where: { id: boardId }, select: { workspaceId: true } });
+    if (!board) throw new NotFoundError('Board not found');
+    await authorizeWorkspace(req.user!.userId, board.workspaceId, WRITE_ROLES);
     const maxPos = await prisma.column.findFirst({
       where: { boardId },
       orderBy: { position: 'desc' },

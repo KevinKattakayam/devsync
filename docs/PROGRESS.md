@@ -9,6 +9,12 @@ Branch upgrade/enterprise. In progress; no push/deploy. Root AGENTS.md and docs/
 - I02: existing PostgreSQL/queue test compilation repaired without removing assertions. Full backend suite:5 suites/17 tests pass. Explicit backend lint/typecheck and frontend unit-test/typecheck scripts added. Frontend lint:0 errors,53 existing warnings. Both installs, typechecks and builds pass; frontend unit test passes. Logs in docs/phase1a-evidence.
 - Root CHANGELOG.md and ADR001/002 added. No CRDT representation/protocol redesign, observability, OpenAPI or Playwright E2E work.
 
+## Phase 1a done (group 2)
+
+- D03/D04/D05/D06/D08 application-level fixes: shared workspace policy before socket effects, canonical task relays and resource binding, workspace-bound member updates/deletes, board authorization, parent validation and tenant-filtered children. Database composite hierarchy invariant still pending.
+- Authorization suite:22 failed/4 passed before;30 pass after (includes positive canonical editor cases). Full backend:6 suites/47 tests pass. Both installs/lints/typechecks/tests/builds pass; frontend retains53 warnings,0 errors. No Playwright run.
+- Socket delete relay still requires an existing task; durable tombstones/replay remain Phase1b. No claims that introducing a policy alone fixes all REST/SCIM/service paths or all session revocation.
+
 ## Phase 1a remaining / requires human action
 
 Authentication architecture question is pending: requested Argon2id/custom cookie rotation conflicts with installed Clerk login/session design. No replacement or claim of equivalent provider controls made. Need decision and account migration/tenant policy access. No passwords or refresh tokens are implemented by this group.

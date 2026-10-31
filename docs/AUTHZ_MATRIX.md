@@ -24,7 +24,7 @@ Static route-by-route review of every registered REST route and every Socket.io 
 | `POST /api/webhooks/stripe` | Stripe signature on raw body | Workspace selected from signed metadata/customer/subscription | Stripe verified event; no replay/order ledger | `backend/src/routes/stripe.webhook.ts:8` |
 | `GET /api/superadmin/metrics` | Service token OR Clerk + DB SUPER_ADMIN | Global administrative authority | N/A | `backend/src/routes/superadmin.routes.ts:23` |
 | `POST /api/superadmin/workspaces/:workspaceId/kill-switch` | Service token OR Clerk + DB SUPER_ADMIN | Global administrative authority | Zod reason | `backend/src/routes/superadmin.routes.ts:37` |
-| `POST /api/tasks/boards/:boardId/columns` | Clerk + local principal | NONE: arbitrary board ID (D06) | Zod body | `backend/src/routes/task.routes.ts:14` |
+| `POST /api/tasks/boards/:boardId/columns` | Clerk + local principal | Board resolved; shared policy requires OWNER/EDITOR (D06 repaired) | Zod body | `backend/src/routes/task.routes.ts:14` |
 | `PATCH /api/tasks/columns/:columnId` | Clerk + local principal | Column/task -> workspace membership; excludes VIEWER | Zod body | `backend/src/routes/task.routes.ts:15` |
 | `DELETE /api/tasks/columns/:columnId` | Clerk + local principal | Column/task -> workspace membership; excludes VIEWER | No body schema / ID format validation | `backend/src/routes/task.routes.ts:16` |
 | `POST /api/tasks/columns/:columnId/tasks` | Clerk + local principal | Column/task -> workspace membership; excludes VIEWER; assigneeId not membership-bound | Zod body | `backend/src/routes/task.routes.ts:19` |
@@ -39,14 +39,14 @@ Static route-by-route review of every registered REST route and every Socket.io 
 | `PATCH /api/workspaces/:id` | Clerk + local principal | OWNER | Zod body | `backend/src/routes/workspace.routes.ts:35` |
 | `DELETE /api/workspaces/:id` | Clerk + local principal | OWNER | No body schema / ID format validation | `backend/src/routes/workspace.routes.ts:36` |
 | `POST /api/workspaces/:id/invite` | Clerk + local principal | OWNER | Zod body | `backend/src/routes/workspace.routes.ts:39` |
-| `PATCH /api/workspaces/:id/members/:memberId` | Clerk + local principal | OWNER of URL workspace; target memberId NOT bound (D05) | Zod body | `backend/src/routes/workspace.routes.ts:40` |
-| `DELETE /api/workspaces/:id/members/:memberId` | Clerk + local principal | OWNER of URL workspace; target memberId NOT bound (D05) | No body schema / ID format validation | `backend/src/routes/workspace.routes.ts:41` |
+| `PATCH /api/workspaces/:id/members/:memberId` | Clerk + local principal | OWNER of URL workspace; target member workspace checked and mutation predicate bound (D05 repaired) | Zod body | `backend/src/routes/workspace.routes.ts:40` |
+| `DELETE /api/workspaces/:id/members/:memberId` | Clerk + local principal | OWNER of URL workspace; target member workspace checked and mutation predicate bound (D05 repaired) | No body schema / ID format validation | `backend/src/routes/workspace.routes.ts:41` |
 | `GET /api/workspaces/:id/github-repositories` | Clerk + local principal | OWNER | No body schema / ID format validation | `backend/src/routes/workspace.routes.ts:44` |
 | `POST /api/workspaces/:id/github-repositories` | Clerk + local principal | OWNER | Zod body | `backend/src/routes/workspace.routes.ts:45` |
 | `PATCH /api/workspaces/:id/github-repositories/:repositoryId` | Clerk + local principal | OWNER; target repository checked against workspace | Zod body | `backend/src/routes/workspace.routes.ts:46` |
 | `DELETE /api/workspaces/:id/github-repositories/:repositoryId` | Clerk + local principal | OWNER; target repository checked against workspace | No body schema / ID format validation | `backend/src/routes/workspace.routes.ts:47` |
 | `GET /api/workspaces/:id/documents` | Clerk + local principal | Any workspace member | No body schema / ID format validation | `backend/src/routes/workspace.routes.ts:50` |
-| `POST /api/workspaces/:id/documents` | Clerk + local principal | OWNER / EDITOR; parentId NOT bound (D08) | Zod body | `backend/src/routes/workspace.routes.ts:51` |
+| `POST /api/workspaces/:id/documents` | Clerk + local principal | OWNER/EDITOR; parent ID workspace/archive checked; nested children tenant-filtered (D08 application fix) | Zod body | `backend/src/routes/workspace.routes.ts:51` |
 | `GET /api/workspaces/:id/boards` | Clerk + local principal | Any workspace member | No body schema / ID format validation | `backend/src/routes/workspace.routes.ts:54` |
 | `POST /api/workspaces/:id/boards` | Clerk + local principal | OWNER / EDITOR | Zod body | `backend/src/routes/workspace.routes.ts:55` |
 | `GET /api/workspaces/:id/snippets` | Clerk + local principal | Any workspace member | No body schema / ID format validation | `backend/src/routes/workspace.routes.ts:58` |
@@ -62,14 +62,14 @@ All connections require a Clerk token and local user lookup; isActive is not che
 
 | Event | Membership | Role/resource binding | Validation | Evidence |
 |---|---|---|---|---|
-| `workspace:join` | NONE | No role or target-resource check | Zod envelope; task/cursor arbitrary where present | `backend/src/socket/presence.handler.ts:68` |
-| `workspace:leave` | NONE | No role or target-resource check | Zod envelope; task/cursor arbitrary where present | `backend/src/socket/presence.handler.ts:105` |
-| `cursor:update` | NONE | No role or target-resource check | Zod envelope; task/cursor arbitrary where present | `backend/src/socket/presence.handler.ts:128` |
+| `workspace:join` | Shared workspace policy, active user/tenant | Member; cursor additionally resolves document workspace/archive | Bounded Zod envelope/cursor | `backend/src/socket/presence.handler.ts:68` |
+| `workspace:leave` | Shared workspace policy, active user/tenant | Member; cursor additionally resolves document workspace/archive | Bounded Zod envelope/cursor | `backend/src/socket/presence.handler.ts:105` |
+| `cursor:update` | Shared workspace policy, active user/tenant | Member; cursor additionally resolves document workspace/archive | Bounded Zod envelope/cursor | `backend/src/socket/presence.handler.ts:128` |
 | `disconnect` | Not applicable | Disconnect cleans buckets/presence; no authz needed | No payload domain schema | `backend/src/socket/presence.handler.ts:140` |
-| `kanban:task-moved` | NONE | No role or target-resource check | Zod envelope; task/cursor arbitrary where present | `backend/src/socket/kanban.handler.ts:39` |
-| `kanban:task-created` | NONE | No role or target-resource check | Zod envelope; task/cursor arbitrary where present | `backend/src/socket/kanban.handler.ts:55` |
-| `kanban:task-updated` | NONE | No role or target-resource check | Zod envelope; task/cursor arbitrary where present | `backend/src/socket/kanban.handler.ts:67` |
-| `kanban:task-deleted` | NONE | No role or target-resource check | Zod envelope; task/cursor arbitrary where present | `backend/src/socket/kanban.handler.ts:79` |
+| `kanban:task-moved` | Shared workspace policy, active user/tenant | OWNER/EDITOR; task/column bound to workspace; canonical data relay | Bounded Zod ID/position envelope | `backend/src/socket/kanban.handler.ts:39` |
+| `kanban:task-created` | Shared workspace policy, active user/tenant | OWNER/EDITOR; task/column bound to workspace; canonical data relay | Bounded Zod ID/position envelope | `backend/src/socket/kanban.handler.ts:55` |
+| `kanban:task-updated` | Shared workspace policy, active user/tenant | OWNER/EDITOR; task/column bound to workspace; canonical data relay | Bounded Zod ID/position envelope | `backend/src/socket/kanban.handler.ts:67` |
+| `kanban:task-deleted` | Shared workspace policy, active user/tenant | OWNER/EDITOR; task/column bound to workspace; canonical data relay | Bounded Zod ID/position envelope | `backend/src/socket/kanban.handler.ts:79` |
 | `error` | Not applicable | Logs incoming error only | No payload domain schema | `backend/src/socket/index.ts:89` |
 | `disconnect` | Not applicable | Disconnect cleans buckets/presence; no authz needed | No payload domain schema | `backend/src/socket/index.ts:93` |
 
@@ -86,4 +86,4 @@ Outbound-only notifications: workspace:users, cursor:updated, activity:new, work
 
 ## Interpretation
 
-Workspace-owner checks are correctly present on workspace mutations, invitations and repository configuration, and document/snippet mutations derive workspace from their resource. Task moves check same-workspace destinations. Critical bypasses D01/D02 are repaired by group1 regressions; missing relationship checks D05/D06/D08 and event checks D03/D04/D07 remain. Task assignee IDs are globally valid User IDs, without ensuring assignment membership; validate tenant assignment as part of Phase 1. Role update accepts OWNER and can demote the last owner; no single-owner/last-owner transaction invariant. SCIM token authority is workspace-wide (including assigning OWNER) rather than normal member role authority.
+Workspace-owner checks are correctly present on workspace mutations, invitations and repository configuration, and document/snippet mutations derive workspace from their resource. Task moves check same-workspace destinations. Critical bypasses D01/D02 are repaired by group1 regressions; D03/D04/D05/D06/D07 and application-level D08 checks are repaired; migration-level tenant hierarchy invariants remain pending. Task assignee IDs are globally valid User IDs, without ensuring assignment membership; validate tenant assignment as part of Phase 1. Role update accepts OWNER and can demote the last owner; no single-owner/last-owner transaction invariant. SCIM token authority is workspace-wide (including assigning OWNER) rather than normal member role authority.

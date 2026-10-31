@@ -8,3 +8,5 @@
 - I02: repair PostgreSQL/queue tests; add explicit lint/type/unit-test gates and fix frontend lint errors without rule suppression.
 
 Historical Phase 0 audit: see docs/CHANGELOG.md. No production deployment or key rotation performed.
+
+- D03/D04/D05/D06/D08: authorize socket domain events, bind resources and member mutations to their workspace, and validate document hierarchy ownership.

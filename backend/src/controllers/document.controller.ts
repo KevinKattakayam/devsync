@@ -34,11 +34,11 @@ export async function getDocuments(req: Request, res: Response, next: NextFuncti
       include: {
         author: { select: { id: true, name: true, avatar: true } },
         children: {
-          where: { isArchived: false },
+          where: { isArchived: false, workspaceId },
           include: {
             author: { select: { id: true, name: true, avatar: true } },
             children: {
-              where: { isArchived: false },
+              where: { isArchived: false, workspaceId },
               select: { id: true, title: true, icon: true },
             },
           },
@@ -56,13 +56,13 @@ export async function getDocuments(req: Request, res: Response, next: NextFuncti
 export async function getDocument(req: Request, res: Response, next: NextFunction) {
   try {
     const documentId = String(req.params.docId || req.params.id);
-    await requireDocumentAccess(req.user!.userId, documentId);
+    const { workspaceId } = await requireDocumentAccess(req.user!.userId, documentId);
     const document = await prisma.document.findUnique({
       where: { id: documentId },
       include: {
         author: { select: { id: true, name: true, avatar: true } },
         children: {
-          where: { isArchived: false },
+          where: { isArchived: false, workspaceId },
           select: { id: true, title: true, icon: true },
           orderBy: { createdAt: 'desc' },
         },
@@ -83,6 +83,10 @@ export async function createDocument(req: Request, res: Response, next: NextFunc
   try {
     const workspaceId = String(req.params.workspaceId || req.params.id);
     const { title, parentId, icon } = req.body;
+    if (parentId) {
+      const parent = await prisma.withTenantTransaction(workspaceId, tx => tx.document.findUnique({ where: { id: parentId }, select: { workspaceId: true, isArchived: true } }));
+      if (!parent || parent.workspaceId !== workspaceId || parent.isArchived) throw new ForbiddenError('Access denied');
+    }
 
     const document = await prisma.withTenantTransaction(workspaceId, (tx) => tx.document.create({
       data: {

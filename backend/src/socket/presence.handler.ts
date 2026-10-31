@@ -1,6 +1,8 @@
 import { Server, Socket } from 'socket.io';
 import { z } from 'zod';
 import { redis, isRedisAvailable } from '../lib/redis';
+import { prisma } from '../lib/prisma';
+import { authorizeWorkspace } from '../security/workspace-policy';
 
 interface AuthenticatedSocket extends Socket {
   userId?: string;
@@ -10,19 +12,19 @@ interface AuthenticatedSocket extends Socket {
 // ── Zod schemas for event payloads ───────────────────────────
 
 const joinPayload = z.object({
-  workspaceId: z.string().min(1),
-  userName: z.string().min(1),
-  avatar: z.string().optional(),
+  workspaceId: z.string().min(1).max(191),
+  userName: z.string().min(1).max(191),
+  avatar: z.string().url().max(2048).optional(),
 });
 
 const leavePayload = z.object({
-  workspaceId: z.string().min(1),
+  workspaceId: z.string().min(1).max(191),
 });
 
 const cursorPayload = z.object({
-  workspaceId: z.string().min(1),
-  documentId: z.string().min(1),
-  cursor: z.any(),
+  workspaceId: z.string().min(1).max(191),
+  documentId: z.string().min(1).max(191),
+  cursor: z.object({ anchor: z.number().int().min(0).max(10000000).optional(), head: z.number().int().min(0).max(10000000).optional() }),
 });
 
 // ── Redis key builders ───────────────────────────────────────
@@ -76,6 +78,8 @@ export function setupPresenceHandlers(io: Server, socket: AuthenticatedSocket) {
     const userId = socket.userId!;
     const roomKey = `workspace:${workspaceId}`;
 
+    try { await authorizeWorkspace(userId, workspaceId); }
+    catch { socket.emit('error', { code: 'FORBIDDEN', message: 'Access denied' }); return; }
     socket.join(roomKey);
 
     // Track socket → workspace mapping for disconnect cleanup
@@ -110,6 +114,8 @@ export function setupPresenceHandlers(io: Server, socket: AuthenticatedSocket) {
     const userId = socket.userId!;
     const roomKey = `workspace:${workspaceId}`;
 
+    try { await authorizeWorkspace(userId, workspaceId); }
+    catch { socket.leave(roomKey); socket.emit('error', { code: 'FORBIDDEN', message: 'Access denied' }); return; }
     socket.leave(roomKey);
     socketWorkspaces.get(socket.id)?.delete(workspaceId);
 
@@ -125,11 +131,16 @@ export function setupPresenceHandlers(io: Server, socket: AuthenticatedSocket) {
   });
 
   // ── Cursor update ────────────────────────────────────────
-  socket.on('cursor:update', (payload: unknown) => {
+  socket.on('cursor:update', async (payload: unknown) => {
     const parsed = cursorPayload.safeParse(payload);
     if (!parsed.success) return;
 
-    const { documentId, cursor } = parsed.data;
+    const { workspaceId, documentId, cursor } = parsed.data;
+    try {
+      await authorizeWorkspace(socket.userId!, workspaceId);
+      const document = await prisma.withTenantTransaction(workspaceId, tx => tx.document.findUnique({ where: { id: documentId }, select: { workspaceId: true, isArchived: true } }));
+      if (!document || document.workspaceId !== workspaceId || document.isArchived) throw new Error('Access denied');
+    } catch { socket.emit('error', { code: 'FORBIDDEN', message: 'Access denied' }); return; }
     socket.to(`document:${documentId}`).emit('cursor:updated', {
       userId: socket.userId,
       cursor,

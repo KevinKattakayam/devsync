@@ -222,8 +222,11 @@ export async function updateMemberRole(req: Request, res: Response, next: NextFu
   try {
     const { role } = req.body;
     const memberId = String(req.params.memberId);
+    const workspaceId = String(req.params.id);
+    const target = await prisma.workspaceMember.findUnique({ where: { id: memberId } });
+    if (!target || target.workspaceId !== workspaceId) throw new NotFoundError('Member not found');
     const member = await prisma.workspaceMember.update({
-      where: { id: memberId },
+      where: { id: memberId, workspaceId },
       data: { role: role as Role },
       include: { user: { select: { id: true, name: true, email: true, avatar: true } } },
     });
@@ -236,6 +239,9 @@ export async function updateMemberRole(req: Request, res: Response, next: NextFu
 export async function removeMember(req: Request, res: Response, next: NextFunction) {
   try {
     const memberId = String(req.params.memberId);
+    const workspaceId = String(req.params.id);
+    const target = await prisma.workspaceMember.findUnique({ where: { id: memberId } });
+    if (!target || target.workspaceId !== workspaceId) throw new NotFoundError('Member not found');
     const member = await prisma.workspaceMember.findUnique({
       where: { id: memberId },
     });
@@ -248,7 +254,7 @@ export async function removeMember(req: Request, res: Response, next: NextFuncti
       throw new ForbiddenError('Cannot remove workspace owner');
     }
 
-    await prisma.workspaceMember.delete({ where: { id: memberId } });
+    await prisma.workspaceMember.delete({ where: { id: memberId, workspaceId } });
     res.json({ message: 'Member removed' });
   } catch (error) {
     next(error);
