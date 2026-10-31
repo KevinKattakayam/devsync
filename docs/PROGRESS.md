@@ -1,81 +1,64 @@
-# Phase 1a progress — 2026-10-31
+# Progress — Phase 1a partial delivery
 
-Branch upgrade/enterprise. In progress; no push/deploy. Root AGENTS.md and docs/MASTER_PROMPT.md remain absent; user-supplied session rules apply. Phase 0 record follows unchanged below.
-
-## Phase 1a done (group 1)
-
-- D01/E01/D02: Critical regression suite established 9 failing cases before changes;11 pass after. Profile mutations strictly allowlisted, native execution disabled with503, collaboration tenant-prefix mismatch/missing documents rejected.
-- D07: viewer read-only connection permission enforced. Active-connection revocation and RLS-safe legacy lookups still need work (C01/G01).
-- I02: existing PostgreSQL/queue test compilation repaired without removing assertions. Full backend suite:5 suites/17 tests pass. Explicit backend lint/typecheck and frontend unit-test/typecheck scripts added. Frontend lint:0 errors,53 existing warnings. Both installs, typechecks and builds pass; frontend unit test passes. Logs in docs/phase1a-evidence.
-- Root CHANGELOG.md and ADR001/002 added. No CRDT representation/protocol redesign, observability, OpenAPI or Playwright E2E work.
-
-## Phase 1a done (group 2)
-
-- D03/D04/D05/D06/D08 application-level fixes: shared workspace policy before socket effects, canonical task relays and resource binding, workspace-bound member updates/deletes, board authorization, parent validation and tenant-filtered children. Database composite hierarchy invariant still pending.
-- Authorization suite:22 failed/4 passed before;30 pass after (includes positive canonical editor cases). Full backend:6 suites/47 tests pass. Both installs/lints/typechecks/tests/builds pass; frontend retains53 warnings,0 errors. No Playwright run.
-- Socket delete relay still requires an existing task; durable tombstones/replay remain Phase1b. No claims that introducing a policy alone fixes all REST/SCIM/service paths or all session revocation.
-
-## Phase 1a done (group 3)
-
-- E02: raw AI HTML escaped before formatting, including headings/lists/tables; two regressions fail before/pass after, original code escaping test retained. No claim of full stored rich-text sanitization yet.
-- G08: signed GitHub task transitions scoped explicitly to repository workspace inside tenant transaction; red regression demonstrated foreign task update, green blocks it.
-- Gate: clean installs, lint/typecheck/test/build succeed for both; backend7 suites/48 tests, frontend3 tests; frontend53 warnings visible. Raw output and statuses in group3-results.json.
-- Historical pre-enterprise schema recovered from Git for a source-backed migration baseline; adoption into deployed databases remains unverified.
-
-## Phase 1a done (group 4)
-
-- G02: baseline generated from actual pre-enterprise Git schema; original four migrations unchanged; forward migration enforces non-null Clerk identity after explicit operator backfill. Actual migrate deploy succeeds on empty pgvector.
-- D08 database invariant: composite parent/document workspace FK added; database regression fails before/pass after. Cross-tenant invalid existing rows block migration, never silently removed.
-- G12 partial: relationship/tenant-list indexes added and verified; list pagination and query-load measurements remain open.
-- I09: real seed script, single tenant transaction, explicit Clerk identity mapping, non-production opt-in and idempotence checks. Does not create Clerk accounts or passwords.
-- Removed db:push script and active setup instructions; migration/adoption guide, migration lockfile and checked seed tsconfig added. Backend/frontend env examples now cover current variables; generated artifacts ignored. Startup configuration enforcement and vulnerable dependency upgrades are not claimed here.
-- Final group4 gate passes installs/lint/typecheck/tests/build for both. Backend8 suites/52 tests, frontend3 tests. Frontend0 errors/53 warnings. Initial root-level prisma validate lacked DATABASE_URL (recorded); generated-client build and real isolated migration tests subsequently pass without defaulting credentials.
-
-## Phase 1a remaining / requires human action
-
-Authentication architecture question is pending: requested Argon2id/custom cookie rotation conflicts with installed Clerk login/session design. No replacement or claim of equivalent provider controls made. Need decision and account migration/tenant policy access. No passwords or refresh tokens are implemented by this group.
-
-Native runner deployment credentials may have been exposed before containment: deployment owner must review access and rotate API/DB/Redis/AI/Clerk/Stripe/service credentials if the endpoint was reachable. No secrets printed, rotated or pushed here.
-
-All other Phase 1a scope remains open until subsequent groups are documented. Do not interpret Phase 0 findings as closed by this progress update.
-
----
-
-# Progress — Phase 0 only
-
-Updated 2026-10-31. Branch: `upgrade/enterprise`. Application code, dependency manifests/locks, schema, workflows and infrastructure remain unchanged. Phase 1 has not started.
+Updated 2026-10-31. Branch `upgrade/enterprise`. No push, deployment, production database mutation, key rotation or real identity provisioning. Phase 1a is **not complete**; do not treat this branch as production-ready. Root AGENTS.md and docs/MASTER_PROMPT.md were absent; the user's supplied session rules were followed. Phase 0 evidence remains in AUDIT.md and audit-evidence/.
 
 ## Done
 
-- Read the available `frontend/AGENTS.md` before frontend review. No root AGENTS.md exists in the checkout; the user's later supplied rules were applied for the rest of the session. Referenced docs/MASTER_PROMPT.md and prior docs/PROGRESS.md did not exist at session start; no plan text invented.
-- Inventoried 153 tracked source/config/doc/lock/asset files with hashes; inspected backend, frontend, Prisma/migrations, infrastructure, CI, Docker, docs and .vscode. Nested `.kilo` worktree tracked-file copies compare identical; generated dependencies/Git internals/local credential values are outside published source evidence.
-- Created ARCHITECTURE_CURRENT.md, AUDIT.md, AUTHZ_MATRIX.md, FIX_ORDER.md, this progress report and docs/CHANGELOG.md. Root changelog omitted to obey the explicit docs-only Phase 0 write rule.
-- Recorded 60 source-referenced findings: **3 Critical, 25 High, 27 Medium, 5 Low**. No claim of live production exploitation; static confidence/reproduction and runtime caveats are stated for every finding.
-- Installed both dependency trees in ignored runtime copies under docs/. Retried sandbox DNS/IPC/port failures with approved access. Both production builds pass; generated-client backend and frontend type-check pass.
-- Ran all existing test/lint commands. Backend: 2 suites passed, 2 failed compilation; 3 individual tests passed. E2E: 2 existing tests skipped themselves for missing fixtures. Frontend test/backend lint scripts absent. Frontend lint: 52 errors/53 warnings. Nothing skipped/deleted/relaxed by the audit to obtain green checks.
-- Registry outdated queries returned 38 backend and 44 frontend entries (not necessarily required upgrades); literal import candidates recorded separately.
-- npm audit: backend 49 entries (2 critical/12 high/31 moderate/4 low), frontend 73 (2 critical/16 high/54 moderate/1 low). Raw JSON, warnings, logs and exit statuses retained. Findings and dependency advisory totals are distinct.
-- Started both development servers. Backend health HTTP200, readiness HTTP503 database unreachable; Redis repeatedly refused local6379. Public frontend/auth pages rendered with existing local Clerk development configuration; structural Clerk CSS warning recorded verbatim.
-- Captured all 14 page route shapes at 1440px and 390px into docs/ui/before (28 images). Protected routes show login redirects, not interior workspace views. ui-results.json and UI README explicitly identify blocks.
-- Read-only Docker availability and Compose configuration probes recorded. Terraform executable absent; infrastructure runtime correctness not claimed.
+| Findings | Code changes and regression evidence |
+|---|---|
+| D01 Critical | Middleware uses parsed Zod output; controller independently validates a strict profile allowlist. Role, Clerk ID and nested membership assignment attacks reject before ORM mutation. |
+| E01 Critical | All host child-process execution removed. Existing endpoint returns503; no insecure enable flag. Harmless execution-boundary regressions fail before/pass after. Execution functionality remains unavailable until a genuinely isolated executor exists. |
+| D02 Critical / D07 | Document workspace must match room prefix; missing/archived documents reject; shared membership/active-user/tenant policy applies; viewer connection marked read-only by Hocuspocus. Protocol/model not rewritten. Ongoing revocation and RLS-safe resolution still C01/G01. |
+| D03/D04 | Socket join/leave/cursor and all four Kanban mutation inputs invoke shared workspace policy. Kanban requires writer role, target task/columns bound to workspace and canonical stored task data; moves must match committed state. Positive member/editor cases preserved. |
+| D05/D06/D08 | Member updates/deletes bind target workspace, columns require board workspace editor permission, parent creation validates tenant/archive state and nested children filter workspace. D08 additionally enforced by composite database FK. D09/D10 remain open. |
+| E02 | AI raw HTML escaped before trusted Markdown formatting, including headings/lists/tables; existing code escaping retained. HTML attack regressions fail before/pass after. This does not validate all stored TipTap JSON. |
+| G08 | Signed webhook task reads and updates explicitly restrict repository workspace in one tenant transaction. Regression proved foreign-task update before and blocks it after. G09 delivery processing still open. |
+| G02 / G12 partial | Historical baseline generated from actual pre-enterprise Git schema; four existing migrations unchanged. Actual full migration chain tested on empty pgvector; forward identity NOT NULL, tenant relationship/list indexes and composite parent constraint. Existing-data adoption requires verification/backfill. Pagination/other RLS callers still open. |
+| I09 | Non-production seed script, explicit write opt-in and three supplied Clerk IDs, atomic tenant transaction and stable fixture IDs. Actual seed twice is idempotent. It creates local records, not working Clerk accounts/passwords. |
+| I02 | Existing PostgreSQL/queue suites repaired without deleting assertions. Explicit lint/typecheck/test scripts added; frontend lint errors fixed through types/component identity/effect structure without rule suppression or ts-ignore. Quality-only Kanban dependency stabilization does not fix its LWW data model. |
+| I01 partial / hygiene | Next16.4.3, coherent TipTap3.32.2, Express4.22.3, Multer2.5, Zod4.6.7, matching testcontainers12 tooling; unused NextAuth/deprecated cursor dependency removed. Direct import dependencies declared. No forced or peer-bypassed installation. Both env examples cover current variables; artifacts ignored. No actual committed secret identified in reviewed source; exhaustive historical secret scanning was not done. |
 
-## Deferred / unverified
+Root CHANGELOG.md, updated AUTHZ_MATRIX.md, migration/seed guide and six ADRs document decisions and limitations. Audit narratives retain Phase0 source locations and now point to current status. Recovered historical baseline is recorded in phase1a-evidence/pre-enterprise-schema.prisma.
 
-- Authenticated editor/board/snippet/settings/billing/superadmin screenshots and accessibility flows: no authenticated E2E_STORAGE_STATE, seeded E2E_WORKSPACE_ID/document IDs or isolated owner/editor/viewer/outsider users.
-- Runtime IDOR/privilege escalation/revocation/SCIM/Stripe/GitHub exploit reproductions: no production data/accounts mutated. Source establishes unsafe code paths; verification instructions accompany findings.
-- Empty DB migration and existing-data upgrade rehearsal: first migration lacks original schema baseline, readiness DB unavailable. Did not run db push or create/delete application data to evade the migration issue.
-- 10+ editors, offline convergence, crash recovery, ordering/replay, reconnect storms, memory/bundle/latency/contrast benchmarks: no reliable full-system fixture; no metrics invented.
-- Terraform fmt/validate/plan: binary absent; cloud credentials/providers were not installed or accessed. Kubernetes/Argo/KEDA/Redis cluster topology, ingress, canary metrics and restore/DR were not deployed.
-- Clerk password/session/cookie/MFA/origin restrictions, provider privacy/retention, deployed CORS/secret settings and historical secret exposure require scoped admin review. No exhaustive Git-history secret scan or live deployment inspection claimed.
+## Final verification
 
-## Human action needed before Phase 1
+- Backend: **9 suites / 55 tests passed**, including actual disposable database/Redis integration. Frontend: **5 unit tests passed**.
+- Both clean installs, lint commands, application/seed typechecks and production builds pass. Frontend lint: **0 errors / 55 warnings**; warnings remain visible. Backend lint is newly introduced syntax checking alongside strict tsc; no previous backend lint rules were disabled.
+- Dependency audits: backend **0 Critical / 0 High / 39 Moderate / 2 Low**; frontend **0 Critical / 0 High / 16 Moderate / 0 Low**. These are advisory entries, not application exploit counts; I01 is not wholly closed.
+- Group1–4 logs and group3/group4-results.json record each group. For final dependencies, use **group5-results.json backend** and **group5-retry-results.json frontend**. The first frontend group5 clean install failed on an npm lockfile AJV inconsistency; normal install repaired it and clean install/checks then passed. Failed peer-resolution attempts are retained.
+- Critical pre-fix:9 failed/2 passed, post-fix:11 pass. Authorization pre-fix:22 failed/4 passed; final30 authorization cases pass. HTML, webhook, migration, seed, hierarchy and dependency-floor red/green evidence retained. Initial root-level Prisma validation lacked DATABASE_URL; actual isolated migration and generated-client checks subsequently pass without defaulting credentials.
+- No Playwright E2E or new authenticated screenshots; no CRDT rewrite, observability feature or OpenAPI work. Mocked handler tests do not claim complete raw-socket/provider/RLS coverage.
 
-1. Provide the actual MASTER_PROMPT.md plan and confirm the authoritative deployment target (docs currently describe several). The Phase 0 instructions served as this audit's scope.
-2. Supply isolated seeded staging database/Redis and Clerk test identities/session-state fixtures for all roles; map preexisting user records to verified Clerk identities and recover historical baseline schema for migration rehearsal.
-3. Review/contain Critical findings D01/D02/E01 before any wider use; inspect deployed credential exposure if native runner was reachable. Proposed fixes are only in FIX_ORDER.md.
-4. Provide tenant-admin policy access for Clerk and narrowly scoped test webhook/billing/provider integrations; choose offline-cache retention and owner/invitation policies. Do not paste secrets into docs.
-5. Confirm licensing/disclosure ownership before adding root LICENSE/SECURITY.md in a later authorized phase.
+## Unfinished Phase 1a — in priority order
+
+| Area / findings | Exactly what remains and why |
+|---|---|
+| Authentication replacement / C01–C04 | **Clerk remains the current implementation.** Requested custom httpOnly/Secure/SameSite cookies, short access lifetime, rotating refresh families/reuse revocation, server logout revocation, Argon2id, single-use verification/reset tokens, account-safe messages and cookie CSRF are **not implemented**. A provider-versus-custom question was raised; no answer received. The request authorizes further implementation, but deployed account/session cutover still needs a verified mapping/plan; no unsafe dual-auth shortcut was introduced in this session. |
+| Startup/config/rate controls | Required-secret fail-fast validation, Redis-backed per-IP/per-account limiting, a production CORS allowlist configuration and OAuth/TOTP feature-flag policy remain. Existing configured CORS, Helmet and in-memory IP limits were retained; not replaced with claims of the requested design. |
+| C01 ongoing access / D09/D10 | Active-session token expiry, logout/member/tenant revocation and eviction across Socket.io and Hocuspocus remain incomplete. Shared policy checks active user/tenant on affected operations but cannot be advertised as session-family revocation. Cross-workspace assignee validation and transactional last-owner invariants still need fixes/tests. |
+| Full authorization centralization | Shared policy covers workspace middleware, task editor/column creation and affected socket/Hocuspocus boundaries. Standalone document/snippet resolvers, AI checks, SCIM/service/global-admin exception policies and every other route have **not** all been centralized. AUTHZ_MATRIX explicitly records remaining boundaries. |
+| G01 High RLS coverage | Unscoped document/snippet/task lookup/mutation, collaboration persistence, search, embeddings and background paths still need tenant transactions and real migrated-schema controller tests with a least-privilege runtime role. The new database test proves policies, not full caller correctness. Do not bypass RLS to make these paths work. |
+| E03/E04/H08 | Multer package upgraded, but upload still buffers before membership and OCR remains unisolated/unbudgeted. Frontend upload URL is still hardcoded localhost. Every body/query/param, rich-text node/attribute/URL and socket envelope is not yet fully bounded/sanitized. Snippet source is escaped data and cannot execute on host, but comprehensive stored-content validation remains. |
+| F01–F03 AI | Atomic per-user/per-workspace reservations and accurate output/context/agent metering, concurrency/cost caps, streaming deadline/cancellation/retry/fallback, untrusted-context delimiting, archived retrieval exclusion and sensitive-error/prompt-log redaction remain. The XSS fix makes raw output inert; it does not solve prompt injection or quota accounting. These need a coherent tested billing/provider design, not hurried estimates presented as real usage. |
+| G03/G04/G05/G07/G09/G10/G11 | Bounded Redis outage behavior, PostgreSQL/BullMQ embedding producer-consumer alignment, leases/retries, atomic task ordering/summary writes, durable webhook/Stripe processing, persistence failure propagation and durable embedding outbox still open. Signed webhook movement alone does not fix its early dedup acknowledgment. |
+| Data lifecycle / G12 | Indexes are done; pagination on every list endpoint, remaining multi-step transactions, soft-delete policy and full cascade/restore review are not. Existing workspace/column cascade deletion behavior was not silently changed. |
+| I01 remaining / I08 | Remaining Moderate/Low advisories and deprecations need separate compatibility review; no blanket forced major upgrades performed. License/disclosure policy and exhaustive historical secret scan remain. |
+
+These are unfinished implementation tasks, not all external blockers. The delivered groups end at a passing, reviewable commit boundary; remaining security/session/tenancy work needs another substantive Phase1a increment rather than declaring completion or rushing a contract migration.
+
+## Deferred outside this delivery
+
+As requested, CRDT representation/replay/projection redesign (B01/B03/G06 and related H03/I04), observability, OpenAPI and Playwright E2E were not started. B02 received only a stable-fetch quality repair; B04 resource caps, B05 tab/heartbeat/rejoin correctness, H01 SSE framing and H02 local cache isolation remain. Frontend mock settings/history/billing/analytics, broader a11y/mobile/theme/template work (H04–H07/H09/H10), unsupported product claims (A01–A03) and infrastructure/CI/KEDA/Redis topology issues (I03–I07) remain in the audit. Frontend presence DTOs were aligned during typing, not a claim of complete B05 remediation.
+
+## Requires human action
+
+1. **No deployment yet:** review remaining High findings, especially G01/C01/F01/H08, before treating this branch as ready. No commits were pushed or applied to production.
+2. If host execution was reachable, review access/incident scope and rotate exposed **Clerk, database, Redis, Groq/OpenAI, Stripe/webhook, superadmin-service, GitHub repository-webhook and Cloudinary credentials** as applicable. AES key rotation requires planned re-encryption of stored repository secrets before replacing ENCRYPTION_KEY. No actual key was rotated here.
+3. Provide verified existing-user-to-Clerk identity mapping and the deployed schema/migration history. Back up and rehearse on a clone before baseline adoption or running legacy destructive identity migrations. Forward migration deliberately blocks null Clerk IDs and cross-tenant parents; do not reset/push/delete records to bypass it.
+4. For usable authenticated fixtures, create three isolated Clerk test identities, supply their IDs in SEED_*_CLERK_ID and run the seed only in an isolated non-production database with explicit opt-in. Automated fixture IDs are not real login accounts. Provider dashboard/session/MFA/origin policy access remains unverified.
+5. Confirm identity cutover expectations (requested custom auth versus retained provider) and authoritative deployment target; docs historically describe several. This is planning input for the remaining implementation, not a claim that custom auth requires permission to begin.
+6. Supply licensing/disclosure ownership and the missing MASTER_PROMPT.md if still authoritative. No novel performance claims or benchmarks were invented.
 
 ## Session boundary
 
-Audit work is complete with the deferred coverage above. Deliverables and raw evidence are included in the `docs: phase 0 audit` commit. Only docs/ files belong in the commit; runtime copies (including ignored credentials/build outputs/node_modules) are excluded. No Phase 1 work is authorized by this progress file. Remaining blocks are recorded rather than reported as passing coverage.
+Five logical code groups are committed with finding IDs; final documentation accompanies the dependency group. Every delivered group has real install/lint/type/test/build evidence. Phase1a remains partial. Stop here; Phase1b has not begun.

@@ -18,6 +18,8 @@ def service(name):
    print(target.read_text(errors='replace')[-900:],flush=True)
   if code!=0:break
  return name,results
-with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool: result=dict(pool.map(service,['backend','frontend']))
+names=sys.argv[2:] or ['backend','frontend']
+assert all(name in ['backend','frontend'] for name in names)
+with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool: result=dict(pool.map(service,names))
 (root/'docs/phase1a-evidence'/f'{group}-results.json').write_text(json.dumps(result,indent=2))
 if any(len(rows)!=len(steps) or any(r['exit']!=0 for r in rows) for rows in result.values()):sys.exit(1)

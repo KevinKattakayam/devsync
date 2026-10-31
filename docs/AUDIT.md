@@ -1,3 +1,5 @@
+> This is the immutable Phase0 finding narrative and original severity count. Phase1a remediations, partial fixes and remaining scope are tracked in [PROGRESS.md](PROGRESS.md) and the updated [AUTHZ_MATRIX.md](AUTHZ_MATRIX.md). Audit-era source line numbers describe the initial checkout, not current offsets.
+
 # Phase 0 audit
 
 Audit date: 2026-10-31. Source is the initial checkout on `main`, audited on `upgrade/enterprise`. No application code changes. Severity assesses impact if reachable, not proof of production compromise. Static confirmations are distinguished from unverified runtime consequences. No production credentials, accounts, exploit execution or external deployment were used.

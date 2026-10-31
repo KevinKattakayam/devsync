@@ -1,0 +1,31 @@
+npm error code ERESOLVE
+npm error ERESOLVE could not resolve
+npm error
+npm error While resolving: frontend@0.1.0
+npm error Found: @tiptap/core@3.22.4
+npm error node_modules/@tiptap/core
+npm error   @tiptap/core@"3.32.2" from the root project
+npm error   peer @tiptap/core@"3.22.4" from @tiptap/extension-blockquote@3.22.4
+npm error   node_modules/@tiptap/extension-blockquote
+npm error     @tiptap/extension-blockquote@"^3.22.4" from @tiptap/starter-kit@3.22.4
+npm error     node_modules/@tiptap/starter-kit
+npm error       @tiptap/starter-kit@"3.32.2" from the root project
+npm error   25 more (@tiptap/extension-bold, ...)
+npm error
+npm error Could not resolve dependency:
+npm error @tiptap/core@"3.32.2" from the root project
+npm error
+npm error Conflicting peer dependency: @tiptap/pm@3.32.2
+npm error node_modules/@tiptap/pm
+npm error   peer @tiptap/pm@"3.32.2" from @tiptap/core@3.32.2
+npm error   node_modules/@tiptap/core
+npm error     @tiptap/core@"3.32.2" from the root project
+npm error
+npm error Fix the upstream dependency conflict, or retry
+npm error this command with --force or --legacy-peer-deps
+npm error to accept an incorrect (and potentially broken) dependency resolution.
+npm error
+npm error
+npm error For a full report see:
+npm error /home/kevin/.npm/_logs/2026-10-31T16_45_09_291Z-eresolve-report.txt
+npm error A complete log of this run can be found in: /home/kevin/.npm/_logs/2026-10-31T16_45_09_291Z-debug-0.log

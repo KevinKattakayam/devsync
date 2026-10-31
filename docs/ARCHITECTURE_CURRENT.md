@@ -1,3 +1,5 @@
+> Phase0 architecture snapshot. Phase1a now uses Next16.4.3, aligned TipTap3.32.2, Zod4, disabled host execution, repaired permission boundaries, a source-backed migration baseline/tenant hierarchy constraint and an explicit seed. Authentication still uses Clerk; the requested custom cookie/password system is not implemented. See PROGRESS.md for current limits.
+
 # Current architecture — observed Phase 0
 
 Reviewed 2026-10-31; source inventory covers 153 tracked files before audit additions. The user's historical brief and README are not the current architecture. Runtime/source evidence is in `audit-evidence/`; every registered operation is detailed in [AUTHZ_MATRIX.md](AUTHZ_MATRIX.md).

@@ -1,3 +1,5 @@
+> Historical Phase0 fix-order proposal. Phase1a delivery has implemented a subset; the authoritative done/partial/open ledger is [PROGRESS.md](PROGRESS.md). All original remaining dependencies still need review; this is not a claim that Phase1a or Phase1b is complete.
+
 # Phase 1 fix order (proposal only)
 
 No fixes in this document have been applied. Preserve existing API/event contracts or introduce explicit versioned replacements. Repair controls and tests together; never disable RLS, authorization, lint rules or tests to obtain a green build.

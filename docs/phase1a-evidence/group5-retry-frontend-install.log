@@ -1,0 +1,9 @@
+npm warn deprecated @opentelemetry/sdk-trace-node@2.10.0: Use @opentelemetry/sdk-trace package
+npm warn deprecated @opentelemetry/propagator-jaeger@2.10.0: Package no longer supported. See https://github.com/open-telemetry/opentelemetry-js/pull/7077
+npm warn deprecated @opentelemetry/sdk-trace-base@2.10.0: Use @opentelemetry/sdk-trace package
+npm warn deprecated eslint@9.39.5: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+
+added 565 packages in 8s
+
+209 packages are looking for funding
+  run `npm fund` for details

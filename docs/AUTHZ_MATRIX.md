@@ -1,3 +1,5 @@
+> Phase1a status: D01/D02/E01 and D03–D08 application boundaries are repaired and regression-tested; D08 also has a tested composite database constraint. This matrix is not a claim that full Phase1a centralization is complete. C01 session revocation, G01 tenant-context coverage, SCIM identity linking, D09 assignments and D10 owner invariants remain open. See PROGRESS.md for the complete scope ledger.
+
 # Authorization matrix — updated during Phase 1a
 
 Static route-by-route review of every registered REST route and every Socket.io input event. This is not a passing integration-test report. OWNER/EDITOR/VIEWER are database workspace roles; there is no per-document ownership ACL beyond membership. Authz checks do not overcome RLS context failures (G01). Every REST route passes Helmet, configured CORS, parsing, trace and global IP limiter; global limiting is skipped outside production.
@@ -62,14 +64,14 @@ All connections require a Clerk token and local user lookup; isActive is not che
 
 | Event | Membership | Role/resource binding | Validation | Evidence |
 |---|---|---|---|---|
-| `workspace:join` | Shared workspace policy, active user/tenant | Member; cursor additionally resolves document workspace/archive | Bounded Zod envelope/cursor | `backend/src/socket/presence.handler.ts:68` |
-| `workspace:leave` | Shared workspace policy, active user/tenant | Member; cursor additionally resolves document workspace/archive | Bounded Zod envelope/cursor | `backend/src/socket/presence.handler.ts:105` |
-| `cursor:update` | Shared workspace policy, active user/tenant | Member; cursor additionally resolves document workspace/archive | Bounded Zod envelope/cursor | `backend/src/socket/presence.handler.ts:128` |
+| `workspace:join` | Shared workspace policy, active user/tenant | Member; cursor additionally resolves document workspace/archive | Bounded Zod envelope/cursor | `backend/src/socket/presence.handler.ts:70` |
+| `workspace:leave` | Shared workspace policy, active user/tenant | Member; cursor additionally resolves document workspace/archive | Bounded Zod envelope/cursor | `backend/src/socket/presence.handler.ts:109` |
+| `cursor:update` | Shared workspace policy, active user/tenant | Member; cursor additionally resolves document workspace/archive | Bounded Zod envelope/cursor | `backend/src/socket/presence.handler.ts:134` |
 | `disconnect` | Not applicable | Disconnect cleans buckets/presence; no authz needed | No payload domain schema | `backend/src/socket/presence.handler.ts:140` |
-| `kanban:task-moved` | Shared workspace policy, active user/tenant | OWNER/EDITOR; task/column bound to workspace; canonical data relay | Bounded Zod ID/position envelope | `backend/src/socket/kanban.handler.ts:39` |
-| `kanban:task-created` | Shared workspace policy, active user/tenant | OWNER/EDITOR; task/column bound to workspace; canonical data relay | Bounded Zod ID/position envelope | `backend/src/socket/kanban.handler.ts:55` |
-| `kanban:task-updated` | Shared workspace policy, active user/tenant | OWNER/EDITOR; task/column bound to workspace; canonical data relay | Bounded Zod ID/position envelope | `backend/src/socket/kanban.handler.ts:67` |
-| `kanban:task-deleted` | Shared workspace policy, active user/tenant | OWNER/EDITOR; task/column bound to workspace; canonical data relay | Bounded Zod ID/position envelope | `backend/src/socket/kanban.handler.ts:79` |
+| `kanban:task-moved` | Shared workspace policy, active user/tenant | OWNER/EDITOR; task/column bound to workspace; canonical data relay | Bounded Zod ID/position envelope | `backend/src/socket/kanban.handler.ts:21` |
+| `kanban:task-created` | Shared workspace policy, active user/tenant | OWNER/EDITOR; task/column bound to workspace; canonical data relay | Bounded Zod ID/position envelope | `backend/src/socket/kanban.handler.ts:21` |
+| `kanban:task-updated` | Shared workspace policy, active user/tenant | OWNER/EDITOR; task/column bound to workspace; canonical data relay | Bounded Zod ID/position envelope | `backend/src/socket/kanban.handler.ts:21` |
+| `kanban:task-deleted` | Shared workspace policy, active user/tenant | OWNER/EDITOR; task/column bound to workspace; canonical data relay | Bounded Zod ID/position envelope | `backend/src/socket/kanban.handler.ts:21` |
 | `error` | Not applicable | Logs incoming error only | No payload domain schema | `backend/src/socket/index.ts:89` |
 | `disconnect` | Not applicable | Disconnect cleans buckets/presence; no authz needed | No payload domain schema | `backend/src/socket/index.ts:93` |
 

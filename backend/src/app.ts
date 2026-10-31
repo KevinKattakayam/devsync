@@ -83,7 +83,7 @@ app.use((err: any, _req: express.Request, res: express.Response, _next: express.
 
   // Zod Validation Errors
   if (err instanceof ZodError) {
-    const messages = err.errors.map((e) => `${e.path.join('.')}: ${e.message}`).join(', ');
+    const messages = err.issues.map((e) => `${e.path.join('.')}: ${e.message}`).join(', ');
     res.status(400).json({ error: messages });
     return;
   }
