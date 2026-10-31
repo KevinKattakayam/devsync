@@ -1,3 +1,5 @@
+import type { JSONContent } from '@tiptap/react';
+
 export interface User {
   id: string;
   name: string;
@@ -34,7 +36,8 @@ export interface WorkspaceMember {
 export interface Document {
   id: string;
   title: string;
-  content: any;
+  content: JSONContent;
+  yjsState?: { type: string; data: number[] } | null;
   icon: string;
   isPublished: boolean;
   isArchived: boolean;
@@ -65,7 +68,7 @@ export interface Task {
   description?: string;
   priority: 'LOW' | 'MEDIUM' | 'HIGH' | 'URGENT';
   position: number;
-  dueDate?: string;
+  dueDate?: string | null;
   assignee?: User;
   labels: TaskLabel[];
   columnId: string;
@@ -91,7 +94,9 @@ export interface Activity {
   id: string;
   type: string;
   message: string;
-  metadata?: any;
+  metadata?: Record<string, unknown>;
   createdAt: string;
   user: User;
 }
+
+export interface PresenceUser { id: string; socketId: string; name: string; avatar?: string; }

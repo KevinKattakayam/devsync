@@ -17,7 +17,7 @@ interface CommandItem {
   id: string;
   title: string;
   category: "Navigation" | "Documents" | "Tasks" | "Snippets" | "Actions";
-  icon: any;
+  icon: import("lucide-react").LucideIcon;
   action: () => void;
   subtitle?: string;
 }

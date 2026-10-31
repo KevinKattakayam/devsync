@@ -1,3 +1,4 @@
+import type { Task, Workspace, Snippet, Document } from '@/types';
 import axios from 'axios';
 import { browserTraceId } from './tracing';
 
@@ -34,7 +35,7 @@ export const workspaceApi = {
   getActivities: (id: string) => api.get(`/workspaces/${id}/activities`),
   create: (data: { name: string; description?: string; icon?: string }) =>
     api.post('/workspaces', data),
-  update: (id: string, data: any) => api.patch(`/workspaces/${id}`, data),
+  update: (id: string, data: Partial<Pick<Workspace, 'name' | 'description' | 'icon'>>) => api.patch(`/workspaces/${id}`, data),
   delete: (id: string) => api.delete(`/workspaces/${id}`),
   invite: (id: string, data: { email: string; role: string }) =>
     api.post(`/workspaces/${id}/invite`, data),
@@ -50,7 +51,7 @@ export const documentApi = {
   get: (id: string) => api.get(`/documents/${id}`),
   create: (workspaceId: string, data?: { title?: string; parentId?: string }) =>
     api.post(`/workspaces/${workspaceId}/documents`, data || {}),
-  update: (id: string, data: any) => api.patch(`/documents/${id}`, data),
+  update: (id: string, data: Partial<Pick<Document, 'title' | 'content' | 'icon' | 'isPublished' | 'isArchived'>>) => api.patch(`/documents/${id}`, data),
   delete: (id: string) => api.delete(`/documents/${id}`),
 };
 
@@ -67,9 +68,9 @@ export const taskApi = {
   updateColumn: (columnId: string, data: { name: string }) =>
     api.patch(`/tasks/columns/${columnId}`, data),
   deleteColumn: (columnId: string) => api.delete(`/tasks/columns/${columnId}`),
-  create: (columnId: string, data: any) =>
+  create: (columnId: string, data: Partial<Task>) =>
     api.post(`/tasks/columns/${columnId}/tasks`, data),
-  update: (taskId: string, data: any) => api.patch(`/tasks/tasks/${taskId}`, data),
+  update: (taskId: string, data: Partial<Task>) => api.patch(`/tasks/tasks/${taskId}`, data),
   delete: (taskId: string) => api.delete(`/tasks/tasks/${taskId}`),
   move: (taskId: string, data: { columnId: string; position: number }) =>
     api.patch(`/tasks/tasks/${taskId}/move`, data),
@@ -85,9 +86,9 @@ export const githubRepositoryApi = {
 // Snippet API
 export const snippetApi = {
   list: (workspaceId: string) => api.get(`/workspaces/${workspaceId}/snippets`),
-  create: (workspaceId: string, data: any) =>
+  create: (workspaceId: string, data: Pick<Snippet, 'title' | 'code' | 'language'> & Partial<Pick<Snippet, 'description'>>) =>
     api.post(`/workspaces/${workspaceId}/snippets`, data),
-  update: (id: string, data: any) => api.patch(`/snippets/${id}`, data),
+  update: (id: string, data: Partial<Pick<Snippet, 'title' | 'code' | 'language' | 'description'>>) => api.patch(`/snippets/${id}`, data),
   delete: (id: string) => api.delete(`/snippets/${id}`),
   execute: (data: { language: string; code: string; stdin?: string; env?: Record<string, string> }) =>
     api.post('/snippets/execute', data),

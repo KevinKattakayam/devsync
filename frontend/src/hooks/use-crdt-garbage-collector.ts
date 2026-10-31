@@ -9,7 +9,6 @@ const SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000;
 export function useCRDTGarbageCollector(document: Y.Doc, intervalMs = 30 * 60 * 1000): void {
   useEffect(() => {
     const collect = (): void => {
-      document.gc = true;
       const activities = document.getMap<string>('record:resolved-activities');
       const cutoff = Date.now() - SEVEN_DAYS;
       document.transact(() => activities.forEach((value, key) => {

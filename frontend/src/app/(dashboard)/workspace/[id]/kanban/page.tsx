@@ -25,7 +25,7 @@ export default function KanbanPage() {
   const boardSync = useLocalFirstYDoc(`kanban:${id}`, getToken);
   useCRDTGarbageCollector(boardSync.document);
   const localBoards = useLocalFirstRecord<Board[]>(boardSync.document, 'boards');
-  const [boards, setBoards] = useState<Board[]>([]);
+  const boards = localBoards.value ?? [];
   const [isLoading, setIsLoading] = useState(true);
   const [showTaskModal, setShowTaskModal] = useState(false);
   const [showAnalytics, setShowAnalytics] = useState(false);
@@ -35,22 +35,16 @@ export default function KanbanPage() {
   const [draggedTask, setDraggedTask] = useState<Task | null>(null);
   const [dragOverColumn, setDragOverColumn] = useState<string | null>(null);
 
-  const loadBoards = useCallback(async () => {
-    try {
-      const { data } = await boardApi.list(id);
-      setBoards(data);
-      localBoards.set(data);
-    } catch { toast.error("Failed to load boards"); }
-    finally { setIsLoading(false); }
-  }, [id, localBoards]);
 
   useEffect(() => {
-    if (localBoards.value) { setBoards(localBoards.value); setIsLoading(false); }
-  }, [localBoards.value]);
-  useEffect(() => { if (id) void loadBoards(); }, [id, loadBoards]);
+    let disposed = false;
+    boardApi.list(id).then(({ data }) => { if (!disposed) localBoards.set(data); })
+      .catch(() => { if (!disposed) toast.error("Failed to load boards"); })
+      .finally(() => { if (!disposed) setIsLoading(false); });
+    return () => { disposed = true; };
+  }, [id, localBoards.set]);
 
   const persistBoards = useCallback((next: Board[]): void => {
-    setBoards(next);
     localBoards.set(next);
   }, [localBoards]);
 
@@ -77,7 +71,7 @@ export default function KanbanPage() {
     } catch { toast.error("Task is saved locally and will retry when synchronization is available"); }
   };
 
-  const updateTask = async (taskId: string, data: any) => {
+  const updateTask = async (taskId: string, data: Partial<Task>) => {
     mutateTask(taskId, (task) => ({ ...task, ...data }));
     try { await taskApi.update(taskId, data); }
     catch { toast.error("Task update is saved locally and will retry when synchronization is available"); }
@@ -101,7 +95,7 @@ export default function KanbanPage() {
     setDraggedTask(null);
   };
 
-  if (isLoading) return <div className="flex items-center justify-center py-20"><Loader2 className="w-6 h-6 animate-spin text-primary" /></div>;
+  if (isLoading && !localBoards.value) return <div className="flex items-center justify-center py-20"><Loader2 className="w-6 h-6 animate-spin text-primary" /></div>;
 
   const board = boards[0];
   if (!board) return <div className="p-8 text-center text-muted-foreground">No board found.</div>;
@@ -178,7 +172,7 @@ export default function KanbanPage() {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="text-xs font-medium text-muted-foreground mb-1 block">Priority</label>
-                  <select defaultValue={selectedTask.priority} onChange={(e) => updateTask(selectedTask.id, { priority: e.target.value })} className="w-full px-3 py-2 rounded-lg bg-muted/50 border border-border text-sm outline-none">
+                  <select defaultValue={selectedTask.priority} onChange={(e) => updateTask(selectedTask.id, { priority: e.target.value as Task['priority'] })} className="w-full px-3 py-2 rounded-lg bg-muted/50 border border-border text-sm outline-none">
                     <option value="LOW">Low</option><option value="MEDIUM">Medium</option><option value="HIGH">High</option><option value="URGENT">Urgent</option>
                   </select>
                 </div>

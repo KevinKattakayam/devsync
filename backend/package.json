@@ -14,7 +14,9 @@
     "db:migrate": "npx prisma migrate dev",
     "db:push": "npx prisma db push",
     "db:seed": "tsx prisma/seed.ts",
-    "db:studio": "npx prisma studio"
+    "db:studio": "npx prisma studio",
+    "lint": "eslint src",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@clerk/express": "^2.1.47",
@@ -51,7 +53,9 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.5",
     "@playwright/test": "^1.62.1",
+    "@testcontainers/postgresql": "^10.28.0",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/jest": "^30.0.0",
@@ -61,6 +65,7 @@
     "@types/pdf-parse": "^1.1.5",
     "@types/pg": "^8.21.0",
     "@types/supertest": "^7.2.1",
+    "eslint": "^9.39.5",
     "jest": "^30.4.2",
     "jest-mock-extended": "^4.0.1",
     "pg": "^8.23.0",
@@ -69,6 +74,7 @@
     "testcontainers": "^10.28.0",
     "ts-jest": "^29.4.12",
     "tsx": "^4.19.0",
-    "typescript": "^5.6.0"
+    "typescript": "^5.6.0",
+    "typescript-eslint": "^8.72.1"
   }
 }

@@ -1,5 +1,7 @@
 "use client";
 
+import { errorMessage } from '@/lib/errors';
+
 import { useState, useRef, useEffect } from "react";
 import { usePathname, useParams } from "next/navigation";
 import { aiApi, documentApi, snippetApi, boardApi } from "@/lib/api";
@@ -67,7 +69,7 @@ export function AiCopilotDrawer() {
 
     try {
       // Gather dynamic workspace context
-      let workspaceContext = `Current View: ${pathname}`;
+      const workspaceContext = `Current View: ${pathname}`;
 
       const res = await aiApi.complete({
         prompt: userMessage.content,
@@ -100,8 +102,8 @@ export function AiCopilotDrawer() {
           } catch {}
         }
       }
-    } catch (err: any) {
-      toast.error(err.message || "Failed to reach AI Copilot");
+    } catch (err: unknown) {
+      toast.error(errorMessage(err, "Failed to reach AI Copilot"));
       setMessages((prev) =>
         prev.map((msg) =>
           msg.id === assistantId

@@ -1,3 +1,24 @@
+# Phase 1a progress — 2026-10-31
+
+Branch upgrade/enterprise. In progress; no push/deploy. Root AGENTS.md and docs/MASTER_PROMPT.md remain absent; user-supplied session rules apply. Phase 0 record follows unchanged below.
+
+## Phase 1a done (group 1)
+
+- D01/E01/D02: Critical regression suite established 9 failing cases before changes;11 pass after. Profile mutations strictly allowlisted, native execution disabled with503, collaboration tenant-prefix mismatch/missing documents rejected.
+- D07: viewer read-only connection permission enforced. Active-connection revocation and RLS-safe legacy lookups still need work (C01/G01).
+- I02: existing PostgreSQL/queue test compilation repaired without removing assertions. Full backend suite:5 suites/17 tests pass. Explicit backend lint/typecheck and frontend unit-test/typecheck scripts added. Frontend lint:0 errors,53 existing warnings. Both installs, typechecks and builds pass; frontend unit test passes. Logs in docs/phase1a-evidence.
+- Root CHANGELOG.md and ADR001/002 added. No CRDT representation/protocol redesign, observability, OpenAPI or Playwright E2E work.
+
+## Phase 1a remaining / requires human action
+
+Authentication architecture question is pending: requested Argon2id/custom cookie rotation conflicts with installed Clerk login/session design. No replacement or claim of equivalent provider controls made. Need decision and account migration/tenant policy access. No passwords or refresh tokens are implemented by this group.
+
+Native runner deployment credentials may have been exposed before containment: deployment owner must review access and rotate API/DB/Redis/AI/Clerk/Stripe/service credentials if the endpoint was reachable. No secrets printed, rotated or pushed here.
+
+All other Phase 1a scope remains open until subsequent groups are documented. Do not interpret Phase 0 findings as closed by this progress update.
+
+---
+
 # Progress — Phase 0 only
 
 Updated 2026-10-31. Branch: `upgrade/enterprise`. Application code, dependency manifests/locks, schema, workflows and infrastructure remain unchanged. Phase 1 has not started.

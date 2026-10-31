@@ -9,8 +9,8 @@ import { verifyToken } from '@clerk/backend';
 
 export const updateMeSchema = z.object({
   name: z.string().min(2).max(50).optional(),
-  avatar: z.string().url().optional().nullable(),
-});
+  avatar: z.string().url().max(2048).optional().nullable(),
+}).strict();
 
 export async function syncMe(req: Request, res: Response, next: NextFunction) {
   try {
@@ -47,7 +47,7 @@ export async function getMe(req: Request, res: Response, next: NextFunction) {
 
 export async function updateMe(req: Request, res: Response, next: NextFunction) {
   try {
-    const user = await prisma.user.update({ where: { id: req.user!.userId }, data: req.body, select: { id: true, name: true, email: true, avatar: true } });
+    const user = await prisma.user.update({ where: { id: req.user!.userId }, data: updateMeSchema.parse(req.body), select: { id: true, name: true, email: true, avatar: true } });
     res.json(user);
   } catch (error) { next(error); }
 }

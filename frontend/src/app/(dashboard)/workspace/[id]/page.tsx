@@ -1,5 +1,7 @@
 "use client";
 
+import { errorMessage } from '@/lib/errors';
+
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
@@ -24,7 +26,6 @@ export default function WorkspacePage() {
   const [inviteEmail, setInviteEmail] = useState('');
   const [inviteRole, setInviteRole] = useState('EDITOR');
 
-  useEffect(() => { if (id) loadWorkspace(); }, [id]);
 
   useEffect(() => {
     if (socket && workspace && user) {
@@ -44,6 +45,15 @@ export default function WorkspacePage() {
     }
   };
 
+  useEffect(() => {
+    let disposed = false;
+    workspaceApi.get(id).then(({ data }) => { if (!disposed) setWorkspace(data); })
+      .catch(() => { if (!disposed) toast.error("Failed to load workspace data"); })
+      .finally(() => { if (!disposed) setIsLoading(false); });
+    return () => { disposed = true; };
+  }, [id]);
+
+
   const handleInvite = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -52,8 +62,8 @@ export default function WorkspacePage() {
       setShowInvite(false);
       setInviteEmail('');
       loadWorkspace();
-    } catch (err: any) {
-      toast.error(err.response?.data?.error || "Failed to invite member");
+    } catch (err: unknown) {
+      toast.error(errorMessage(err, "Failed to invite member"));
     }
   };
 

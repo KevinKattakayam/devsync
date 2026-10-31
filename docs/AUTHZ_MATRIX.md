@@ -1,4 +1,4 @@
-# Authorization matrix
+# Authorization matrix — updated during Phase 1a
 
 Static route-by-route review of every registered REST route and every Socket.io input event. This is not a passing integration-test report. OWNER/EDITOR/VIEWER are database workspace roles; there is no per-document ownership ACL beyond membership. Authz checks do not overcome RLS context failures (G01). Every REST route passes Helmet, configured CORS, parsing, trace and global IP limiter; global limiting is skipped outside production.
 
@@ -9,7 +9,7 @@ Static route-by-route review of every registered REST route and every Socket.io 
 | `POST /api/ai/complete` | Clerk + local principal | Workspace membership (VIEWER allowed); balance preflight BEFORE membership | Truthiness checks only; IP AI limiter | `backend/src/routes/ai.routes.ts:10` |
 | `POST /api/auth/sync` | Clerk getAuth or verified bearer fallback | Self | No body schema / ID format validation | `backend/src/routes/auth.routes.ts:10` |
 | `GET /api/auth/me` | Clerk + local principal | Self | No body schema / ID format validation | `backend/src/routes/auth.routes.ts:11` |
-| `PATCH /api/auth/me` | Clerk + local principal | Self; unsafe original body permits privilege escalation (D01) | Zod body | `backend/src/routes/auth.routes.ts:12` |
+| `PATCH /api/auth/me` | Clerk + local principal | Self; strict profile allowlist at middleware and controller (D01 fixed) | Zod body | `backend/src/routes/auth.routes.ts:12` |
 | `GET /api/documents/:id` | Clerk + local principal | Document -> membership; write excludes VIEWER | No body schema / ID format validation | `backend/src/routes/document.routes.ts:10` |
 | `PATCH /api/documents/:id` | Clerk + local principal | Document -> membership; write excludes VIEWER | Zod body with content:any | `backend/src/routes/document.routes.ts:11` |
 | `DELETE /api/documents/:id` | Clerk + local principal | Document -> membership; write excludes VIEWER | No body schema / ID format validation | `backend/src/routes/document.routes.ts:12` |
@@ -18,7 +18,7 @@ Static route-by-route review of every registered REST route and every Socket.io 
 | `POST /scim/v2/Users` | SHA-256 bearer token lookup + timingSafeEqual | Token workspace; external identity composite bound; global User edited (C04) | Zod custom User or partial; not standard SCIM Operations envelope | `backend/src/routes/scim.routes.ts:38` |
 | `PATCH /scim/v2/Users/:externalId` | SHA-256 bearer token lookup + timingSafeEqual | Token workspace; external identity composite bound; global User edited (C04) | Zod custom User or partial; not standard SCIM Operations envelope | `backend/src/routes/scim.routes.ts:53` |
 | `DELETE /scim/v2/Users/:externalId` | SHA-256 bearer token lookup + timingSafeEqual | Token workspace; external identity composite bound; global User edited (C04) | External ID lookup | `backend/src/routes/scim.routes.ts:68` |
-| `POST /api/snippets/execute` | Clerk + local principal | NONE (all signed-in users); host execution (E01) | No body schema / ID format validation | `backend/src/routes/snippet.routes.ts:10` |
+| `POST /api/snippets/execute` | Clerk + local principal | Execution disabled for everyone with503 (E01 contained) | No body schema / ID format validation | `backend/src/routes/snippet.routes.ts:10` |
 | `PATCH /api/snippets/:snippetId` | Clerk + local principal | Snippet -> workspace membership; excludes VIEWER | Zod body | `backend/src/routes/snippet.routes.ts:11` |
 | `DELETE /api/snippets/:snippetId` | Clerk + local principal | Snippet -> workspace membership; excludes VIEWER | No body schema / ID format validation | `backend/src/routes/snippet.routes.ts:12` |
 | `POST /api/webhooks/stripe` | Stripe signature on raw body | Workspace selected from signed metadata/customer/subscription | Stripe verified event; no replay/order ledger | `backend/src/routes/stripe.webhook.ts:8` |
@@ -79,11 +79,11 @@ Outbound-only notifications: workspace:users, cursor:updated, activity:new, work
 
 | Room / operation | Authentication | Membership/role/resource check | Evidence |
 |---|---|---|---|
-| document:<workspace>:<document>, read/update/awareness | Clerk token | Checks supplied workspace only; no document workspace comparison, no viewer write block | backend/src/services/yjs.service.ts:52 |
-| bare document ID, read/update | Clerk token | Resolves workspace if record exists; missing record leaves workspace empty and skips membership; no viewer write block | backend/src/services/yjs.service.ts:81 |
-| kanban:<workspace>, workspace:<workspace> | Clerk token | Membership only; no editor restriction; no durable server store for these room types | backend/src/services/yjs.service.ts:92 |
+| document:<workspace>:<document>, read/update/awareness | Clerk token | Compares actual document workspace to room prefix; membership+active user/tenant; viewer read-only (D02/D07 fixed) | backend/src/services/yjs.service.ts:52 |
+| bare document ID, read/update | Clerk token | Rejects missing/archived document; resolves membership; viewer read-only. RLS-safe ID resolution still pending G01 | backend/src/services/yjs.service.ts:81 |
+| kanban:<workspace>, workspace:<workspace> | Clerk token | Membership+active user/tenant; viewer read-only; no durable server store for these room types | backend/src/services/yjs.service.ts:92 |
 | Existing connection after revoke/expiry/suspend | Initial Clerk token | No ongoing expiry/membership/active-user enforcement or cross-transport eviction | backend/src/services/yjs.service.ts:57 |
 
 ## Interpretation
 
-Workspace-owner checks are correctly present on workspace mutations, invitations and repository configuration, and document/snippet mutations derive workspace from their resource. Task moves check same-workspace destinations. Critical bypasses are D01/D02; missing relationship checks D05/D06/D08 and event checks D03/D04/D07 remain. Task assignee IDs are globally valid User IDs, without ensuring assignment membership; validate tenant assignment as part of Phase 1. Role update accepts OWNER and can demote the last owner; no single-owner/last-owner transaction invariant. SCIM token authority is workspace-wide (including assigning OWNER) rather than normal member role authority.
+Workspace-owner checks are correctly present on workspace mutations, invitations and repository configuration, and document/snippet mutations derive workspace from their resource. Task moves check same-workspace destinations. Critical bypasses D01/D02 are repaired by group1 regressions; missing relationship checks D05/D06/D08 and event checks D03/D04/D07 remain. Task assignee IDs are globally valid User IDs, without ensuring assignment membership; validate tenant assignment as part of Phase 1. Role update accepts OWNER and can demote the last owner; no single-owner/last-owner transaction invariant. SCIM token authority is workspace-wide (including assigning OWNER) rather than normal member role authority.

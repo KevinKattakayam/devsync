@@ -1,5 +1,7 @@
 "use client";
 
+import type { PresenceUser } from '@/types';
+
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { useAuth } from './auth-provider';
@@ -7,7 +9,7 @@ import { useAuth } from './auth-provider';
 interface SocketContextType {
   socket: Socket | null;
   isConnected: boolean;
-  onlineUsers: any[];
+  onlineUsers: PresenceUser[];
 }
 
 const SocketContext = createContext<SocketContextType>({
@@ -19,7 +21,7 @@ const SocketContext = createContext<SocketContextType>({
 export function SocketProvider({ children }: { children: React.ReactNode }) {
   const [socket, setSocket] = useState<Socket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
-  const [onlineUsers, setOnlineUsers] = useState<any[]>([]);
+  const [onlineUsers, setOnlineUsers] = useState<PresenceUser[]>([]);
   const { isAuthenticated, getToken } = useAuth();
 
   useEffect(() => {
@@ -43,7 +45,7 @@ export function SocketProvider({ children }: { children: React.ReactNode }) {
       console.log('[Socket] Disconnected');
     });
 
-    newSocket.on('workspace:users', (users: any[]) => {
+    newSocket.on('workspace:users', (users: PresenceUser[]) => {
       setOnlineUsers(users);
     });
 

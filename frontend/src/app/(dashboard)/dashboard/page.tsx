@@ -1,5 +1,7 @@
 "use client";
 
+import { errorMessage } from '@/lib/errors';
+
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useAuth } from "@/providers/auth-provider";
@@ -17,13 +19,21 @@ export default function DashboardPage() {
   const [form, setForm] = useState({ name: '', description: '' });
   const [creating, setCreating] = useState(false);
 
-  useEffect(() => { loadWorkspaces(); }, []);
 
   const loadWorkspaces = async () => {
     try { const { data } = await workspaceApi.list(); setWorkspaces(data); }
     catch { toast.error("Failed to load workspaces"); }
     finally { setIsLoading(false); }
   };
+
+  useEffect(() => {
+    let disposed = false;
+    workspaceApi.list().then(({ data }) => { if (!disposed) setWorkspaces(data); })
+      .catch(() => { if (!disposed) toast.error("Failed to load workspace data"); })
+      .finally(() => { if (!disposed) setIsLoading(false); });
+    return () => { disposed = true; };
+  }, []);
+
 
   const createWorkspace = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,8 +45,8 @@ export default function DashboardPage() {
       setShowCreate(false);
       setForm({ name: '', description: '' });
       loadWorkspaces();
-    } catch (err: any) {
-      toast.error(err.response?.data?.error || "Failed to create workspace");
+    } catch (err: unknown) {
+      toast.error(errorMessage(err, "Failed to create workspace"));
     } finally { setCreating(false); }
   };
 

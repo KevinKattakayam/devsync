@@ -1,5 +1,10 @@
 "use client";
 
+import { errorMessage } from '@/lib/errors';
+
+import type { ReactNode } from "react";
+import type { Doc } from "yjs";
+import type { HocuspocusProvider } from "@hocuspocus/provider";
 import { useEffect, useState, useCallback, useMemo } from "react";
 import { useParams } from "next/navigation";
 import { documentApi, aiApi } from "@/lib/api";
@@ -45,14 +50,25 @@ function getCursorColor(name: string): string {
 }
 
 interface EditorInnerProps {
-  ydoc: any;
-  provider: any;
+  ydoc: Doc;
+  provider: HocuspocusProvider | null;
   userName: string;
   cursorColor: string;
   workspaceId: string;
   doc: Document | null;
-  onAiSources: (sources: any[]) => void;
+  onAiSources: (sources: { type: string; title: string; score: number }[]) => void;
 }
+
+const ToolBtn = ({ onClick, active, children, title: t }: { onClick: () => unknown; active?: boolean; children: ReactNode; title: string }) => (
+    <button
+      onMouseDown={(e) => e.preventDefault()} // Prevent stealing focus / selection from editor
+      onClick={onClick}
+      title={t}
+      className={`w-8 h-8 rounded flex items-center justify-center transition-colors ${active ? 'bg-primary/20 text-primary' : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'}`}>
+      {children}
+    </button>
+  );
+
 
 function EditorInner({
   ydoc,
@@ -122,7 +138,7 @@ function EditorInner({
 
   // Import legacy JSON once if not yet in Yjs
   useEffect(() => {
-    if (editor && doc?.content && !(doc as any).yjsState) {
+    if (editor && doc?.content && !doc.yjsState) {
       editor.commands.setContent(doc.content);
     }
   }, [editor, doc]);
@@ -174,8 +190,8 @@ function EditorInner({
           } catch { }
         }
       }
-    } catch (error: any) {
-      const message = error.response?.data?.error || error.message || "AI request failed";
+    } catch (error: unknown) {
+      const message = errorMessage(error, "AI request failed");
       toast.error(message);
     } finally {
       setAiLoading(false);
@@ -210,15 +226,6 @@ function EditorInner({
     toast.success('Copied AI response to clipboard');
   };
 
-  const ToolBtn = ({ onClick, active, children, title: t }: any) => (
-    <button
-      onMouseDown={(e) => e.preventDefault()} // Prevent stealing focus / selection from editor
-      onClick={onClick}
-      title={t}
-      className={`w-8 h-8 rounded flex items-center justify-center transition-colors ${active ? 'bg-primary/20 text-primary' : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'}`}>
-      {children}
-    </button>
-  );
 
   return (
     <>
@@ -450,39 +457,31 @@ export default function DocEditorPage() {
   const { user, getToken } = useAuth();
   const [doc, setDoc] = useState<Document | null>(null);
   const [title, setTitle] = useState("");
-  const [saving, setSaving] = useState(false);
+
   const [aiSources, setAiSources] = useState<{ type: string; title: string; score: number }[]>([]);
   const [connectedUsers, setConnectedUsers] = useState<number>(0);
-  const [connectionStatus, setConnectionStatus] = useState<string>('disconnected');
+
 
   // ── Yjs + Hocuspocus provider setup ────────────────────────
 
   const { document: ydoc, provider, localReady, syncStatus } = useLocalFirstYDoc(`document:${workspaceId}:${docId}`, getToken);
   useCRDTGarbageCollector(ydoc);
 
-  useEffect(() => {
-    setConnectionStatus(syncStatus);
-    setSaving(!localReady);
-  }, [localReady, syncStatus]);
+  const connectionStatus = syncStatus;
+  const saving = !localReady;
 
   const userName = user?.name || 'Anonymous';
   const cursorColor = getCursorColor(userName);
 
   // ── Load document metadata ─────────────────────────────────
 
-  const loadDoc = useCallback(async () => {
-    try {
-      const { data } = await documentApi.get(docId);
-      setDoc(data);
-      setTitle(data.title);
-    } catch {
-      toast.error("Failed to load document");
-    }
-  }, [docId]);
-
   useEffect(() => {
-    if (docId) void loadDoc();
-  }, [docId, loadDoc]);
+    let disposed = false;
+    documentApi.get(docId).then(({ data }) => {
+      if (!disposed) { setDoc(data); setTitle(data.title); }
+    }).catch(() => { if (!disposed) toast.error("Failed to load document"); });
+    return () => { disposed = true; };
+  }, [docId]);
 
   const saveTitle = async () => {
     try {

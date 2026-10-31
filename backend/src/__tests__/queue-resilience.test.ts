@@ -14,7 +14,7 @@ describe('BullMQ DLQ resilience', () => {
     const connection = { host: redis.getHost(), port: redis.getMappedPort(6379), maxRetriesPerRequest: null as null };
     queue = new Queue('resilience-source', { connection, defaultJobOptions: { attempts: 2, backoff: { type: 'fixed', delay: 10 } } });
     dlq = new Queue('resilience-dlq', { connection });
-    worker = new Worker('resilience-source', async () => { throw new Error('simulated redis dependent service outage'); }, { connection });
+    worker = new Worker<{ id: string }>('resilience-source', async () => { throw new Error('simulated redis dependent service outage'); }, { connection });
     worker.on('failed', (job: Job<{ id: string }> | undefined, error: Error) => {
       if (job && job.attemptsMade >= (job.opts.attempts || 1)) void dlq.add('failed-job', { sourceJobId: job.id, failedReason: error.message }, { jobId: `dlq-${job.id}` });
     });

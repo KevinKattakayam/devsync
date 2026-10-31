@@ -1,5 +1,7 @@
 "use client";
 
+import { errorMessage } from '@/lib/errors';
+
 import { useEffect, useState, useRef } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { documentApi } from "@/lib/api";
@@ -78,7 +80,6 @@ export default function DocsPage() {
   const [showUploadModal, setShowUploadModal] = useState(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  useEffect(() => { if (id) loadDocs(); }, [id]);
 
   const loadDocs = async () => {
     try {
@@ -90,6 +91,15 @@ export default function DocsPage() {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    let disposed = false;
+    documentApi.list(id).then(({ data }) => { if (!disposed) setDocs(data); })
+      .catch(() => { if (!disposed) toast.error("Failed to load workspace data"); })
+      .finally(() => { if (!disposed) setIsLoading(false); });
+    return () => { disposed = true; };
+  }, [id]);
+
 
   const createDoc = async () => {
     try {
@@ -143,8 +153,8 @@ export default function DocsPage() {
       if (docId) {
         router.push(`/workspace/${id}/docs/${docId}`);
       }
-    } catch (err: any) {
-      toast.error(err.message || "Failed to process document", { id: toastId });
+    } catch (err: unknown) {
+      toast.error(errorMessage(err, "Failed to process document"), { id: toastId });
     } finally {
       setIsUploading(false);
       if (fileInputRef.current) fileInputRef.current.value = "";

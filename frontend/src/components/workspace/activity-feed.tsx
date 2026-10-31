@@ -30,7 +30,7 @@ export function ActivityFeed({ workspaceId, initialActivities = [] }: ActivityFe
 
   useEffect(() => {
     if (initialActivities.length === 0) {
-      fetchActivities();
+      workspaceApi.getActivities(workspaceId).then(({ data }) => setActivities(data)).catch(() => {});
     }
     const interval = setInterval(fetchActivities, 12000);
     return () => clearInterval(interval);

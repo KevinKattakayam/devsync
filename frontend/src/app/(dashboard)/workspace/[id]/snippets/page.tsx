@@ -1,5 +1,7 @@
 "use client";
 
+import { errorMessage } from '@/lib/errors';
+
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { snippetApi, aiApi } from "@/lib/api";
@@ -33,7 +35,6 @@ export default function SnippetsPage() {
   const [isAiGenerating, setIsAiGenerating] = useState(false);
   const [aiGenPrompt, setAiGenPrompt] = useState("");
 
-  useEffect(() => { if (id) loadSnippets(); }, [id]);
 
   const loadSnippets = async () => {
     try {
@@ -45,6 +46,15 @@ export default function SnippetsPage() {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    let disposed = false;
+    snippetApi.list(id).then(({ data }) => { if (!disposed) setSnippets(data); })
+      .catch(() => { if (!disposed) toast.error("Failed to load workspace data"); })
+      .finally(() => { if (!disposed) setIsLoading(false); });
+    return () => { disposed = true; };
+  }, [id]);
+
 
   const createSnippet = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -109,7 +119,7 @@ Description: <1-sentence description>
       });
       setAiGenPrompt("");
       toast.success("Snippet generated!", { id: toastId });
-    } catch (err: any) {
+    } catch (err: unknown) {
       toast.error("AI Generation failed", { id: toastId });
     } finally {
       setIsAiGenerating(false);
@@ -129,8 +139,8 @@ Description: <1-sentence description>
         [snippet.id]: { output: data.output, timeMs: data.timeMs }
       }));
       toast.success(`Executed ${snippet.language} in ${data.timeMs}ms`);
-    } catch (err: any) {
-      const errorMsg = err.response?.data?.error || err.message || "Execution failed";
+    } catch (err: unknown) {
+      const errorMsg = errorMessage(err, "Execution failed");
       setRunOutputs(prev => ({
         ...prev,
         [snippet.id]: { output: `❌ Error: ${errorMsg}`, timeMs: 0 }

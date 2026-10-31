@@ -5,6 +5,7 @@ import { WebSocketServer, WebSocket } from 'ws';
 import * as Y from 'yjs';
 import { verifyToken } from '@clerk/backend';
 import { prisma } from '../lib/prisma';
+import { authorizeWorkspace } from '../security/workspace-policy';
 import { reconcileOfflineAiActions } from './crdt-sync.service';
 
 interface CollaborationRoom {
@@ -77,29 +78,20 @@ export function setupHocuspocusServer(httpServer: HttpServer): Hocuspocus {
 
         const room = parseRoom(data.documentName);
         let targetWorkspaceId = room.workspaceId;
-
-        if (room.type === 'document' && room.documentId && !targetWorkspaceId) {
-          const document = await prisma.document.findUnique({
+        if (room.documentId) {
+          // Never trust the workspace prefix as proof of document ownership.
+          const record = await prisma.document.findUnique({
             where: { id: room.documentId },
-            select: { workspaceId: true },
+            select: { workspaceId: true, isArchived: true },
           });
-          if (document) {
-            targetWorkspaceId = document.workspaceId;
+          if (!record || record.isArchived || (targetWorkspaceId && record.workspaceId !== targetWorkspaceId)) {
+            throw new Error('Access denied');
           }
+          targetWorkspaceId = record.workspaceId;
         }
-
-        if (targetWorkspaceId) {
-          const member = await prisma.workspaceMember.findUnique({
-            where: {
-              userId_workspaceId: {
-                userId: user.id,
-                workspaceId: targetWorkspaceId,
-              },
-            },
-          });
-
-          if (!member) throw new Error('Not a workspace member');
-        }
+        if (!targetWorkspaceId) throw new Error('Access denied');
+        const member = await authorizeWorkspace(user.id, targetWorkspaceId);
+        data.connectionConfig.readOnly = member.role === 'VIEWER';
 
         // Return user info for awareness/cursors
         return {

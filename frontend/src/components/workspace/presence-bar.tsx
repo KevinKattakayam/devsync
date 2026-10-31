@@ -21,12 +21,12 @@ export function PresenceBar() {
           <div className="flex -space-x-2 overflow-hidden">
             {onlineUsers.map((u, i) => (
               <div
-                key={u.userId || i}
+                key={u.id || i}
                 className="inline-block h-6 w-6 rounded-full ring-2 ring-background flex items-center justify-center text-[9px] font-bold text-white shadow-sm"
-                style={{ backgroundColor: generateColor(u.userName || u.userId || "User") }}
-                title={`${u.userName || "Teammate"} is online`}
+                style={{ backgroundColor: generateColor(u.name || u.id || "User") }}
+                title={`${u.name || "Teammate"} is online`}
               >
-                {getInitials(u.userName || "?")}
+                {getInitials(u.name || "?")}
               </div>
             ))}
           </div>
