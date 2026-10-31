@@ -77,6 +77,8 @@ model WorkspaceMember {
   workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
 
   @@unique([userId, workspaceId])
+  @@index([workspaceId])
+
 }
 
 model ScimProvisioningToken {
@@ -119,9 +121,13 @@ model Document {
   workspaceId String
   parentId    String?
   author      User       @relation(fields: [authorId], references: [id])
-  parent      Document?  @relation("DocHierarchy", fields: [parentId], references: [id])
+  parent      Document?  @relation("DocHierarchy", fields: [parentId, workspaceId], references: [id, workspaceId], onDelete: Restrict, onUpdate: Restrict)
   children    Document[] @relation("DocHierarchy")
   workspace   Workspace  @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  @@unique([id, workspaceId])
+  @@index([workspaceId, isArchived, updatedAt])
+  @@index([parentId])
+
 }
 
 model Board {
@@ -132,6 +138,8 @@ model Board {
   workspaceId String
   workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   columns     Column[]
+  @@index([workspaceId])
+
 }
 
 model Column {
@@ -141,6 +149,8 @@ model Column {
   boardId  String
   board    Board  @relation(fields: [boardId], references: [id], onDelete: Cascade)
   tasks    Task[]
+  @@index([boardId, position])
+
 }
 
 model Task {
@@ -160,6 +170,9 @@ model Task {
   assignee    User?       @relation(fields: [assigneeId], references: [id])
   column      Column      @relation(fields: [columnId], references: [id], onDelete: Cascade)
   labels      TaskLabel[]
+  @@index([columnId, position])
+  @@index([assigneeId])
+
 }
 
 model TaskLabel {
@@ -184,6 +197,8 @@ model Snippet {
   workspaceId String
   author      User      @relation(fields: [authorId], references: [id])
   workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  @@index([workspaceId, updatedAt])
+
 }
 
 model GitHubRepository {
@@ -235,6 +250,8 @@ model Activity {
   workspaceId String
   user        User      @relation(fields: [userId], references: [id])
   workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  @@index([workspaceId, createdAt])
+
 }
 
 enum Role {

@@ -8,7 +8,7 @@ After a successful first login, `POST /api/auth/sync` provisions the local user.
 
 ### Existing databases
 
-This repository historically used `prisma db push` and has no initial Prisma migration. Before production rollout, create a baseline migration from the **pre-enterprise** schema, mark that baseline as applied on the already-running database with `prisma migrate resolve --applied <baseline-name>`, then run `prisma migrate deploy` to apply `20260729180000_enterprise_platform`. Do not run the baseline DDL against an existing database. Fresh environments apply the baseline and enterprise migrations in sequence.
+The repository now includes `20260729000000_baseline`, generated from the historical pre-enterprise schema in Git. Fresh environments apply the full chain using `npm run db:migrate`. Before adopting this history into an existing database, follow [backend/prisma/README.md](backend/prisma/README.md): verify the actual historical schema, backups, identity backfill and migration checksums on a disposable clone before marking a baseline applied. Never run baseline CREATE TABLE statements against an existing database. The forward migration deliberately rejects null Clerk IDs or cross-workspace parent links instead of deleting or fabricating data.
 
 ## Collaboration
 

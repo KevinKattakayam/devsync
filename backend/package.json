@@ -11,12 +11,12 @@
     "test": "jest --runInBand",
     "test:e2e": "playwright test -c playwright.config.ts",
     "postinstall": "prisma generate",
-    "db:migrate": "npx prisma migrate dev",
-    "db:push": "npx prisma db push",
+    "db:migrate": "prisma migrate deploy",
     "db:seed": "tsx prisma/seed.ts",
     "db:studio": "npx prisma studio",
-    "lint": "eslint src",
-    "typecheck": "tsc --noEmit"
+    "lint": "eslint src prisma",
+    "typecheck": "tsc --noEmit && tsc -p tsconfig.seed.json",
+    "db:migrate:dev": "prisma migrate dev"
   },
   "dependencies": {
     "@clerk/express": "^2.1.47",

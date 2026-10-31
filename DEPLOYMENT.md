@@ -55,8 +55,8 @@ Set these in the frontend hosting service:
    - Start: `npm start`
 5. Add the backend environment variables listed above.
 6. Run Prisma against the deployed database:
-   - `npx prisma db push` for a simple schema sync, or
-   - `npx prisma migrate deploy` if you add migrations later.
+   - Use `npm run db:migrate` (`prisma migrate deploy`).
+   - Existing databases require the verified baseline/backfill procedure in [backend/prisma/README.md](backend/prisma/README.md); do not use db push.
 
 ### Backend Docker deployment
 

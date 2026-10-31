@@ -22,6 +22,15 @@ Branch upgrade/enterprise. In progress; no push/deploy. Root AGENTS.md and docs/
 - Gate: clean installs, lint/typecheck/test/build succeed for both; backend7 suites/48 tests, frontend3 tests; frontend53 warnings visible. Raw output and statuses in group3-results.json.
 - Historical pre-enterprise schema recovered from Git for a source-backed migration baseline; adoption into deployed databases remains unverified.
 
+## Phase 1a done (group 4)
+
+- G02: baseline generated from actual pre-enterprise Git schema; original four migrations unchanged; forward migration enforces non-null Clerk identity after explicit operator backfill. Actual migrate deploy succeeds on empty pgvector.
+- D08 database invariant: composite parent/document workspace FK added; database regression fails before/pass after. Cross-tenant invalid existing rows block migration, never silently removed.
+- G12 partial: relationship/tenant-list indexes added and verified; list pagination and query-load measurements remain open.
+- I09: real seed script, single tenant transaction, explicit Clerk identity mapping, non-production opt-in and idempotence checks. Does not create Clerk accounts or passwords.
+- Removed db:push script and active setup instructions; migration/adoption guide, migration lockfile and checked seed tsconfig added. Backend/frontend env examples now cover current variables; generated artifacts ignored. Startup configuration enforcement and vulnerable dependency upgrades are not claimed here.
+- Final group4 gate passes installs/lint/typecheck/tests/build for both. Backend8 suites/52 tests, frontend3 tests. Frontend0 errors/53 warnings. Initial root-level prisma validate lacked DATABASE_URL (recorded); generated-client build and real isolated migration tests subsequently pass without defaulting credentials.
+
 ## Phase 1a remaining / requires human action
 
 Authentication architecture question is pending: requested Argon2id/custom cookie rotation conflicts with installed Clerk login/session design. No replacement or claim of equivalent provider controls made. Need decision and account migration/tenant policy access. No passwords or refresh tokens are implemented by this group.
