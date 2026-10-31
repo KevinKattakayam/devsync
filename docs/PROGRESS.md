@@ -15,6 +15,13 @@ Branch upgrade/enterprise. In progress; no push/deploy. Root AGENTS.md and docs/
 - Authorization suite:22 failed/4 passed before;30 pass after (includes positive canonical editor cases). Full backend:6 suites/47 tests pass. Both installs/lints/typechecks/tests/builds pass; frontend retains53 warnings,0 errors. No Playwright run.
 - Socket delete relay still requires an existing task; durable tombstones/replay remain Phase1b. No claims that introducing a policy alone fixes all REST/SCIM/service paths or all session revocation.
 
+## Phase 1a done (group 3)
+
+- E02: raw AI HTML escaped before formatting, including headings/lists/tables; two regressions fail before/pass after, original code escaping test retained. No claim of full stored rich-text sanitization yet.
+- G08: signed GitHub task transitions scoped explicitly to repository workspace inside tenant transaction; red regression demonstrated foreign task update, green blocks it.
+- Gate: clean installs, lint/typecheck/test/build succeed for both; backend7 suites/48 tests, frontend3 tests; frontend53 warnings visible. Raw output and statuses in group3-results.json.
+- Historical pre-enterprise schema recovered from Git for a source-backed migration baseline; adoption into deployed databases remains unverified.
+
 ## Phase 1a remaining / requires human action
 
 Authentication architecture question is pending: requested Argon2id/custom cookie rotation conflicts with installed Clerk login/session design. No replacement or claim of equivalent provider controls made. Need decision and account migration/tenant policy access. No passwords or refresh tokens are implemented by this group.

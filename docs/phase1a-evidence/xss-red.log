@@ -1,0 +1,93 @@
+
+> frontend@0.1.0 test
+> node --test tests/*.test.mjs
+
+TAP version 13
+# Subtest: code blocks and inline code escape HTML
+ok 1 - code blocks and inline code escape HTML
+  ---
+  duration_ms: 1.593721
+  type: 'test'
+  ...
+# Subtest: E02 treats ordinary HTML, handlers and malformed tags as inert text
+not ok 2 - E02 treats ordinary HTML, handlers and malformed tags as inert text
+  ---
+  duration_ms: 1.061995
+  type: 'test'
+  location: '/home/kevin/devsync/frontend/tests/markdown.test.mjs:17:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input was expected to not match the regular expression /<(?:img|svg|script|iframe)\b/i. Input:
+    
+    '<p><img src=x onerror="alert(1)"></p>'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: '<p><img src=x onerror="alert(1)"></p>'
+  operator: 'doesNotMatch'
+  stack: |-
+    TestContext.<anonymous> (file:///home/kevin/devsync/frontend/tests/markdown.test.mjs:20:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: E02 escapes HTML inside headings, lists and table cells
+not ok 3 - E02 escapes HTML inside headings, lists and table cells
+  ---
+  duration_ms: 0.59428
+  type: 'test'
+  location: '/home/kevin/devsync/frontend/tests/markdown.test.mjs:25:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input was expected to not match the regular expression /<(?:img|svg|iframe)\b/i. Input:
+    
+    '<h1><img src=x onerror=alert(1)></h1>\n' +
+      '<ul>\n' +
+      '<li><svg/onload=alert(1)></li>\n' +
+      '</ul>\n' +
+      '<table class="border-collapse border border-white/20 my-2 w-full text-xs"><thead><tr>\n' +
+      '<th class="border border-white/20 p-1.5 bg-white/5 font-bold">h</th>\n' +
+      '</tr></thead><tbody>\n' +
+      '<tr>\n' +
+      '<td class="border border-white/20 p-1.5"><iframe src=x></td>\n' +
+      '</tr>\n' +
+      '</tbody></table>'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    <h1><img src=x onerror=alert(1)></h1>
+    <ul>
+    <li><svg/onload=alert(1)></li>
+    </ul>
+    <table class="border-collapse border border-white/20 my-2 w-full text-xs"><thead><tr>
+    <th class="border border-white/20 p-1.5 bg-white/5 font-bold">h</th>
+    </tr></thead><tbody>
+    <tr>
+    <td class="border border-white/20 p-1.5"><iframe src=x></td>
+    </tr>
+    </tbody></table>
+  operator: 'doesNotMatch'
+  stack: |-
+    TestContext.<anonymous> (file:///home/kevin/devsync/frontend/tests/markdown.test.mjs:27:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..3
+# tests 3
+# suites 0
+# pass 1
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 550.190819

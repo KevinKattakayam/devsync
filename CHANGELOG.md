@@ -10,3 +10,4 @@
 Historical Phase 0 audit: see docs/CHANGELOG.md. No production deployment or key rotation performed.
 
 - D03/D04/D05/D06/D08: authorize socket domain events, bind resources and member mutations to their workspace, and validate document hierarchy ownership.
+- E02/G08: render raw AI HTML inert and bind signed webhook task movement to repository tenant within a transaction.

@@ -164,8 +164,15 @@ router.post('/', async (req, res, next) => {
 
     const keys = taskKeys(`${payload.pull_request?.title || ''}\n${payload.pull_request?.body || ''}`);
     if (!keys.length) return res.status(202).json({ ignored: 'No task reference found' });
-    const tasks = await prisma.task.findMany({ where: { taskKey: { in: keys } }, select: { id: true, taskKey: true, columnId: true } });
-    const moved = await prisma.$transaction(tasks.map((task, index) => prisma.task.update({ where: { id: task.id }, data: { columnId: targetColumnId, position: index } })));
+    const { tasks, moved } = await prisma.withTenantTransaction(repository.workspaceId, async tx => {
+      const tenant = { column: { board: { workspaceId: repository.workspaceId } } };
+      const tasks = await tx.task.findMany({ where: { ...tenant, taskKey: { in: keys } }, select: { id: true, taskKey: true, columnId: true } });
+      const moved = [];
+      for (const [index, task] of tasks.entries()) {
+        moved.push(await tx.task.update({ where: { id: task.id, ...tenant }, data: { columnId: targetColumnId, position: index } }));
+      }
+      return { tasks, moved };
+    });
 
     // Emit real-time Kanban events for each moved task
     try {

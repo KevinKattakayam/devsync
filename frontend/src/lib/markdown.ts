@@ -23,10 +23,13 @@ export function markdownToHtml(markdown: string): string {
     return `\n\n${placeholder}\n\n`;
   });
 
+  // E02: raw model/document HTML is data, never trusted markup. Escape before
+  // adding our fixed Markdown tags; code fences above were escaped separately.
+  text = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
   // 3. Inline code
   text = text.replace(/`([^`\n]+)`/g, (_m, code) => {
-    const escaped = code.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    return `<code>${escaped}</code>`;
+    return `<code>${code}</code>`;
   });
 
   // 4. Headings

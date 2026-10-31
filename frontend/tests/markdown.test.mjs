@@ -13,3 +13,18 @@ test('code blocks and inline code escape HTML', () => {
   assert.ok(html.includes('&lt;script&gt;'));
   assert.ok(html.includes('&lt;iframe&gt;'));
 });
+
+test('E02 treats ordinary HTML, handlers and malformed tags as inert text', () => {
+  for (const attack of ['<img src=x onerror="alert(1)">', '<svg/onload=alert(1)>', '<script>alert(1)</script>', '<h1><iframe srcdoc="<script>alert(1)</script>"></iframe></h1>']) {
+    const html = markdownToHtml(attack);
+    assert.doesNotMatch(html, /<(?:img|svg|script|iframe)\b/i);
+    assert.ok(html.includes('&lt;'));
+  }
+});
+
+test('E02 escapes HTML inside headings, lists and table cells', () => {
+  const html = markdownToHtml('# <img src=x onerror=alert(1)>\n- <svg/onload=alert(1)>\n| h |\n|---|\n| <iframe src=x> |');
+  assert.doesNotMatch(html, /<(?:img|svg|iframe)\b/i);
+  assert.ok(html.includes('<h1>'));
+  assert.ok(html.includes('<table'));
+});
