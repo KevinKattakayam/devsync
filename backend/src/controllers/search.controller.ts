@@ -1,12 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
-import { z } from 'zod';
+import { workspaceSearchSchema } from '../schemas/search.schema';
 import { READ_ROLES, withWorkspaceAccess, authorizeWorkspace } from '../security/workspace-policy';
 import { semanticWorkspaceContext } from '../services/embedding.service';
 
-export const workspaceSearchSchema = z.object({
-  q: z.string().trim().min(2).max(500),
-  limit: z.coerce.number().int().min(1).max(20).default(10),
-});
+export { workspaceSearchSchema } from '../schemas/search.schema';
 
 /** Unified, tenant-scoped search. Semantic results are preferred; the keyword
  * fallback keeps search useful before an embedding provider is configured. */

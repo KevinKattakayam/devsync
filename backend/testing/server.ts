@@ -26,8 +26,9 @@ async function main() {
   ]);
   const fixtures = createFixtureAuthentication(prisma, secret),
     outer = express();
-  outer.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }), express.json());
-  outer.use('/__test', fixtures.router);
+  outer.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
+  // Product routes own parsing, including their signed-webhook raw-byte capture.
+  outer.use('/__test', express.json(), fixtures.router);
   outer.use((_req, _res, next) => withAuthentication(fixtures.strategy, next));
   outer.use(app, errorMiddleware);
   const http = createServer(outer),

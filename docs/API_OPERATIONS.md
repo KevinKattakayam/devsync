@@ -1,3 +1,11 @@
+# Phase1e contract coverage
+
+`backend/openapi.json` now covers all55 inventoried HTTP operations, with Zod path/query/body transport schemas, response DTOs/statuses, multipart upload, SSE event data, signatures, correlation headers and bodyless/redirect responses. Legacy backend aliases are declared alongside v1 paths. The2 frontend operations identify the frontend origin separately. Backend mounted routes fail generation if a contract is absent; independent AST tests guard app-level and Next handlers. `npm run openapi:check` checks the committed artifact.
+
+`x-contract-complete:true` describes schema documentation coverage. `x-validation-complete:false` is deliberately retained: production does not run a universal output validator, native Stripe/Multer boundaries are preserved, and ignored request bodies remain ignored. This change does not alter authorization or add an auth bypass. See ADR019 and phase1e-evidence/ for actual validation output. Provider success and real Clerk sign-in must not be inferred from the isolated fixture.
+
+---
+
 # Phase 1b API and telemetry
 
 The same protected routers are mounted at `/api/v1` and the existing `/api` paths. SCIM retains `/scim/v2`; webhook aliases preserve signed raw-body validation. Legacy application routes emit a Deprecation date of 2026-11-01. There is no automatic removal: retain aliases until clients have migrated and a separately reviewed release supplies at least 90 days of notice. Operational `/api/health` and `/api/ready` probes remain supported. Track alias usage without logging query strings or workspace/document content.
