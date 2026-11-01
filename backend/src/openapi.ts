@@ -9,7 +9,7 @@ interface Layer {
   route?: {
     path: string;
     methods: Record<string, boolean>;
-    stack: { handle: { requestSchema?: ZodSchema } }[];
+    stack: { handle: { requestSchema?: ZodSchema; idempotencyKeySchema?: ZodSchema } }[];
   };
 }
 export function generateOpenApi(mounts: ApiMount[]) {
@@ -25,15 +25,24 @@ export function generateOpenApi(mounts: ApiMount[]) {
         if (!enabled) continue;
         const schema = layer.route.stack.find((item) => item.handle.requestSchema)?.handle
           .requestSchema;
+        const keySchema = layer.route.stack.find((item) => item.handle.idempotencyKeySchema)?.handle
+          .idempotencyKeySchema;
+        const parameters: Record<string, unknown>[] = [...path.matchAll(/\{([^}]+)\}/g)].map(
+          (match) => ({ name: match[1], in: 'path', required: true, schema: { type: 'string' } }),
+        );
+        if (keySchema)
+          parameters.push({
+            name: 'Idempotency-Key',
+            in: 'header',
+            required: false,
+            schema: z.toJSONSchema(keySchema),
+            description:
+              'Optional atomic create receipt; same authority and logical scope, 24-hour window. Different payload with the same key returns409. Authorization is rechecked on replay.',
+          });
         const operation: Record<string, unknown> = {
           operationId: `${method}_${path.replace(/[^a-zA-Z0-9]/g, '_')}`,
           security: mount.security ?? [{ ClerkSession: [] }, { ClerkCookie: [] }],
-          parameters: [...path.matchAll(/\{([^}]+)\}/g)].map((match) => ({
-            name: match[1],
-            in: 'path',
-            required: true,
-            schema: { type: 'string' },
-          })),
+          parameters,
           // Missing query/response schemas are explicit rather than invented.
           'x-validation-complete': false,
           responses: {

@@ -127,6 +127,10 @@ Resource handlers now enforce their policy independently of route middleware. Pr
 | Clerk sync / self profile | Verified Clerk SDK profile sync through central active identity policy; self-profile mutation through central principal policy/exclusive lock | D01 retained, inactive/self-privilege/concurrent-profile tests added; no test-login endpoint in production |
 | Seed / migration / maintenance | Explicit operator access and non-production seed opt-in; outside public user routes | Disposable-database migration and seed tests retained |
 
+### Create receipt replay
+
+All current durable resource creates accept optional atomic Idempotency-Key. The actor or service policy runs before any receipt lookup; a downgraded/removed member or revoked SCIM token cannot replay a protected create. Logical scope binds workspace/parent resource and authority, and legacy/v1 aliases share scope. Receipts have forced authority RLS; no raw key/request body or repository secret is retained. Real parallel HTTP, role-change, RLS and SQL-failure rollback tests cover these paths. Provider webhooks, self-sync and streaming AI keep their explicitly different protocols; see API_OPERATIONS.md and ADR016.
+
 ### Internal maintenance bookkeeping
 
 Embedding lease claims are a private scheduler operation, never an HTTP or socket payload operation. Claim/ack/retry concerns outbox metadata only; acknowledgements bind workspace, revision and random lease token. Every resource read/vector mutation independently invokes the central active-workspace/outbox/resource policy under tenant RLS, before provider disclosure and again before storing a result. Producers check writer role and the actual resource in the transaction. Legacy jobs without resolvable scope are quarantined. Seed and migration access remains an explicit operator exception.

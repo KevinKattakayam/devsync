@@ -1,3 +1,5 @@
+import { idempotencyKeyHeader } from '../lib/create-idempotency';
+import { idempotentCreate } from '../lib/create-idempotency';
 import { Router } from 'express';
 import { z } from 'zod';
 import { BadRequestError, ForbiddenError, ConflictError } from '../utils/errors';
@@ -42,47 +44,63 @@ async function requireMutableMembership(
   if (member?.role === 'OWNER') throw new ForbiddenError('SCIM cannot modify workspace owners');
   return member;
 }
-router.post('/Users', validate(scimUserSchema), async (req, res, next) => {
+router.post('/Users', idempotencyKeyHeader, validate(scimUserSchema), async (req, res, next) => {
   try {
     const input = scimUserSchema.parse(req.body);
-    const result = await withScimAccess(req.header('authorization'), async (tx, workspaceId) => {
-      const email = input.userName.toLowerCase();
-      const identity = await tx.scimExternalIdentity.findUnique({
-        where: { workspaceId_externalId: { workspaceId, externalId: input.externalId } },
-        include: { user: true },
-      });
-      if (identity && identity.user.email.toLowerCase() !== email)
-        throw new ConflictError('External identity is already bound');
-      // Existing global Clerk profiles are never overwritten by a tenant provisioner.
-      const user = await tx.user.upsert({
-        where: { email },
-        create: {
-          clerkId: `scim:${workspaceId}:${input.externalId}`,
-          email,
-          name: input.name?.formatted,
-        },
-        update: {},
-      });
-      await requireMutableMembership(tx, workspaceId, user.id);
-      if (input.active !== false)
-        await tx.workspaceMember.upsert({
-          where: { userId_workspaceId: { userId: user.id, workspaceId } },
-          create: { userId: user.id, workspaceId, role: input.roles?.[0]?.value ?? 'VIEWER' },
-          update: { role: input.roles?.[0]?.value ?? 'VIEWER' },
-        });
-      else await tx.workspaceMember.deleteMany({ where: { userId: user.id, workspaceId } });
-      await tx.scimExternalIdentity.upsert({
-        where: { workspaceId_externalId: { workspaceId, externalId: input.externalId } },
-        create: { workspaceId, externalId: input.externalId, userId: user.id },
-        update: {},
-      });
-      return {
-        body: scimUser(user, input.externalId, input.active !== false),
-        workspaceId,
-        userId: user.id,
-      };
-    });
-    notifyCollaborationAclChange(result.workspaceId, result.userId);
+    let mutated = false;
+    const receipt = await withScimAccess(
+      req.header('authorization'),
+      async (tx, workspaceId, credentialId) =>
+        idempotentCreate(
+          tx,
+          `scim:${credentialId}`,
+          ['scim.user.create', workspaceId],
+          req.header('idempotency-key'),
+          input,
+          async () => {
+            mutated = true;
+            const email = input.userName.toLowerCase();
+            const identity = await tx.scimExternalIdentity.findUnique({
+              where: { workspaceId_externalId: { workspaceId, externalId: input.externalId } },
+              include: { user: true },
+            });
+            if (identity && identity.user.email.toLowerCase() !== email)
+              throw new ConflictError('External identity is already bound');
+            // Existing global Clerk profiles are never overwritten by a tenant provisioner.
+            const user = await tx.user.upsert({
+              where: { email },
+              create: {
+                clerkId: `scim:${workspaceId}:${input.externalId}`,
+                email,
+                name: input.name?.formatted,
+              },
+              update: {},
+            });
+            await requireMutableMembership(tx, workspaceId, user.id);
+            if (input.active !== false)
+              await tx.workspaceMember.upsert({
+                where: { userId_workspaceId: { userId: user.id, workspaceId } },
+                create: { userId: user.id, workspaceId, role: input.roles?.[0]?.value ?? 'VIEWER' },
+                update: { role: input.roles?.[0]?.value ?? 'VIEWER' },
+              });
+            else await tx.workspaceMember.deleteMany({ where: { userId: user.id, workspaceId } });
+            await tx.scimExternalIdentity.upsert({
+              where: { workspaceId_externalId: { workspaceId, externalId: input.externalId } },
+              create: { workspaceId, externalId: input.externalId, userId: user.id },
+              update: {},
+            });
+            return {
+              body: scimUser(user, input.externalId, input.active !== false),
+              workspaceId,
+              userId: user.id,
+            };
+          },
+        ),
+    );
+    const result = z
+      .object({ body: z.json(), workspaceId: z.string(), userId: z.string() })
+      .parse(JSON.parse(JSON.stringify(receipt)));
+    if (mutated) notifyCollaborationAclChange(result.workspaceId, result.userId);
     res.status(201).json(result.body);
   } catch (error) {
     next(error);

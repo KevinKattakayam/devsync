@@ -1,3 +1,4 @@
+import { idempotentCreate } from '../lib/create-idempotency';
 import { Request, Response, NextFunction } from 'express';
 import { z } from 'zod';
 import * as Y from 'yjs';
@@ -97,43 +98,51 @@ export async function createDocument(req: Request, res: Response, next: NextFunc
       req.user!.userId,
       workspaceId,
       WRITE_ROLES,
-      async (tx) => {
-        if (parentId) {
-          const parent = await tx.document.findUnique({
-            where: { id: parentId },
-            select: { workspaceId: true, isArchived: true },
-          });
-          if (!parent || parent.workspaceId !== workspaceId || parent.isArchived)
-            throw new ForbiddenError('Access denied');
-        }
-        const state = legacyDocument(null);
-        try {
-          const result = await tx.document.create({
-            data: {
-              title: title || 'Untitled',
-              icon: icon || '📄',
-              authorId: req.user!.userId,
-              workspaceId,
-              parentId,
-              content: projectDocument(state),
-              yjsState: Buffer.from(Y.encodeStateAsUpdate(state)),
-            },
-            include: { author },
-          });
-          await tx.activity.create({
-            data: {
-              type: 'doc_created',
-              message: `created document "${result.title}"`,
-              userId: req.user!.userId,
-              workspaceId,
-            },
-          });
-          await queueEmbedding('document', result.id, tx, workspaceId, req.user!.userId);
-          return result;
-        } finally {
-          state.destroy();
-        }
-      },
+      async (tx) =>
+        idempotentCreate(
+          tx,
+          req.user!.userId,
+          ['document.create', workspaceId],
+          req.header('idempotency-key'),
+          { title, parentId, icon },
+          async () => {
+            if (parentId) {
+              const parent = await tx.document.findUnique({
+                where: { id: parentId },
+                select: { workspaceId: true, isArchived: true },
+              });
+              if (!parent || parent.workspaceId !== workspaceId || parent.isArchived)
+                throw new ForbiddenError('Access denied');
+            }
+            const state = legacyDocument(null);
+            try {
+              const result = await tx.document.create({
+                data: {
+                  title: title || 'Untitled',
+                  icon: icon || '📄',
+                  authorId: req.user!.userId,
+                  workspaceId,
+                  parentId,
+                  content: projectDocument(state),
+                  yjsState: Buffer.from(Y.encodeStateAsUpdate(state)),
+                },
+                include: { author },
+              });
+              await tx.activity.create({
+                data: {
+                  type: 'doc_created',
+                  message: `created document "${result.title}"`,
+                  userId: req.user!.userId,
+                  workspaceId,
+                },
+              });
+              await queueEmbedding('document', result.id, tx, workspaceId, req.user!.userId);
+              return result;
+            } finally {
+              state.destroy();
+            }
+          },
+        ),
     );
     res.status(201).json(document);
   } catch (error) {

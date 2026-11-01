@@ -1,3 +1,4 @@
+import { idempotencyKeyHeader } from '../lib/create-idempotency';
 import { Router, RequestHandler } from 'express';
 import multer from 'multer';
 import { authMiddleware } from '../middleware/auth.middleware';
@@ -46,6 +47,7 @@ export function createIngestionRouter(authenticate: RequestHandler = authMiddlew
   router.post(
     '/workspaces/:id/documents/ingest',
     authenticate,
+    idempotencyKeyHeader,
     async (req, _res, next) => {
       try {
         await authorizeWorkspace(req.user!.userId, String(req.params.id), WRITE_ROLES);
@@ -73,6 +75,7 @@ export function createIngestionRouter(authenticate: RequestHandler = authMiddlew
           req.file.originalname,
           workspaceId,
           userId,
+          req.header('idempotency-key'),
         );
 
         res.status(201).json({

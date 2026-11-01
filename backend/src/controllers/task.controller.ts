@@ -1,3 +1,4 @@
+import { idempotentCreate } from '../lib/create-idempotency';
 import { Request, Response, NextFunction } from 'express';
 import { z } from 'zod';
 import { prisma } from '../lib/prisma';
@@ -146,20 +147,28 @@ export async function createBoard(req: Request, res: Response, next: NextFunctio
     const workspaceId = String(req.params.workspaceId || req.params.id);
     const { name } = createBoardSchema.parse(req.body);
     const board = await withWorkspaceAccess(req.user!.userId, workspaceId, WRITE_ROLES, (tx) =>
-      tx.board.create({
-        data: {
-          name,
-          workspaceId,
-          columns: {
-            create: [
-              { name: 'To Do', position: 0 },
-              { name: 'In Progress', position: 1 },
-              { name: 'Done', position: 2 },
-            ],
-          },
-        },
-        include: { columns: { orderBy: { position: 'asc' } } },
-      }),
+      idempotentCreate(
+        tx,
+        req.user!.userId,
+        ['board.create', workspaceId],
+        req.header('idempotency-key'),
+        { name },
+        () =>
+          tx.board.create({
+            data: {
+              name,
+              workspaceId,
+              columns: {
+                create: [
+                  { name: 'To Do', position: 0 },
+                  { name: 'In Progress', position: 1 },
+                  { name: 'Done', position: 2 },
+                ],
+              },
+            },
+            include: { columns: { orderBy: { position: 'asc' } } },
+          }),
+      ),
     );
     res.status(201).json(board);
   } catch (error) {
@@ -179,19 +188,29 @@ export async function createColumn(req: Request, res: Response, next: NextFuncti
       req.user!.userId,
       board.workspaceId,
       WRITE_ROLES,
-      async (tx) => {
-        const current = await tx.board.findUnique({
-          where: { id: boardId },
-          select: { workspaceId: true },
-        });
-        if (!current || current.workspaceId !== board.workspaceId)
-          throw new ForbiddenError('Access denied');
-        const max = await tx.column.findFirst({
-          where: { boardId },
-          orderBy: { position: 'desc' },
-        });
-        return tx.column.create({ data: { name, boardId, position: (max?.position ?? -1) + 1 } });
-      },
+      async (tx) =>
+        idempotentCreate(
+          tx,
+          req.user!.userId,
+          ['column.create', board.workspaceId, boardId],
+          req.header('idempotency-key'),
+          { name },
+          async () => {
+            const current = await tx.board.findUnique({
+              where: { id: boardId },
+              select: { workspaceId: true },
+            });
+            if (!current || current.workspaceId !== board.workspaceId)
+              throw new ForbiddenError('Access denied');
+            const max = await tx.column.findFirst({
+              where: { boardId },
+              orderBy: { position: 'desc' },
+            });
+            return tx.column.create({
+              data: { name, boardId, position: (max?.position ?? -1) + 1 },
+            });
+          },
+        ),
     );
     res.status(201).json(column);
   } catch (error) {
@@ -224,29 +243,41 @@ export async function createTask(req: Request, res: Response, next: NextFunction
   try {
     const columnId = String(req.params.columnId);
     const { dueDate, ...data } = createTaskSchema.parse(req.body);
-    const task = await withColumnAccess(req.user!.userId, columnId, async (tx, workspaceId) => {
-      await requireAssignee(tx, workspaceId, data.assigneeId);
-      const max = await tx.task.findFirst({ where: { columnId }, orderBy: { position: 'desc' } });
-      const result = await tx.task.create({
-        data: {
-          ...data,
-          columnId,
-          position: (max?.position ?? -1) + 1,
-          dueDate: dueDate ? new Date(dueDate) : undefined,
+    const task = await withColumnAccess(req.user!.userId, columnId, async (tx, workspaceId) =>
+      idempotentCreate(
+        tx,
+        req.user!.userId,
+        ['task.create', workspaceId, columnId],
+        req.header('idempotency-key'),
+        { ...data, dueDate },
+        async () => {
+          await requireAssignee(tx, workspaceId, data.assigneeId);
+          const max = await tx.task.findFirst({
+            where: { columnId },
+            orderBy: { position: 'desc' },
+          });
+          const result = await tx.task.create({
+            data: {
+              ...data,
+              columnId,
+              position: (max?.position ?? -1) + 1,
+              dueDate: dueDate ? new Date(dueDate) : undefined,
+            },
+            include: taskInclude,
+          });
+          await tx.activity.create({
+            data: {
+              type: 'task_created',
+              message: `created task "${result.title}"`,
+              userId: req.user!.userId,
+              workspaceId,
+            },
+          });
+          await queueEmbedding('task', result.id, tx, workspaceId, req.user!.userId);
+          return result;
         },
-        include: taskInclude,
-      });
-      await tx.activity.create({
-        data: {
-          type: 'task_created',
-          message: `created task "${result.title}"`,
-          userId: req.user!.userId,
-          workspaceId,
-        },
-      });
-      await queueEmbedding('task', result.id, tx, workspaceId, req.user!.userId);
-      return result;
-    });
+      ),
+    );
     res.status(201).json(task);
   } catch (error) {
     next(error);

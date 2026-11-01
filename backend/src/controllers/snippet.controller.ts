@@ -1,3 +1,4 @@
+import { idempotentCreate } from '../lib/create-idempotency';
 import { Request, Response, NextFunction } from 'express';
 import { z } from 'zod';
 import { queueEmbedding } from '../services/embedding.service';
@@ -49,22 +50,30 @@ export async function createSnippet(req: Request, res: Response, next: NextFunct
       req.user!.userId,
       workspaceId,
       WRITE_ROLES,
-      async (tx) => {
-        const result = await tx.snippet.create({
-          data: { ...data, authorId: req.user!.userId, workspaceId },
-          include: { author: { select: { id: true, name: true, avatar: true } } },
-        });
-        await tx.activity.create({
-          data: {
-            type: 'snippet_created',
-            message: `added snippet "${result.title}"`,
-            userId: req.user!.userId,
-            workspaceId,
+      async (tx) =>
+        idempotentCreate(
+          tx,
+          req.user!.userId,
+          ['snippet.create', workspaceId],
+          req.header('idempotency-key'),
+          data,
+          async () => {
+            const result = await tx.snippet.create({
+              data: { ...data, authorId: req.user!.userId, workspaceId },
+              include: { author: { select: { id: true, name: true, avatar: true } } },
+            });
+            await tx.activity.create({
+              data: {
+                type: 'snippet_created',
+                message: `added snippet "${result.title}"`,
+                userId: req.user!.userId,
+                workspaceId,
+              },
+            });
+            await queueEmbedding('snippet', result.id, tx, workspaceId, req.user!.userId);
+            return result;
           },
-        });
-        await queueEmbedding('snippet', result.id, tx, workspaceId, req.user!.userId);
-        return result;
-      },
+        ),
     );
     res.status(201).json(snippet);
   } catch (error) {

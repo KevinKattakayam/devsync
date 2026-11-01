@@ -1,3 +1,4 @@
+import { idempotencyKeyHeader } from '../lib/create-idempotency';
 import { Router } from 'express';
 import { authMiddleware } from '../middleware/auth.middleware';
 import { requireOwner, requireEditor, requireWorkspaceMember } from '../middleware/rbac.middleware';
@@ -60,7 +61,7 @@ const router = Router();
 router.use(authMiddleware);
 
 // Workspace CRUD
-router.post('/', validate(createWorkspaceSchema), createWorkspace);
+router.post('/', idempotencyKeyHeader, validate(createWorkspaceSchema), createWorkspace);
 router.get('/', getWorkspaces);
 router.get('/:id', requireWorkspaceMember(), getWorkspace);
 router.get('/:id/activities', requireWorkspaceMember(), getActivities);
@@ -69,7 +70,13 @@ router.patch('/:id', requireOwner(), validate(updateWorkspaceSchema), updateWork
 router.delete('/:id', requireOwner(), deleteWorkspace);
 
 // Members
-router.post('/:id/invite', requireOwner(), validate(inviteMemberSchema), inviteMember);
+router.post(
+  '/:id/invite',
+  requireOwner(),
+  idempotencyKeyHeader,
+  validate(inviteMemberSchema),
+  inviteMember,
+);
 router.patch(
   '/:id/members/:memberId',
   requireOwner(),
@@ -83,6 +90,7 @@ router.get('/:id/github-repositories', requireOwner(), listRepositories);
 router.post(
   '/:id/github-repositories',
   requireOwner(),
+  idempotencyKeyHeader,
   validate(connectRepositorySchema),
   connectRepository,
 );
@@ -96,14 +104,32 @@ router.delete('/:id/github-repositories/:repositoryId', requireOwner(), disconne
 
 // Documents
 router.get('/:id/documents', requireWorkspaceMember(), getDocuments);
-router.post('/:id/documents', requireEditor(), validate(createDocumentSchema), createDocument);
+router.post(
+  '/:id/documents',
+  requireEditor(),
+  idempotencyKeyHeader,
+  validate(createDocumentSchema),
+  createDocument,
+);
 
 // Boards & Tasks
 router.get('/:id/boards', requireWorkspaceMember(), getBoards);
-router.post('/:id/boards', requireEditor(), validate(createBoardSchema), createBoard);
+router.post(
+  '/:id/boards',
+  requireEditor(),
+  idempotencyKeyHeader,
+  validate(createBoardSchema),
+  createBoard,
+);
 
 // Snippets
 router.get('/:id/snippets', requireWorkspaceMember(), getSnippets);
-router.post('/:id/snippets', requireEditor(), validate(createSnippetSchema), createSnippet);
+router.post(
+  '/:id/snippets',
+  requireEditor(),
+  idempotencyKeyHeader,
+  validate(createSnippetSchema),
+  createSnippet,
+);
 
 export default router;

@@ -1,7 +1,7 @@
 import express from 'express';
 import request from 'supertest';
 import { PostgreSqlContainer, StartedPostgreSqlContainer } from '@testcontainers/postgresql';
-import { PrismaClient } from '@prisma/client';
+import { Prisma, PrismaClient } from '@prisma/client';
 import { Client } from 'pg';
 import { randomBytes, createHash, createHmac } from 'crypto';
 import Stripe from 'stripe';
@@ -12,6 +12,8 @@ import { HocuspocusProvider, HocuspocusProviderWebsocket } from '@hocuspocus/pro
 import * as Y from 'yjs';
 import { createTenantPrismaClient, TenantPrismaClient } from '../lib/tenant-prisma';
 import { withDatabase } from '../lib/prisma';
+import { logger } from '../observability/logger';
+import { idempotentCreate } from '../lib/create-idempotency';
 import * as documents from '../controllers/document.controller';
 import * as snippets from '../controllers/snippet.controller';
 import * as tasks from '../controllers/task.controller';
@@ -56,6 +58,15 @@ jest.mock('../lib/queue', () => ({
 }));
 jest.mock('../services/ai-gateway.service', () => ({ completeWithFallback: jest.fn() }));
 jest.mock(
+  'openai',
+  () =>
+    class FixtureOpenAI {
+      embeddings = {
+        create: async () => ({ data: [{ embedding: Array<number>(1536).fill(0.01) }] }),
+      };
+    },
+);
+jest.mock(
   'groq-sdk',
   () =>
     class FixtureGroq {
@@ -93,6 +104,7 @@ app.use((req, _res, next) =>
       clerkId: 'fixture',
       email: 'fixture@example.test',
     };
+    req.log = logger;
     next();
   }),
 );
@@ -121,6 +133,8 @@ app.get('/workspaces/:id/search', workspaceSearch);
 app.use(createIngestionRouter((_req, _res, next) => next()));
 app.get('/documents/:id', documents.getDocument);
 app.post('/workspaces/:id/documents', documents.createDocument);
+app.post('/api/workspaces/:id/documents', documents.createDocument);
+app.post('/api/v1/workspaces/:id/documents', documents.createDocument);
 app.patch('/documents/:id', documents.updateDocument);
 app.put('/documents/:id/content', documents.updateDocument);
 app.delete('/documents/:id', documents.deleteDocument);
@@ -680,7 +694,8 @@ it.each(['/workspaces/TEAM', '/workspaces/TEAM/activities', '/workspaces/TEAM/re
     expect((await request(app).get(path.replace(/TEAM/g, b))).status).toBe(403);
     expect(
       (await request(app).get(path.replace(/TEAM/g, a)).set('x-fixture-actor', 'viewer')).status,
-    ).toBe(200);
+    ).toBe(path.endsWith('/repositories') ? 403 : 200);
+    expect((await request(app).get(path.replace(/TEAM/g, a))).status).toBe(200);
   },
 );
 
@@ -1477,4 +1492,309 @@ it('D01/G07 concurrent self-profile mutations serialize without lock upgrade dea
     avatar: 'https://example.test/fixture-avatar.png',
     systemRole: 'USER',
   });
+});
+
+const keyedCreates = [
+  ['/workspaces/TEAM/documents', { title: 'Idempotent document' }, 'document'],
+  [
+    '/workspaces/TEAM/snippets',
+    { title: 'Idempotent snippet', code: 'const value = 1;', language: 'typescript' },
+    'snippet',
+  ],
+  ['/workspaces/TEAM/boards', { name: 'Idempotent board' }, 'board'],
+  ['/boards/board-TEAM/columns', { name: 'Idempotent column' }, 'column'],
+  ['/columns/column-TEAM/tasks', { title: 'Idempotent task' }, 'task'],
+  ['/workspaces/TEAM/invite', { email: 'foreign@example.test', role: 'VIEWER' }, 'member'],
+  [
+    '/workspaces/TEAM/repositories',
+    {
+      repositoryId: 'idempotent-TEAM',
+      owner: 'fixture',
+      name: 'idempotent-TEAM',
+      webhookSecret: 'fixture-webhook-secret',
+    },
+    'repository',
+  ],
+] as const;
+async function resourceCount(kind: string, workspaceId: string) {
+  if (kind === 'document') return admin.document.count({ where: { workspaceId } });
+  if (kind === 'snippet') return admin.snippet.count({ where: { workspaceId } });
+  if (kind === 'board') return admin.board.count({ where: { workspaceId } });
+  if (kind === 'column') return admin.column.count({ where: { board: { workspaceId } } });
+  if (kind === 'task') return admin.task.count({ where: { column: { board: { workspaceId } } } });
+  if (kind === 'member') return admin.workspaceMember.count({ where: { workspaceId } });
+  return admin.gitHubRepository.count({ where: { workspaceId } });
+}
+it.each(keyedCreates)(
+  'G09 parallel duplicate creates are atomic for %s',
+  async (path, data, kind) => {
+    const { a } = await fixture(),
+      key = randomBytes(16).toString('hex'),
+      url = path.replace(/TEAM/g, a),
+      payload = bodyFor(data, a);
+    const before = await resourceCount(kind, a),
+      receipts = await admin.apiIdempotencyRecord.count(),
+      activities = await admin.activity.count({ where: { workspaceId: a } });
+    await withEnvironment({ ENCRYPTION_KEY: 'ab'.repeat(32) }, async () => {
+      const replies = await Promise.all(
+        Array.from({ length: 6 }, () =>
+          request(app).post(url).set('Idempotency-Key', key).send(payload),
+        ),
+      );
+      expect(replies.map((reply) => reply.status)).toEqual(Array<number>(6).fill(201));
+      for (const reply of replies) expect(reply.body).toEqual(replies[0].body);
+      expect(await resourceCount(kind, a)).toBe(before + 1);
+      expect(await admin.apiIdempotencyRecord.count()).toBe(receipts + 1);
+      expect(await admin.activity.count({ where: { workspaceId: a } })).toBe(
+        activities + (['document', 'snippet', 'task', 'member'].includes(kind) ? 1 : 0),
+      );
+      const changed =
+        'title' in data
+          ? { ...payload, title: `${data.title} changed` }
+          : 'name' in data
+            ? { ...payload, name: `${data.name} changed` }
+            : { ...payload, role: 'EDITOR' };
+      expect((await request(app).post(url).set('Idempotency-Key', key).send(changed)).status).toBe(
+        409,
+      );
+      expect(await resourceCount(kind, a)).toBe(before + 1);
+      if (kind === 'repository') {
+        const receipt = await admin.apiIdempotencyRecord.findFirstOrThrow({
+          where: { authorityId: 'owner' },
+          orderBy: { createdAt: 'desc' },
+        });
+        expect(JSON.stringify(receipt.response)).not.toContain('webhookSecret');
+        expect(JSON.stringify(receipt.response)).not.toContain('enc:v1:');
+      }
+    });
+  },
+);
+it('G09 workspace creation has one atomic receipt under parallel requests without an existing tenant lock', async () => {
+  const key = randomBytes(16).toString('hex'),
+    name = `Atomic workspace ${++sequence}`,
+    before = await admin.workspace.count();
+  const replies = await Promise.all(
+    Array.from({ length: 8 }, () =>
+      request(app).post('/workspaces').set('Idempotency-Key', key).send({ name }),
+    ),
+  );
+  expect(replies.map((reply) => reply.status)).toEqual(Array<number>(8).fill(201));
+  for (const reply of replies) expect(reply.body).toEqual(replies[0].body);
+  expect(await admin.workspace.count()).toBe(before + 1);
+  expect(
+    await admin.activity.count({
+      where: { workspaceId: replies[0].body.id as string, type: 'workspace_created' },
+    }),
+  ).toBe(1);
+});
+it('G09 legacy/v1 aliases share a receipt, malformed keys reject, and receipt copies remain RLS-protected', async () => {
+  const { a } = await fixture(),
+    key = randomBytes(16).toString('hex');
+  const first = await request(app)
+    .post(`/api/workspaces/${a}/documents`)
+    .set('Idempotency-Key', key)
+    .send({ title: 'Alias receipt' });
+  const replay = await request(app)
+    .post(`/api/v1/workspaces/${a}/documents`)
+    .set('Idempotency-Key', key)
+    .send({ title: 'Alias receipt' });
+  expect(first.status).toBe(201);
+  expect(replay.status).toBe(201);
+  expect(replay.body).toEqual(first.body);
+  expect(await db.apiIdempotencyRecord.count()).toBe(0);
+  expect(await db.withTenantTransaction(a, (tx) => tx.apiIdempotencyRecord.count())).toBe(0);
+  expect(
+    (
+      await request(app)
+        .post(`/workspaces/${a}/documents`)
+        .set('Idempotency-Key', 'x'.repeat(129))
+        .send({ title: 'Invalid' })
+    ).status,
+  ).toBe(400);
+});
+it('D07/G09 replay cannot bypass changed role, principal or workspace scope', async () => {
+  const { a, b } = await fixture(),
+    key = randomBytes(16).toString('hex');
+  const first = await request(app)
+    .post(`/workspaces/${a}/documents`)
+    .set('x-fixture-actor', 'editor')
+    .set('Idempotency-Key', key)
+    .send({ title: 'Private receipt' });
+  expect(first.status).toBe(201);
+  await admin.workspaceMember.update({
+    where: { userId_workspaceId: { workspaceId: a, userId: 'editor' } },
+    data: { role: 'VIEWER' },
+  });
+  expect(
+    (
+      await request(app)
+        .post(`/workspaces/${a}/documents`)
+        .set('x-fixture-actor', 'editor')
+        .set('Idempotency-Key', key)
+        .send({ title: 'Private receipt' })
+    ).status,
+  ).toBe(403);
+  expect(
+    (
+      await request(app)
+        .post(`/workspaces/${b}/documents`)
+        .set('Idempotency-Key', key)
+        .send({ title: 'Private receipt' })
+    ).status,
+  ).toBe(403);
+  const owner = await request(app)
+    .post(`/workspaces/${a}/documents`)
+    .set('Idempotency-Key', key)
+    .send({ title: 'Private receipt' });
+  expect(owner.status).toBe(201);
+  expect(owner.body.id).not.toBe(first.body.id);
+});
+it('G09 a receipt-write failure rolls back resource, activity and outbox; the same key can retry', async () => {
+  const { a } = await fixture(),
+    key = randomBytes(16).toString('hex'),
+    before = await state(a),
+    jobs = await admin.embeddingJob.count({ where: { workspaceId: a } }),
+    receipts = await admin.apiIdempotencyRecord.count();
+  await admin.$executeRaw(
+    Prisma.sql`CREATE FUNCTION phase1c_reject_receipt() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN RAISE EXCEPTION 'fixture receipt failure'; END $$`,
+  );
+  await admin.$executeRaw(
+    Prisma.sql`CREATE TRIGGER phase1c_reject_receipt BEFORE UPDATE ON "ApiIdempotencyRecord" FOR EACH ROW EXECUTE FUNCTION phase1c_reject_receipt()`,
+  );
+  try {
+    const response = await request(app)
+      .post(`/workspaces/${a}/documents`)
+      .set('Idempotency-Key', key)
+      .send({ title: 'Rollback receipt' });
+    expect(response.status).toBe(500);
+    expect(response.body.error).toBe('Internal server error');
+    expect(await state(a)).toEqual(before);
+    expect(await admin.embeddingJob.count({ where: { workspaceId: a } })).toBe(jobs);
+    expect(await admin.apiIdempotencyRecord.count()).toBe(receipts);
+  } finally {
+    await admin.$executeRaw(
+      Prisma.sql`DROP TRIGGER phase1c_reject_receipt ON "ApiIdempotencyRecord"`,
+    );
+    await admin.$executeRaw(Prisma.sql`DROP FUNCTION phase1c_reject_receipt()`);
+  }
+  expect(
+    (
+      await request(app)
+        .post(`/workspaces/${a}/documents`)
+        .set('Idempotency-Key', key)
+        .send({ title: 'Rollback receipt' })
+    ).status,
+  ).toBe(201);
+});
+it('G09 ingestion and SCIM create receipts survive concurrent duplicates and reject changed payloads', async () => {
+  const { a } = await fixture(),
+    key = randomBytes(16).toString('hex'),
+    before = await admin.document.count({ where: { workspaceId: a } });
+  const upload = (text: string) =>
+    request(app)
+      .post(`/workspaces/${a}/documents/ingest`)
+      .set('Idempotency-Key', key)
+      .attach('file', Buffer.from(text), { filename: 'idempotent.txt', contentType: 'text/plain' });
+  const replies = await Promise.all([
+    upload('Idempotent text'),
+    upload('Idempotent text'),
+    upload('Idempotent text'),
+  ]);
+  expect(replies.map((reply) => reply.status)).toEqual([201, 201, 201]);
+  expect(replies[1].body).toEqual(replies[0].body);
+  expect(await admin.document.count({ where: { workspaceId: a } })).toBe(before + 1);
+  expect((await upload('Changed text')).status).toBe(409);
+  const credential = await scimToken(a),
+    scimKey = randomBytes(16).toString('hex'),
+    body = {
+      externalId: 'idempotent-scim',
+      userName: 'editor@example.test',
+      roles: [{ value: 'VIEWER' }],
+    };
+  const requests = await Promise.all(
+    Array.from({ length: 4 }, () =>
+      request(app)
+        .post('/scim/v2/Users')
+        .set('Authorization', `Bearer ${credential.token}`)
+        .set('Idempotency-Key', scimKey)
+        .send(body),
+    ),
+  );
+  expect(requests.map((reply) => reply.status)).toEqual([201, 201, 201, 201]);
+  for (const reply of requests) expect(reply.body).toEqual(requests[0].body);
+  expect(
+    (
+      await request(app)
+        .post('/scim/v2/Users')
+        .set('Authorization', `Bearer ${credential.token}`)
+        .set('Idempotency-Key', scimKey)
+        .send({ ...body, active: false })
+    ).status,
+  ).toBe(409);
+  await admin.scimProvisioningToken.update({
+    where: { id: credential.id },
+    data: { revokedAt: new Date() },
+  });
+  expect(
+    (
+      await request(app)
+        .post('/scim/v2/Users')
+        .set('Authorization', `Bearer ${credential.token}`)
+        .set('Idempotency-Key', scimKey)
+        .send(body)
+    ).status,
+  ).toBe(401);
+});
+
+it('G09 expired receipts can be reused within the documented window semantics', async () => {
+  const { a } = await fixture(),
+    key = randomBytes(16).toString('hex'),
+    url = `/workspaces/${a}/documents`;
+  const first = await request(app)
+    .post(url)
+    .set('Idempotency-Key', key)
+    .send({ title: 'Before expiry' });
+  expect(first.status).toBe(201);
+  const receipt = await admin.apiIdempotencyRecord.findFirstOrThrow({
+    where: { authorityId: 'owner' },
+    orderBy: { createdAt: 'desc' },
+  });
+  await admin.apiIdempotencyRecord.update({
+    where: { id: receipt.id },
+    data: { expiresAt: new Date(Date.now() - 1000) },
+  });
+  const next = await request(app)
+    .post(url)
+    .set('Idempotency-Key', key)
+    .send({ title: 'After expiry' });
+  expect(next.status).toBe(201);
+  expect(next.body.id).not.toBe(first.body.id);
+});
+it('G09 JSON null is a completed receipt, and a thrown create leaves no receipt behind', async () => {
+  const { a } = await fixture(),
+    key = randomBytes(16).toString('hex');
+  let calls = 0;
+  const run = () =>
+    withDatabase(db, () =>
+      withWorkspaceAccess('owner', a, WRITE_ROLES, (tx) =>
+        idempotentCreate(tx, 'owner', ['fixture.null', a], key, {}, async () => {
+          calls++;
+          return null;
+        }),
+      ),
+    );
+  expect(await run()).toBeNull();
+  expect(await run()).toBeNull();
+  expect(calls).toBe(1);
+  const before = await admin.apiIdempotencyRecord.count();
+  await expect(
+    withDatabase(db, () =>
+      withWorkspaceAccess('owner', a, WRITE_ROLES, (tx) =>
+        idempotentCreate(tx, 'owner', ['fixture.failure', a], key, {}, async () => {
+          throw new Error('Fixture failure');
+        }),
+      ),
+    ),
+  ).rejects.toThrow('Fixture failure');
+  expect(await admin.apiIdempotencyRecord.count()).toBe(before);
 });

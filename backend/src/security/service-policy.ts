@@ -18,7 +18,7 @@ async function lockWorkspace(tx: TenantTransaction, workspaceId: string) {
 }
 export async function withScimAccess<T>(
   authorization: string | undefined,
-  operation: (tx: TenantTransaction, workspaceId: string) => Promise<T>,
+  operation: (tx: TenantTransaction, workspaceId: string, credentialId: string) => Promise<T>,
 ): Promise<T> {
   if (!authorization?.startsWith('Bearer ') || authorization.length > 8192)
     throw new UnauthorizedError('Invalid SCIM token');
@@ -40,7 +40,7 @@ export async function withScimAccess<T>(
       !timingSafeEqual(Buffer.from(token.tokenHash), Buffer.from(hash))
     )
       throw new UnauthorizedError('Invalid SCIM token');
-    return operation(tx, candidate.workspaceId);
+    return operation(tx, candidate.workspaceId, token.id);
   });
 }
 export async function withGitHubWebhookAccess<T>(

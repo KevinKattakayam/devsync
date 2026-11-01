@@ -1,7 +1,8 @@
+import { idempotentCreate } from '../lib/create-idempotency';
 import { Request, Response, NextFunction } from 'express';
 import { z } from 'zod';
 import type { TenantTransaction } from '../lib/tenant-prisma';
-import { OWNER_ROLES, READ_ROLES, withWorkspaceAccess } from '../security/workspace-policy';
+import { OWNER_ROLES, withWorkspaceAccess } from '../security/workspace-policy';
 import { ForbiddenError, NotFoundError } from '../utils/errors';
 import { encryptSecret } from '../services/secret.service';
 
@@ -58,7 +59,7 @@ export async function listRepositories(req: Request, res: Response, next: NextFu
   try {
     const workspaceId = String(req.params.id);
     res.json(
-      await withWorkspaceAccess(req.user!.userId, workspaceId, READ_ROLES, (tx) =>
+      await withWorkspaceAccess(req.user!.userId, workspaceId, OWNER_ROLES, (tx) =>
         tx.gitHubRepository.findMany({ where: { workspaceId }, select: repositorySelect }),
       ),
     );
@@ -74,15 +75,24 @@ export async function connectRepository(req: Request, res: Response, next: NextF
       req.user!.userId,
       workspaceId,
       OWNER_ROLES,
-      async (tx) => {
-        await validateColumn(tx, workspaceId, data.prOpenedColumnId);
-        await validateColumn(tx, workspaceId, data.prMergedColumnId);
-        return tx.gitHubRepository.create({
-          data: { ...data, webhookSecret: encryptSecret(data.webhookSecret), workspaceId },
-        });
-      },
+      async (tx) =>
+        idempotentCreate(
+          tx,
+          req.user!.userId,
+          ['repository.create', workspaceId],
+          req.header('idempotency-key'),
+          data,
+          async () => {
+            await validateColumn(tx, workspaceId, data.prOpenedColumnId);
+            await validateColumn(tx, workspaceId, data.prMergedColumnId);
+            return tx.gitHubRepository.create({
+              data: { ...data, webhookSecret: encryptSecret(data.webhookSecret), workspaceId },
+              select: { ...repositorySelect, workspaceId: true, updatedAt: true },
+            });
+          },
+        ),
     );
-    res.status(201).json({ ...repository, webhookSecret: undefined });
+    res.status(201).json(repository);
   } catch (error) {
     next(error);
   }

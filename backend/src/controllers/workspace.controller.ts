@@ -1,3 +1,4 @@
+import { idempotentCreate } from '../lib/create-idempotency';
 import { notifyCollaborationAclChange } from '../services/collaboration-acl';
 import { Request, Response, NextFunction } from 'express';
 import { Role } from '@prisma/client';
@@ -47,55 +48,64 @@ export async function createWorkspace(req: Request, res: Response, next: NextFun
     const { name, description, icon } = createWorkspaceSchema.parse(req.body);
     const userId = req.user!.userId;
 
-    const workspace = await withPrincipalAccess(userId, async (tx) => {
-      const workspace = await tx.workspace.create({
-        data: {
-          name,
-          slug: generateSlug(name),
-          description,
-          icon: icon || '💻',
-          billingStatus: 'active',
-          members: {
-            create: {
-              userId,
-              role: Role.OWNER,
-            },
-          },
-          // Create a default board
-          boards: {
-            create: {
-              name: 'Main Board',
-              columns: {
-                create: [
-                  { name: 'Backlog', position: 0 },
-                  { name: 'To Do', position: 1 },
-                  { name: 'In Progress', position: 2 },
-                  { name: 'Review', position: 3 },
-                  { name: 'Done', position: 4 },
-                ],
+    const workspace = await withPrincipalAccess(userId, async (tx) =>
+      idempotentCreate(
+        tx,
+        userId,
+        ['workspace.create'],
+        req.header('idempotency-key'),
+        { name, description, icon },
+        async () => {
+          const workspace = await tx.workspace.create({
+            data: {
+              name,
+              slug: generateSlug(name),
+              description,
+              icon: icon || '💻',
+              billingStatus: 'active',
+              members: {
+                create: {
+                  userId,
+                  role: Role.OWNER,
+                },
+              },
+              // Create a default board
+              boards: {
+                create: {
+                  name: 'Main Board',
+                  columns: {
+                    create: [
+                      { name: 'Backlog', position: 0 },
+                      { name: 'To Do', position: 1 },
+                      { name: 'In Progress', position: 2 },
+                      { name: 'Review', position: 3 },
+                      { name: 'Done', position: 4 },
+                    ],
+                  },
+                },
               },
             },
-          },
-        },
-        include: {
-          members: {
-            include: { user: { select: { id: true, name: true, email: true, avatar: true } } },
-          },
-        },
-      });
+            include: {
+              members: {
+                include: { user: { select: { id: true, name: true, email: true, avatar: true } } },
+              },
+            },
+          });
 
-      // Log activity
-      await tx.activity.create({
-        data: {
-          type: 'workspace_created',
-          message: `created workspace "${name}"`,
-          userId,
-          workspaceId: workspace.id,
-        },
-      });
+          // Log activity
+          await tx.activity.create({
+            data: {
+              type: 'workspace_created',
+              message: `created workspace "${name}"`,
+              userId,
+              workspaceId: workspace.id,
+            },
+          });
 
-      return workspace;
-    });
+          return workspace;
+        },
+      ),
+    );
 
     res.status(201).json(workspace);
   } catch (error) {
@@ -207,40 +217,48 @@ export async function inviteMember(req: Request, res: Response, next: NextFuncti
       req.user!.userId,
       workspaceId,
       OWNER_ROLES,
-      async (tx) => {
-        const user = await tx.user.findUnique({ where: { email } });
-        if (!user) {
-          throw new NotFoundError('User not found with that email');
-        }
+      async (tx) =>
+        idempotentCreate(
+          tx,
+          req.user!.userId,
+          ['member.invite', workspaceId],
+          req.header('idempotency-key'),
+          { email, role },
+          async () => {
+            const user = await tx.user.findUnique({ where: { email } });
+            if (!user) {
+              throw new NotFoundError('User not found with that email');
+            }
 
-        const existingMember = await tx.workspaceMember.findUnique({
-          where: { userId_workspaceId: { userId: user.id, workspaceId } },
-        });
+            const existingMember = await tx.workspaceMember.findUnique({
+              where: { userId_workspaceId: { userId: user.id, workspaceId } },
+            });
 
-        if (existingMember) {
-          throw new BadRequestError('User is already a member');
-        }
+            if (existingMember) {
+              throw new BadRequestError('User is already a member');
+            }
 
-        const member = await tx.workspaceMember.create({
-          data: {
-            userId: user.id,
-            workspaceId,
-            role,
+            const member = await tx.workspaceMember.create({
+              data: {
+                userId: user.id,
+                workspaceId,
+                role,
+              },
+              include: { user: { select: { id: true, name: true, email: true, avatar: true } } },
+            });
+
+            await tx.activity.create({
+              data: {
+                type: 'member_invited',
+                message: `invited ${user.name || user.email} to the workspace`,
+                userId: req.user!.userId,
+                workspaceId,
+              },
+            });
+
+            return member;
           },
-          include: { user: { select: { id: true, name: true, email: true, avatar: true } } },
-        });
-
-        await tx.activity.create({
-          data: {
-            type: 'member_invited',
-            message: `invited ${user.name || user.email} to the workspace`,
-            userId: req.user!.userId,
-            workspaceId,
-          },
-        });
-
-        return member;
-      },
+        ),
     );
     res.status(201).json(member);
   } catch (error) {

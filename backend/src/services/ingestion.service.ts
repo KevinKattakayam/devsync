@@ -1,3 +1,6 @@
+import { createHash } from 'crypto';
+import { z } from 'zod';
+import { idempotentCreate } from '../lib/create-idempotency';
 import { PDFParse } from 'pdf-parse';
 import Tesseract from 'tesseract.js';
 import * as Y from 'yjs';
@@ -189,6 +192,7 @@ export async function ingestDocument(
   originalFilename: string,
   workspaceId: string,
   authorId: string,
+  idempotencyKey?: string,
 ): Promise<IngestResult> {
   await authorizeWorkspace(authorId, workspaceId, WRITE_ROLES);
   if (!buffer.length || buffer.length > 25 * 1024 * 1024 || originalFilename.length > 255)
@@ -235,47 +239,65 @@ export async function ingestDocument(
     .slice(0, 200); // Title case
 
   // Create document
-  const document = await withWorkspaceAccess(authorId, workspaceId, WRITE_ROLES, async (tx) => {
-    const state = legacyDocument(richTextSchema.parse(JSON.parse(JSON.stringify(tiptapContent))));
-    try {
-      const document = await tx.document.create({
-        data: {
-          title,
-          content: projectDocument(state),
-          yjsState: Buffer.from(Y.encodeStateAsUpdate(state)),
-          icon: isPDF ? '📑' : '🖼️',
-          authorId,
-          workspaceId,
-        },
-      });
+  const document = await withWorkspaceAccess(authorId, workspaceId, WRITE_ROLES, async (tx) =>
+    idempotentCreate(
+      tx,
+      authorId,
+      ['document.ingest', workspaceId],
+      idempotencyKey,
+      { fileHash: createHash('sha256').update(buffer).digest('hex'), mimeType, originalFilename },
+      async () => {
+        const state = legacyDocument(
+          richTextSchema.parse(JSON.parse(JSON.stringify(tiptapContent))),
+        );
+        try {
+          const document = await tx.document.create({
+            data: {
+              title,
+              content: projectDocument(state),
+              yjsState: Buffer.from(Y.encodeStateAsUpdate(state)),
+              icon: isPDF ? '📑' : '🖼️',
+              authorId,
+              workspaceId,
+            },
+          });
 
-      // Log activity
-      await tx.activity.create({
-        data: {
-          type: 'doc_ingested',
-          message: `ingested ${isPDF ? 'PDF' : 'image'} "${originalFilename}" as document "${title}"`,
-          metadata: {
-            sourceType: isPDF ? 'pdf' : 'image',
-            originalFilename,
+          // Log activity
+          await tx.activity.create({
+            data: {
+              type: 'doc_ingested',
+              message: `ingested ${isPDF ? 'PDF' : 'image'} "${originalFilename}" as document "${title}"`,
+              metadata: {
+                sourceType: isPDF ? 'pdf' : 'image',
+                originalFilename,
+                extractedTextLength: extractedText.length,
+              },
+              userId: authorId,
+              workspaceId,
+            },
+          });
+
+          // Queue embedding
+          await queueEmbedding('document', document.id, tx, workspaceId, authorId);
+          return {
+            documentId: document.id,
+            title,
             extractedTextLength: extractedText.length,
-          },
-          userId: authorId,
-          workspaceId,
-        },
-      });
+            sourceType: isPDF ? 'pdf' : 'image',
+          };
+        } finally {
+          state.destroy();
+        }
+      },
+    ),
+  );
 
-      // Queue embedding
-      await queueEmbedding('document', document.id, tx, workspaceId, authorId);
-      return document;
-    } finally {
-      state.destroy();
-    }
-  });
-
-  return {
-    documentId: document.id,
-    title,
-    extractedTextLength: extractedText.length,
-    sourceType: isPDF ? 'pdf' : 'image',
-  };
+  return z
+    .object({
+      documentId: z.string(),
+      title: z.string(),
+      extractedTextLength: z.number().int().nonnegative(),
+      sourceType: z.enum(['pdf', 'image']),
+    })
+    .parse(document);
 }

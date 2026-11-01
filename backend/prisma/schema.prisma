@@ -263,6 +263,18 @@ model Activity {
 
 }
 
+model ApiIdempotencyRecord {
+  id          String @id
+  authorityId String
+  requestHash String
+  response    Json?
+  expiresAt   DateTime
+  createdAt   DateTime @default(now())
+
+  @@index([authorityId, expiresAt])
+  @@index([expiresAt])
+}
+
 enum Role {
   OWNER
   EDITOR
