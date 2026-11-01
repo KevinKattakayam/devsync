@@ -1,0 +1,108 @@
+
+> frontend@0.1.0 lint
+> eslint --max-warnings=0
+
+
+> frontend@0.1.0 format:check
+> prettier --check . --ignore-unknown
+
+Checking formatting...
+All matched files use Prettier code style!
+
+> frontend@0.1.0 typecheck
+> tsc --noEmit
+
+
+> frontend@0.1.0 test
+> node --test tests/*.test.mjs && vitest run
+
+TAP version 13
+# Subtest: tests/dependency-policy.test.mjs
+ok 1 - tests/dependency-policy.test.mjs
+  ---
+  duration_ms: 103.053667
+  type: 'test'
+  ...
+# Subtest: tests/fixture-isolation.test.mjs
+ok 2 - tests/fixture-isolation.test.mjs
+  ---
+  duration_ms: 116.648737
+  type: 'test'
+  ...
+# Subtest: tests/markdown.test.mjs
+ok 3 - tests/markdown.test.mjs
+  ---
+  duration_ms: 555.474249
+  type: 'test'
+  ...
+# Subtest: tests/theme-contrast.test.mjs
+ok 4 - tests/theme-contrast.test.mjs
+  ---
+  duration_ms: 90.432513
+  type: 'test'
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 574.37244
+
+ RUN  v5.0.5 /home/kevin/devsync/frontend
+
+ ❯ tests/editor-commands.test.tsx (6 tests | 2 failed) 449ms
+   ❯ editor block commands using the existing Yjs schema (6)
+     × writes taskList into the shared Yjs document 70ms
+     × writes codeBlock into the shared Yjs document 38ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/editor-commands.test.tsx > editor block commands using the existing Yjs schema > writes taskList into the shared Yjs document
+AssertionError: expected '<tasklist><taskitem checked="false"><…' to contain 'taskList'
+
+Expected: "taskList"
+Received: "<tasklist><taskitem checked="false"><paragraph></paragraph></taskitem></tasklist><paragraph></paragraph>"
+
+ ❯ tests/editor-commands.test.tsx:57:63
+     55|         command!.run(editor);
+     56|         expect(editor.isActive(id === 'heading2' ? 'heading' : id)).to…
+     57|         expect(document.getXmlFragment('default').toString()).toContai…
+       |                                                               ^
+     58|           id === 'heading2' ? 'heading' : id,
+     59|         );
+ ❯ withEditor tests/editor-commands.test.tsx:23:5
+ ❯ tests/editor-commands.test.tsx:52:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/editor-commands.test.tsx > editor block commands using the existing Yjs schema > writes codeBlock into the shared Yjs document
+AssertionError: expected '<codeblock></codeblock><paragraph></p…' to contain 'codeBlock'
+
+Expected: "codeBlock"
+Received: "<codeblock></codeblock><paragraph></paragraph>"
+
+ ❯ tests/editor-commands.test.tsx:57:63
+     55|         command!.run(editor);
+     56|         expect(editor.isActive(id === 'heading2' ? 'heading' : id)).to…
+     57|         expect(document.getXmlFragment('default').toString()).toContai…
+       |                                                               ^
+     58|           id === 'heading2' ? 'heading' : id,
+     59|         );
+ ❯ withEditor tests/editor-commands.test.tsx:23:5
+ ❯ tests/editor-commands.test.tsx:52:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed | 9 passed (10)
+      Tests  2 failed | 49 passed (51)
+   Start at  23:41:25
+   Duration  5.44s (environment 43%, tests 37%, import 18%, transform 2%)
+
+Environment  jsdom was created 10 times · 12.38s total, 43% of tracked time
+             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+             learn more: https://vitest.dev/guide/improving-performance#test-environments
+

@@ -2,7 +2,6 @@
 
 import { errorMessage } from '@/lib/errors';
 
-import type { ReactNode } from 'react';
 import type { Doc } from 'yjs';
 import type { HocuspocusProvider } from '@hocuspocus/provider';
 import { useEffect, useState, useMemo } from 'react';
@@ -26,34 +25,9 @@ import { CollaborationCursor } from '@/lib/tiptap-collaboration-cursor';
 import { useLocalFirstYDoc } from '@/lib/local-first-yjs';
 import { useCRDTGarbageCollector } from '@/hooks/use-crdt-garbage-collector';
 import { markdownToHtml } from '@/lib/markdown';
-import {
-  Bold,
-  Italic,
-  Strikethrough,
-  Code,
-  List,
-  ListOrdered,
-  Heading1,
-  Heading2,
-  Heading3,
-  Quote,
-  Minus,
-  Undo,
-  Redo,
-  Sparkles,
-  Loader2,
-  CheckSquare,
-  Users,
-  CornerDownLeft,
-  RefreshCw,
-  Copy,
-  Trash2,
-  Send,
-  History,
-  Clock,
-  RotateCcw,
-  X,
-} from 'lucide-react';
+import { Users, Sparkles } from 'lucide-react';
+import { Button, Dialog, DialogContent, Input, Skeleton } from '@/components/ui';
+import { EditorTools } from '@/components/editor/tools';
 import { toast } from 'sonner';
 
 // ── Collaboration cursor colors ──────────────────────────────
@@ -92,27 +66,6 @@ interface EditorInnerProps {
   onAiSources: (sources: { type: string; title: string; score: number }[]) => void;
 }
 
-const ToolBtn = ({
-  onClick,
-  active,
-  children,
-  title: t,
-}: {
-  onClick: () => unknown;
-  active?: boolean;
-  children: ReactNode;
-  title: string;
-}) => (
-  <button
-    onMouseDown={(e) => e.preventDefault()} // Prevent stealing focus / selection from editor
-    onClick={onClick}
-    title={t}
-    className={`w-8 h-8 rounded flex items-center justify-center transition-colors ${active ? 'bg-primary/20 text-primary' : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'}`}
-  >
-    {children}
-  </button>
-);
-
 function EditorInner({
   canWrite,
   ydoc,
@@ -132,18 +85,19 @@ function EditorInner({
     to: number;
     text: string;
   } | null>(null);
-  const [showHistory, setShowHistory] = useState(false);
-  const [selectedSnapshot, setSelectedSnapshot] = useState<number>(0);
 
   const extensions = useMemo(
     () => [
       StarterKit.configure({ undoRedo: false, link: false }),
-      Placeholder.configure({ placeholder: 'Start writing... Press / for AI commands' }),
+      Placeholder.configure({ placeholder: 'Write something, or type / to insert a block…' }),
       Highlight,
       Image,
-      TableKit,
+      TableKit.configure({ table: { renderWrapper: true } }),
       TaskList,
-      TaskItem.configure({ nested: true }),
+      TaskItem.configure({
+        nested: true,
+        a11y: { checkboxLabel: (node) => `Task: ${node.textContent || 'Untitled task'}` },
+      }),
       LinkExt.configure({ openOnClick: false }),
       Collaboration.configure({ document: ydoc }),
       ...(provider
@@ -163,12 +117,11 @@ function EditorInner({
     immediatelyRender: false,
     extensions,
     editorProps: {
-      attributes: { class: 'prose prose-invert max-w-none focus:outline-none min-h-[400px]' },
-      handleKeyDown: (_view, event) => {
-        if (event.key === '/' && !event.shiftKey) {
-          setTimeout(() => setShowAiMenu(true), 100);
-        }
-        return false;
+      attributes: {
+        class: 'editor-canvas min-h-[400px]',
+        role: 'textbox',
+        'aria-label': 'Document editor',
+        'aria-multiline': 'true',
       },
     },
   });
@@ -296,365 +249,123 @@ function EditorInner({
 
   return (
     <>
-      {/* Toolbar */}
-      {editor && canWrite && (
-        <div className="glass-card px-2 py-1.5 mb-4 flex items-center gap-0.5 flex-wrap sticky top-0 z-10">
-          <ToolBtn
-            onClick={() => editor.chain().focus().toggleBold().run()}
-            active={editor.isActive('bold')}
-            title="Bold"
-          >
-            <Bold className="w-4 h-4" />
-          </ToolBtn>
-          <ToolBtn
-            onClick={() => editor.chain().focus().toggleItalic().run()}
-            active={editor.isActive('italic')}
-            title="Italic"
-          >
-            <Italic className="w-4 h-4" />
-          </ToolBtn>
-          <ToolBtn
-            onClick={() => editor.chain().focus().toggleStrike().run()}
-            active={editor.isActive('strike')}
-            title="Strike"
-          >
-            <Strikethrough className="w-4 h-4" />
-          </ToolBtn>
-          <ToolBtn
-            onClick={() => editor.chain().focus().toggleCode().run()}
-            active={editor.isActive('code')}
-            title="Code"
-          >
-            <Code className="w-4 h-4" />
-          </ToolBtn>
-          <div className="w-px h-5 bg-border mx-1" />
-          <ToolBtn
-            onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-            active={editor.isActive('heading', { level: 1 })}
-            title="H1"
-          >
-            <Heading1 className="w-4 h-4" />
-          </ToolBtn>
-          <ToolBtn
-            onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-            active={editor.isActive('heading', { level: 2 })}
-            title="H2"
-          >
-            <Heading2 className="w-4 h-4" />
-          </ToolBtn>
-          <ToolBtn
-            onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-            active={editor.isActive('heading', { level: 3 })}
-            title="H3"
-          >
-            <Heading3 className="w-4 h-4" />
-          </ToolBtn>
-          <div className="w-px h-5 bg-border mx-1" />
-          <ToolBtn
-            onClick={() => editor.chain().focus().toggleBulletList().run()}
-            active={editor.isActive('bulletList')}
-            title="Bullet List"
-          >
-            <List className="w-4 h-4" />
-          </ToolBtn>
-          <ToolBtn
-            onClick={() => editor.chain().focus().toggleOrderedList().run()}
-            active={editor.isActive('orderedList')}
-            title="Ordered List"
-          >
-            <ListOrdered className="w-4 h-4" />
-          </ToolBtn>
-          <ToolBtn
-            onClick={() => editor.chain().focus().toggleTaskList().run()}
-            active={editor.isActive('taskList')}
-            title="Task List"
-          >
-            <CheckSquare className="w-4 h-4" />
-          </ToolBtn>
-          <ToolBtn
-            onClick={() => editor.chain().focus().toggleBlockquote().run()}
-            active={editor.isActive('blockquote')}
-            title="Quote"
-          >
-            <Quote className="w-4 h-4" />
-          </ToolBtn>
-          <ToolBtn onClick={() => editor.chain().focus().setHorizontalRule().run()} title="Divider">
-            <Minus className="w-4 h-4" />
-          </ToolBtn>
-          <div className="w-px h-5 bg-border mx-1" />
-          <ToolBtn onClick={() => editor.chain().focus().undo().run()} title="Undo">
-            <Undo className="w-4 h-4" />
-          </ToolBtn>
-          <ToolBtn onClick={() => editor.chain().focus().redo().run()} title="Redo">
-            <Redo className="w-4 h-4" />
-          </ToolBtn>
-          <div className="flex-1" />
-          <div className="flex items-center gap-2">
-            <button
-              onMouseDown={(e) => e.preventDefault()}
-              onClick={() => setShowHistory(!showHistory)}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-medium transition-all ${
-                showHistory
-                  ? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
-                  : 'bg-white/[0.04] text-muted-foreground hover:text-foreground border-white/10 hover:bg-white/[0.08]'
-              }`}
-            >
-              <History className="w-3.5 h-3.5" /> History
-            </button>
-
-            <div className="relative">
-              <button
-                onMouseDown={(e) => e.preventDefault()}
-                onClick={() => setShowAiMenu(!showAiMenu)}
-                disabled={aiLoading}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary text-primary-foreground text-xs font-medium hover:opacity-90 disabled:opacity-50 transition-all shadow-lg shadow-primary/20"
-              >
-                {aiLoading ? (
-                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                ) : (
-                  <Sparkles className="w-3.5 h-3.5" />
-                )}{' '}
-                AI Assistant
-              </button>
-              {showAiMenu && (
-                <>
-                  <div className="fixed inset-0 z-40" onClick={() => setShowAiMenu(false)} />
-                  <div className="absolute right-0 top-10 w-72 bg-slate-950/95 border border-white/10 rounded-2xl shadow-2xl p-2.5 z-50 backdrop-blur-xl animate-scale-in">
-                    {selectedTextRange && (
-                      <div className="mb-2 px-2.5 py-1.5 rounded-lg bg-primary/10 border border-primary/20 text-[11px] text-primary flex items-center justify-between">
-                        <span className="truncate">
-                          Selected: &ldquo;{selectedTextRange.text.slice(0, 24)}...&rdquo;
-                        </span>
-                        <button
-                          onClick={() => setSelectedTextRange(null)}
-                          className="text-[10px] underline ml-1 hover:text-foreground"
-                        >
-                          Clear
-                        </button>
-                      </div>
-                    )}
-
-                    {/* Custom Prompt Input */}
-                    <form
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                        if (customPrompt.trim()) {
-                          handleAiAction('custom', 'Custom Prompt', customPrompt.trim());
-                        }
-                      }}
-                      className="flex items-center gap-1.5 p-1 rounded-xl bg-white/[0.05] border border-white/10 mb-2 focus-within:border-primary/50 transition-all"
-                    >
-                      <input
-                        type="text"
-                        value={customPrompt}
-                        onChange={(e) => setCustomPrompt(e.target.value)}
-                        placeholder="Ask AI anything or write prompt..."
-                        className="w-full bg-transparent px-2 py-1 text-xs text-foreground outline-none placeholder:text-muted-foreground"
-                        autoFocus
-                      />
-                      <button
-                        type="submit"
-                        disabled={!customPrompt.trim()}
-                        className="p-1.5 rounded-lg bg-primary text-primary-foreground disabled:opacity-40 hover:opacity-90 transition-all"
-                      >
-                        <Send className="w-3 h-3" />
-                      </button>
-                    </form>
-
-                    <p className="text-[10px] uppercase font-bold tracking-wider text-muted-foreground px-2 py-1">
-                      Quick Actions
-                    </p>
-                    <div className="space-y-0.5">
-                      {[
-                        { action: 'continue', label: '✍️ Continue writing' },
-                        {
-                          action: 'improve',
-                          label: selectedTextRange ? '✨ Improve selection' : '✨ Improve text',
-                        },
-                        {
-                          action: 'summarize',
-                          label: selectedTextRange
-                            ? '📝 Summarize selection'
-                            : '📝 Summarize document',
-                        },
-                        {
-                          action: 'fix_grammar',
-                          label: selectedTextRange ? '🔤 Fix selection grammar' : '🔤 Fix grammar',
-                        },
-                        {
-                          action: 'explain',
-                          label: selectedTextRange ? '💡 Explain selection' : '💡 Explain concept',
-                        },
-                        { action: 'generate_code', label: '💻 Generate code' },
-                      ].map(({ action, label }) => (
-                        <button
-                          key={action}
-                          onClick={() => handleAiAction(action, label)}
-                          className="w-full text-left px-2.5 py-1.5 rounded-lg text-xs font-medium hover:bg-white/10 transition-colors text-foreground flex items-center justify-between"
-                        >
-                          {label}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </>
-              )}
-            </div>
-          </div>
+      {editor && <EditorTools editor={editor} canWrite={canWrite} />}
+      {canWrite && (
+        <div className="mb-4 flex justify-end">
+          <Button variant="ghost" disabled={aiLoading} onClick={() => setShowAiMenu(true)}>
+            <Sparkles aria-hidden="true" className="size-4" />
+            {aiLoading ? 'Generating…' : 'AI Assistant'}
+          </Button>
         </div>
       )}
-
-      {/* Floating AI Streaming Response Card */}
+      <Dialog open={showAiMenu && canWrite} onOpenChange={setShowAiMenu}>
+        <DialogContent
+          title="AI Assistant"
+          description="Review generated text before applying it. Selected text is used when available."
+        >
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              if (customPrompt.trim())
+                void handleAiAction('custom', 'Custom prompt', customPrompt.trim());
+            }}
+            className="space-y-3"
+          >
+            <label className="block space-y-2 text-sm">
+              <span>Your prompt</span>
+              <Input
+                value={customPrompt}
+                onChange={(event) => setCustomPrompt(event.target.value)}
+                placeholder="Describe what to write or change"
+              />
+            </label>
+            <Button type="submit" disabled={!customPrompt.trim() || aiLoading}>
+              Generate
+            </Button>
+          </form>
+          <div className="mt-5 flex flex-wrap gap-2">
+            {[
+              { action: 'continue', label: 'Continue writing' },
+              { action: 'improve', label: 'Improve text' },
+              { action: 'summarize', label: 'Summarize' },
+              { action: 'fix_grammar', label: 'Fix grammar' },
+              { action: 'explain', label: 'Explain' },
+              { action: 'generate_code', label: 'Generate code' },
+            ].map((item) => (
+              <Button
+                key={item.action}
+                variant="secondary"
+                onClick={() => {
+                  void handleAiAction(item.action, item.label);
+                }}
+              >
+                {item.label}
+              </Button>
+            ))}
+          </div>
+        </DialogContent>
+      </Dialog>
       {aiStreamingText && (
-        <div className="mb-4 rounded-2xl border border-primary/50 bg-slate-950/95 p-4 shadow-2xl backdrop-blur-2xl animate-fade-in relative overflow-hidden">
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-lg gradient-primary flex items-center justify-center text-white shadow-md shadow-primary/20">
-                {aiLoading ? (
-                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                ) : (
-                  <Sparkles className="w-3.5 h-3.5" />
-                )}
-              </div>
-              <div>
-                <p className="text-xs font-bold text-foreground">
-                  AI Response {aiActionName ? `· ${aiActionName}` : ''}
-                </p>
-                <p className="text-[10px] text-muted-foreground">
-                  {selectedTextRange
-                    ? `Targeting: "${selectedTextRange.text.slice(0, 30)}..."`
-                    : aiLoading
-                      ? 'Generating streaming content...'
-                      : 'Ready to apply'}
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
-              {selectedTextRange ? (
-                <button
-                  onClick={handleReplaceSelection}
-                  className="px-3 py-1.5 rounded-lg bg-primary text-primary-foreground text-xs font-semibold flex items-center gap-1.5 transition-all shadow-md shadow-primary/20 hover:opacity-90"
-                >
-                  <RefreshCw className="w-3.5 h-3.5" /> Replace selection
-                </button>
-              ) : null}
-              <button
-                onClick={handleInsertBelow}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all ${
-                  selectedTextRange
-                    ? 'bg-white/10 hover:bg-white/15 text-foreground'
-                    : 'bg-primary text-primary-foreground shadow-md shadow-primary/20 hover:opacity-90'
-                }`}
-              >
-                <CornerDownLeft className="w-3.5 h-3.5" /> Insert into document
-              </button>
-              <button
-                onClick={handleCopyAi}
-                className="p-1.5 rounded-lg hover:bg-white/10 text-muted-foreground hover:text-foreground text-xs transition-colors"
-                title="Copy to clipboard"
-              >
-                <Copy className="w-3.5 h-3.5" />
-              </button>
-              <button
+        <section className="mb-6 rounded-lg bg-secondary p-4" aria-label="AI draft">
+          <h2 className="text-sm font-medium">AI draft · {aiActionName}</h2>
+          <div
+            className="my-4 break-words text-sm"
+            dangerouslySetInnerHTML={{ __html: markdownToHtml(aiStreamingText) }}
+          />
+          {canWrite && (
+            <div className="flex flex-wrap gap-2">
+              {selectedTextRange && (
+                <Button disabled={aiLoading} onClick={handleReplaceSelection}>
+                  Replace selection
+                </Button>
+              )}
+              <Button disabled={aiLoading} onClick={handleInsertBelow}>
+                Insert into document
+              </Button>
+              <Button variant="ghost" onClick={handleCopyAi}>
+                Copy draft
+              </Button>
+              <Button
+                variant="ghost"
                 onClick={() => {
                   setAiStreamingText('');
                   setSelectedTextRange(null);
                 }}
-                className="p-1.5 rounded-lg hover:bg-destructive/20 text-muted-foreground hover:text-destructive text-xs transition-colors"
-                title="Discard"
               >
-                <Trash2 className="w-3.5 h-3.5" />
-              </button>
+                Discard draft
+              </Button>
             </div>
-          </div>
-
-          <div
-            className="prose prose-invert prose-sm max-w-none p-3.5 rounded-xl bg-white/[0.03] border border-white/5 text-xs text-slate-200 leading-relaxed font-sans"
-            dangerouslySetInnerHTML={{ __html: markdownToHtml(aiStreamingText) }}
-          />
-        </div>
+          )}
+        </section>
       )}
-
-      {/* Editor */}
-      <div className="glass-card p-6 min-h-[500px]">
-        <EditorSurface editor={editor} canWrite={canWrite} />
-      </div>
-
-      {/* Version History Drawer */}
-      {showHistory && (
-        <div className="fixed top-20 right-6 z-40 w-80 bg-slate-950/95 border border-white/15 rounded-2xl shadow-2xl p-4 backdrop-blur-2xl animate-scale-in flex flex-col space-y-3">
-          <div className="flex items-center justify-between border-b border-white/10 pb-2">
-            <span className="text-xs font-bold text-foreground flex items-center gap-1.5">
-              <Clock className="w-4 h-4 text-amber-400" /> Version History
-            </span>
-            <button
-              onClick={() => setShowHistory(false)}
-              className="text-muted-foreground hover:text-foreground"
-            >
-              <X className="w-4 h-4" />
-            </button>
-          </div>
-
-          <div className="space-y-2">
-            {[
-              {
-                id: 0,
-                title: 'Live Current Version',
-                time: 'Just now',
-                desc: 'Latest synchronized CRDT state',
-              },
-              {
-                id: 1,
-                title: 'Auto-Saved Checkpoint',
-                time: '10 mins ago',
-                desc: 'Prior editing snapshot',
-              },
-              {
-                id: 2,
-                title: 'Initial Creation Draft',
-                time: 'Draft',
-                desc: 'Document baseline creation point',
-              },
-            ].map((v) => (
-              <div
-                key={v.id}
-                onClick={() => setSelectedSnapshot(v.id)}
-                className={`p-3 rounded-xl border transition-all cursor-pointer ${
-                  selectedSnapshot === v.id
-                    ? 'bg-amber-500/10 border-amber-500/40 text-white'
-                    : 'bg-white/[0.03] border-white/10 hover:bg-white/[0.06] text-muted-foreground'
-                }`}
-              >
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-foreground">{v.title}</span>
-                  <span className="text-[10px] font-mono text-muted-foreground">{v.time}</span>
-                </div>
-                <p className="text-[11px] text-muted-foreground mt-0.5">{v.desc}</p>
-                {selectedSnapshot === v.id && v.id !== 0 && (
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      toast.success(`Restored to ${v.title}`);
-                    }}
-                    className="mt-2 w-full flex items-center justify-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-primary text-primary-foreground text-[11px] font-semibold"
-                  >
-                    <RotateCcw className="w-3 h-3" /> Restore This Checkpoint
-                  </button>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
+      <EditorSurface editor={editor} canWrite={canWrite} />
+      <p className="mt-8 text-xs text-muted-foreground">
+        {canWrite
+          ? 'Type / on an empty paragraph to insert a block. Use Undo to revert your changes.'
+          : 'Read only. A workspace owner can change your access.'}
+      </p>
     </>
   );
 }
 
 export default function DocEditorPage() {
   const { id: workspaceId, docId } = useParams<{ id: string; docId: string }>();
+  const { user } = useAuth();
+  return (
+    <DocumentEditor
+      key={`${workspaceId}:${docId}:${user?.id}`}
+      workspaceId={workspaceId}
+      docId={docId}
+    />
+  );
+}
+function DocumentEditor({ workspaceId, docId }: { workspaceId: string; docId: string }) {
   const { user, getToken } = useAuth();
   const [doc, setDoc] = useState<Document | null>(null);
   const [title, setTitle] = useState('');
+  const [loadError, setLoadError] = useState(false);
+  const [attempt, setAttempt] = useState(0);
+  const [titleSaving, setTitleSaving] = useState(false);
 
   const [aiSources, setAiSources] = useState<{ type: string; title: string; score: number }[]>([]);
   const [connectedUsers, setConnectedUsers] = useState<number>(0);
@@ -703,26 +414,65 @@ export default function DocEditorPage() {
         }
       })
       .catch(() => {
-        if (!disposed) toast.error('Failed to load document');
+        if (!disposed) setLoadError(true);
       });
     return () => {
       disposed = true;
     };
-  }, [docId]);
+  }, [docId, attempt]);
 
   const saveTitle = async () => {
-    if (!canWrite) return;
+    if (!canWrite || !doc || titleSaving || title === doc.title) return;
+    const previous = doc.title,
+      next = title;
+    setTitleSaving(true);
     try {
-      await documentApi.update(docId, { title });
-    } catch {}
+      await documentApi.update(docId, { title: next });
+      setDoc((current) => (current ? { ...current, title: next } : current));
+      toast.success('Title updated', {
+        action: {
+          label: 'Undo',
+          onClick: () => {
+            void documentApi
+              .update(docId, { title: previous })
+              .then(() => {
+                setTitle(previous);
+                setDoc((current) => (current ? { ...current, title: previous } : current));
+              })
+              .catch(() => toast.error('Title undo failed. Check your access and try again.'));
+          },
+        },
+      });
+    } catch {
+      toast.error('Title was not saved. Edit the title and leave the field to retry.');
+    } finally {
+      setTitleSaving(false);
+    }
   };
+  if (loadError)
+    return (
+      <div className="mx-auto max-w-3xl px-4 py-12" role="alert">
+        <h1 className="text-xl font-semibold">Document could not load</h1>
+        <p className="my-4 text-sm text-muted-foreground">
+          Check your connection and workspace access, then retry.
+        </p>
+        <Button
+          onClick={() => {
+            setLoadError(false);
+            setAttempt((value) => value + 1);
+          }}
+        >
+          Retry document
+        </Button>
+      </div>
+    );
 
   return (
-    <div className="w-full min-w-0 max-w-4xl mx-auto px-4 md:px-8 py-8 animate-fade-in">
+    <div className="w-full min-w-0 max-w-3xl mx-auto px-4 md:px-8 py-8">
       {/* Title */}
       <input
         aria-label="Document title"
-        readOnly={!canWrite}
+        readOnly={!canWrite || titleSaving}
         type="text"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
@@ -755,7 +505,7 @@ export default function DocEditorPage() {
         />
       </div>
 
-      {localReady && (provider?.synced || ydoc.getXmlFragment('default').length > 0) ? (
+      {doc && localReady && (provider?.synced || ydoc.getXmlFragment('default').length > 0) ? (
         <EditorInner
           key={`${workspaceId}:${docId}:${user?.id}`}
           canWrite={canWrite}
@@ -767,8 +517,11 @@ export default function DocEditorPage() {
           onAiSources={setAiSources}
         />
       ) : (
-        <div className="flex items-center justify-center py-20">
-          <Loader2 className="w-6 h-6 animate-spin text-primary" />
+        <div role="status" aria-label="Loading document content" className="space-y-4 py-10">
+          <Skeleton className="h-8 w-2/3" />
+          <Skeleton className="h-4 w-full" />
+          <Skeleton className="h-4 w-5/6" />
+          <p className="text-sm text-muted-foreground">Loading local content and connecting…</p>
         </div>
       )}
 

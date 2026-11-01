@@ -241,3 +241,67 @@
     transform: translateY(0);
   }
 }
+
+@layer components {
+  .editor-canvas {
+    padding: 0;
+    overflow-wrap: anywhere;
+    color: var(--foreground);
+    font-size: 16px;
+    line-height: 1.75;
+  }
+  .editor-canvas:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 8px;
+    border-radius: var(--radius);
+  }
+  .editor-canvas .tableWrapper {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+  .editor-canvas table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    margin: 24px 0;
+  }
+  .editor-canvas th,
+  .editor-canvas td {
+    min-width: 64px;
+    border: 1px solid var(--input);
+    padding: 8px;
+    vertical-align: top;
+    position: relative;
+  }
+  .editor-canvas th {
+    background: var(--secondary);
+  }
+  .editor-canvas .selectedCell {
+    background: var(--selection);
+  }
+  .editor-canvas ul[data-type='taskList'] {
+    padding-left: 0;
+    list-style: none;
+  }
+  .editor-canvas li[data-type='taskItem'] {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .editor-canvas li[data-type='taskItem'] > div {
+    min-width: 0;
+    flex: 1;
+  }
+  .editor-canvas input[type='checkbox'] {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--primary);
+  }
+  .editor-canvas pre {
+    max-width: 100%;
+  }
+  .editor-canvas pre code {
+    white-space: pre;
+    overflow-wrap: normal;
+  }
+}

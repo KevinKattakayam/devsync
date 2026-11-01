@@ -1,3 +1,17 @@
+# Phase 3c — bounded editor foundation, group 1
+
+On `upgrade/enterprise`, no push or3d. Read frontend AGENTS guidance (root AGENTS.md absent), PROGRESS, AUTHZ_MATRIX and DESIGN. Scope is the highest-priority **A canvas, selection formatting, slash commands, existing tables/tasks/code**. Block drag handles, persisted callouts and B–E are explicitly deferred. No backend production source, CRDT schema, provider, authorization policy, API contract or migration is changed.
+
+Replace the crowded fixed toolbar/card with a quiet canvas, selection bubble and keyboard-accessible formatting fallback. Slash commands filter existing block types, use arrows/Enter/Escape and preserve literal inline/code slashes. Existing TipTap table/task/code nodes get insertion and contextual controls: table row/column actions, task checkbox labels, code language metadata and copy (plain code, no execution/highlighting claim). Server-authorized editability still drives the editor and controls. Existing named collaborator cursors remain as before; no completion claim for B.
+
+The old version-history drawer fabricated checkpoints and showed success without restoring anything. It is removed; real snapshot history/diff/restore remains D, not an advertised capability. The existing AI request/SSE/sanitized insertion path is retained behind a design-system dialog and draft preview. Provider-backed AI generation is not tested in this slice. Document metadata failures have retry and a route error boundary; content connection has labeled skeletons; title saves show failure or authorized Undo. Body edits retain the existing local-first/Yjs Undo and acknowledgment status rather than new REST saves or misleading saved toasts.
+
+Actual group1 gate: initial lint found one effect dependency warning, fixed without suppression. New command tests were renamed to the configured .test.tsx include pattern; first actual run caught XML tag casing assertions (Yjs serializes lowercase), corrected while retaining active-node and shared-document assertions. Final lint/format/types, Node4 files and Vitest10 files/**51 tests** pass. Production webpack build and browser acceptance results follow. Logs in ui/phase3c-evidence retain failures.
+
+Deferred: A block drag handles (need robust transaction/selection and keyboard reordering), callouts (need schema-compatible persistence design); B cursor polish/outline/count/Markdown export; C mentions/selection comments; D real CRDT snapshot history/diff/restore; E safely rendered Mermaid. Timebox prioritizes A's existing-schema controls and collaboration/accessibility acceptance. No invented snapshots or unversioned backend endpoints.
+
+---
+
 # Phase 3b — bounded workspace access settings; stop here
 
 On `upgrade/enterprise`; local commits only, no push or3c. Highest-priority delivery is **A Members/roles and verified invitations**. B–F remain deferred; no backend production code, API contracts, migrations or central authority policy changed. Earlier security/realtime/data behavior is retained. Root AGENTS.md is absent; relevant frontend guidance, AUTHZ_MATRIX, AUDIT, DESIGN, gallery and prior evidence were read.

@@ -1,3 +1,10 @@
+# Phase 3c — editor foundation
+
+- Replace the crowded toolbar/card with a focused document canvas, selection formatting, keyboard slash commands and a formatting fallback using existing design tokens/components.
+- Add existing-schema table/task insertion, table controls and contextual code language/copy controls. Preserve local-first Yjs synchronization and server-authorized read-only behavior.
+- Add document load retry/error/skeleton states and title-save feedback/Undo. Retain existing AI requests behind a shared dialog; remove fabricated history/restore controls.
+- Defer dragging/callouts and B–E rather than changing CRDT schema or API contracts within the timebox.
+
 # Phase 3b — settings browser acceptance and review
 
 - Add seeded settings main-flow, central editor/viewer admin-denial and responsive state tests, retaining default browser journeys.
