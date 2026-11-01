@@ -1,0 +1,13 @@
+file:///home/kevin/devsync/frontend/testing/prepare.mjs:7
+  if (mode !== 'test') throw new Error('Fixture generation requires NODE_ENV=test');
+                             ^
+
+Error: Fixture generation requires NODE_ENV=test
+    at assertFixtureMode (file:///home/kevin/devsync/frontend/testing/prepare.mjs:7:30)
+    at prepare (file:///home/kevin/devsync/frontend/testing/prepare.mjs:10:3)
+    at file:///home/kevin/devsync/frontend/testing/prepare.mjs:56:21
+    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:681:26)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
+
+Node.js v22.23.2

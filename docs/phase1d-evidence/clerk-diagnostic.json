@@ -1,0 +1,6 @@
+{
+  "status": 200,
+  "contentType": "application/json",
+  "error": null,
+  "signIn": "Blocked: three login identities and credentials absent"
+}

@@ -1,0 +1,33 @@
+{
+  "backend": [
+    {
+      "step": "install",
+      "command": [
+        "npm",
+        "ci",
+        "--no-audit"
+      ],
+      "exit": 1
+    }
+  ],
+  "frontend": [
+    {
+      "step": "install",
+      "command": [
+        "npm",
+        "ci",
+        "--no-audit"
+      ],
+      "exit": 0
+    },
+    {
+      "step": "lint",
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exit": 1
+    }
+  ]
+}

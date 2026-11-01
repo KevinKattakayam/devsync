@@ -1,0 +1,15 @@
+{
+  ".github/workflows/main.yml": {
+    "parsed": true,
+    "jobs": [
+      "quality",
+      "image-security"
+    ]
+  },
+  ".github/workflows/deploy.yml": {
+    "parsed": true,
+    "jobs": [
+      "deploy"
+    ]
+  }
+}

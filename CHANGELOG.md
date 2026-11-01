@@ -1,3 +1,9 @@
+# Phase 1d — frontend fixture increment (partial)
+
+- Add production-excluded frontend fixture generation and identity/token/logout adapter, isolation regressions and four component tests; generated app type-checks.
+- Verify Clerk admin access HTTP 200 and key alignment without exposing credentials. Real three-user sign-in remains blocked on identity mapping/sign-in method.
+- Retain actual baseline/gate failures and retries. Default Turbopack is blocked by local port binding; webpack build passes. Authenticated Playwright, invitation acceptance, paired screenshots and complete API contracts remain unfinished; see docs/PROGRESS.md.
+
 # Phase1c — browser fixture foundation and evidence
 
 - I02/C01: production Clerk authentication retained behind trusted composition; separate guarded test-only login executable and negative production-route/credential checks.186 backend tests and full gates pass. Browser adapter, acceptance flow and E2E remain unfinished.

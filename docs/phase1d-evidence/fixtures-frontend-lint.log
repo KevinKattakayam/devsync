@@ -1,0 +1,11 @@
+
+> frontend@0.1.0 lint
+> eslint --max-warnings=0
+
+
+/home/kevin/devsync/frontend/testing/auth-provider.tsx
+  56:5  warning  Do not use `window.location.assign()` to navigate to internal Next.js pages. Use `redirect()` in the render phase, or `useRouter().push()` in Client Components' event handlers instead. See: https://nextjs.org/docs/messages/no-location-assign-relative-destination  @next/next/no-location-assign-relative-destination
+
+✖ 1 problem (0 errors, 1 warning)
+
+ESLint found too many warnings (maximum: 0).

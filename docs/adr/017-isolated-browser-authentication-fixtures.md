@@ -11,3 +11,5 @@ The frontend test artifact is generated into an ignored staging directory with a
 Consequences: these tests verify authenticated product behavior, not Clerk's hosted sign-in UI or provider session issuance. Provider integration still needs a valid development instance/identities in a separate smoke test. Fixture source and generated artifacts must remain outside production packages and be included in development lint/type checks.
 
 Implementation status: backend fixture composition and production-rejection regressions are implemented. Frontend artifact generation, invitation acceptance and Playwright product flows remain pending; this ADR is not a browser E2E pass.
+
+Phase1d increment: frontend/testing now generates a separate development-only tree with fixture identity/token/logout adapter. Generator and generated production-build refusal, source isolation, component behavior and generated type checking are verified. This still does not implement browser orchestration or establish authenticated Playwright/Clerk sign-in success. Current Clerk admin access is HTTP200; required three identity mappings/sign-in method remain missing.

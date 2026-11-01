@@ -1,3 +1,32 @@
+# Phase 1d — partial delivery, not complete
+
+Branch `upgrade/enterprise`; no push or Phase 2 work. Root `AGENTS.md` is absent; read frontend guidance, progress, authorization matrix, audit and ADRs 001–018. Production authentication/authorization behavior is unchanged.
+
+Clerk read-only admin requests now return **HTTP 200**; backend/frontend keys match without disclosing values. The development instance has two users and no identifiable owner/editor/viewer role candidates. **No real browser sign-in was performed**: three identity mappings and a supported sign-in method are missing. This is not a provider error; no key replacement is currently indicated. See phase1d-evidence/clerk-*.json. The earlier sandbox request failed with `fetch failed EAI_AGAIN`; the approved retry succeeded.
+
+Frontend fixture increment: explicit adapter and generator create an ignored `.worktrees/frontend-fixture` tree without copying environment files. Production source has no fixture selector/import; generator rejects non-test mode and generated Next config rejects production. Adapter supports seeded owner/editor/viewer identity loading, fresh API/socket tokens and backend logout. Component tests verify those identities, renewal/logout and disposal; they simulate HTTP, not Clerk or browser journeys. Generated tree type-checks. Instructions: frontend/testing/README.md. Production refusal logs and all gate output are retained in phase1d-evidence/.
+
+Baseline: backend install/lint/format/types, **15 suites / 186 tests**, and build passed. Frontend install/lint/format/types, **5 Node + 6 component tests** passed. Default Turbopack build failed with `binding to a port — Operation not permitted`, including the approved retry; supported webpack production build passed. The initial sandbox backend install timed out. An overlapping reinstall caused a temporary missing-module failure; all installs subsequently ran without overlap. No test or coverage floor was weakened. Final fixture gate: both installs/lint/format/types/tests/build commands exit 0, with **186 backend tests, 7 frontend Node tests and 10 component tests**; frontend build explicitly uses webpack. Results are recorded in phase1d-evidence/fixtures-final-results.json. Production inspection found no fixture markers in 115 JavaScript files; configured credential values were absent from evidence. OpenAPI drift passes; this does not establish complete route schemas.
+
+## Unfinished, in requested priority order
+
+| Item | Exact status and reason |
+| --- | --- |
+| Real Clerk sign-in/sign-out as three users | Not executed. Two users exist, but required role mapping and sign-in method were not provided; async clarification remains unanswered. |
+| Full frontend fixture / authenticated Playwright journeys | Adapter, isolation tests and generation exist; database/browser startup orchestration, browser login helper and all requested Playwright journeys are not implemented/run. This increment concentrated on the first fixture boundary and its verification. Existing E2E tests/skips are unchanged and are not counted as passes. |
+| Invitation acceptance | Not implemented; ADR018 remains proposed. Legacy invite still immediately adds a registered user. No email delivery, acceptance, expiry or reuse E2E result is claimed. Requires pending-invitation storage/policy/API/UI and browser coverage. |
+| Screenshots | No new captures in this session. Existing separate worktree `.worktrees/phase1b-main` matches `main` at `9deffe28f37cf86905617cb6e4105b6588ed5f56`. All requested current pages and new paired before captures remain outstanding because authenticated browser orchestration was not completed. Existing screenshots/placeholder limitations remain. See page list below. |
+| Complete API contracts | Not implemented. Existing partial OpenAPI drift check passes; remaining parameter/query/response schemas and fail-on-missing-schema test remain outstanding. This work was below the unfinished browser/invitation priorities. |
+| Exact local CI | Quality commands run locally; YAML parses. `act`/`actionlint` absent. Hosted actions, image/security/publish/deploy steps remain unverified, enumerated in CI_LOCAL_VERIFICATION.md. |
+
+Uncaptured pages at **both 1440px and 390px**: `/`, `/login`, `/signup`, `/sign-in`, `/sign-up`, `/dashboard`, `/settings/billing`, `/superadmin`, `/workspace/[id]`, `/workspace/[id]/docs`, `/workspace/[id]/docs/[docId]`, `/workspace/[id]/kanban`, `/workspace/[id]/settings`, `/workspace/[id]/snippets`. Public captures were not rerun; protected pages need the unfinished authenticated browser harness; superadmin additionally needs a verified SUPER_ADMIN identity (workspace owner is insufficient). No new page failure diagnosis is claimed.
+
+## User action
+
+Create or identify three development Clerk users in the configured instance (existing two may be reused), with verified emails; supply the owner/editor/viewer mapping and a supported test sign-in method. Set `SEED_OWNER_CLERK_ID`, `SEED_EDITOR_CLERK_ID`, `SEED_VIEWER_CLERK_ID` in local backend configuration for **real Clerk** seed use. These must be existing provider IDs. Use only a disposable database and explicit `SEED_ALLOW_WRITE=true`; no production seed was run. Keep secrets/passwords out of chat, logs and Git. CI still requires the publishable-key repository variable and Clerk secret named in the workflow. No key rotation is required by the successful admin check.
+
+---
+
 # Phase1c — in progress
 
 Branch upgrade/enterprise; no push. Root AGENTS.md and docs/MASTER_PROMPT.md remain absent; supplied AGENTS rules and frontend/AGENTS.md apply. Read audit/matrix/fix-order/ADRs. Baseline install/lint/format/types/tests/build passes both apps (phase1c-evidence/baseline-results.json); authentication is Clerk, not custom refresh rotation. Local key variables are populated but the read-only development admin API check returns HTTP403 text/plain without a provider JSON error. Validity is unverified; identity fixture IDs/credentials are absent. Required provider setup was explained; an isolated production-excluded test harness is planned under the user's explicit fallback authorization, not yet implemented.

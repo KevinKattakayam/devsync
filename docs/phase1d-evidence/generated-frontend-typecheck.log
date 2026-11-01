@@ -1,0 +1,5 @@
+
+> frontend@0.1.0 typecheck
+> tsc --noEmit
+
+src/providers/socket-provider.tsx(49,38): error TS2554: Expected 0 arguments, but got 1.
