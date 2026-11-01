@@ -1,7 +1,11 @@
 import { PDFParse } from 'pdf-parse';
 import Tesseract from 'tesseract.js';
-import { prisma } from '../lib/prisma';
+import * as Y from 'yjs';
 import { queueEmbedding } from './embedding.service';
+import { authorizeWorkspace, WRITE_ROLES, withWorkspaceAccess } from '../security/workspace-policy';
+import { BadRequestError } from '../utils/errors';
+import { richTextSchema } from '../security/rich-text';
+import { legacyDocument, projectDocument } from './crdt-schema';
 
 // ── Tiptap/ProseMirror JSON builders ─────────────────────────
 
@@ -148,9 +152,13 @@ function textToTiptapJson(text: string): PMNode {
 // ── PDF extraction ───────────────────────────────────────────
 
 async function extractFromPDF(buffer: Buffer): Promise<string> {
-  const parser = new (PDFParse as any)({ data: buffer });
-  const data = await parser.getText();
-  return data?.text || '';
+  const parser = new PDFParse({ data: buffer });
+  try {
+    const data = await parser.getText();
+    return data.text || '';
+  } finally {
+    await parser.destroy();
+  }
 }
 
 // ── Image OCR extraction ─────────────────────────────────────
@@ -182,6 +190,9 @@ export async function ingestDocument(
   workspaceId: string,
   authorId: string,
 ): Promise<IngestResult> {
+  await authorizeWorkspace(authorId, workspaceId, WRITE_ROLES);
+  if (!buffer.length || buffer.length > 25 * 1024 * 1024 || originalFilename.length > 255)
+    throw new BadRequestError('Invalid or oversized upload');
   // Determine source type
   const isPDF = mimeType === 'application/pdf';
   const isImage = mimeType.startsWith('image/');
@@ -192,7 +203,7 @@ export async function ingestDocument(
     originalFilename.endsWith('.txt');
 
   if (!isPDF && !isImage && !isText) {
-    throw new Error(
+    throw new BadRequestError(
       `Unsupported file type: ${mimeType}. Supported: PDF, PNG, JPG, TIFF, Markdown, Text.`,
     );
   }
@@ -208,8 +219,10 @@ export async function ingestDocument(
   }
 
   if (!extractedText.trim()) {
-    throw new Error('No text could be extracted from the uploaded file.');
+    throw new BadRequestError('No text could be extracted from the uploaded file.');
   }
+  if (extractedText.length > 256 * 1024)
+    throw new BadRequestError('Extracted text exceeds document limit');
 
   // Convert to Tiptap JSON
   const tiptapContent = textToTiptapJson(extractedText);
@@ -218,36 +231,46 @@ export async function ingestDocument(
   const title = originalFilename
     .replace(/\.[^.]+$/, '') // Remove extension
     .replace(/[_-]+/g, ' ') // Replace separators with spaces
-    .replace(/\b\w/g, (c) => c.toUpperCase()); // Title case
+    .replace(/\b\w/g, (c) => c.toUpperCase())
+    .slice(0, 200); // Title case
 
   // Create document
-  const document = await prisma.document.create({
-    data: {
-      title,
-      content: tiptapContent as any,
-      icon: isPDF ? '📑' : '🖼️',
-      authorId,
-      workspaceId,
-    },
-  });
+  const document = await withWorkspaceAccess(authorId, workspaceId, WRITE_ROLES, async (tx) => {
+    const state = legacyDocument(richTextSchema.parse(JSON.parse(JSON.stringify(tiptapContent))));
+    try {
+      const document = await tx.document.create({
+        data: {
+          title,
+          content: projectDocument(state),
+          yjsState: Buffer.from(Y.encodeStateAsUpdate(state)),
+          icon: isPDF ? '📑' : '🖼️',
+          authorId,
+          workspaceId,
+        },
+      });
 
-  // Log activity
-  await prisma.activity.create({
-    data: {
-      type: 'doc_ingested',
-      message: `ingested ${isPDF ? 'PDF' : 'image'} "${originalFilename}" as document "${title}"`,
-      metadata: {
-        sourceType: isPDF ? 'pdf' : 'image',
-        originalFilename,
-        extractedTextLength: extractedText.length,
-      },
-      userId: authorId,
-      workspaceId,
-    },
-  });
+      // Log activity
+      await tx.activity.create({
+        data: {
+          type: 'doc_ingested',
+          message: `ingested ${isPDF ? 'PDF' : 'image'} "${originalFilename}" as document "${title}"`,
+          metadata: {
+            sourceType: isPDF ? 'pdf' : 'image',
+            originalFilename,
+            extractedTextLength: extractedText.length,
+          },
+          userId: authorId,
+          workspaceId,
+        },
+      });
 
-  // Queue embedding
-  queueEmbedding('document', document.id);
+      // Queue embedding
+      await queueEmbedding('document', document.id, tx);
+      return document;
+    } finally {
+      state.destroy();
+    }
+  });
 
   return {
     documentId: document.id,

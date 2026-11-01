@@ -35,7 +35,7 @@ export interface CollaborationOptions {
   storeDebounceMs?: number;
   acl?: EventEmitter;
   auditTimeoutMs?: number;
-  reconcile?(document: Y.Doc, workspaceId: string): Promise<void>;
+  reconcile?(document: Y.Doc, workspaceId: string, actorId: string): Promise<void>;
 }
 const idPattern = /^[a-zA-Z0-9_-]{1,191}$/;
 function parseRoom(name: string): { workspaceId: string; documentId?: string } {
@@ -233,15 +233,20 @@ export function createCollaborationServer(http: HttpServer, options: Collaborati
         throw error;
       }
     },
-    async onStoreDocument({ documentName, document }) {
+    async onStoreDocument({ documentName, document, lastContext }) {
       const room = rooms.get(documentName);
       if (room) {
-        if (options.reconcile && document.getMap('devsync:ai-actions').size) {
+        if (
+          options.reconcile &&
+          lastContext?.user?.id &&
+          lastContext.workspaceId === room.workspaceId &&
+          document.getMap('devsync:ai-actions').size
+        ) {
           const candidate = new Y.Doc();
           try {
             Y.applyUpdate(candidate, await journal.load(room));
             const vector = Y.encodeStateVector(candidate);
-            await options.reconcile(candidate, room.workspaceId);
+            await options.reconcile(candidate, room.workspaceId, lastContext.user.id);
             const update = Y.encodeStateAsUpdate(candidate, vector);
             if (update.byteLength > 2) {
               await journal.append(room, update);

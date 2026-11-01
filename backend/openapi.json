@@ -33,6 +33,49 @@
               }
             }
           }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "type": "object",
+                "properties": {
+                  "prompt": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 16000
+                  },
+                  "context": {
+                    "type": "string",
+                    "maxLength": 32000
+                  },
+                  "workspaceId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 191
+                  },
+                  "action": {
+                    "type": "string",
+                    "enum": [
+                      "continue",
+                      "improve",
+                      "summarize",
+                      "fix_grammar",
+                      "explain",
+                      "generate_code",
+                      "custom"
+                    ]
+                  }
+                },
+                "required": [
+                  "prompt",
+                  "workspaceId"
+                ]
+              }
+            }
+          }
         }
       }
     },

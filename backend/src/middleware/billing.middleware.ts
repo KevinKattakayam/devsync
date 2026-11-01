@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { randomUUID } from 'crypto';
+import { authorizeWorkspace } from '../security/workspace-policy';
 import { assertTokenBalance, recordTokenUsage } from '../services/billing.service';
 
 declare global {
@@ -18,6 +19,7 @@ export async function meteredAiRequest(
 ): Promise<void> {
   try {
     const workspaceId = String(req.body?.workspaceId || '');
+    await authorizeWorkspace(req.user!.userId, workspaceId);
     await assertTokenBalance(workspaceId);
     const requestId = randomUUID();
     req.billingRequestId = requestId;
@@ -29,7 +31,8 @@ export async function meteredAiRequest(
           requestId,
           Math.ceil(text.length / 4),
           'ai_complete',
-        ).catch((error) => console.error('[Billing] usage report failed', error));
+          req.user!.userId,
+        ).catch(() => console.warn('[Billing] Usage report failed'));
       }
     });
     next();

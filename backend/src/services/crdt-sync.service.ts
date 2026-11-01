@@ -1,4 +1,5 @@
 import * as Y from 'yjs';
+import { authorizeWorkspace, WRITE_ROLES } from '../security/workspace-policy';
 import { assertTokenBalance, recordTokenUsage } from './billing.service';
 
 const ACTION_MAP = 'devsync:ai-actions';
@@ -41,6 +42,7 @@ function parseAction(value: unknown): OfflineAiAction | null {
 export async function reconcileOfflineAiActions(
   document: Y.Doc,
   workspaceId: string,
+  actorId: string,
 ): Promise<void> {
   const actions = document.getMap<string>(ACTION_MAP);
   const entries = [...actions.entries()].slice(0, MAX_ACTIONS_PER_SYNC);
@@ -62,14 +64,16 @@ export async function reconcileOfflineAiActions(
     }
     if (action.status !== 'pending') continue;
     try {
+      await authorizeWorkspace(actorId, workspaceId, WRITE_ROLES);
       await assertTokenBalance(workspaceId);
       // `id` is globally generated client-side and TokenUsage.requestId is
       // unique, making reconnect/replay idempotent.
       await recordTokenUsage(
         workspaceId,
-        `offline-ai:${action.id}`,
+        `offline-ai:${workspaceId}:${actorId}:${action.id}`,
         action.estimatedTokens,
         'offline_ai_reservation',
+        actorId,
       );
       actions.set(key, JSON.stringify({ ...action, status: 'authorized' }));
     } catch {

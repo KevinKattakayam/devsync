@@ -19,7 +19,7 @@ Every application `/api/...` router below is also mounted at `/api/v1/...` with 
 
 | Route | Authentication | Permission checks actually present | Validation | Evidence |
 |---|---|---|---|---|
-| `POST /api/ai/complete` | Clerk + local principal | Workspace membership (VIEWER allowed); balance preflight BEFORE membership | Truthiness checks only; IP AI limiter | `backend/src/routes/ai.routes.ts:10` |
+| `POST /api/ai/complete` | Clerk + local principal | Central active-user/tenant membership (VIEWER allowed); membership BEFORE balance/provider; usage rechecks actor policy | Bounded Zod body; IP AI limiter; untrusted context fields; provider timeout | `backend/src/routes/ai.routes.ts:10` |
 | `POST /api/auth/sync` | Clerk getAuth or verified bearer fallback | Self | No body schema / ID format validation | `backend/src/routes/auth.routes.ts:10` |
 | `GET /api/auth/me` | Clerk + local principal | Self | No body schema / ID format validation | `backend/src/routes/auth.routes.ts:11` |
 | `PATCH /api/auth/me` | Clerk + local principal | Self; strict profile allowlist at middleware and controller (D01 fixed) | Zod body | `backend/src/routes/auth.routes.ts:12` |
@@ -27,7 +27,7 @@ Every application `/api/...` router below is also mounted at `/api/v1/...` with 
 | `PATCH /api/documents/:id` | Clerk + local principal | Central resource policy in tenant transaction; active principal, unsuspended tenant; read accepts VIEWER, writes require OWNER/EDITOR | Bounded JSON rich text, safe URL checks; optional revision conflicts; canonical Yjs replacement | `backend/src/routes/document.routes.ts:11` |
 | `DELETE /api/documents/:id` | Clerk + local principal | Central resource policy in tenant transaction; active principal, unsuspended tenant; read accepts VIEWER, writes require OWNER/EDITOR | No body schema / ID format validation | `backend/src/routes/document.routes.ts:12` |
 | `POST /api/webhooks/github` | Repository-specific HMAC signature | Target column bound; task reads/updates explicitly tenant-filtered in a tenant transaction (G08 repaired) | Envelope Zod, action fields largely any; delivery ID dedup | `backend/src/routes/github-webhook.routes.ts:26` |
-| `POST /api/workspaces/:id/documents/ingest` | Clerk + local principal | Workspace member excluding VIEWER, after buffering | Multer 25MB, MIME allowlist; no filename/page/image limits | `backend/src/routes/ingestion.routes.ts:42` |
+| `POST /api/workspaces/:id/documents/ingest` | Clerk + local principal | Central writer policy before buffering, before extraction and inside canonical write transaction | Multer25MB/MIME allowlist; filename255 and extracted text256KiB; OCR isolation/page/image budgets remain open | `backend/src/routes/ingestion.routes.ts:42` |
 | `POST /scim/v2/Users` | SHA-256 bearer token lookup + timingSafeEqual | Token workspace; external identity composite bound; global User edited (C04) | Zod custom User or partial; not standard SCIM Operations envelope | `backend/src/routes/scim.routes.ts:38` |
 | `PATCH /scim/v2/Users/:externalId` | SHA-256 bearer token lookup + timingSafeEqual | Token workspace; external identity composite bound; global User edited (C04) | Zod custom User or partial; not standard SCIM Operations envelope | `backend/src/routes/scim.routes.ts:53` |
 | `DELETE /scim/v2/Users/:externalId` | SHA-256 bearer token lookup + timingSafeEqual | Token workspace; external identity composite bound; global User edited (C04) | External ID lookup | `backend/src/routes/scim.routes.ts:68` |
@@ -121,8 +121,8 @@ Resource handlers now enforce their policy independently of route middleware. Pr
 | Signed GitHub webhook and PR-summary worker | Existing repository HMAC and workspace-bound task transaction; explicit central service capability policy still pending | G08 regression retained; delivery retry semantics remain open |
 | SCIM create/update/delete | Existing hashed provisioning-token authorization; centralized service policy/global identity effects still pending | Not certified as least-privilege identity provisioning |
 | Signed Stripe webhook / usage metering | Existing signature/customer handling and usage ledger; central service policy/atomic reservations pending | Do not infer workspace-role authority from provider authentication |
-| AI completion / offline AI reservation / embeddings | Existing transport/AI membership checks; central per-mutation actor/service authorization and tenant worker coverage still pending | Not converted by the task-completion change |
-| Ingestion / OCR document create | Existing ad-hoc member check after buffering; central policy and canonical persistence still pending | Not converted; upload isolation remains open |
+| AI completion / offline AI reservation / embeddings | AI/search/usage/offline reservations now use central actor policy; embedding worker service authority and tenant coverage remain pending | AI/usage/ingestion regressions in resource-mutations.integration.test.ts; quota accuracy remains open |
+| Ingestion / OCR document create | Central writer check before parsing/extraction and in final canonical document/activity/outbox transaction | Real text-upload positive/foreign/viewer/inactive tests; PDF/OCR isolation remains open |
 | Superadmin kill switch | Existing global admin/service credential checks; central service exception policy pending | No new global bypass introduced |
 | Clerk sync / self profile | Verified Clerk self-sync; strict profile allowlist | Existing D01 tests retained; no test-login endpoint in production |
 | Seed / migration / maintenance | Explicit operator access and non-production seed opt-in; outside public user routes | Disposable-database migration and seed tests retained |

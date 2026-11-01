@@ -2,6 +2,7 @@ import { createHash } from 'crypto';
 import OpenAI from 'openai';
 import { Prisma } from '@prisma/client';
 import { prisma } from '../lib/prisma';
+import { authorizeWorkspace, READ_ROLES, withWorkspaceAccess } from '../security/workspace-policy';
 import type { TenantTransaction } from '../lib/tenant-prisma';
 
 const client = process.env.OPENAI_API_KEY
@@ -27,7 +28,7 @@ async function embed(text: string) {
   } catch (error) {
     console.warn(
       '[Embedding] Failed to generate embedding (graceful fallback):',
-      (error as any)?.message || error,
+      error instanceof Error ? error.name : 'UnknownError',
     );
     return null;
   }
@@ -100,14 +101,24 @@ export async function refreshEmbedding(kind: 'document' | 'snippet' | 'task', id
   }
 }
 
-export async function semanticWorkspaceContext(workspaceId: string, query: string, limit = 6) {
+export async function semanticWorkspaceContext(
+  workspaceId: string,
+  query: string,
+  limit: number,
+  actorId: string,
+) {
+  await authorizeWorkspace(actorId, workspaceId);
   try {
     const values = await embed(query);
     if (!values) return [];
-    return await prisma.$queryRaw<{ type: string; title: string; body: string; score: number }[]>`
+    return await withWorkspaceAccess(
+      actorId,
+      workspaceId,
+      READ_ROLES,
+      (tx) => tx.$queryRaw<{ type: string; title: string; body: string; score: number }[]>`
       SELECT * FROM (
         SELECT 'document' AS type, d.title, COALESCE(d.content::text, '') AS body, 1 - (d.embedding <=> ${vector(values)}) AS score
-        FROM "Document" d WHERE d."workspaceId" = ${workspaceId} AND d.embedding IS NOT NULL
+        FROM "Document" d WHERE d."workspaceId" = ${workspaceId} AND d."isArchived" = false AND d.embedding IS NOT NULL
         UNION ALL
         SELECT 'snippet', s.title, concat_ws(E'\n', s.description, s.code), 1 - (s.embedding <=> ${vector(values)})
         FROM "Snippet" s WHERE s."workspaceId" = ${workspaceId} AND s.embedding IS NOT NULL
@@ -115,11 +126,12 @@ export async function semanticWorkspaceContext(workspaceId: string, query: strin
         SELECT 'task', t.title, COALESCE(t.description, ''), 1 - (t.embedding <=> ${vector(values)})
         FROM "Task" t JOIN "Column" c ON t."columnId" = c.id JOIN "Board" b ON c."boardId" = b.id
         WHERE b."workspaceId" = ${workspaceId} AND t.embedding IS NOT NULL
-      ) context ORDER BY score DESC LIMIT ${limit}`;
+      ) context ORDER BY score DESC LIMIT ${Math.max(1, Math.min(20, limit))}`,
+    );
   } catch (error) {
     console.warn(
       '[Embedding] Semantic workspace context query skipped:',
-      (error as any)?.message || error,
+      error instanceof Error ? error.name : 'UnknownError',
     );
     return [];
   }

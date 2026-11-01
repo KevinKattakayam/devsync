@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { z } from 'zod';
-import { prisma } from '../lib/prisma';
+import { READ_ROLES, withWorkspaceAccess, authorizeWorkspace } from '../security/workspace-policy';
 import { semanticWorkspaceContext } from '../services/embedding.service';
 
 export const workspaceSearchSchema = z.object({
@@ -14,37 +14,44 @@ export async function workspaceSearch(req: Request, res: Response, next: NextFun
   try {
     const workspaceId = String(req.params.id);
     const { q, limit } = workspaceSearchSchema.parse(req.query);
-    const semantic = await semanticWorkspaceContext(workspaceId, q, limit);
+    await authorizeWorkspace(req.user!.userId, workspaceId);
+    const semantic = await semanticWorkspaceContext(workspaceId, q, limit, req.user!.userId);
     if (semantic.length) return res.json({ mode: 'semantic', results: semantic });
 
     const contains = { contains: q, mode: 'insensitive' as const };
-    const [documents, snippets, tasks] = await Promise.all([
-      prisma.document.findMany({
-        where: {
-          workspaceId,
-          isArchived: false,
-          OR: [{ title: contains }, { content: { string_contains: q } }],
-        },
-        select: { id: true, title: true, updatedAt: true },
-        take: limit,
-      }),
-      prisma.snippet.findMany({
-        where: {
-          workspaceId,
-          OR: [{ title: contains }, { description: contains }, { code: contains }],
-        },
-        select: { id: true, title: true, description: true, updatedAt: true },
-        take: limit,
-      }),
-      prisma.task.findMany({
-        where: {
-          column: { board: { workspaceId } },
-          OR: [{ title: contains }, { taskKey: contains }, { description: contains }],
-        },
-        select: { id: true, title: true, taskKey: true, updatedAt: true },
-        take: limit,
-      }),
-    ]);
+    const [documents, snippets, tasks] = await withWorkspaceAccess(
+      req.user!.userId,
+      workspaceId,
+      READ_ROLES,
+      (tx) =>
+        Promise.all([
+          tx.document.findMany({
+            where: {
+              workspaceId,
+              isArchived: false,
+              OR: [{ title: contains }, { content: { string_contains: q } }],
+            },
+            select: { id: true, title: true, updatedAt: true },
+            take: limit,
+          }),
+          tx.snippet.findMany({
+            where: {
+              workspaceId,
+              OR: [{ title: contains }, { description: contains }, { code: contains }],
+            },
+            select: { id: true, title: true, description: true, updatedAt: true },
+            take: limit,
+          }),
+          tx.task.findMany({
+            where: {
+              column: { board: { workspaceId } },
+              OR: [{ title: contains }, { taskKey: contains }, { description: contains }],
+            },
+            select: { id: true, title: true, taskKey: true, updatedAt: true },
+            take: limit,
+          }),
+        ]),
+    );
     res.json({
       mode: 'keyword',
       results: [

@@ -16,6 +16,13 @@ import * as snippets from '../controllers/snippet.controller';
 import * as tasks from '../controllers/task.controller';
 import * as workspaces from '../controllers/workspace.controller';
 import * as repositories from '../controllers/github-repository.controller';
+import { aiComplete } from '../controllers/ai.controller';
+import { meteredAiRequest } from '../middleware/billing.middleware';
+import { createIngestionRouter } from '../routes/ingestion.routes';
+import { ingestDocument } from '../services/ingestion.service';
+import { workspaceSearch } from '../controllers/search.controller';
+import { reconcileOfflineAiActions } from '../services/crdt-sync.service';
+import { recordTokenUsage } from '../services/billing.service';
 import { errorMiddleware } from '../middleware/error.middleware';
 import { withWorkspaceAccess, WRITE_ROLES } from '../security/workspace-policy';
 import { createCollaborationServer } from '../services/collaboration-server';
@@ -24,6 +31,19 @@ import { projectDocument } from '../services/crdt-schema';
 import { processTaskCompletion } from '../agents/task-completion.agent';
 import { completeWithFallback } from '../services/ai-gateway.service';
 jest.mock('../services/ai-gateway.service', () => ({ completeWithFallback: jest.fn() }));
+jest.mock(
+  'groq-sdk',
+  () =>
+    class FixtureGroq {
+      chat = {
+        completions: {
+          async *create() {
+            yield { choices: [{ delta: { content: 'Fixture AI response' } }] };
+          },
+        },
+      };
+    },
+);
 jest.mock('../lib/redis', () => ({
   redis: { options: { host: 'localhost', port: 6379 } },
   isRedisAvailable: async () => false,
@@ -60,6 +80,9 @@ app.post('/workspaces/:id/repositories', repositories.connectRepository);
 app.patch('/workspaces/:id/repositories/:repositoryId', repositories.updateRepository);
 app.delete('/workspaces/:id/repositories/:repositoryId', repositories.disconnectRepository);
 app.get('/workspaces/:id/documents', documents.getDocuments);
+app.post('/ai/complete', meteredAiRequest, aiComplete);
+app.get('/workspaces/:id/search', workspaceSearch);
+app.use(createIngestionRouter((_req, _res, next) => next()));
 app.get('/documents/:id', documents.getDocument);
 app.post('/workspaces/:id/documents', documents.createDocument);
 app.patch('/documents/:id', documents.updateDocument);
@@ -623,3 +646,133 @@ it.each(['/workspaces/TEAM', '/workspaces/TEAM/activities', '/workspaces/TEAM/re
     ).toBe(200);
   },
 );
+
+it('G01/E03 ingestion rejects foreign/viewer/inactive before buffering and commits canonical state for an editor', async () => {
+  const { a, b } = await fixture();
+  for (const [actor, workspaceId] of [
+    ['owner', b],
+    ['viewer', a],
+    ['inactive', a],
+  ] as const) {
+    const result = await request(app)
+      .post(`/workspaces/${workspaceId}/documents/ingest`)
+      .set('x-fixture-actor', actor)
+      .attach('file', Buffer.from('Invalid MIME must not be reached'), {
+        filename: 'fixture.exe',
+        contentType: 'application/x-forbidden',
+      });
+    expect(result.status).toBe(403);
+    await expect(
+      withDatabase(db, () =>
+        ingestDocument(Buffer.from('text'), 'text/plain', 'fixture.txt', workspaceId, actor),
+      ),
+    ).rejects.toThrow('Access denied');
+  }
+  const result = await request(app)
+    .post(`/workspaces/${a}/documents/ingest`)
+    .set('x-fixture-actor', 'editor')
+    .attach('file', Buffer.from('EXTRACTED TITLE\nFixture text\n- One\n- Two\nA | B\n1 | 2'), {
+      filename: 'fixture.md',
+      contentType: 'text/markdown',
+    });
+  expect(result.status).toBe(201);
+  const document = await admin.document.findUniqueOrThrow({
+    where: { id: result.body.documentId as string },
+  });
+  expect(document.workspaceId).toBe(a);
+  expect(document.yjsState).not.toBeNull();
+  const recovered = new Y.Doc();
+  try {
+    Y.applyUpdate(recovered, document.yjsState!);
+    expect(JSON.stringify(projectDocument(recovered))).toContain('Fixture text');
+  } finally {
+    recovered.destroy();
+  }
+  expect(await admin.activity.count({ where: { workspaceId: a, type: 'doc_ingested' } })).toBe(1);
+  expect(await admin.embeddingJob.count({ where: { resourceId: document.id } })).toBe(1);
+});
+it('G01 search is tenant-scoped under forced RLS and retains viewer access', async () => {
+  const { a, b } = await fixture();
+  expect((await request(app).get(`/workspaces/${b}/search?q=Task`)).status).toBe(403);
+  const result = await request(app)
+    .get(`/workspaces/${a}/search?q=Task`)
+    .set('x-fixture-actor', 'viewer');
+  expect(result.status).toBe(200);
+  expect(result.body.results).toEqual(
+    expect.arrayContaining([expect.objectContaining({ id: `task-${a}` })]),
+  );
+  expect(JSON.stringify(result.body)).not.toContain(`task-${b}`);
+});
+it('F01/G01 AI membership precedes balance/provider access and viewers can request bounded read-only output', async () => {
+  const { a, b } = await fixture();
+  for (const [actor, workspaceId] of [
+    ['owner', b],
+    ['inactive', a],
+  ] as const) {
+    const result = await request(app)
+      .post('/ai/complete')
+      .set('x-fixture-actor', actor)
+      .send({ workspaceId, prompt: 'Summarize' });
+    expect(result.status).toBe(403);
+    expect(await admin.tokenUsage.count({ where: { workspaceId } })).toBe(0);
+  }
+  const response = await request(app).post('/ai/complete').set('x-fixture-actor', 'viewer').send({
+    workspaceId: a,
+    prompt: 'Summarize',
+    context: 'Untrusted instructions',
+    action: 'summarize',
+  });
+  expect(response.status).toBe(200);
+  expect(response.text).toContain('Fixture AI response');
+  await until(
+    async () => (await admin.tokenUsage.count({ where: { workspaceId: a } })) === 1,
+    'Authorized usage not persisted',
+  );
+  expect(
+    (
+      await request(app)
+        .post('/ai/complete')
+        .send({ workspaceId: a, prompt: 'x'.repeat(16001) })
+    ).status,
+  ).toBe(400);
+});
+it('F01 central usage/offline-action policy rejects foreign and revoked actors, with workspace-bound replay keys', async () => {
+  const { a, b } = await fixture();
+  const action = {
+    id: 'fixture-action-id',
+    type: 'complete',
+    prompt: 'Summarize',
+    estimatedTokens: 10,
+    status: 'pending',
+  };
+  for (const actorId of ['viewer', 'foreign', 'inactive']) {
+    const document = new Y.Doc();
+    try {
+      document.getMap<string>('devsync:ai-actions').set(action.id, JSON.stringify(action));
+      await withDatabase(db, () => reconcileOfflineAiActions(document, a, actorId));
+      expect(document.getMap<string>('devsync:ai-actions').get(action.id)).toContain('rejected');
+    } finally {
+      document.destroy();
+    }
+  }
+  expect(await admin.tokenUsage.count({ where: { workspaceId: a } })).toBe(0);
+  await expect(
+    withDatabase(db, () => recordTokenUsage(b, 'forged', 10, 'fixture', 'owner')),
+  ).rejects.toThrow('Access denied');
+  const document = new Y.Doc();
+  try {
+    document.getMap<string>('devsync:ai-actions').set(action.id, JSON.stringify(action));
+    await withDatabase(db, () => reconcileOfflineAiActions(document, a, 'editor'));
+    expect(document.getMap<string>('devsync:ai-actions').get(action.id)).toContain('authorized');
+    document.getMap<string>('devsync:ai-actions').set(action.id, JSON.stringify(action));
+    await withDatabase(db, () => reconcileOfflineAiActions(document, a, 'editor'));
+    expect(await admin.tokenUsage.count({ where: { workspaceId: a } })).toBe(1);
+    const usage = await admin.tokenUsage.findFirstOrThrow({ where: { workspaceId: a } });
+    expect(usage.requestId).toBe(`offline-ai:${a}:editor:${action.id}`);
+    await expect(
+      withDatabase(db, () => recordTokenUsage(a, usage.requestId, 11, usage.source, 'editor')),
+    ).rejects.toThrow('Access denied');
+  } finally {
+    document.destroy();
+  }
+});

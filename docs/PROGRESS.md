@@ -12,6 +12,8 @@ Resource group gate: **15 backend suites / 123 tests**, retained frontend **5 No
 
 Workspace/repository group completed: creator principal policy, controller-local transactional membership/OWNER policies, tenant-scoped reads, atomic creation/invitation activity and last-owner protection. Concurrent owner-demotion requests leave exactly one owner. Both full gates pass with **145 backend tests** (15 suites) and retained frontend tests; phase1c-evidence/workspaces-results.json.
 
+AI/search/ingestion group completed: central checks before balance/provider calls and before multipart buffering; tenant-scoped search, bounded AI schema/untrusted-context separation; ingestion rechecks authority and atomically stores canonical CRDT/activity/outbox state; PDF cleanup; actor-attributed usage/offline reservations and workspace-bound replay keys. Full gate final backend from services-retry-results.json plus frontend from services-results.json passes with **149 backend tests** and retained frontend tests. The first backend gate stopped on fixture formatting, corrected without suppression. Initial OpenAPI generation overlapped dependency replacement and failed importing a temporarily absent package; generation was rerun after install completed, then the complete backend gate passed. Failed output retained. AST inventory now reports **17 explicit legacy any annotations, 0 suppression markers**; the remaining annotations are all in unconverted service routes.
+
 Next: finish priority2 service mutation authorization, then atomic create idempotency, authenticated E2E/original-main worktree capture, complete contracts/no-any and local CI verification. These items remain unfinished; historical Phase1a/1b limitations below remain until explicitly closed.
 
 ---
