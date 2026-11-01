@@ -4,7 +4,7 @@ async function main() {
   const [
     { default: express },
     { createServer },
-    { prisma, withDatabase },
+    { prisma },
     { withAuthentication },
     { default: app },
     { createFixtureAuthentication },
@@ -28,9 +28,7 @@ async function main() {
     outer = express();
   outer.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }), express.json());
   outer.use('/__test', fixtures.router);
-  outer.use((_req, _res, next) =>
-    withDatabase(prisma, () => withAuthentication(fixtures.strategy, next)),
-  );
+  outer.use((_req, _res, next) => withAuthentication(fixtures.strategy, next));
   outer.use(app, errorMiddleware);
   const http = createServer(outer),
     socket = createSocketServer(http, {
