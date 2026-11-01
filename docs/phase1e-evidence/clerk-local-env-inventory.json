@@ -1,0 +1,25 @@
+{
+  "inspectedFiles": [
+    {
+      "file": ".worktrees/phase1b-main/frontend/.env.local",
+      "names": []
+    },
+    {
+      "file": "backend/.env",
+      "names": []
+    },
+    {
+      "file": "docs/audit-evidence/runtime/backend/.env",
+      "names": []
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.env.local",
+      "names": []
+    },
+    {
+      "file": "frontend/.env.local",
+      "names": []
+    }
+  ],
+  "matches": []
+}

@@ -1,0 +1,7 @@
+{
+  "sourceSha256": "1c1ee1167dea2772e1c5213302bac686afb405ae77a92bf90cac689da8196c97",
+  "postgresHostPort": 57867,
+  "redisHostPort": 37511,
+  "temporaryWorkflow": "/tmp/devsync-act-quality-local.yml",
+  "changes": "display name for isolation, host ports and matching connection URLs only; all workflow steps unchanged"
+}

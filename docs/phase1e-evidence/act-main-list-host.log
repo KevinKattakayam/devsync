@@ -1,0 +1,4 @@
+time="2026-11-01T15:44:59+05:30" level=info msg="Using docker host 'unix:///var/run/docker.sock', and daemon socket 'unix:///var/run/docker.sock'"
+Stage  Job ID          Job name                                                  Workflow name                   Workflow file  Events           
+0      quality         Install, lint, format, types, tests, contracts and build  Build, Test, Scan, and Publish  main.yml       pull_request,push
+1      image-security  Build, scan, SBOM, and publish                            Build, Test, Scan, and Publish  main.yml       push,pull_request

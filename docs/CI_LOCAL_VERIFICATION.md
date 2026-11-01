@@ -1,3 +1,24 @@
+# Phase1e local CI verification
+
+The complete command gate is `phase1e-evidence/contracts-results.json`: both clean installs, lint, format, strict types, tests and builds pass. Backend:16 suites/192 tests with existing coverage floors. Frontend:7 Node tests/10 component tests, webpack build. The separate actual browser/API run is `contracts-browser-retry.log`:11 passed. OpenAPI now has55 complete documentation contracts; universal runtime output validation is not claimed.
+
+The Turbopack investigation found sandbox EPERM on every tested local bind. Host binds succeed; a cached failing Turbopack graph repeated EPERM without a TCP bind syscall. Moving only the generated `.next` tree aside made a host build bind127.0.0.1:0 and complete. The final current-tree default build is recorded separately in `turbopack-final-host.log`. Webpack remains the explicit group gate.
+
+Downloaded official act v0.2.94 into `/tmp/devsync-act` and verified its release archive digest (`act-install.json`). Both workflow listings pass. The quality dry run and image-security dry run (which includes its quality dependency) crash in act's `containerReference.GetHealth`/`waitForServiceContainer` with a nil-pointer panic and exit2. Their output is retained. An initial run also failed at the sandbox cache write, and an initial dry run exited on the image-selection prompt; the retry uses explicit runner mapping and /tmp caches. The Railway dry run exits0 and validates its plan only: every success line is prefixed DRYRUN. No container execution, publish or deployment is claimed from these dry runs. Secret/env/variable files were explicitly `/dev/null`.
+
+Every step not verified by actual workflow execution:
+
+| Workflow / group | Unverified steps |
+| --- | --- |
+| main.yml quality | checkout; setup-node and npm cache; Actions service-container networking/health; hosted npm ci/lint/format/types/tests/OpenAPI/build execution; upload-artifact coverage; GitHub Clerk variable/secret injection. Equivalent local commands pass, but these Actions steps did not run. |
+| main.yml image-security | checkout; setup-buildx; registry login; both Docker image builds/load and GHA cache; Trivy HIGH/CRITICAL gate; SARIF upload; CycloneDX SBOM generation; SBOM artifact upload/365-day retention; immutable image publication; SLSA attestation. None executed. The PR dry-run plan reaches the failing quality dependency. |
+| deploy.yml | checkout; global Railway CLI install; backend deployment; frontend deployment. Only the dry-run plan passed. No deployment was executed. |
+| Browser CI | The11 local Playwright/API cases pass, but the current workflow does not invoke the new isolated browser harness. No CI browser pass is claimed. |
+
+No push, registry publication, deployment, key rotation or Phase2 work occurred. The failed local act engine does not establish that the repository workflow fails on GitHub; exact hosted execution remains unverified. Historical reports below are retained as historical limitations.
+
+---
+
 # Phase 1d local verification
 
 Actual output is in phase1d-evidence/. Backend baseline passes all six commands with 186 tests; frontend passes all commands with the supported `next build --webpack` builder. Default `next build` failed locally at Turbopack port binding even on an approved retry. The exact default frontend CI build is therefore **not locally verified successful**. The final fixture gate uses webpack explicitly and records that command. OpenAPI drift passes, but complete schemas/E2E are still absent.

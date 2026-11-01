@@ -1,0 +1,172 @@
+diff --git a/frontend/next.config.ts b/frontend/next.config.ts
+index 4d87f6b..1bafe84 100644
+--- a/frontend/next.config.ts
++++ b/frontend/next.config.ts
+@@ -1,23 +1,7 @@
+-import type { NextConfig } from "next";
+ 
+-const backendUrl = process.env.BACKEND_URL || 'http://localhost:5000';
+-
+-const nextConfig: NextConfig = {
+-  output: 'standalone',
+-  images: {
+-    remotePatterns: [
+-      { protocol: 'https', hostname: 'res.cloudinary.com' },
+-      { protocol: 'https', hostname: 'avatars.githubusercontent.com' },
+-    ],
+-  },
+-  async rewrites() {
+-    return [
+-      {
+-        source: '/api/backend/:path*',
+-        destination: `${backendUrl}/api/:path*`,
+-      },
+-    ];
+-  },
+-};
+-
+-export default nextConfig;
++if (process.env.NODE_ENV !== 'development') throw new Error('Fixture frontend is development-only');
++export default { env: {
++  NEXT_PUBLIC_API_URL: 'http://127.0.0.1:5501/api',
++  NEXT_PUBLIC_SOCKET_URL: 'http://127.0.0.1:5501',
++  NEXT_PUBLIC_YJS_URL: 'ws://127.0.0.1:5501'
++} };
+diff --git a/frontend/src/providers/auth-provider.tsx b/frontend/src/providers/auth-provider.tsx
+index d910afe..852caaf 100644
+--- a/frontend/src/providers/auth-provider.tsx
++++ b/frontend/src/providers/auth-provider.tsx
+@@ -1,42 +1,66 @@
+-"use client";
++'use client';
+ 
+-import React, { createContext, useContext, useEffect, useMemo } from 'react';
+-import { useAuth as useClerkAuth, useClerk, useUser } from '@clerk/nextjs';
+-import api, { setTokenGetter } from '@/lib/api';
+-import { User } from '@/types';
+-
+-interface AuthContextType {
+-  user: User | null;
+-  isLoading: boolean;
+-  isAuthenticated: boolean;
+-  getToken: () => Promise<string | null>;
+-  logout: () => Promise<void>;
+-}
+-
+-const AuthContext = createContext<AuthContextType>({ user: null, isLoading: true, isAuthenticated: false, getToken: async () => null, logout: async () => {} });
++import { createContext, useCallback, useContext, useEffect, useState } from 'react';
++import { z } from 'zod';
++import { useRouter } from 'next/navigation';
++import { setTokenGetter } from '@/lib/api';
++import type { User } from '@/types';
+ 
++const identity = z.object({
++  id: z.string(),
++  name: z.string(),
++  email: z.email(),
++  avatar: z.string().nullish(),
++});
++const token = z.object({ token: z.string() });
++const origin = 'http://127.0.0.1:5501';
++const getToken: (options?: { skipCache?: boolean }) => Promise<string | null> = async () => {
++  const response = await fetch(`${origin}/__test/token`, { credentials: 'include' });
++  return response.ok ? token.parse(await response.json()).token : null;
++};
++const AuthContext = createContext({
++  user: null as User | null,
++  isLoading: true,
++  isAuthenticated: false,
++  getToken,
++  logout: async () => {},
++});
+ export function AuthProvider({ children }: { children: React.ReactNode }) {
+-  const { user, isLoaded } = useUser();
+-  const { isSignedIn, getToken } = useClerkAuth();
+-  const { signOut } = useClerk();
+-
++  const router = useRouter();
++  const [user, setUser] = useState<User | null>(null);
++  const [isLoading, setLoading] = useState(true);
+   useEffect(() => {
++    let disposed = false;
+     setTokenGetter(getToken);
+-    if (isSignedIn) {
+-      getToken().then(token => token ? api.post('/auth/sync', undefined, { headers: { Authorization: `Bearer ${token}` } }) : null).catch(() => {});
+-    }
+-    return () => setTokenGetter(null);
+-  }, [getToken, isSignedIn]);
+-
+-  const value = useMemo<AuthContextType>(() => ({
+-    user: user ? { id: user.id, name: user.fullName || user.username || user.primaryEmailAddress?.emailAddress || 'Member', email: user.primaryEmailAddress?.emailAddress || '', avatar: user.imageUrl } : null,
+-    isLoading: !isLoaded,
+-    isAuthenticated: !!isSignedIn,
+-    getToken: async () => (await getToken()) || null,
+-    logout: () => signOut({ redirectUrl: '/login' }),
+-  }), [getToken, isLoaded, isSignedIn, signOut, user]);
+-
+-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
++    void fetch(`${origin}/__test/me`, { credentials: 'include' })
++      .then(async (response) => {
++        if (!response.ok) return;
++        const value = identity.parse(await response.json());
++        if (!disposed) setUser({ ...value, avatar: value.avatar || undefined });
++      })
++      .catch(() => {})
++      .finally(() => {
++        if (!disposed) setLoading(false);
++      });
++    return () => {
++      disposed = true;
++      setTokenGetter(null);
++    };
++  }, []);
++  const logout = useCallback(async () => {
++    const response = await fetch(`${origin}/__test/logout`, {
++      method: 'POST',
++      credentials: 'include',
++    });
++    if (!response.ok) throw new Error('Fixture logout failed');
++    setTokenGetter(null);
++    setUser(null);
++    router.push('/login');
++  }, [router]);
++  return (
++    <AuthContext.Provider value={{ user, isLoading, isAuthenticated: !!user, getToken, logout }}>
++      {children}
++    </AuthContext.Provider>
++  );
+ }
+-
+ export const useAuth = () => useContext(AuthContext);
+diff --git a/frontend/src/proxy.ts b/frontend/src/proxy.ts
+index c8483e3..06e7116 100644
+--- a/frontend/src/proxy.ts
++++ b/frontend/src/proxy.ts
+@@ -1,26 +1 @@
+-import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
+-import { NextResponse } from 'next/server';
+-import type { NextRequest } from 'next/server';
+-
+-const isPublicRoute = createRouteMatcher([
+-  '/',
+-  '/login(.*)',
+-  '/signup(.*)',
+-  '/sign-in(.*)',
+-  '/sign-up(.*)',
+-  '/api/auth/reset(.*)',
+-]);
+-
+-export default clerkMiddleware(async (auth, request) => {
+-  if (!isPublicRoute(request)) {
+-    await auth.protect();
+-  }
+-});
+-
+-export const config = {
+-  matcher: [
+-    // Exclude auth routes from middleware entirely to avoid clock-skew JWT loops
+-    '/((?!_next|login|signup|sign-in|sign-up|api/auth/reset|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+-    '/(api(?!/auth/reset)|trpc)(.*)',
+-  ],
+-};
++export function proxy() {}

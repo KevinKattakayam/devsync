@@ -1,0 +1,8 @@
+
+> devsync-backend@1.0.0 typecheck
+> tsc --noEmit && tsc -p tsconfig.seed.json && tsc -p tsconfig.testing.json
+
+testing/browser/capture.spec.ts(68,37): error TS2584: Cannot find name 'document'. Do you need to change your target library? Try changing the 'lib' compiler option to include 'dom'.
+testing/run-browser.ts(89,13): error TS2339: Property 'E2E_UI_CAPTURE' does not exist on type '{ NODE_ENV: string; DATABASE_URL: string; E2E_ADMIN_DATABASE_URL: string; REDIS_URL: string; CLERK_SECRET_KEY: string; CLERK_PUBLISHABLE_KEY: string; GROQ_API_KEY: string; OPENAI_API_KEY: string; ... 6 more ...; SEED_VIEWER_CLERK_ID: string; }'.
+testing/run-browser.ts(94,15): error TS2339: Property 'E2E_UI_CAPTURE' does not exist on type '{ NODE_ENV: string; DATABASE_URL: string; E2E_ADMIN_DATABASE_URL: string; REDIS_URL: string; CLERK_SECRET_KEY: string; CLERK_PUBLISHABLE_KEY: string; GROQ_API_KEY: string; OPENAI_API_KEY: string; ... 6 more ...; SEED_VIEWER_CLERK_ID: string; }'.
+testing/run-browser.ts(112,22): error TS2339: Property 'E2E_UI_CAPTURE' does not exist on type '{ NODE_ENV: string; DATABASE_URL: string; E2E_ADMIN_DATABASE_URL: string; REDIS_URL: string; CLERK_SECRET_KEY: string; CLERK_PUBLISHABLE_KEY: string; GROQ_API_KEY: string; OPENAI_API_KEY: string; ... 6 more ...; SEED_VIEWER_CLERK_ID: string; }'.

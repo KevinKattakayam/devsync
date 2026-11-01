@@ -1,0 +1,13 @@
+{
+  "inspectedFiles": [
+    "backend/.env",
+    "frontend/.env.local"
+  ],
+  "requiredIdentityVariables": [
+    "SEED_OWNER_CLERK_ID",
+    "SEED_EDITOR_CLERK_ID",
+    "SEED_VIEWER_CLERK_ID"
+  ],
+  "availableIdentityVariableNames": [],
+  "realProviderSignIn": "not attempted: identity mappings and sign-in method not visible; file location clarification pending"
+}

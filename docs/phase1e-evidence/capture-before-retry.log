@@ -1,0 +1,91 @@
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": PostgreSQL database "devsync_e2e_browser", schema "public" at "localhost:32779"
+
+11 migrations found in prisma/migrations
+
+Applying migration `20260729000000_baseline`
+Applying migration `20260729180000_enterprise_platform`
+Applying migration `20260815000000_phase_3_tenant_rls`
+Applying migration `20260815001000_scim_provisioning`
+Applying migration `20260815002000_commercial_billing`
+Applying migration `20261031000000_tenant_indexes`
+Applying migration `20261031010000_crdt_journal`
+Applying migration `202611010001_canonical_revision`
+Applying migration `202611010002_embedding_authority`
+Applying migration `202611010003_atomic_create_idempotency`
+Applying migration `202611010004_workspace_invitations`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20260729000000_baseline/
+    └─ migration.sql
+  └─ 20260729180000_enterprise_platform/
+    └─ migration.sql
+  └─ 20260815000000_phase_3_tenant_rls/
+    └─ migration.sql
+  └─ 20260815001000_scim_provisioning/
+    └─ migration.sql
+  └─ 20260815002000_commercial_billing/
+    └─ migration.sql
+  └─ 20261031000000_tenant_indexes/
+    └─ migration.sql
+  └─ 20261031010000_crdt_journal/
+    └─ migration.sql
+  └─ 202611010001_canonical_revision/
+    └─ migration.sql
+  └─ 202611010002_embedding_authority/
+    └─ migration.sql
+  └─ 202611010003_atomic_create_idempotency/
+    └─ migration.sql
+  └─ 202611010004_workspace_invitations/
+    └─ migration.sql
+      
+All migrations have been successfully applied.
+Sample workspace seeded. Sign in with the supplied Clerk test identities.
+/home/kevin/devsync/.worktrees/frontend-fixture
+Isolated fixture server ready
+{"level":30,"time":1793528574978,"service":"devsync-api","req":{"id":"f0fc706f-5160-48f5-a7c9-dcf0a7e1ca62","method":"GET"},"requestId":"f0fc706f-5160-48f5-a7c9-dcf0a7e1ca62","res":{"statusCode":200},"responseTime":10,"msg":"request completed"}
+▲ Next.js 16.2.4 (webpack)
+- Local:         http://127.0.0.1:3001
+- Network:       http://127.0.0.1:3001
+✓ Ready in 744ms
+
+○ Compiling /login/[[...rest]] ...
+Attention: Clerk collects telemetry data from its SDKs when connected to development instances.
+The data collected is used to inform Clerk's product roadmap.
+To learn more, including how to opt-out from the telemetry program, visit: https://clerk.com/docs/telemetry.
+
+ GET /login 200 in 5.5s (next.js: 4.9s, proxy.ts: 4ms, application-code: 544ms)
+ GET /login 200 in 107ms (next.js: 27ms, proxy.ts: 12ms, application-code: 68ms)
+
+Running 1 test using 1 worker
+
+(node:42182) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1793528588926,"service":"devsync-api","req":{"id":"7545682d-c561-4dba-bf66-e3efc126b1d1","method":"GET"},"requestId":"7545682d-c561-4dba-bf66-e3efc126b1d1","res":{"statusCode":200},"responseTime":26,"msg":"request completed"}
+{"level":30,"time":1793528589149,"service":"devsync-api","req":{"id":"fa39323b-c549-440d-8d2f-4b75ad6529ce","method":"GET"},"requestId":"fa39323b-c549-440d-8d2f-4b75ad6529ce","res":{"statusCode":200},"responseTime":15,"msg":"request completed"}
+ GET /workspace/devsync-sample/docs 200 in 3.1s (next.js: 2.7s, proxy.ts: 8ms, application-code: 435ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+{"level":30,"time":1793528594097,"service":"devsync-api","req":{"id":"8443551f-6171-483e-949e-085978acbcac","method":"GET"},"requestId":"8443551f-6171-483e-949e-085978acbcac","res":{"statusCode":200},"responseTime":64,"msg":"request completed"}
+{"level":30,"time":1793528594126,"service":"devsync-api","req":{"id":"cdcc3117-b501-45d3-91eb-dad3deb68b93","method":"GET"},"requestId":"cdcc3117-b501-45d3-91eb-dad3deb68b93","res":{"statusCode":304},"responseTime":27,"msg":"request completed"}
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+{"level":30,"time":1793528608056,"service":"devsync-api","req":{"id":"710476bc-b942-4789-a4ab-bf416b532c72","method":"GET"},"requestId":"710476bc-b942-4789-a4ab-bf416b532c72","res":{"statusCode":200},"responseTime":34,"msg":"request completed"}
+{"target":"before","captured":25,"unavailable":[{"path":"/superadmin","width":1440,"error":"HTTP 500"},{"path":"/workspace/devsync-sample/docs","width":390,"error":"expect(locator).toBeVisible() failed; API document titles: [\"Welcome\"]"},{"path":"/superadmin","width":390,"error":"HTTP 500"}]}
+  ✓  1 testing/browser/capture.spec.ts:7:5 › capture public and authenticated page evidence at both requested widths (19.4s)
+
+  1 passed (20.7s)
+[?25h

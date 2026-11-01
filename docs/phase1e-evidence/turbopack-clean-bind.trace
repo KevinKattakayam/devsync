@@ -1,0 +1,218 @@
+79828 +++ exited with 0 +++
+79893 bind(27, {sa_family=AF_NETLINK, nl_pid=0, nl_groups=00000000}, 12) = 0
+79905 +++ exited with 0 +++
+79904 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=79905, si_uid=1000, si_status=0, si_utime=0, si_stime=0} ---
+79904 +++ exited with 0 +++
+79821 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=79904, si_uid=1000, si_status=0, si_utime=0, si_stime=0} ---
+79894 bind(29, {sa_family=AF_NETLINK, nl_pid=0, nl_groups=00000000}, 12) = 0
+79893 bind(30, {sa_family=AF_NETLINK, nl_pid=0, nl_groups=00000000}, 12) = 0
+79894 bind(32, {sa_family=AF_NETLINK, nl_pid=0, nl_groups=00000000}, 12) = 0
+79896 bind(27, {sa_family=AF_INET, sin_port=htons(0), sin_addr=inet_addr("127.0.0.1")}, 16) = 0
+79893 bind(27, {sa_family=AF_NETLINK, nl_pid=0, nl_groups=00000000}, 12) = 0
+79892 bind(27, {sa_family=AF_NETLINK, nl_pid=0, nl_groups=00000000}, 12) = 0
+80917 +++ exited with 0 +++
+80916 +++ exited with 0 +++
+80915 +++ exited with 0 +++
+80914 +++ exited with 0 +++
+80913 +++ exited with 0 +++
+80918 +++ exited with 0 +++
+80912 +++ exited with 0 +++
+79821 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=80912, si_uid=1000, si_status=0, si_utime=11 /* 0.11 s */, si_stime=10 /* 0.10 s */} ---
+79902 +++ exited with 0 +++
+79895 +++ exited with 0 +++
+79900 +++ exited with 0 +++
+79896 +++ exited with 0 +++
+80950 +++ exited with 0 +++
+80948 +++ exited with 0 +++
+80949 +++ exited with 0 +++
+80951 +++ exited with 0 +++
+80947 +++ exited with 0 +++
+80955 +++ exited with 0 +++
+80940 +++ exited with 0 +++
+79821 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=80940, si_uid=1000, si_status=0, si_utime=1639 /* 16.39 s */, si_stime=86 /* 0.86 s */} ---
+79892 bind(32, {sa_family=AF_NETLINK, nl_pid=0, nl_groups=00000000}, 12) = 0
+81772 +++ exited with 0 +++
+79899 +++ exited with 0 +++
+81776 +++ exited with 0 +++
+81771 +++ exited with 0 +++
+81763 +++ exited with 0 +++
+81775 +++ exited with 0 +++
+80416 +++ exited with 0 +++
+81778 +++ exited with 0 +++
+81779 +++ exited with 0 +++
+80939 +++ exited with 0 +++
+79898 +++ exited with 0 +++
+79901 +++ exited with 0 +++
+81666 --- SIGINT {si_signo=SIGINT, si_code=SI_USER, si_pid=79821, si_uid=1000} ---
+81667 --- SIGINT {si_signo=SIGINT, si_code=SI_USER, si_pid=79821, si_uid=1000} ---
+81684 --- SIGINT {si_signo=SIGINT, si_code=SI_USER, si_pid=79821, si_uid=1000} ---
+81698 --- SIGINT {si_signo=SIGINT, si_code=SI_USER, si_pid=79821, si_uid=1000} ---
+81706 --- SIGINT {si_signo=SIGINT, si_code=SI_USER, si_pid=79821, si_uid=1000} ---
+81714 --- SIGINT {si_signo=SIGINT, si_code=SI_USER, si_pid=79821, si_uid=1000} ---
+81721 --- SIGINT {si_signo=SIGINT, si_code=SI_USER, si_pid=79821, si_uid=1000} ---
+81666 --- SIGINT {si_signo=SIGINT, si_code=SI_TKILL, si_pid=81666, si_uid=1000} ---
+81667 --- SIGINT {si_signo=SIGINT, si_code=SI_TKILL, si_pid=81667, si_uid=1000} ---
+81952 +++ killed by SIGINT +++
+81951 +++ killed by SIGINT +++
+81950 +++ killed by SIGINT +++
+81949 +++ killed by SIGINT +++
+81948 +++ killed by SIGINT +++
+81947 +++ killed by SIGINT +++
+81946 +++ killed by SIGINT +++
+81945 +++ killed by SIGINT +++
+81944 +++ killed by SIGINT +++
+81943 +++ killed by SIGINT +++
+81942 +++ killed by SIGINT +++
+81941 +++ killed by SIGINT +++
+81940 +++ killed by SIGINT +++
+81939 +++ killed by SIGINT +++
+81930 +++ killed by SIGINT +++
+81929 +++ killed by SIGINT +++
+81705 +++ killed by SIGINT +++
+81697 +++ killed by SIGINT +++
+81696 +++ killed by SIGINT +++
+81695 +++ killed by SIGINT +++
+81694 +++ killed by SIGINT +++
+81693 +++ killed by SIGINT +++
+81692 +++ killed by SIGINT +++
+81684 --- SIGINT {si_signo=SIGINT, si_code=SI_TKILL, si_pid=81684, si_uid=1000} ---
+81672 +++ killed by SIGINT +++
+81671 +++ killed by SIGINT +++
+81670 +++ killed by SIGINT +++
+81669 +++ killed by SIGINT +++
+81668 +++ killed by SIGINT +++
+81698 --- SIGINT {si_signo=SIGINT, si_code=SI_TKILL, si_pid=81698, si_uid=1000} ---
+81938 +++ killed by SIGINT +++
+81937 +++ killed by SIGINT +++
+81935 +++ killed by SIGINT +++
+81934 +++ killed by SIGINT +++
+81933 +++ killed by SIGINT +++
+81932 +++ killed by SIGINT +++
+81931 +++ killed by SIGINT +++
+81712 +++ killed by SIGINT +++
+81706 --- SIGINT {si_signo=SIGINT, si_code=SI_TKILL, si_pid=81706, si_uid=1000} ---
+81704 +++ killed by SIGINT +++
+81703 +++ killed by SIGINT +++
+81702 +++ killed by SIGINT +++
+81701 +++ killed by SIGINT +++
+81700 +++ killed by SIGINT +++
+81927 +++ killed by SIGINT +++
+81926 +++ killed by SIGINT +++
+81925 +++ killed by SIGINT +++
+81924 +++ killed by SIGINT +++
+81923 +++ killed by SIGINT +++
+81921 +++ killed by SIGINT +++
+81717 +++ killed by SIGINT +++
+81711 +++ killed by SIGINT +++
+81710 +++ killed by SIGINT +++
+81709 +++ killed by SIGINT +++
+81708 +++ killed by SIGINT +++
+81707 +++ killed by SIGINT +++
+81914 +++ killed by SIGINT +++
+81727 +++ killed by SIGINT +++
+81912 +++ killed by SIGINT +++
+81718 +++ killed by SIGINT +++
+81716 +++ killed by SIGINT +++
+81715 +++ killed by SIGINT +++
+81720 +++ killed by SIGINT +++
+81714 --- SIGINT {si_signo=SIGINT, si_code=SI_TKILL, si_pid=81714, si_uid=1000} ---
+81917 +++ killed by SIGINT +++
+81916 +++ killed by SIGINT +++
+81915 +++ killed by SIGINT +++
+81913 +++ killed by SIGINT +++
+81911 +++ killed by SIGINT +++
+81920 +++ killed by SIGINT +++
+81721 --- SIGINT {si_signo=SIGINT, si_code=SI_TKILL, si_pid=81721, si_uid=1000} ---
+81719 +++ killed by SIGINT +++
+81998 +++ killed by SIGINT +++
+81996 +++ killed by SIGINT +++
+81995 +++ killed by SIGINT +++
+81910 +++ killed by SIGINT +++
+81908 +++ killed by SIGINT +++
+81907 +++ killed by SIGINT +++
+81905 +++ killed by SIGINT +++
+81903 +++ killed by SIGINT +++
+81901 +++ killed by SIGINT +++
+81722 +++ killed by SIGINT +++
+81726 +++ killed by SIGINT +++
+81906 +++ killed by SIGINT +++
+81904 +++ killed by SIGINT +++
+81899 +++ killed by SIGINT +++
+81897 +++ killed by SIGINT +++
+81895 +++ killed by SIGINT +++
+81902 +++ killed by SIGINT +++
+81734 +++ killed by SIGINT +++
+81733 +++ killed by SIGINT +++
+81729 +++ killed by SIGINT +++
+81728 +++ killed by SIGINT +++
+81723 +++ killed by SIGINT +++
+81898 +++ killed by SIGINT +++
+81731 +++ killed by SIGINT +++
+81730 +++ killed by SIGINT +++
+81896 +++ killed by SIGINT +++
+81997 +++ killed by SIGINT +++
+81909 +++ killed by SIGINT +++
+81900 +++ killed by SIGINT +++
+81725 +++ killed by SIGINT +++
+81666 +++ killed by SIGINT +++
+79821 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_KILLED, si_pid=81666, si_uid=1000, si_status=SIGINT, si_utime=83 /* 0.83 s */, si_stime=23 /* 0.23 s */} ---
+81936 +++ killed by SIGINT +++
+81922 +++ killed by SIGINT +++
+81918 +++ killed by SIGINT +++
+81706 +++ killed by SIGINT +++
+81698 +++ killed by SIGINT +++
+81684 +++ killed by SIGINT +++
+81667 +++ killed by SIGINT +++
+79822 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_KILLED, si_pid=81706, si_uid=1000, si_status=SIGINT, si_utime=93 /* 0.93 s */, si_stime=26 /* 0.26 s */} ---
+81732 +++ killed by SIGINT +++
+81721 +++ killed by SIGINT +++
+79821 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_KILLED, si_pid=81721, si_uid=1000, si_status=SIGINT, si_utime=88 /* 0.88 s */, si_stime=27 /* 0.27 s */} ---
+81724 +++ killed by SIGINT +++
+81714 +++ killed by SIGINT +++
+79821 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_KILLED, si_pid=81714, si_uid=1000, si_status=SIGINT, si_utime=156 /* 1.56 s */, si_stime=37 /* 0.37 s */} ---
+79892 +++ exited with 0 +++
+79891 +++ exited with 0 +++
+79894 +++ exited with 0 +++
+79893 +++ exited with 0 +++
+79822 +++ exited with 0 +++
+79825 +++ exited with 0 +++
+79826 +++ exited with 0 +++
+79823 +++ exited with 0 +++
+79824 +++ exited with 0 +++
+80986 +++ exited with 0 +++
+80985 +++ exited with 0 +++
+80984 +++ exited with 0 +++
+80983 +++ exited with 0 +++
+80982 +++ exited with 0 +++
+80981 +++ exited with 0 +++
+80980 +++ exited with 0 +++
+80668 +++ exited with 0 +++
+80667 +++ exited with 0 +++
+80666 +++ exited with 0 +++
+80665 +++ exited with 0 +++
+80664 +++ exited with 0 +++
+80663 +++ exited with 0 +++
+80662 +++ exited with 0 +++
+80661 +++ exited with 0 +++
+79897 +++ exited with 0 +++
+79827 +++ exited with 0 +++
+79821 +++ exited with 0 +++
+80280 +++ exited with 0 +++
+80281 +++ exited with 0 +++
+80282 +++ exited with 0 +++
+80279 +++ exited with 0 +++
+80255 +++ exited with 0 +++
+80257 +++ exited with 0 +++
+80254 +++ exited with 0 +++
+80256 +++ exited with 0 +++
+80253 +++ exited with 0 +++
+80290 +++ exited with 0 +++
+80289 +++ exited with 0 +++
+80288 +++ exited with 0 +++
+80287 +++ exited with 0 +++
+80286 +++ exited with 0 +++
+80285 +++ exited with 0 +++
+80284 +++ exited with 0 +++
+80283 +++ exited with 0 +++
+80258 +++ exited with 0 +++
+80252 +++ exited with 0 +++

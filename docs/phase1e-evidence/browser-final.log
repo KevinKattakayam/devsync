@@ -1,0 +1,194 @@
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": PostgreSQL database "devsync_e2e_browser", schema "public" at "localhost:32788"
+
+11 migrations found in prisma/migrations
+
+Applying migration `20260729000000_baseline`
+Applying migration `20260729180000_enterprise_platform`
+Applying migration `20260815000000_phase_3_tenant_rls`
+Applying migration `20260815001000_scim_provisioning`
+Applying migration `20260815002000_commercial_billing`
+Applying migration `20261031000000_tenant_indexes`
+Applying migration `20261031010000_crdt_journal`
+Applying migration `202611010001_canonical_revision`
+Applying migration `202611010002_embedding_authority`
+Applying migration `202611010003_atomic_create_idempotency`
+Applying migration `202611010004_workspace_invitations`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20260729000000_baseline/
+    └─ migration.sql
+  └─ 20260729180000_enterprise_platform/
+    └─ migration.sql
+  └─ 20260815000000_phase_3_tenant_rls/
+    └─ migration.sql
+  └─ 20260815001000_scim_provisioning/
+    └─ migration.sql
+  └─ 20260815002000_commercial_billing/
+    └─ migration.sql
+  └─ 20261031000000_tenant_indexes/
+    └─ migration.sql
+  └─ 20261031010000_crdt_journal/
+    └─ migration.sql
+  └─ 202611010001_canonical_revision/
+    └─ migration.sql
+  └─ 202611010002_embedding_authority/
+    └─ migration.sql
+  └─ 202611010003_atomic_create_idempotency/
+    └─ migration.sql
+  └─ 202611010004_workspace_invitations/
+    └─ migration.sql
+      
+All migrations have been successfully applied.
+Sample workspace seeded. Sign in with the supplied Clerk test identities.
+/home/kevin/devsync/.worktrees/frontend-fixture
+Isolated fixture server ready
+{"level":30,"time":1793528991439,"service":"devsync-api","req":{"id":"cc234184-1899-4264-81c5-67b4c9f0ab8d","method":"GET"},"requestId":"cc234184-1899-4264-81c5-67b4c9f0ab8d","res":{"statusCode":200},"responseTime":10,"msg":"request completed"}
+▲ Next.js 16.4.3 (webpack)
+- Local:         http://127.0.0.1:3001
+- Network:       http://127.0.0.1:3001
+✓ Ready in 450ms
+✓ Running next.config.ts took 40ms
+
+✓ Generated AGENTS.md for AI agents. Set `agentRules: false` in next.config to disable.
+○ Compiling /(auth)/login/[[...rest]]/page ...
+ GET /login 200 in 1581ms (next.js: 1097ms, proxy.ts: 105ms, application-code: 379ms)
+
+Running 10 tests using 1 worker
+
+(node:56092) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1793529016914,"service":"devsync-api","req":{"id":"2b479c1e-3145-4554-b777-1c84ce37f845","method":"GET"},"requestId":"2b479c1e-3145-4554-b777-1c84ce37f845","res":{"statusCode":200},"responseTime":20,"msg":"request completed"}
+ GET /dashboard 200 in 2.6s (next.js: 2.3s, proxy.ts: 12ms, application-code: 295ms)
+{"level":30,"time":1793529021153,"service":"devsync-api","req":{"id":"5fdca266-0f27-4e9b-b87f-ce7c4f4d6d5f","method":"GET"},"requestId":"5fdca266-0f27-4e9b-b87f-ce7c4f4d6d5f","res":{"statusCode":200},"responseTime":53,"msg":"request completed"}
+{"level":30,"time":1793529021174,"service":"devsync-api","req":{"id":"d019ada5-6257-45b9-b81e-4f816b01047f","method":"GET"},"requestId":"d019ada5-6257-45b9-b81e-4f816b01047f","res":{"statusCode":304},"responseTime":19,"msg":"request completed"}
+ GET /login 200 in 111ms (next.js: 43ms, proxy.ts: 6ms, application-code: 62ms)
+ GET /login 200 in 44ms (next.js: 13ms, proxy.ts: 5ms, application-code: 25ms)
+  ✓   1 testing/browser/journeys.spec.ts:10:7 › owner signs in and signs out with server session invalidation (5.1s)
+{"level":30,"time":1793529021832,"service":"devsync-api","req":{"id":"69066b35-2483-4a7f-8442-684aca869f9d","method":"GET"},"requestId":"69066b35-2483-4a7f-8442-684aca869f9d","res":{"statusCode":200},"responseTime":9,"msg":"request completed"}
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+ GET /dashboard 200 in 42ms (next.js: 1.8ms, proxy.ts: 4ms, application-code: 36ms)
+{"level":30,"time":1793529023210,"service":"devsync-api","req":{"id":"22fe1ebe-0e71-4f5e-8414-9eb6eaaed654","method":"GET"},"requestId":"22fe1ebe-0e71-4f5e-8414-9eb6eaaed654","res":{"statusCode":200},"responseTime":21,"msg":"request completed"}
+{"level":30,"time":1793529023229,"service":"devsync-api","req":{"id":"a3521ecc-5ba8-48ae-80b2-f5e7d9afa621","method":"GET"},"requestId":"a3521ecc-5ba8-48ae-80b2-f5e7d9afa621","res":{"statusCode":304},"responseTime":18,"msg":"request completed"}
+ GET /login 200 in 110ms (next.js: 45ms, proxy.ts: 9ms, application-code: 56ms)
+ GET /login 200 in 50ms (next.js: 12ms, proxy.ts: 5ms, application-code: 32ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+  ✓   2 testing/browser/journeys.spec.ts:10:7 › editor signs in and signs out with server session invalidation (2.1s)
+{"level":30,"time":1793529023892,"service":"devsync-api","req":{"id":"d13c1dbd-cd05-48ce-8166-4d5305a3b143","method":"GET"},"requestId":"d13c1dbd-cd05-48ce-8166-4d5305a3b143","res":{"statusCode":200},"responseTime":8,"msg":"request completed"}
+ GET /dashboard 200 in 50ms (next.js: 2.0ms, proxy.ts: 3ms, application-code: 44ms)
+{"level":30,"time":1793529025184,"service":"devsync-api","req":{"id":"7a1086fc-c544-41dd-bf9e-051c5693b46f","method":"GET"},"requestId":"7a1086fc-c544-41dd-bf9e-051c5693b46f","res":{"statusCode":200},"responseTime":21,"msg":"request completed"}
+{"level":30,"time":1793529025203,"service":"devsync-api","req":{"id":"b5f5448d-6d5b-4962-b2ba-647f8b405e43","method":"GET"},"requestId":"b5f5448d-6d5b-4962-b2ba-647f8b405e43","res":{"statusCode":304},"responseTime":17,"msg":"request completed"}
+ GET /login 200 in 116ms (next.js: 38ms, proxy.ts: 5ms, application-code: 73ms)
+ GET /login 200 in 67ms (next.js: 16ms, proxy.ts: 10ms, application-code: 41ms)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+  ✓   3 testing/browser/journeys.spec.ts:10:7 › viewer signs in and signs out with server session invalidation (2.0s)
+{"level":30,"time":1793529025949,"service":"devsync-api","req":{"id":"b0b42c3d-ba4a-42b0-8fcb-4f25ebfd624f","method":"GET"},"requestId":"b0b42c3d-ba4a-42b0-8fcb-4f25ebfd624f","res":{"statusCode":200},"responseTime":10,"msg":"request completed"}
+ GET /dashboard 200 in 39ms (next.js: 1.8ms, proxy.ts: 3ms, application-code: 34ms)
+{"level":30,"time":1793529027293,"service":"devsync-api","req":{"id":"3978bc14-f335-4564-849f-5a672797f14e","method":"GET"},"requestId":"3978bc14-f335-4564-849f-5a672797f14e","res":{"statusCode":200},"responseTime":21,"msg":"request completed"}
+{"level":30,"time":1793529027310,"service":"devsync-api","req":{"id":"adf6e362-31db-49a1-96b9-76bfcec3d314","method":"GET"},"requestId":"adf6e362-31db-49a1-96b9-76bfcec3d314","res":{"statusCode":304},"responseTime":16,"msg":"request completed"}
+{"level":30,"time":1793529027729,"service":"devsync-api","req":{"id":"6a0ee21a-0666-4459-a1f6-c01daa2dbc45","method":"POST"},"requestId":"6a0ee21a-0666-4459-a1f6-c01daa2dbc45","res":{"statusCode":201},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793529027785,"service":"devsync-api","req":{"id":"95488494-440e-4c1f-8ea6-7fe7b6201750","method":"GET"},"requestId":"95488494-440e-4c1f-8ea6-7fe7b6201750","res":{"statusCode":200},"responseTime":27,"msg":"request completed"}
+ GET /dashboard 200 in 41ms (next.js: 2.0ms, proxy.ts: 4ms, application-code: 35ms)
+{"level":30,"time":1793529029269,"service":"devsync-api","req":{"id":"05621054-8f30-488f-8395-51ce43a819ad","method":"GET"},"requestId":"05621054-8f30-488f-8395-51ce43a819ad","res":{"statusCode":304},"responseTime":27,"msg":"request completed"}
+{"level":30,"time":1793529029291,"service":"devsync-api","req":{"id":"2e78a73d-f59e-4025-b21f-842b1499d68a","method":"GET"},"requestId":"2e78a73d-f59e-4025-b21f-842b1499d68a","res":{"statusCode":304},"responseTime":20,"msg":"request completed"}
+  ✓   4 testing/browser/journeys.spec.ts:22:5 › owner creates a workspace from the dashboard (3.5s)
+{"level":30,"time":1793529029456,"service":"devsync-api","req":{"id":"fb49788b-d98e-44aa-801f-e7347c415d49","method":"GET"},"requestId":"fb49788b-d98e-44aa-801f-e7347c415d49","res":{"statusCode":200},"responseTime":17,"msg":"request completed"}
+{"level":30,"time":1793529029457,"service":"devsync-api","req":{"id":"ecd5cbfa-7d3f-4eb0-8751-331e9219753b","method":"GET"},"requestId":"ecd5cbfa-7d3f-4eb0-8751-331e9219753b","res":{"statusCode":200},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793529029470,"service":"devsync-api","req":{"id":"6f9715ef-0cac-4a6f-a0ea-acffd14f35e7","method":"GET"},"requestId":"6f9715ef-0cac-4a6f-a0ea-acffd14f35e7","res":{"statusCode":200},"responseTime":28,"msg":"request completed"}
+○ Compiling /(dashboard)/workspace/[id]/docs/[docId]/page ...
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 5.0s (next.js: 4.6s, proxy.ts: 12ms, application-code: 475ms)
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 5.0s (next.js: 4.6s, proxy.ts: 10ms, application-code: 476ms)
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 5.0s (next.js: 4.6s, proxy.ts: 10ms, application-code: 477ms)
+{"level":30,"time":1793529036644,"service":"devsync-api","req":{"id":"e3b747ef-3132-4113-982c-9d1156290fcf","method":"GET"},"requestId":"e3b747ef-3132-4113-982c-9d1156290fcf","res":{"statusCode":200},"responseTime":98,"msg":"request completed"}
+{"level":30,"time":1793529036683,"service":"devsync-api","req":{"id":"c31340e5-8dcf-4c07-a7aa-f4d08a6d00c4","method":"GET"},"requestId":"c31340e5-8dcf-4c07-a7aa-f4d08a6d00c4","res":{"statusCode":200},"responseTime":85,"msg":"request completed"}
+{"level":30,"time":1793529036689,"service":"devsync-api","req":{"id":"15a4f504-099b-47d1-ad57-aac59d556f3d","method":"GET"},"requestId":"15a4f504-099b-47d1-ad57-aac59d556f3d","res":{"statusCode":200},"responseTime":47,"msg":"request completed"}
+{"level":30,"time":1793529036729,"service":"devsync-api","req":{"id":"4bc1997b-93ad-4d83-a96a-07c346dd10c8","method":"GET"},"requestId":"4bc1997b-93ad-4d83-a96a-07c346dd10c8","res":{"statusCode":200},"responseTime":65,"msg":"request completed"}
+{"level":30,"time":1793529036739,"service":"devsync-api","req":{"id":"bb51d326-66ea-4bc1-8007-a8772b010f7a","method":"GET"},"requestId":"bb51d326-66ea-4bc1-8007-a8772b010f7a","res":{"statusCode":304},"responseTime":53,"msg":"request completed"}
+{"level":30,"time":1793529036745,"service":"devsync-api","req":{"id":"d8179c41-e72e-4e09-bd80-791c12e1d278","method":"GET"},"requestId":"d8179c41-e72e-4e09-bd80-791c12e1d278","res":{"statusCode":304},"responseTime":52,"msg":"request completed"}
+{"level":30,"time":1793529036950,"service":"devsync-api","req":{"id":"da9c135b-9128-4248-bc5e-21f36a7d5fbd","method":"PATCH"},"requestId":"da9c135b-9128-4248-bc5e-21f36a7d5fbd","res":{"statusCode":403},"responseTime":14,"msg":"request completed"}
+  ✓   5 testing/browser/journeys.spec.ts:33:5 › two contexts edit the same document and both edits merge; viewer is read-only (7.9s)
+{"level":30,"time":1793529037311,"service":"devsync-api","req":{"id":"1233fa72-fa2e-4f59-94ea-563f8edc3b4a","method":"GET"},"requestId":"1233fa72-fa2e-4f59-94ea-563f8edc3b4a","res":{"statusCode":200},"responseTime":10,"msg":"request completed"}
+{"level":30,"time":1793529037337,"service":"devsync-api","req":{"id":"12c9364c-2d22-4105-be44-9d07a67c6e64","method":"GET"},"requestId":"12c9364c-2d22-4105-be44-9d07a67c6e64","res":{"statusCode":200},"responseTime":8,"msg":"request completed"}
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 106ms (next.js: 41ms, proxy.ts: 5ms, application-code: 61ms)
+{"level":30,"time":1793529038909,"service":"devsync-api","req":{"id":"2a1163bd-307a-4ac6-9544-34c9b03b8b20","method":"GET"},"requestId":"2a1163bd-307a-4ac6-9544-34c9b03b8b20","res":{"statusCode":200},"responseTime":28,"msg":"request completed"}
+{"level":30,"time":1793529038933,"service":"devsync-api","req":{"id":"f7c3098b-f995-47b4-878a-df5488ff5fcb","method":"GET"},"requestId":"f7c3098b-f995-47b4-878a-df5488ff5fcb","res":{"statusCode":304},"responseTime":22,"msg":"request completed"}
+{"level":30,"time":1793529039067,"service":"devsync-api","req":{"id":"24687525-92f1-49fd-b61d-7c83a4cd29da","method":"GET"},"requestId":"24687525-92f1-49fd-b61d-7c83a4cd29da","res":{"statusCode":200},"responseTime":17,"msg":"request completed"}
+{"level":30,"time":1793529039091,"service":"devsync-api","req":{"id":"799775de-c180-4991-9cde-f653d18bad26","method":"DELETE"},"requestId":"799775de-c180-4991-9cde-f653d18bad26","res":{"statusCode":200},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793529039105,"service":"devsync-api","req":{"id":"47e7731c-6358-4e46-8d18-c3f5b44b5e31","method":"GET"},"requestId":"47e7731c-6358-4e46-8d18-c3f5b44b5e31","res":{"statusCode":403},"responseTime":4,"msg":"request completed"}
+{"level":30,"time":1793529039126,"service":"devsync-api","req":{"id":"c24dc455-8206-41fd-9265-65d6eb89c6d0","method":"POST"},"requestId":"c24dc455-8206-41fd-9265-65d6eb89c6d0","res":{"statusCode":201},"responseTime":17,"msg":"request completed"}
+  ✓   6 testing/browser/journeys.spec.ts:73:5 › owner removes an editor with an open document and access closes within seconds (1.9s)
+{"level":30,"time":1793529039249,"service":"devsync-api","req":{"id":"751d4b3b-b0c7-4f9b-9411-7fbde790fe3b","method":"GET"},"requestId":"751d4b3b-b0c7-4f9b-9411-7fbde790fe3b","res":{"statusCode":200},"responseTime":9,"msg":"request completed"}
+{"level":30,"time":1793529039280,"service":"devsync-api","req":{"id":"f64fdb1e-940b-4e5f-aa2d-c2ba388b7c3b","method":"POST"},"requestId":"f64fdb1e-940b-4e5f-aa2d-c2ba388b7c3b","res":{"statusCode":201},"responseTime":23,"msg":"request completed"}
+Yjs was already imported. This breaks constructor checks and will lead to issues! - https://github.com/yjs/yjs/issues/438
+ GET /workspace/devsync-sample/kanban 200 in 2.7s (next.js: 2.5s, proxy.ts: 9ms, application-code: 190ms)
+{"level":30,"time":1793529043536,"service":"devsync-api","req":{"id":"9f3145aa-8310-413b-9076-638762583fe3","method":"GET"},"requestId":"9f3145aa-8310-413b-9076-638762583fe3","res":{"statusCode":200},"responseTime":30,"msg":"request completed"}
+{"level":30,"time":1793529043576,"service":"devsync-api","req":{"id":"7545f6ba-a9ca-45de-8a73-381c263bb560","method":"GET"},"requestId":"7545f6ba-a9ca-45de-8a73-381c263bb560","res":{"statusCode":304},"responseTime":38,"msg":"request completed"}
+{"level":30,"time":1793529043869,"service":"devsync-api","req":{"id":"61657c8a-f2c8-46f9-8cee-7a60a3bfe47a","method":"PATCH"},"requestId":"61657c8a-f2c8-46f9-8cee-7a60a3bfe47a","res":{"statusCode":200},"responseTime":26,"msg":"request completed"}
+{"level":30,"time":1793529043895,"service":"devsync-api","req":{"id":"aa03ef26-41b4-4a4b-82b0-89293d1d84aa","method":"GET"},"requestId":"aa03ef26-41b4-4a4b-82b0-89293d1d84aa","res":{"statusCode":200},"responseTime":18,"msg":"request completed"}
+ GET /workspace/devsync-sample/kanban 200 in 125ms (next.js: 53ms, proxy.ts: 10ms, application-code: 62ms)
+ GET /workspace/devsync-sample/snippets 200 in 2.6s (next.js: 2.5s, proxy.ts: 5ms, application-code: 166ms)
+{"level":30,"time":1793529047929,"service":"devsync-api","req":{"id":"09d6795f-1bf3-469b-8251-027a6572f539","method":"GET"},"requestId":"09d6795f-1bf3-469b-8251-027a6572f539","res":{"statusCode":200},"responseTime":18,"msg":"request completed"}
+{"level":30,"time":1793529047941,"service":"devsync-api","req":{"id":"cdd143eb-89e0-4f97-a337-6735bc4dfa3a","method":"GET"},"requestId":"cdd143eb-89e0-4f97-a337-6735bc4dfa3a","res":{"statusCode":304},"responseTime":11,"msg":"request completed"}
+{"level":30,"time":1793529048493,"service":"devsync-api","req":{"id":"ee81bbba-b890-4368-8ff6-6e0facd51dd6","method":"POST"},"requestId":"ee81bbba-b890-4368-8ff6-6e0facd51dd6","res":{"statusCode":201},"responseTime":23,"msg":"request completed"}
+{"level":30,"time":1793529048532,"service":"devsync-api","req":{"id":"167a716a-c9b8-4d2a-8b98-a0a51f370b64","method":"GET"},"requestId":"167a716a-c9b8-4d2a-8b98-a0a51f370b64","res":{"statusCode":200},"responseTime":11,"msg":"request completed"}
+ GET /workspace/devsync-sample/snippets 200 in 109ms (next.js: 49ms, proxy.ts: 4ms, application-code: 56ms)
+{"level":30,"time":1793529049859,"service":"devsync-api","req":{"id":"f0bdab16-8076-4523-89d4-e5f6afa8cd35","method":"GET"},"requestId":"f0bdab16-8076-4523-89d4-e5f6afa8cd35","res":{"statusCode":304},"responseTime":11,"msg":"request completed"}
+{"level":30,"time":1793529049873,"service":"devsync-api","req":{"id":"82351f01-08f8-42ce-bdb2-5d2ec4eef28e","method":"GET"},"requestId":"82351f01-08f8-42ce-bdb2-5d2ec4eef28e","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+  ✓   7 testing/browser/journeys.spec.ts:111:5 › owner moves a Kanban card and saves a snippet (10.8s)
+{"level":30,"time":1793529050032,"service":"devsync-api","req":{"id":"3e1224d9-7f4a-4667-bde1-a16039dfd48e","method":"GET"},"requestId":"3e1224d9-7f4a-4667-bde1-a16039dfd48e","res":{"statusCode":200},"responseTime":10,"msg":"request completed"}
+{"level":30,"time":1793529050051,"service":"devsync-api","req":{"id":"d4f8c10f-0d59-41c8-9358-8875575f164d","method":"GET"},"requestId":"d4f8c10f-0d59-41c8-9358-8875575f164d","res":{"statusCode":200},"responseTime":7,"msg":"request completed"}
+{"level":30,"time":1793529050070,"service":"devsync-api","req":{"id":"60941b06-01bb-4ce7-939b-8e9ceacf214d","method":"POST"},"requestId":"60941b06-01bb-4ce7-939b-8e9ceacf214d","res":{"statusCode":201},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793529050077,"service":"devsync-api","req":{"id":"fcfda409-4c92-43f2-a3c4-913dc5b8cf9a","method":"GET"},"requestId":"fcfda409-4c92-43f2-a3c4-913dc5b8cf9a","res":{"statusCode":403},"responseTime":3,"msg":"request completed"}
+ GET /workspace/cmvxovzyl005b12e3bni2yq50 200 in 3.8s (next.js: 3.7s, proxy.ts: 6ms, application-code: 152ms)
+{"level":30,"time":1793529056723,"service":"devsync-api","req":{"id":"6e172baf-6eda-402c-ad98-fdd3d4d1e13f","method":"GET"},"requestId":"6e172baf-6eda-402c-ad98-fdd3d4d1e13f","res":{"statusCode":200},"responseTime":19,"msg":"request completed"}
+{"level":30,"time":1793529056742,"service":"devsync-api","req":{"id":"a65da5f0-b9f1-48e2-be0e-1a6253a97c8f","method":"GET"},"requestId":"a65da5f0-b9f1-48e2-be0e-1a6253a97c8f","res":{"statusCode":304},"responseTime":18,"msg":"request completed"}
+{"level":30,"time":1793529057406,"service":"devsync-api","req":{"id":"3e49a6ff-25f9-4397-b7b3-a52a4b4c318a","method":"POST"},"requestId":"3e49a6ff-25f9-4397-b7b3-a52a4b4c318a","res":{"statusCode":201},"responseTime":14,"msg":"request completed"}
+ GET /workspace/cmvxovzyl005b12e3bni2yq50 200 in 155ms (next.js: 74ms, proxy.ts: 9ms, application-code: 72ms)
+ GET /invitations/cmvxow5mf005q12e3xfe0ge4z 200 in 3.1s (next.js: 2.9s, proxy.ts: 3ms, application-code: 174ms)
+ GET /workspace/cmvxovzyl005b12e3bni2yq50 200 in 126ms (next.js: 50ms, proxy.ts: 4ms, application-code: 73ms)
+{"level":30,"time":1793529062161,"service":"devsync-api","req":{"id":"5d5e168f-f34e-41d9-88fb-b8ecb4ba9436","method":"POST"},"requestId":"5d5e168f-f34e-41d9-88fb-b8ecb4ba9436","res":{"statusCode":200},"responseTime":35,"msg":"request completed"}
+{"level":30,"time":1793529062194,"service":"devsync-api","req":{"id":"f8b5bac3-1235-4f99-8de6-bb1ee3411b64","method":"GET"},"requestId":"f8b5bac3-1235-4f99-8de6-bb1ee3411b64","res":{"statusCode":200},"responseTime":19,"msg":"request completed"}
+{"level":30,"time":1793529062211,"service":"devsync-api","req":{"id":"d2c4cbcd-996e-47d3-bb49-a0c96bcdd37c","method":"DELETE"},"requestId":"d2c4cbcd-996e-47d3-bb49-a0c96bcdd37c","res":{"statusCode":200},"responseTime":10,"msg":"request completed"}
+{"level":30,"time":1793529062237,"service":"devsync-api","req":{"id":"48856ae2-f238-4a5a-a911-fc41d092ecff","method":"POST"},"requestId":"48856ae2-f238-4a5a-a911-fc41d092ecff","res":{"statusCode":400},"responseTime":21,"msg":"request completed"}
+{"level":30,"time":1793529062246,"service":"devsync-api","req":{"id":"9f3c61ba-9a5a-4905-86d7-8f8f2eb85151","method":"GET"},"requestId":"9f3c61ba-9a5a-4905-86d7-8f8f2eb85151","res":{"statusCode":403},"responseTime":4,"msg":"request completed"}
+  ✓   8 testing/browser/journeys.spec.ts:160:7 › owner invites by email, recipient accepts with EDITOR, reuse cannot restore removed membership (12.3s)
+{"level":30,"time":1793529062329,"service":"devsync-api","req":{"id":"7c637954-3aff-4180-8550-5f3a301b27a1","method":"GET"},"requestId":"7c637954-3aff-4180-8550-5f3a301b27a1","res":{"statusCode":200},"responseTime":6,"msg":"request completed"}
+{"level":30,"time":1793529062349,"service":"devsync-api","req":{"id":"133c675d-f684-4a65-bfd5-b9f8765eb3a7","method":"GET"},"requestId":"133c675d-f684-4a65-bfd5-b9f8765eb3a7","res":{"statusCode":200},"responseTime":8,"msg":"request completed"}
+{"level":30,"time":1793529062365,"service":"devsync-api","req":{"id":"a527867e-d130-4423-b797-56d6be87b84e","method":"POST"},"requestId":"a527867e-d130-4423-b797-56d6be87b84e","res":{"statusCode":201},"responseTime":11,"msg":"request completed"}
+{"level":30,"time":1793529062373,"service":"devsync-api","req":{"id":"f19b3477-3365-449b-8f67-dcc95095ef4b","method":"GET"},"requestId":"f19b3477-3365-449b-8f67-dcc95095ef4b","res":{"statusCode":403},"responseTime":4,"msg":"request completed"}
+ GET /workspace/cmvxow9g7006612e38eiez39z 200 in 53ms (next.js: 3ms, proxy.ts: 4ms, application-code: 46ms)
+{"level":30,"time":1793529063937,"service":"devsync-api","req":{"id":"d5390c14-b877-41a9-8b00-1a71a7f4d8ad","method":"GET"},"requestId":"d5390c14-b877-41a9-8b00-1a71a7f4d8ad","res":{"statusCode":200},"responseTime":18,"msg":"request completed"}
+{"level":30,"time":1793529063952,"service":"devsync-api","req":{"id":"0b3af121-6fbf-4b6d-b5e2-979345f15fd3","method":"GET"},"requestId":"0b3af121-6fbf-4b6d-b5e2-979345f15fd3","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793529064681,"service":"devsync-api","req":{"id":"4e267d89-f239-4ac4-8467-8343779ad4aa","method":"POST"},"requestId":"4e267d89-f239-4ac4-8467-8343779ad4aa","res":{"statusCode":201},"responseTime":19,"msg":"request completed"}
+ GET /invitations/cmvxowb8g006l12e3d2fkksqy 200 in 124ms (next.js: 67ms, proxy.ts: 4ms, application-code: 53ms)
+{"level":30,"time":1793529066676,"service":"devsync-api","req":{"id":"b214ef81-a9f7-44d3-8979-9381954d312e","method":"POST"},"requestId":"b214ef81-a9f7-44d3-8979-9381954d312e","res":{"statusCode":200},"responseTime":23,"msg":"request completed"}
+{"level":30,"time":1793529066702,"service":"devsync-api","req":{"id":"2e466c99-8092-4e6a-8b6d-44bfb227aa74","method":"GET"},"requestId":"2e466c99-8092-4e6a-8b6d-44bfb227aa74","res":{"statusCode":200},"responseTime":12,"msg":"request completed"}
+{"level":30,"time":1793529066719,"service":"devsync-api","req":{"id":"7062ba7f-1a58-416b-a53b-f16da1f6b5e0","method":"DELETE"},"requestId":"7062ba7f-1a58-416b-a53b-f16da1f6b5e0","res":{"statusCode":200},"responseTime":11,"msg":"request completed"}
+{"level":30,"time":1793529066736,"service":"devsync-api","req":{"id":"fa0d4c0d-b7f5-4890-a6c8-8ffcf0702988","method":"POST"},"requestId":"fa0d4c0d-b7f5-4890-a6c8-8ffcf0702988","res":{"statusCode":400},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793529066743,"service":"devsync-api","req":{"id":"5132eb85-d836-4870-a43b-79ffd8566479","method":"GET"},"requestId":"5132eb85-d836-4870-a43b-79ffd8566479","res":{"statusCode":403},"responseTime":3,"msg":"request completed"}
+  ✓   9 testing/browser/journeys.spec.ts:160:7 › owner invites by email, recipient accepts with VIEWER, reuse cannot restore removed membership (4.5s)
+{"level":30,"time":1793529066822,"service":"devsync-api","req":{"id":"06400916-3308-4995-afed-68daeb5d73d2","method":"GET"},"requestId":"06400916-3308-4995-afed-68daeb5d73d2","res":{"statusCode":200},"responseTime":9,"msg":"request completed"}
+{"level":30,"time":1793529066839,"service":"devsync-api","req":{"id":"1c4fa0d1-0a7b-4914-998d-c4c0048c7afd","method":"GET"},"requestId":"1c4fa0d1-0a7b-4914-998d-c4c0048c7afd","res":{"statusCode":200},"responseTime":6,"msg":"request completed"}
+{"level":30,"time":1793529066857,"service":"devsync-api","req":{"id":"782d4535-4a42-4efe-a6ec-0127a9dbaf3f","method":"GET"},"requestId":"782d4535-4a42-4efe-a6ec-0127a9dbaf3f","res":{"statusCode":200},"responseTime":6,"msg":"request completed"}
+{"level":30,"time":1793529066871,"service":"devsync-api","req":{"id":"3ffd7d34-6dcf-44d7-821a-592556e26d21","method":"POST"},"requestId":"3ffd7d34-6dcf-44d7-821a-592556e26d21","res":{"statusCode":201},"responseTime":9,"msg":"request completed"}
+{"level":30,"time":1793529066885,"service":"devsync-api","req":{"id":"c3c527b8-3d9c-4f7d-a680-fe30e69bc5a2","method":"POST"},"requestId":"c3c527b8-3d9c-4f7d-a680-fe30e69bc5a2","res":{"statusCode":201},"responseTime":10,"msg":"request completed"}
+ GET /invitations/cmvxowcxt007f12e3fyockpbk 200 in 151ms (next.js: 79ms, proxy.ts: 7ms, application-code: 66ms)
+{"level":30,"time":1793529068481,"service":"devsync-api","req":{"id":"080c3e1d-c5bc-4962-88a8-352be8c47bbd","method":"POST"},"requestId":"080c3e1d-c5bc-4962-88a8-352be8c47bbd","res":{"statusCode":400},"responseTime":19,"msg":"request completed"}
+{"level":30,"time":1793529068514,"service":"devsync-api","req":{"id":"fce66f47-d8ce-4285-91e0-ea5df41b9ac0","method":"POST"},"requestId":"fce66f47-d8ce-4285-91e0-ea5df41b9ac0","res":{"statusCode":201},"responseTime":12,"msg":"request completed"}
+{"level":30,"time":1793529068529,"service":"devsync-api","req":{"id":"cb987177-3355-44a4-a1ed-5c9f6ea1ac53","method":"DELETE"},"requestId":"cb987177-3355-44a4-a1ed-5c9f6ea1ac53","res":{"statusCode":204},"responseTime":9,"msg":"request completed"}
+{"level":30,"time":1793529068548,"service":"devsync-api","req":{"id":"894d48b0-aedc-45c5-8898-35bad559880c","method":"POST"},"requestId":"894d48b0-aedc-45c5-8898-35bad559880c","res":{"statusCode":400},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793529068561,"service":"devsync-api","req":{"id":"d38abd9e-76dd-4fbc-bab5-c581422352fc","method":"POST"},"requestId":"d38abd9e-76dd-4fbc-bab5-c581422352fc","res":{"statusCode":201},"responseTime":10,"msg":"request completed"}
+{"level":30,"time":1793529068573,"service":"devsync-api","req":{"id":"6b053e1b-43fb-4347-ab40-e06dcd43a865","method":"POST"},"requestId":"6b053e1b-43fb-4347-ab40-e06dcd43a865","res":{"statusCode":403},"responseTime":7,"msg":"request completed"}
+{"level":30,"time":1793529068580,"service":"devsync-api","req":{"id":"8d4ca7d1-602c-41f1-a990-1ce90af00cf6","method":"POST"},"requestId":"8d4ca7d1-602c-41f1-a990-1ce90af00cf6","res":{"statusCode":400},"responseTime":3,"msg":"request completed"}
+{"level":30,"time":1793529068602,"service":"devsync-api","req":{"id":"b1ba2721-4555-4096-b16e-96e5041000a8","method":"POST"},"requestId":"b1ba2721-4555-4096-b16e-96e5041000a8","res":{"statusCode":200},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793529068608,"service":"devsync-api","req":{"id":"fca3bffc-2fe2-47cb-8fc3-50a2899228fe","method":"POST"},"requestId":"fca3bffc-2fe2-47cb-8fc3-50a2899228fe","res":{"statusCode":400},"responseTime":19,"msg":"request completed"}
+{"level":30,"time":1793529068624,"service":"devsync-api","req":{"id":"f60ef8d4-3d2a-45e0-a9e7-f74027fd8416","method":"POST"},"requestId":"f60ef8d4-3d2a-45e0-a9e7-f74027fd8416","res":{"statusCode":201},"responseTime":11,"msg":"request completed"}
+{"level":30,"time":1793529068646,"service":"devsync-api","req":{"id":"511d34d3-fd0d-4898-a699-94c908be44ba","method":"POST"},"requestId":"511d34d3-fd0d-4898-a699-94c908be44ba","res":{"statusCode":200},"responseTime":17,"msg":"request completed"}
+{"level":30,"time":1793529068655,"service":"devsync-api","req":{"id":"fc63f7ce-9e89-4709-852c-c898bb7003e8","method":"POST"},"requestId":"fc63f7ce-9e89-4709-852c-c898bb7003e8","res":{"statusCode":403},"responseTime":4,"msg":"request completed"}
+  ✓  10 testing/browser/journeys.spec.ts:225:5 › invitation recipient binding, expiry, revocation, payload validation and concurrent acceptance (1.9s)
+
+  10 passed (53.2s)
+[?25h

@@ -1,3 +1,48 @@
+# Phase1e — browser/product evidence delivered; provider/hosted checks remain open
+
+## Final stop note — local act verification incomplete
+
+Local `act` verification of the backend quality job was **not completed** because of port conflicts and artifact-server/runtime-token limits in this sandbox. The original workflow could not bind port6379. A temporary port-translated copy ran the backend quality commands, but coverage upload failed with `Unable to get the ACTIONS_RUNTIME_TOKEN env variable`. The proposed artifact-server retry was not executed. **Hosted CI on GitHub is the remaining check.** No further act runs, builds or tests will be started in this session. This final note supersedes earlier local-act summaries below and in CI_LOCAL_VERIFICATION.md.
+
+Branch `upgrade/enterprise`; no push, deployment or Phase2. Root AGENTS.md remains absent; frontend guidance, progress, authorization matrix and ADRs were read. Production security behavior is unchanged: this session adds the requested verified-recipient invitation lifecycle and schema metadata; the two discovered composition/parsing bugs were confined to the test executable.
+
+## Delivered
+
+- `2114a15`: disposable PostgreSQL/Redis orchestration, migrated/seeded data, non-bypass runtime role and actual browser UI/API/CRDT journeys. Original fixture server recursively bound its Prisma proxy to itself, producing401; the test composition now uses the default database directly. Three fixture roles sign in/out, workspace creation persists, two contexts edit ONE document and both edits merge, viewer UI/server writes are denied, an editor with an open document loses editability within 5 seconds and HTTP access is denied, a Kanban move commits and a snippet survives reload.
+- `e40ca0a`: additive pending email-bound invitations; OWNER creates/revokes, authenticated verified recipient accepts a fixed EDITOR/VIEWER role. Forced tenant/recipient RLS; serialized expiry/revocation/reuse checks and atomic member/activity/acceptance. Existing membership roles are preserved; used links cannot restore removed membership. Both grant roles, expiry, reuse after removal, wrong recipient, forged role, revocation and concurrent acceptance pass in real browser/HTTP fixtures. UI creates a shareable link and explicitly says no email was sent. Legacy immediate-add invite API is retained. ADR018 and AUTHZ_MATRIX updated.
+- `9a6f543`:54 real UI captures:26 before and28 current, each successful PNG verified at 1440px or390px. Fresh main worktree `.worktrees/phase1e-main` is detached at 9deffe28f37cf86905617cb6e4105b6588ed5f56. Only worktree auth/proxy/runtime config changed for capture; patch retained. Real public Clerk widgets and isolated owner product sessions use disposable current-backend data; this is UI reference evidence, not original-main security/provider proof. The new invitation route has two current captures and no original-main counterpart. Manifests and exact missing pages are in ui/before and ui/current. Historical placeholder filenames now contain actual seeded interiors.
+- `f53f920`: complete Zod transport documentation for 55 HTTP operations (51 mounted backend,2 app-level,2 Next); explicit DTO projections, path/query/body/status/header schemas, multipart, SSE, signatures and redirects. Generation fails for a missing mounted contract or missing mutating request schema; independent AST inventories guard app/Next routes, orphan entries and all recursive schema references. Runtime security/signature/Multer behavior is retained; `x-contract-complete:true` is distinct from the retained `x-validation-complete:false`. Existing tests were not weakened. Real-response contract validation additionally covers resource CRUD/profile/search, repository setup, signed native GitHub/Stripe, SCIM and service-authorized administration with ephemeral credentials and no external provider expense. This caught a fixture-only outer JSON parser consuming signed bytes; only fixture-login endpoints now use that outer parser. ADR019 explains scope.
+
+## Real verification
+
+Baseline both six-command gates passed using webpack, with 186 backend tests,7 Node tests and10 component tests. Browser group and invitation group each ran full gates; first invitation backend gate stopped on formatting and the corrected retry passed. Capture group full gate passed. Final contract group `phase1e-evidence/contracts-results.json`: both `npm ci --no-audit`, lint, format, strict types, tests and builds exit0; backend **16 suites /192 tests**, frontend **7 Node +10 component tests**, webpack build. Existing coverage thresholds are retained. Separate final browser/API run `contracts-browser-retry.log`: **11 passed**. Earlier failures/interruptions/timeouts and successful retries are retained. No existing skipped E2E scenario is counted as passed.
+
+Turbopack failure is environmental/cache-related: sandbox IPv4/IPv6 binds returnEPERM; host probes bind successfully. A cached failed graph repeated the error without a TCP bind syscall. After moving generated `.next` aside, a clean host build binds127.0.0.1:0 and completes (`turbopack-clean-host.log`, bind trace). A final current-tree default build is recorded in `turbopack-final-host.log`; webpack is the explicit verified group gate. No source workaround weakens sandboxing or security.
+
+Local CI: official act v0.2.94 release digest verified; workflow listings pass. Quality and image dry runs crash in act's service health-check code with nil-pointer panic/exit2. Railway dry run passes only as a plan; no commands deploy anything. Full local quality commands pass independently. Every unexecuted workflow step is enumerated in CI_LOCAL_VERIFICATION.md.
+
+## Unfinished and why
+
+| Item | Exact remaining condition |
+| --- | --- |
+| Real Clerk sign-in as owner/editor/viewer | Not attempted: the supplied identity/method configuration is not visible. Both default env files and all 5 project env files (including worktrees) contain no SEED/E2E/TEST identity or sign-in-method settings. Inherited process has none. Current Clerk admin API returns200 and reports 2 users, with no identifiable owner/editor/viewer candidates. No key invalidity or provider login error is fabricated. File-location clarification was requested but no path/settings were received. See clerk-readiness.json, clerk-local-env-inventory.json and clerk-provider-recheck.json. All passing sign-in/out journeys use the explicitly isolated fixture, not provider sessions. |
+| Superadmin UI before/current at 1440px and390px | HTTP500: server layout requires Clerk middleware/currentUser and a real global SUPER_ADMIN session; fixture owner authority is insufficient. Metrics loader also attempts the default backend on port5000, unavailable in the fixture. No bypass was added. Historical superadmin PNGs are excluded from the manifests. |
+| Initial unconfigured main startup cause | Bare worktree probe ended without a completed HTTP response before its deadline. Its exact root cause remains unverified. Valid local Clerk configuration, isolated auth and seeded local API/data make all other capture routes serve200; source workaround stays in the separate worktree. |
+| Exact GitHub CI/image/security/publish/deploy execution | Not executed. act workflow listing and Railway plan work, but the service-container dry-run bug blocks main quality/image planning. Hosted actions/caches/uploads, container images, Trivy/SARIF/SBOM/provenance, registry publication and deployment remain unverified. See exact per-step ledger. |
+| Browser CI gate | Local harness passes, but the workflow has not been extended to run it. No CI browser result is claimed. |
+
+The inherited mobile docs layout gives its loaded title zero width at 390px on BOTH branches. Captures preserve it; logs record actual bounds. No UI regression or fix is claimed for that inherited issue.
+
+## User action
+
+1. Make the configured identity env file available in this workspace or provide its exact path and variable names (not secret values). The visible defaults are backend/.env and frontend/.env.local; backend/.env.example defines `SEED_OWNER_CLERK_ID`, `SEED_EDITOR_CLERK_ID`, `SEED_VIEWER_CLERK_ID`. Supply 3 distinct existing development IDs and the approved sign-in method through local env. The currently configured instance has only 2 users, so ensure those users belong to the same instance as the configured matching Clerk keys. Successful admin access does not justify rotating keys. Do not paste passwords or keys into chat.
+2. A real verified global SUPER_ADMIN test session and correctly configured backend origin are needed for superadmin interiors. Workspace OWNER is not that authority.
+3. Hosted CI verification still needs the workflow's Clerk repository variable/secret. No push is performed to trigger it. Review/apply the new forward invitation migration only through normal backed-up deployment procedures; this session migrated disposable databases only.
+
+Historical ledgers follow; superseded unfinished statements below are not the current Phase1e status.
+
+---
+
 # Phase 1d — partial delivery, not complete
 
 Branch `upgrade/enterprise`; no push or Phase 2 work. Root `AGENTS.md` is absent; read frontend guidance, progress, authorization matrix, audit and ADRs 001–018. Production authentication/authorization behavior is unchanged.

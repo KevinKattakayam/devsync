@@ -1,3 +1,11 @@
+# Phase1e — authenticated browser journeys, invitations, UI evidence and contracts
+
+- Add disposable non-bypass browser orchestration and10 retained product journeys plus real HTTP DTO validation; final Playwright/API run 11 passes. Fix test-only self-referencing database binding and premature JSON parsing; production auth/signature behavior remains intact.
+- Add verified-recipient invitation creation/acceptance/revocation with tenant/recipient RLS, atomic role application and expiry/reuse/concurrency coverage. UI provides a shareable link and makes no email-delivery claim.
+- Capture54 actual before/current UI images at 1440px/390px; original main stays in a separate worktree. Superadmin interiors remain unavailable; manifests explain why.
+- Complete55 OpenAPI/Zod HTTP contracts and enforce route/request/response schema inventory plus recursive-reference integrity. Final full gates:192 backend tests,7 frontend Node tests,10 component tests; both builds pass using webpack. Clean host Turbopack build confirms sandbox/cache origin of the earlier bind failure.
+- Record actual act workflow listings, failing quality/image dry runs and successful deploy-plan dry run; no publish/deploy/push occurred. Real Clerk sign-in remains blocked by configuration not visible in project env files. See docs/PROGRESS.md and CI_LOCAL_VERIFICATION.md for required actions and remaining checks.
+
 # Phase 1d — frontend fixture increment (partial)
 
 - Add production-excluded frontend fixture generation and identity/token/logout adapter, isolation regressions and four component tests; generated app type-checks.

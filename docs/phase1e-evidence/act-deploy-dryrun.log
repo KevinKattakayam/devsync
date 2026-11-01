@@ -1,0 +1,19 @@
+time="2026-11-01T16:28:36+05:30" level=info msg="Using docker host 'unix:///var/run/docker.sock', and daemon socket 'unix:///var/run/docker.sock'"
+*DRYRUN* [Deploy to Railway/deploy] ⭐ Run Set up job
+*DRYRUN* [Deploy to Railway/deploy] 🚀  Start image=catthehacker/ubuntu:act-latest
+*DRYRUN* [Deploy to Railway/deploy]   🐳  docker pull image=catthehacker/ubuntu:act-latest platform= username= forcePull=true
+*DRYRUN* [Deploy to Railway/deploy]   🐳  docker create image=catthehacker/ubuntu:act-latest platform= entrypoint=["tail" "-f" "/dev/null"] cmd=[] network="host"
+*DRYRUN* [Deploy to Railway/deploy]   🐳  docker run image=catthehacker/ubuntu:act-latest platform= entrypoint=["tail" "-f" "/dev/null"] cmd=[] network="host"
+*DRYRUN* [Deploy to Railway/deploy]   ✅  Success - Set up job
+*DRYRUN* [Deploy to Railway/deploy] ⭐ Run Main actions/checkout@v4
+*DRYRUN* [Deploy to Railway/deploy]   ✅  Success - Main actions/checkout@v4 [5.213017ms]
+*DRYRUN* [Deploy to Railway/deploy] ⭐ Run Main Install Railway CLI
+*DRYRUN* [Deploy to Railway/deploy]   ✅  Success - Main Install Railway CLI [14.927397ms]
+*DRYRUN* [Deploy to Railway/deploy] ⭐ Run Main Deploy Backend
+*DRYRUN* [Deploy to Railway/deploy]   ✅  Success - Main Deploy Backend [15.572813ms]
+*DRYRUN* [Deploy to Railway/deploy] ⭐ Run Main Deploy Frontend
+*DRYRUN* [Deploy to Railway/deploy]   ✅  Success - Main Deploy Frontend [14.919934ms]
+*DRYRUN* [Deploy to Railway/deploy] ⭐ Run Complete job
+*DRYRUN* [Deploy to Railway/deploy] Cleaning up container for job deploy
+*DRYRUN* [Deploy to Railway/deploy]   ✅  Success - Complete job
+*DRYRUN* [Deploy to Railway/deploy] 🏁  Job succeeded

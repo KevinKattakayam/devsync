@@ -1,0 +1,120 @@
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": PostgreSQL database "devsync_e2e_browser", schema "public" at "localhost:32826"
+
+10 migrations found in prisma/migrations
+
+Applying migration `20260729000000_baseline`
+Applying migration `20260729180000_enterprise_platform`
+Applying migration `20260815000000_phase_3_tenant_rls`
+Applying migration `20260815001000_scim_provisioning`
+Applying migration `20260815002000_commercial_billing`
+Applying migration `20261031000000_tenant_indexes`
+Applying migration `20261031010000_crdt_journal`
+Applying migration `202611010001_canonical_revision`
+Applying migration `202611010002_embedding_authority`
+Applying migration `202611010003_atomic_create_idempotency`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20260729000000_baseline/
+    └─ migration.sql
+  └─ 20260729180000_enterprise_platform/
+    └─ migration.sql
+  └─ 20260815000000_phase_3_tenant_rls/
+    └─ migration.sql
+  └─ 20260815001000_scim_provisioning/
+    └─ migration.sql
+  └─ 20260815002000_commercial_billing/
+    └─ migration.sql
+  └─ 20261031000000_tenant_indexes/
+    └─ migration.sql
+  └─ 20261031010000_crdt_journal/
+    └─ migration.sql
+  └─ 202611010001_canonical_revision/
+    └─ migration.sql
+  └─ 202611010002_embedding_authority/
+    └─ migration.sql
+  └─ 202611010003_atomic_create_idempotency/
+    └─ migration.sql
+      
+All migrations have been successfully applied.
+Sample workspace seeded. Sign in with the supplied Clerk test identities.
+/home/kevin/devsync/.worktrees/frontend-fixture
+Isolated fixture server ready
+{"level":30,"time":1793524386431,"service":"devsync-api","req":{"id":"cdadcfbf-d584-4395-8167-c757d0c801b1","method":"GET"},"requestId":"cdadcfbf-d584-4395-8167-c757d0c801b1","res":{"statusCode":200},"responseTime":4,"msg":"request completed"}
+▲ Next.js 16.4.3 (webpack)
+- Local:         http://127.0.0.1:3001
+- Network:       http://127.0.0.1:3001
+✓ Ready in 307ms
+✓ Running next.config.ts took 27ms
+
+✓ Generated AGENTS.md for AI agents. Set `agentRules: false` in next.config to disable.
+○ Compiling /(auth)/login/[[...rest]]/page ...
+ GET /login 200 in 757ms (proxy.ts: 89ms)
+ GET /login 200 in 86ms (next.js: 34ms, proxy.ts: 7ms, application-code: 46ms)
+
+Running 7 tests using 1 worker
+
+(node:63730) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ GET /dashboard 200 in 2.1s (next.js: 1809ms, proxy.ts: 4ms, application-code: 243ms)
+{"level":30,"time":1793524410479,"service":"devsync-api","req":{"id":"f1d28d17-ef60-4725-8cdc-7bfe17017f75","method":"GET"},"requestId":"f1d28d17-ef60-4725-8cdc-7bfe17017f75","res":{"statusCode":401},"responseTime":5,"msg":"request completed"}
+{"level":30,"time":1793524410484,"service":"devsync-api","req":{"id":"6c8ef9b5-dd47-4ef2-9010-6d5dd9fda7a1","method":"GET"},"requestId":"6c8ef9b5-dd47-4ef2-9010-6d5dd9fda7a1","res":{"statusCode":401},"responseTime":3,"msg":"request completed"}
+  ✘  1 testing/browser/journeys.spec.ts:34:7 › owner signs in and signs out with server session invalidation (1.5m)
+(node:70120) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ GET /dashboard 200 in 74ms (next.js: 3ms, proxy.ts: 5ms, application-code: 67ms)
+{"level":30,"time":1793524498796,"service":"devsync-api","req":{"id":"1fab25a5-7c37-441e-8c27-02274025549c","method":"GET"},"requestId":"1fab25a5-7c37-441e-8c27-02274025549c","res":{"statusCode":401},"responseTime":2,"msg":"request completed"}
+{"level":30,"time":1793524498800,"service":"devsync-api","req":{"id":"a31e8522-e296-426f-99cf-255cf90651e2","method":"GET"},"requestId":"a31e8522-e296-426f-99cf-255cf90651e2","res":{"statusCode":401},"responseTime":2,"msg":"request completed"}
+  ✘  2 testing/browser/journeys.spec.ts:34:7 › editor signs in and signs out with server session invalidation (1.4m)
+
+
+  1) testing/browser/journeys.spec.ts:34:7 › owner signs in and signs out with server session invalidation 
+
+    Test timeout of 90000ms exceeded.
+
+    Error: locator.click: Test timeout of 90000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Sample owner', exact: true })
+
+
+      38 |   }) => {
+      39 |     await login(context, role);
+    > 40 |     await page.goto('/dashboard');
+         |                                   ^
+      41 |     await page.getByRole('button', { name: `Sample ${role}`, exact: true }).click();
+      42 |     await page.getByRole('button', { name: 'Sign Out', exact: true }).click();
+      43 |     await expect(page).toHaveURL(/\/login/);
+        at /home/kevin/devsync/backend/testing/browser/journeys.spec.ts:40:77
+
+    Error Context: test-results/journeys-owner-signs-in-an-a1bef-server-session-invalidation/error-context.md
+
+  2) testing/browser/journeys.spec.ts:34:7 › editor signs in and signs out with server session invalidation 
+
+    Test was interrupted.
+
+    Error: locator.click: Test ended.
+    Call log:
+      - waiting for getByRole('button', { name: 'Sample editor', exact: true })
+
+
+      38 |   }) => {
+      39 |     await login(context, role);
+    > 40 |     await page.goto('/dashboard');
+         |                                   ^
+      41 |     await page.getByRole('button', { name: `Sample ${role}`, exact: true }).click();
+      42 |     await page.getByRole('button', { name: 'Sign Out', exact: true }).click();
+      43 |     await expect(page).toHaveURL(/\/login/);
+        at /home/kevin/devsync/backend/testing/browser/journeys.spec.ts:40:77
+
+    Error Context: test-results/journeys-editor-signs-in-a-e9d38-server-session-invalidation/error-context.md
+
+  1 failed
+    testing/browser/journeys.spec.ts:34:7 › owner signs in and signs out with server session invalidation 
+  1 interrupted
+    testing/browser/journeys.spec.ts:34:7 › editor signs in and signs out with server session invalidation 
+  5 did not run
+[?25h
+Browser orchestration command exited 130

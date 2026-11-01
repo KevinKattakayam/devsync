@@ -1,0 +1,1028 @@
+time="2026-11-01T16:47:48+05:30" level=info msg="Using docker host 'unix:///var/run/docker.sock', and daemon socket 'unix:///var/run/docker.sock'"
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build] ⭐ Run Set up job
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build] 🚀  Start image=catthehacker/ubuntu:act-24.04
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   🐳  docker pull image=pgvector/pgvector:pg16 platform= username= forcePull=true
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   🐳  docker pull image=redis:7-alpine platform= username= forcePull=true
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build] using DockerAuthConfig authentication for docker pull
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build] using DockerAuthConfig authentication for docker pull
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   🐳  docker pull image=catthehacker/ubuntu:act-24.04 platform= username= forcePull=true
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build] using DockerAuthConfig authentication for docker pull
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build] Cleaning up services for job Install, lint, format, types, tests, contracts and build
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build] Cleaning up network for job Install, lint, format, types, tests, contracts and build, and network name is: act-DevSync-Local-Quality-Port-Translation-Install-lint-format-5904afc75840fa6896824444a3e5f56ff106d1e155e80a079df334b14bfff312-quality-network
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   🐳  docker pull image=redis:7-alpine platform= username= forcePull=false
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   🐳  docker pull image=pgvector/pgvector:pg16 platform= username= forcePull=false
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   🐳  docker create image=redis:7-alpine platform= entrypoint=[] cmd=[] network="act-DevSync-Local-Quality-Port-Translation-Install-lint-format-5904afc75840fa6896824444a3e5f56ff106d1e155e80a079df334b14bfff312-quality-network"
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   🐳  docker create image=pgvector/pgvector:pg16 platform= entrypoint=[] cmd=[] network="act-DevSync-Local-Quality-Port-Translation-Install-lint-format-5904afc75840fa6896824444a3e5f56ff106d1e155e80a079df334b14bfff312-quality-network"
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   🐳  docker run image=redis:7-alpine platform= entrypoint=[] cmd=[] network="act-DevSync-Local-Quality-Port-Translation-Install-lint-format-5904afc75840fa6896824444a3e5f56ff106d1e155e80a079df334b14bfff312-quality-network"
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   🐳  docker run image=pgvector/pgvector:pg16 platform= entrypoint=[] cmd=[] network="act-DevSync-Local-Quality-Port-Translation-Install-lint-format-5904afc75840fa6896824444a3e5f56ff106d1e155e80a079df334b14bfff312-quality-network"
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   🐳  docker create image=catthehacker/ubuntu:act-24.04 platform= entrypoint=["tail" "-f" "/dev/null"] cmd=[] network="host"
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   🐳  docker run image=catthehacker/ubuntu:act-24.04 platform= entrypoint=["tail" "-f" "/dev/null"] cmd=[] network="host"
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build] container health of 8601af178f2aae0874b5e9f2e3d9692ebfc922ed7fdf41d56e819105eb45b508 (redis:7-alpine) is starting
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build] container health of 15d13253fa590408e66ccfd3b5805aa677547e4755b863531b8ac4b8b4ccc04e (pgvector/pgvector:pg16) is starting
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build] container health of 8601af178f2aae0874b5e9f2e3d9692ebfc922ed7fdf41d56e819105eb45b508 (redis:7-alpine) is starting
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build] container health of 15d13253fa590408e66ccfd3b5805aa677547e4755b863531b8ac4b8b4ccc04e (pgvector/pgvector:pg16) is starting
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build] container health of 8601af178f2aae0874b5e9f2e3d9692ebfc922ed7fdf41d56e819105eb45b508 (redis:7-alpine) is starting
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build] container health of 15d13253fa590408e66ccfd3b5805aa677547e4755b863531b8ac4b8b4ccc04e (pgvector/pgvector:pg16) is starting
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build] container health of 8601af178f2aae0874b5e9f2e3d9692ebfc922ed7fdf41d56e819105eb45b508 (redis:7-alpine) is healthy
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build] container health of 15d13253fa590408e66ccfd3b5805aa677547e4755b863531b8ac4b8b4ccc04e (pgvector/pgvector:pg16) is healthy
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   🐳  docker exec cmd=[node --no-warnings -e console.log(process.execPath)] user= workdir=
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   ✅  Success - Set up job
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   ☁  git clone 'https://github.com/actions/setup-node' # ref=v4
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   ☁  git clone 'https://github.com/actions/upload-artifact' # ref=v4
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build] 🧪  Matrix: map[service:backend]
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build] ⭐ Run Main actions/checkout@v4
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   🐳  docker cp src=/home/kevin/devsync/. dst=/home/kevin/devsync
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   ✅  Success - Main actions/checkout@v4 [1.354753171s]
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build] ⭐ Run Main actions/setup-node@v4
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   🐳  docker cp src=/tmp/devsync-act-quality-cache/act/actions-setup-node@v4/ dst=/var/run/act/actions/actions-setup-node@v4/
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   🐳  docker exec cmd=[/opt/acttoolcache/node/24.19.0/x64/bin/node /var/run/act/actions/actions-setup-node@v4/dist/setup/index.js] user= workdir=
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | Attempting to download 22...
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | (node:31) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | (Use `node --trace-deprecation ...` to show where the warning was created)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | Acquiring 22.23.4 - x64 from https://github.com/actions/node-versions/releases/download/22.23.4-39619033003/node-22.23.4-linux-x64.tar.gz
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | Extracting ...
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | [command]/usr/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /tmp/a5baad6a-a272-4a73-8c11-cfb12f797e56 -f /tmp/d51dd7ab-1c54-45a4-9b17-c8adce7e4ab3
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | Adding to the cache ...
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   ❓  ::group::Environment details
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | node: v22.23.4
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | npm: 10.9.9
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | yarn: 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   ❓  ::endgroup::
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   🚧  ::warning::The runner was not able to contact the cache service. Caching will be skipped
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   ❓ add-matcher /run/act/actions/actions-setup-node@v4/.github/tsc.json
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   ❓ add-matcher /run/act/actions/actions-setup-node@v4/.github/eslint-stylish.json
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   ❓ add-matcher /run/act/actions/actions-setup-node@v4/.github/eslint-compact.json
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   ✅  Success - Main actions/setup-node@v4 [11.147939212s]
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   ⚙  ::set-output:: node-version=v22.23.4
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   ⚙  ::add-path:: /opt/hostedtoolcache/node/22.23.4/x64/bin
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build] ⭐ Run Main npm ci
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   🐳  docker exec cmd=[bash -e /var/run/act/workflow/2] user= workdir=backend
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | npm warn deprecated node-domexception@1.0.0: Use your platform's native DOMException instead
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | npm warn deprecated levelup@4.4.0: Superseded by abstract-level (https://github.com/Level/community#faq)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | npm warn deprecated level-errors@2.0.1: Superseded by abstract-level (https://github.com/Level/community#faq)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | npm warn deprecated level-packager@5.1.1: Superseded by abstract-level (https://github.com/Level/community#faq)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | npm warn deprecated level-concat-iterator@2.0.1: Superseded by abstract-level (https://github.com/Level/community#faq)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | npm warn deprecated level-codec@9.0.2: Superseded by level-transcoder (https://github.com/Level/community#faq)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | npm warn deprecated level-js@5.0.2: Superseded by browser-level (https://github.com/Level/community#faq)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | npm warn deprecated leveldown@5.6.0: Superseded by classic-level (https://github.com/Level/community#faq)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | npm warn deprecated eslint@9.39.5: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | npm warn deprecated deferred-leveldown@5.3.0: Superseded by abstract-level (https://github.com/Level/community#faq)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | npm warn deprecated encoding-down@6.3.0: Superseded by abstract-level (https://github.com/Level/community#faq)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | npm warn deprecated abstract-leveldown@6.2.3: Superseded by abstract-level (https://github.com/Level/community#faq)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | > devsync-backend@1.0.0 postinstall
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | > prisma generate
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | Prisma schema loaded from prisma/schema.prisma
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | ✔ Generated Prisma Client (v5.22.0) to ./node_modules/@prisma/client in 206ms
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | Tip: Want to react to database changes in your app as they happen? Discover how with Pulse: https://pris.ly/tip-1-pulse
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | added 1017 packages, and audited 1018 packages in 58s
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 171 packages are looking for funding
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   run `npm fund` for details
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 43 vulnerabilities (2 low, 41 moderate)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | To address issues that do not require attention, run:
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   npm audit fix
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | To address all issues possible (including breaking changes), run:
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   npm audit fix --force
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | Some issues need review, and may require choosing
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | a different dependency.
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | Run `npm audit` for details.
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   ✅  Success - Main npm ci [58.14787472s]
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build] ⭐ Run Main npm run lint
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   🐳  docker exec cmd=[bash -e /var/run/act/workflow/3] user= workdir=backend
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | > devsync-backend@1.0.0 lint
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | > eslint src prisma testing
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   ✅  Success - Main npm run lint [1.695745257s]
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build] ⭐ Run Main npm run format:check
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   🐳  docker exec cmd=[bash -e /var/run/act/workflow/4] user= workdir=backend
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | > devsync-backend@1.0.0 format:check
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | > prettier --check . --ignore-unknown
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | Checking formatting...
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | All matched files use Prettier code style!
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   ✅  Success - Main npm run format:check [1.905929154s]
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build] ⭐ Run Main npm run typecheck
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   🐳  docker exec cmd=[bash -e /var/run/act/workflow/5] user= workdir=backend
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | > devsync-backend@1.0.0 typecheck
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | > tsc --noEmit && tsc -p tsconfig.seed.json && tsc -p tsconfig.testing.json
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   ✅  Success - Main npm run typecheck [11.731972569s]
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build] ⭐ Run Main npm test
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   🐳  docker exec cmd=[bash -e /var/run/act/workflow/6] user= workdir=backend
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | > devsync-backend@1.0.0 test
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | > jest --runInBand
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | {"level":50,"time":1793532037918,"service":"devsync-api","msg":"Unexpected server error"}
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | PASS src/__tests__/resource-mutations.integration.test.ts (18.752 s)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   ● Console
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       [beforeHandleMessage] Error: Message rejected
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:195:55)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at processTicksAndRejections (node:internal/process/task_queues:103:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       closing connection 02103d1a-dd03-479d-8210-de52aecd56e6 (while handling document:resource-a-36:doc-resource-a-36) because of exception Error: Message rejected
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:195:55)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at processTicksAndRejections (node:internal/process/task_queues:103:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       [beforeHandleMessage] Error: Message rejected
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:195:55)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at processTicksAndRejections (node:internal/process/task_queues:103:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       closing connection c6ae0e62-9d3d-4944-852e-420b5fa2c63c (while handling document:resource-a-36:doc-resource-a-36) because of exception Error: Message rejected
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:195:55)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at processTicksAndRejections (node:internal/process/task_queues:103:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | PASS src/__tests__/collaboration.integration.test.ts (23.728 s)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   ● Console
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Collaboration scenario: merges two real clients editing the same paragraph concurrently
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:19:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Closing collaboration clients and servers
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:87:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       [beforeHandleMessage] Error: Message rejected
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:195:55)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at processTicksAndRejections (node:internal/process/task_queues:103:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       closing connection 30a66505-34b6-4e35-aeb1-3fd848dd1cf8 (while handling document:workspace:document-1) because of exception Error: Message rejected
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:195:55)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at processTicksAndRejections (node:internal/process/task_queues:103:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       [beforeHandleMessage] Error: Message rejected
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:195:55)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at processTicksAndRejections (node:internal/process/task_queues:103:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       closing connection 907b5a8f-c0fe-471a-96f5-3f52ef65a8e8 (while handling document:workspace:document-1) because of exception Error: Message rejected
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:195:55)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at processTicksAndRejections (node:internal/process/task_queues:103:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Collaboration cleanup complete
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:98:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Collaboration scenario: merges offline edits on reconnect rather than replacing server text
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:19:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Closing collaboration clients and servers
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:87:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       [beforeHandleMessage] Error: Message rejected
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:195:55)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at processTicksAndRejections (node:internal/process/task_queues:103:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       closing connection 7af7e5dd-98f3-451e-8c6b-c6b6376a0a15 (while handling document:workspace:document-2) because of exception Error: Message rejected
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:195:55)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at processTicksAndRejections (node:internal/process/task_queues:103:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       [beforeHandleMessage] Error: Message rejected
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:195:55)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/ClientConnection.ts:290:4
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at node_modules/@hocuspocus/server/src/ClientConnection.ts:290:4
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       closing connection 793fea32-7a1d-4fc1-a759-e294daf31c0b (while handling document:workspace:document-2) because of exception Error: Message rejected
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:195:55)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/ClientConnection.ts:290:4
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at node_modules/@hocuspocus/server/src/ClientConnection.ts:290:4
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Collaboration cleanup complete
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:98:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Collaboration scenario: rejects viewer mutations at the actual server protocol and journal
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:19:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Closing collaboration clients and servers
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:87:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       [beforeHandleMessage] Error: Message rejected
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:195:55)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at processTicksAndRejections (node:internal/process/task_queues:103:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       closing connection 253ad034-68b2-413c-b9ae-482194e14f40 (while handling document:workspace:document-3) because of exception Error: Message rejected
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:195:55)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at processTicksAndRejections (node:internal/process/task_queues:103:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       [beforeHandleMessage] Error: Message rejected
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:195:55)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at processTicksAndRejections (node:internal/process/task_queues:103:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       closing connection 787a388e-d227-4fdc-9b38-2f91644dc451 (while handling document:workspace:document-3) because of exception Error: Message rejected
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:195:55)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at processTicksAndRejections (node:internal/process/task_queues:103:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Collaboration cleanup complete
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:98:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Collaboration scenario: cuts off a removed member without waiting for another edit
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:19:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Closing collaboration clients and servers
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:87:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Collaboration cleanup complete
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:98:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Collaboration scenario: cuts off a downgraded editor and requires a new read-only session
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:19:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Closing collaboration clients and servers
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:87:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       [beforeHandleMessage] Error: Message rejected
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:195:55)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at processTicksAndRejections (node:internal/process/task_queues:103:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       closing connection 7d796303-44b7-4a5e-aec9-ec8384f31003 (while handling document:workspace:document-5) because of exception Error: Message rejected
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:195:55)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at processTicksAndRejections (node:internal/process/task_queues:103:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Collaboration cleanup complete
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:98:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Collaboration scenario: rejects forged document workspace prefixes and non-member rooms
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:19:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       [onAuthenticate] ForbiddenError: Access denied
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at authorizeWorkspace (/home/kevin/devsync/backend/src/security/workspace-policy.ts:48:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.onAuthenticate (/home/kevin/devsync/backend/src/services/collaboration-server.ts:147:22)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at ClientConnection.handleQueueingMessage (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/ClientConnection.ts:531:5) {
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |         statusCode: 403,
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |         isOperational: true
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       }
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at ClientConnection.handleQueueingMessage (node_modules/@hocuspocus/server/src/ClientConnection.ts:531:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       [onAuthenticate] Error: Access denied
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at authorize (/home/kevin/devsync/backend/src/services/collaboration-server.ts:81:15)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.onAuthenticate (/home/kevin/devsync/backend/src/services/collaboration-server.ts:155:7)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at ClientConnection.handleQueueingMessage (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/ClientConnection.ts:531:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at ClientConnection.handleQueueingMessage (node_modules/@hocuspocus/server/src/ClientConnection.ts:531:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       [onAuthenticate] ForbiddenError: Access denied
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at authorizeWorkspace (/home/kevin/devsync/backend/src/security/workspace-policy.ts:48:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.onAuthenticate (/home/kevin/devsync/backend/src/services/collaboration-server.ts:147:22)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at ClientConnection.handleQueueingMessage (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/ClientConnection.ts:531:5) {
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |         statusCode: 403,
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |         isOperational: true
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       }
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at ClientConnection.handleQueueingMessage (node_modules/@hocuspocus/server/src/ClientConnection.ts:531:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Closing collaboration clients and servers
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:87:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Collaboration cleanup complete
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:98:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Collaboration scenario: authenticates awareness names and cleans remote presence on disconnect
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:19:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Closing collaboration clients and servers
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:87:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       [beforeHandleMessage] Error: Message rejected
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:195:55)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at processTicksAndRejections (node:internal/process/task_queues:103:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       closing connection 80e6279c-5f0d-49be-9243-1f5e63888245 (while handling document:workspace:document-7) because of exception Error: Message rejected
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:195:55)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at processTicksAndRejections (node:internal/process/task_queues:103:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Collaboration cleanup complete
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:98:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Collaboration scenario: recovers acknowledged updates from the journal before snapshot compaction
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:19:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Closing collaboration clients and servers
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:87:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       [beforeHandleMessage] Error: Message rejected
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:195:55)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/ClientConnection.ts:290:4
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at node_modules/@hocuspocus/server/src/ClientConnection.ts:290:4
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       closing connection ace75fc5-c8d3-413f-a02d-4fbe96de149d (while handling document:workspace:document-8) because of exception Error: Message rejected
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:195:55)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/ClientConnection.ts:290:4
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at node_modules/@hocuspocus/server/src/ClientConnection.ts:290:4
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Collaboration cleanup complete
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:98:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Collaboration scenario: synchronizes two backend instances through real Redis fanout
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:19:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Closing collaboration clients and servers
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:87:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       [beforeHandleMessage] Error: Message rejected
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:195:55)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at processTicksAndRejections (node:internal/process/task_queues:103:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       closing connection 4222bbcf-4cef-4b99-8d62-87c91fc5f390 (while handling document:workspace:document-9) because of exception Error: Message rejected
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:195:55)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at processTicksAndRejections (node:internal/process/task_queues:103:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Collaboration cleanup complete
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:98:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Collaboration scenario: converts seeded legacy JSON with dry-run, retained backup, repeatable apply and guarded rollback
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:19:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Closing collaboration clients and servers
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:87:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Collaboration cleanup complete
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:98:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Collaboration scenario: resolves legacy bare IDs through tenant memberships and rejects malformed rooms
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:19:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       [onAuthenticate] Error: Access denied
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at parseRoom (/home/kevin/devsync/backend/src/services/collaboration-server.ts:52:9)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.parseRoom [as onAuthenticate] (/home/kevin/devsync/backend/src/services/collaboration-server.ts:127:20)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at processTicksAndRejections (node:internal/process/task_queues:103:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at ClientConnection.handleQueueingMessage (node_modules/@hocuspocus/server/src/ClientConnection.ts:531:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Closing collaboration clients and servers
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:87:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       [beforeHandleMessage] Error: Message rejected
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:195:55)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at processTicksAndRejections (node:internal/process/task_queues:103:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       closing connection 3b8fb0a2-ec50-4f73-b025-49c57026e73c (while handling document-10) because of exception Error: Message rejected
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:195:55)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at processTicksAndRejections (node:internal/process/task_queues:103:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Collaboration cleanup complete
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:98:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Collaboration scenario: keeps viewers read-only in ephemeral workspace and Kanban rooms
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:19:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Closing collaboration clients and servers
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:87:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Collaboration cleanup complete
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:98:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Collaboration scenario: enforces room admission, per-room connections and expired tokens
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:19:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       [onAuthenticate] Error: Room limit exceeded
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.onAuthenticate (/home/kevin/devsync/backend/src/services/collaboration-server.ts:157:15)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at ClientConnection.handleQueueingMessage (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/ClientConnection.ts:531:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at ClientConnection.handleQueueingMessage (node_modules/@hocuspocus/server/src/ClientConnection.ts:531:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       [onAuthenticate] Error: Room connection limit exceeded
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.onAuthenticate (/home/kevin/devsync/backend/src/services/collaboration-server.ts:162:15)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at ClientConnection.handleQueueingMessage (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/ClientConnection.ts:531:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at ClientConnection.handleQueueingMessage (node_modules/@hocuspocus/server/src/ClientConnection.ts:531:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       [onAuthenticate] Error: Session expired
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.onAuthenticate (/home/kevin/devsync/backend/src/services/collaboration-server.ts:126:15)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at processTicksAndRejections (node:internal/process/task_queues:103:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at ClientConnection.handleQueueingMessage (node_modules/@hocuspocus/server/src/ClientConnection.ts:531:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Closing collaboration clients and servers
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:87:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       [beforeHandleMessage] Error: Message rejected
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:195:55)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at processTicksAndRejections (node:internal/process/task_queues:103:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       closing connection c87d5283-fb43-4d79-b24d-8b911828c674 (while handling document:workspace:document-11) because of exception Error: Message rejected
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:195:55)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at processTicksAndRejections (node:internal/process/task_queues:103:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Collaboration cleanup complete
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:98:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Collaboration scenario: renews the same identity but disconnects a token attempting to change principals
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:19:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       [onTokenSync] Error: Access denied
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.onTokenSync (/home/kevin/devsync/backend/src/services/collaboration-server.ts:186:51)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.onTokenSyncCallback (node_modules/@hocuspocus/server/src/ClientConnection.ts:401:12)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Error: Access denied
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.onTokenSync (/home/kevin/devsync/backend/src/services/collaboration-server.ts:186:51)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.onTokenSyncCallback (node_modules/@hocuspocus/server/src/ClientConnection.ts:418:13)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Closing collaboration clients and servers
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:87:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Collaboration cleanup complete
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:98:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Collaboration scenario: evicts local membership changes immediately and expires passive sessions
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:19:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Closing collaboration clients and servers
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:87:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Collaboration cleanup complete
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:98:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Collaboration scenario: journals server reconciliation before broadcasting the resulting state
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:19:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Closing collaboration clients and servers
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:87:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       [beforeHandleMessage] Error: Message rejected
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:195:55)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at processTicksAndRejections (node:internal/process/task_queues:103:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       closing connection f0b26c16-cd54-4fba-8836-102591b8139f (while handling document:workspace:document-15) because of exception Error: Message rejected
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:195:55)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at processTicksAndRejections (node:internal/process/task_queues:103:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Collaboration cleanup complete
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:98:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Collaboration scenario: rejects foreign-origin and excess WebSocket connections before admission
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:19:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Closing collaboration clients and servers
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:87:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       [beforeHandleMessage] Error: Message rejected
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:195:55)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at processTicksAndRejections (node:internal/process/task_queues:103:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       closing connection 63d071d9-3643-44b3-a39f-104004465b8e (while handling document:workspace:document-16) because of exception Error: Message rejected
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:195:55)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at processTicksAndRejections (node:internal/process/task_queues:103:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.info
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       Collaboration cleanup complete
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:98:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | PASS src/__tests__/realtime-revocation.integration.test.ts (7.31 s)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   ● Console
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       [beforeHandleAwareness] ForbiddenError: Access denied
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at authorizeWorkspace (/home/kevin/devsync/backend/src/security/workspace-policy.ts:48:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at authorize (/home/kevin/devsync/backend/src/services/collaboration-server.ts:66:20)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at withPolicyDeadline (/home/kevin/devsync/backend/src/security/policy-deadline.ts:5:12)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at enforce (/home/kevin/devsync/backend/src/services/collaboration-server.ts:86:7)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.beforeHandleAwareness (/home/kevin/devsync/backend/src/services/collaboration-server.ts:218:7)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at MessageReceiver.apply (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/MessageReceiver.ts:109:6)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:275:6) {
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |         statusCode: 403,
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |         isOperational: true
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       }
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at MessageReceiver.apply (node_modules/@hocuspocus/server/src/MessageReceiver.ts:109:6)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:275:6)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       closing connection 4508899f-bf32-4792-a002-fb6b642c084a (while handling document:team-a-1:doc-team-a-1) because of exception ForbiddenError: Access denied
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at authorizeWorkspace (/home/kevin/devsync/backend/src/security/workspace-policy.ts:48:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at authorize (/home/kevin/devsync/backend/src/services/collaboration-server.ts:66:20)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at withPolicyDeadline (/home/kevin/devsync/backend/src/security/policy-deadline.ts:5:12)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at enforce (/home/kevin/devsync/backend/src/services/collaboration-server.ts:86:7)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.beforeHandleAwareness (/home/kevin/devsync/backend/src/services/collaboration-server.ts:218:7)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at MessageReceiver.apply (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/MessageReceiver.ts:109:6)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:275:6) {
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |         statusCode: 403,
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |         isOperational: true
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       }
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       [onAuthenticate] ForbiddenError: Access denied
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at authorizeWorkspace (/home/kevin/devsync/backend/src/security/workspace-policy.ts:48:11)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.onAuthenticate (/home/kevin/devsync/backend/src/services/collaboration-server.ts:147:22)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at ClientConnection.handleQueueingMessage (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/ClientConnection.ts:531:5) {
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |         statusCode: 403,
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |         isOperational: true
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       }
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at ClientConnection.handleQueueingMessage (node_modules/@hocuspocus/server/src/ClientConnection.ts:531:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       [beforeHandleMessage] Error: Access changed
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at authorize (/home/kevin/devsync/backend/src/services/collaboration-server.ts:72:45)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at withPolicyDeadline (/home/kevin/devsync/backend/src/security/policy-deadline.ts:5:12)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at enforce (/home/kevin/devsync/backend/src/services/collaboration-server.ts:86:7)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:201:7)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |     console.error
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       closing connection edcb1b4b-5057-4cc8-8f71-5e155032a461 (while handling document:team-a-2:doc-team-a-2) because of exception Error: Access changed
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at authorize (/home/kevin/devsync/backend/src/services/collaboration-server.ts:72:45)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at withPolicyDeadline (/home/kevin/devsync/backend/src/security/policy-deadline.ts:5:12)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at enforce (/home/kevin/devsync/backend/src/services/collaboration-server.ts:86:7)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:201:7)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |           at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |       at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | PASS src/__tests__/authorization-boundaries.test.ts
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | {"level":30,"time":1793532073656,"service":"devsync-api","req":{"id":"2ed1804c-a8d9-49ac-9090-3bcdfd4484a3","method":"GET"},"requestId":"2ed1804c-a8d9-49ac-9090-3bcdfd4484a3","res":{"statusCode":200},"responseTime":2,"msg":"request completed"}
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | {"level":30,"time":1793532073661,"service":"devsync-api","req":{"id":"e239299c-6cc6-416b-acb2-a871b2ab6620","method":"GET"},"requestId":"e239299c-6cc6-416b-acb2-a871b2ab6620","res":{"statusCode":401},"responseTime":2,"msg":"request completed"}
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | {"level":30,"time":1793532073666,"service":"devsync-api","req":{"id":"06061a62-0aeb-4139-b2c0-e5eebb09db06","method":"GET"},"requestId":"06061a62-0aeb-4139-b2c0-e5eebb09db06","res":{"statusCode":200},"responseTime":1,"msg":"request completed"}
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | {"level":30,"time":1793532073668,"service":"devsync-api","req":{"id":"4635a3a6-f8f4-424d-a2bd-aa3df170b6d9","method":"GET"},"requestId":"4635a3a6-f8f4-424d-a2bd-aa3df170b6d9","res":{"statusCode":401},"responseTime":1,"msg":"request completed"}
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | {"level":30,"time":1793532073671,"service":"devsync-api","req":{"id":"4332c055-3215-4bb2-a9c0-b4cf19589961","method":"GET"},"requestId":"4332c055-3215-4bb2-a9c0-b4cf19589961","res":{"statusCode":404},"responseTime":1,"msg":"request completed"}
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | {"level":30,"time":1793532073677,"service":"devsync-api","req":{"id":"979650c6-9442-49f9-8889-53a73b043e82","method":"POST"},"requestId":"979650c6-9442-49f9-8889-53a73b043e82","res":{"statusCode":400},"responseTime":4,"msg":"request completed"}
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | {"level":30,"time":1793532073684,"service":"devsync-api","req":{"id":"718e3b2a-bb77-48c3-aaf5-b97ab7502c87","method":"GET"},"requestId":"718e3b2a-bb77-48c3-aaf5-b97ab7502c87","res":{"statusCode":404},"responseTime":1,"msg":"request completed"}
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | {"level":30,"time":1793532073685,"service":"devsync-api","req":{"id":"236a5b2b-2833-40b3-a8b9-04a8c3891b78","method":"GET"},"requestId":"236a5b2b-2833-40b3-a8b9-04a8c3891b78","res":{"statusCode":403},"responseTime":0,"msg":"request completed"}
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | {"level":30,"time":1793532073688,"service":"devsync-api","req":{"id":"9e2ca0b8-5936-4100-bb73-94711434abb2","method":"GET"},"requestId":"9e2ca0b8-5936-4100-bb73-94711434abb2","res":{"statusCode":403},"responseTime":1,"msg":"request completed"}
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | {"level":30,"time":1793532073690,"service":"devsync-api","req":{"id":"bf08c302-3e3b-4bd7-9a83-b24a2b12d3a0","method":"GET"},"requestId":"bf08c302-3e3b-4bd7-9a83-b24a2b12d3a0","res":{"statusCode":200},"responseTime":1,"msg":"request completed"}
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | PASS src/__tests__/api-reliability.test.ts
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | {"level":30,"time":1793532073758,"service":"devsync-api","req":{"id":"9c3a929f-ebd5-4a8f-ae0e-0b16326a5e90","method":"GET"},"requestId":"9c3a929f-ebd5-4a8f-ae0e-0b16326a5e90","res":{"statusCode":200},"responseTime":2,"msg":"request completed"}
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | {"level":30,"time":1793532073800,"service":"devsync-api","req":{"id":"74680ab1-bbc3-43a4-a637-f2afba6c31b2","method":"POST"},"requestId":"74680ab1-bbc3-43a4-a637-f2afba6c31b2","res":{"statusCode":404},"responseTime":0,"msg":"request completed"}
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | {"level":30,"time":1793532073802,"service":"devsync-api","req":{"id":"4dd53c58-717c-429e-a8aa-c27791470095","method":"GET"},"requestId":"4dd53c58-717c-429e-a8aa-c27791470095","res":{"statusCode":401},"responseTime":1,"msg":"request completed"}
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | PASS src/__tests__/contracts.test.ts
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | PASS src/__tests__/critical-security.test.ts
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | PASS src/__tests__/migration-chain.test.ts
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | PASS src/__tests__/rls-security.test.ts
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | PASS src/__tests__/github-tenant.test.ts
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | PASS src/__tests__/queue-resilience.test.ts
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | PASS src/__tests__/telemetry.integration.test.ts
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | PASS src/__tests__/readiness.integration.test.ts
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | PASS src/__tests__/dependency-policy.test.ts
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | PASS src/__tests__/secret.service.test.ts
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | PASS src/__tests__/health.test.ts
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | ----------------------------------|---------|----------|---------|---------|-------------------------------------------------------------------
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | File                              | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s                                                 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | ----------------------------------|---------|----------|---------|---------|-------------------------------------------------------------------
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | All files                         |   78.48 |    68.91 |   72.15 |   80.79 |                                                                   
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |  src                              |    68.1 |    79.38 |   41.66 |   70.41 |                                                                   
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   app.ts                          |   98.33 |       75 |     100 |     100 | 44                                                                
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   contracts.ts                    |   95.48 |       75 |     100 |     100 | 8,17-37,49,157                                                    
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   openapi.ts                      |   96.51 |     95.4 |    90.9 |   97.43 | 83,158                                                            
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   server.ts                       |       0 |        0 |       0 |       0 | 1-97                                                              
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   worker.ts                       |       0 |        0 |       0 |       0 | 1-103                                                             
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |  src/agents                       |   84.74 |    58.33 |      70 |    87.5 |                                                                   
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   pr-summary.agent.ts             |      85 |       50 |      75 |   89.47 | 44,74                                                             
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   task-completion.agent.ts        |   84.61 |       60 |   66.66 |   86.48 | 66,74,78,84,114                                                   
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |  src/controllers                  |   87.07 |    68.67 |   85.43 |   88.36 |                                                                   
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   ai.controller.ts                |   87.87 |    59.09 |      50 |   87.87 | 29,59,98-101                                                      
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   auth.controller.ts              |   58.97 |       10 |      80 |   63.88 | 19-37                                                             
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   document.controller.ts          |   96.42 |    82.05 |     100 |   97.59 | 175,188                                                           
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   github-repository.controller.ts |     100 |       90 |     100 |     100 | 117                                                               
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   invitation.controller.ts        |   32.35 |        0 |       0 |   33.33 | 14-43,47-52,56-71                                                 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   search.controller.ts            |   85.71 |       50 |      50 |   89.47 | 55-56                                                             
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   snippet.controller.ts           |     100 |      100 |     100 |     100 |                                                                   
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   task.controller.ts              |   95.07 |    65.21 |     100 |   96.35 | 75,204,301,360-373                                                
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   workspace.controller.ts         |   84.95 |    77.41 |   86.36 |   85.71 | 117-145,170,230,238                                               
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |  src/lib                          |   53.24 |    51.04 |      42 |   55.05 |                                                                   
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   cache.ts                        |       0 |        0 |       0 |       0 | 1-67                                                              
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   create-idempotency.ts           |   89.79 |    82.92 |     100 |   93.02 | 19,26,59                                                          
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   idempotency.ts                  |       0 |        0 |       0 |       0 | 1-27                                                              
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   lifecycle.ts                    |   91.66 |       60 |      75 |    90.9 | 6,27                                                              
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   prisma.ts                       |   93.75 |       70 |   66.66 |   93.75 | 36                                                                
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   queue.ts                        |   31.25 |        0 |       0 |   31.25 | 41,49-62,72-114,120-124                                           
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   redis.ts                        |   26.31 |    16.66 |    9.09 |   32.25 | 12-20,25-27,41-45,51-64                                           
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   tenant-prisma.ts                |   93.33 |       75 |     100 |   93.33 | 19                                                                
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |  src/middleware                   |   78.78 |    62.79 |   81.48 |   79.35 |                                                                   
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   auth.middleware.ts              |   51.51 |    42.85 |      25 |   53.33 | 27,48-59,65-69                                                    
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   billing.middleware.ts           |   94.11 |     62.5 |   66.66 |   94.11 | 35                                                                
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   error.middleware.ts             |      72 |    69.04 |     100 |   70.21 | 37-38,50-51,58-59,62-63,66-67,70-71,74-75                         
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   rate-limit.middleware.ts        |   85.71 |       50 |      50 |   85.71 | 20                                                                
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   rbac.middleware.ts              |   94.73 |    83.33 |     100 |   94.73 | 13                                                                
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   request-context.middleware.ts   |     100 |      100 |     100 |     100 |                                                                   
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   tracing.middleware.ts           |   85.71 |       50 |     100 |     100 | 14-15                                                             
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   validate.middleware.ts          |    92.3 |       50 |     100 |   91.66 | 15                                                                
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |  src/observability                |      70 |    57.14 |      48 |   70.52 |                                                                   
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   ai.ts                           |     100 |      100 |     100 |     100 |                                                                   
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   logger.ts                       |     100 |      100 |     100 |     100 |                                                                   
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   metrics.ts                      |   94.73 |    92.85 |   85.71 |   94.28 | 32,77                                                             
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   reporting.ts                    |   31.57 |     12.5 |      25 |   35.29 | 4-27,31,34-35                                                     
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   request-scope.ts                |     100 |      100 |     100 |     100 |                                                                   
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   telemetry.ts                    |   34.78 |        0 |      10 |   34.78 | 9-74,78-79                                                        
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |  src/routes                       |   93.85 |    71.87 |   96.96 |   94.84 |                                                                   
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   ai.routes.ts                    |     100 |      100 |     100 |     100 |                                                                   
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   auth.routes.ts                  |     100 |      100 |     100 |     100 |                                                                   
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   document.routes.ts              |     100 |      100 |     100 |     100 |                                                                   
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   github-webhook.routes.ts        |   91.42 |    74.68 |     100 |   94.02 | 130,150,163,206                                                   
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   health.routes.ts                |   83.33 |    70.83 |      90 |   84.37 | 16-17,54-56                                                       
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   ingestion.routes.ts             |   93.33 |       60 |     100 |   93.33 | 30,69                                                             
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   scim.routes.ts                  |      92 |    68.18 |     100 |   92.85 | 130-131,161-163                                                   
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   snippet.routes.ts               |     100 |      100 |     100 |     100 |                                                                   
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   stripe.webhook.ts               |   91.66 |       75 |     100 |   91.66 | 8                                                                 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   superadmin.routes.ts            |     100 |       75 |     100 |     100 | 25                                                                
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   task.routes.ts                  |     100 |      100 |     100 |     100 |                                                                   
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   workspace.routes.ts             |     100 |      100 |     100 |     100 |                                                                   
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |  src/schemas                      |     100 |      100 |     100 |     100 |                                                                   
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   search.schema.ts                |     100 |      100 |     100 |     100 |                                                                   
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |  src/scripts                      |       0 |        0 |       0 |       0 |                                                                   
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   openapi.ts                      |       0 |        0 |       0 |       0 | 1-24                                                              
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |  src/security                     |   76.98 |    72.24 |    82.5 |   82.05 |                                                                   
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   authentication.ts               |      44 |    13.33 |      50 |      50 | 26-31,39-43                                                       
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   invitation-policy.ts            |   16.66 |        0 |       0 |   18.18 | 7-54                                                              
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   policy-deadline.ts              |   85.71 |    33.33 |   66.66 |     100 | 2-12                                                              
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   realtime-identity.ts            |   70.58 |       70 |      50 |      75 | 13,19-20,24                                                       
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   rich-text.ts                    |   86.36 |    85.71 |     100 |     100 | 7,11,13-14                                                        
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   service-policy.ts               |   88.33 |    84.21 |     100 |   93.51 | 24,62,82,113,133,207,244                                          
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   workspace-policy.ts             |      92 |     90.9 |     100 |   95.65 | 35,62                                                             
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |  src/services                     |   76.63 |    68.85 |   75.67 |   79.85 |                                                                   
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   ai-gateway.service.ts           |       0 |        0 |       0 |       0 | 1-98                                                              
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   billing.service.ts              |   68.57 |    45.71 |      60 |   70.58 | 10-11,21,29-36,67-73                                              
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   cloudinary.service.ts           |       0 |      100 |       0 |       0 | 1-32                                                              
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   collaboration-acl.ts            |     100 |      100 |     100 |     100 |                                                                   
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   collaboration-server.ts         |   88.35 |    82.56 |   94.44 |   92.23 | 178-180,197-198,231-233,267-268,322-323,377-378,382-383,411       
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   crdt-journal.ts                 |    87.5 |    68.75 |     100 |   91.52 | 50-51,72,87-95                                                    
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   crdt-migration.ts               |   86.36 |    76.19 |     100 |   97.22 | 57                                                                
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   crdt-schema.ts                  |     100 |      100 |     100 |     100 |                                                                   
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   crdt-sync.service.ts            |   78.57 |    73.33 |     100 |   84.61 | 30,33,52-63                                                       
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   embedding-runner.ts             |    87.5 |       50 |      80 |   93.33 | 15                                                                
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   embedding.service.ts            |   84.94 |    72.13 |   92.85 |   89.15 | 29-37,189-211                                                     
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   ingestion.service.ts            |   58.33 |    54.28 |   44.44 |   60.57 | 43-51,69-70,75-96,122-131,143-144,158-177,199,210,218,220,226,229 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   secret.service.ts               |     100 |      100 |     100 |     100 |                                                                   
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   yjs.service.ts                  |   82.35 |       25 |   66.66 |    87.5 | 8-9                                                               
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |  src/socket                       |   86.85 |    75.29 |    83.6 |   88.61 |                                                                   
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   index.ts                        |   58.33 |      100 |   33.33 |   58.33 | 11-16,19-21                                                       
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   kanban.handler.ts               |   90.62 |       88 |      75 |   90.62 | 60,64,95                                                          
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   presence-store.ts               |   95.55 |    79.16 |   88.88 |   97.43 | 24                                                                
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   presence.handler.ts             |   78.08 |    45.45 |    90.9 |   81.42 | 51-52,88-92,102-111                                               
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   rate-limiter.ts                 |      96 |     87.5 |     100 |      96 | 66                                                                
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   server.ts                       |   88.34 |    76.92 |   83.87 |   90.47 | 75,78,88,124,140-141,148-149,152-153,162,164,179,204              
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |  src/utils                        |     100 |        0 |     100 |     100 |                                                                   
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   |   errors.ts                       |     100 |        0 |     100 |     100 | 14-38                                                             
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | ----------------------------------|---------|----------|---------|---------|-------------------------------------------------------------------
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | Test Suites: 16 passed, 16 total
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | Tests:       192 passed, 192 total
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | Snapshots:   0 total
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | Time:        70.156 s
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | Ran all test suites.
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | {"level":30,"time":1793532088768,"service":"devsync-api","req":{"id":"60804b91-da55-4685-b116-986fd69db9d9","method":"GET"},"requestId":"60804b91-da55-4685-b116-986fd69db9d9","res":{"statusCode":200},"responseTime":1,"msg":"request completed"}
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   ✅  Success - Main npm test [1m10.735740504s]
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build] ⭐ Run Main npm run openapi:check
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   🐳  docker exec cmd=[bash -e /var/run/act/workflow/7] user= workdir=backend
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | > devsync-backend@1.0.0 openapi:check
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | > NODE_ENV=test tsx src/scripts/openapi.ts --check
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   ✅  Success - Main npm run openapi:check [2.870246946s]
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build] ⭐ Run Main npm run build
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   🐳  docker exec cmd=[bash -e /var/run/act/workflow/8] user= workdir=backend
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | > devsync-backend@1.0.0 build
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | > prisma generate && tsc
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | Prisma schema loaded from prisma/schema.prisma
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | ✔ Generated Prisma Client (v5.22.0) to ./node_modules/@prisma/client in 288ms
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | Tip: Want real-time updates to your database without manual polling? Discover how with Pulse: https://pris.ly/tip-0-pulse
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | 
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | ┌─────────────────────────────────────────────────────────┐
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | │  Update available 5.22.0 -> 8.0.0-rc.29                 │
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | │                                                         │
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | │  This is a major update - please follow the guide at    │
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | │  https://pris.ly/d/major-version-upgrade                │
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | │                                                         │
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | │  Run the following to update                            │
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | │    npm i --save-dev prisma@latest                       │
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | │    npm i @prisma/client@latest                          │
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | └─────────────────────────────────────────────────────────┘
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   ✅  Success - Main npm run build [7.614905352s]
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build] ⭐ Run Main actions/upload-artifact@v4
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   🐳  docker cp src=/tmp/devsync-act-quality-cache/act/actions-upload-artifact@v4/ dst=/var/run/act/actions/actions-upload-artifact@v4/
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   🐳  docker exec cmd=[/opt/acttoolcache/node/24.19.0/x64/bin/node /var/run/act/actions/actions-upload-artifact@v4/dist/upload/index.js] user= workdir=
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | (node:1379) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | (Use `node --trace-deprecation ...` to show where the warning was created)
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | With the provided path, there will be 103 files uploaded
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | Artifact name is valid!
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   | Root directory input is valid!
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   ❗  ::error::Unable to get the ACTIONS_RUNTIME_TOKEN env variable
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   ❌  Failure - Main actions/upload-artifact@v4 [748.54894ms]
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build] exitcode '1': failure
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build] ⭐ Run Complete job
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build]   ✅  Success - Complete job
+[DevSync Local Quality Port Translation/Install, lint, format, types, tests, contracts and build] 🏁  Job failed
+Error: Job 'Install, lint, format, types, tests, contracts and build' failed

@@ -1,0 +1,78 @@
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": PostgreSQL database "devsync_e2e_browser", schema "public" at "localhost:32782"
+
+11 migrations found in prisma/migrations
+
+Applying migration `20260729000000_baseline`
+Applying migration `20260729180000_enterprise_platform`
+Applying migration `20260815000000_phase_3_tenant_rls`
+Applying migration `20260815001000_scim_provisioning`
+Applying migration `20260815002000_commercial_billing`
+Applying migration `20261031000000_tenant_indexes`
+Applying migration `20261031010000_crdt_journal`
+Applying migration `202611010001_canonical_revision`
+Applying migration `202611010002_embedding_authority`
+Applying migration `202611010003_atomic_create_idempotency`
+Applying migration `202611010004_workspace_invitations`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20260729000000_baseline/
+    └─ migration.sql
+  └─ 20260729180000_enterprise_platform/
+    └─ migration.sql
+  └─ 20260815000000_phase_3_tenant_rls/
+    └─ migration.sql
+  └─ 20260815001000_scim_provisioning/
+    └─ migration.sql
+  └─ 20260815002000_commercial_billing/
+    └─ migration.sql
+  └─ 20261031000000_tenant_indexes/
+    └─ migration.sql
+  └─ 20261031010000_crdt_journal/
+    └─ migration.sql
+  └─ 202611010001_canonical_revision/
+    └─ migration.sql
+  └─ 202611010002_embedding_authority/
+    └─ migration.sql
+  └─ 202611010003_atomic_create_idempotency/
+    └─ migration.sql
+  └─ 202611010004_workspace_invitations/
+    └─ migration.sql
+      
+All migrations have been successfully applied.
+Sample workspace seeded. Sign in with the supplied Clerk test identities.
+/home/kevin/devsync/.worktrees/frontend-fixture
+Isolated fixture server ready
+{"level":30,"time":1793528707202,"service":"devsync-api","req":{"id":"8f75c1e9-9186-4825-a4a0-0a06e88a493d","method":"GET"},"requestId":"8f75c1e9-9186-4825-a4a0-0a06e88a493d","res":{"statusCode":200},"responseTime":7,"msg":"request completed"}
+▲ Next.js 16.2.4 (webpack)
+- Local:         http://127.0.0.1:3001
+- Network:       http://127.0.0.1:3001
+✓ Ready in 383ms
+
+○ Compiling /login/[[...rest]] ...
+ GET /login 200 in 1082ms (proxy.ts: 445ms)
+Attention: Clerk collects telemetry data from its SDKs when connected to development instances.
+The data collected is used to inform Clerk's product roadmap.
+To learn more, including how to opt-out from the telemetry program, visit: https://clerk.com/docs/telemetry.
+
+ GET /login 200 in 84ms (next.js: 22ms, proxy.ts: 7ms, application-code: 55ms)
+
+Running 1 test using 1 worker
+
+(node:46344) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1793528720383,"service":"devsync-api","req":{"id":"4bbf7be8-c030-4c7f-be3c-eedfbd955fbf","method":"GET"},"requestId":"4bbf7be8-c030-4c7f-be3c-eedfbd955fbf","res":{"statusCode":200},"responseTime":23,"msg":"request completed"}
+{"level":30,"time":1793528720600,"service":"devsync-api","req":{"id":"6d34e575-19ba-4e3e-aa28-dbf34f089d12","method":"GET"},"requestId":"6d34e575-19ba-4e3e-aa28-dbf34f089d12","res":{"statusCode":200},"responseTime":17,"msg":"request completed"}
+ GET /workspace/devsync-sample/docs 200 in 2.6s (next.js: 2.2s, proxy.ts: 16ms, application-code: 417ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+{"level":30,"time":1793528724860,"service":"devsync-api","req":{"id":"62ddbc08-ebea-477f-8ca7-543690834fe6","method":"GET"},"requestId":"62ddbc08-ebea-477f-8ca7-543690834fe6","res":{"statusCode":200},"responseTime":62,"msg":"request completed"}
+{"level":30,"time":1793528724880,"service":"devsync-api","req":{"id":"c55dd2b1-2855-4209-82cb-5364e2ede159","method":"GET"},"requestId":"c55dd2b1-2855-4209-82cb-5364e2ede159","res":{"statusCode":304},"responseTime":19,"msg":"request completed"}
+{"source":"before","width":390,"documentTitleBounds":{"x":323.78125,"y":1345,"width":0,"height":20}}
+{"target":"before","captured":26,"unavailable":[{"path":"/superadmin","width":1440,"error":"HTTP 500"},{"path":"/superadmin","width":390,"error":"HTTP 500"}]}
+  ✓  1 testing/browser/capture.spec.ts:7:5 › capture public and authenticated page evidence at both requested widths (5.1s)
+
+  1 passed (6.1s)
+[?25h
