@@ -1,3 +1,7 @@
+# Phase1c — service authority group
+
+- C04/D07/G08/G09/I02: central SCIM/repository/global-admin/signed-billing policies; tenant-only SCIM membership effects, registered repository jobs, atomic webhook DB effects, customer/subscription binding and preserved admin suspension.160 backend tests pass. Remove all remaining explicit any annotations and enforce no-explicit-any in backend lint.
+
 # Phase1c — AI/search/ingestion group
 
 - G01/E03/F01: central membership checks before upload parsing, balance/provider work and usage writes; tenant-scoped search; canonical atomic ingestion with PDF cleanup; bounded AI request schema and untrusted-context separation; attributed offline replay keys.149 backend tests pass. Atomic quotas and remaining provider/service authorities stay open.

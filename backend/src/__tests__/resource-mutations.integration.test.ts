@@ -3,7 +3,8 @@ import request from 'supertest';
 import { PostgreSqlContainer, StartedPostgreSqlContainer } from '@testcontainers/postgresql';
 import { PrismaClient } from '@prisma/client';
 import { Client } from 'pg';
-import { randomBytes } from 'crypto';
+import { randomBytes, createHash, createHmac } from 'crypto';
+import Stripe from 'stripe';
 import { spawnSync } from 'child_process';
 import { createServer } from 'http';
 import WebSocket from 'ws';
@@ -30,6 +31,19 @@ import { CrdtJournal } from '../services/crdt-journal';
 import { projectDocument } from '../services/crdt-schema';
 import { processTaskCompletion } from '../agents/task-completion.agent';
 import { completeWithFallback } from '../services/ai-gateway.service';
+import scimRouter from '../routes/scim.routes';
+import githubRouter from '../routes/github-webhook.routes';
+import stripeRouter from '../routes/stripe.webhook';
+import superadminRouter from '../routes/superadmin.routes';
+import { processPRSummary, PRSummaryJobData } from '../agents/pr-summary.agent';
+jest.mock('@clerk/express', () => ({
+  ...jest.requireActual<typeof import('@clerk/express')>('@clerk/express'),
+  getAuth: (req: express.Request) => ({ userId: req.header('x-verified-clerk-fixture') || null }),
+}));
+jest.mock('../lib/queue', () => ({
+  QueueNames: { PR_SUMMARY: 'fixture-pr', TASK_COMPLETION: 'fixture-task' },
+  getQueue: () => ({ getWaitingCount: async () => 0 }),
+}));
 jest.mock('../services/ai-gateway.service', () => ({ completeWithFallback: jest.fn() }));
 jest.mock(
   'groq-sdk',
@@ -54,7 +68,13 @@ let admin: PrismaClient;
 let db: TenantPrismaClient;
 let sequence = 0;
 const app = express();
-app.use(express.json());
+app.use(
+  express.json({
+    verify: (req, _res, raw) => {
+      (req as express.Request).rawBody = raw;
+    },
+  }),
+);
 // Identity adapter is test-fixture-only; production app/server has no such header.
 app.use((req, _res, next) =>
   withDatabase(db, () => {
@@ -66,6 +86,10 @@ app.use((req, _res, next) =>
     next();
   }),
 );
+app.use('/scim/v2', scimRouter);
+app.use('/github', githubRouter);
+app.use('/stripe', stripeRouter);
+app.use('/superadmin', superadminRouter);
 app.post('/workspaces', workspaces.createWorkspace);
 app.get('/workspaces', workspaces.getWorkspaces);
 app.get('/workspaces/:id', workspaces.getWorkspace);
@@ -122,7 +146,7 @@ beforeAll(async () => {
   url.username = 'resource_runtime';
   url.password = password;
   db = createTenantPrismaClient(new PrismaClient({ datasourceUrl: url.toString() }));
-  for (const id of ['owner', 'editor', 'viewer', 'foreign', 'inactive'])
+  for (const id of ['owner', 'editor', 'viewer', 'foreign', 'inactive', 'superadmin'])
     await admin.user.create({
       data: {
         id,
@@ -130,6 +154,7 @@ beforeAll(async () => {
         email: `${id}@example.test`,
         name: id,
         isActive: id !== 'inactive',
+        systemRole: id === 'superadmin' ? 'SUPER_ADMIN' : 'USER',
       },
     });
   jest
@@ -775,4 +800,447 @@ it('F01 central usage/offline-action policy rejects foreign and revoked actors, 
   } finally {
     document.destroy();
   }
+});
+
+async function scimToken(workspaceId: string) {
+  const token = randomBytes(32).toString('hex');
+  const record = await admin.scimProvisioningToken.create({
+    data: { workspaceId, tokenHash: createHash('sha256').update(token).digest('hex') },
+  });
+  return { token, id: record.id };
+}
+it('C04/D07 SCIM changes only its tenant membership and cannot rebind global identity or grant OWNER', async () => {
+  const { a, b } = await fixture(),
+    credential = await scimToken(a);
+  await admin.workspaceMember.create({
+    data: { userId: 'editor', workspaceId: b, role: 'EDITOR' },
+  });
+  const globalBefore = await admin.user.findUniqueOrThrow({ where: { id: 'editor' } });
+  const post = await request(app)
+    .post('/scim/v2/Users')
+    .set('Authorization', `Bearer ${credential.token}`)
+    .send({
+      externalId: 'linked-editor',
+      userName: globalBefore.email,
+      roles: [{ value: 'VIEWER' }],
+    });
+  expect(post.status).toBe(201);
+  expect(
+    (
+      await admin.workspaceMember.findUniqueOrThrow({
+        where: { userId_workspaceId: { userId: 'editor', workspaceId: a } },
+      })
+    ).role,
+  ).toBe('VIEWER');
+  expect(
+    (
+      await admin.workspaceMember.findUniqueOrThrow({
+        where: { userId_workspaceId: { userId: 'editor', workspaceId: b } },
+      })
+    ).role,
+  ).toBe('EDITOR');
+  for (const data of [
+    { userName: 'foreign@example.test' },
+    { name: { formatted: 'Forged global profile' } },
+  ])
+    expect(
+      (
+        await request(app)
+          .patch('/scim/v2/Users/linked-editor')
+          .set('Authorization', `Bearer ${credential.token}`)
+          .send(data)
+      ).status,
+    ).toBe(409);
+  expect(
+    (
+      await request(app)
+        .post('/scim/v2/Users')
+        .set('Authorization', `Bearer ${credential.token}`)
+        .send({ externalId: 'linked-editor', userName: 'foreign@example.test' })
+    ).status,
+  ).toBe(409);
+  expect(
+    (
+      await request(app)
+        .patch('/scim/v2/Users/linked-editor')
+        .set('Authorization', `Bearer ${credential.token}`)
+        .send({ roles: [{ value: 'OWNER' }] })
+    ).status,
+  ).toBe(400);
+  const deactivated = await request(app)
+    .patch('/scim/v2/Users/linked-editor')
+    .set('Authorization', `Bearer ${credential.token}`)
+    .send({ active: false });
+  expect(deactivated.status).toBe(200);
+  expect(deactivated.body.active).toBe(false);
+  expect(
+    await admin.workspaceMember.findUnique({
+      where: { userId_workspaceId: { userId: 'editor', workspaceId: a } },
+    }),
+  ).toBeNull();
+  expect(
+    await admin.workspaceMember.findUnique({
+      where: { userId_workspaceId: { userId: 'editor', workspaceId: b } },
+    }),
+  ).not.toBeNull();
+  expect(await admin.user.findUniqueOrThrow({ where: { id: 'editor' } })).toEqual(globalBefore);
+});
+it.each(['post', 'patch', 'delete'] as const)(
+  'D07 SCIM %s cannot affect a foreign identity, owner or revoked token scope',
+  async (method) => {
+    const { a, b } = await fixture(),
+      credential = await scimToken(a);
+    const identity = await admin.scimExternalIdentity.create({
+      data: { workspaceId: b, userId: 'foreign', externalId: 'foreign-external' },
+    });
+    const foreignBefore = await admin.user.findUniqueOrThrow({ where: { id: 'foreign' } });
+    const url = method === 'post' ? '/scim/v2/Users' : '/scim/v2/Users/foreign-external';
+    const data = {
+      externalId: 'foreign-external',
+      userName: 'foreign@example.test',
+      active: false,
+    };
+    const foreign = await request(app)
+      [method](url)
+      .set('Authorization', `Bearer ${credential.token}`)
+      .send(data);
+    // POST may add a distinct local link; no authority over the other tenant's link/profile.
+    expect(foreign.status).toBe(method === 'post' ? 201 : method === 'delete' ? 204 : 400);
+    expect(await admin.scimExternalIdentity.findUnique({ where: { id: identity.id } })).toEqual(
+      identity,
+    );
+    expect(await admin.user.findUniqueOrThrow({ where: { id: 'foreign' } })).toEqual(foreignBefore);
+    await admin.scimExternalIdentity.create({
+      data: { workspaceId: a, userId: 'owner', externalId: 'owner-external' },
+    });
+    expect(
+      (
+        await request(app)
+          [method](method === 'post' ? '/scim/v2/Users' : '/scim/v2/Users/owner-external')
+          .set('Authorization', `Bearer ${credential.token}`)
+          .send({ externalId: 'owner-external', userName: 'owner@example.test', active: false })
+      ).status,
+    ).toBe(403);
+    await admin.scimProvisioningToken.update({
+      where: { id: credential.id },
+      data: { revokedAt: new Date() },
+    });
+    expect(
+      (
+        await request(app)
+          [method](url)
+          .set('Authorization', `Bearer ${credential.token}`)
+          .send(data)
+      ).status,
+    ).toBe(401);
+    expect(
+      (await request(app)[method](url).set('Authorization', 'Bearer invalid').send(data)).status,
+    ).toBe(401);
+  },
+);
+async function githubEvent(
+  repositoryId: string,
+  secret: string,
+  data: object,
+  delivery = randomBytes(16).toString('hex'),
+  event = 'pull_request',
+) {
+  const payload = JSON.stringify({ repository: { id: repositoryId }, ...data });
+  return request(app)
+    .post('/github')
+    .set('Content-Type', 'application/json')
+    .set('x-github-delivery', delivery)
+    .set('x-github-event', event)
+    .set(
+      'x-hub-signature-256',
+      `sha256=${createHmac('sha256', secret).update(payload).digest('hex')}`,
+    )
+    .send(payload);
+}
+it('G08/D07 signed GitHub scope is repository-bound, transactionally retryable and duplicate-safe', async () => {
+  const { a, b } = await fixture(),
+    repository = await repositoryFixture(a);
+  await admin.gitHubRepository.update({
+    where: { id: repository.id },
+    data: { prOpenedColumnId: `target-${a}` },
+  });
+  const keyA = `SEC-${sequence}`,
+    keyB = `SEC-${10000 + sequence}`;
+  await admin.task.update({ where: { id: `task-${a}` }, data: { taskKey: keyA } });
+  await admin.task.update({ where: { id: `task-${b}` }, data: { taskKey: keyB } });
+  const payload = {
+    action: 'opened',
+    workspaceId: b,
+    pull_request: { title: `Fixes ${keyA}; Fixes ${keyB}`, body: '' },
+  };
+  expect((await githubEvent(repository.repositoryId, 'incorrect-secret', payload)).status).toBe(
+    401,
+  );
+  expect(await admin.gitHubWebhookDelivery.count()).toBe(0);
+  const delivery = randomBytes(16).toString('hex');
+  await admin.gitHubRepository.update({
+    where: { id: repository.id },
+    data: { prOpenedColumnId: `target-${b}` },
+  });
+  expect(
+    (await githubEvent(repository.repositoryId, repository.webhookSecret, payload, delivery))
+      .status,
+  ).toBe(409);
+  expect(await admin.gitHubWebhookDelivery.count({ where: { deliveryId: delivery } })).toBe(0);
+  await admin.gitHubRepository.update({
+    where: { id: repository.id },
+    data: { prOpenedColumnId: `target-${a}` },
+  });
+  const replies = await Promise.all([
+    githubEvent(repository.repositoryId, repository.webhookSecret, payload, delivery),
+    githubEvent(repository.repositoryId, repository.webhookSecret, payload, delivery),
+  ]);
+  expect(replies.map((reply) => reply.status).sort()).toEqual([200, 202]);
+  expect((await admin.task.findUniqueOrThrow({ where: { id: `task-${a}` } })).columnId).toBe(
+    `target-${a}`,
+  );
+  expect((await admin.task.findUniqueOrThrow({ where: { id: `task-${b}` } })).columnId).toBe(
+    `column-${b}`,
+  );
+  await admin.workspace.update({ where: { id: a }, data: { suspendedAt: new Date() } });
+  expect(
+    (await githubEvent(repository.repositoryId, repository.webhookSecret, payload)).status,
+  ).toBe(403);
+});
+it.each(['push', 'issues'])(
+  'D07 GitHub %s activities require the bound unsuspended repository authority',
+  async (event) => {
+    const { a, b } = await fixture(),
+      repository = await repositoryFixture(a);
+    const payload =
+      event === 'push'
+        ? { ref: 'refs/heads/main', commits: [{}], pusher: { name: 'fixture' } }
+        : { action: 'opened', issue: { title: 'Fixture', user: { login: 'fixture' } } };
+    expect(
+      (
+        await githubEvent(
+          repository.repositoryId,
+          repository.webhookSecret,
+          payload,
+          undefined,
+          event,
+        )
+      ).status,
+    ).toBe(200);
+    expect(
+      await admin.activity.count({ where: { workspaceId: a, type: { startsWith: 'github_' } } }),
+    ).toBe(1);
+    expect(await admin.activity.count({ where: { workspaceId: b } })).toBe(0);
+  },
+);
+it('D07 repository jobs reject foreign/deleted/suspended scope before provider work and recheck after it', async () => {
+  const { a, b } = await fixture(),
+    repository = await repositoryFixture(a),
+    other = await repositoryFixture(b);
+  const data: PRSummaryJobData = {
+    action: 'opened',
+    prTitle: 'Fixture',
+    prBody: 'Fixture body',
+    prNumber: 1,
+    prUrl: 'https://github.com/fixture',
+    repositoryOwner: 'forged-owner',
+    repositoryName: 'forged-name',
+    repositoryId: repository.id,
+    workspaceId: a,
+    taskKeys: [],
+    author: 'fixture',
+  };
+  const before = jest.mocked(completeWithFallback).mock.calls.length;
+  await expect(
+    withDatabase(db, () => processPRSummary({ data: { ...data, repositoryId: other.id } })),
+  ).rejects.toThrow('Access denied');
+  expect(jest.mocked(completeWithFallback).mock.calls.length).toBe(before);
+  await withDatabase(db, () => processPRSummary({ data }));
+  expect(await admin.activity.count({ where: { workspaceId: a, type: 'pr_opened' } })).toBe(1);
+  jest.mocked(completeWithFallback).mockImplementationOnce(async () => {
+    await admin.gitHubRepository.delete({ where: { id: repository.id } });
+    return {
+      content: 'Must not store deleted repository output',
+      provider: 'groq',
+      tokens: 1,
+    } as Awaited<ReturnType<typeof completeWithFallback>>;
+  });
+  await expect(withDatabase(db, () => processPRSummary({ data }))).rejects.toThrow('Access denied');
+  expect(await admin.activity.count({ where: { workspaceId: a, type: 'pr_opened' } })).toBe(1);
+  await admin.workspace.update({ where: { id: b }, data: { suspendedAt: new Date() } });
+  await expect(
+    withDatabase(db, () =>
+      processPRSummary({ data: { ...data, workspaceId: b, repositoryId: other.id } }),
+    ),
+  ).rejects.toThrow('Access denied');
+});
+async function withEnvironment<T>(values: Record<string, string>, operation: () => Promise<T>) {
+  const previous = Object.fromEntries(Object.keys(values).map((key) => [key, process.env[key]]));
+  Object.assign(process.env, values);
+  try {
+    return await operation();
+  } finally {
+    for (const [key, value] of Object.entries(previous)) {
+      if (value === undefined) delete process.env[key];
+      else process.env[key] = value;
+    }
+  }
+}
+async function stripeEvent(type: string, data: object, valid = true) {
+  const secret = 'whsec_fixture_only_not_a_deployment_key';
+  const payload = JSON.stringify({
+    id: `evt_${randomBytes(16).toString('hex')}`,
+    object: 'event',
+    type,
+    data: { object: data },
+  });
+  const signature = new Stripe('sk_test_fixture_only').webhooks.generateTestHeaderString({
+    payload,
+    secret: valid ? secret : 'wrong-secret',
+  });
+  return withEnvironment(
+    { STRIPE_SECRET_KEY: 'sk_test_fixture_only', STRIPE_WEBHOOK_SECRET: secret },
+    () =>
+      request(app)
+        .post('/stripe')
+        .set('Content-Type', 'application/json')
+        .set('stripe-signature', signature)
+        .send(payload),
+  );
+}
+it('D07 signed billing events bind customers and subscriptions and cannot clear admin suspension', async () => {
+  const { a, b } = await fixture();
+  await admin.workspace.update({
+    where: { id: a },
+    data: { stripeCustomerId: `cus_${a}`, stripeSubscriptionId: `sub_${a}` },
+  });
+  await admin.workspace.update({
+    where: { id: b },
+    data: { stripeCustomerId: `cus_${b}`, stripeSubscriptionId: `sub_${b}` },
+  });
+  expect(
+    (
+      await stripeEvent('checkout.session.completed', {
+        customer: `cus_${b}`,
+        metadata: { workspaceId: a },
+      })
+    ).status,
+  ).toBe(403);
+  expect(
+    (await stripeEvent('invoice.payment_succeeded', { id: 'invoice', customer: `cus_${a}` }, false))
+      .status,
+  ).toBe(400);
+  expect(
+    (
+      await stripeEvent('invoice.payment_succeeded', {
+        id: 'invoice',
+        customer: `cus_${b}`,
+        metadata: { workspaceId: a },
+      })
+    ).status,
+  ).toBe(200);
+  expect((await admin.workspace.findUniqueOrThrow({ where: { id: b } })).billingStatus).toBe(
+    'active',
+  );
+  expect((await admin.workspace.findUniqueOrThrow({ where: { id: a } })).billingStatus).toBe(
+    'inactive',
+  );
+  expect(
+    (await stripeEvent('customer.subscription.deleted', { id: `sub_${b}`, customer: `cus_${a}` }))
+      .status,
+  ).toBe(403);
+  expect(
+    (await stripeEvent('customer.subscription.deleted', { id: `sub_${b}`, customer: `cus_${b}` }))
+      .status,
+  ).toBe(200);
+  expect((await admin.workspace.findUniqueOrThrow({ where: { id: b } })).billingStatus).toBe(
+    'canceled',
+  );
+  const suspendedAt = new Date();
+  await admin.workspace.update({
+    where: { id: a },
+    data: { suspendedAt, billingStatus: 'suspended' },
+  });
+  expect(
+    (await stripeEvent('invoice.payment_succeeded', { id: 'invoice-paid', customer: `cus_${a}` }))
+      .status,
+  ).toBe(200);
+  expect((await admin.workspace.findUniqueOrThrow({ where: { id: a } })).suspendedAt).toEqual(
+    suspendedAt,
+  );
+  expect((await admin.workspace.findUniqueOrThrow({ where: { id: a } })).billingStatus).toBe(
+    'suspended',
+  );
+});
+it('D07 checkout associates only its signed workspace and customer', async () => {
+  const { a, b } = await fixture();
+  expect(
+    (
+      await stripeEvent('checkout.session.completed', {
+        customer: `cus_${a}`,
+        subscription: `sub_${a}`,
+        metadata: { workspaceId: a },
+      })
+    ).status,
+  ).toBe(200);
+  expect((await admin.workspace.findUniqueOrThrow({ where: { id: a } })).stripeCustomerId).toBe(
+    `cus_${a}`,
+  );
+  expect(
+    (await admin.workspace.findUniqueOrThrow({ where: { id: b } })).stripeCustomerId,
+  ).toBeNull();
+});
+it('D07 superadmin requires active verified global role or a strong configured service credential', async () => {
+  const { a, b } = await fixture();
+  for (const clerkId of ['fixture_owner', 'fixture_editor', 'fixture_viewer', 'fixture_inactive']) {
+    expect(
+      (
+        await request(app)
+          .post(`/superadmin/workspaces/${a}/kill-switch`)
+          .set('x-verified-clerk-fixture', clerkId)
+          .send({ reason: 'Unauthorized attempt' })
+      ).status,
+    ).toBe(403);
+    expect(
+      (await request(app).get('/superadmin/metrics').set('x-verified-clerk-fixture', clerkId))
+        .status,
+    ).toBe(403);
+  }
+  expect(
+    (
+      await request(app)
+        .post(`/superadmin/workspaces/${a}/kill-switch`)
+        .set('x-verified-clerk-fixture', 'fixture_superadmin')
+        .send({ reason: 'Fixture suspension' })
+    ).status,
+  ).toBe(200);
+  expect(
+    (
+      await request(app)
+        .get('/superadmin/metrics')
+        .set('x-verified-clerk-fixture', 'fixture_superadmin')
+    ).status,
+  ).toBe(200);
+  await withEnvironment({ SUPERADMIN_SERVICE_TOKEN: 'short' }, async () =>
+    expect(
+      (
+        await request(app)
+          .post(`/superadmin/workspaces/${b}/kill-switch`)
+          .set('x-superadmin-service-token', 'short')
+          .send({ reason: 'Short key rejected' })
+      ).status,
+    ).toBe(403),
+  );
+  await withEnvironment(
+    { SUPERADMIN_SERVICE_TOKEN: 'fixture-service-key-32-characters-minimum' },
+    async () =>
+      expect(
+        (
+          await request(app)
+            .post(`/superadmin/workspaces/${b}/kill-switch`)
+            .set('x-superadmin-service-token', 'fixture-service-key-32-characters-minimum')
+            .send({ reason: 'Fixture suspension' })
+        ).status,
+      ).toBe(200),
+  );
 });

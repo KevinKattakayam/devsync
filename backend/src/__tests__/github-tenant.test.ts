@@ -34,11 +34,16 @@ const secret = randomBytes(32).toString('hex');
 beforeEach(() => {
   jest.clearAllMocks();
   db.gitHubRepository.findUnique.mockResolvedValue({
+    id: 'registered-repo-a',
     repositoryId: 'repo-a',
     workspaceId: 'a',
     webhookSecret: secret,
     prOpenedColumnId: 'column-a',
   } as Awaited<ReturnType<typeof prisma.gitHubRepository.findUnique>>);
+  db.workspace.findUnique.mockResolvedValue({ suspendedAt: null } as Awaited<
+    ReturnType<typeof prisma.workspace.findUnique>
+  >);
+  db.$queryRaw.mockResolvedValue([{ id: 'fixture-delivery' }]);
   db.column.findUnique.mockResolvedValue({
     id: 'column-a',
     name: 'Column',
