@@ -1,0 +1,9 @@
+# Phase 3a actual gates
+
+Group1: first typecheck failed on a Testing Library query that mistakenly used Playwright's exact option. Corrected query preserves assertions. Retry lint/format/types pass; Node4 files and Vitest8 files/35 tests pass; production webpack build exit0. Source commit865e914.
+
+Group2: frontend lint/format/types, Node4 files and Vitest8 files/35 tests pass. Browser-harness lint/format/types pass. Backend16 suites/192 tests and build exit0. Final frontend production webpack build is in group2-frontend-build.log. No production backend source, migrations or API contracts changed. The inherited dashboard creation journey's selector changes from New to the explicit New workspace label; persistence assertions are unchanged. No tests or coverage floors were removed, skipped or weakened; no lint/axe rule disabling or suppression was introduced.
+
+Browser progression: sandbox IPC failed (browser-initial.log); first host run4 failed/2 passed on presence-group semantics and route cleanup; first correction2 failed/4 passed because the desktop element was missed; desktop-only correction2 passed. After rubric refinements, the complete final run6 passed,22 full-page axe results/0 reported violations. Incomplete focus/contrast entries remain in the per-state JSON. Failure logs are retained, not summarized as passes. Screenshots: ../after/dashboard. Total/partial failure captures inject503; ready/activity/task content is actual API data. Test setup uses the seeded identities and test-only login, never real Clerk sign-in.
+
+No act, hosted CI, dependency audits, redundant post-pass rebuilds, extra evidence recapture or Phase3b work. Landing/onboarding are deferred; workspace creation has confirmed save rather than destructive undo because its contract offers no guarded inverse. Document creation uses a pending row and existing Idempotency-Key, and Undo archives after the created ID is available. See PROGRESS.md for exact limits.

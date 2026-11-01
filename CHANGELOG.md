@@ -1,3 +1,9 @@
+# Phase 3a — dashboard review and browser acceptance
+
+- Clarify New workspace and the document destination; tighten the mobile heading/action layout and preserve room to scroll past the shared floating control.
+- Repair empty shell presence-group semantics discovered by the full-page audit. Add seeded dashboard main-flow/fault/empty/permission tests without changing production backend behavior.
+- Save initial/final dashboard captures and rubric review:22 final states, zero reported axe violations,6 browser tests pass. Final gates pass with35 frontend component tests and192 backend tests. Retain incomplete entries and initial failures; defer landing, onboarding and unsafe workspace-creation undo.
+
 # Phase 3a — dashboard foundation
 
 - Replace the workspace-card dashboard with recent documents, tasks matched to the local account, real activity, workspace filtering/navigation and quick actions using the existing shell and tokens.

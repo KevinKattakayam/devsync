@@ -1,3 +1,37 @@
+# Phase 3a — bounded dashboard delivery; stop here
+
+On `upgrade/enterprise`; local commits only, no push, deployment or3b. Root AGENTS.md is absent; frontend guidance, prior progress, AUTHZ_MATRIX and DESIGN.md were read. Highest-priority half delivered is **A / Dashboard**. B / Landing and C / Onboarding were not started. Production security, authorization, realtime/data behavior, migrations and HTTP contracts are unchanged.
+
+## Dashboard delivered
+
+Recent documents ranked by actual available modification dates, tasks matched to `/auth/me`'s local user ID rather than the Clerk ID, actual workspace activity, workspace filter/navigation and role-aware quick actions. No fake summary totals or operational capabilities. Existing API fan-out is bounded to three workspace batches. Skeletons, helpful empty states, partial/total error retry and a route-specific Next error boundary are included; internal exception text is not exposed by the new boundary.
+
+Quick document creation has an immediate pending row, receipt-bound retry and Undo toast. Undo uses existing archival (not delete), waits for the ID if clicked during creation, and restores the row/offers retry when archive fails. Existing workspace creation gets a labeled Radix dialog, pending controls, preserved input on failure and retry; Escape/Close remain usable during a slow request. New workspace naming and quick-document destination were clarified after screenshot review.
+
+## Actual verification
+
+Group1 first failed types on the new test's unsupported exact query option; fixed without relaxing assertions. Retry lint/format/types, Node4 files, Vitest8 files/**35 tests**, webpack production build pass. Group2 frontend lint/format/types and the same35 component tests pass; browser-harness lint/format/types pass; backend **16 suites/192 tests** and backend build exit0. Final frontend webpack build is recorded in ui/phase3a-evidence/group2-frontend-build.log. No suppressions, explicit any, disabled rules or weakened tests. The old dashboard journey keeps its persistence checks and uses the clearer New workspace selector.
+
+Final **6 browser tests pass**. Actual fixture owner/viewer sessions, seed data, real migrated disposable PostgreSQL/Redis and existing APIs are used. The seeded task is assigned through the API and a review document is created through the API. Empty-account testing temporarily removes/restores the seeded viewer's sample membership. Real Clerk sign-in is not needed/attempted.
+
+**22 final screenshots /22 full-page axe results /0 reported violations**, with raw focus/contrast incomplete entries retained. Initial/final images and the critique/correction/repeat-once rubric are in ui/after/dashboard. Ready/loading/create-dialog/total-error/partial-error states are captured at1440/390 in dark/light; empty state at360 in both themes. Error captures use labeled503 fault injection, not fabricated service-outage evidence. A360px viewer read-only flow also passes; no exhaustive360px owner-state matrix or screen-reader certification is claimed.
+
+Initial browser failures are retained: sandbox tsx IPC denial; host4 failed/2 passed on empty presence-group role and route cleanup; first correction2 failed/4 passed because the desktop element was not matched; desktop-only correction2 passed. The final complete suite passes6/6. Shell edits are semantic group roles only. Fixtures shut down their processes/containers. No act or extra post-pass verification.
+
+## Exact deferrals and limits
+
+- **B Landing:** clear value proposition, truthful real-UI preview and fast signup path remain untouched. Timebox prioritized the dashboard and its full state/main-flow review. No landing screenshot/axe completion claim.
+- **C Onboarding:** guided first run and sample-workspace creation are not implemented. Dashboard empty state intentionally creates no sample data automatically. Requires a separate3a increment; do not start3b.
+- **Workspace-creation optimistic undo:** not implemented. Existing API cannot conditionally remove only an unchanged empty workspace; delete-based undo could erase collaborators' data. Retained confirmed save instead of adding an unsafe inverse or changing the contract without versioning. This remains an explicit exception to the universal mutation/undo requirement.
+- Document recency uses timestamps available in the existing list DTO. Third-level child projections without updatedAt are omitted from ranking rather than assigned invented dates; arbitrary-depth recency/discovery and backend pagination remain outside this UI slice. Activity uses existing latest20-per-workspace responses; display is the latest6 across them. Assigned tasks display the earliest6 by due date with an explicit6-of-total label when needed.
+- Task links open their actual board; no new task-completion/editor action or fabricated Done column. Activity is loaded data, not a claim of a new live dashboard subscription. Refresh obtains current data.
+- Automated fault injection covers request failures, not a real provider outage. Route-boundary retry is unit-tested; no forced production component-crash test flag was added. Screen-reader/browser matrix, outstanding old shell Popover reference review, residual ghost-control outlines and shared floating-control overlap refinement remain as previously recorded.
+- No new dashboard pixel baseline or hosted CI run; Playwright asserts the main flow and captures the review states. No production mutation or secrets in artifacts.
+
+CHANGELOG updated; stop after committing group2. Do not attempt the remaining pages in this session.
+
+---
+
 # Phase 3a — bounded dashboard delivery in progress
 
 On `upgrade/enterprise`; no push or3b. Root AGENTS.md remains absent; frontend guidance, current progress, authorization matrix and DESIGN.md were read. Highest-priority half is **A / Dashboard**; landing-page redesign and guided sample-workspace onboarding are deferred rather than attempted in this session. Earlier security/authorization/realtime/data code and transport contracts remain unchanged.

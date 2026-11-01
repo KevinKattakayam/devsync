@@ -121,7 +121,7 @@ it('keeps create-workspace input after a server failure and allows retry', async
   const user = userEvent.setup();
   render(<DashboardPage />);
   await screen.findByText('My task');
-  await user.click(screen.getByRole('button', { name: 'New' }));
+  await user.click(screen.getByRole('button', { name: 'New workspace' }));
   await user.type(screen.getByRole('textbox', { name: 'Name' }), 'New workspace');
   await user.click(screen.getByRole('button', { name: 'Create' }));
   await screen.findByRole('alert');

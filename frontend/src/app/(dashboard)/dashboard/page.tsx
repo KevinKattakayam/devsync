@@ -196,11 +196,11 @@ function Dashboard() {
     });
   }
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8 md:px-8" data-dashboard>
-      <header className="mb-8 flex flex-wrap items-start justify-between gap-4">
+    <div className="mx-auto max-w-6xl px-4 pt-8 pb-24 md:px-8" data-dashboard>
+      <header className="mb-8 grid grid-cols-[minmax(0,1fr)_auto] items-start gap-4">
         <div>
           <p className="mb-2 text-xs text-muted-foreground">Your work, together</p>
-          <h1 className="text-[28px] font-semibold leading-9 tracking-tight">
+          <h1 className="break-words text-[28px] font-semibold leading-9 tracking-tight">
             Welcome back, {data.name.split(' ')[0] || 'developer'}
           </h1>
           <p className="mt-2 max-w-xl text-sm text-muted-foreground">
@@ -228,17 +228,28 @@ function Dashboard() {
             ]}
           />
         </label>
-        <div className="flex flex-wrap items-center gap-3" aria-label="Quick actions">
-          <Button
-            disabled={!writer || visibleDrafts.some((item) => item.state === 'creating')}
-            onClick={() => {
-              if (writer) createDocument(writer);
-            }}
+        <div>
+          <div
+            className="flex flex-wrap items-center gap-3"
+            role="group"
+            aria-label="Quick actions"
           >
-            <Plus aria-hidden="true" className="size-4" />
-            New document
-          </Button>
-          <CreateWorkspace onCreated={retry} />
+            <Button
+              disabled={!writer || visibleDrafts.some((item) => item.state === 'creating')}
+              onClick={() => {
+                if (writer) createDocument(writer);
+              }}
+            >
+              <Plus aria-hidden="true" className="size-4" />
+              New document
+            </Button>
+            <CreateWorkspace onCreated={retry} />
+          </div>
+          {writer && (
+            <p className="mt-2 break-words text-xs text-muted-foreground">
+              New documents go to {writer.name}.
+            </p>
+          )}
         </div>
       </div>
       {!writer && data.workspaces.length > 0 && (
@@ -260,7 +271,7 @@ function Dashboard() {
           <EmptyState
             icon={<Folder className="size-8" />}
             title="Make room for your next idea"
-            description="Use New to create your first workspace. Then add a document or invite your team. Nothing is added until you choose."
+            description="Use New workspace to create your first workspace. Then add a document or invite your team. Nothing is added until you choose."
           />
         </div>
       ) : (
@@ -357,7 +368,11 @@ function Dashboard() {
               </Panel>
               <Panel
                 title="Assigned to you"
-                detail={`${tasks.length} ${tasks.length === 1 ? 'task' : 'tasks'}`}
+                detail={
+                  tasks.length > 6
+                    ? `6 of ${tasks.length} tasks · by due date`
+                    : `${tasks.length} ${tasks.length === 1 ? 'task' : 'tasks'}`
+                }
               >
                 {tasks.length === 0 ? (
                   <EmptyState

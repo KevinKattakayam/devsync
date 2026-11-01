@@ -38,7 +38,7 @@ export function CreateWorkspace({ onCreated }: { onCreated: () => void }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="secondary">New</Button>
+        <Button variant="secondary">New workspace</Button>
       </DialogTrigger>
       <DialogContent
         title="Create workspace"

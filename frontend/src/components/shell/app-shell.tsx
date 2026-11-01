@@ -354,7 +354,11 @@ function Shell({ children, user }: { children: ReactNode; user: User }) {
             </ol>
           </nav>
           <div className="shell-topbar-actions">
-            <div className="hidden items-center gap-2 lg:flex" aria-label="Workspace presence">
+            <div
+              className="hidden items-center gap-2 lg:flex"
+              role="group"
+              aria-label="Workspace presence"
+            >
               {people.length > 0 && (
                 <>
                   <AvatarStack people={people} max={3} />
@@ -363,7 +367,11 @@ function Shell({ children, user }: { children: ReactNode; user: User }) {
               )}
             </div>
             {people.length > 0 && (
-              <div className="lg:hidden" aria-label={`${people.length} workspace members online`}>
+              <div
+                className="lg:hidden"
+                role="group"
+                aria-label={`${people.length} workspace members online`}
+              >
                 <AvatarStack people={people.slice(0, 1)} max={1} />
               </div>
             )}

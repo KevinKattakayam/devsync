@@ -22,7 +22,7 @@ for (const role of ['owner', 'editor', 'viewer'] as const) {
 test('owner creates a workspace from the dashboard', async ({ page, context }) => {
   await login(context, 'owner');
   await page.goto('/dashboard');
-  await page.getByRole('button', { name: 'New', exact: true }).click();
+  await page.getByRole('button', { name: 'New workspace', exact: true }).click();
   const name = `Browser workspace ${Date.now()}`;
   await page.getByPlaceholder('My Project').fill(name);
   await page.getByRole('button', { name: 'Create', exact: true }).click();
