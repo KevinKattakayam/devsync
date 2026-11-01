@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useId, useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
 import { Dialog, DialogContent, DialogTrigger } from './overlays';
 import { Button, Input, Kbd } from './controls';
 
@@ -15,17 +15,21 @@ export function CommandPalette({
   actions,
   open,
   onOpenChange,
+  trigger,
 }: {
   actions: CommandAction[];
+  trigger?: ReactNode;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
-        <Button variant="secondary">
-          Commands <Kbd>⌘ / Ctrl K</Kbd>
-        </Button>
+        {trigger || (
+          <Button variant="secondary">
+            Commands <Kbd>⌘ / Ctrl K</Kbd>
+          </Button>
+        )}
       </DialogTrigger>
       <DialogContent
         title="Commands"

@@ -9,8 +9,6 @@ import Link from 'next/link';
 import { workspaceApi } from '@/lib/api';
 import { Workspace } from '@/types';
 import { getInitials, generateColor } from '@/lib/utils';
-import { useSocket } from '@/providers/socket-provider';
-import { useAuth } from '@/providers/auth-provider';
 import { ActivityFeed } from '@/components/workspace/activity-feed';
 import { WorkspaceStats } from '@/components/workspace/workspace-stats';
 import { PresenceBar } from '@/components/workspace/presence-bar';
@@ -32,23 +30,12 @@ import { toast } from 'sonner';
 
 export default function WorkspacePage() {
   const { id } = useParams<{ id: string }>();
-  const { user } = useAuth();
-  const { socket } = useSocket();
   const [workspace, setWorkspace] = useState<Workspace | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [showInvite, setShowInvite] = useState(false);
   const [invitationLink, setInvitationLink] = useState('');
   const [inviteEmail, setInviteEmail] = useState('');
   const [inviteRole, setInviteRole] = useState('EDITOR');
-
-  useEffect(() => {
-    if (socket && workspace && user) {
-      socket.emit('workspace:join', { workspaceId: workspace.id, userName: user.name });
-      return () => {
-        socket.emit('workspace:leave', { workspaceId: workspace.id });
-      };
-    }
-  }, [socket, workspace, user]);
 
   useEffect(() => {
     let disposed = false;

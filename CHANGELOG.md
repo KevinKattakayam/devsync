@@ -1,3 +1,9 @@
+# Phase 2b — shared app shell
+
+- Replace the logged-in layout with neutral navigation, collapsible rail, workspace switcher, nested document disclosures, breadcrumbs, user menu, focus mode and mobile Drawer.
+- Integrate existing resource APIs with the command primitive; add keyboard help, scoped navigation state and named responsive document title sizing.
+- Share the shell across dashboard/workspace/billing/invitation routes and retain the superadmin server guard around the same shell. No backend/API contract changes.
+
 # Phase 2 — UI foundation, group 2
 
 - Add semantic controls, Radix modal/drawer/select/menu/popover/tooltip/tabs/selection primitives, identity/status/loading/empty/keyboard controls, a supplied-action command palette and a shared Sonner toast host.

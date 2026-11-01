@@ -291,11 +291,11 @@ export default function DocsPage() {
   }
 
   return (
-    <div className="p-6 md:p-8 max-w-6xl mx-auto space-y-8 animate-fade-in">
+    <div className="p-4 md:p-8 min-w-0 max-w-6xl mx-auto space-y-8 animate-fade-in">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 glass-card p-6 border-white/10 relative overflow-hidden">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-200 to-indigo-300">
+          <h1 className="text-[28px] leading-9 font-semibold tracking-tight text-foreground">
             Documentation Hub
           </h1>
           <p className="text-xs text-muted-foreground mt-0.5">
@@ -303,7 +303,7 @@ export default function DocsPage() {
           </p>
         </div>
 
-        <div className="flex items-center gap-2.5">
+        <div className="flex flex-wrap items-center gap-2.5">
           <input
             type="file"
             ref={fileInputRef}

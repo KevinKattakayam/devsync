@@ -718,18 +718,19 @@ export default function DocEditorPage() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-6 py-8 animate-fade-in">
+    <div className="w-full min-w-0 max-w-4xl mx-auto px-4 md:px-8 py-8 animate-fade-in">
       {/* Title */}
       <input
+        aria-label="Document title"
         readOnly={!canWrite}
         type="text"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         onBlur={saveTitle}
-        className="w-full text-3xl font-bold bg-transparent outline-none mb-2 placeholder:text-muted-foreground/50"
+        className="block w-full min-w-0 text-[28px] leading-9 font-semibold text-foreground bg-transparent mb-2 placeholder:text-muted-foreground"
         placeholder="Untitled"
       />
-      <div className="flex items-center gap-3 mb-6 text-xs text-muted-foreground">
+      <div className="flex flex-wrap items-center gap-3 mb-6 text-xs text-muted-foreground">
         <DocumentSyncStatus
           status={syncStatus}
           pending={pending || !localReady}

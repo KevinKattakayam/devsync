@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @import './foundation.css';
+@import './shell.css';
 
 @custom-variant dark (&:where(.dark, .dark *));
 

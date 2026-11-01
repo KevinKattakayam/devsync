@@ -1,5 +1,6 @@
 import { currentUser } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
+import { AppShell } from '@/components/shell/app-shell';
 
 export default async function SuperadminLayout({
   children,
@@ -7,8 +8,8 @@ export default async function SuperadminLayout({
   const user = await currentUser();
   if (user?.publicMetadata.systemRole !== 'SUPER_ADMIN') redirect('/dashboard');
   return (
-    <main className="min-h-screen bg-background text-foreground">
+    <AppShell>
       <div className="mx-auto max-w-7xl p-6">{children}</div>
-    </main>
+    </AppShell>
   );
 }

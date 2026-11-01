@@ -1,3 +1,13 @@
+# Phase 2b — app shell in progress
+
+On `upgrade/enterprise`; no push or Phase3. Read frontend guidance, DESIGN.md, prior gallery code/evidence and previous audit/authorization context. Root AGENTS.md remains absent. Production backend/API/authentication contracts are unchanged.
+
+Group 1 implements the shared logged-in shell, responsive Drawer/rail, real workspace/document navigation, breadcrumbs, user menu, focus mode, command integration and shortcut help; documents get an explicitly labeled full-width title field and wrapping metadata. The superadmin layout retains its existing server-side global-authority guard before rendering AppShell.
+
+Real frontend gate: initial lint failed on an unused overview auth import after centralizing presence; fixed without suppression. Retry lint, formatting, types, Node4 files and Vitest6 files /25 tests pass; webpack production build exit0. Logs: ui/phase2b-evidence/group1-*.log. Browser acceptance, existing presence payload compatibility, shell axe/incomplete review, screenshots/critique/visual baselines and mobile route verification are the next group; no browser completion claim yet. i18n remains last.
+
+---
+
 # Phase 2 — UI foundation (bounded delivery; stop here)
 
 Branch `upgrade/enterprise`; no push. Root AGENTS.md is absent; frontend/AGENTS.md, progress, authorization matrix, audit and before/current UI evidence were read. This session supersedes historical “no Phase2” stop notes for UI work only. Earlier security, authorization, realtime and data behavior remains unchanged.
