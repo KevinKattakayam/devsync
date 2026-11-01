@@ -1,3 +1,9 @@
+# Phase 3e — transport acceptance and review
+
+- Correct source-label contrast; preserve failed evidence and raw axe incomplete items. Final four seeded transport-fixture browser tests pass with eight final captures/zero reported axe violations.
+- Verify retained generated labels/reference legends and disabled partial-output actions without calling or claiming to evaluate a live model.
+- Record54 frontend/193 backend tests and builds; explicitly defer atomic quotas/usage, streamed fallback, evaluation scaffold and PWA. No Phase4 or push.
+
 # Phase 3e — reliable editor AI stream and provenance
 
 - Parse bounded complete SSE frames across split UTF8/CRLF, require completion before applying, and expose stop/retry guidance for partial or failed streams.

@@ -1,0 +1,108 @@
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": PostgreSQL database "devsync_e2e_browser", schema "public" at "localhost:32842"
+
+11 migrations found in prisma/migrations
+
+Applying migration `20260729000000_baseline`
+Applying migration `20260729180000_enterprise_platform`
+Applying migration `20260815000000_phase_3_tenant_rls`
+Applying migration `20260815001000_scim_provisioning`
+Applying migration `20260815002000_commercial_billing`
+Applying migration `20261031000000_tenant_indexes`
+Applying migration `20261031010000_crdt_journal`
+Applying migration `202611010001_canonical_revision`
+Applying migration `202611010002_embedding_authority`
+Applying migration `202611010003_atomic_create_idempotency`
+Applying migration `202611010004_workspace_invitations`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20260729000000_baseline/
+    └─ migration.sql
+  └─ 20260729180000_enterprise_platform/
+    └─ migration.sql
+  └─ 20260815000000_phase_3_tenant_rls/
+    └─ migration.sql
+  └─ 20260815001000_scim_provisioning/
+    └─ migration.sql
+  └─ 20260815002000_commercial_billing/
+    └─ migration.sql
+  └─ 20261031000000_tenant_indexes/
+    └─ migration.sql
+  └─ 20261031010000_crdt_journal/
+    └─ migration.sql
+  └─ 202611010001_canonical_revision/
+    └─ migration.sql
+  └─ 202611010002_embedding_authority/
+    └─ migration.sql
+  └─ 202611010003_atomic_create_idempotency/
+    └─ migration.sql
+  └─ 202611010004_workspace_invitations/
+    └─ migration.sql
+      
+All migrations have been successfully applied.
+Sample workspace seeded. Sign in with the supplied Clerk test identities.
+/home/kevin/devsync/.worktrees/frontend-fixture
+Isolated fixture server ready
+{"level":30,"time":1793563158022,"service":"devsync-api","req":{"id":"21856274-ab03-43f1-a69a-4fafa0abcda0","method":"GET"},"requestId":"21856274-ab03-43f1-a69a-4fafa0abcda0","res":{"statusCode":200},"responseTime":5,"msg":"request completed"}
+▲ Next.js 16.4.3 (webpack)
+- Local:         http://127.0.0.1:3001
+- Network:       http://127.0.0.1:3001
+✓ Ready in 675ms
+✓ Running next.config.ts took 42ms
+
+✓ Generated AGENTS.md for AI agents. Set `agentRules: false` in next.config to disable.
+○ Compiling /(auth)/login/[[...rest]]/page ...
+ GET /login 200 in 1838ms (next.js: 1329ms, proxy.ts: 80ms, application-code: 429ms)
+ GET /login 200 in 139ms (next.js: 48ms, proxy.ts: 9ms, application-code: 81ms)
+
+Running 4 tests using 1 worker
+
+(node:146329) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1793563192231,"service":"devsync-api","req":{"id":"43bebc9d-51c9-4be1-82db-5c9e7d7ac175","method":"GET"},"requestId":"43bebc9d-51c9-4be1-82db-5c9e7d7ac175","res":{"statusCode":200},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793563192308,"service":"devsync-api","req":{"id":"5c0e4801-cc89-46b5-b08c-905e716faf77","method":"POST"},"requestId":"5c0e4801-cc89-46b5-b08c-905e716faf77","res":{"statusCode":201},"responseTime":66,"msg":"request completed"}
+○ Compiling /(dashboard)/workspace/[id]/docs/[docId]/page ...
+ GET /workspace/devsync-sample/docs/cmvy97s9r000390o5xoqqnegi 200 in 6.3s (next.js: 5.7s, proxy.ts: 18ms, application-code: 598ms)
+{"level":30,"time":1793563200709,"service":"devsync-api","req":{"id":"f04f26b9-47b2-46fc-a157-a0748094a4ba","method":"GET"},"requestId":"f04f26b9-47b2-46fc-a157-a0748094a4ba","res":{"statusCode":200},"responseTime":61,"msg":"request completed"}
+{"level":30,"time":1793563200712,"service":"devsync-api","req":{"id":"0893da3d-ff5d-4da9-8242-245e55cd98e9","method":"GET"},"requestId":"0893da3d-ff5d-4da9-8242-245e55cd98e9","res":{"statusCode":200},"responseTime":60,"msg":"request completed"}
+{"level":30,"time":1793563200715,"service":"devsync-api","req":{"id":"8efd8667-f095-4312-984d-bbc0076eb96b","method":"GET"},"requestId":"8efd8667-f095-4312-984d-bbc0076eb96b","res":{"statusCode":200},"responseTime":70,"msg":"request completed"}
+{"level":30,"time":1793563200747,"service":"devsync-api","req":{"id":"edf408d6-65ed-4416-a6ad-f1833239eec7","method":"GET"},"requestId":"edf408d6-65ed-4416-a6ad-f1833239eec7","res":{"statusCode":304},"responseTime":33,"msg":"request completed"}
+{"level":30,"time":1793563200749,"service":"devsync-api","req":{"id":"8a10e3a6-c3a2-46a7-b52e-3f864a899e5b","method":"GET"},"requestId":"8a10e3a6-c3a2-46a7-b52e-3f864a899e5b","res":{"statusCode":304},"responseTime":29,"msg":"request completed"}
+{"level":30,"time":1793563200759,"service":"devsync-api","req":{"id":"a7b9f0ee-ab37-4750-8ead-eb97f02117d0","method":"GET"},"requestId":"a7b9f0ee-ab37-4750-8ead-eb97f02117d0","res":{"statusCode":304},"responseTime":49,"msg":"request completed"}
+  ✓  1 testing/browser/ai.spec.ts:8:9 › dark 1440 AI transport fixture labels, references and partial failure (11.1s)
+{"level":30,"time":1793563203154,"service":"devsync-api","req":{"id":"803b28c5-845f-4760-b498-1775d017b612","method":"GET"},"requestId":"803b28c5-845f-4760-b498-1775d017b612","res":{"statusCode":200},"responseTime":11,"msg":"request completed"}
+{"level":30,"time":1793563203188,"service":"devsync-api","req":{"id":"5a3aee9f-bd44-4a00-b520-c83bc470e4cc","method":"POST"},"requestId":"5a3aee9f-bd44-4a00-b520-c83bc470e4cc","res":{"statusCode":201},"responseTime":27,"msg":"request completed"}
+ GET /workspace/devsync-sample/docs/cmvy980o8001q90o5jldaptnr 200 in 205ms (next.js: 88ms, proxy.ts: 6ms, application-code: 110ms)
+{"level":30,"time":1793563204974,"service":"devsync-api","req":{"id":"ed57b2c7-b94b-4a70-b670-c458ea926515","method":"GET"},"requestId":"ed57b2c7-b94b-4a70-b670-c458ea926515","res":{"statusCode":200},"responseTime":25,"msg":"request completed"}
+{"level":30,"time":1793563204978,"service":"devsync-api","req":{"id":"529d81ed-0439-4db8-b487-cbea1a80bfc4","method":"GET"},"requestId":"529d81ed-0439-4db8-b487-cbea1a80bfc4","res":{"statusCode":200},"responseTime":25,"msg":"request completed"}
+{"level":30,"time":1793563204982,"service":"devsync-api","req":{"id":"540091dc-e8df-40d1-8dcb-9535052e9413","method":"GET"},"requestId":"540091dc-e8df-40d1-8dcb-9535052e9413","res":{"statusCode":200},"responseTime":31,"msg":"request completed"}
+{"level":30,"time":1793563204996,"service":"devsync-api","req":{"id":"97d0647b-5290-47e7-ab87-c2207fab8b46","method":"GET"},"requestId":"97d0647b-5290-47e7-ab87-c2207fab8b46","res":{"statusCode":304},"responseTime":17,"msg":"request completed"}
+{"level":30,"time":1793563205002,"service":"devsync-api","req":{"id":"758d1d55-9426-4e76-8986-f9d34d41e61b","method":"GET"},"requestId":"758d1d55-9426-4e76-8986-f9d34d41e61b","res":{"statusCode":304},"responseTime":26,"msg":"request completed"}
+{"level":30,"time":1793563205009,"service":"devsync-api","req":{"id":"7ec7ed0d-4c34-4b3f-9dcc-53cafbecd3c2","method":"GET"},"requestId":"7ec7ed0d-4c34-4b3f-9dcc-53cafbecd3c2","res":{"statusCode":304},"responseTime":24,"msg":"request completed"}
+  ✓  2 testing/browser/ai.spec.ts:8:9 › dark 390 AI transport fixture labels, references and partial failure (3.9s)
+{"level":30,"time":1793563207084,"service":"devsync-api","req":{"id":"18f7fcd8-f4a8-416d-826b-e8c467da6f57","method":"GET"},"requestId":"18f7fcd8-f4a8-416d-826b-e8c467da6f57","res":{"statusCode":200},"responseTime":8,"msg":"request completed"}
+{"level":30,"time":1793563207133,"service":"devsync-api","req":{"id":"e5d42d60-8d8e-456b-8fc6-c84fb11951b6","method":"POST"},"requestId":"e5d42d60-8d8e-456b-8fc6-c84fb11951b6","res":{"statusCode":201},"responseTime":38,"msg":"request completed"}
+ GET /workspace/devsync-sample/docs/cmvy983po003d90o5lenu16a9 200 in 124ms (next.js: 57ms, proxy.ts: 5ms, application-code: 62ms)
+{"level":30,"time":1793563208878,"service":"devsync-api","req":{"id":"68ddea10-9c04-4406-8c45-46595a5c31a5","method":"GET"},"requestId":"68ddea10-9c04-4406-8c45-46595a5c31a5","res":{"statusCode":200},"responseTime":38,"msg":"request completed"}
+{"level":30,"time":1793563208879,"service":"devsync-api","req":{"id":"f0cd7acf-a1ef-4cf7-89a9-2599204eabf8","method":"GET"},"requestId":"f0cd7acf-a1ef-4cf7-89a9-2599204eabf8","res":{"statusCode":200},"responseTime":46,"msg":"request completed"}
+{"level":30,"time":1793563208892,"service":"devsync-api","req":{"id":"c39c5a3c-e19a-4635-a401-a9be23d60cfa","method":"GET"},"requestId":"c39c5a3c-e19a-4635-a401-a9be23d60cfa","res":{"statusCode":200},"responseTime":48,"msg":"request completed"}
+{"level":30,"time":1793563208910,"service":"devsync-api","req":{"id":"6b5152b6-f4f3-4dfe-9b0f-265ea7495768","method":"GET"},"requestId":"6b5152b6-f4f3-4dfe-9b0f-265ea7495768","res":{"statusCode":304},"responseTime":27,"msg":"request completed"}
+{"level":30,"time":1793563208913,"service":"devsync-api","req":{"id":"78252990-c34d-4e93-95db-739745f0d484","method":"GET"},"requestId":"78252990-c34d-4e93-95db-739745f0d484","res":{"statusCode":304},"responseTime":28,"msg":"request completed"}
+{"level":30,"time":1793563208925,"service":"devsync-api","req":{"id":"bd058f90-2db9-47de-86ce-2ee9dee51825","method":"GET"},"requestId":"bd058f90-2db9-47de-86ce-2ee9dee51825","res":{"statusCode":304},"responseTime":31,"msg":"request completed"}
+  ✓  3 testing/browser/ai.spec.ts:8:9 › light 1440 AI transport fixture labels, references and partial failure (3.9s)
+{"level":30,"time":1793563211044,"service":"devsync-api","req":{"id":"884f2ff8-7b93-48a1-9357-c57c3e85a7f5","method":"GET"},"requestId":"884f2ff8-7b93-48a1-9357-c57c3e85a7f5","res":{"statusCode":200},"responseTime":7,"msg":"request completed"}
+{"level":30,"time":1793563211085,"service":"devsync-api","req":{"id":"36d84e34-8e63-428a-bffd-9ff2089ee88b","method":"POST"},"requestId":"36d84e34-8e63-428a-bffd-9ff2089ee88b","res":{"statusCode":201},"responseTime":33,"msg":"request completed"}
+ GET /workspace/devsync-sample/docs/cmvy986rj005390o5eipe8vlg 200 in 160ms (next.js: 74ms, proxy.ts: 6ms, application-code: 80ms)
+{"level":30,"time":1793563212899,"service":"devsync-api","req":{"id":"cc284028-904a-47ec-b0cc-7bbad0fb717d","method":"GET"},"requestId":"cc284028-904a-47ec-b0cc-7bbad0fb717d","res":{"statusCode":200},"responseTime":42,"msg":"request completed"}
+{"level":30,"time":1793563212902,"service":"devsync-api","req":{"id":"bbe12248-fbe3-4b2c-a9b4-72186842c825","method":"GET"},"requestId":"bbe12248-fbe3-4b2c-a9b4-72186842c825","res":{"statusCode":200},"responseTime":39,"msg":"request completed"}
+{"level":30,"time":1793563212911,"service":"devsync-api","req":{"id":"c1cb988c-35a3-4ad9-9201-11a9682bad98","method":"GET"},"requestId":"c1cb988c-35a3-4ad9-9201-11a9682bad98","res":{"statusCode":200},"responseTime":51,"msg":"request completed"}
+{"level":30,"time":1793563212953,"service":"devsync-api","req":{"id":"91ca09dc-1e98-4d26-9f73-3882ca529b5b","method":"GET"},"requestId":"91ca09dc-1e98-4d26-9f73-3882ca529b5b","res":{"statusCode":304},"responseTime":48,"msg":"request completed"}
+{"level":30,"time":1793563212959,"service":"devsync-api","req":{"id":"05a981f6-72d3-4a27-8c0b-f6b0a1e51470","method":"GET"},"requestId":"05a981f6-72d3-4a27-8c0b-f6b0a1e51470","res":{"statusCode":304},"responseTime":55,"msg":"request completed"}
+{"level":30,"time":1793563212983,"service":"devsync-api","req":{"id":"45659274-7f83-4ed6-be7f-95a94bcb732a","method":"GET"},"requestId":"45659274-7f83-4ed6-be7f-95a94bcb732a","res":{"statusCode":304},"responseTime":67,"msg":"request completed"}
+  ✓  4 testing/browser/ai.spec.ts:8:9 › light 390 AI transport fixture labels, references and partial failure (4.1s)
+
+  4 passed (24.3s)
+[?25h

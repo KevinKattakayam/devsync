@@ -621,8 +621,7 @@ function DocumentEditor({ workspaceId, docId }: { workspaceId: string; docId: st
           </span>{' '}
           {aiSources.map((source, index) => (
             <span key={`${source.type}-${source.title}`}>
-              {index > 0 && ', '}[{index + 1}] {source.title}{' '}
-              <span className="opacity-60">({source.type})</span>
+              {index > 0 && ', '}[{index + 1}] {source.title} <span>({source.type})</span>
             </span>
           ))}
         </div>
