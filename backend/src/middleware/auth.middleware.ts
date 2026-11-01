@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { getAuth, clerkClient } from '@clerk/express';
 import { UnauthorizedError } from '../utils/errors';
 import { prisma } from '../lib/prisma';
+import { withIdentityProfileAccess } from '../security/service-policy';
 
 declare global {
   namespace Express {
@@ -26,6 +27,7 @@ export async function authMiddleware(
       user = await syncClerkUser(auth.userId);
     }
 
+    if (!user.isActive) throw new UnauthorizedError('Invalid or expired session');
     req.user = { userId: user.id, clerkId: user.clerkId, email: user.email };
     next();
   } catch (error) {
@@ -50,7 +52,7 @@ export async function optionalAuth(
       if (!user) {
         user = await syncClerkUser(auth.userId);
       }
-      if (user) req.user = { userId: user.id, clerkId: user.clerkId, email: user.email };
+      if (user?.isActive) req.user = { userId: user.id, clerkId: user.clerkId, email: user.email };
     }
     next();
   } catch {
@@ -69,9 +71,11 @@ export async function syncClerkUser(clerkId: string) {
     clerkUser.username ||
     null;
 
-  return prisma.user.upsert({
-    where: { clerkId },
-    create: { clerkId, email, name, avatar: clerkUser.imageUrl },
-    update: { email, name, avatar: clerkUser.imageUrl },
-  });
+  return withIdentityProfileAccess(clerkId, (tx) =>
+    tx.user.upsert({
+      where: { clerkId },
+      create: { clerkId, email, name, avatar: clerkUser.imageUrl },
+      update: { email, name, avatar: clerkUser.imageUrl },
+    }),
+  );
 }

@@ -265,7 +265,7 @@ export async function ingestDocument(
       });
 
       // Queue embedding
-      await queueEmbedding('document', document.id, tx);
+      await queueEmbedding('document', document.id, tx, workspaceId, authorId);
       return document;
     } finally {
       state.destroy();

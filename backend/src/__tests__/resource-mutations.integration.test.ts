@@ -36,6 +36,16 @@ import githubRouter from '../routes/github-webhook.routes';
 import stripeRouter from '../routes/stripe.webhook';
 import superadminRouter from '../routes/superadmin.routes';
 import { processPRSummary, PRSummaryJobData } from '../agents/pr-summary.agent';
+import { startEmbeddingPolling } from '../services/embedding-runner';
+import { getMe, updateMe } from '../controllers/auth.controller';
+import { withIdentityProfileAccess } from '../security/service-policy';
+import {
+  queueEmbedding,
+  refreshEmbedding,
+  claimEmbeddingJobs,
+  acknowledgeEmbeddingJob,
+  processEmbeddingJobs,
+} from '../services/embedding.service';
 jest.mock('@clerk/express', () => ({
   ...jest.requireActual<typeof import('@clerk/express')>('@clerk/express'),
   getAuth: (req: express.Request) => ({ userId: req.header('x-verified-clerk-fixture') || null }),
@@ -87,6 +97,8 @@ app.use((req, _res, next) =>
   }),
 );
 app.use('/scim/v2', scimRouter);
+app.get('/auth/me', getMe);
+app.patch('/auth/me', updateMe);
 app.use('/github', githubRouter);
 app.use('/stripe', stripeRouter);
 app.use('/superadmin', superadminRouter);
@@ -1243,4 +1255,226 @@ it('D07 superadmin requires active verified global role or a strong configured s
         ).status,
       ).toBe(200),
   );
+});
+
+it('D01/C01 central self-profile and identity policies reject inactive principals without privilege assignment', async () => {
+  expect((await request(app).get('/auth/me').set('x-fixture-actor', 'inactive')).status).toBe(403);
+  expect(
+    (
+      await request(app)
+        .patch('/auth/me')
+        .set('x-fixture-actor', 'inactive')
+        .send({ name: 'Denied profile' })
+    ).status,
+  ).toBe(403);
+  expect(
+    (
+      await request(app)
+        .patch('/auth/me')
+        .set('x-fixture-actor', 'editor')
+        .send({ name: 'Profile', systemRole: 'SUPER_ADMIN' })
+    ).status,
+  ).toBe(400);
+  expect(
+    (
+      await request(app)
+        .patch('/auth/me')
+        .set('x-fixture-actor', 'editor')
+        .send({ name: 'Fixture profile' })
+    ).status,
+  ).toBe(200);
+  expect((await admin.user.findUniqueOrThrow({ where: { id: 'editor' } })).systemRole).toBe('USER');
+  await expect(
+    withDatabase(db, () =>
+      withIdentityProfileAccess('fixture_inactive', (tx) =>
+        tx.user.update({ where: { id: 'inactive' }, data: { name: 'Must reject' } }),
+      ),
+    ),
+  ).rejects.toThrow('Access denied');
+});
+async function enqueueResource(
+  kind: 'document' | 'snippet' | 'task',
+  resourceId: string,
+  workspaceId: string,
+) {
+  return withDatabase(db, () =>
+    withWorkspaceAccess('editor', workspaceId, WRITE_ROLES, (tx) =>
+      queueEmbedding(kind, resourceId, tx, workspaceId, 'editor'),
+    ),
+  );
+}
+it.each(['document', 'snippet', 'task'] as const)(
+  'G01 embedding %s producer and consumer bind tenant/resource authority',
+  async (kind) => {
+    const { a, b } = await fixture(),
+      id = `${kind === 'document' ? 'doc' : kind}-${a}`,
+      foreignId = `${kind === 'document' ? 'doc' : kind}-${b}`;
+    await enqueueResource(kind, id, a);
+    let calls = 0;
+    const provider = async (text: string) => {
+      calls++;
+      expect(text.length).toBeGreaterThan(0);
+      return Array<number>(1536).fill(0.01);
+    };
+    await expect(withDatabase(db, () => refreshEmbedding(kind, id, b, provider))).rejects.toThrow(
+      'Access denied',
+    );
+    await expect(
+      withDatabase(db, () => refreshEmbedding(kind, foreignId, a, provider)),
+    ).rejects.toThrow('Access denied');
+    expect(calls).toBe(0);
+    await expect(
+      withDatabase(db, () =>
+        db.withTenantTransaction(a, (tx) => queueEmbedding(kind, foreignId, tx, a, 'editor')),
+      ),
+    ).rejects.toThrow('Access denied');
+    await expect(
+      withDatabase(db, () =>
+        db.withTenantTransaction(a, (tx) => queueEmbedding(kind, id, tx, a, 'viewer')),
+      ),
+    ).rejects.toThrow('Access denied');
+    expect(await withDatabase(db, () => refreshEmbedding(kind, id, a, provider))).toBe(true);
+    expect(calls).toBe(1);
+    expect(await withDatabase(db, () => refreshEmbedding(kind, id, a, provider))).toBe(true);
+    expect(calls).toBe(1);
+    await admin.workspace.update({ where: { id: a }, data: { suspendedAt: new Date() } });
+    await expect(withDatabase(db, () => refreshEmbedding(kind, id, a, provider))).rejects.toThrow(
+      'Access denied',
+    );
+  },
+);
+it('G01/G04 embedding rejects stale provider results and preserves newly queued work', async () => {
+  const { a } = await fixture(),
+    id = `doc-${a}`;
+  await enqueueResource('document', id, a);
+  const result = withDatabase(db, () =>
+    refreshEmbedding('document', id, a, async () => {
+      expect(
+        (
+          await request(app)
+            .patch(`/documents/${id}`)
+            .send({ title: 'Changed during provider call' })
+        ).status,
+      ).toBe(200);
+      return Array<number>(1536).fill(0.02);
+    }),
+  );
+  await expect(result).rejects.toThrow('Content changed during embedding');
+  expect((await admin.document.findUniqueOrThrow({ where: { id } })).embeddingHash).toBeNull();
+  expect(
+    (
+      await admin.embeddingJob.findUniqueOrThrow({
+        where: { resourceType_resourceId: { resourceType: 'document', resourceId: id } },
+      })
+    ).revision,
+  ).toBe(1);
+});
+it('G04 parallel embedding claims have unique leases, expired leases recover and stale acknowledgements cannot delete new work', async () => {
+  // Retire only this fixture's prior metadata; documents and earlier assertions are retained.
+  await admin.embeddingJob.updateMany({ data: { status: 'dead' } });
+  const { a, b } = await fixture(),
+    id = `doc-${a}`;
+  await enqueueResource('document', id, a);
+  const batches = await withDatabase(db, () =>
+    Promise.all([claimEmbeddingJobs(), claimEmbeddingJobs()]),
+  );
+  const claims = batches.flat();
+  expect(claims).toHaveLength(1);
+  const first = claims[0];
+  expect(
+    (await withDatabase(db, () => acknowledgeEmbeddingJob({ ...first, workspaceId: b }))).count,
+  ).toBe(0);
+  await admin.embeddingJob.update({
+    where: { id: first.id },
+    data: { leaseUntil: new Date(Date.now() - 1000) },
+  });
+  const [renewed] = await withDatabase(db, () => claimEmbeddingJobs());
+  expect(renewed.id).toBe(first.id);
+  expect(renewed.leaseToken).not.toBe(first.leaseToken);
+  expect((await withDatabase(db, () => acknowledgeEmbeddingJob(first))).count).toBe(0);
+  await enqueueResource('document', id, a);
+  expect((await withDatabase(db, () => acknowledgeEmbeddingJob(renewed))).count).toBe(0);
+  const stored = await admin.embeddingJob.findUniqueOrThrow({ where: { id: first.id } });
+  expect(stored.status).toBe('pending');
+  expect(stored.revision).toBe(1);
+  await withDatabase(db, () => processEmbeddingJobs(async () => Array<number>(1536).fill(0.03)));
+  expect(await admin.embeddingJob.findUnique({ where: { id: first.id } })).toBeNull();
+});
+it('G04 failed embedding deliveries remain retryable instead of deleting pending work', async () => {
+  await admin.embeddingJob.updateMany({ data: { status: 'dead' } });
+  const { a } = await fixture(),
+    id = `doc-${a}`;
+  await enqueueResource('document', id, a);
+  await withDatabase(db, () => processEmbeddingJobs(async () => null));
+  const stored = await admin.embeddingJob.findUniqueOrThrow({
+    where: { resourceType_resourceId: { resourceType: 'document', resourceId: id } },
+  });
+  expect(stored.status).toBe('pending');
+  expect(stored.attempts).toBe(1);
+  expect(stored.leaseToken).toBeNull();
+});
+
+it('G04/G10 the shared poller stops admission and waits for the real in-flight database batch', async () => {
+  await admin.embeddingJob.updateMany({ data: { status: 'dead' } });
+  const { a } = await fixture(),
+    id = `doc-${a}`;
+  await enqueueResource('document', id, a);
+  let entered!: () => void,
+    release!: () => void,
+    stopped = false,
+    calls = 0;
+  const active = new Promise<void>((resolve) => {
+    entered = resolve;
+  });
+  const paused = new Promise<void>((resolve) => {
+    release = resolve;
+  });
+  const poller = withDatabase(db, () =>
+    startEmbeddingPolling(10, () =>
+      processEmbeddingJobs(async () => {
+        calls++;
+        entered();
+        await paused;
+        return Array<number>(1536).fill(0.04);
+      }),
+    ),
+  );
+  await active;
+  const stop = poller.stop().then(() => {
+    stopped = true;
+  });
+  try {
+    await new Promise((resolve) => setTimeout(resolve, 30));
+    expect(stopped).toBe(false);
+    expect(calls).toBe(1);
+  } finally {
+    release();
+  }
+  await stop;
+  expect(
+    await admin.embeddingJob.findUnique({
+      where: { resourceType_resourceId: { resourceType: 'document', resourceId: id } },
+    }),
+  ).toBeNull();
+  await new Promise((resolve) => setTimeout(resolve, 30));
+  expect(calls).toBe(1);
+});
+
+it('D01/G07 concurrent self-profile mutations serialize without lock upgrade deadlocks', async () => {
+  const replies = await Promise.all([
+    request(app)
+      .patch('/auth/me')
+      .set('x-fixture-actor', 'editor')
+      .send({ name: 'Concurrent profile' }),
+    request(app)
+      .patch('/auth/me')
+      .set('x-fixture-actor', 'editor')
+      .send({ avatar: 'https://example.test/fixture-avatar.png' }),
+  ]);
+  expect(replies.map((reply) => reply.status)).toEqual([200, 200]);
+  expect(await admin.user.findUniqueOrThrow({ where: { id: 'editor' } })).toMatchObject({
+    name: 'Concurrent profile',
+    avatar: 'https://example.test/fixture-avatar.png',
+    systemRole: 'USER',
+  });
 });

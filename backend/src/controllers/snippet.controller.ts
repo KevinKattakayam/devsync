@@ -62,7 +62,7 @@ export async function createSnippet(req: Request, res: Response, next: NextFunct
             workspaceId,
           },
         });
-        await queueEmbedding('snippet', result.id, tx);
+        await queueEmbedding('snippet', result.id, tx, workspaceId, req.user!.userId);
         return result;
       },
     );
@@ -81,13 +81,13 @@ export async function updateSnippet(req: Request, res: Response, next: NextFunct
       'snippet',
       snippetId,
       WRITE_ROLES,
-      async (tx) => {
+      async (tx, workspaceId) => {
         const result = await tx.snippet.update({
           where: { id: snippetId },
           data,
           include: { author: { select: { id: true, name: true, avatar: true } } },
         });
-        await queueEmbedding('snippet', result.id, tx);
+        await queueEmbedding('snippet', result.id, tx, workspaceId, req.user!.userId);
         return result;
       },
     );

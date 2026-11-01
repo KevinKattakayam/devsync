@@ -1,0 +1,13 @@
+
+> devsync-backend@1.0.0 test
+> jest --runInBand --runTestsByPath src/__tests__/resource-mutations.integration.test.ts src/__tests__/critical-security.test.ts --coverage=false
+
+
+Test Suites: 2 passed, 2 total
+Tests:       91 passed, 91 total
+Snapshots:   0 total
+Time:        24.87 s
+Ran all test suites within paths "src/__tests__/resource-mutations.integration.test.ts", "src/__tests__/critical-security.test.ts".
+Jest did not exit one second after the test run has completed.
+
+'This usually means that there are asynchronous operations that weren't stopped in your tests. Consider running Jest with `--detectOpenHandles` to troubleshoot this issue.

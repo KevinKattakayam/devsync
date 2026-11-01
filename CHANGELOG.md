@@ -1,3 +1,7 @@
+# Phase1c — embedding and self-profile group
+
+- G01/G04/G10/C01/D01: tenant-bound writer-authorized embedding outbox, central maintenance scope, leased/revision-fenced delivery and stale-result checks; standalone PostgreSQL consumer and draining scheduler. Central active self-profile/IdP policy with serialized profile updates.169 backend tests and full gates pass; no explicit any or suppressions.
+
 # Phase1c — service authority group
 
 - C04/D07/G08/G09/I02: central SCIM/repository/global-admin/signed-billing policies; tenant-only SCIM membership effects, registered repository jobs, atomic webhook DB effects, customer/subscription binding and preserved admin suspension.160 backend tests pass. Remove all remaining explicit any annotations and enforce no-explicit-any in backend lint.

@@ -194,3 +194,53 @@ export async function applyBillingWebhook(raw: Buffer, signature: string): Promi
     });
   }
 }
+
+export type EmbeddingKind = 'document' | 'snippet' | 'task';
+/** Private outbox maintenance authority, bound to an authorized producer's durable scope. */
+export async function withEmbeddingAccess<T>(
+  workspaceId: string,
+  kind: EmbeddingKind,
+  resourceId: string,
+  operation: (tx: TenantTransaction) => Promise<T>,
+): Promise<T> {
+  if (!workspaceId || workspaceId.length > 191 || !resourceId || resourceId.length > 191)
+    throw new ForbiddenError('Access denied');
+  return prisma.withTenantTransaction(workspaceId, async (tx) => {
+    await lockWorkspace(tx, workspaceId);
+    const job = await tx.embeddingJob.findUnique({
+      where: { resourceType_resourceId: { resourceType: kind, resourceId } },
+    });
+    if (!job || job.workspaceId !== workspaceId) throw new ForbiddenError('Access denied');
+    const resource =
+      kind === 'document'
+        ? await tx.document.findUnique({
+            where: { id: resourceId, workspaceId, isArchived: false },
+            select: { id: true },
+          })
+        : kind === 'snippet'
+          ? await tx.snippet.findUnique({
+              where: { id: resourceId, workspaceId },
+              select: { id: true },
+            })
+          : await tx.task.findFirst({
+              where: { id: resourceId, column: { board: { workspaceId } } },
+              select: { id: true },
+            });
+    if (!resource) throw new ForbiddenError('Access denied');
+    return operation(tx);
+  });
+}
+
+/** Clerk SDK profile sync is a verified-IdP exception, never a body-supplied user ID. */
+export async function withIdentityProfileAccess<T>(
+  clerkId: string,
+  operation: (tx: TenantTransaction) => Promise<T>,
+): Promise<T> {
+  if (!clerkId || clerkId.length > 191) throw new ForbiddenError('Access denied');
+  return prisma.$transaction(async (tx) => {
+    await tx.$queryRaw`SELECT id FROM "User" WHERE "clerkId"=${clerkId} FOR UPDATE`;
+    const existing = await tx.user.findUnique({ where: { clerkId }, select: { isActive: true } });
+    if (existing && !existing.isActive) throw new ForbiddenError('Access denied');
+    return operation(tx);
+  });
+}

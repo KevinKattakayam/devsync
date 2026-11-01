@@ -13,7 +13,7 @@ import { createServer } from 'http';
 import app from './app';
 import { setupSocket, destroySocket } from './socket/index';
 import { setupHocuspocusServer, destroyHocuspocus } from './services/yjs.service';
-import { processEmbeddingJobs } from './services/embedding.service';
+import { startEmbeddingPolling } from './services/embedding-runner';
 import { disconnectRedis } from './lib/redis';
 import { prisma } from './lib/prisma';
 
@@ -32,15 +32,8 @@ registerCollaborationMetrics(() => ({
 }));
 
 // Embedding worker — runs in-process when configured (production should use `npm run worker`)
-let embeddingTimer: ReturnType<typeof setInterval> | undefined;
-const runEmbedding = () => {
-  void processEmbeddingJobs().catch(() => logger.error('Embedding polling failed'));
-};
-if (process.env.RUN_EMBEDDING_WORKER_IN_API === 'true') {
-  embeddingTimer = setInterval(runEmbedding, 10_000);
-  embeddingTimer.unref();
-  runEmbedding();
-}
+const embeddingPoller =
+  process.env.RUN_EMBEDDING_WORKER_IN_API === 'true' ? startEmbeddingPolling(10000) : undefined;
 httpServer.listen(PORT, () => logger.info({ port: PORT }, 'API listening'));
 
 let shutdownPromise: Promise<void> | undefined;
@@ -48,14 +41,18 @@ function shutdown(signal: string): Promise<void> {
   if (shutdownPromise) return shutdownPromise;
   logger.info({ signal }, 'API draining');
   beginDrain();
-  if (embeddingTimer) clearInterval(embeddingTimer);
+  const embeddingsStopped = embeddingPoller?.stop();
   shutdownPromise = drainResources({
     stopAccepting: () =>
       new Promise<void>((resolve, reject) => {
         httpServer.close((error) => (error ? reject(error) : resolve()));
         httpServer.closeIdleConnections();
       }),
-    collaboration: destroyHocuspocus,
+    collaboration: async () => {
+      const outcomes = await Promise.allSettled([destroyHocuspocus(), embeddingsStopped]);
+      if (outcomes.some((outcome) => outcome.status === 'rejected'))
+        throw new Error('State drain failed');
+    },
     sockets: destroySocket,
     redis: disconnectRedis,
     database: () => prisma.$disconnect(),

@@ -33,6 +33,10 @@ const errors: ErrorRequestHandler = (error: unknown, _req, res, _next) => {
 app.use(errors);
 beforeEach(() => {
   jest.clearAllMocks();
+  db.$transaction.mockImplementation(async (operation) => {
+    if (typeof operation === 'function') return operation(prisma);
+    return Promise.all(operation);
+  });
   db.withTenantTransaction.mockImplementation(async (_tenant, operation) => operation(prisma));
   db.user.findUnique.mockResolvedValue({
     id: 'user-a',
@@ -89,8 +93,19 @@ describe('E01 execution must fail closed', () => {
   });
 });
 describe('D02/D07 Hocuspocus authorization hooks', () => {
+  let originalRedisUrl: string | undefined;
+  beforeEach(() => {
+    originalRedisUrl = process.env.REDIS_URL;
+    // These hook unit tests have no Redis transport; real fanout has separate integration coverage.
+    delete process.env.REDIS_URL;
+  });
   afterEach(async () => {
-    await destroyHocuspocus();
+    try {
+      await destroyHocuspocus();
+    } finally {
+      if (originalRedisUrl === undefined) delete process.env.REDIS_URL;
+      else process.env.REDIS_URL = originalRedisUrl;
+    }
   });
   async function authenticate(room: string) {
     const instance = setupHocuspocusServer(createServer());

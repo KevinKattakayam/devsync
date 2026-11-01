@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { z } from 'zod';
 import { UnauthorizedError } from '../utils/errors';
+import { withPrincipalAccess } from '../security/workspace-policy';
 import { prisma } from '../lib/prisma';
 import { syncClerkUser } from '../middleware/auth.middleware';
 
@@ -40,20 +41,22 @@ export async function syncMe(req: Request, res: Response, next: NextFunction) {
 
 export async function getMe(req: Request, res: Response, next: NextFunction) {
   try {
-    const user = await prisma.user.findUnique({
-      where: { id: req.user!.userId },
-      select: {
-        id: true,
-        clerkId: true,
-        name: true,
-        email: true,
-        avatar: true,
-        createdAt: true,
-        memberships: {
-          include: { workspace: { select: { id: true, name: true, slug: true, icon: true } } },
+    const user = await withPrincipalAccess(req.user!.userId, (tx) =>
+      tx.user.findUnique({
+        where: { id: req.user!.userId },
+        select: {
+          id: true,
+          clerkId: true,
+          name: true,
+          email: true,
+          avatar: true,
+          createdAt: true,
+          memberships: {
+            include: { workspace: { select: { id: true, name: true, slug: true, icon: true } } },
+          },
         },
-      },
-    });
+      }),
+    );
     if (!user) throw new UnauthorizedError('User not found');
     res.json(user);
   } catch (error) {
@@ -63,11 +66,18 @@ export async function getMe(req: Request, res: Response, next: NextFunction) {
 
 export async function updateMe(req: Request, res: Response, next: NextFunction) {
   try {
-    const user = await prisma.user.update({
-      where: { id: req.user!.userId },
-      data: updateMeSchema.parse(req.body),
-      select: { id: true, name: true, email: true, avatar: true },
-    });
+    const data = updateMeSchema.parse(req.body);
+    const user = await withPrincipalAccess(
+      req.user!.userId,
+      (tx) =>
+        tx.user.update({
+          where: { id: req.user!.userId },
+          data,
+          select: { id: true, name: true, email: true, avatar: true },
+        }),
+      prisma,
+      true,
+    );
     res.json(user);
   } catch (error) {
     next(error);

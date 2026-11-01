@@ -244,7 +244,7 @@ export async function createTask(req: Request, res: Response, next: NextFunction
           workspaceId,
         },
       });
-      await queueEmbedding('task', result.id, tx);
+      await queueEmbedding('task', result.id, tx, workspaceId, req.user!.userId);
       return result;
     });
     res.status(201).json(task);
@@ -277,7 +277,7 @@ export async function updateTask(req: Request, res: Response, next: NextFunction
           },
           include: taskInclude,
         });
-        await queueEmbedding('task', result.id, tx);
+        await queueEmbedding('task', result.id, tx, workspaceId, req.user!.userId);
         return result;
       },
     );

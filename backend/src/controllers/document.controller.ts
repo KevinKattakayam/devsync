@@ -128,7 +128,7 @@ export async function createDocument(req: Request, res: Response, next: NextFunc
               workspaceId,
             },
           });
-          await queueEmbedding('document', result.id, tx);
+          await queueEmbedding('document', result.id, tx, workspaceId, req.user!.userId);
           return result;
         } finally {
           state.destroy();
@@ -191,7 +191,7 @@ export async function updateDocument(req: Request, res: Response, next: NextFunc
           include: { author },
         });
         if (content !== undefined || metadata.title !== undefined)
-          await queueEmbedding('document', id, tx);
+          await queueEmbedding('document', id, tx, workspaceId, req.user!.userId);
         return result;
       },
     );

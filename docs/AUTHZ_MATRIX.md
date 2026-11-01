@@ -1,4 +1,4 @@
-> Phase1a status: D01/D02/E01 and D03–D08 application boundaries are repaired and regression-tested; D08 also has a tested composite database constraint. This matrix is not a claim that full Phase1a centralization is complete. Phase1c closes ongoing transport workspace revocation and D09 assignment checks for converted REST handlers. Broader G01 tenant-context coverage, Provider identity provisioning/linking and remaining worker authorization remain open; converted service policies are listed below. See PROGRESS.md for the complete scope ledger.
+> Phase1a status: D01/D02/E01 and D03–D08 application boundaries are repaired and regression-tested; D08 also has a tested composite database constraint. This matrix is not a claim that full Phase1a centralization is complete. Phase1c closes ongoing transport workspace revocation and D09 assignment checks for converted REST handlers. Broader G01 tenant-context coverage, Provider identity provisioning/linking remains open; current actor/service/maintenance policies and limits are listed below. See PROGRESS.md for the complete scope ledger.
 
 # Authorization matrix — updated during Phase 1c
 
@@ -22,7 +22,7 @@ Every application `/api/...` router below is also mounted at `/api/v1/...` with 
 | `POST /api/ai/complete` | Clerk + local principal | Central active-user/tenant membership (VIEWER allowed); membership BEFORE balance/provider; usage rechecks actor policy | Bounded Zod body; IP AI limiter; untrusted context fields; provider timeout | `backend/src/routes/ai.routes.ts:10` |
 | `POST /api/auth/sync` | Clerk getAuth or verified bearer fallback | Self | No body schema / ID format validation | `backend/src/routes/auth.routes.ts:10` |
 | `GET /api/auth/me` | Clerk + local principal | Self | No body schema / ID format validation | `backend/src/routes/auth.routes.ts:11` |
-| `PATCH /api/auth/me` | Clerk + local principal | Self; strict profile allowlist at middleware and controller (D01 fixed) | Zod body | `backend/src/routes/auth.routes.ts:12` |
+| `PATCH /api/auth/me` | Clerk + local principal | Central active principal with exclusive user-row lock; strict profile allowlist at middleware and controller | Zod body | `backend/src/routes/auth.routes.ts:12` |
 | `GET /api/documents/:id` | Clerk + local principal | Central resource policy in tenant transaction; active principal, unsuspended tenant; read accepts VIEWER, writes require OWNER/EDITOR | No body schema / ID format validation | `backend/src/routes/document.routes.ts:10` |
 | `PATCH /api/documents/:id` | Clerk + local principal | Central resource policy in tenant transaction; active principal, unsuspended tenant; read accepts VIEWER, writes require OWNER/EDITOR | Bounded JSON rich text, safe URL checks; optional revision conflicts; canonical Yjs replacement | `backend/src/routes/document.routes.ts:11` |
 | `DELETE /api/documents/:id` | Clerk + local principal | Central resource policy in tenant transaction; active principal, unsuspended tenant; read accepts VIEWER, writes require OWNER/EDITOR | No body schema / ID format validation | `backend/src/routes/document.routes.ts:12` |
@@ -121,11 +121,15 @@ Resource handlers now enforce their policy independently of route middleware. Pr
 | Signed GitHub webhook and PR-summary worker | Central current HMAC/repository scope; active-tenant transaction; PR jobs require registered repository/workspace pair before provider use and at commit | G08 retained and real signed cross-tenant/retry/duplicate tests; queue delivery gap remains open |
 | SCIM create/update/delete | Central locked, non-revoked token/workspace policy; only scoped membership/link effects; OWNER and shared profile changes denied | Foreign identity, revoked token, OWNER and global profile regressions; real Clerk provisioning/linking remains open |
 | Signed Stripe webhook / usage metering | Central signed event policy and customer/subscription bindings; admin suspension preserved; usage requires central actor policy | Real SDK signature/cross-customer/subscription tests; provider ordering, quotas and delivery retries remain open |
-| AI completion / offline AI reservation / embeddings | AI/search/usage/offline reservations now use central actor policy; embedding worker service authority and tenant coverage remain pending | AI/usage/ingestion regressions in resource-mutations.integration.test.ts; quota accuracy remains open |
+| AI completion / offline AI reservation / embeddings | AI/search/usage/offline reservations use central actor policy; embedding producers require writer/tenant/resource binding and consumers require matching active-tenant outbox scope | Real tenant/role/vector/lease/stale-result tests in resource-mutations.integration.test.ts; quota accuracy remains open |
 | Ingestion / OCR document create | Central writer check before parsing/extraction and in final canonical document/activity/outbox transaction | Real text-upload positive/foreign/viewer/inactive tests; PDF/OCR isolation remains open |
 | Superadmin kill switch | Central active verified SUPER_ADMIN or constant-time configured service credential of at least32 bytes | Tests deny workspace roles/short credentials and permit explicit global authority |
-| Clerk sync / self profile | Verified Clerk self-sync; strict profile allowlist | Existing D01 tests retained; no test-login endpoint in production |
+| Clerk sync / self profile | Verified Clerk SDK profile sync through central active identity policy; self-profile mutation through central principal policy/exclusive lock | D01 retained, inactive/self-privilege/concurrent-profile tests added; no test-login endpoint in production |
 | Seed / migration / maintenance | Explicit operator access and non-production seed opt-in; outside public user routes | Disposable-database migration and seed tests retained |
+
+### Internal maintenance bookkeeping
+
+Embedding lease claims are a private scheduler operation, never an HTTP or socket payload operation. Claim/ack/retry concerns outbox metadata only; acknowledgements bind workspace, revision and random lease token. Every resource read/vector mutation independently invokes the central active-workspace/outbox/resource policy under tenant RLS, before provider disclosure and again before storing a result. Producers check writer role and the actual resource in the transaction. Legacy jobs without resolvable scope are quarantined. Seed and migration access remains an explicit operator exception.
 
 ## Interpretation
 

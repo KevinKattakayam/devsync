@@ -11,20 +11,26 @@ import { startTaskCompletionWorker } from './agents/task-completion.agent';
 import { startPRSummaryWorker } from './agents/pr-summary.agent';
 import { refreshEmbedding } from './services/embedding.service';
 import { Worker } from 'bullmq';
+import { z } from 'zod';
+import { startEmbeddingPolling } from './services/embedding-runner';
+import { drainResources } from './lib/lifecycle';
+import { logger } from './observability/logger';
 
 // ── Embedding Worker (replaces setInterval polling) ─────────
 
-interface EmbeddingJobData {
-  resourceType: 'document' | 'snippet' | 'task';
-  resourceId: string;
-}
+const embeddingJobSchema = z.object({
+  resourceType: z.enum(['document', 'snippet', 'task']),
+  resourceId: z.string().min(1).max(191),
+  workspaceId: z.string().min(1).max(191),
+});
+type EmbeddingJobData = z.infer<typeof embeddingJobSchema>;
 
 function startEmbeddingWorker(): Worker<EmbeddingJobData> {
   return createWorker<EmbeddingJobData>(
     QueueNames.EMBEDDING,
     async (job) => {
-      const { resourceType, resourceId } = job.data;
-      await refreshEmbedding(resourceType, resourceId);
+      const { resourceType, resourceId, workspaceId } = embeddingJobSchema.parse(job.data);
+      await refreshEmbedding(resourceType, resourceId, workspaceId);
     },
     3, // 3 concurrent embedding jobs
   );
@@ -53,23 +59,46 @@ function start() {
 }
 
 start();
+const embeddingPoller = startEmbeddingPolling();
 
 // ── Graceful shutdown ────────────────────────────────────────
 
-async function shutdown(signal: string) {
-  console.log(`\n[Worker] Received ${signal}, shutting down...`);
-
-  // Close all workers first (let in-progress jobs finish)
-  await Promise.allSettled(workers.map((w) => w.close()));
-
-  await closeQueues();
-  await disconnectRedis();
-  await prisma.$disconnect();
-  await stopTelemetry();
-
-  console.log('[Worker] Shutdown complete');
-  process.exit(0);
+let shutdownPromise: Promise<void> | undefined;
+function shutdown(signal: string): Promise<void> {
+  if (shutdownPromise) return shutdownPromise;
+  logger.info({ signal }, 'Worker draining');
+  shutdownPromise = drainResources({
+    stopAccepting: () => embeddingPoller.stop(),
+    collaboration: async () => {
+      const outcomes = await Promise.allSettled(workers.map((worker) => worker.close()));
+      if (outcomes.some((outcome) => outcome.status === 'rejected'))
+        throw new Error('Worker drain failed');
+      await closeQueues();
+    },
+    sockets: async () => {},
+    redis: disconnectRedis,
+    database: () => prisma.$disconnect(),
+    telemetry: stopTelemetry,
+    force: () => process.exit(1),
+  }).then(
+    () => {
+      process.exit(0);
+    },
+    () => {
+      logger.fatal('Worker shutdown failed');
+      process.exit(1);
+    },
+  );
+  return shutdownPromise;
 }
 
 process.on('SIGTERM', () => void shutdown('SIGTERM'));
 process.on('SIGINT', () => void shutdown('SIGINT'));
+process.on('unhandledRejection', () => {
+  logger.fatal('Unhandled worker failure');
+  void shutdown('unhandledRejection');
+});
+process.on('uncaughtException', () => {
+  logger.fatal('Uncaught worker exception');
+  void shutdown('uncaughtException');
+});

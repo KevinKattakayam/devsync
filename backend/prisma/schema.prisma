@@ -52,6 +52,7 @@ model Workspace {
   scimTokens  ScimProvisioningToken[]
   scimExternalIdentities ScimExternalIdentity[]
   tokenUsage TokenUsage[]
+  embeddingJobs EmbeddingJob[]
 }
 
 model TokenUsage {
@@ -232,6 +233,11 @@ model EmbeddingJob {
   id           String   @id @default(cuid())
   resourceType String
   resourceId   String
+  workspaceId  String?
+  workspace    Workspace? @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  revision     Int @default(0)
+  leaseToken   String?
+  leaseUntil   DateTime?
   status       String   @default("pending")
   attempts     Int      @default(0)
   lastError    String?
