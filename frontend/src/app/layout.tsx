@@ -5,7 +5,7 @@ import { GeistMono } from 'geist/font/mono';
 import { ThemeProvider } from '@/providers/theme-provider';
 import { AuthProvider } from '@/providers/auth-provider';
 import { SocketProvider } from '@/providers/socket-provider';
-import { Toaster } from 'sonner';
+import { Toast } from '@/components/ui/overlays';
 import { ClerkProvider } from '@clerk/nextjs';
 import { SyncStatusManager } from '@/components/sync-status-manager';
 
@@ -37,16 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <SocketProvider>
                 {children}
                 <SyncStatusManager />
-                <Toaster
-                  position="bottom-right"
-                  toastOptions={{
-                    style: {
-                      background: 'var(--card)',
-                      border: '1px solid var(--border)',
-                      color: 'var(--foreground)',
-                    },
-                  }}
-                />
+                <Toast />
               </SocketProvider>
             </AuthProvider>
           </ThemeProvider>

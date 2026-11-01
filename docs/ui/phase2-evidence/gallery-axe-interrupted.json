@@ -1,0 +1,113 @@
+[
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "default",
+    "violations": [],
+    "incomplete": []
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "dialog",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-hidden-focus",
+        "targets": [
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(1)"
+          ],
+          [
+            "a"
+          ],
+          [
+            "#design-main"
+          ],
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(15)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "drawer",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-hidden-focus",
+        "targets": [
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(1)"
+          ],
+          [
+            "a"
+          ],
+          [
+            "#design-main"
+          ],
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(15)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "popover",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-valid-attr-value",
+        "targets": [
+          [
+            "button[aria-controls=\"radix-_R_75klritmlb_\"]"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "menu",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-hidden-focus",
+        "targets": [
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(1)"
+          ],
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(14)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "select",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-hidden-focus",
+        "targets": [
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(1)"
+          ],
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(14)"
+          ]
+        ]
+      }
+    ]
+  }
+]

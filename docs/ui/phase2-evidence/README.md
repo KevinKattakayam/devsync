@@ -1,0 +1,11 @@
+# Phase 2 component foundation verification
+
+Group 1: lint, format, typecheck, Node 3 test files and Vitest 4 files /10 tests passed. Sandbox webpack build failed before compilation with `Could not parse output from TypeScript's --showConfig.` The approved host retry of `npm run build -- --webpack` passed. Output was shown in the session; group 1 has no retained full raw log. Do not infer backend test execution.
+
+Group 2 raw quality output is in group2-checks.log and group2-final-checks.log. Build output is in group2-build.log. No act, hosted CI, extra rebuild, provider sign-in, product E2E or screenshot review was run.
+
+The axe runner audits only the development component gallery in the isolated frontend artifact, with demonstration data and no product API/authentication actions. Production middleware and test-login boundaries are unchanged. Shell screenshots/E2E must use the seed and test-only login in frontend/testing/README.md; those are deferred.
+
+Final gallery-axe.json: 40 combinations (10 states × two widths × two themes), 0 reported violations. Checks include WCAG 2 A/AA, 2.1 AA and 2.2 AA tags; no axe rules were disabled. Entry animations settle before measurement. Incomplete rule IDs: `aria-hidden-focus`, `aria-valid-attr-value`, `color-contrast`. Exact targets remain in JSON and require manual review; zero reported violations is not a WCAG certification. Keyboard component tests cover traps/restoration, Escape, tabs, menus, selection, command filtering and pending actions; they do not establish all screen-reader/browser behavior.
+
+Initial gallery-axe-initial.json retains background aria-hidden-focus and avatar overflow-label issues, plus contrast measurements made during entry fades. The fix adds inert background handling for modal select/menu, a semantic role for avatar overflow, a disabled empty-command option and animation-aware measurement. An interrupted retry in gallery-axe-interrupted.json records the partial run before finding a Select cleanup bug; cleanup is now explicitly tied to open state and covered by a keyboard regression. Initial sandbox Chrome failed with a socket permission error; the actual audit ran with approved host Chrome. No screenshot or visual-equivalence result is claimed.

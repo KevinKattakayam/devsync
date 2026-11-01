@@ -1,3 +1,9 @@
+# Phase 2 — UI foundation, group 2
+
+- Add semantic controls, Radix modal/drawer/select/menu/popover/tooltip/tabs/selection primitives, identity/status/loading/empty/keyboard controls, a supplied-action command palette and a shared Sonner toast host.
+- Add development-only /design-system with interactive light/dark/system examples. Product-shell integration is deferred; backend contracts and authentication are unchanged.
+- Add keyboard/focus/pending-action and token-contrast regressions plus a browser axe audit for the component workbench. Preserve initial failing axe evidence; fix background focus and avatar semantics before delivery.
+
 # Phase 2 — UI foundation, group 1
 
 - Specify a neutral, keyboard-first UI direction, measured light/dark contrast pairs, geometry, motion, icon and future shell rules in docs/ui/DESIGN.md.
