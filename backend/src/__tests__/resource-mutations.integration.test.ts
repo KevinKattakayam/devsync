@@ -14,6 +14,8 @@ import { withDatabase } from '../lib/prisma';
 import * as documents from '../controllers/document.controller';
 import * as snippets from '../controllers/snippet.controller';
 import * as tasks from '../controllers/task.controller';
+import * as workspaces from '../controllers/workspace.controller';
+import * as repositories from '../controllers/github-repository.controller';
 import { errorMiddleware } from '../middleware/error.middleware';
 import { withWorkspaceAccess, WRITE_ROLES } from '../security/workspace-policy';
 import { createCollaborationServer } from '../services/collaboration-server';
@@ -44,6 +46,19 @@ app.use((req, _res, next) =>
     next();
   }),
 );
+app.post('/workspaces', workspaces.createWorkspace);
+app.get('/workspaces', workspaces.getWorkspaces);
+app.get('/workspaces/:id', workspaces.getWorkspace);
+app.patch('/workspaces/:id', workspaces.updateWorkspace);
+app.delete('/workspaces/:id', workspaces.deleteWorkspace);
+app.post('/workspaces/:id/invite', workspaces.inviteMember);
+app.patch('/workspaces/:id/members/:memberId', workspaces.updateMemberRole);
+app.delete('/workspaces/:id/members/:memberId', workspaces.removeMember);
+app.get('/workspaces/:id/activities', workspaces.getActivities);
+app.get('/workspaces/:id/repositories', repositories.listRepositories);
+app.post('/workspaces/:id/repositories', repositories.connectRepository);
+app.patch('/workspaces/:id/repositories/:repositoryId', repositories.updateRepository);
+app.delete('/workspaces/:id/repositories/:repositoryId', repositories.disconnectRepository);
 app.get('/workspaces/:id/documents', documents.getDocuments);
 app.get('/documents/:id', documents.getDocument);
 app.post('/workspaces/:id/documents', documents.createDocument);
@@ -444,3 +459,167 @@ it('G06 sends canonical REST and authorized agent changes to live rooms on two i
     }
   }
 });
+
+const workspaceWrites = [
+  ['patch', '/workspaces/TEAM', { name: 'Changed workspace' }],
+  ['delete', '/workspaces/TEAM', {}],
+  ['post', '/workspaces/TEAM/invite', { email: 'foreign@example.test', role: 'VIEWER' }],
+  ['patch', '/workspaces/TEAM/members/MEMBER', { role: 'VIEWER' }],
+  ['delete', '/workspaces/TEAM/members/MEMBER', {}],
+  [
+    'post',
+    '/workspaces/TEAM/repositories',
+    {
+      repositoryId: 'new-TEAM',
+      owner: 'fixture',
+      name: 'new-TEAM',
+      webhookSecret: 'fixture-webhook-secret',
+      prOpenedColumnId: 'column-TEAM',
+    },
+  ],
+  ['patch', '/workspaces/TEAM/repositories/repo-TEAM', { name: 'updated-TEAM' }],
+  ['delete', '/workspaces/TEAM/repositories/repo-TEAM', {}],
+] as const;
+async function repositoryFixture(workspaceId: string) {
+  return admin.gitHubRepository.create({
+    data: {
+      id: `repo-${workspaceId}`,
+      repositoryId: `external-${workspaceId}`,
+      owner: 'fixture',
+      name: workspaceId,
+      webhookSecret: 'fixture-webhook-secret',
+      workspaceId,
+    },
+  });
+}
+it.each(workspaceWrites)(
+  'D05/D10 central workspace policy denies foreign/editor/viewer/inactive %s %s',
+  async (method, path, body) => {
+    const { a, b } = await fixture();
+    await repositoryFixture(a);
+    await repositoryFixture(b);
+    for (const [actor, team] of [
+      ['owner', b],
+      ['editor', a],
+      ['viewer', a],
+      ['inactive', a],
+    ] as const) {
+      const member = await admin.workspaceMember.findFirstOrThrow({
+        where: { workspaceId: team, userId: team === a ? 'editor' : 'foreign' },
+      });
+      const before = await admin.workspace.findUniqueOrThrow({
+        where: { id: team },
+        include: { members: true, githubRepositories: true },
+      });
+      const response = await request(app)
+        [method](path.replace(/TEAM/g, team).replace('MEMBER', member.id))
+        .set('x-fixture-actor', actor)
+        .send(bodyFor(body, team));
+      expect(response.status).toBe(403);
+      expect(
+        await admin.workspace.findUniqueOrThrow({
+          where: { id: team },
+          include: { members: true, githubRepositories: true },
+        }),
+      ).toEqual(before);
+    }
+  },
+);
+it.each(workspaceWrites)(
+  'D05/D10 central workspace policy permits owner %s %s',
+  async (method, path, body) => {
+    const { a } = await fixture();
+    await repositoryFixture(a);
+    const member = await admin.workspaceMember.findUniqueOrThrow({
+      where: { userId_workspaceId: { workspaceId: a, userId: 'editor' } },
+    });
+    process.env.ENCRYPTION_KEY = 'ab'.repeat(32); // Fixture-only encryption key, never used by the app entrypoint.
+    const response = await request(app)
+      [method](path.replace(/TEAM/g, a).replace('MEMBER', member.id))
+      .send(bodyFor(body, a));
+    expect(response.status).toBe(
+      method === 'post' ? 201 : path.includes('repositories') && method === 'delete' ? 204 : 200,
+    );
+  },
+);
+it('D05 binds member and repository IDs even when the caller owns the URL workspace', async () => {
+  const { a, b } = await fixture();
+  const repository = await repositoryFixture(b);
+  const member = await admin.workspaceMember.findFirstOrThrow({ where: { workspaceId: b } });
+  for (const method of ['patch', 'delete'] as const) {
+    expect(
+      (await request(app)[method](`/workspaces/${a}/members/${member.id}`).send({ role: 'OWNER' }))
+        .status,
+    ).toBe(404);
+    expect(
+      (
+        await request(app)
+          [method](`/workspaces/${a}/repositories/${repository.id}`)
+          .send({ name: 'forged' })
+      ).status,
+    ).toBe(404);
+  }
+  expect(
+    (
+      await request(app)
+        .post(`/workspaces/${a}/repositories`)
+        .send({
+          repositoryId: 'forged',
+          owner: 'fixture',
+          name: 'forged',
+          webhookSecret: 'fixture-secret-123',
+          prOpenedColumnId: `column-${b}`,
+        })
+    ).status,
+  ).toBe(403);
+});
+it('D10 parallel demotions preserve at least one owner and recheck policy at commit', async () => {
+  const { a } = await fixture();
+  await admin.workspaceMember.update({
+    where: { userId_workspaceId: { workspaceId: a, userId: 'editor' } },
+    data: { role: 'OWNER' },
+  });
+  const owners = await admin.workspaceMember.findMany({ where: { workspaceId: a, role: 'OWNER' } });
+  const responses = await Promise.all(
+    owners.map((member) =>
+      request(app)
+        .patch(`/workspaces/${a}/members/${member.id}`)
+        .set('x-fixture-actor', member.userId)
+        .send({ role: 'EDITOR' }),
+    ),
+  );
+  expect(responses.map((response) => response.status).sort()).toEqual([200, 403]);
+  expect(await admin.workspaceMember.count({ where: { workspaceId: a, role: 'OWNER' } })).toBe(1);
+});
+it('G01 workspace creation authorizes the active principal and assigns only that principal ownership', async () => {
+  expect(
+    (
+      await request(app)
+        .post('/workspaces')
+        .set('x-fixture-actor', 'inactive')
+        .send({ name: 'Denied' })
+    ).status,
+  ).toBe(403);
+  const response = await request(app)
+    .post('/workspaces')
+    .set('x-fixture-actor', 'editor')
+    .send({ name: 'Fixture workspace', userId: 'foreign', role: 'OWNER', workspaceId: 'forged' });
+  expect(response.status).toBe(201);
+  expect(response.body.members).toHaveLength(1);
+  expect(response.body.members[0]).toMatchObject({ userId: 'editor', role: 'OWNER' });
+  expect(
+    await admin.activity.count({
+      where: { workspaceId: response.body.id as string, type: 'workspace_created' },
+    }),
+  ).toBe(1);
+});
+it.each(['/workspaces/TEAM', '/workspaces/TEAM/activities', '/workspaces/TEAM/repositories'])(
+  'G01 central workspace read policy protects %s',
+  async (path) => {
+    const { a, b } = await fixture();
+    expect((await request(app).get(path.replace(/TEAM/g, b))).status).toBe(403);
+    expect(
+      (await request(app).get(path.replace(/TEAM/g, a)).set('x-fixture-actor', 'viewer')).status,
+    ).toBe(200);
+  },
+);

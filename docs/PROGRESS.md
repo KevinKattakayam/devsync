@@ -10,7 +10,9 @@ Priority2 resource group completed: central policy inside tenant transactions fo
 
 Resource group gate: **15 backend suites / 123 tests**, retained frontend **5 Node + 6 component tests**, both installs/lint/format/types/build pass; phase1c-evidence/resources-results.json. New integration suite uses migrated non-bypass PostgreSQL, actual controllers, Yjs and two independent Hocuspocus servers. An initial fixture used unsupported ES2021 replaceAll and omitted the Redis queue import options/provider attach; these were corrected, with failed logs retained. Sandboxed Prisma generation exited without changing generated files; approved host generation succeeded. No test assertions or coverage floors were weakened.
 
-Next: finish priority2 workspace/member and service mutation authorization, then atomic create idempotency, authenticated E2E/original-main worktree capture, complete contracts/no-any and local CI verification. These items remain unfinished; historical Phase1a/1b limitations below remain until explicitly closed.
+Workspace/repository group completed: creator principal policy, controller-local transactional membership/OWNER policies, tenant-scoped reads, atomic creation/invitation activity and last-owner protection. Concurrent owner-demotion requests leave exactly one owner. Both full gates pass with **145 backend tests** (15 suites) and retained frontend tests; phase1c-evidence/workspaces-results.json.
+
+Next: finish priority2 service mutation authorization, then atomic create idempotency, authenticated E2E/original-main worktree capture, complete contracts/no-any and local CI verification. These items remain unfinished; historical Phase1a/1b limitations below remain until explicitly closed.
 
 ---
 

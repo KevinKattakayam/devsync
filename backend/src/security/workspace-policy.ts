@@ -5,6 +5,22 @@ import { ForbiddenError } from '../utils/errors';
 
 export const READ_ROLES: readonly Role[] = [Role.OWNER, Role.EDITOR, Role.VIEWER];
 export const WRITE_ROLES: readonly Role[] = [Role.OWNER, Role.EDITOR];
+export const OWNER_ROLES: readonly Role[] = [Role.OWNER];
+
+/** Operations such as workspace creation have a principal but no existing tenant. */
+export async function withPrincipalAccess<T>(
+  userId: string,
+  operation: (tx: TenantTransaction) => Promise<T>,
+  db: TenantPrismaClient = prisma,
+): Promise<T> {
+  if (!userId || userId.length > 191) throw new ForbiddenError('Access denied');
+  return db.$transaction(async (tx) => {
+    await tx.$queryRaw`SELECT id FROM "User" WHERE id=${userId} FOR SHARE`;
+    const user = await tx.user.findUnique({ where: { id: userId }, select: { isActive: true } });
+    if (!user?.isActive) throw new ForbiddenError('Access denied');
+    return operation(tx);
+  });
+}
 
 /** Shared transport-neutral policy. Call before reading a room or emitting data. */
 export async function authorizeWorkspace(

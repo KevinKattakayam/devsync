@@ -1,3 +1,7 @@
+# Phase1c — workspace authorization group
+
+- D05/D10/G01: central transactional principal/workspace/member/repository policies; active user checks, workspace-scoped reads and writes, atomic workspace/invitation activities, concurrent last-owner protection. Full gates pass with145 backend tests; existing tests retained.
+
 # Phase1c — realtime revocation group
 
 - C01/D03/D07/B05: shared Clerk realtime identity, per-packet and bounded passive Socket.io policy checks, role/member/expiry eviction across backend instances; retain and bound Hocuspocus checks. Public Socket.io middleware replaces the private untyped packet override.

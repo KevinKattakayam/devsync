@@ -1789,33 +1789,50 @@
                 "properties": {
                   "repositoryId": {
                     "type": "string",
-                    "minLength": 1
+                    "minLength": 1,
+                    "maxLength": 191
                   },
                   "owner": {
                     "type": "string",
-                    "minLength": 1
+                    "minLength": 1,
+                    "maxLength": 191
                   },
                   "name": {
                     "type": "string",
-                    "minLength": 1
+                    "minLength": 1,
+                    "maxLength": 191
                   },
                   "installationId": {
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 191
                   },
                   "webhookSecret": {
                     "type": "string",
-                    "minLength": 16
+                    "minLength": 16,
+                    "maxLength": 4096
                   },
                   "prOpenedColumnId": {
-                    "type": [
-                      "string",
-                      "null"
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 191
+                      },
+                      {
+                        "type": "null"
+                      }
                     ]
                   },
                   "prMergedColumnId": {
-                    "type": [
-                      "string",
-                      "null"
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 191
+                      },
+                      {
+                        "type": "null"
+                      }
                     ]
                   }
                 },
@@ -1886,29 +1903,45 @@
                 "properties": {
                   "owner": {
                     "type": "string",
-                    "minLength": 1
+                    "minLength": 1,
+                    "maxLength": 191
                   },
                   "name": {
                     "type": "string",
-                    "minLength": 1
+                    "minLength": 1,
+                    "maxLength": 191
                   },
                   "installationId": {
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 191
                   },
                   "webhookSecret": {
                     "type": "string",
-                    "minLength": 16
+                    "minLength": 16,
+                    "maxLength": 4096
                   },
                   "prOpenedColumnId": {
-                    "type": [
-                      "string",
-                      "null"
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 191
+                      },
+                      {
+                        "type": "null"
+                      }
                     ]
                   },
                   "prMergedColumnId": {
-                    "type": [
-                      "string",
-                      "null"
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 191
+                      },
+                      {
+                        "type": "null"
+                      }
                     ]
                   }
                 }
