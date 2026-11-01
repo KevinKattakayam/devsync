@@ -1,3 +1,9 @@
+# Phase 3b — workspace access settings
+
+- Replace mock workspace settings with searchable real members/roles and verified invitation controls using existing APIs and design-system components.
+- Add owner-only UI, confirmation, optimistic role changes with Undo, invitation receipt retry/revocation Undo, loading/empty/error retry and keyboard regressions. Keep backend contracts and authorization unchanged.
+- Explicitly label in-view invitation history; defer provider security, profile/metadata, tokens, audit, export and account deletion within the timebox.
+
 # Phase 3a — dashboard review and browser acceptance
 
 - Clarify New workspace and the document destination; tighten the mobile heading/action layout and preserve room to scroll past the shared floating control.

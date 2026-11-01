@@ -1,0 +1,14 @@
+
+> frontend@0.1.0 lint
+> eslint --max-warnings=0
+
+
+/home/kevin/devsync/frontend/src/components/settings/invitations.tsx
+  58:38  warning  The ref value 'notifications.current' will likely have changed by the time this effect cleanup function runs. If this ref points to a node rendered by React, copy 'notifications.current' to a variable inside the effect, and use that variable in the cleanup function  react-hooks/exhaustive-deps
+
+/home/kevin/devsync/frontend/src/components/settings/members.tsx
+  49:38  warning  The ref value 'notifications.current' will likely have changed by the time this effect cleanup function runs. If this ref points to a node rendered by React, copy 'notifications.current' to a variable inside the effect, and use that variable in the cleanup function  react-hooks/exhaustive-deps
+
+✖ 2 problems (0 errors, 2 warnings)
+
+ESLint found too many warnings (maximum: 0).

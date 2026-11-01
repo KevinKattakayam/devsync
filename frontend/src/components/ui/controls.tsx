@@ -78,9 +78,11 @@ export function Select({
   open: controlledOpen,
   defaultOpen,
   onOpenChange,
+  triggerId,
   ...props
 }: ComponentProps<typeof SelectPrimitive.Root> & {
   label: string;
+  triggerId?: string;
   placeholder?: string;
   options: SelectOption[];
 }) {
@@ -98,6 +100,7 @@ export function Select({
       }}
     >
       <SelectPrimitive.Trigger
+        id={triggerId}
         aria-label={label}
         className="ui-input flex items-center justify-between gap-2"
       >

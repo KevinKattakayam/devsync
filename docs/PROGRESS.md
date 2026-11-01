@@ -1,3 +1,17 @@
+# Phase 3b — members and invitations, group 1
+
+Bounded scope: A / Members, roles and verified invitations. B–F are deferred to preserve the requested timebox. Existing central authorization, backend behavior and API contracts are unchanged. Root AGENTS.md is absent; frontend guidance, prior progress, AUTHZ_MATRIX, AUDIT, DESIGN, gallery and prior UI evidence were read.
+
+Settings now loads real workspace members and the local `/auth/me` principal, with searchable sections, loading skeletons, helpful empty states, load/access retry and a route error boundary. Owners can confirm role changes/removal, create recipient-bound EDITOR/VIEWER invitation links and confirm revocation. Editors/viewers have read-only access. Role changes optimistically update and support Undo through the same central PATCH policy. Invitation creation supports receipt-bound retry and Undo through revocation, including before the create response. No legacy immediate-membership invitation is used.
+
+Limits: removal and revocation require confirmation and have no unsafe regrant/reissue undo; rejoining requires a new verified invitation. Own role is read-only. The API has no invitation-list endpoint, so only links created in this mounted view are shown, explicitly labeled as incomplete; refresh clears that view without deleting invitations. No new unversioned endpoint was added.
+
+Group1 real checks: initial lint found two effect-cleanup ref warnings, fixed by capturing the cleanup collections. Two keyboard tests exposed Enter-release activating Cancel after opening the role confirmation; initial dialog focus now goes to the dialog itself. Final lint, format, strict types, Node4 files and Vitest9 files/45 tests pass. Production build and browser acceptance evidence follow in the next group. Failed output is retained in ui/phase3b-evidence.
+
+Exact deferrals: B active-session list/revoke and conditional2FA (no applicable flag found in searched code/example configuration); C profile/workspace metadata editing; D scoped, shown-once API tokens; E paginated/filterable audit log; F export/account deletion. These require their own reviewed existing-contract integrations or versioned backend support and were not started. No3c, push or deployment.
+
+---
+
 # Phase 3a — bounded dashboard delivery; stop here
 
 On `upgrade/enterprise`; local commits only, no push, deployment or3b. Root AGENTS.md is absent; frontend guidance, prior progress, AUTHZ_MATRIX and DESIGN.md were read. Highest-priority half delivered is **A / Dashboard**. B / Landing and C / Onboarding were not started. Production security, authorization, realtime/data behavior, migrations and HTTP contracts are unchanged.
