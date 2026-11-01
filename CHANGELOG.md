@@ -1,3 +1,9 @@
+# Phase 2 — UI foundation, group 1
+
+- Specify a neutral, keyboard-first UI direction, measured light/dark contrast pairs, geometry, motion, icon and future shell rules in docs/ui/DESIGN.md.
+- Replace global glass/gradient decoration with semantic Tailwind v4 tokens; restore distinct light/dark scopes, reduced motion and theme-aware editor styles.
+- Serve Geist Sans/Mono through next/font/local; correct toast CSS-variable colors. Backend/API/auth/collaboration behavior is unchanged.
+
 # Phase1e — authenticated browser journeys, invitations, UI evidence and contracts
 
 - Add disposable non-bypass browser orchestration and10 retained product journeys plus real HTTP DTO validation; final Playwright/API run 11 passes. Fix test-only self-referencing database binding and premature JSON parsing; production auth/signature behavior remains intact.
@@ -70,6 +76,7 @@ Historical Phase 0 audit: see docs/CHANGELOG.md. No production deployment or key
 - E02/G08: render raw AI HTML inert and bind signed webhook task movement to repository tenant within a transaction.
 - G02/G12/D08/I09: source-backed baseline, forward tenant indexes and composite hierarchy constraint; explicit non-production seed; versioned migration scripts and environment templates.
 - I01: upgrade advisory-affected dependencies and remove unused NextAuth; final audits show no Critical/High dependency entries, with Moderate/Low entries explicitly retained.
+
 # Phase 1b — collaboration group (2026-11-01)
 
 - B03/B04/G10: tenant-scoped PostgreSQL CRDT journal committed before acknowledgement, row-locked compaction, Redis fanout, resource limits and durable legacy conversion with guarded rollback.

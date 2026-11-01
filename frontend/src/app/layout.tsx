@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import { GeistSans } from 'geist/font/sans';
+import { GeistMono } from 'geist/font/mono';
 import { ThemeProvider } from '@/providers/theme-provider';
 import { AuthProvider } from '@/providers/auth-provider';
 import { SocketProvider } from '@/providers/socket-provider';
@@ -17,11 +19,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="min-h-screen">
+      <body className={`${GeistSans.variable} ${GeistMono.variable} min-h-screen`}>
         <ClerkProvider
           appearance={{
             variables: {
-              colorPrimary: '#6366f1',
+              colorPrimary: 'var(--primary)',
             },
           }}
         >
@@ -39,9 +41,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   position="bottom-right"
                   toastOptions={{
                     style: {
-                      background: 'hsl(var(--card))',
-                      border: '1px solid hsl(var(--border))',
-                      color: 'hsl(var(--foreground))',
+                      background: 'var(--card)',
+                      border: '1px solid var(--border)',
+                      color: 'var(--foreground)',
                     },
                   }}
                 />
