@@ -1,3 +1,19 @@
+# Phase 4a — research and proposals only; stop after commit
+
+On `upgrade/enterprise`; no push/deployment. Root AGENTS.md is absent; the available frontend guidance, PROGRESS and AUTHZ_MATRIX were read. Only documentation is changed; no feature, API, authorization, CRDT, data-layer, dependency or test code was written or modified.
+
+Delivered [FEATURE_PROPOSALS.md](FEATURE_PROPOSALS.md): web-backed desk research covering all17 requested products; developer-reported information/context/docs friction; explicitly dated historical documentation/language evidence; individual stale-spec/offline complaints distinguished from representative findings; hypotheses for solo developers, students, startups, OSS maintainers and distributed teams. India mobile/connectivity evidence is distinguished from unverified developer bandwidth/language preferences. Height's primary site could not be fetched; its shutdown is secondary-sourced and not used to infer a cause.
+
+The catalog has32 candidates, each with problem/audience, honest novelty comparison, actual DevSync module reuse and gaps, relative effort/impact, privacy/security risks and API/licence/cost constraints. All32 have explicit subjective impact/feasibility/novelty/safety/reuse scores and ranked totals. Eight selected: P02 decision receipts, P01 code-change review receipts, P04 snippet safety preflight, P06 evidence-only digest, P08 approved onboarding paths, P14 verified portable export, P24 evidence-linked task acceptance and P19 text-first handoff delta. Selection is a proposal, not authorization to build or a claim of world-first originality/free production hosting.
+
+Reject P28 unconsented always-on capture, P29 mixed-workspace indexing/answers and P30 training on user content. Source/derivative authority, membership/revocation, no-training terms, explicit human acceptance, versioned future contracts and bounded disclosures are prerequisites, never optional ranking tradeoffs. Existing quota/citation/offline/authority gaps are preserved honestly; the historical architecture snapshot is not treated as current capability.
+
+Timebox deferrals: hands-on competitor trials, interviews/user validation, representative region/language demand, exact entitlements for every deferred connector, Height primary confirmation, patent/uniqueness search, implementation designs and validated engineering/cost estimates. No datasets, user quotes, performance/impact numbers or capabilities were invented. Public complaints are paraphrased and linked. Research prioritizes a complete inventory and security-filtered shortlist over pretending to validate market demand.
+
+Actual validation: proposal Markdown formatting passes. Both application lint/format/type-check gates pass; frontend9 Node tests across4 files and54 component tests pass; backend17 suites/193 tests pass; both production builds exit0. Real command output was shown in this session (logs in /tmp/devsync-phase4a-frontend-gate.log and /tmp/devsync-phase4a-backend-gate.log, not committed). No UI change, screenshot/E2E/axe run or extra audit was performed for this documentation-only session. After the research commit, STOP. Do not start implementation.
+
+---
+
 # Phase 3e — bounded AI delivery; stop here
 
 Local branch upgrade/enterprise, commits only; no push, deployment or Phase4. Highest-priority delivered slice is reliable editor streaming plus context/reference/label safety. **Per-user/workspace atomic quotas and a usage display are NOT delivered**. All remaining scope and reasons appear in the group1 ledger below. Existing membership/RLS retrieval, billing, API/SSE field contracts and CRDT synchronization are retained.

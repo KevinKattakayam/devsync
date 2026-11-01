@@ -1,3 +1,10 @@
+# Phase 4a — research and proposals
+
+- Add source-linked research across17 products and developer pain points, with explicit evidence limits for target segments, India connectivity and non-English collaboration.
+- Document32 proposals with effort, impact, reuse, novelty, security and dependency constraints; score all and select eight bounded, free/open-tool-friendly directions.
+- Reject cross-workspace leakage, training on user content and unconsented capture. Record unvalidated demand/connector terms and further research as deferred.
+- Documentation only: no feature implementation, API change or push.
+
 # Phase 3e — transport acceptance and review
 
 - Correct source-label contrast; preserve failed evidence and raw axe incomplete items. Final four seeded transport-fixture browser tests pass with eight final captures/zero reported axe violations.
