@@ -131,14 +131,18 @@ export const snippetApi = {
 
 // AI API
 export const aiApi = {
-  complete: async (data: {
-    prompt: string;
-    context?: string;
-    action?: string;
-    workspaceId: string;
-  }) =>
+  complete: async (
+    data: {
+      prompt: string;
+      context?: string;
+      action?: string;
+      workspaceId: string;
+    },
+    signal?: AbortSignal,
+  ) =>
     (async () => {
       const response = await fetch(`${API_URL}/ai/complete`, {
+        signal,
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

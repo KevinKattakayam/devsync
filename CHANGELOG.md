@@ -1,3 +1,10 @@
+# Phase 3e — reliable editor AI stream and provenance
+
+- Parse bounded complete SSE frames across split UTF8/CRLF, require completion before applying, and expose stop/retry guidance for partial or failed streams.
+- Separate quick-action instructions from untrusted document context; number existing workspace source records and strengthen the prompt policy without changing HTTP/SSE contracts.
+- Label preview/copied/applied editor text as AI-generated, retain reference legends and reject stale selection replacements. Preserve workspace policy and CRDT insertion/Undo.
+- Explicitly defer atomic quotas/usage, streamed fallback, evaluation scaffold and PWA work within the timebox.
+
 # Phase 3d — bounded review acceptance
 
 - Save eight final dark/light board/drawer captures and raw axe reports; final five browser tests pass, including keyboard-only moves and authorization denials.
