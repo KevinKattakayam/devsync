@@ -4,7 +4,8 @@ import { Client } from 'pg';
 import { randomBytes, randomUUID } from 'crypto';
 import { spawn, ChildProcess } from 'child_process';
 import { resolve } from 'path';
-import { rename } from 'fs/promises';
+import { rename, cp, readFile, writeFile, symlink } from 'fs/promises';
+import { parse } from 'dotenv';
 
 const root = resolve(__dirname, '../..');
 async function run(args: string[], cwd: string, env: NodeJS.ProcessEnv) {
@@ -16,11 +17,11 @@ async function run(args: string[], cwd: string, env: NodeJS.ProcessEnv) {
   if (code !== 0) throw new Error(`Browser orchestration command exited ${code}`);
 }
 async function ready(url: string, child: ChildProcess) {
-  const deadline = Date.now() + 90000;
+  const deadline = Date.now() + (process.env.E2E_UI_CAPTURE ? 180000 : 90000);
   while (Date.now() < deadline) {
     if (child.exitCode !== null) throw new Error('Browser fixture process exited before readiness');
     try {
-      const response = await fetch(url, { signal: AbortSignal.timeout(2000) });
+      const response = await fetch(url, { signal: AbortSignal.timeout(5000) });
       if (response.ok) return;
     } catch {
       /* Startup polling only; bounded by deadline. */
@@ -41,6 +42,7 @@ async function main() {
     const env = {
       ...process.env,
       NODE_ENV: 'test',
+      E2E_UI_CAPTURE: process.env.E2E_UI_CAPTURE,
       DATABASE_URL: postgres.getConnectionUri(),
       E2E_ADMIN_DATABASE_URL: postgres.getConnectionUri(),
       REDIS_URL: `redis://${redis.getHost()}:${redis.getMappedPort(6379)}`,
@@ -77,13 +79,51 @@ async function main() {
     } finally {
       await connection.end();
     }
-    const target = resolve(root, '.worktrees/frontend-fixture');
+    let target = resolve(root, '.worktrees/frontend-fixture');
     try {
       await rename(target, `/tmp/devsync-fixture-${randomUUID()}`);
     } catch (error) {
       if (!(error instanceof Error && 'code' in error && error.code === 'ENOENT')) throw error;
     }
     await run(['testing/prepare.mjs'], resolve(root, 'frontend'), env);
+    const frontendEnvironment: NodeJS.ProcessEnv = { ...env, NODE_ENV: 'development' };
+    if (env.E2E_UI_CAPTURE) {
+      const clerk = parse(await readFile(resolve(root, 'frontend/.env.local')));
+      frontendEnvironment.CLERK_SECRET_KEY = clerk.CLERK_SECRET_KEY;
+      frontendEnvironment.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY =
+        clerk.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
+      if (env.E2E_UI_CAPTURE === 'before') {
+        const original = resolve(root, '.worktrees/phase1e-main/frontend');
+        await cp(
+          resolve(target, 'src/providers/auth-provider.tsx'),
+          resolve(original, 'src/providers/auth-provider.tsx'),
+        );
+        await cp(resolve(target, 'src/proxy.ts'), resolve(original, 'src/proxy.ts'));
+        await cp(resolve(target, 'next.config.ts'), resolve(original, 'next.config.ts'));
+        try {
+          await symlink(
+            resolve(root, '.worktrees/phase1b-main/frontend/node_modules'),
+            resolve(original, 'node_modules'),
+            'dir',
+          );
+        } catch (error) {
+          if (!(error instanceof Error && 'code' in error && error.code === 'EEXIST')) throw error;
+        }
+        target = original;
+      } else if (env.E2E_UI_CAPTURE === 'current') {
+        // Capture the real public Clerk widgets, retaining the isolated product identity adapter.
+        await cp(
+          resolve(root, 'frontend/src/app/layout.tsx'),
+          resolve(target, 'src/app/layout.tsx'),
+        );
+        for (const path of ['login', 'signup', 'sign-in', 'sign-up'])
+          await cp(
+            resolve(root, `frontend/src/app/(auth)/${path}`),
+            resolve(target, `src/app/(auth)/${path}`),
+            { recursive: true },
+          );
+      } else throw new Error('Unknown UI capture target');
+    }
     const backend = spawn(
       process.execPath,
       ['node_modules/tsx/dist/cli.mjs', 'testing/server.ts'],
@@ -108,7 +148,7 @@ async function main() {
       ],
       {
         cwd: target,
-        env: { ...env, NODE_ENV: 'development' },
+        env: frontendEnvironment,
         stdio: 'inherit',
       },
     );

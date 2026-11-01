@@ -1,6 +1,7 @@
 import { defineConfig } from '@playwright/test';
 export default defineConfig({
   testDir: './browser',
+  testMatch: process.env.E2E_UI_CAPTURE ? 'capture.spec.ts' : 'journeys.spec.ts',
   timeout: 90000,
   expect: { timeout: 15000 },
   workers: 1,

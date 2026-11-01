@@ -1,0 +1,216 @@
+{
+  "source": "upgrade/enterprise",
+  "authentication": "isolated fixture identity adapter; actual public Clerk widgets; disposable migrated current backend",
+  "records": [
+    {
+      "path": "/",
+      "width": 1440,
+      "status": 200,
+      "finalPath": "/",
+      "file": "home-1440.png"
+    },
+    {
+      "path": "/login",
+      "width": 1440,
+      "status": 200,
+      "finalPath": "/login",
+      "file": "login-1440.png"
+    },
+    {
+      "path": "/signup",
+      "width": 1440,
+      "status": 200,
+      "finalPath": "/signup",
+      "file": "signup-1440.png"
+    },
+    {
+      "path": "/sign-in",
+      "width": 1440,
+      "status": 200,
+      "finalPath": "/sign-in",
+      "file": "sign-in-1440.png"
+    },
+    {
+      "path": "/sign-up",
+      "width": 1440,
+      "status": 200,
+      "finalPath": "/sign-up",
+      "file": "sign-up-1440.png"
+    },
+    {
+      "path": "/dashboard",
+      "width": 1440,
+      "status": 200,
+      "finalPath": "/dashboard",
+      "file": "dashboard-1440.png"
+    },
+    {
+      "path": "/settings/billing",
+      "width": 1440,
+      "status": 200,
+      "finalPath": "/settings/billing",
+      "file": "settings-billing-1440.png"
+    },
+    {
+      "path": "/workspace/devsync-sample",
+      "width": 1440,
+      "status": 200,
+      "finalPath": "/workspace/devsync-sample",
+      "file": "workspace-audit-placeholder-1440.png"
+    },
+    {
+      "path": "/workspace/devsync-sample/docs",
+      "width": 1440,
+      "status": 200,
+      "finalPath": "/workspace/devsync-sample/docs",
+      "file": "workspace-audit-placeholder-docs-1440.png"
+    },
+    {
+      "path": "/workspace/devsync-sample/docs/devsync-sample-doc",
+      "width": 1440,
+      "status": 200,
+      "finalPath": "/workspace/devsync-sample/docs/devsync-sample-doc",
+      "file": "workspace-audit-placeholder-docs-audit-document-1440.png"
+    },
+    {
+      "path": "/workspace/devsync-sample/kanban",
+      "width": 1440,
+      "status": 200,
+      "finalPath": "/workspace/devsync-sample/kanban",
+      "file": "workspace-audit-placeholder-kanban-1440.png"
+    },
+    {
+      "path": "/workspace/devsync-sample/snippets",
+      "width": 1440,
+      "status": 200,
+      "finalPath": "/workspace/devsync-sample/snippets",
+      "file": "workspace-audit-placeholder-snippets-1440.png"
+    },
+    {
+      "path": "/workspace/devsync-sample/settings",
+      "width": 1440,
+      "status": 200,
+      "finalPath": "/workspace/devsync-sample/settings",
+      "file": "workspace-audit-placeholder-settings-1440.png"
+    },
+    {
+      "path": "/superadmin",
+      "width": 1440,
+      "status": 500,
+      "finalPath": "/superadmin",
+      "error": "HTTP 500"
+    },
+    {
+      "path": "/invitations/cmvxorltr0003a0lwisf7ivv1",
+      "width": 1440,
+      "status": 200,
+      "finalPath": "/invitations/cmvxorltr0003a0lwisf7ivv1",
+      "file": "invitation-1440.png"
+    },
+    {
+      "path": "/",
+      "width": 390,
+      "status": 200,
+      "finalPath": "/",
+      "file": "home-390.png"
+    },
+    {
+      "path": "/login",
+      "width": 390,
+      "status": 200,
+      "finalPath": "/login",
+      "file": "login-390.png"
+    },
+    {
+      "path": "/signup",
+      "width": 390,
+      "status": 200,
+      "finalPath": "/signup",
+      "file": "signup-390.png"
+    },
+    {
+      "path": "/sign-in",
+      "width": 390,
+      "status": 200,
+      "finalPath": "/sign-in",
+      "file": "sign-in-390.png"
+    },
+    {
+      "path": "/sign-up",
+      "width": 390,
+      "status": 200,
+      "finalPath": "/sign-up",
+      "file": "sign-up-390.png"
+    },
+    {
+      "path": "/dashboard",
+      "width": 390,
+      "status": 200,
+      "finalPath": "/dashboard",
+      "file": "dashboard-390.png"
+    },
+    {
+      "path": "/settings/billing",
+      "width": 390,
+      "status": 200,
+      "finalPath": "/settings/billing",
+      "file": "settings-billing-390.png"
+    },
+    {
+      "path": "/workspace/devsync-sample",
+      "width": 390,
+      "status": 200,
+      "finalPath": "/workspace/devsync-sample",
+      "file": "workspace-audit-placeholder-390.png"
+    },
+    {
+      "path": "/workspace/devsync-sample/docs",
+      "width": 390,
+      "status": 200,
+      "finalPath": "/workspace/devsync-sample/docs",
+      "file": "workspace-audit-placeholder-docs-390.png"
+    },
+    {
+      "path": "/workspace/devsync-sample/docs/devsync-sample-doc",
+      "width": 390,
+      "status": 200,
+      "finalPath": "/workspace/devsync-sample/docs/devsync-sample-doc",
+      "file": "workspace-audit-placeholder-docs-audit-document-390.png"
+    },
+    {
+      "path": "/workspace/devsync-sample/kanban",
+      "width": 390,
+      "status": 200,
+      "finalPath": "/workspace/devsync-sample/kanban",
+      "file": "workspace-audit-placeholder-kanban-390.png"
+    },
+    {
+      "path": "/workspace/devsync-sample/snippets",
+      "width": 390,
+      "status": 200,
+      "finalPath": "/workspace/devsync-sample/snippets",
+      "file": "workspace-audit-placeholder-snippets-390.png"
+    },
+    {
+      "path": "/workspace/devsync-sample/settings",
+      "width": 390,
+      "status": 200,
+      "finalPath": "/workspace/devsync-sample/settings",
+      "file": "workspace-audit-placeholder-settings-390.png"
+    },
+    {
+      "path": "/superadmin",
+      "width": 390,
+      "status": 500,
+      "finalPath": "/superadmin",
+      "error": "HTTP 500"
+    },
+    {
+      "path": "/invitations/cmvxorq850009a0lw3qxtg2xn",
+      "width": 390,
+      "status": 200,
+      "finalPath": "/invitations/cmvxorq850009a0lw3qxtg2xn",
+      "file": "invitation-390.png"
+    }
+  ]
+}

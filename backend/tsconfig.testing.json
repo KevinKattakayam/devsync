@@ -2,6 +2,7 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "rootDir": ".",
+    "lib": ["ES2020", "DOM"],
     "noEmit": true
   },
   "include": ["testing/**/*.ts"],
