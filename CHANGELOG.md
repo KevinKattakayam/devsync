@@ -16,6 +16,8 @@
 
 # Changelog
 
+- Phase1c D07/D09/G01/G06/G07: transactional central authorization and RLS-safe resource handlers; tenant-bound active assignees, atomic task ordering/activity/embedding outbox, canonical REST/actor-attributed agent document writes and revision-based live-room refresh. Add conflict-checked PUT content API while retaining legacy PATCH semantics. Real PostgreSQL/CRDT regression tests and ADR011/012.
+
 ## Phase 1a — partial delivery (2026-10-31)
 
 - D01: strict parsed profile mutations prevent ORM field/role assignment.

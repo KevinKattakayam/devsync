@@ -112,6 +112,7 @@ model Document {
   title       String     @default("Untitled")
   content     Json?
   yjsState    Bytes?
+  crdtRevision Int @default(0)
   embedding   Unsupported("vector(1536)")?
   embeddingHash String?
   icon        String?    @default("📄")

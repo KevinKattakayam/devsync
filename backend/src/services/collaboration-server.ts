@@ -57,6 +57,7 @@ export function createCollaborationServer(http: HttpServer, options: Collaborati
   const rooms = new Map<string, DocumentRoom>();
   const admitted = new Map<string, number>();
   const connections = new Set<Connection<Context>>();
+  const revisions = new Map<string, number>();
   const maxRooms = options.maxRooms ?? 100;
   const acl = options.acl ?? collaborationAcl;
   let closing = false;
@@ -265,8 +266,44 @@ export function createCollaborationServer(http: HttpServer, options: Collaborati
     async afterUnloadDocument({ documentName }) {
       rooms.delete(documentName);
       admitted.delete(documentName);
+      revisions.delete(documentName);
     },
   });
+  // The journal is authoritative for REST/worker mutations too. A revision check
+  // catches committed writes even if a pod misses a Redis notification.
+  let refreshing: Promise<void> | undefined;
+  const refresh = setInterval(() => {
+    if (closing || refreshing) return;
+    refreshing = Promise.all(
+      [...rooms].map(async ([name, room]) => {
+        const live = hocuspocus.documents.get(name);
+        if (!live) return;
+        try {
+          const record = await options.db.withTenantTransaction(room.workspaceId, (tx) =>
+            tx.document.findUnique({
+              where: { id: room.documentId, workspaceId: room.workspaceId },
+              select: { crdtRevision: true, isArchived: true },
+            }),
+          );
+          if (!record || record.isArchived) return;
+          if (revisions.get(name) === record.crdtRevision) return;
+          const state = await journal.load(room);
+          if (!closing && hocuspocus.documents.get(name) === live) {
+            Y.applyUpdate(live, state, 'durable-journal');
+            revisions.set(name, record.crdtRevision);
+          }
+        } catch {
+          // Existing per-connection policy sweeps fail closed on DB outages.
+          // Keep the prior revision so the next tick retries the durable state.
+        }
+      }),
+    )
+      .then(() => undefined)
+      .finally(() => {
+        refreshing = undefined;
+      });
+  }, 500);
+  refresh.unref();
   let sweeping = false;
   const sweep = setInterval(() => {
     if (sweeping || closing) return;
@@ -356,6 +393,8 @@ export function createCollaborationServer(http: HttpServer, options: Collaborati
   async function stop(compact = true) {
     closing = true;
     clearInterval(sweep);
+    clearInterval(refresh);
+    await refreshing;
     acl.off('revoke', revoke);
     http.off('upgrade', upgrade);
     let failure: unknown;

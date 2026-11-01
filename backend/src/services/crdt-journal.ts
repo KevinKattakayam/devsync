@@ -75,6 +75,14 @@ export class CrdtJournal {
           create: { ...room, digest, update: Buffer.from(update) },
           update: {},
         });
+        await tx.document.update({
+          where: { id: room.documentId },
+          data: {
+            crdtRevision: { increment: 1 },
+            content: projectDocument(document),
+            embeddingHash: null,
+          },
+        });
         if (updates.length >= 63) {
           await tx.document.update({
             where: { id: room.documentId },
@@ -90,6 +98,31 @@ export class CrdtJournal {
         document.destroy();
       }
     });
+  }
+  /** Trusted callers must authorize the actor in this same tenant transaction. */
+  async mutate(
+    tx: TenantTransaction,
+    room: DocumentRoom,
+    operation: (document: Y.Doc) => void,
+  ): Promise<void> {
+    const { document } = await this.locked(tx, room);
+    try {
+      operation(document);
+      const state = Y.encodeStateAsUpdate(document);
+      if (state.byteLength > MAX_STATE) throw new Error('Document limit exceeded');
+      await tx.document.update({
+        where: { id: room.documentId },
+        data: {
+          yjsState: Buffer.from(state),
+          content: projectDocument(document),
+          crdtRevision: { increment: 1 },
+          embeddingHash: null,
+        },
+      });
+      await tx.documentUpdate.deleteMany({ where: room });
+    } finally {
+      document.destroy();
+    }
   }
   /** Snapshot comes only from committed journal data, never a stale pod's Y.Doc. */
   async compact(room: DocumentRoom): Promise<void> {

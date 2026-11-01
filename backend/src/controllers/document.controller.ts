@@ -1,49 +1,51 @@
 import { Request, Response, NextFunction } from 'express';
 import { z } from 'zod';
-import { NotFoundError, ForbiddenError } from '../utils/errors';
+import * as Y from 'yjs';
+import { BadRequestError, ConflictError, ForbiddenError, NotFoundError } from '../utils/errors';
 import { prisma } from '../lib/prisma';
 import { queueEmbedding } from '../services/embedding.service';
+import {
+  READ_ROLES,
+  WRITE_ROLES,
+  withResourceAccess,
+  withWorkspaceAccess,
+} from '../security/workspace-policy';
+import { richTextSchema } from '../security/rich-text';
+import { legacyDocument, projectDocument } from '../services/crdt-schema';
+import { CrdtJournal } from '../services/crdt-journal';
 
 export const createDocumentSchema = z.object({
   title: z.string().max(200).optional(),
-  parentId: z.string().optional(),
+  parentId: z.string().min(1).max(191).optional(),
   icon: z.string().max(10).optional(),
 });
-
 export const updateDocumentSchema = z.object({
   title: z.string().max(200).optional(),
-  content: z.any().optional(),
+  content: richTextSchema.optional(),
+  crdtRevision: z.number().int().min(0).optional(),
   icon: z.string().max(10).optional(),
   isPublished: z.boolean().optional(),
   isArchived: z.boolean().optional(),
 });
-
-async function requireDocumentAccess(userId: string, documentId: string, write = false) {
-  const document = await prisma.document.findUnique({
-    where: { id: documentId },
-    select: { workspaceId: true },
-  });
-  if (!document) throw new NotFoundError('Document not found');
-  const member = await prisma.workspaceMember.findUnique({
-    where: { userId_workspaceId: { userId, workspaceId: document.workspaceId } },
-  });
-  if (!member || (write && member.role === 'VIEWER'))
-    throw new ForbiddenError(write ? 'Requires EDITOR or OWNER role' : 'Not a workspace member');
-  return document;
-}
-
+export const replaceDocumentContentSchema = z
+  .object({
+    content: richTextSchema,
+    crdtRevision: z.number().int().min(0),
+  })
+  .strict();
+const author = { select: { id: true, name: true, avatar: true } };
 export async function getDocuments(req: Request, res: Response, next: NextFunction) {
   try {
     const workspaceId = String(req.params.workspaceId || req.params.id);
-    const documents = await prisma.withTenantTransaction(workspaceId, (tx) =>
+    const documents = await withWorkspaceAccess(req.user!.userId, workspaceId, READ_ROLES, (tx) =>
       tx.document.findMany({
         where: { workspaceId, isArchived: false, parentId: null },
         include: {
-          author: { select: { id: true, name: true, avatar: true } },
+          author,
           children: {
             where: { isArchived: false, workspaceId },
             include: {
-              author: { select: { id: true, name: true, avatar: true } },
+              author,
               children: {
                 where: { isArchived: false, workspaceId },
                 select: { id: true, title: true, icon: true },
@@ -60,115 +62,150 @@ export async function getDocuments(req: Request, res: Response, next: NextFuncti
     next(error);
   }
 }
-
 export async function getDocument(req: Request, res: Response, next: NextFunction) {
   try {
-    const documentId = String(req.params.docId || req.params.id);
-    const { workspaceId } = await requireDocumentAccess(req.user!.userId, documentId);
-    const document = await prisma.document.findUnique({
-      where: { id: documentId },
-      include: {
-        author: { select: { id: true, name: true, avatar: true } },
-        children: {
-          where: { isArchived: false, workspaceId },
-          select: { id: true, title: true, icon: true },
-          orderBy: { createdAt: 'desc' },
-        },
-      },
-    });
-
-    if (!document) {
-      throw new NotFoundError('Document not found');
-    }
-
+    const id = String(req.params.docId || req.params.id);
+    const document = await withResourceAccess(
+      req.user!.userId,
+      'document',
+      id,
+      READ_ROLES,
+      (tx, workspaceId) =>
+        tx.document.findUnique({
+          where: { id },
+          include: {
+            author,
+            children: {
+              where: { isArchived: false, workspaceId },
+              select: { id: true, title: true, icon: true },
+              orderBy: { createdAt: 'desc' },
+            },
+          },
+        }),
+    );
+    if (!document) throw new NotFoundError('Document not found');
     res.json(document);
   } catch (error) {
     next(error);
   }
 }
-
 export async function createDocument(req: Request, res: Response, next: NextFunction) {
   try {
     const workspaceId = String(req.params.workspaceId || req.params.id);
-    const { title, parentId, icon } = req.body;
-    if (parentId) {
-      const parent = await prisma.withTenantTransaction(workspaceId, (tx) =>
-        tx.document.findUnique({
-          where: { id: parentId },
-          select: { workspaceId: true, isArchived: true },
-        }),
-      );
-      if (!parent || parent.workspaceId !== workspaceId || parent.isArchived)
-        throw new ForbiddenError('Access denied');
-    }
-
-    const document = await prisma.withTenantTransaction(workspaceId, (tx) =>
-      tx.document.create({
-        data: {
-          title: title || 'Untitled',
-          icon: icon || '📄',
-          authorId: req.user!.userId,
-          workspaceId,
-          parentId,
-        },
-        include: {
-          author: { select: { id: true, name: true, avatar: true } },
-        },
-      }),
-    );
-
-    await prisma.activity.create({
-      data: {
-        type: 'doc_created',
-        message: `created document "${document.title}"`,
-        userId: req.user!.userId,
-        workspaceId,
+    const { title, parentId, icon } = createDocumentSchema.parse(req.body);
+    const document = await withWorkspaceAccess(
+      req.user!.userId,
+      workspaceId,
+      WRITE_ROLES,
+      async (tx) => {
+        if (parentId) {
+          const parent = await tx.document.findUnique({
+            where: { id: parentId },
+            select: { workspaceId: true, isArchived: true },
+          });
+          if (!parent || parent.workspaceId !== workspaceId || parent.isArchived)
+            throw new ForbiddenError('Access denied');
+        }
+        const state = legacyDocument(null);
+        try {
+          const result = await tx.document.create({
+            data: {
+              title: title || 'Untitled',
+              icon: icon || '📄',
+              authorId: req.user!.userId,
+              workspaceId,
+              parentId,
+              content: projectDocument(state),
+              yjsState: Buffer.from(Y.encodeStateAsUpdate(state)),
+            },
+            include: { author },
+          });
+          await tx.activity.create({
+            data: {
+              type: 'doc_created',
+              message: `created document "${result.title}"`,
+              userId: req.user!.userId,
+              workspaceId,
+            },
+          });
+          await queueEmbedding('document', result.id, tx);
+          return result;
+        } finally {
+          state.destroy();
+        }
       },
-    });
-
+    );
     res.status(201).json(document);
-    queueEmbedding('document', document.id);
   } catch (error) {
     next(error);
   }
 }
-
 export async function updateDocument(req: Request, res: Response, next: NextFunction) {
   try {
-    const documentId = String(req.params.docId || req.params.id);
-    await requireDocumentAccess(req.user!.userId, documentId, true);
-    const { title, content, icon, isPublished, isArchived } = req.body;
-
-    const document = await prisma.document.update({
-      where: { id: documentId },
-      data: {
-        ...(title !== undefined && { title }),
-        ...(content !== undefined && { content }),
-        ...(icon !== undefined && { icon }),
-        ...(isPublished !== undefined && { isPublished }),
-        ...(isArchived !== undefined && { isArchived }),
+    const id = String(req.params.docId || req.params.id);
+    const { content, crdtRevision, ...metadata } = updateDocumentSchema.parse(req.body);
+    const document = await withResourceAccess(
+      req.user!.userId,
+      'document',
+      id,
+      WRITE_ROLES,
+      async (tx, workspaceId) => {
+        if (content !== undefined) {
+          // A whole-document replacement needs an explicit revision; never erase newer CRDT edits silently.
+          await tx.$queryRaw`SELECT id FROM "Document" WHERE id=${id} AND "workspaceId"=${workspaceId} FOR UPDATE`;
+          const existing = await tx.document.findUniqueOrThrow({ where: { id } });
+          if (
+            (req.method === 'PUT' && crdtRevision === undefined) ||
+            (crdtRevision !== undefined && existing.crdtRevision !== crdtRevision)
+          )
+            throw new ConflictError('Content replacement requires the current crdtRevision');
+          let replacement: Y.Doc;
+          try {
+            replacement = legacyDocument(content);
+          } catch {
+            throw new BadRequestError('Invalid rich text');
+          }
+          try {
+            await new CrdtJournal(prisma).mutate(tx, { workspaceId, documentId: id }, (state) => {
+              const fragment = state.getXmlFragment('default');
+              fragment.delete(0, fragment.length);
+              fragment.insert(
+                0,
+                replacement
+                  .getXmlFragment('default')
+                  .toArray()
+                  .map((node) => {
+                    if (!(node instanceof Y.XmlElement) && !(node instanceof Y.XmlText))
+                      throw new BadRequestError('Invalid rich text node');
+                    return node.clone();
+                  }),
+              );
+            });
+          } finally {
+            replacement.destroy();
+          }
+        }
+        const result = await tx.document.update({
+          where: { id },
+          data: metadata,
+          include: { author },
+        });
+        if (content !== undefined || metadata.title !== undefined)
+          await queueEmbedding('document', id, tx);
+        return result;
       },
-      include: {
-        author: { select: { id: true, name: true, avatar: true } },
-      },
-    });
-
+    );
     res.json(document);
-    if (title !== undefined || content !== undefined) queueEmbedding('document', document.id);
   } catch (error) {
     next(error);
   }
 }
-
 export async function deleteDocument(req: Request, res: Response, next: NextFunction) {
   try {
-    const documentId = String(req.params.docId || req.params.id);
-    await requireDocumentAccess(req.user!.userId, documentId, true);
-    // Soft delete
-    await prisma.document.update({
-      where: { id: documentId },
-      data: { isArchived: true },
-    });
+    const id = String(req.params.docId || req.params.id);
+    await withResourceAccess(req.user!.userId, 'document', id, WRITE_ROLES, (tx) =>
+      tx.document.update({ where: { id }, data: { isArchived: true } }),
+    );
     res.json({ message: 'Document archived' });
   } catch (error) {
     next(error);

@@ -1,6 +1,6 @@
 import { Role } from '@prisma/client';
 import { prisma } from '../lib/prisma';
-import type { TenantPrismaClient } from '../lib/tenant-prisma';
+import type { TenantPrismaClient, TenantTransaction } from '../lib/tenant-prisma';
 import { ForbiddenError } from '../utils/errors';
 
 export const READ_ROLES: readonly Role[] = [Role.OWNER, Role.EDITOR, Role.VIEWER];
@@ -11,7 +11,7 @@ export async function authorizeWorkspace(
   userId: string,
   workspaceId: string,
   roles: readonly Role[] = READ_ROLES,
-  db: TenantPrismaClient = prisma,
+  db: Pick<TenantPrismaClient, 'user' | 'workspace' | 'workspaceMember'> = prisma,
 ) {
   if (!userId || !workspaceId || workspaceId.length > 191)
     throw new ForbiddenError('Access denied');
@@ -30,4 +30,62 @@ export async function authorizeWorkspace(
     throw new ForbiddenError('Access denied');
   }
   return member;
+}
+
+/** Locks and policy share the mutation's transaction; membership cannot change mid-write. */
+export async function withWorkspaceAccess<T>(
+  userId: string,
+  workspaceId: string,
+  roles: readonly Role[],
+  operation: (tx: TenantTransaction) => Promise<T>,
+  db: TenantPrismaClient = prisma,
+): Promise<T> {
+  if (!userId || !workspaceId || workspaceId.length > 191)
+    throw new ForbiddenError('Access denied');
+  return db.withTenantTransaction(workspaceId, async (tx) => {
+    if (roles.includes(Role.VIEWER))
+      await tx.$queryRaw`SELECT id FROM "Workspace" WHERE id=${workspaceId} FOR SHARE`;
+    else await tx.$queryRaw`SELECT id FROM "Workspace" WHERE id=${workspaceId} FOR UPDATE`;
+    await tx.$queryRaw`SELECT id FROM "User" WHERE id=${userId} FOR SHARE`;
+    await tx.$queryRaw`SELECT id FROM "WorkspaceMember" WHERE "workspaceId"=${workspaceId} AND "userId"=${userId} FOR SHARE`;
+    await authorizeWorkspace(userId, workspaceId, roles, tx);
+    return operation(tx);
+  });
+}
+
+export type ProtectedResource = 'document' | 'snippet' | 'task';
+/** Legacy standalone URLs must not discover a protected resource by bypassing RLS. */
+export async function withResourceAccess<T>(
+  userId: string,
+  kind: ProtectedResource,
+  resourceId: string,
+  roles: readonly Role[],
+  operation: (tx: TenantTransaction, workspaceId: string) => Promise<T>,
+  db: TenantPrismaClient = prisma,
+): Promise<T> {
+  if (!userId || !resourceId || resourceId.length > 191) throw new ForbiddenError('Access denied');
+  const memberships = await db.workspaceMember.findMany({
+    where: { userId },
+    select: { workspaceId: true },
+    orderBy: { workspaceId: 'asc' },
+  });
+  for (const { workspaceId } of memberships) {
+    // First discover the ID within RLS. Do not reject unrelated read-only memberships.
+    const found = await db.withTenantTransaction(workspaceId, async (tx) => {
+      if (kind === 'document')
+        return tx.document.findUnique({ where: { id: resourceId }, select: { id: true } });
+      if (kind === 'snippet')
+        return tx.snippet.findUnique({ where: { id: resourceId }, select: { id: true } });
+      return tx.task.findUnique({ where: { id: resourceId }, select: { id: true } });
+    });
+    if (found)
+      return withWorkspaceAccess(
+        userId,
+        workspaceId,
+        roles,
+        async (tx) => operation(tx, workspaceId),
+        db,
+      );
+  }
+  throw new ForbiddenError('Access denied');
 }

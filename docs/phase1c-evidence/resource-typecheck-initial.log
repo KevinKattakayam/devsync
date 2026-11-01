@@ -1,0 +1,14 @@
+
+> devsync-backend@1.0.0 typecheck
+> tsc --noEmit && tsc -p tsconfig.seed.json
+
+src/controllers/document.controller.ts(151,54): error TS2339: Property 'crdtRevision' does not exist on type '{ id: string; createdAt: Date; updatedAt: Date; icon: string | null; title: string; workspaceId: string; content: JsonValue; yjsState: Buffer<ArrayBufferLike> | null; ... 4 more ...; parentId: string | null; }'.
+src/controllers/document.controller.ts(165,17): error TS2345: Argument of type '(YXmlElement<{ [key: string]: string; }> | YXmlText | YXmlHook)[]' is not assignable to parameter of type '(YXmlElement<{ [key: string]: string; }> | YXmlText)[]'.
+  Type 'YXmlElement<{ [key: string]: string; }> | YXmlText | YXmlHook' is not assignable to type 'YXmlElement<{ [key: string]: string; }> | YXmlText'.
+    Type 'YXmlHook' is not assignable to type 'YXmlElement<{ [key: string]: string; }> | YXmlText'.
+      Type 'YXmlHook' is missing the following properties from type 'YXmlElement<{ [key: string]: string; }>': nodeName, _prelimAttrs, nextSibling, prevSibling, and 16 more.
+src/services/collaboration-server.ts(285,25): error TS2353: Object literal may only specify known properties, and 'crdtRevision' does not exist in type 'DocumentSelect<DefaultArgs>'.
+src/services/collaboration-server.ts(289,46): error TS2339: Property 'crdtRevision' does not exist on type '{ id: string; createdAt: Date; updatedAt: Date; icon: string | null; title: string; workspaceId: string; content: JsonValue; yjsState: Buffer<ArrayBufferLike> | null; ... 4 more ...; parentId: string | null; }'.
+src/services/collaboration-server.ts(293,40): error TS2339: Property 'crdtRevision' does not exist on type '{ id: string; createdAt: Date; updatedAt: Date; icon: string | null; title: string; workspaceId: string; content: JsonValue; yjsState: Buffer<ArrayBufferLike> | null; ... 4 more ...; parentId: string | null; }'.
+src/services/crdt-journal.ts(81,13): error TS2353: Object literal may only specify known properties, and 'crdtRevision' does not exist in type '(Without<DocumentUpdateInput, DocumentUncheckedUpdateInput> & DocumentUncheckedUpdateInput) | (Without<...> & DocumentUpdateInput)'.
+src/services/crdt-journal.ts(118,11): error TS2353: Object literal may only specify known properties, and 'crdtRevision' does not exist in type '(Without<DocumentUpdateInput, DocumentUncheckedUpdateInput> & DocumentUncheckedUpdateInput) | (Without<...> & DocumentUpdateInput)'.

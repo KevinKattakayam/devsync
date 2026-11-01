@@ -2,6 +2,7 @@ import { createHash } from 'crypto';
 import OpenAI from 'openai';
 import { Prisma } from '@prisma/client';
 import { prisma } from '../lib/prisma';
+import type { TenantTransaction } from '../lib/tenant-prisma';
 
 const client = process.env.OPENAI_API_KEY
   ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
@@ -36,8 +37,12 @@ function vector(values: number[]) {
   return Prisma.raw(`'[${values.join(',')}]'::vector`);
 }
 
-export async function queueEmbedding(kind: 'document' | 'snippet' | 'task', id: string) {
-  await prisma.$executeRaw`INSERT INTO "EmbeddingJob" ("id", "resourceType", "resourceId", "status", "attempts", "runAfter", "createdAt", "updatedAt") VALUES (${`${kind}:${id}`}, ${kind}, ${id}, 'pending', 0, NOW(), NOW(), NOW()) ON CONFLICT ("resourceType", "resourceId") DO UPDATE SET "status" = 'pending', "runAfter" = NOW(), "lastError" = NULL, "updatedAt" = NOW()`;
+export async function queueEmbedding(
+  kind: 'document' | 'snippet' | 'task',
+  id: string,
+  tx: Pick<TenantTransaction, '$executeRaw'> = prisma,
+) {
+  await tx.$executeRaw`INSERT INTO "EmbeddingJob" ("id", "resourceType", "resourceId", "status", "attempts", "runAfter", "createdAt", "updatedAt") VALUES (${`${kind}:${id}`}, ${kind}, ${id}, 'pending', 0, NOW(), NOW(), NOW()) ON CONFLICT ("resourceType", "resourceId") DO UPDATE SET "status" = 'pending', "runAfter" = NOW(), "lastError" = NULL, "updatedAt" = NOW()`;
 }
 
 let workerRunning = false;
