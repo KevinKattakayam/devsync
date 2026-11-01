@@ -1,3 +1,10 @@
+# Phase 3c — editor acceptance and review
+
+- Preserve cached content on metadata failure; put read-only semantics on the actual editor textbox, retain visible canvas focus, and enlarge task targets.
+- Add seeded block-flow, clipboard/table/selection, two-context merge, offline/reconnect and actual-protocol viewer-denial browser tests. Preserve default journeys and central authorization.
+- Save40 final dark/light review captures and raw axe reports with zero reported violations; record incomplete accessibility/layout work and A remainder/B–E deferrals honestly.
+- Final51 component tests,192 backend tests, six browser tests and production builds pass. No3d or push.
+
 # Phase 3c — editor foundation
 
 - Replace the crowded toolbar/card with a focused document canvas, selection formatting, keyboard slash commands and a formatting fallback using existing design tokens/components.

@@ -120,7 +120,8 @@ function EditorInner({
       attributes: {
         class: 'editor-canvas min-h-[400px]',
         role: 'textbox',
-        'aria-label': 'Document editor',
+        'aria-label': 'Document content',
+        'aria-readonly': String(!canWrite),
         'aria-multiline': 'true',
       },
     },
@@ -449,7 +450,8 @@ function DocumentEditor({ workspaceId, docId }: { workspaceId: string; docId: st
       setTitleSaving(false);
     }
   };
-  if (loadError)
+  const cachedContent = localReady && ydoc.getXmlFragment('default').length > 0;
+  if (loadError && !cachedContent)
     return (
       <div className="mx-auto max-w-3xl px-4 py-12" role="alert">
         <h1 className="text-xl font-semibold">Document could not load</h1>
@@ -469,16 +471,35 @@ function DocumentEditor({ workspaceId, docId }: { workspaceId: string; docId: st
 
   return (
     <div className="w-full min-w-0 max-w-3xl mx-auto px-4 md:px-8 py-8">
+      {loadError && (
+        <div role="alert" className="mb-6 rounded-lg bg-secondary p-4 text-sm">
+          <p>
+            Document details are unavailable. Showing the existing local content; connection status
+            below reflects synchronization.
+          </p>
+          <Button
+            className="mt-3"
+            variant="secondary"
+            onClick={() => {
+              setLoadError(false);
+              setAttempt((value) => value + 1);
+            }}
+          >
+            Retry document
+          </Button>
+        </div>
+      )}
       {/* Title */}
       <input
         aria-label="Document title"
-        readOnly={!canWrite || titleSaving}
+        readOnly={!canWrite || titleSaving || !doc}
         type="text"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         onBlur={saveTitle}
         className="block w-full min-w-0 text-[28px] leading-9 font-semibold text-foreground bg-transparent mb-2 placeholder:text-muted-foreground"
-        placeholder="Untitled"
+        placeholder={loadError ? 'Document title unavailable' : 'Untitled'}
+        maxLength={200}
       />
       <div className="flex flex-wrap items-center gap-3 mb-6 text-xs text-muted-foreground">
         <DocumentSyncStatus
@@ -505,7 +526,9 @@ function DocumentEditor({ workspaceId, docId }: { workspaceId: string; docId: st
         />
       </div>
 
-      {doc && localReady && (provider?.synced || ydoc.getXmlFragment('default').length > 0) ? (
+      {(doc || loadError) &&
+      localReady &&
+      (provider?.synced || ydoc.getXmlFragment('default').length > 0) ? (
         <EditorInner
           key={`${workspaceId}:${docId}:${user?.id}`}
           canWrite={canWrite}

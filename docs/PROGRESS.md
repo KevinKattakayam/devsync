@@ -1,3 +1,32 @@
+# Phase 3c — bounded editor delivery; stop here
+
+On `upgrade/enterprise`; local commits only, no push/deployment/3d. Root AGENTS.md is absent; frontend guidance, progress, authorization matrix and DESIGN were read. Delivered the highest-priority existing-schema part of **A**: focused canvas, floating selection formatting with keyboard fallback, filtered slash menu with arrows/Enter/Escape, table/task insertion and contextual table/code controls. No backend production code, API contracts, CRDT schema, transport/authentication/authorization or migrations changed.
+
+Task checkboxes have accessible labels and24px targets. Code controls choose existing language metadata and copy selected-block text, with failure feedback; they do not execute or highlight code. Table controls add/remove rows/columns or the table. Every command retains server-authorized editability. Body transactions use the existing Yjs provider/local store and collaboration Undo, not replacement REST saves. Title save gets pending/failure feedback and authorized Undo; no conditional revision/concurrent-title protection is claimed.
+
+Metadata failure has retry and preserves existing local content when available; the title is then explicitly unavailable/read-only. Connection skeletons and a route error boundary are included. The existing AI request/SSE/escaped Markdown insertion remains behind a design-system dialog/draft preview. No provider-backed AI test was run. The previous fake checkpoints/restore success UI is removed; real version restore remains deferred.
+
+## Actual validation
+
+Frontend final lint/format/strict types,9 Node tests across4 files, Vitest10 files/**51 tests** and webpack production build pass. Backend testing-harness lint/format/application+seed+testing types pass; **16 suites/192 tests** and build pass. No tests deleted/weakened, explicit any, suppression or disabled rule introduced. Evidence: ui/phase3c-evidence; group1 commit0782410 followed by the review commit.
+
+Final browser suite **6/6 pass** using seeded fixture identities, actual APIs and migrated disposable PostgreSQL/Redis. Two browser contexts edit the same document simultaneously; both edits reach all contexts. Simulated offline HTTP plus explicit WebSocket closure permits a local edit while another browser edits online; reconnect merges both and returns to Saved. Viewer contenteditable=false, no insertion control, REST PATCH403. A separate actual Hocuspocus/Yjs viewer client ignores the UI, receives readonly scope, sends a forged update and receives the existing server denial frame. This does not replace the retained backend journal/auth tests or claim a complete offline reload/revocation matrix.
+
+**40 final screenshots/40 axe reports/0 reported violations**,1440/390 dark/light plus360 empty/read-only, are in ui/after/editor/final. Raw incompletes remain. Review/critique/corrections/repeat and honest residual flaws are in ui/after/editor/REVIEW.md. Remaining semantic container labels, floating overlap, modal focus review and clipped contrast items mean no complete WCAG certification claim.
+
+Failed evidence retained: initial lint effect dependency warning; new command tests initially outside the configured include pattern, then two lowercase XML assertions corrected while retaining shared-document checks. Initial browser suite6 failed (invalid wrapper ARIA and offline emulation leaving the existing WebSocket open). Correction run5 failed/1 passed (task target size, plus editor option refresh dropping the read-only attribute); fixed before final6/6. Sandbox tsx IPC denial required host permission. No act, audits, redundant backend suites or additional post-pass builds/evidence checks.
+
+## Exact deferrals and limits
+
+- **A remaining:** block drag handles with keyboard reordering and safe CRDT selection/transaction behavior; persisted callouts with a shared schema/persistence design. Not implemented within this timebox. Contextual code controls sit above the canvas rather than on each code block; syntax highlighting is not added. Full slash-menu collision behavior remains limited.
+- **B:** existing collaborator cursors/names/colors preserved, not polished. Outline, word count and Markdown export are deferred.
+- **C:** member/document mentions and selection comment threads are deferred; no new persisted marks/thread contracts invented.
+- **D:** real CRDT snapshot listing, visual diff and restore are deferred. Removed mock history was not a working implementation and is not replaced by a fabricated history.
+- **E:** safe sanitized Mermaid rendering is deferred; no diagram execution/rendering surface added.
+- Remaining review flaws: mobile AI row height, task checkbox/text stacking, prose/header gutter alignment, code/table control distance, floating toolbar/menu overlap and generic labeled-container roles. Full screen-reader/Tab traversal, populated360 owner-state matrix, multiple browsers and offline reload/account-switch tests are not complete. The existing shared shell Copilot/overlay limitations remain. Timebox stops here, without beginning3d.
+
+---
+
 # Phase 3c — bounded editor foundation, group 1
 
 On `upgrade/enterprise`, no push or3d. Read frontend AGENTS guidance (root AGENTS.md absent), PROGRESS, AUTHZ_MATRIX and DESIGN. Scope is the highest-priority **A canvas, selection formatting, slash commands, existing tables/tasks/code**. Block drag handles, persisted callouts and B–E are explicitly deferred. No backend production source, CRDT schema, provider, authorization policy, API contract or migration is changed.

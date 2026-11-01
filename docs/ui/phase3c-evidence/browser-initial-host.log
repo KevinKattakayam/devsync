@@ -1,0 +1,328 @@
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": PostgreSQL database "devsync_e2e_browser", schema "public" at "localhost:32789"
+
+11 migrations found in prisma/migrations
+
+Applying migration `20260729000000_baseline`
+Applying migration `20260729180000_enterprise_platform`
+Applying migration `20260815000000_phase_3_tenant_rls`
+Applying migration `20260815001000_scim_provisioning`
+Applying migration `20260815002000_commercial_billing`
+Applying migration `20261031000000_tenant_indexes`
+Applying migration `20261031010000_crdt_journal`
+Applying migration `202611010001_canonical_revision`
+Applying migration `202611010002_embedding_authority`
+Applying migration `202611010003_atomic_create_idempotency`
+Applying migration `202611010004_workspace_invitations`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20260729000000_baseline/
+    └─ migration.sql
+  └─ 20260729180000_enterprise_platform/
+    └─ migration.sql
+  └─ 20260815000000_phase_3_tenant_rls/
+    └─ migration.sql
+  └─ 20260815001000_scim_provisioning/
+    └─ migration.sql
+  └─ 20260815002000_commercial_billing/
+    └─ migration.sql
+  └─ 20261031000000_tenant_indexes/
+    └─ migration.sql
+  └─ 20261031010000_crdt_journal/
+    └─ migration.sql
+  └─ 202611010001_canonical_revision/
+    └─ migration.sql
+  └─ 202611010002_embedding_authority/
+    └─ migration.sql
+  └─ 202611010003_atomic_create_idempotency/
+    └─ migration.sql
+  └─ 202611010004_workspace_invitations/
+    └─ migration.sql
+      
+All migrations have been successfully applied.
+Sample workspace seeded. Sign in with the supplied Clerk test identities.
+/home/kevin/devsync/.worktrees/frontend-fixture
+Isolated fixture server ready
+{"level":30,"time":1793556998742,"service":"devsync-api","req":{"id":"b250d625-5215-49d0-b560-9d1edb6821fc","method":"GET"},"requestId":"b250d625-5215-49d0-b560-9d1edb6821fc","res":{"statusCode":200},"responseTime":8,"msg":"request completed"}
+▲ Next.js 16.4.3 (webpack)
+- Local:         http://127.0.0.1:3001
+- Network:       http://127.0.0.1:3001
+✓ Ready in 639ms
+✓ Running next.config.ts took 52ms
+○ Compiling /instrumentation ...
+
+✓ Generated AGENTS.md for AI agents. Set `agentRules: false` in next.config to disable.
+○ Compiling /(auth)/login/[[...rest]]/page ...
+ GET /login 200 in 648ms (proxy.ts: 104ms)
+ GET /login 200 in 1294ms (next.js: 808ms, proxy.ts: 7ms, application-code: 479ms)
+
+Running 6 tests using 1 worker
+
+(node:50304) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1793557034574,"service":"devsync-api","req":{"id":"8b0b254a-1d1c-4a21-86fa-7daf6309a9ed","method":"GET"},"requestId":"8b0b254a-1d1c-4a21-86fa-7daf6309a9ed","res":{"statusCode":200},"responseTime":26,"msg":"request completed"}
+{"level":30,"time":1793557034687,"service":"devsync-api","req":{"id":"fa726fd6-1eb7-4e33-92b3-1819aa7bafc3","method":"POST"},"requestId":"fa726fd6-1eb7-4e33-92b3-1819aa7bafc3","res":{"statusCode":201},"responseTime":95,"msg":"request completed"}
+{"level":30,"time":1793557034727,"service":"devsync-api","req":{"id":"d08d7c0b-1aeb-4892-baee-029cc42b1041","method":"GET"},"requestId":"d08d7c0b-1aeb-4892-baee-029cc42b1041","res":{"statusCode":200},"responseTime":31,"msg":"request completed"}
+{"level":30,"time":1793557034782,"service":"devsync-api","req":{"id":"b090e080-6397-4503-b19a-4f3f1bd32839","method":"PATCH"},"requestId":"b090e080-6397-4503-b19a-4f3f1bd32839","res":{"statusCode":200},"responseTime":45,"msg":"request completed"}
+○ Compiling /(dashboard)/workspace/[id]/docs/[docId]/page ...
+ GET /workspace/devsync-sample/docs/cmvy5jt0q0003u8ajl7hhyuan 200 in 6.9s (next.js: 6.3s, proxy.ts: 13ms, application-code: 588ms)
+{"level":30,"time":1793557043613,"service":"devsync-api","req":{"id":"2fdc859d-94a0-488c-8d25-481ccce5c02c","method":"GET"},"requestId":"2fdc859d-94a0-488c-8d25-481ccce5c02c","res":{"statusCode":200},"responseTime":62,"msg":"request completed"}
+{"level":30,"time":1793557043616,"service":"devsync-api","req":{"id":"aa32d898-aaad-4173-972a-268af66d7c3e","method":"GET"},"requestId":"aa32d898-aaad-4173-972a-268af66d7c3e","res":{"statusCode":200},"responseTime":70,"msg":"request completed"}
+{"level":30,"time":1793557043628,"service":"devsync-api","req":{"id":"a7df3f3b-9c1a-43f8-926f-65c0c03977d5","method":"GET"},"requestId":"a7df3f3b-9c1a-43f8-926f-65c0c03977d5","res":{"statusCode":200},"responseTime":80,"msg":"request completed"}
+{"level":30,"time":1793557043629,"service":"devsync-api","req":{"id":"7cf10098-80d8-4ba3-b84c-cf0b5dfd788e","method":"GET"},"requestId":"7cf10098-80d8-4ba3-b84c-cf0b5dfd788e","res":{"statusCode":200},"responseTime":76,"msg":"request completed"}
+dark 1440 loading: 0 axe violations; 1 incomplete
+{"level":30,"time":1793557044269,"service":"devsync-api","req":{"id":"0540be2a-3729-413e-a07f-9343f1761040","method":"GET"},"requestId":"0540be2a-3729-413e-a07f-9343f1761040","res":{"statusCode":200},"responseTime":22,"msg":"request completed"}
+{"level":30,"time":1793557044272,"service":"devsync-api","req":{"id":"d39dac1a-d366-4cb4-b0f6-4378018b8c7d","method":"GET"},"requestId":"d39dac1a-d366-4cb4-b0f6-4378018b8c7d","res":{"statusCode":200},"responseTime":23,"msg":"request completed"}
+dark 1440 ready: 1 axe violations; 2 incomplete
+  ✘  1 testing/browser/editor.spec.ts:110:9 › dark 1440 editor block flow and review states (10.4s)
+(node:52841) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1793557045968,"service":"devsync-api","req":{"id":"56610a88-9c9a-439f-b3db-464dd6734a4d","method":"GET"},"requestId":"56610a88-9c9a-439f-b3db-464dd6734a4d","res":{"statusCode":200},"responseTime":21,"msg":"request completed"}
+{"level":30,"time":1793557046006,"service":"devsync-api","req":{"id":"226ec73d-2479-4f63-b05e-77f25c737573","method":"POST"},"requestId":"226ec73d-2479-4f63-b05e-77f25c737573","res":{"statusCode":201},"responseTime":21,"msg":"request completed"}
+{"level":30,"time":1793557046024,"service":"devsync-api","req":{"id":"de7ca07b-1a26-40b4-87fc-f39e746a21fb","method":"GET"},"requestId":"de7ca07b-1a26-40b4-87fc-f39e746a21fb","res":{"statusCode":200},"responseTime":12,"msg":"request completed"}
+{"level":30,"time":1793557046053,"service":"devsync-api","req":{"id":"23a26db0-5506-4aba-b10e-a1a961548d87","method":"PATCH"},"requestId":"23a26db0-5506-4aba-b10e-a1a961548d87","res":{"statusCode":200},"responseTime":25,"msg":"request completed"}
+ GET /workspace/devsync-sample/docs/cmvy5k1rg001cu8ajbnizj9fp 200 in 133ms (next.js: 74ms, proxy.ts: 6ms, application-code: 54ms)
+{"level":30,"time":1793557048104,"service":"devsync-api","req":{"id":"22ef3703-9d0f-427a-b5e5-891cbd5de94f","method":"GET"},"requestId":"22ef3703-9d0f-427a-b5e5-891cbd5de94f","res":{"statusCode":200},"responseTime":54,"msg":"request completed"}
+{"level":30,"time":1793557048106,"service":"devsync-api","req":{"id":"0dfd2ebc-c6c3-4a3a-8a2f-3f32c666cda3","method":"GET"},"requestId":"0dfd2ebc-c6c3-4a3a-8a2f-3f32c666cda3","res":{"statusCode":200},"responseTime":54,"msg":"request completed"}
+{"level":30,"time":1793557048111,"service":"devsync-api","req":{"id":"c0504813-f117-4075-a6cb-61a8ed3a16cb","method":"GET"},"requestId":"c0504813-f117-4075-a6cb-61a8ed3a16cb","res":{"statusCode":200},"responseTime":62,"msg":"request completed"}
+{"level":30,"time":1793557048114,"service":"devsync-api","req":{"id":"b12d15b0-1fc6-4e7d-9dc7-3cd3bf50fe36","method":"GET"},"requestId":"b12d15b0-1fc6-4e7d-9dc7-3cd3bf50fe36","res":{"statusCode":200},"responseTime":60,"msg":"request completed"}
+dark 390 loading: 0 axe violations; 0 incomplete
+{"level":30,"time":1793557048593,"service":"devsync-api","req":{"id":"421fdd61-8abc-4271-be00-0d89667f1821","method":"GET"},"requestId":"421fdd61-8abc-4271-be00-0d89667f1821","res":{"statusCode":200},"responseTime":23,"msg":"request completed"}
+{"level":30,"time":1793557048595,"service":"devsync-api","req":{"id":"03460854-fb22-4452-a787-7a13ceb4591a","method":"GET"},"requestId":"03460854-fb22-4452-a787-7a13ceb4591a","res":{"statusCode":200},"responseTime":24,"msg":"request completed"}
+dark 390 ready: 1 axe violations; 1 incomplete
+  ✘  2 testing/browser/editor.spec.ts:110:9 › dark 390 editor block flow and review states (3.1s)
+(node:54187) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1793557049956,"service":"devsync-api","req":{"id":"7b7410fb-49d0-44a9-891e-d64ea61ae3fc","method":"GET"},"requestId":"7b7410fb-49d0-44a9-891e-d64ea61ae3fc","res":{"statusCode":200},"responseTime":10,"msg":"request completed"}
+{"level":30,"time":1793557050025,"service":"devsync-api","req":{"id":"c76842fa-5d4d-42f5-aec0-cf94b8dd9ece","method":"POST"},"requestId":"c76842fa-5d4d-42f5-aec0-cf94b8dd9ece","res":{"statusCode":201},"responseTime":50,"msg":"request completed"}
+{"level":30,"time":1793557050062,"service":"devsync-api","req":{"id":"565191b4-0960-4800-a905-259949210b87","method":"GET"},"requestId":"565191b4-0960-4800-a905-259949210b87","res":{"statusCode":200},"responseTime":21,"msg":"request completed"}
+{"level":30,"time":1793557050110,"service":"devsync-api","req":{"id":"a6bc512a-66f4-4e55-b79d-71fca9f3f95c","method":"PATCH"},"requestId":"a6bc512a-66f4-4e55-b79d-71fca9f3f95c","res":{"statusCode":200},"responseTime":38,"msg":"request completed"}
+ GET /workspace/devsync-sample/docs/cmvy5k4ul002ku8ajkrj4du5a 200 in 124ms (next.js: 57ms, proxy.ts: 6ms, application-code: 61ms)
+{"level":30,"time":1793557053383,"service":"devsync-api","req":{"id":"1f4f06da-9d72-4297-8701-62ea24564f10","method":"GET"},"requestId":"1f4f06da-9d72-4297-8701-62ea24564f10","res":{"statusCode":200},"responseTime":41,"msg":"request completed"}
+{"level":30,"time":1793557053386,"service":"devsync-api","req":{"id":"4fdd0ece-50ae-41ae-b46f-99c195b7960f","method":"GET"},"requestId":"4fdd0ece-50ae-41ae-b46f-99c195b7960f","res":{"statusCode":200},"responseTime":31,"msg":"request completed"}
+{"level":30,"time":1793557053390,"service":"devsync-api","req":{"id":"f74f035a-3859-4415-aa7f-7e7fe8481c39","method":"GET"},"requestId":"f74f035a-3859-4415-aa7f-7e7fe8481c39","res":{"statusCode":200},"responseTime":51,"msg":"request completed"}
+{"level":30,"time":1793557053410,"service":"devsync-api","req":{"id":"45b14f8c-5a0e-4d3b-88d4-5cfe22df19f3","method":"GET"},"requestId":"45b14f8c-5a0e-4d3b-88d4-5cfe22df19f3","res":{"statusCode":200},"responseTime":57,"msg":"request completed"}
+light 1440 loading: 0 axe violations; 1 incomplete
+{"level":30,"time":1793557054054,"service":"devsync-api","req":{"id":"6e44a13c-8abe-45d6-bdeb-88ff61540f03","method":"GET"},"requestId":"6e44a13c-8abe-45d6-bdeb-88ff61540f03","res":{"statusCode":200},"responseTime":32,"msg":"request completed"}
+{"level":30,"time":1793557054055,"service":"devsync-api","req":{"id":"c815d546-e943-4f2a-881e-38b46ef11419","method":"GET"},"requestId":"c815d546-e943-4f2a-881e-38b46ef11419","res":{"statusCode":200},"responseTime":30,"msg":"request completed"}
+light 1440 ready: 1 axe violations; 2 incomplete
+  ✘  3 testing/browser/editor.spec.ts:110:9 › light 1440 editor block flow and review states (4.6s)
+(node:55010) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1793557055843,"service":"devsync-api","req":{"id":"2a5f0980-0e78-4590-9f17-227aca1df048","method":"GET"},"requestId":"2a5f0980-0e78-4590-9f17-227aca1df048","res":{"statusCode":200},"responseTime":11,"msg":"request completed"}
+{"level":30,"time":1793557055897,"service":"devsync-api","req":{"id":"53b219df-05df-4029-9042-643796e1e849","method":"POST"},"requestId":"53b219df-05df-4029-9042-643796e1e849","res":{"statusCode":201},"responseTime":34,"msg":"request completed"}
+{"level":30,"time":1793557055922,"service":"devsync-api","req":{"id":"0fa5826f-95ed-4c85-8be3-204f534376e1","method":"GET"},"requestId":"0fa5826f-95ed-4c85-8be3-204f534376e1","res":{"statusCode":200},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793557055965,"service":"devsync-api","req":{"id":"58cf4dfd-884c-4fb9-9abd-df2cc5f73bad","method":"PATCH"},"requestId":"58cf4dfd-884c-4fb9-9abd-df2cc5f73bad","res":{"statusCode":200},"responseTime":35,"msg":"request completed"}
+ GET /workspace/devsync-sample/docs/cmvy5k9dx003tu8ajmagvbf9m 200 in 141ms (next.js: 60ms, proxy.ts: 7ms, application-code: 74ms)
+{"level":30,"time":1793557058119,"service":"devsync-api","req":{"id":"91024c64-1744-4ef4-a33c-34057d534ad5","method":"GET"},"requestId":"91024c64-1744-4ef4-a33c-34057d534ad5","res":{"statusCode":200},"responseTime":63,"msg":"request completed"}
+{"level":30,"time":1793557058120,"service":"devsync-api","req":{"id":"895da4f8-a184-47bd-a164-611d470eaf42","method":"GET"},"requestId":"895da4f8-a184-47bd-a164-611d470eaf42","res":{"statusCode":200},"responseTime":61,"msg":"request completed"}
+{"level":30,"time":1793557058137,"service":"devsync-api","req":{"id":"7e0e4320-f179-4057-9411-7275b8be9860","method":"GET"},"requestId":"7e0e4320-f179-4057-9411-7275b8be9860","res":{"statusCode":200},"responseTime":83,"msg":"request completed"}
+{"level":30,"time":1793557058137,"service":"devsync-api","req":{"id":"270662ce-64bc-4beb-b5cb-54cf95c02860","method":"GET"},"requestId":"270662ce-64bc-4beb-b5cb-54cf95c02860","res":{"statusCode":200},"responseTime":86,"msg":"request completed"}
+light 390 loading: 0 axe violations; 0 incomplete
+{"level":30,"time":1793557058781,"service":"devsync-api","req":{"id":"23ccc865-3f04-4079-84ef-ff743dd77464","method":"GET"},"requestId":"23ccc865-3f04-4079-84ef-ff743dd77464","res":{"statusCode":200},"responseTime":64,"msg":"request completed"}
+{"level":30,"time":1793557058788,"service":"devsync-api","req":{"id":"9aaad6a0-03b5-4ec3-82ef-929a5c1d4877","method":"GET"},"requestId":"9aaad6a0-03b5-4ec3-82ef-929a5c1d4877","res":{"statusCode":200},"responseTime":69,"msg":"request completed"}
+light 390 ready: 1 axe violations; 1 incomplete
+  ✘  4 testing/browser/editor.spec.ts:110:9 › light 390 editor block flow and review states (3.3s)
+(node:56507) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1793557060189,"service":"devsync-api","req":{"id":"ae6c129c-3535-4e59-8dd3-5b7b7c82e2a2","method":"GET"},"requestId":"ae6c129c-3535-4e59-8dd3-5b7b7c82e2a2","res":{"statusCode":200},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793557060205,"service":"devsync-api","req":{"id":"1a7136a8-bbd7-446f-b627-192463aa57cd","method":"GET"},"requestId":"1a7136a8-bbd7-446f-b627-192463aa57cd","res":{"statusCode":200},"responseTime":26,"msg":"request completed"}
+{"level":30,"time":1793557060206,"service":"devsync-api","req":{"id":"77981a8d-3d9f-4c44-86b6-6fb7e31d47ff","method":"GET"},"requestId":"77981a8d-3d9f-4c44-86b6-6fb7e31d47ff","res":{"statusCode":200},"responseTime":28,"msg":"request completed"}
+{"level":30,"time":1793557060251,"service":"devsync-api","req":{"id":"993aadd7-d894-4f5f-9b85-e01994d3a0f8","method":"POST"},"requestId":"993aadd7-d894-4f5f-9b85-e01994d3a0f8","res":{"statusCode":201},"responseTime":28,"msg":"request completed"}
+{"level":30,"time":1793557060283,"service":"devsync-api","req":{"id":"87343864-1b3d-4a50-8178-44407de90bef","method":"GET"},"requestId":"87343864-1b3d-4a50-8178-44407de90bef","res":{"statusCode":200},"responseTime":26,"msg":"request completed"}
+{"level":30,"time":1793557060407,"service":"devsync-api","req":{"id":"e841f8b6-9029-489c-82bb-ab566b23943e","method":"PATCH"},"requestId":"e841f8b6-9029-489c-82bb-ab566b23943e","res":{"statusCode":200},"responseTime":113,"msg":"request completed"}
+ GET /workspace/devsync-sample/docs/cmvy5kcr20055u8aj199rxmp2 200 in 370ms (next.js: 120ms, proxy.ts: 16ms, application-code: 234ms)
+ GET /workspace/devsync-sample/docs/cmvy5kcr20055u8aj199rxmp2 200 in 387ms (next.js: 202ms, proxy.ts: 20ms, application-code: 165ms)
+ GET /workspace/devsync-sample/docs/cmvy5kcr20055u8aj199rxmp2 200 in 390ms (next.js: 259ms, proxy.ts: 12ms, application-code: 119ms)
+{"level":30,"time":1793557066259,"service":"devsync-api","req":{"id":"55d548c1-d2ab-46e3-8553-942c7f616bfe","method":"GET"},"requestId":"55d548c1-d2ab-46e3-8553-942c7f616bfe","res":{"statusCode":200},"responseTime":158,"msg":"request completed"}
+{"level":30,"time":1793557066260,"service":"devsync-api","req":{"id":"e4c2eac2-1846-4499-aea3-bca679aad7e8","method":"GET"},"requestId":"e4c2eac2-1846-4499-aea3-bca679aad7e8","res":{"statusCode":200},"responseTime":135,"msg":"request completed"}
+{"level":30,"time":1793557066268,"service":"devsync-api","req":{"id":"ff30d44e-aa3a-4e88-99a7-a15f8166cef3","method":"GET"},"requestId":"ff30d44e-aa3a-4e88-99a7-a15f8166cef3","res":{"statusCode":200},"responseTime":128,"msg":"request completed"}
+{"level":30,"time":1793557066300,"service":"devsync-api","req":{"id":"ba955de3-440e-4368-b77d-a89abddb1182","method":"GET"},"requestId":"ba955de3-440e-4368-b77d-a89abddb1182","res":{"statusCode":200},"responseTime":163,"msg":"request completed"}
+{"level":30,"time":1793557066303,"service":"devsync-api","req":{"id":"47da70a9-8c6d-4cba-8322-bf98e5c761c1","method":"GET"},"requestId":"47da70a9-8c6d-4cba-8322-bf98e5c761c1","res":{"statusCode":200},"responseTime":165,"msg":"request completed"}
+{"level":30,"time":1793557066308,"service":"devsync-api","req":{"id":"ac9d65de-6489-4057-89c8-01ba7b9ed2c3","method":"GET"},"requestId":"ac9d65de-6489-4057-89c8-01ba7b9ed2c3","res":{"statusCode":200},"responseTime":176,"msg":"request completed"}
+{"level":30,"time":1793557066329,"service":"devsync-api","req":{"id":"67870910-f6b6-47df-88c8-ec2926815d59","method":"GET"},"requestId":"67870910-f6b6-47df-88c8-ec2926815d59","res":{"statusCode":200},"responseTime":99,"msg":"request completed"}
+{"level":30,"time":1793557066333,"service":"devsync-api","req":{"id":"8efb8a7b-f3dd-4b32-be39-3ee6fc8da088","method":"GET"},"requestId":"8efb8a7b-f3dd-4b32-be39-3ee6fc8da088","res":{"statusCode":200},"responseTime":129,"msg":"request completed"}
+{"level":30,"time":1793557066356,"service":"devsync-api","req":{"id":"b48d52fc-a693-40d0-b25b-afdfe5c6c41e","method":"GET"},"requestId":"b48d52fc-a693-40d0-b25b-afdfe5c6c41e","res":{"statusCode":200},"responseTime":143,"msg":"request completed"}
+{"level":30,"time":1793557066365,"service":"devsync-api","req":{"id":"0728fd6f-c260-4f52-8c27-f639c7494f4e","method":"GET"},"requestId":"0728fd6f-c260-4f52-8c27-f639c7494f4e","res":{"statusCode":304},"responseTime":83,"msg":"request completed"}
+{"level":30,"time":1793557066368,"service":"devsync-api","req":{"id":"9b7598dd-f22e-433b-8026-3227cb3a5f3a","method":"GET"},"requestId":"9b7598dd-f22e-433b-8026-3227cb3a5f3a","res":{"statusCode":304},"responseTime":84,"msg":"request completed"}
+{"level":30,"time":1793557066378,"service":"devsync-api","req":{"id":"07325ce2-b662-43d4-94e8-8fce5553dfca","method":"GET"},"requestId":"07325ce2-b662-43d4-94e8-8fce5553dfca","res":{"statusCode":304},"responseTime":97,"msg":"request completed"}
+{"level":30,"time":1793557066390,"service":"devsync-api","req":{"id":"6522787d-07e8-4bde-9026-8102233d00b3","method":"GET"},"requestId":"6522787d-07e8-4bde-9026-8102233d00b3","res":{"statusCode":304},"responseTime":54,"msg":"request completed"}
+{"level":30,"time":1793557066401,"service":"devsync-api","req":{"id":"b6ea4545-db30-4af8-b6f3-65d2c15a6bfe","method":"GET"},"requestId":"b6ea4545-db30-4af8-b6f3-65d2c15a6bfe","res":{"statusCode":304},"responseTime":88,"msg":"request completed"}
+{"level":30,"time":1793557066401,"service":"devsync-api","req":{"id":"b80a19fb-19eb-4596-be83-739b232933c8","method":"GET"},"requestId":"b80a19fb-19eb-4596-be83-739b232933c8","res":{"statusCode":304},"responseTime":86,"msg":"request completed"}
+{"level":30,"time":1793557066405,"service":"devsync-api","req":{"id":"36393c82-09e7-4999-b3e3-57b56d102eae","method":"GET"},"requestId":"36393c82-09e7-4999-b3e3-57b56d102eae","res":{"statusCode":304},"responseTime":85,"msg":"request completed"}
+{"level":30,"time":1793557066415,"service":"devsync-api","req":{"id":"f896a2f7-5414-4bf3-b0cd-669e7c747d79","method":"GET"},"requestId":"f896a2f7-5414-4bf3-b0cd-669e7c747d79","res":{"statusCode":304},"responseTime":73,"msg":"request completed"}
+{"level":30,"time":1793557066429,"service":"devsync-api","req":{"id":"4142e040-2979-43b6-aacc-c683f0b01744","method":"GET"},"requestId":"4142e040-2979-43b6-aacc-c683f0b01744","res":{"statusCode":304},"responseTime":65,"msg":"request completed"}
+  ✘  5 testing/browser/editor.spec.ts:200:5 › two browser contexts merge simultaneous and offline edits; viewer cannot edit at server (22.3s)
+(node:59831) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1793557083645,"service":"devsync-api","req":{"id":"5a13a534-b685-4a6a-8444-31e13a5e2062","method":"GET"},"requestId":"5a13a534-b685-4a6a-8444-31e13a5e2062","res":{"statusCode":200},"responseTime":6,"msg":"request completed"}
+{"level":30,"time":1793557083672,"service":"devsync-api","req":{"id":"70a256b4-50cf-4eae-a1d9-ca601201d4cd","method":"GET"},"requestId":"70a256b4-50cf-4eae-a1d9-ca601201d4cd","res":{"statusCode":200},"responseTime":7,"msg":"request completed"}
+{"level":30,"time":1793557083710,"service":"devsync-api","req":{"id":"3d0fffde-c794-4e90-a9cb-d27d1e11abd4","method":"POST"},"requestId":"3d0fffde-c794-4e90-a9cb-d27d1e11abd4","res":{"statusCode":201},"responseTime":27,"msg":"request completed"}
+ GET /workspace/devsync-sample/docs/cmvy5kuuo00auu8aj4fkh8nrv 200 in 156ms (next.js: 60ms, proxy.ts: 6ms, application-code: 91ms)
+{"level":30,"time":1793557085505,"service":"devsync-api","req":{"id":"404c4f93-008b-48e9-97c6-5993e330a801","method":"GET"},"requestId":"404c4f93-008b-48e9-97c6-5993e330a801","res":{"statusCode":200},"responseTime":25,"msg":"request completed"}
+{"level":30,"time":1793557085506,"service":"devsync-api","req":{"id":"edabc1d9-66fa-4fec-bc12-ca7906fd4722","method":"GET"},"requestId":"edabc1d9-66fa-4fec-bc12-ca7906fd4722","res":{"statusCode":200},"responseTime":24,"msg":"request completed"}
+{"level":30,"time":1793557085519,"service":"devsync-api","req":{"id":"407b0d7b-825a-42b1-984d-b5f243238def","method":"GET"},"requestId":"407b0d7b-825a-42b1-984d-b5f243238def","res":{"statusCode":200},"responseTime":33,"msg":"request completed"}
+{"level":30,"time":1793557085526,"service":"devsync-api","req":{"id":"22b3b9a9-a902-44f6-bb96-8d5b189eda0b","method":"GET"},"requestId":"22b3b9a9-a902-44f6-bb96-8d5b189eda0b","res":{"statusCode":304},"responseTime":18,"msg":"request completed"}
+{"level":30,"time":1793557085527,"service":"devsync-api","req":{"id":"c9b34cb4-36a4-4f8d-9ebb-0cc766174320","method":"GET"},"requestId":"c9b34cb4-36a4-4f8d-9ebb-0cc766174320","res":{"statusCode":304},"responseTime":20,"msg":"request completed"}
+{"level":30,"time":1793557085540,"service":"devsync-api","req":{"id":"12a41582-355d-485a-a62a-6e7dda5a348f","method":"GET"},"requestId":"12a41582-355d-485a-a62a-6e7dda5a348f","res":{"statusCode":304},"responseTime":18,"msg":"request completed"}
+dark 360 empty: 1 axe violations; 1 incomplete
+  ✘  6 testing/browser/editor.spec.ts:295:5 › 360px empty canvas and viewer remain accessible in both themes (2.7s)
+
+
+  1) testing/browser/editor.spec.ts:110:9 › dark 1440 editor block flow and review states ──────────
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "aria-allowed-attr: div[aria-label=\"Document content\"]",
+    + ]
+
+      102 |   expect(
+      103 |     report.violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(' ')).join(', ')}`),
+    > 104 |   ).toEqual([]);
+          |     ^
+      105 |   expect(report.bounds.page).toBeLessThanOrEqual(width);
+      106 |   expect(report.bounds.scroll || 0).toBeLessThanOrEqual((report.bounds.main || width) + 1);
+      107 | }
+        at capture (/home/kevin/devsync/backend/testing/browser/editor.spec.ts:104:5)
+        at /home/kevin/devsync/backend/testing/browser/editor.spec.ts:137:9
+
+    Error Context: test-results/editor-dark-1440-editor-block-flow-and-review-states/error-context.md
+
+  2) testing/browser/editor.spec.ts:110:9 › dark 390 editor block flow and review states ───────────
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "aria-allowed-attr: div[aria-label=\"Document content\"]",
+    + ]
+
+      102 |   expect(
+      103 |     report.violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(' ')).join(', ')}`),
+    > 104 |   ).toEqual([]);
+          |     ^
+      105 |   expect(report.bounds.page).toBeLessThanOrEqual(width);
+      106 |   expect(report.bounds.scroll || 0).toBeLessThanOrEqual((report.bounds.main || width) + 1);
+      107 | }
+        at capture (/home/kevin/devsync/backend/testing/browser/editor.spec.ts:104:5)
+        at /home/kevin/devsync/backend/testing/browser/editor.spec.ts:137:9
+
+    Error Context: test-results/editor-dark-390-editor-block-flow-and-review-states/error-context.md
+
+  3) testing/browser/editor.spec.ts:110:9 › light 1440 editor block flow and review states ─────────
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "aria-allowed-attr: div[aria-label=\"Document content\"]",
+    + ]
+
+      102 |   expect(
+      103 |     report.violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(' ')).join(', ')}`),
+    > 104 |   ).toEqual([]);
+          |     ^
+      105 |   expect(report.bounds.page).toBeLessThanOrEqual(width);
+      106 |   expect(report.bounds.scroll || 0).toBeLessThanOrEqual((report.bounds.main || width) + 1);
+      107 | }
+        at capture (/home/kevin/devsync/backend/testing/browser/editor.spec.ts:104:5)
+        at /home/kevin/devsync/backend/testing/browser/editor.spec.ts:137:9
+
+    Error Context: test-results/editor-light-1440-editor-block-flow-and-review-states/error-context.md
+
+  4) testing/browser/editor.spec.ts:110:9 › light 390 editor block flow and review states ──────────
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "aria-allowed-attr: div[aria-label=\"Document content\"]",
+    + ]
+
+      102 |   expect(
+      103 |     report.violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(' ')).join(', ')}`),
+    > 104 |   ).toEqual([]);
+          |     ^
+      105 |   expect(report.bounds.page).toBeLessThanOrEqual(width);
+      106 |   expect(report.bounds.scroll || 0).toBeLessThanOrEqual((report.bounds.main || width) + 1);
+      107 | }
+        at capture (/home/kevin/devsync/backend/testing/browser/editor.spec.ts:104:5)
+        at /home/kevin/devsync/backend/testing/browser/editor.spec.ts:137:9
+
+    Error Context: test-results/editor-light-390-editor-block-flow-and-review-states/error-context.md
+
+  5) testing/browser/editor.spec.ts:200:5 › two browser contexts merge simultaneous and offline edits; viewer cannot edit at server 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('status').filter({ hasText: 'Offline — awaiting sync' })
+    Expected: visible
+    Timeout: 15000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 15000ms
+      - waiting for getByRole('status').filter({ hasText: 'Offline — awaiting sync' })
+
+
+      239 |     await expect(
+      240 |       pages[0].getByRole('status').filter({ hasText: 'Offline — awaiting sync' }),
+    > 241 |     ).toBeVisible();
+          |       ^
+      242 |     await pages[0].locator('.ProseMirror').click();
+      243 |     await pages[0].keyboard.press('Control+End');
+      244 |     await pages[0].keyboard.insertText('Offline contribution. ');
+        at /home/kevin/devsync/backend/testing/browser/editor.spec.ts:241:7
+
+    Error Context: test-results/editor-two-browser-context-b4608-iewer-cannot-edit-at-server/error-context.md
+
+  6) testing/browser/editor.spec.ts:295:5 › 360px empty canvas and viewer remain accessible in both themes 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "aria-allowed-attr: div[aria-label=\"Document content\"]",
+    + ]
+
+      102 |   expect(
+      103 |     report.violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(' ')).join(', ')}`),
+    > 104 |   ).toEqual([]);
+          |     ^
+      105 |   expect(report.bounds.page).toBeLessThanOrEqual(width);
+      106 |   expect(report.bounds.scroll || 0).toBeLessThanOrEqual((report.bounds.main || width) + 1);
+      107 | }
+        at capture (/home/kevin/devsync/backend/testing/browser/editor.spec.ts:104:5)
+        at /home/kevin/devsync/backend/testing/browser/editor.spec.ts:316:7
+
+    Error Context: test-results/editor-360px-empty-canvas--0253c-n-accessible-in-both-themes/error-context.md
+
+  6 failed
+    testing/browser/editor.spec.ts:110:9 › dark 1440 editor block flow and review states ───────────
+    testing/browser/editor.spec.ts:110:9 › dark 390 editor block flow and review states ────────────
+    testing/browser/editor.spec.ts:110:9 › light 1440 editor block flow and review states ──────────
+    testing/browser/editor.spec.ts:110:9 › light 390 editor block flow and review states ───────────
+    testing/browser/editor.spec.ts:200:5 › two browser contexts merge simultaneous and offline edits; viewer cannot edit at server 
+    testing/browser/editor.spec.ts:295:5 › 360px empty canvas and viewer remain accessible in both themes 
+[?25h
+Browser orchestration command exited 1
