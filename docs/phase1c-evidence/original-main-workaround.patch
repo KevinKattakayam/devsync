@@ -1,0 +1,13 @@
+diff --git a/frontend/src/proxy.ts b/frontend/src/proxy.ts
+index c8483e3..9cd7d7c 100644
+--- a/frontend/src/proxy.ts
++++ b/frontend/src/proxy.ts
+@@ -20,7 +20,7 @@ export default clerkMiddleware(async (auth, request) => {
+ export const config = {
+   matcher: [
+     // Exclude auth routes from middleware entirely to avoid clock-skew JWT loops
+-    '/((?!_next|login|signup|sign-in|sign-up|api/auth/reset|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
++    '/((?!$|_next|login|signup|sign-in|sign-up|api/auth/reset|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+     '/(api(?!/auth/reset)|trpc)(.*)',
+   ],
+ };

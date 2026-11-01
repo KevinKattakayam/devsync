@@ -1,0 +1,26 @@
+{
+  "act": null,
+  "actionlint": null,
+  "docker": "/usr/bin/docker",
+  "workflows": {
+    ".github/workflows/main.yml": {
+      "parsed": true,
+      "jobs": [
+        "quality",
+        "image-security"
+      ]
+    },
+    ".github/workflows/deploy.yml": {
+      "parsed": true,
+      "jobs": [
+        "deploy"
+      ]
+    }
+  },
+  "notExecuted": [
+    "GitHub-hosted action runtime",
+    "image-security build/Trivy/SBOM/provenance/publish",
+    "Railway deploy",
+    "Playwright authenticated E2E (not configured in quality job)"
+  ]
+}

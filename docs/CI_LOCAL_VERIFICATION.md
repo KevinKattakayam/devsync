@@ -1,0 +1,9 @@
+# Phase1c local CI verification
+
+The latest complete local command gate is phase1c-evidence/browser-fixture-results.json. Both apps pass clean install, lint, formatting, strict type checks, tests and build. Backend includes fixture-source lint/type checks and186 passing tests with existing coverage floors. Frontend retains5 Node and6 component tests. Local install uses npm ci --no-audit; a dependency audit/security-scan pass is not claimed.
+
+Backend integration tests use actual disposable PostgreSQL/pgvector and Redis containers, including non-bypass RLS clients and independent real-time servers. This exercises the quality commands outside GitHub Actions; it does not verify the exact Actions service networking or hosted runner. OpenAPI drift is separately checked in final-openapi-check.log. The source AST scan finds zero explicit any annotations and zero suppression markers, including the test executable.
+
+Both workflow YAML files parse locally. act and actionlint are not installed (ci-local-capabilities.json). The following remain unverified: GitHub-hosted action execution/caches/uploads; image builds, Trivy SARIF scans, SBOM/provenance; registry publication; Railway deployment. No publish/deploy step was run. Frontend Docker build-time Clerk configuration also needs an actual image-build check; a successful local frontend build with ignored development configuration does not prove that path works.
+
+Authenticated Playwright product journeys are unfinished and are not currently a verified CI gate. Existing E2E tests were not deleted or weakened; their prior fixture-dependent skips are not represented as passes. The new backend login fixture is only the foundation for an isolated browser artifact. Full query/response OpenAPI contracts remain partial and explicitly marked incomplete.

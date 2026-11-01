@@ -1,0 +1,16 @@
+[
+  {
+    "route": "/",
+    "width": 1440,
+    "status": 200,
+    "finalURL": "http://localhost:3100/",
+    "file": "home-1440.png"
+  },
+  {
+    "route": "/",
+    "width": 390,
+    "status": 200,
+    "finalURL": "http://localhost:3100/",
+    "file": "home-390.png"
+  }
+]

@@ -1,3 +1,11 @@
+# Phase1c landing-page recapture
+
+Original main9deffe2 was run in the existing separate worktree. The landing page again returned HTTP500 at both widths, with a self-proxy ECONNRESET in the runtime log. A worktree-only change excludes the already-public root route from Clerk middleware. With that change, the original landing UI renders HTTP200 at1440px and390px; both home screenshots below have been replaced and visually inspected. The deeper Clerk/proxy failure remains unverified; this is an isolated workaround, not a production fix or a DB issue proven by tracing.
+
+The exact one-line workaround, runtime and before/after capture output are in docs/phase1c-evidence/original-main-workaround.patch, original-main-runtime.log, original-main-home-capture.log and original-main-home-capture-workaround.log. No protected route was made public. Authenticated interiors remain unfinished: Clerk admin access is unverified and the new isolated browser-auth fixture has not yet been connected to a frontend artifact. Existing protected-route images below are historical login redirects, not populated workspace screenshots. The earlier manifest is retained for those attempts.
+
+---
+
 # Original-main BEFORE capture — partial UI coverage
 
 Captured from detached original `main` commit `9deffe2` in the separate `.worktrees/phase1b-main` worktree, without modifying its application code. Viewports: 1440×1000 and 390×1000, full-page screenshots, system Chrome driven by Playwright. Existing ignored Clerk configuration was supplied; no login/session authorization was bypassed. The temporary worktree/processes were lost during a session restart, so captures were completed again in the persistent workspace worktree.
