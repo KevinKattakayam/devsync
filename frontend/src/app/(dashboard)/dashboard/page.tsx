@@ -1,245 +1,475 @@
 'use client';
 
-import { errorMessage } from '@/lib/errors';
-
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import Link from 'next/link';
+import { ArrowUpRight, CheckSquare, FileText, Folder, Plus, RefreshCw } from 'lucide-react';
 import { useAuth } from '@/providers/auth-provider';
-import { workspaceApi } from '@/lib/api';
-import { Workspace } from '@/types';
-import { getInitials, generateColor } from '@/lib/utils';
-import { Plus, FileText, Kanban, ArrowRight, Loader2 } from 'lucide-react';
-import { toast } from 'sonner';
+import { Badge, Button, EmptyState, Select, toast } from '@/components/ui';
+import { CreateWorkspace } from '@/components/dashboard/create-workspace';
+import { DashboardError, DashboardLoading } from '@/components/dashboard/dashboard-states';
+import {
+  assignedTasks,
+  loadDashboard,
+  recentDocuments,
+  type DashboardOverview,
+  type WorkspaceOverview,
+} from '@/lib/dashboard-data';
+import {
+  dashboardDocumentRequests,
+  startUndoableDocument,
+  type CreatedDashboardDocument,
+} from '@/lib/undoable-document';
 
+function dateLabel(value: string) {
+  return Number.isFinite(Date.parse(value))
+    ? new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric' }).format(new Date(value))
+    : 'Date unavailable';
+}
+function Panel({
+  title,
+  children,
+  detail,
+}: {
+  title: string;
+  children: ReactNode;
+  detail?: string;
+}) {
+  return (
+    <section className="min-w-0">
+      <div className="mb-4 flex flex-wrap items-baseline justify-between gap-2">
+        <h2 className="text-sm font-semibold">{title}</h2>
+        {detail && <p className="text-xs text-muted-foreground">{detail}</p>}
+      </div>
+      {children}
+    </section>
+  );
+}
+interface Draft {
+  receipt: string;
+  workspace: WorkspaceOverview['workspace'];
+  state: 'creating' | 'saved' | 'error';
+  document?: CreatedDashboardDocument;
+}
 export default function DashboardPage() {
   const { user } = useAuth();
-  const [workspaces, setWorkspaces] = useState<Workspace[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [showCreate, setShowCreate] = useState(false);
-  const [form, setForm] = useState({ name: '', description: '' });
-  const [creating, setCreating] = useState(false);
-
-  const loadWorkspaces = async () => {
-    try {
-      const { data } = await workspaceApi.list();
-      setWorkspaces(data);
-    } catch {
-      toast.error('Failed to load workspaces');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
+  return user ? <Dashboard key={user.id} /> : <DashboardLoading />;
+}
+function Dashboard() {
+  const [attempt, setAttempt] = useState(0);
+  const [snapshot, setSnapshot] = useState<{
+    attempt: number;
+    data?: DashboardOverview;
+    error?: boolean;
+  }>();
+  const [scope, setScope] = useState('all');
+  const [drafts, setDrafts] = useState<Draft[]>([]);
+  const [hiddenDocuments, setHiddenDocuments] = useState<string[]>([]);
+  const mounted = useRef(true);
+  useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
   useEffect(() => {
     let disposed = false;
-    workspaceApi
-      .list()
-      .then(({ data }) => {
-        if (!disposed) setWorkspaces(data);
+    void loadDashboard()
+      .then((data) => {
+        if (!disposed) setSnapshot({ attempt, data });
       })
       .catch(() => {
-        if (!disposed) toast.error('Failed to load workspace data');
-      })
-      .finally(() => {
-        if (!disposed) setIsLoading(false);
+        if (!disposed) setSnapshot({ attempt, error: true });
       });
     return () => {
       disposed = true;
     };
-  }, []);
-
-  const createWorkspace = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!form.name.trim()) return;
-    setCreating(true);
-    try {
-      await workspaceApi.create(form);
-      toast.success('Workspace created');
-      setShowCreate(false);
-      setForm({ name: '', description: '' });
-      loadWorkspaces();
-    } catch (err: unknown) {
-      toast.error(errorMessage(err, 'Failed to create workspace'));
-    } finally {
-      setCreating(false);
-    }
-  };
-
-  const hour = new Date().getHours();
-  const greeting = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
-  const totalDocs = workspaces.reduce((s, w) => s + (w._count?.documents || 0), 0);
-  const totalBoards = workspaces.reduce((s, w) => s + (w._count?.boards || 0), 0);
-
-  return (
-    <div className="p-6 max-w-5xl mx-auto animate-fade-in">
-      <div className="mb-6">
-        <h1 className="text-lg font-semibold">
-          {greeting}, {user?.name?.split(' ')[0] || 'there'}
-        </h1>
-        <p className="text-xs text-muted-foreground mt-0.5">
-          Here&apos;s an overview of your workspaces
-        </p>
+  }, [attempt]);
+  const retry = () => setAttempt((value) => value + 1);
+  if (!snapshot || snapshot.attempt !== attempt) return <DashboardLoading />;
+  if (!snapshot.data || snapshot.error)
+    return (
+      <div className="mx-auto max-w-6xl p-4 md:p-8">
+        <h1 className="mb-6 text-[28px] font-semibold leading-9">Your dashboard</h1>
+        <DashboardError retry={retry} />
       </div>
-
-      {/* Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-        {[
-          { label: 'Workspaces', value: workspaces.length, color: 'text-primary' },
-          { label: 'Documents', value: totalDocs, color: 'text-blue-400' },
-          { label: 'Boards', value: totalBoards, color: 'text-warning' },
-          {
-            label: 'Members',
-            value: new Set(workspaces.flatMap((w) => w.members?.map((m) => m.user.id) || [])).size,
-            color: 'text-success',
+    );
+  const data = snapshot.data;
+  const activeScope =
+    scope === 'all' || data.workspaces.some((item) => item.workspace.id === scope) ? scope : 'all';
+  const visible = data.workspaces.filter(
+    (item) => activeScope === 'all' || item.workspace.id === activeScope,
+  );
+  const writer = visible.find(
+    (item) => item.workspace.role === 'OWNER' || item.workspace.role === 'EDITOR',
+  )?.workspace;
+  const recent = recentDocuments(visible).filter(
+    (document) => !hiddenDocuments.includes(document.id),
+  );
+  const visibleDrafts = drafts.filter(
+    (draft) =>
+      (activeScope === 'all' || draft.workspace.id === activeScope) &&
+      !recent.some((document) => document.id === draft.document?.id),
+  );
+  const tasks = assignedTasks(visible, data.userId);
+  const activities = visible
+    .flatMap((item) =>
+      item.activities.map((activity) => ({ ...activity, workspace: item.workspace })),
+    )
+    .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt))
+    .slice(0, 6);
+  const failures = visible.flatMap((item) =>
+    item.failures.map((kind) => `${kind} in ${item.workspace.name}`),
+  );
+  function createDocument(
+    workspace: WorkspaceOverview['workspace'],
+    receipt = crypto.randomUUID(),
+  ) {
+    const update = (fn: (items: Draft[]) => Draft[]) => {
+      if (mounted.current) setDrafts(fn);
+    };
+    let hidden = false;
+    update((items) => [
+      ...items.filter((item) => item.receipt !== receipt),
+      { receipt, workspace, state: 'creating' },
+    ]);
+    const operation = startUndoableDocument(dashboardDocumentRequests(workspace.id, receipt), {
+      committed: (document) => {
+        update((items) =>
+          items.map((item) =>
+            item.receipt === receipt ? { ...item, state: 'saved', document } : item,
+          ),
+        );
+        toast.success('Document created', {
+          id: receipt,
+          duration: 8000,
+          action: {
+            label: 'Undo',
+            onClick: () => {
+              void operation.undo();
+            },
           },
-        ].map((s, i) => (
-          <div key={i} className="surface p-4">
-            <p className={`text-2xl font-bold ${s.color}`}>{s.value}</p>
-            <p className="text-[11px] text-muted-foreground mt-0.5">{s.label}</p>
-          </div>
-        ))}
-      </div>
-
-      {/* Workspaces */}
-      <div className="flex items-center justify-between mb-3">
-        <h2 className="text-sm font-semibold">Workspaces</h2>
-        <button
-          onClick={() => setShowCreate(true)}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-md gradient-primary text-white text-xs font-medium hover:opacity-90"
-        >
-          <Plus className="w-3.5 h-3.5" /> New
-        </button>
-      </div>
-
-      {isLoading ? (
-        <div className="flex justify-center py-16">
-          <Loader2 className="w-5 h-5 animate-spin text-muted-foreground" />
+        });
+      },
+      hidden: () => {
+        hidden = true;
+        const document = operation.getDocument();
+        if (document && mounted.current) setHiddenDocuments((ids) => [...ids, document.id]);
+        update((items) => items.filter((item) => item.receipt !== receipt));
+      },
+      undone: () => {
+        toast.success('Document creation undone', { id: receipt });
+      },
+      failed: (stage, document) => {
+        if (stage === 'create') {
+          if (!hidden)
+            update((items) =>
+              items.map((item) => (item.receipt === receipt ? { ...item, state: 'error' } : item)),
+            );
+          toast.error('Document could not be created', { id: receipt });
+        } else {
+          if (document && mounted.current)
+            setHiddenDocuments((ids) => ids.filter((id) => id !== document.id));
+          update((items) => [
+            ...items.filter((item) => item.receipt !== receipt),
+            { receipt, workspace, state: 'saved', document },
+          ]);
+          toast.error('Undo failed. The document is still available.', {
+            id: receipt,
+            action: {
+              label: 'Retry undo',
+              onClick: () => {
+                void operation.undo();
+              },
+            },
+          });
+        }
+      },
+    });
+    toast.loading('Creating document…', {
+      id: receipt,
+      action: {
+        label: 'Undo',
+        onClick: () => {
+          void operation.undo();
+        },
+      },
+    });
+  }
+  return (
+    <div className="mx-auto max-w-6xl px-4 py-8 md:px-8" data-dashboard>
+      <header className="mb-8 flex flex-wrap items-start justify-between gap-4">
+        <div>
+          <p className="mb-2 text-xs text-muted-foreground">Your work, together</p>
+          <h1 className="text-[28px] font-semibold leading-9 tracking-tight">
+            Welcome back, {data.name.split(' ')[0] || 'developer'}
+          </h1>
+          <p className="mt-2 max-w-xl text-sm text-muted-foreground">
+            Pick up a document, find your next task, or see what changed.
+          </p>
         </div>
-      ) : workspaces.length === 0 ? (
-        <div className="surface p-10 text-center">
-          <h3 className="text-sm font-semibold mb-1">No workspaces yet</h3>
-          <p className="text-xs text-muted-foreground mb-4">Create one to get started</p>
-          <button
-            onClick={() => setShowCreate(true)}
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-md gradient-primary text-white text-xs font-medium"
+        <Button variant="ghost" aria-label="Refresh dashboard" onClick={retry}>
+          <RefreshCw aria-hidden="true" className="size-4" />
+          <span className="hidden sm:inline">Refresh</span>
+        </Button>
+      </header>
+      <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+        <label className="block w-full space-y-2 text-xs font-medium sm:w-64">
+          <span>Show work from</span>
+          <Select
+            label="Dashboard workspace"
+            value={activeScope}
+            onValueChange={setScope}
+            options={[
+              { value: 'all', label: 'All workspaces' },
+              ...data.workspaces.map((item) => ({
+                value: item.workspace.id,
+                label: item.workspace.name,
+              })),
+            ]}
+          />
+        </label>
+        <div className="flex flex-wrap items-center gap-3" aria-label="Quick actions">
+          <Button
+            disabled={!writer || visibleDrafts.some((item) => item.state === 'creating')}
+            onClick={() => {
+              if (writer) createDocument(writer);
+            }}
           >
-            <Plus className="w-3.5 h-3.5" /> Create Workspace
-          </button>
+            <Plus aria-hidden="true" className="size-4" />
+            New document
+          </Button>
+          <CreateWorkspace onCreated={retry} />
         </div>
-      ) : (
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
-          {workspaces.map((ws) => (
-            <Link
-              key={ws.id}
-              href={`/workspace/${ws.id}`}
-              className="surface p-4 hover:border-primary/30 transition-colors group"
-            >
-              <div className="flex items-start justify-between mb-3">
-                <div className="flex items-center gap-2.5">
-                  <span className="text-xl">{ws.icon}</span>
-                  <div>
-                    <h3 className="text-sm font-medium group-hover:text-primary transition-colors">
-                      {ws.name}
-                    </h3>
-                    <p className="text-[11px] text-muted-foreground capitalize">
-                      {ws.role?.toLowerCase()}
-                    </p>
-                  </div>
-                </div>
-                <ArrowRight className="w-3.5 h-3.5 text-muted-foreground group-hover:text-primary group-hover:translate-x-0.5 transition-all" />
-              </div>
-              {ws.description && (
-                <p className="text-xs text-muted-foreground mb-3 line-clamp-2">{ws.description}</p>
-              )}
-              <div className="flex items-center justify-between pt-2.5 border-t border-border">
-                <div className="flex items-center gap-3 text-[11px] text-muted-foreground">
-                  <span className="flex items-center gap-1">
-                    <FileText className="w-3 h-3" />
-                    {ws._count?.documents || 0}
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <Kanban className="w-3 h-3" />
-                    {ws._count?.boards || 0}
-                  </span>
-                </div>
-                <div className="flex -space-x-1">
-                  {ws.members?.slice(0, 3).map((m, i) => (
-                    <div
-                      key={i}
-                      className="w-5 h-5 rounded-full flex items-center justify-center text-[8px] font-medium text-white border border-background"
-                      style={{ backgroundColor: generateColor(m.user.email || '') }}
-                    >
-                      {getInitials(m.user.name || '?')}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </Link>
-          ))}
-          <button
-            onClick={() => setShowCreate(true)}
-            className="surface p-4 border-dashed hover:border-primary/30 transition-colors flex flex-col items-center justify-center gap-2 text-muted-foreground hover:text-primary min-h-[140px]"
-          >
-            <Plus className="w-5 h-5" />
-            <span className="text-xs font-medium">New Workspace</span>
-          </button>
+      </div>
+      {!writer && data.workspaces.length > 0 && (
+        <p className="mb-6 text-xs text-muted-foreground">
+          Document creation is available in workspaces where you are an owner or editor.
+        </p>
+      )}
+      {failures.length > 0 && (
+        <div className="mb-8">
+          <DashboardError
+            retry={retry}
+            title="Some work could not load"
+            description={`Could not load ${failures.join('; ')}. Retry to check access and load the latest data.`}
+          />
         </div>
       )}
-
-      {/* Create Modal */}
-      {showCreate && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
-          onClick={() => setShowCreate(false)}
-        >
-          <div
-            className="bg-card border border-border rounded-xl w-full max-w-sm p-5 shadow-xl animate-scale-in"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h2 className="text-sm font-semibold mb-4">Create workspace</h2>
-            <form onSubmit={createWorkspace} className="space-y-3">
-              <div>
-                <label className="text-xs font-medium mb-1 block">Name</label>
-                <input
-                  type="text"
-                  value={form.name}
-                  onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))}
-                  className="w-full px-3 py-2 rounded-md bg-background border border-border focus:border-primary outline-none text-sm"
-                  placeholder="My Project"
-                  required
-                  autoFocus
-                />
-              </div>
-              <div>
-                <label className="text-xs font-medium mb-1 block">
-                  Description <span className="text-muted-foreground">(optional)</span>
-                </label>
-                <textarea
-                  value={form.description}
-                  onChange={(e) => setForm((p) => ({ ...p, description: e.target.value }))}
-                  className="w-full px-3 py-2 rounded-md bg-background border border-border focus:border-primary outline-none text-sm resize-none"
-                  rows={2}
-                />
-              </div>
-              <div className="flex gap-2 pt-1">
-                <button
-                  type="button"
-                  onClick={() => setShowCreate(false)}
-                  className="flex-1 py-2 rounded-md border border-border text-xs hover:bg-muted/50"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  disabled={creating}
-                  className="flex-1 py-2 rounded-md gradient-primary text-white text-xs font-medium hover:opacity-90 disabled:opacity-50 flex items-center justify-center gap-1.5"
-                >
-                  {creating && <Loader2 className="w-3 h-3 animate-spin" />} Create
-                </button>
-              </div>
-            </form>
-          </div>
+      {data.workspaces.length === 0 ? (
+        <div className="rounded-xl bg-card">
+          <EmptyState
+            icon={<Folder className="size-8" />}
+            title="Make room for your next idea"
+            description="Use New to create your first workspace. Then add a document or invite your team. Nothing is added until you choose."
+          />
         </div>
+      ) : (
+        <>
+          <div className="grid min-w-0 gap-10 lg:grid-cols-[minmax(0,1.65fr)_minmax(0,1fr)]">
+            <div className="min-w-0 space-y-10">
+              <Panel title="Recent documents" detail="By last update">
+                {visibleDrafts.length === 0 && recent.length === 0 ? (
+                  <EmptyState
+                    icon={<FileText className="size-6" />}
+                    title="A fresh page awaits"
+                    description={
+                      failures.some((item) => item.startsWith('documents'))
+                        ? 'Retry above to load your documents.'
+                        : 'Documents you and your team update will appear here.'
+                    }
+                  />
+                ) : (
+                  <ul className="space-y-1" aria-label="Recent documents">
+                    {visibleDrafts.map((draft) => (
+                      <li key={draft.receipt} className="rounded-lg bg-card px-4 py-3">
+                        <div className="flex min-w-0 items-center justify-between gap-3">
+                          <div className="min-w-0">
+                            {draft.document ? (
+                              <Link
+                                className="block truncate text-sm font-medium hover:underline"
+                                href={`/workspace/${draft.workspace.id}/docs/${draft.document.id}`}
+                              >
+                                {draft.document.title || 'Untitled document'}
+                              </Link>
+                            ) : (
+                              <p className="text-sm font-medium">Untitled document</p>
+                            )}
+                            <p className="mt-1 truncate text-xs text-muted-foreground">
+                              {draft.workspace.name}
+                            </p>
+                          </div>
+                          {draft.state === 'creating' ? (
+                            <span role="status" className="text-xs text-muted-foreground">
+                              Creating…
+                            </span>
+                          ) : draft.state === 'error' ? (
+                            <Button
+                              size="compact"
+                              variant="secondary"
+                              onClick={() => createDocument(draft.workspace, draft.receipt)}
+                            >
+                              Retry creation
+                            </Button>
+                          ) : (
+                            <Badge>Just created</Badge>
+                          )}
+                        </div>
+                        {draft.state === 'error' && (
+                          <p role="alert" className="mt-2 text-xs text-destructive">
+                            Could not create this document. Retry or refresh the dashboard.
+                          </p>
+                        )}
+                      </li>
+                    ))}
+                    {recent.map((document) => (
+                      <li key={document.id}>
+                        <Link
+                          href={`/workspace/${document.workspace.id}/docs/${document.id}`}
+                          className="group flex min-w-0 items-center gap-3 rounded-lg px-4 py-3 hover:bg-secondary"
+                        >
+                          <FileText
+                            aria-hidden="true"
+                            className="size-4 shrink-0 text-muted-foreground"
+                          />
+                          <div className="min-w-0 flex-1">
+                            <p className="truncate text-sm font-medium">
+                              {document.title || 'Untitled document'}
+                            </p>
+                            <p className="mt-1 truncate text-xs text-muted-foreground">
+                              {document.workspace.name}
+                            </p>
+                          </div>
+                          <time
+                            dateTime={document.updatedAt}
+                            className="shrink-0 text-xs text-muted-foreground"
+                          >
+                            {dateLabel(document.updatedAt || '')}
+                          </time>
+                          <ArrowUpRight
+                            aria-hidden="true"
+                            className="size-4 shrink-0 text-muted-foreground"
+                          />
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </Panel>
+              <Panel
+                title="Assigned to you"
+                detail={`${tasks.length} ${tasks.length === 1 ? 'task' : 'tasks'}`}
+              >
+                {tasks.length === 0 ? (
+                  <EmptyState
+                    icon={<CheckSquare className="size-6" />}
+                    title="Nothing assigned to you"
+                    description={
+                      failures.some((item) => item.startsWith('tasks'))
+                        ? 'Retry above to load your tasks.'
+                        : 'Tasks assigned to your account will appear here. Open a workspace board to plan with your team.'
+                    }
+                  />
+                ) : (
+                  <ul className="space-y-1" aria-label="Assigned tasks">
+                    {tasks.slice(0, 6).map((task) => (
+                      <li key={task.id}>
+                        <Link
+                          href={`/workspace/${task.workspace.id}/kanban`}
+                          className="flex min-w-0 items-start gap-3 rounded-lg px-4 py-3 hover:bg-secondary"
+                        >
+                          <CheckSquare
+                            aria-hidden="true"
+                            className="mt-0.5 size-4 shrink-0 text-muted-foreground"
+                          />
+                          <div className="min-w-0 flex-1">
+                            <p className="break-words text-sm font-medium">{task.title}</p>
+                            <p className="mt-1 break-words text-xs text-muted-foreground">
+                              {task.workspace.name} · {task.column}
+                            </p>
+                            <p className="mt-2 text-xs text-muted-foreground">
+                              {task.dueDate ? `Due ${dateLabel(task.dueDate)}` : 'No due date'}
+                            </p>
+                          </div>
+                          <Badge
+                            tone={
+                              task.priority === 'HIGH' || task.priority === 'URGENT'
+                                ? 'warning'
+                                : 'neutral'
+                            }
+                          >
+                            {task.priority.toLowerCase()}
+                          </Badge>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </Panel>
+            </div>
+            <aside aria-label="Workspace updates" className="min-w-0 space-y-10">
+              <Panel title="Activity" detail="Latest updates">
+                {activities.length === 0 ? (
+                  <EmptyState
+                    title="Quiet for now"
+                    description={
+                      failures.some((item) => item.startsWith('activity'))
+                        ? 'Retry above to load recent activity.'
+                        : 'Workspace activity will appear as your team makes changes.'
+                    }
+                  />
+                ) : (
+                  <ol className="space-y-5" aria-label="Recent activity">
+                    {activities.map((activity) => (
+                      <li key={activity.id} className="flex min-w-0 gap-3">
+                        <span
+                          aria-hidden="true"
+                          className="mt-2 size-1.5 shrink-0 rounded-full bg-primary"
+                        />
+                        <div className="min-w-0">
+                          <p className="break-words text-sm leading-6">{activity.message}</p>
+                          <p className="mt-1 break-words text-xs text-muted-foreground">
+                            {activity.workspace.name} · {activity.user.name}
+                          </p>
+                          <time
+                            dateTime={activity.createdAt}
+                            className="mt-1 block text-xs text-muted-foreground"
+                          >
+                            {dateLabel(activity.createdAt)}
+                          </time>
+                        </div>
+                      </li>
+                    ))}
+                  </ol>
+                )}
+              </Panel>
+              <Panel title="Workspaces">
+                <ul className="space-y-1">
+                  {data.workspaces.map(({ workspace }) => (
+                    <li key={workspace.id}>
+                      <Link
+                        href={`/workspace/${workspace.id}`}
+                        className="flex min-w-0 items-center gap-3 rounded-lg px-3 py-3 hover:bg-secondary"
+                      >
+                        <Folder
+                          aria-hidden="true"
+                          className="size-4 shrink-0 text-muted-foreground"
+                        />
+                        <span className="min-w-0 flex-1 truncate text-sm">{workspace.name}</span>
+                        <span className="text-xs capitalize text-muted-foreground">
+                          {workspace.role?.toLowerCase()}
+                        </span>
+                        <ArrowUpRight
+                          aria-hidden="true"
+                          className="size-3.5 shrink-0 text-muted-foreground"
+                        />
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </Panel>
+            </aside>
+          </div>
+        </>
       )}
     </div>
   );

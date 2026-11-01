@@ -1,3 +1,15 @@
+# Phase 3a — bounded dashboard delivery in progress
+
+On `upgrade/enterprise`; no push or3b. Root AGENTS.md remains absent; frontend guidance, current progress, authorization matrix and DESIGN.md were read. Highest-priority half is **A / Dashboard**; landing-page redesign and guided sample-workspace onboarding are deferred rather than attempted in this session. Earlier security/authorization/realtime/data code and transport contracts remain unchanged.
+
+Group1 replaces the dashboard with real recent documents, local-ID assigned tasks, activity and workspace controls using existing APIs. Resource fan-out is bounded to three workspace batches; partial failures stay visible with retry instead of becoming fake empty states. Skeletons and a route-specific Next error boundary are included. Quick document creation is optimistic and supports undo by archiving, never hard deletion; retries keep the same existing Idempotency-Key. Undo before creation resolves waits for the ID, and failed undo restores the row with a retry toast.
+
+Workspace creation retains confirmed save with accessible dialog/pending/error/retry. **Its optimistic undo remains deferred:** the existing workspace contract has no guarded inverse; deleting a newly created workspace could erase concurrent collaborator data. No unsafe delete-based undo or new unversioned API was added. This is a deliberate limit against the per-page mutation requirement, not a claim that all creates have undo.
+
+Real group1 checks: initial types failed because a new unit test used Playwright's exact option in Testing Library; corrected query preserves the assertion. Retry lint/format/types, Node4 files and Vitest8 files/35 tests pass. Production build output is recorded in ui/phase3a-evidence/group1-build.log. Browser main-flow tests, axe,1440/390 dark/light captures and critique/correction/repeat remain group2. New user states create no sample data automatically; no landing/onboarding page is touched.
+
+---
+
 # Phase 2b — bounded shell delivery; stop here
 
 On `upgrade/enterprise`; local commits only, no push/deployment/Phase3. DESIGN.md, gallery and prior evidence were read along with project guidance and authorization/audit context. Root AGENTS.md is still absent. Earlier backend security/authorization/realtime/data behavior and API contracts are unchanged; only frontend UI and browser testing code changed.

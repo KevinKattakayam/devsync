@@ -1,3 +1,9 @@
+# Phase 3a — dashboard foundation
+
+- Replace the workspace-card dashboard with recent documents, tasks matched to the local account, real activity, workspace filtering/navigation and quick actions using the existing shell and tokens.
+- Add bounded existing-API aggregation, loading skeletons, partial/total failure retry, a route error boundary and useful empty states. Keep workspace creation accessible with input-preserving retry.
+- Add optimistic quick document creation with receipt-bound retries and undo by archival, including undo before the create response. No backend or API contract changes.
+
 # Phase 2b — shell acceptance and review
 
 - Complete mobile Drawer, scoped presence using the existing join DTO, keyboard commands/help, Copilot focus handling, mobile title fix and narrow-route wrapping. Preserve backend and API contracts.
