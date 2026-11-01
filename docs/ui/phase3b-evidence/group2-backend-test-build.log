@@ -1,0 +1,19 @@
+
+> devsync-backend@1.0.0 test
+> jest --runInBand
+
+{"level":50,"time":1793552507478,"service":"devsync-api","msg":"Unexpected server error"}
+{"level":30,"time":1793552532127,"service":"devsync-api","req":{"id":"e134fa09-8d3d-49b8-8892-afcd5ee84ae2","method":"GET"},"requestId":"e134fa09-8d3d-49b8-8892-afcd5ee84ae2","res":{"statusCode":200},"responseTime":3,"msg":"request completed"}
+{"level":30,"time":1793552532138,"service":"devsync-api","req":{"id":"19014cf5-8fe7-4d6d-b23c-8710ce7694c3","method":"GET"},"requestId":"19014cf5-8fe7-4d6d-b23c-8710ce7694c3","res":{"statusCode":401},"responseTime":4,"msg":"request completed"}
+{"level":30,"time":1793552532145,"service":"devsync-api","req":{"id":"3f7d422a-24e8-40b8-8d21-af746bb5dad9","method":"GET"},"requestId":"3f7d422a-24e8-40b8-8d21-af746bb5dad9","res":{"statusCode":200},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1793552532150,"service":"devsync-api","req":{"id":"7ec8ce15-022e-4a69-b560-b5e1b805ee23","method":"GET"},"requestId":"7ec8ce15-022e-4a69-b560-b5e1b805ee23","res":{"statusCode":401},"responseTime":2,"msg":"request completed"}
+{"level":30,"time":1793552532192,"service":"devsync-api","req":{"id":"625cf890-8686-4fc5-a239-1cae55e40aa0","method":"GET"},"requestId":"625cf890-8686-4fc5-a239-1cae55e40aa0","res":{"statusCode":404},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1793552532226,"service":"devsync-api","req":{"id":"ee3067fd-aa6d-42a0-9a8a-dae82d938760","method":"POST"},"requestId":"ee3067fd-aa6d-42a0-9a8a-dae82d938760","res":{"statusCode":400},"responseTime":30,"msg":"request completed"}
+{"level":30,"time":1793552532254,"service":"devsync-api","req":{"id":"07211224-8d69-410f-9ad6-3d80c987b392","method":"GET"},"requestId":"07211224-8d69-410f-9ad6-3d80c987b392","res":{"statusCode":404},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1793552532258,"service":"devsync-api","req":{"id":"56439f9d-8752-49da-a4ff-c2f7f6cb1aa2","method":"GET"},"requestId":"56439f9d-8752-49da-a4ff-c2f7f6cb1aa2","res":{"statusCode":403},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1793552532265,"service":"devsync-api","req":{"id":"0358c2db-eaec-47e2-9d7d-c772f6f39dd6","method":"GET"},"requestId":"0358c2db-eaec-47e2-9d7d-c772f6f39dd6","res":{"statusCode":403},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1793552532273,"service":"devsync-api","req":{"id":"7c8c2bd2-bb94-422c-b947-2343d5b36a07","method":"GET"},"requestId":"7c8c2bd2-bb94-422c-b947-2343d5b36a07","res":{"statusCode":200},"responseTime":5,"msg":"request completed"}
+{"level":30,"time":1793552532458,"service":"devsync-api","req":{"id":"f3cc878b-53c4-4505-bb7b-000f9d69d8be","method":"GET"},"requestId":"f3cc878b-53c4-4505-bb7b-000f9d69d8be","res":{"statusCode":200},"responseTime":5,"msg":"request completed"}
+{"level":30,"time":1793552532530,"service":"devsync-api","req":{"id":"957ef53b-7670-45cc-8107-3160ebcf3738","method":"POST"},"requestId":"957ef53b-7670-45cc-8107-3160ebcf3738","res":{"statusCode":404},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1793552532533,"service":"devsync-api","req":{"id":"d771d670-3d0e-4d8c-a4d5-c22c3b7f1976","method":"GET"},"requestId":"d771d670-3d0e-4d8c-a4d5-c22c3b7f1976","res":{"statusCode":401},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1793552540180,"service":"devsync-api","req":{"id":"de4eccf3-2c12-4a01-92f2-01699b6ffff6","method":"GET"},"requestId":"de4eccf3-2c12-4a01-92f2-01699b6ffff6","res":{"statusCode":200},"responseTime":33,"msg":"request completed"}

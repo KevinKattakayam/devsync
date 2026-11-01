@@ -1,0 +1,150 @@
+
+> devsync-backend@1.0.0 lint
+> eslint src prisma testing
+
+
+> devsync-backend@1.0.0 format:check
+> prettier --check . --ignore-unknown
+
+Checking formatting...
+All matched files use Prettier code style!
+
+> devsync-backend@1.0.0 typecheck
+> tsc --noEmit && tsc -p tsconfig.seed.json && tsc -p tsconfig.testing.json
+
+
+> devsync-backend@1.0.0 test
+> jest --runInBand
+
+{"level":50,"time":1793554983023,"service":"devsync-api","msg":"Unexpected server error"}
+{"level":30,"time":1793555023011,"service":"devsync-api","req":{"id":"0a1bfdd9-4f43-47b0-97cd-e5dffb912f73","method":"GET"},"requestId":"0a1bfdd9-4f43-47b0-97cd-e5dffb912f73","res":{"statusCode":200},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1793555023017,"service":"devsync-api","req":{"id":"f31ac379-77b4-4c5f-83ae-7b28e08ea88a","method":"GET"},"requestId":"f31ac379-77b4-4c5f-83ae-7b28e08ea88a","res":{"statusCode":401},"responseTime":2,"msg":"request completed"}
+{"level":30,"time":1793555023030,"service":"devsync-api","req":{"id":"95b9d1b0-fa54-4769-8ef4-2fe184b730d5","method":"GET"},"requestId":"95b9d1b0-fa54-4769-8ef4-2fe184b730d5","res":{"statusCode":200},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1793555023033,"service":"devsync-api","req":{"id":"071e370c-aa15-4c3d-96e1-e1f5de3c9579","method":"GET"},"requestId":"071e370c-aa15-4c3d-96e1-e1f5de3c9579","res":{"statusCode":401},"responseTime":2,"msg":"request completed"}
+{"level":30,"time":1793555023036,"service":"devsync-api","req":{"id":"2211f351-7810-4b02-afb5-b5abab4d61cf","method":"GET"},"requestId":"2211f351-7810-4b02-afb5-b5abab4d61cf","res":{"statusCode":404},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1793555023042,"service":"devsync-api","req":{"id":"dfaffb7e-cfa0-40c2-bf9a-4978625795b2","method":"POST"},"requestId":"dfaffb7e-cfa0-40c2-bf9a-4978625795b2","res":{"statusCode":400},"responseTime":4,"msg":"request completed"}
+{"level":30,"time":1793555023051,"service":"devsync-api","req":{"id":"a39a13a2-bdf4-44d0-b3eb-1c5acad34b82","method":"GET"},"requestId":"a39a13a2-bdf4-44d0-b3eb-1c5acad34b82","res":{"statusCode":404},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1793555023053,"service":"devsync-api","req":{"id":"1fc80149-f922-46f5-8269-5184c22340c3","method":"GET"},"requestId":"1fc80149-f922-46f5-8269-5184c22340c3","res":{"statusCode":403},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1793555023056,"service":"devsync-api","req":{"id":"95d0ef8a-f97e-43f1-b942-9d2d7d09c0db","method":"GET"},"requestId":"95d0ef8a-f97e-43f1-b942-9d2d7d09c0db","res":{"statusCode":403},"responseTime":0,"msg":"request completed"}
+{"level":30,"time":1793555023060,"service":"devsync-api","req":{"id":"263bd388-ef3e-4281-8474-d7ad3eaf3221","method":"GET"},"requestId":"263bd388-ef3e-4281-8474-d7ad3eaf3221","res":{"statusCode":200},"responseTime":2,"msg":"request completed"}
+{"level":30,"time":1793555023142,"service":"devsync-api","req":{"id":"366666ef-a868-4811-920d-c889dfbeb985","method":"GET"},"requestId":"366666ef-a868-4811-920d-c889dfbeb985","res":{"statusCode":200},"responseTime":3,"msg":"request completed"}
+{"level":30,"time":1793555023193,"service":"devsync-api","req":{"id":"45ab947a-9dc5-4730-b7ec-39286cce7cf7","method":"POST"},"requestId":"45ab947a-9dc5-4730-b7ec-39286cce7cf7","res":{"statusCode":404},"responseTime":2,"msg":"request completed"}
+{"level":30,"time":1793555023198,"service":"devsync-api","req":{"id":"d86d4195-7e5a-4048-868b-80c11a0edd3b","method":"GET"},"requestId":"d86d4195-7e5a-4048-868b-80c11a0edd3b","res":{"statusCode":401},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1793555042452,"service":"devsync-api","req":{"id":"f4870b5f-6a39-4bc2-a690-05cdbdc4aa1d","method":"GET"},"requestId":"f4870b5f-6a39-4bc2-a690-05cdbdc4aa1d","res":{"statusCode":200},"responseTime":1,"msg":"request completed"}
+----------------------------------|---------|----------|---------|---------|-------------------------------------------------------------------
+File                              | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s                                                 
+----------------------------------|---------|----------|---------|---------|-------------------------------------------------------------------
+All files                         |   78.64 |    68.78 |   72.34 |   80.96 |                                                                   
+ src                              |    68.1 |    78.62 |   41.66 |   70.41 |                                                                   
+  app.ts                          |   98.33 |       50 |     100 |     100 | 31-44                                                             
+  contracts.ts                    |   95.48 |       75 |     100 |     100 | 8,17-37,49,157                                                    
+  openapi.ts                      |   96.51 |     95.4 |    90.9 |   97.43 | 83,158                                                            
+  server.ts                       |       0 |        0 |       0 |       0 | 1-97                                                              
+  worker.ts                       |       0 |        0 |       0 |       0 | 1-103                                                             
+ src/agents                       |   84.74 |    58.33 |      70 |    87.5 |                                                                   
+  pr-summary.agent.ts             |      85 |       50 |      75 |   89.47 | 44,74                                                             
+  task-completion.agent.ts        |   84.61 |       60 |   66.66 |   86.48 | 66,74,78,84,114                                                   
+ src/controllers                  |   87.07 |    68.07 |   85.43 |   88.36 |                                                                   
+  ai.controller.ts                |   87.87 |    54.54 |      50 |   87.87 | 29,59,98-101                                                      
+  auth.controller.ts              |   58.97 |       10 |      80 |   63.88 | 19-37                                                             
+  document.controller.ts          |   96.42 |    82.05 |     100 |   97.59 | 175,188                                                           
+  github-repository.controller.ts |     100 |       90 |     100 |     100 | 117                                                               
+  invitation.controller.ts        |   32.35 |        0 |       0 |   33.33 | 14-43,47-52,56-71                                                 
+  search.controller.ts            |   85.71 |       50 |      50 |   89.47 | 55-56                                                             
+  snippet.controller.ts           |     100 |      100 |     100 |     100 |                                                                   
+  task.controller.ts              |   95.07 |    65.21 |     100 |   96.35 | 75,204,301,360-373                                                
+  workspace.controller.ts         |   84.95 |    77.41 |   86.36 |   85.71 | 117-145,170,230,238                                               
+ src/lib                          |   53.24 |    51.04 |      42 |   55.05 |                                                                   
+  cache.ts                        |       0 |        0 |       0 |       0 | 1-67                                                              
+  create-idempotency.ts           |   89.79 |    82.92 |     100 |   93.02 | 19,26,59                                                          
+  idempotency.ts                  |       0 |        0 |       0 |       0 | 1-27                                                              
+  lifecycle.ts                    |   91.66 |       60 |      75 |    90.9 | 6,27                                                              
+  prisma.ts                       |   93.75 |       70 |   66.66 |   93.75 | 36                                                                
+  queue.ts                        |   31.25 |        0 |       0 |   31.25 | 41,49-62,72-114,120-124                                           
+  redis.ts                        |   26.31 |    16.66 |    9.09 |   32.25 | 12-20,25-27,41-45,51-64                                           
+  tenant-prisma.ts                |   93.33 |       75 |     100 |   93.33 | 19                                                                
+ src/middleware                   |   78.78 |    62.79 |   81.48 |   79.35 |                                                                   
+  auth.middleware.ts              |   51.51 |    42.85 |      25 |   53.33 | 27,48-59,65-69                                                    
+  billing.middleware.ts           |   94.11 |     62.5 |   66.66 |   94.11 | 35                                                                
+  error.middleware.ts             |      72 |    69.04 |     100 |   70.21 | 37-38,50-51,58-59,62-63,66-67,70-71,74-75                         
+  rate-limit.middleware.ts        |   85.71 |       50 |      50 |   85.71 | 20                                                                
+  rbac.middleware.ts              |   94.73 |    83.33 |     100 |   94.73 | 13                                                                
+  request-context.middleware.ts   |     100 |      100 |     100 |     100 |                                                                   
+  tracing.middleware.ts           |   85.71 |       50 |     100 |     100 | 14-15                                                             
+  validate.middleware.ts          |    92.3 |       50 |     100 |   91.66 | 15                                                                
+ src/observability                |      70 |    57.14 |      48 |   70.52 |                                                                   
+  ai.ts                           |     100 |      100 |     100 |     100 |                                                                   
+  logger.ts                       |     100 |      100 |     100 |     100 |                                                                   
+  metrics.ts                      |   94.73 |    92.85 |   85.71 |   94.28 | 32,77                                                             
+  reporting.ts                    |   31.57 |     12.5 |      25 |   35.29 | 4-27,31,34-35                                                     
+  request-scope.ts                |     100 |      100 |     100 |     100 |                                                                   
+  telemetry.ts                    |   34.78 |        0 |      10 |   34.78 | 9-74,78-79                                                        
+ src/routes                       |   93.85 |    71.87 |   96.96 |   94.84 |                                                                   
+  ai.routes.ts                    |     100 |      100 |     100 |     100 |                                                                   
+  auth.routes.ts                  |     100 |      100 |     100 |     100 |                                                                   
+  document.routes.ts              |     100 |      100 |     100 |     100 |                                                                   
+  github-webhook.routes.ts        |   91.42 |    74.68 |     100 |   94.02 | 130,150,163,206                                                   
+  health.routes.ts                |   83.33 |    70.83 |      90 |   84.37 | 16-17,54-56                                                       
+  ingestion.routes.ts             |   93.33 |       60 |     100 |   93.33 | 30,69                                                             
+  scim.routes.ts                  |      92 |    68.18 |     100 |   92.85 | 130-131,161-163                                                   
+  snippet.routes.ts               |     100 |      100 |     100 |     100 |                                                                   
+  stripe.webhook.ts               |   91.66 |       75 |     100 |   91.66 | 8                                                                 
+  superadmin.routes.ts            |     100 |       75 |     100 |     100 | 25                                                                
+  task.routes.ts                  |     100 |      100 |     100 |     100 |                                                                   
+  workspace.routes.ts             |     100 |      100 |     100 |     100 |                                                                   
+ src/schemas                      |     100 |      100 |     100 |     100 |                                                                   
+  search.schema.ts                |     100 |      100 |     100 |     100 |                                                                   
+ src/scripts                      |       0 |        0 |       0 |       0 |                                                                   
+  openapi.ts                      |       0 |        0 |       0 |       0 | 1-24                                                              
+ src/security                     |   76.98 |    72.24 |    82.5 |   82.05 |                                                                   
+  authentication.ts               |      44 |    13.33 |      50 |      50 | 26-31,39-43                                                       
+  invitation-policy.ts            |   16.66 |        0 |       0 |   18.18 | 7-54                                                              
+  policy-deadline.ts              |   85.71 |    33.33 |   66.66 |     100 | 2-12                                                              
+  realtime-identity.ts            |   70.58 |       70 |      50 |      75 | 13,19-20,24                                                       
+  rich-text.ts                    |   86.36 |    85.71 |     100 |     100 | 7,11,13-14                                                        
+  service-policy.ts               |   88.33 |    84.21 |     100 |   93.51 | 24,62,82,113,133,207,244                                          
+  workspace-policy.ts             |      92 |     90.9 |     100 |   95.65 | 35,62                                                             
+ src/services                     |   77.17 |    69.06 |   76.57 |   80.59 |                                                                   
+  ai-gateway.service.ts           |       0 |        0 |       0 |       0 | 1-98                                                              
+  billing.service.ts              |   68.57 |    45.71 |      60 |   70.58 | 10-11,21,29-36,67-73                                              
+  cloudinary.service.ts           |       0 |      100 |       0 |       0 | 1-32                                                              
+  collaboration-acl.ts            |     100 |      100 |     100 |     100 |                                                                   
+  collaboration-server.ts         |   88.75 |    83.07 |   94.44 |   92.23 | 178-180,197-198,231-233,267-268,322-323,377-378,382-383,411       
+  crdt-journal.ts                 |    87.5 |    68.75 |     100 |   91.52 | 50-51,72,87-95                                                    
+  crdt-migration.ts               |   86.36 |    76.19 |     100 |   97.22 | 57                                                                
+  crdt-schema.ts                  |     100 |      100 |     100 |     100 |                                                                   
+  crdt-sync.service.ts            |   78.57 |    73.33 |     100 |   84.61 | 30,33,52-63                                                       
+  embedding-runner.ts             |    87.5 |       50 |      80 |   93.33 | 15                                                                
+  embedding.service.ts            |   88.17 |    72.13 |     100 |   95.18 | 33-37,207-211                                                     
+  ingestion.service.ts            |   58.33 |    54.28 |   44.44 |   60.57 | 43-51,69-70,75-96,122-131,143-144,158-177,199,210,218,220,226,229 
+  secret.service.ts               |     100 |      100 |     100 |     100 |                                                                   
+  yjs.service.ts                  |   82.35 |       25 |   66.66 |    87.5 | 8-9                                                               
+ src/socket                       |   87.14 |     74.7 |    83.6 |   88.61 |                                                                   
+  index.ts                        |   58.33 |      100 |   33.33 |   58.33 | 11-16,19-21                                                       
+  kanban.handler.ts               |   90.62 |       88 |      75 |   90.62 | 60,64,95                                                          
+  presence-store.ts               |   97.77 |    79.16 |   88.88 |   97.43 | 24                                                                
+  presence.handler.ts             |   78.08 |    45.45 |    90.9 |   81.42 | 51-52,88-92,102-111                                               
+  rate-limiter.ts                 |      96 |     87.5 |     100 |      96 | 66                                                                
+  server.ts                       |   88.34 |    75.82 |   83.87 |   90.47 | 75,78,88,124,140-141,148-149,152-153,162,164,179,204              
+ src/utils                        |     100 |        0 |     100 |     100 |                                                                   
+  errors.ts                       |     100 |        0 |     100 |     100 | 14-38                                                             
+----------------------------------|---------|----------|---------|---------|-------------------------------------------------------------------
+
+Test Suites: 16 passed, 16 total
+Tests:       192 passed, 192 total
+Snapshots:   0 total
+Time:        89.552 s
+Ran all test suites.
+
+> devsync-backend@1.0.0 build
+> prisma generate && tsc
+
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+
+✔ Generated Prisma Client (v5.22.0) to ./node_modules/@prisma/client in 331ms
+
+Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
+
+Tip: Want to turn off tips and other hints? https://pris.ly/tip-4-nohints
+

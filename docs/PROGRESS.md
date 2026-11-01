@@ -1,3 +1,28 @@
+# Phase 3b — bounded workspace access settings; stop here
+
+On `upgrade/enterprise`; local commits only, no push or3c. Highest-priority delivery is **A Members/roles and verified invitations**. B–F remain deferred; no backend production code, API contracts, migrations or central authority policy changed. Earlier security/realtime/data behavior is retained. Root AGENTS.md is absent; relevant frontend guidance, AUTHZ_MATRIX, AUDIT, DESIGN, gallery and prior evidence were read.
+
+Delivered: searchable settings sections and member/email/role filtering; actual local-principal role detection; owner-only role change/removal and recipient-bound EDITOR/VIEWER link creation/revocation. Skeletons, helpful empty states, load/access retry, generic route error boundary, responsive wrapping and labeled keyboard controls. Role updates are optimistic with authorized Undo; invitation creation keeps receipt-bound retry and revocation Undo, including before create resolves. Verified recipient acceptance is reused unchanged. No email-sending capability is claimed.
+
+**Actual gates:** frontend lint/format/strict types, Node4 files and Vitest9 files/**45 tests** pass; final webpack production build exits0. Backend harness lint/format/application+seed+testing types pass; backend **16 suites/192 tests** and build exit0. First lint cleanup warnings and keyboard failures were fixed without suppressions or weakened assertions. Logs: ui/phase3b-evidence. The interrupted backend run has no result claim; completed retry is group2-backend-retry.log.
+
+**Browser:** final **6/6** tests pass with migrated disposable PostgreSQL/Redis, seed data and test-only login. Real main flow creates a workspace, creates an invitation, accepts with the matching seeded recipient, changes role, undoes it and removes the member; read access then returns403. Both editor and viewer independently receive403 for role PATCH, member DELETE, invitation POST and invitation DELETE, and have no settings admin controls. Final **40 screenshots/40 axe reports/0 reported violations** are in ui/after/settings/final. Initial/final critique, remaining flaws and incomplete-item review are in ui/after/settings/REVIEW.md. The new role-dialog Tab/Shift+Tab wrap and Escape/restoration assertions pass in one targeted dark1440 follow-up (browser-modal-focus.log). No additional production build or backend suite was rerun after that test-only addition. Do not infer full assistive-technology certification from axe.
+
+Initial browser attempts include sandbox IPC denial, a missing explicit test-mode invocation, and an interrupted run with two keyboard failures. Completed initial suite:2 passed/4 failed (transition-time contrast and ambiguous acceptance status query). Option readiness, animation settlement and precise status targeting fix those failures; no axe rules are excluded. Shared overlay/skip-link stacking and clipped contrast incompletes remain honestly documented, not declared closed. The original default browser suites remain selected when no settings flag is supplied.
+
+## Exact deferrals and exceptions
+
+- **B Security:** active-session listing/revoke and conditional2FA are not implemented. No applicable feature flag was found in searched source/example configuration. Provider/session APIs need a separate reviewed integration; no fake session rows or controls were added.
+- **C Profile/workspace settings:** real profile and workspace metadata editing is deferred. The old mock name/description and nonfunctional danger-zone form were replaced with supported access settings, not represented as saved metadata.
+- **D API tokens:** scoped, shown-once creation and revocation are deferred; no token UI or backend contract was invented.
+- **E Audit log:** filterable, paginated log UI is deferred. **F Export/account deletion:** confirmed export/deletion flows are deferred. Timebox prioritized the verified access-management slice and its acceptance rather than beginning these integrations.
+- No invitation-list API exists. Only links created in the currently mounted view are shown, explicitly labeled incomplete; refresh clears that view without deleting invitations. Full persistent pending/history management requires separately reviewed/versioned backend support.
+- Confirmed member removal and invitation revocation have no optimistic undo: the existing API has no safe inverse that preserves recipient consent/current authority. Rejoining requires a new verified invitation; no immediate-grant legacy endpoint is used as undo. Own role remains read-only in this UI; the backend retains its last-owner invariant.
+- Existing PATCH has no conditional revision field. Undo reuses current server authorization; no new compare-and-swap or protection against concurrent administrators is claimed. Member counts are explicitly from last refresh; invitation statuses reflect local actions, not a live server list.
+- Minor desktop invitation-field baseline offset,360px owner-specific state matrix, shared Copilot overlap, skip-link/modal stacking, remaining clipped contrast incompletes, full remove/revoke manual focus review and broader screen-reader/browser coverage remain deferred after the bounded review loop. No pixel-baseline or hosted CI claim. Stop after the second local commit.
+
+---
+
 # Phase 3b — members and invitations, group 1
 
 Bounded scope: A / Members, roles and verified invitations. B–F are deferred to preserve the requested timebox. Existing central authorization, backend behavior and API contracts are unchanged. Root AGENTS.md is absent; frontend guidance, prior progress, AUTHZ_MATRIX, AUDIT, DESIGN, gallery and prior UI evidence were read.

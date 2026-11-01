@@ -1,3 +1,9 @@
+# Phase 3b — settings browser acceptance and review
+
+- Add seeded settings main-flow, central editor/viewer admin-denial and responsive state tests, retaining default browser journeys.
+- Align member actions with recipient-specific labels; review40 final dark/light settings captures with zero reported axe violations. Preserve raw incomplete items and failed/interrupted output.
+- Record final45 frontend/192 backend tests and production builds; defer B–F, complete invitation history and remaining overlay/alignment/accessibility limits in PROGRESS.md.
+
 # Phase 3b — workspace access settings
 
 - Replace mock workspace settings with searchable real members/roles and verified invitation controls using existing APIs and design-system components.

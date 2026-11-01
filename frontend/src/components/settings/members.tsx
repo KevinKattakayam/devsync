@@ -204,6 +204,7 @@ export function Members({
                       {role !== 'OWNER' && (
                         <Button
                           variant="ghost"
+                          aria-label={`Remove ${member.user.name || member.user.email}`}
                           size="compact"
                           disabled={busy}
                           onClick={(event) => {
@@ -211,7 +212,7 @@ export function Members({
                             setChange({ member, remove: true });
                           }}
                         >
-                          Remove {member.user.name || member.user.email}
+                          Remove
                         </Button>
                       )}
                     </>

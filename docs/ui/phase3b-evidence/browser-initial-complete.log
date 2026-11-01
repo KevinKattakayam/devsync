@@ -1,0 +1,298 @@
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": PostgreSQL database "devsync_e2e_browser", schema "public" at "localhost:32780"
+
+11 migrations found in prisma/migrations
+
+Applying migration `20260729000000_baseline`
+Applying migration `20260729180000_enterprise_platform`
+Applying migration `20260815000000_phase_3_tenant_rls`
+Applying migration `20260815001000_scim_provisioning`
+Applying migration `20260815002000_commercial_billing`
+Applying migration `20261031000000_tenant_indexes`
+Applying migration `20261031010000_crdt_journal`
+Applying migration `202611010001_canonical_revision`
+Applying migration `202611010002_embedding_authority`
+Applying migration `202611010003_atomic_create_idempotency`
+Applying migration `202611010004_workspace_invitations`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20260729000000_baseline/
+    └─ migration.sql
+  └─ 20260729180000_enterprise_platform/
+    └─ migration.sql
+  └─ 20260815000000_phase_3_tenant_rls/
+    └─ migration.sql
+  └─ 20260815001000_scim_provisioning/
+    └─ migration.sql
+  └─ 20260815002000_commercial_billing/
+    └─ migration.sql
+  └─ 20261031000000_tenant_indexes/
+    └─ migration.sql
+  └─ 20261031010000_crdt_journal/
+    └─ migration.sql
+  └─ 202611010001_canonical_revision/
+    └─ migration.sql
+  └─ 202611010002_embedding_authority/
+    └─ migration.sql
+  └─ 202611010003_atomic_create_idempotency/
+    └─ migration.sql
+  └─ 202611010004_workspace_invitations/
+    └─ migration.sql
+      
+All migrations have been successfully applied.
+Sample workspace seeded. Sign in with the supplied Clerk test identities.
+/home/kevin/devsync/.worktrees/frontend-fixture
+Isolated fixture server ready
+{"level":30,"time":1793555406808,"service":"devsync-api","req":{"id":"dd3e88fd-89b6-4356-ac68-1d012eba0ad8","method":"GET"},"requestId":"dd3e88fd-89b6-4356-ac68-1d012eba0ad8","res":{"statusCode":200},"responseTime":5,"msg":"request completed"}
+▲ Next.js 16.4.3 (webpack)
+- Local:         http://127.0.0.1:3001
+- Network:       http://127.0.0.1:3001
+✓ Ready in 726ms
+✓ Running next.config.ts took 146ms
+○ Compiling /instrumentation ...
+
+✓ Generated AGENTS.md for AI agents. Set `agentRules: false` in next.config to disable.
+○ Compiling /(auth)/login/[[...rest]]/page ...
+ GET /login 200 in 1600ms (next.js: 1129ms, proxy.ts: 63ms, application-code: 408ms)
+
+Running 6 tests using 1 worker
+
+(node:20802) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1793555443946,"service":"devsync-api","req":{"id":"84c09088-ec1c-48bc-a4b4-13bc883ba78a","method":"GET"},"requestId":"84c09088-ec1c-48bc-a4b4-13bc883ba78a","res":{"statusCode":200},"responseTime":28,"msg":"request completed"}
+ GET /workspace/devsync-sample/settings 200 in 4.1s (next.js: 3.8s, proxy.ts: 15ms, application-code: 320ms)
+{"level":30,"time":1793555450193,"service":"devsync-api","req":{"id":"56818a68-d40d-471f-aace-c3428a85921c","method":"GET"},"requestId":"56818a68-d40d-471f-aace-c3428a85921c","res":{"statusCode":200},"responseTime":32,"msg":"request completed"}
+{"level":30,"time":1793555450203,"service":"devsync-api","req":{"id":"58167c3c-b6e6-4da8-b632-b40a6326d1d8","method":"GET"},"requestId":"58167c3c-b6e6-4da8-b632-b40a6326d1d8","res":{"statusCode":200},"responseTime":31,"msg":"request completed"}
+{"level":30,"time":1793555450212,"service":"devsync-api","req":{"id":"40360368-1a87-4c42-82f5-0170c264c4a6","method":"GET"},"requestId":"40360368-1a87-4c42-82f5-0170c264c4a6","res":{"statusCode":200},"responseTime":56,"msg":"request completed"}
+{"level":30,"time":1793555450214,"service":"devsync-api","req":{"id":"3191f5c2-e44e-4185-987d-76636674b0ad","method":"GET"},"requestId":"3191f5c2-e44e-4185-987d-76636674b0ad","res":{"statusCode":200},"responseTime":47,"msg":"request completed"}
+{"level":30,"time":1793555450216,"service":"devsync-api","req":{"id":"a2a15933-d086-45e2-8927-0684fefcfcc0","method":"GET"},"requestId":"a2a15933-d086-45e2-8927-0684fefcfcc0","res":{"statusCode":200},"responseTime":52,"msg":"request completed"}
+{"level":30,"time":1793555450220,"service":"devsync-api","req":{"id":"7fc821bc-ea09-49f3-825e-e569e41d6015","method":"GET"},"requestId":"7fc821bc-ea09-49f3-825e-e569e41d6015","res":{"statusCode":200},"responseTime":55,"msg":"request completed"}
+dark 1440 loading: 0 axe violations; 0 incomplete
+{"level":30,"time":1793555450709,"service":"devsync-api","req":{"id":"35b77c4a-2712-445b-97b8-1435b7a7a9aa","method":"GET"},"requestId":"35b77c4a-2712-445b-97b8-1435b7a7a9aa","res":{"statusCode":200},"responseTime":26,"msg":"request completed"}
+{"level":30,"time":1793555450712,"service":"devsync-api","req":{"id":"8ad6dcb4-ef5d-4383-b5b7-f9f03f79f636","method":"GET"},"requestId":"8ad6dcb4-ef5d-4383-b5b7-f9f03f79f636","res":{"statusCode":200},"responseTime":31,"msg":"request completed"}
+dark 1440 ready: 0 axe violations; 1 incomplete
+dark 1440 role-dialog: 0 axe violations; 1 incomplete
+dark 1440 remove-dialog: 0 axe violations; 1 incomplete
+dark 1440 search-empty: 0 axe violations; 0 incomplete
+{"level":30,"time":1793555452392,"service":"devsync-api","req":{"id":"2fd3f202-5ff5-47d1-a6ff-9eec2e342c7d","method":"POST"},"requestId":"2fd3f202-5ff5-47d1-a6ff-9eec2e342c7d","res":{"statusCode":201},"responseTime":53,"msg":"request completed"}
+dark 1440 invite-created: 0 axe violations; 1 incomplete
+dark 1440 revoke-dialog: 0 axe violations; 1 incomplete
+{"level":30,"time":1793555453088,"service":"devsync-api","req":{"id":"5aeb82a3-592d-4701-9c47-15f431070d56","method":"DELETE"},"requestId":"5aeb82a3-592d-4701-9c47-15f431070d56","res":{"statusCode":204},"responseTime":21,"msg":"request completed"}
+{"level":30,"time":1793555453198,"service":"devsync-api","req":{"id":"818ecb77-6ff6-4f6f-99a2-9e8b4b63249a","method":"GET"},"requestId":"818ecb77-6ff6-4f6f-99a2-9e8b4b63249a","res":{"statusCode":200},"responseTime":13,"msg":"request completed"}
+dark 1440 error-injected: 0 axe violations; 0 incomplete
+{"level":30,"time":1793555453417,"service":"devsync-api","req":{"id":"d19a06a6-392e-47a7-b7d4-4174cbfa8c16","method":"GET"},"requestId":"d19a06a6-392e-47a7-b7d4-4174cbfa8c16","res":{"statusCode":304},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793555453422,"service":"devsync-api","req":{"id":"5fb0b0db-48b0-4a26-9543-2bfa94c38436","method":"GET"},"requestId":"5fb0b0db-48b0-4a26-9543-2bfa94c38436","res":{"statusCode":200},"responseTime":21,"msg":"request completed"}
+  ✓  1 testing/browser/settings.spec.ts:50:9 › dark 1440 settings states, keyboard and invitation revocation (9.9s)
+{"level":30,"time":1793555453618,"service":"devsync-api","req":{"id":"3f7ffedf-4227-498e-8771-081c5be30462","method":"GET"},"requestId":"3f7ffedf-4227-498e-8771-081c5be30462","res":{"statusCode":200},"responseTime":9,"msg":"request completed"}
+ GET /workspace/devsync-sample/settings 200 in 125ms (next.js: 64ms, proxy.ts: 3ms, application-code: 58ms)
+{"level":30,"time":1793555455344,"service":"devsync-api","req":{"id":"680d632a-1526-4910-98b4-e797fb5d1e49","method":"GET"},"requestId":"680d632a-1526-4910-98b4-e797fb5d1e49","res":{"statusCode":200},"responseTime":17,"msg":"request completed"}
+{"level":30,"time":1793555455356,"service":"devsync-api","req":{"id":"8e5507e8-7f50-4b98-8c41-2f4a3ddd9b63","method":"GET"},"requestId":"8e5507e8-7f50-4b98-8c41-2f4a3ddd9b63","res":{"statusCode":200},"responseTime":25,"msg":"request completed"}
+{"level":30,"time":1793555455361,"service":"devsync-api","req":{"id":"ab454ad1-71af-4f6e-9caa-da2c4a80b5d7","method":"GET"},"requestId":"ab454ad1-71af-4f6e-9caa-da2c4a80b5d7","res":{"statusCode":200},"responseTime":33,"msg":"request completed"}
+{"level":30,"time":1793555455384,"service":"devsync-api","req":{"id":"973eca7b-0fdd-489a-81bc-223217472d80","method":"GET"},"requestId":"973eca7b-0fdd-489a-81bc-223217472d80","res":{"statusCode":200},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793555455398,"service":"devsync-api","req":{"id":"caab5c9a-6385-4fc4-81a7-6c97ed7e5c65","method":"GET"},"requestId":"caab5c9a-6385-4fc4-81a7-6c97ed7e5c65","res":{"statusCode":200},"responseTime":28,"msg":"request completed"}
+{"level":30,"time":1793555455406,"service":"devsync-api","req":{"id":"a9932512-dace-4661-ac59-4fe8285f56d3","method":"GET"},"requestId":"a9932512-dace-4661-ac59-4fe8285f56d3","res":{"statusCode":200},"responseTime":39,"msg":"request completed"}
+dark 390 loading: 0 axe violations; 0 incomplete
+{"level":30,"time":1793555455783,"service":"devsync-api","req":{"id":"be98798f-ebee-4494-9b5d-76f2404ed5d8","method":"GET"},"requestId":"be98798f-ebee-4494-9b5d-76f2404ed5d8","res":{"statusCode":200},"responseTime":16,"msg":"request completed"}
+{"level":30,"time":1793555455785,"service":"devsync-api","req":{"id":"58fa4512-d3cb-40d5-88f2-c1c448f349b5","method":"GET"},"requestId":"58fa4512-d3cb-40d5-88f2-c1c448f349b5","res":{"statusCode":200},"responseTime":17,"msg":"request completed"}
+dark 390 ready: 0 axe violations; 1 incomplete
+dark 390 role-dialog: 0 axe violations; 1 incomplete
+dark 390 remove-dialog: 0 axe violations; 1 incomplete
+dark 390 search-empty: 0 axe violations; 0 incomplete
+{"level":30,"time":1793555457267,"service":"devsync-api","req":{"id":"c6be0f00-5bb1-4801-aa6c-c1a19d3b8306","method":"POST"},"requestId":"c6be0f00-5bb1-4801-aa6c-c1a19d3b8306","res":{"statusCode":201},"responseTime":25,"msg":"request completed"}
+dark 390 invite-created: 1 axe violations; 1 incomplete
+  ✘  2 testing/browser/settings.spec.ts:50:9 › dark 390 settings states, keyboard and invitation revocation (3.9s)
+(node:22249) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1793555458491,"service":"devsync-api","req":{"id":"ff197be7-d49e-4a7a-a81e-7686097b969f","method":"GET"},"requestId":"ff197be7-d49e-4a7a-a81e-7686097b969f","res":{"statusCode":200},"responseTime":24,"msg":"request completed"}
+ GET /workspace/devsync-sample/settings 200 in 142ms (next.js: 69ms, proxy.ts: 6ms, application-code: 67ms)
+{"level":30,"time":1793555460169,"service":"devsync-api","req":{"id":"6bbdd848-6647-4188-8529-982ce7cef8fd","method":"GET"},"requestId":"6bbdd848-6647-4188-8529-982ce7cef8fd","res":{"statusCode":200},"responseTime":20,"msg":"request completed"}
+{"level":30,"time":1793555460171,"service":"devsync-api","req":{"id":"0763ad62-6c8c-4d60-a676-42fba506764d","method":"GET"},"requestId":"0763ad62-6c8c-4d60-a676-42fba506764d","res":{"statusCode":200},"responseTime":18,"msg":"request completed"}
+{"level":30,"time":1793555460175,"service":"devsync-api","req":{"id":"21892753-aa5f-4525-a7df-4c3314aba8c9","method":"GET"},"requestId":"21892753-aa5f-4525-a7df-4c3314aba8c9","res":{"statusCode":200},"responseTime":23,"msg":"request completed"}
+{"level":30,"time":1793555460180,"service":"devsync-api","req":{"id":"a9061aef-91af-4826-a712-2d264ea6e36c","method":"GET"},"requestId":"a9061aef-91af-4826-a712-2d264ea6e36c","res":{"statusCode":200},"responseTime":29,"msg":"request completed"}
+{"level":30,"time":1793555460181,"service":"devsync-api","req":{"id":"d7253c2a-9777-46a0-9eb8-b0c2f7ce4968","method":"GET"},"requestId":"d7253c2a-9777-46a0-9eb8-b0c2f7ce4968","res":{"statusCode":200},"responseTime":24,"msg":"request completed"}
+{"level":30,"time":1793555460187,"service":"devsync-api","req":{"id":"1f24b47c-24cd-4a4a-b493-22feede0ad2d","method":"GET"},"requestId":"1f24b47c-24cd-4a4a-b493-22feede0ad2d","res":{"statusCode":200},"responseTime":33,"msg":"request completed"}
+light 1440 loading: 0 axe violations; 0 incomplete
+{"level":30,"time":1793555460636,"service":"devsync-api","req":{"id":"d64413d8-529d-4184-952c-772c3b251d69","method":"GET"},"requestId":"d64413d8-529d-4184-952c-772c3b251d69","res":{"statusCode":200},"responseTime":26,"msg":"request completed"}
+{"level":30,"time":1793555460637,"service":"devsync-api","req":{"id":"4fe3e8d5-4480-4533-a192-b84ef5b50782","method":"GET"},"requestId":"4fe3e8d5-4480-4533-a192-b84ef5b50782","res":{"statusCode":200},"responseTime":25,"msg":"request completed"}
+light 1440 ready: 0 axe violations; 1 incomplete
+light 1440 role-dialog: 0 axe violations; 1 incomplete
+light 1440 remove-dialog: 0 axe violations; 1 incomplete
+light 1440 search-empty: 0 axe violations; 0 incomplete
+{"level":30,"time":1793555462241,"service":"devsync-api","req":{"id":"02668ee3-cbb5-452c-a3d4-1c4017363366","method":"POST"},"requestId":"02668ee3-cbb5-452c-a3d4-1c4017363366","res":{"statusCode":201},"responseTime":21,"msg":"request completed"}
+light 1440 invite-created: 0 axe violations; 1 incomplete
+light 1440 revoke-dialog: 0 axe violations; 2 incomplete
+{"level":30,"time":1793555462875,"service":"devsync-api","req":{"id":"bddb8a17-36fe-4d23-8437-0d305172c6d8","method":"DELETE"},"requestId":"bddb8a17-36fe-4d23-8437-0d305172c6d8","res":{"statusCode":204},"responseTime":20,"msg":"request completed"}
+{"level":30,"time":1793555462999,"service":"devsync-api","req":{"id":"5ad62bd8-628c-4c67-a836-d4f75d1223d0","method":"GET"},"requestId":"5ad62bd8-628c-4c67-a836-d4f75d1223d0","res":{"statusCode":200},"responseTime":18,"msg":"request completed"}
+light 1440 error-injected: 0 axe violations; 0 incomplete
+{"level":30,"time":1793555463300,"service":"devsync-api","req":{"id":"c6902b9d-15a1-4d92-b79c-abe409de43a1","method":"GET"},"requestId":"c6902b9d-15a1-4d92-b79c-abe409de43a1","res":{"statusCode":304},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793555463310,"service":"devsync-api","req":{"id":"6f22d75c-845f-481f-94f9-da0ab6231cb2","method":"GET"},"requestId":"6f22d75c-845f-481f-94f9-da0ab6231cb2","res":{"statusCode":200},"responseTime":26,"msg":"request completed"}
+  ✓  3 testing/browser/settings.spec.ts:50:9 › light 1440 settings states, keyboard and invitation revocation (5.0s)
+{"level":30,"time":1793555463508,"service":"devsync-api","req":{"id":"d2ab0a22-2913-4d07-85df-02ab4b9417de","method":"GET"},"requestId":"d2ab0a22-2913-4d07-85df-02ab4b9417de","res":{"statusCode":200},"responseTime":22,"msg":"request completed"}
+ GET /workspace/devsync-sample/settings 200 in 120ms (next.js: 53ms, proxy.ts: 4ms, application-code: 63ms)
+{"level":30,"time":1793555465050,"service":"devsync-api","req":{"id":"d7f40675-999b-4734-9769-25acff5451d1","method":"GET"},"requestId":"d7f40675-999b-4734-9769-25acff5451d1","res":{"statusCode":200},"responseTime":16,"msg":"request completed"}
+{"level":30,"time":1793555465052,"service":"devsync-api","req":{"id":"3219f7b6-a0e3-45bc-b791-acd32cb1dffb","method":"GET"},"requestId":"3219f7b6-a0e3-45bc-b791-acd32cb1dffb","res":{"statusCode":200},"responseTime":12,"msg":"request completed"}
+{"level":30,"time":1793555465057,"service":"devsync-api","req":{"id":"56465e43-8f71-4c11-8885-769476b6b1c6","method":"GET"},"requestId":"56465e43-8f71-4c11-8885-769476b6b1c6","res":{"statusCode":200},"responseTime":19,"msg":"request completed"}
+{"level":30,"time":1793555465057,"service":"devsync-api","req":{"id":"0c0b225a-d1a3-4297-aa42-278c554de410","method":"GET"},"requestId":"0c0b225a-d1a3-4297-aa42-278c554de410","res":{"statusCode":200},"responseTime":19,"msg":"request completed"}
+{"level":30,"time":1793555465066,"service":"devsync-api","req":{"id":"0151cc36-8b0f-448d-b2d6-388adf8e5fdf","method":"GET"},"requestId":"0151cc36-8b0f-448d-b2d6-388adf8e5fdf","res":{"statusCode":200},"responseTime":30,"msg":"request completed"}
+{"level":30,"time":1793555465069,"service":"devsync-api","req":{"id":"fffb6701-6d8f-4333-b482-102844775c49","method":"GET"},"requestId":"fffb6701-6d8f-4333-b482-102844775c49","res":{"statusCode":200},"responseTime":30,"msg":"request completed"}
+light 390 loading: 0 axe violations; 0 incomplete
+{"level":30,"time":1793555465569,"service":"devsync-api","req":{"id":"d0f91ddf-ce3f-49f1-abf4-aace4aa1f2f0","method":"GET"},"requestId":"d0f91ddf-ce3f-49f1-abf4-aace4aa1f2f0","res":{"statusCode":200},"responseTime":25,"msg":"request completed"}
+{"level":30,"time":1793555465570,"service":"devsync-api","req":{"id":"fedfa7f4-bf24-4998-8f41-b3464461458d","method":"GET"},"requestId":"fedfa7f4-bf24-4998-8f41-b3464461458d","res":{"statusCode":200},"responseTime":25,"msg":"request completed"}
+light 390 ready: 0 axe violations; 1 incomplete
+light 390 role-dialog: 0 axe violations; 1 incomplete
+light 390 remove-dialog: 0 axe violations; 1 incomplete
+light 390 search-empty: 0 axe violations; 0 incomplete
+{"level":30,"time":1793555467024,"service":"devsync-api","req":{"id":"c5f7a97f-0b71-403a-a162-6b814e716a58","method":"POST"},"requestId":"c5f7a97f-0b71-403a-a162-6b814e716a58","res":{"statusCode":201},"responseTime":24,"msg":"request completed"}
+light 390 invite-created: 1 axe violations; 1 incomplete
+  ✘  4 testing/browser/settings.spec.ts:50:9 › light 390 settings states, keyboard and invitation revocation (3.8s)
+(node:23100) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1793555468239,"service":"devsync-api","req":{"id":"3406c52e-643e-4c66-a05b-d817389af33c","method":"GET"},"requestId":"3406c52e-643e-4c66-a05b-d817389af33c","res":{"statusCode":200},"responseTime":16,"msg":"request completed"}
+{"level":30,"time":1793555468274,"service":"devsync-api","req":{"id":"7f93ee85-dbb2-47cf-8af0-fcee015c2496","method":"GET"},"requestId":"7f93ee85-dbb2-47cf-8af0-fcee015c2496","res":{"statusCode":200},"responseTime":8,"msg":"request completed"}
+{"level":30,"time":1793555468301,"service":"devsync-api","req":{"id":"0d2848c9-f256-4bdd-871e-a25c2dff669d","method":"POST"},"requestId":"0d2848c9-f256-4bdd-871e-a25c2dff669d","res":{"statusCode":201},"responseTime":19,"msg":"request completed"}
+ GET /workspace/cmvy4m8eb0023hemohg19g173/settings 200 in 127ms (next.js: 47ms, proxy.ts: 8ms, application-code: 72ms)
+{"level":30,"time":1793555469902,"service":"devsync-api","req":{"id":"b8348562-5948-47eb-a2a9-f497866a925d","method":"GET"},"requestId":"b8348562-5948-47eb-a2a9-f497866a925d","res":{"statusCode":200},"responseTime":27,"msg":"request completed"}
+{"level":30,"time":1793555469903,"service":"devsync-api","req":{"id":"aacb5627-12a2-40aa-9141-a8c906280573","method":"GET"},"requestId":"aacb5627-12a2-40aa-9141-a8c906280573","res":{"statusCode":200},"responseTime":19,"msg":"request completed"}
+{"level":30,"time":1793555469904,"service":"devsync-api","req":{"id":"0f2ff81b-54bd-41a7-8c8a-9aada72d9bd2","method":"GET"},"requestId":"0f2ff81b-54bd-41a7-8c8a-9aada72d9bd2","res":{"statusCode":200},"responseTime":34,"msg":"request completed"}
+{"level":30,"time":1793555469917,"service":"devsync-api","req":{"id":"97e87eda-a46a-4875-b61b-16c2c69a313c","method":"GET"},"requestId":"97e87eda-a46a-4875-b61b-16c2c69a313c","res":{"statusCode":304},"responseTime":10,"msg":"request completed"}
+{"level":30,"time":1793555469921,"service":"devsync-api","req":{"id":"c38fa460-ece7-4ecd-9da4-f19e12839441","method":"GET"},"requestId":"c38fa460-ece7-4ecd-9da4-f19e12839441","res":{"statusCode":304},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793555469930,"service":"devsync-api","req":{"id":"79a2da14-3c40-4c45-9bc2-530e83e87fd0","method":"GET"},"requestId":"79a2da14-3c40-4c45-9bc2-530e83e87fd0","res":{"statusCode":304},"responseTime":22,"msg":"request completed"}
+{"level":30,"time":1793555469935,"service":"devsync-api","req":{"id":"607a4cd6-9785-46c5-946a-fdbaee709168","method":"GET"},"requestId":"607a4cd6-9785-46c5-946a-fdbaee709168","res":{"statusCode":200},"responseTime":52,"msg":"request completed"}
+{"level":30,"time":1793555469970,"service":"devsync-api","req":{"id":"5c74d758-52ea-46c4-8d16-b0e405c0c442","method":"GET"},"requestId":"5c74d758-52ea-46c4-8d16-b0e405c0c442","res":{"statusCode":304},"responseTime":33,"msg":"request completed"}
+{"level":30,"time":1793555470258,"service":"devsync-api","req":{"id":"7057a0d9-9ff4-4a59-a7ab-c3924ae551aa","method":"POST"},"requestId":"7057a0d9-9ff4-4a59-a7ab-c3924ae551aa","res":{"statusCode":201},"responseTime":34,"msg":"request completed"}
+ GET /workspace/cmvy4m8eb0023hemohg19g173/settings 200 in 138ms (next.js: 51ms, proxy.ts: 8ms, application-code: 79ms)
+ GET /invitations/cmvy4m9wg002shemoruqq7l94 200 in 3.0s (next.js: 2.8s, proxy.ts: 4ms, application-code: 226ms)
+ GET /workspace/cmvy4m8eb0023hemohg19g173/settings 200 in 129ms (next.js: 44ms, proxy.ts: 6ms, application-code: 80ms)
+{"level":30,"time":1793555475034,"service":"devsync-api","req":{"id":"2afc70da-8bbb-41b7-95bf-b9c96822fc00","method":"GET"},"requestId":"2afc70da-8bbb-41b7-95bf-b9c96822fc00","res":{"statusCode":200},"responseTime":26,"msg":"request completed"}
+{"level":30,"time":1793555475055,"service":"devsync-api","req":{"id":"d9c038ac-c93e-431f-8b2a-f54fabf6b41f","method":"GET"},"requestId":"d9c038ac-c93e-431f-8b2a-f54fabf6b41f","res":{"statusCode":304},"responseTime":19,"msg":"request completed"}
+{"level":30,"time":1793555475147,"service":"devsync-api","req":{"id":"723c209b-22b8-4eca-8e58-472735e0a594","method":"POST"},"requestId":"system","res":{"statusCode":null},"responseTime":41,"msg":"request aborted"}
+  ✘  5 testing/browser/settings.spec.ts:123:5 › owner invitation acceptance, role change Undo and member removal (7.0s)
+(node:23841) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1793555476151,"service":"devsync-api","req":{"id":"553bcf76-bc33-4564-bdeb-eb438fae1bbd","method":"GET"},"requestId":"553bcf76-bc33-4564-bdeb-eb438fae1bbd","res":{"statusCode":200},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793555476179,"service":"devsync-api","req":{"id":"0303a227-788f-4336-be3a-6fe700e9ffbf","method":"GET"},"requestId":"0303a227-788f-4336-be3a-6fe700e9ffbf","res":{"statusCode":200},"responseTime":12,"msg":"request completed"}
+{"level":30,"time":1793555476205,"service":"devsync-api","req":{"id":"ca2397b1-394b-4393-856b-9f21a8be3de4","method":"POST"},"requestId":"ca2397b1-394b-4393-856b-9f21a8be3de4","res":{"statusCode":201},"responseTime":19,"msg":"request completed"}
+{"level":30,"time":1793555476261,"service":"devsync-api","req":{"id":"a490c945-4e03-41ff-aa13-ad61c2cc0761","method":"GET"},"requestId":"a490c945-4e03-41ff-aa13-ad61c2cc0761","res":{"statusCode":200},"responseTime":20,"msg":"request completed"}
+ GET /workspace/devsync-sample/settings 200 in 177ms (next.js: 51ms, proxy.ts: 5ms, application-code: 120ms)
+{"level":30,"time":1793555478027,"service":"devsync-api","req":{"id":"1b367176-5a69-4317-b254-7f60c18f16f9","method":"GET"},"requestId":"1b367176-5a69-4317-b254-7f60c18f16f9","res":{"statusCode":200},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793555478033,"service":"devsync-api","req":{"id":"6a9bd00f-1090-4f4f-9a80-7f27c42707f0","method":"GET"},"requestId":"6a9bd00f-1090-4f4f-9a80-7f27c42707f0","res":{"statusCode":200},"responseTime":20,"msg":"request completed"}
+{"level":30,"time":1793555478037,"service":"devsync-api","req":{"id":"5742d22f-1161-4883-bced-ee32be7dedaf","method":"GET"},"requestId":"5742d22f-1161-4883-bced-ee32be7dedaf","res":{"statusCode":200},"responseTime":17,"msg":"request completed"}
+{"level":30,"time":1793555478041,"service":"devsync-api","req":{"id":"d3d19b20-3e53-4930-94c6-a453459194e9","method":"GET"},"requestId":"d3d19b20-3e53-4930-94c6-a453459194e9","res":{"statusCode":304},"responseTime":11,"msg":"request completed"}
+{"level":30,"time":1793555478054,"service":"devsync-api","req":{"id":"a869c583-e1cd-4022-a9c0-1880a4265e38","method":"GET"},"requestId":"a869c583-e1cd-4022-a9c0-1880a4265e38","res":{"statusCode":304},"responseTime":19,"msg":"request completed"}
+{"level":30,"time":1793555478058,"service":"devsync-api","req":{"id":"725f6a49-2274-4722-89e2-f8afca9fed12","method":"GET"},"requestId":"725f6a49-2274-4722-89e2-f8afca9fed12","res":{"statusCode":304},"responseTime":16,"msg":"request completed"}
+{"level":30,"time":1793555478060,"service":"devsync-api","req":{"id":"5913821a-986e-458d-b65b-c328834b3ac5","method":"GET"},"requestId":"5913821a-986e-458d-b65b-c328834b3ac5","res":{"statusCode":200},"responseTime":41,"msg":"request completed"}
+{"level":30,"time":1793555478095,"service":"devsync-api","req":{"id":"897fc2eb-b213-4977-85bf-45849c5d03c8","method":"GET"},"requestId":"897fc2eb-b213-4977-85bf-45849c5d03c8","res":{"statusCode":304},"responseTime":34,"msg":"request completed"}
+dark 360 editor-read-only: 0 axe violations; 1 incomplete
+light 360 editor-read-only: 1 axe violations; 1 incomplete
+  ✘  6 testing/browser/settings.spec.ts:179:5 › editor and viewer admin denials and 360px read-only settings (2.9s)
+
+
+  1) testing/browser/settings.spec.ts:50:9 › dark 390 settings states, keyboard and invitation revocation 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "color-contrast: button[type=\"submit\"]",
+    + ]
+
+      42 |   expect(
+      43 |     report.violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(' ')).join(', ')}`),
+    > 44 |   ).toEqual([]);
+         |     ^
+      45 |   expect(report.bounds.page).toBeLessThanOrEqual(width);
+      46 |   expect(report.bounds.scroll || 0).toBeLessThanOrEqual((report.bounds.main || width) + 1);
+      47 | }
+        at capture (/home/kevin/devsync/backend/testing/browser/settings.spec.ts:44:5)
+        at /home/kevin/devsync/backend/testing/browser/settings.spec.ts:102:9
+
+    Error Context: test-results/settings-dark-390-settings-b1266-d-and-invitation-revocation/error-context.md
+
+  2) testing/browser/settings.spec.ts:50:9 › light 390 settings states, keyboard and invitation revocation 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "color-contrast: button[aria-label=\"Invitation role\"] > span:nth-child(1), button[type=\"submit\"]",
+    + ]
+
+      42 |   expect(
+      43 |     report.violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(' ')).join(', ')}`),
+    > 44 |   ).toEqual([]);
+         |     ^
+      45 |   expect(report.bounds.page).toBeLessThanOrEqual(width);
+      46 |   expect(report.bounds.scroll || 0).toBeLessThanOrEqual((report.bounds.main || width) + 1);
+      47 | }
+        at capture (/home/kevin/devsync/backend/testing/browser/settings.spec.ts:44:5)
+        at /home/kevin/devsync/backend/testing/browser/settings.spec.ts:102:9
+
+    Error Context: test-results/settings-light-390-setting-52dbe-d-and-invitation-revocation/error-context.md
+
+  3) testing/browser/settings.spec.ts:123:5 › owner invitation acceptance, role change Undo and member removal 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator: getByRole('status')
+    Expected: "Invitation accepted. Your role is VIEWER."
+    Error: strict mode violation: getByRole('status') resolved to 2 elements:
+        1) <div role="status" class="shell-connection" aria-label="Server connected">…</div> aka getByRole('status', { name: 'Server connected' })
+        2) <p role="status"></p> aka getByRole('status').filter({ hasText: /^$/ })
+
+    Call log:
+      - Expect "toHaveText" with timeout 15000ms
+      - waiting for getByRole('status')
+
+
+      146 |     if (!link) throw new Error('Missing created invitation');
+      147 |     const accept = await recipient.newPage();
+    > 148 |     await accept.goto(link);
+          |                             ^
+      149 |     await accept.getByRole('button', { name: 'Accept invitation', exact: true }).click();
+      150 |     await expect(accept.getByRole('status')).toHaveText(
+      151 |       'Invitation accepted. Your role is VIEWER.',
+        at /home/kevin/devsync/backend/testing/browser/settings.spec.ts:148:46
+
+    Error Context: test-results/settings-owner-invitation--e8e11-nge-Undo-and-member-removal/error-context.md
+
+  4) testing/browser/settings.spec.ts:179:5 › editor and viewer admin denials and 360px read-only settings 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "color-contrast: .shell-copilot-trigger",
+    + ]
+
+      42 |   expect(
+      43 |     report.violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(' ')).join(', ')}`),
+    > 44 |   ).toEqual([]);
+         |     ^
+      45 |   expect(report.bounds.page).toBeLessThanOrEqual(width);
+      46 |   expect(report.bounds.scroll || 0).toBeLessThanOrEqual((report.bounds.main || width) + 1);
+      47 | }
+        at capture (/home/kevin/devsync/backend/testing/browser/settings.spec.ts:44:5)
+        at /home/kevin/devsync/backend/testing/browser/settings.spec.ts:213:11
+
+    Error Context: test-results/settings-editor-and-viewer-c17e4-nd-360px-read-only-settings/error-context.md
+
+  4 failed
+    testing/browser/settings.spec.ts:50:9 › dark 390 settings states, keyboard and invitation revocation 
+    testing/browser/settings.spec.ts:50:9 › light 390 settings states, keyboard and invitation revocation 
+    testing/browser/settings.spec.ts:123:5 › owner invitation acceptance, role change Undo and member removal 
+    testing/browser/settings.spec.ts:179:5 › editor and viewer admin denials and 360px read-only settings 
+  2 passed (36.5s)
+[?25h
+Browser orchestration command exited 1

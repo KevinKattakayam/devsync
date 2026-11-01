@@ -145,7 +145,7 @@ export function Invitations({
   return (
     <>
       <form onSubmit={submit} className="mb-6 space-y-4">
-        <div className="grid min-w-0 gap-4 sm:grid-cols-[minmax(0,1fr)_10rem]">
+        <div className="grid min-w-0 items-end gap-4 sm:grid-cols-[minmax(0,1fr)_10rem]">
           <label className="block space-y-2 text-sm">
             <span>Recipient email</span>
             <Input
