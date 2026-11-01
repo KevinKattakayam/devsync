@@ -52,7 +52,16 @@ const originalScroll = HTMLElement.prototype.scrollIntoView;
 beforeEach(() => {
   mocks.actor = 'owner-user';
   mocks.get.mockImplementation(async (path: string) => ({
-    data: path === '/auth/me' ? { id: mocks.actor } : { id: 'one', name: 'Engineering', members },
+    data: path.endsWith('/ai/usage')
+      ? {
+          unit: 'admitted requests',
+          period: 'UTC',
+          user: { daily: 0, monthly: 0, dailyLimit: 100, monthlyLimit: 1000 },
+          workspace: { daily: 0, monthly: 0, dailyLimit: 1000, monthlyLimit: 10000 },
+        }
+      : path === '/auth/me'
+        ? { id: mocks.actor }
+        : { id: 'one', name: 'Engineering', members },
   }));
   mocks.patch.mockImplementation(async (_path: string, body: { role: MemberRole }) => ({
     data: { ...members[1], role: body.role },

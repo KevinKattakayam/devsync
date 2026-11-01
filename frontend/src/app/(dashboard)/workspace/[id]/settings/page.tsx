@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { useAuth } from '@/providers/auth-provider';
 import { Badge, Button, EmptyState, Input } from '@/components/ui';
+import { AiUsage } from '@/components/settings/ai-usage';
 import { Members } from '@/components/settings/members';
 import { Invitations } from '@/components/settings/invitations';
 import { SettingsError, SettingsLoading } from '@/components/settings/states';
@@ -53,6 +54,7 @@ function Settings({ workspaceId }: { workspaceId: string }) {
   const memberMatch = workspace.members.some((member) =>
     `${member.user.name} ${member.user.email} ${member.role}`.toLowerCase().includes(normalized),
   );
+  const showAi = !query.trim() || 'ai usage quota allowance'.includes(query.trim().toLowerCase());
   const showMembers = membersSection || memberMatch;
   // Search invitation rows inside the section without losing its in-view history on filter changes.
   const showInvitations =
@@ -74,6 +76,7 @@ function Settings({ workspaceId }: { workspaceId: string }) {
           <RefreshCw aria-hidden="true" className="size-4" />
         </Button>
       </header>
+      {showAi && <AiUsage workspaceId={workspaceId} />}
       <div className="mb-8">
         <label className="block space-y-2 text-sm">
           <span>Search settings</span>
@@ -118,7 +121,7 @@ function Settings({ workspaceId }: { workspaceId: string }) {
               members or manage invitations.
             </p>
           )}
-          {!showMembers && !showInvitations && (
+          {!showMembers && !showInvitations && !showAi && (
             <EmptyState
               title="No settings match"
               description="Try members, invitations, a name or an email address."

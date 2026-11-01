@@ -212,9 +212,18 @@ function EditorInner({
         if (!accumulated.trim()) throw new Error('AI returned no text. Try another prompt.');
         setAiComplete(true);
       }
-    } catch {
-      if (!controller.signal.aborted)
-        setAiError('AI could not finish. Try again; partial output cannot be applied.');
+    } catch (error: unknown) {
+      if (!controller.signal.aborted) {
+        const status =
+          error && typeof error === 'object' && 'status' in error ? error.status : undefined;
+        setAiError(
+          status === 429
+            ? 'AI request limit reached. Check usage in workspace settings or wait for active requests to finish.'
+            : status === 503
+              ? 'AI is temporarily unavailable. Your documents remain available.'
+              : 'AI could not finish. Try again; partial output cannot be applied.',
+        );
+      }
     } finally {
       if (!controller.signal.aborted) setAiLoading(false);
     }

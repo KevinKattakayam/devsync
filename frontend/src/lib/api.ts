@@ -151,9 +151,18 @@ export const aiApi = {
         body: JSON.stringify(data),
       });
       if (!response.ok)
-        throw Object.assign(new Error(`AI request failed (${response.status})`), {
-          status: response.status,
-        });
+        throw Object.assign(
+          new Error(
+            response.status === 429
+              ? 'AI request limit reached. Check usage in workspace settings or wait for active requests to finish.'
+              : response.status === 503
+                ? 'AI is temporarily unavailable. Your documents remain available.'
+                : `AI request failed (${response.status})`,
+          ),
+          {
+            status: response.status,
+          },
+        );
       return response;
     })(),
 };
