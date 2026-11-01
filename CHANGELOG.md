@@ -1,3 +1,8 @@
+# Phase 3d — bounded review acceptance
+
+- Save eight final dark/light board/drawer captures and raw axe reports; final five browser tests pass, including keyboard-only moves and authorization denials.
+- Record residual layout/accessibility gaps, missing per-page acceptance and remaining Kanban/snippets scope explicitly. No3e or push.
+
 # Phase 3d — Kanban movement and task drawer
 
 - Add named keyboard move controls alongside native dragging, server-scope edit gating, move Undo via existing authorization and canonical refresh on failure.
