@@ -152,3 +152,7 @@ Production server always uses Clerk. The separate backend/testing executable ref
 | DELETE /api[/v1]/workspaces/:id/invitations/:invitationId | Active OWNER in the URL tenant, pending invitation bound to that tenant | Real HTTP revocation and subsequent acceptance denial |
 
 Legacy immediate-add /invite remains unchanged. The link carries an identifier, not recipient authority. No email delivery is claimed. Existing memberships retain their current role on acceptance. See ADR018.
+
+## Phase3f AI admission and usage
+
+`GET /api/v2/ai/usage` requires verified active identity and central current workspace read membership, including VIEWER. Only the caller's global personal totals and the selected authorized workspace aggregate are returned; no other user's totals or prompts are exposed. Response is no-store. The legacy/v1 completion route retains its request/SSE contract and now checks central workspace authority before atomic request/concurrency admission and any provider call. Task/repository/embedding workers retain their current central authorities before provider disclosure and share workspace quota counters; internal service principals cannot be supplied by clients. Quota exhaustion is429; admission infrastructure failure is503, fail closed. Billing estimates are distinct from admitted-request quotas; see AI_COST_SAFETY.md for durability, embedding-redelivery and financial-accounting limitations.

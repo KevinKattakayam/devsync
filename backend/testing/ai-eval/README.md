@@ -1,0 +1,7 @@
+# AI evaluation scaffold
+
+`scaffold.ts` exports the case format, output format, asynchronous `Scorer` interface and sequential `runEvaluation(cases, generate, score)` runner. It deliberately contains no cases, dataset, provider implementation, scores or results.
+
+Supply reviewed, consented cases in the `EvaluationCase` format: an ID, local actor and workspace IDs, prompt, expected source IDs, and forbidden workspace IDs. An adapter must authenticate that actor, invoke the normal authorized/quota-controlled service, and return text plus actual source/workspace identifiers. Those identifiers must come from retrieval metadata, never from model assertions. Existing legacy SSE references lack stable source IDs; that adapter requires a future versioned provenance contract before factual citation evaluations are possible.
+
+Inject a scorer implementing the exported interface. Citation presence, claim support, injection resistance and forbidden-workspace leakage are different checks; do not present presence as correctness. A scorer owns its criteria and returns case ID, pass/fail and notes. The runner stops on adapter/scorer exceptions; it does not retry, call a provider by itself, persist prompts or upload content. Use an isolated workspace and configured quota budget. Redact notes before retaining them. Results require a real supplied corpus and executed evaluation; none are claimed here.

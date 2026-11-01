@@ -1,3 +1,10 @@
+# Phase 3f — AI cost and safety
+
+- Enforce atomic user/workspace daily/monthly request allowances and concurrent-operation limits before AI provider calls; add authorized versioned usage API and settings display.
+- Disable SDK retries, restrict fallback to explicit pre-admission rejections, cancel bounded editor calls and avoid generation replay on task/PR retries.
+- Add evaluation case/runner/scorer scaffold without datasets/results, parallel Redis quota tests and provider/isolation failure tests.
+- Document request-versus-billing semantics, durable Redis requirements, embedding redelivery and uncompleted browser/axe acceptance. Defer PWA to Phase5; no Phase4b or push.
+
 # Phase 4a — research and proposals
 
 - Add source-linked research across17 products and developer pain points, with explicit evidence limits for target segments, India connectivity and non-English collaboration.

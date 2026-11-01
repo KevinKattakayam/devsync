@@ -1,12 +1,20 @@
 import { Request, Response, NextFunction } from 'express';
 import Groq from 'groq-sdk';
+import OpenAI from 'openai';
+import { openAiStream } from '../services/ai-provider';
+import { AppError } from '../utils/errors';
 import { untrustedAiContext, AI_CONTEXT_POLICY } from '../services/ai-prompt';
 import { observeAi } from '../observability/ai';
 import { z } from 'zod';
 import { authorizeWorkspace } from '../security/workspace-policy';
 import { semanticWorkspaceContext } from '../services/embedding.service';
 
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY || '', timeout: 10000, maxRetries: 1 });
+const groq = process.env.GROQ_API_KEY
+  ? new Groq({ apiKey: process.env.GROQ_API_KEY, timeout: 10000, maxRetries: 0 })
+  : null;
+const secondary = process.env.OPENAI_API_KEY
+  ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY, timeout: 10000, maxRetries: 0 })
+  : null;
 export const aiCompleteSchema = z.object({
   prompt: z.string().min(1).max(16000),
   context: z.string().max(32000).optional(),
@@ -17,7 +25,16 @@ export const aiCompleteSchema = z.object({
 });
 
 export async function aiComplete(req: Request, res: Response, next: NextFunction) {
+  req.aiQuotaStarted = true;
+  const abort = new AbortController();
+  const timer = setTimeout(() => abort.abort(), 60000);
+  res.once('close', () => abort.abort());
   try {
+    if (!groq && !secondary)
+      throw new AppError(
+        'AI unavailable: no provider configured. Your documents remain available.',
+        503,
+      );
     const { prompt, context, action, workspaceId } = aiCompleteSchema.parse(req.body);
     await authorizeWorkspace(req.user!.userId, workspaceId);
     const semanticContext = await semanticWorkspaceContext(
@@ -59,11 +76,11 @@ export async function aiComplete(req: Request, res: Response, next: NextFunction
       `data: ${JSON.stringify({ sources: semanticContext.map(({ type, title, score }) => ({ type, title, score: Number(score.toFixed(3)) })) })}\n\n`,
     );
 
-    await observeAi('groq', async () => {
-      const stream = await groq.chat.completions.create({
-        model: process.env.GROQ_MODEL || 'openai/gpt-oss-20b',
+    await observeAi(groq ? 'groq' : 'openai', async () => {
+      const parameters = {
+        model: '',
         messages: [
-          { role: 'system', content: systemPrompt },
+          { role: 'system' as const, content: systemPrompt },
           ...(context || workspaceContext
             ? [
                 {
@@ -72,20 +89,40 @@ export async function aiComplete(req: Request, res: Response, next: NextFunction
                 },
               ]
             : []),
-          { role: 'user', content: prompt },
+          { role: 'user' as const, content: prompt },
         ],
-        stream: true,
+        stream: true as const,
         max_tokens: 1024,
         temperature: 0.7,
-      });
+      };
+      const stream = await openAiStream<
+        AsyncIterable<{ choices: { delta?: { content?: string | null } }[] }>
+      >(
+        groq
+          ? async () =>
+              groq.chat.completions.create(
+                { ...parameters, model: process.env.GROQ_MODEL || 'openai/gpt-oss-20b' },
+                { signal: abort.signal },
+              )
+          : null,
+        secondary
+          ? async () =>
+              secondary.chat.completions.create(
+                { ...parameters, model: process.env.OPENAI_MODEL || 'gpt-4o-mini' },
+                { signal: abort.signal },
+              )
+          : null,
+      );
 
       for await (const chunk of stream) {
+        if (abort.signal.aborted) break;
         const content = chunk.choices[0]?.delta?.content || '';
         if (content) {
           res.write(`data: ${JSON.stringify({ content })}\n\n`);
         }
       }
     });
+    if (abort.signal.aborted) throw new Error('AI request cancelled');
     res.write(`data: ${JSON.stringify({ done: true })}\n\n`);
     res.end();
   } catch (error: unknown) {
@@ -97,5 +134,8 @@ export async function aiComplete(req: Request, res: Response, next: NextFunction
       );
       res.end();
     }
+  } finally {
+    clearTimeout(timer);
+    await req.aiQuotaRelease?.();
   }
 }

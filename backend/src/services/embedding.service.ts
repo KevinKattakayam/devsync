@@ -1,5 +1,7 @@
 import { createHash, randomUUID } from 'crypto';
 import OpenAI from 'openai';
+import { AiQuota } from './ai-quota';
+import { redis } from '../lib/redis';
 import { Prisma } from '@prisma/client';
 import { z } from 'zod';
 import { prisma } from '../lib/prisma';
@@ -13,7 +15,7 @@ import { EmbeddingKind, withEmbeddingAccess } from '../security/service-policy';
 import type { TenantTransaction } from '../lib/tenant-prisma';
 import { AppError, ConflictError, ForbiddenError } from '../utils/errors';
 const client = process.env.OPENAI_API_KEY
-  ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY, timeout: 10000, maxRetries: 1 })
+  ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY, timeout: 10000, maxRetries: 0 })
   : null;
 const model = process.env.EMBEDDING_MODEL || 'text-embedding-3-small';
 const vectorSchema = z.array(z.number().finite()).length(1536);
@@ -24,8 +26,9 @@ function textFromJson(value: unknown): string {
   if (value && typeof value === 'object') return Object.values(value).map(textFromJson).join(' ');
   return '';
 }
-async function embed(text: string) {
+async function embed(text: string, actorId: string, workspaceId: string) {
   if (!client) return null;
+  const release = await new AiQuota(redis).acquire(actorId, workspaceId);
   try {
     const result = await client.embeddings.create({ model, input: text.slice(0, 30000) });
     return vectorSchema.parse(result.data[0]?.embedding);
@@ -35,6 +38,8 @@ async function embed(text: string) {
       error instanceof Error ? error.name : 'UnknownError',
     );
     return null;
+  } finally {
+    await release().catch(() => undefined);
   }
 }
 function vector(values: number[]) {
@@ -152,14 +157,16 @@ export async function refreshEmbedding(
   kind: EmbeddingKind,
   id: string,
   workspaceId: string,
-  provider: EmbeddingProvider = embed,
+  provider?: EmbeddingProvider,
 ): Promise<boolean> {
   const original = await withEmbeddingAccess(workspaceId, kind, id, (tx) =>
     embeddingText(tx, kind, id),
   );
   const hash = createHash('sha256').update(original.text).digest('hex');
   if (hash === original.hash) return true;
-  const raw = await provider(original.text);
+  const raw = provider
+    ? await provider(original.text)
+    : await embed(original.text, `service:embedding:${workspaceId}`, workspaceId);
   if (!raw) return false;
   const values = vectorSchema.parse(raw);
   await withEmbeddingAccess(workspaceId, kind, id, async (tx) => {
@@ -184,7 +191,7 @@ export async function semanticWorkspaceContext(
 ) {
   await authorizeWorkspace(actorId, workspaceId);
   try {
-    const values = await embed(query);
+    const values = await embed(query, actorId, workspaceId);
     if (!values) return [];
     return await withWorkspaceAccess(
       actorId,

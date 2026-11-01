@@ -372,6 +372,34 @@ add('POST', '/scim/v2/Users', scim, '201');
 add('PATCH', '/scim/v2/Users/{externalId}', scim);
 noContent('DELETE', '/scim/v2/Users/{externalId}');
 
+const aiAllowance = z
+  .object({
+    daily: z.number().int().nonnegative(),
+    monthly: z.number().int().nonnegative(),
+    dailyLimit: z.number().int().positive(),
+    monthlyLimit: z.number().int().positive(),
+  })
+  .strict();
+add(
+  'GET',
+  '/api/v2/ai/usage',
+  z
+    .object({
+      unit: z.literal('admitted requests'),
+      period: z.literal('UTC calendar day/month'),
+      user: aiAllowance,
+      workspace: aiAllowance,
+    })
+    .strict(),
+  '200',
+  {
+    surface: 'app',
+    query: z.object({ workspaceId: z.string().min(1).max(191) }).strict(),
+    description:
+      'Current actor global and selected authorized workspace request allowances. UTC calendar periods; no prompt content or other workspace identifiers.',
+  },
+);
+
 add('GET', '/metrics', z.string(), '200', {
   surface: 'app',
   responses: { '200': { schema: z.string(), mime: 'text/plain' } },

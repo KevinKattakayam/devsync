@@ -72,19 +72,18 @@ jest.mock(
       };
     },
 );
-jest.mock(
-  'groq-sdk',
-  () =>
-    class FixtureGroq {
-      chat = {
-        completions: {
-          async *create() {
-            yield { choices: [{ delta: { content: 'Fixture AI response' } }] };
-          },
+jest.mock('groq-sdk', () => {
+  process.env.GROQ_API_KEY = 'fixture-not-a-provider-credential';
+  return class FixtureGroq {
+    chat = {
+      completions: {
+        async *create() {
+          yield { choices: [{ delta: { content: 'Fixture AI response' } }] };
         },
-      };
-    },
-);
+      },
+    };
+  };
+});
 jest.mock('../lib/redis', () => ({
   redis: { options: { host: 'localhost', port: 6379 } },
   isRedisAvailable: async () => false,
