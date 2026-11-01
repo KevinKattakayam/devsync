@@ -63,6 +63,7 @@ function CommandList({ actions, onSelect }: { actions: CommandAction[]; onSelect
   return (
     <div>
       <Input
+        placeholder="Search documents, tasks, snippets or actions…"
         role="combobox"
         aria-label="Search commands"
         aria-expanded="true"

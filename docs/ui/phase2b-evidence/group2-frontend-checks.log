@@ -1,0 +1,61 @@
+
+> frontend@0.1.0 lint
+> eslint --max-warnings=0
+
+
+> frontend@0.1.0 format:check
+> prettier --check . --ignore-unknown
+
+Checking formatting...
+All matched files use Prettier code style!
+
+> frontend@0.1.0 typecheck
+> tsc --noEmit
+
+
+> frontend@0.1.0 test
+> node --test tests/*.test.mjs && vitest run
+
+TAP version 13
+# Subtest: tests/dependency-policy.test.mjs
+ok 1 - tests/dependency-policy.test.mjs
+  ---
+  duration_ms: 75.980141
+  type: 'test'
+  ...
+# Subtest: tests/fixture-isolation.test.mjs
+ok 2 - tests/fixture-isolation.test.mjs
+  ---
+  duration_ms: 100.597771
+  type: 'test'
+  ...
+# Subtest: tests/markdown.test.mjs
+ok 3 - tests/markdown.test.mjs
+  ---
+  duration_ms: 528.295594
+  type: 'test'
+  ...
+# Subtest: tests/theme-contrast.test.mjs
+ok 4 - tests/theme-contrast.test.mjs
+  ---
+  duration_ms: 76.937718
+  type: 'test'
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 541.992945
+
+ RUN  v5.0.5 /home/kevin/devsync/frontend
+
+
+ Test Files  7 passed (7)
+      Tests  26 passed (26)
+   Start at  20:48:10
+   Duration  4.85s (environment 60%, import 19%, tests 17%, transform 4%)
+

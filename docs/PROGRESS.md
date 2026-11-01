@@ -1,3 +1,41 @@
+# Phase 2b — bounded shell delivery; stop here
+
+On `upgrade/enterprise`; local commits only, no push/deployment/Phase3. DESIGN.md, gallery and prior evidence were read along with project guidance and authorization/audit context. Root AGENTS.md is still absent. Earlier backend security/authorization/realtime/data behavior and API contracts are unchanged; only frontend UI and browser testing code changed.
+
+## Delivered
+
+- Shared AppShell wraps dashboard, workspace overview/docs/editor/Kanban/snippets/settings, billing and invitation layouts. Superadmin keeps its existing server authority guard before the same shell; no fixture bypass was added.
+- Collapsible240px sidebar/56px rail, real workspace switcher, keyboard disclosure document hierarchy, breadcrumbs, real member-filtered presence (including mobile), user menu and focus mode. Presence joins/leaves are centralized in the shell with the existing required userName DTO field and fresh scope cleanup.
+- Existing Radix command primitive integrates document/task/snippet title search, route/workspace navigation, authorized document creation and dark/light/system themes. Cmd/Ctrl+K and ? help respect text inputs/contenteditable. New tests retain viewer denial. Copilot now uses the shared Drawer/named controls, without changing provider/backend behavior.
+- Mobile navigation leaves the content flow. Document title is labeled and full width; actual bounds are832px at1440 and358px at390 in both themes.360px shell main/client scroll widths are360/360 on eight routes (dashboard, overview, docs list/editor, Kanban, snippets, workspace settings, billing). Kanban keeps its internal board scroller.
+  -40 final unmodified viewport captures and40 Playwright visual baselines are in ui/after/shell/final and backend/testing/browser/shell.spec.ts-snapshots. Rubric, initial failures, acceptance corrections and final critique: ui/after/shell/REVIEW.md. Baselines were created with explicit update mode; no independent pre-existing-baseline comparison is claimed.
+
+## Actual checks
+
+Group1 initially failed lint for an unused overview auth import; fixed retry passes lint/format/types, Node4 files, Vitest6 files/25 tests and webpack production build. Group2 final frontend lint/format/types pass, Node4 files and Vitest7 files/**26 tests** pass; webpack build exit0. Browser-harness lint/format/types pass; backend **16 suites/192 tests** and build exit0. Logs are in ui/phase2b-evidence. Existing tests, assertions and coverage floors are retained; no suppressions, rule disabling or explicit any added.
+
+Initial browser run failed on development reload/injected axe, repeated beforeAll nested fixture data and360px overview overflow. The first final pass also found collapsed-indicator aria-prohibited-attr, remaining overview flex overflow and missing snapshot baselines. Those failures are retained. Corrected run **6 browser tests pass**, with **40 shell axe combinations /0 reported violations**, no disabled axe rules. Scope is navigation/topbar/skip link and open shell overlays; product interiors are not included. Fixture login/seed/disposable DB/Redis were used. No real Clerk sign-in required or attempted. Fixture processes/containers shut down after the suite. No act or extra post-pass rebuild/evidence recheck.
+
+## Prior incomplete review — findings and exact limits
+
+Focus guards/background aria-hidden items were inspected and tested in Chromium: keyboard/programmatic focus stayed within modal layers and Escape restored triggers in both themes. Nonmodal Popover allows outside focus. Overlap-related contrast incompletes were inspected; enabled visible overlay text/input/menu computed pairs meet4.5:1 in both themes. These results do not certify screen readers or every browser. Full raw entries/samples: ui/after/shell/final/gallery-manual-review.json.
+
+Popover aria-controls remains an incomplete check. The relationship assertion ran **after dismissal**, so direct confirmation of its reference **while open is still unfinished**; no complete resolution is claimed. Named popup and Escape/trigger behavior pass. This corrects the earlier in-session shorthand that open relationships had been confirmed.
+
+## Deferred and why
+
+- i18n English/Hindi/Tamil: deliberately last; bounded session concentrated on shell/browser acceptance.
+- Direct open-Popover ID reference confirmation, screen-reader/browser matrix and exhaustive WCAG2.2 certification: not finished; tested focus/contrast does not settle every incomplete rule.
+- Some ghost-control outlines remain heavier than DESIGN.md intends because of the inherited global border cascade. This is an honest residual visual refinement after the requested review/correction loop.
+- Product interiors still contain old colors, mock operational claims and dialogs. Those screens appear behind the new shell, but their complete redesign/accessibility is outside the shell audit. No new mock capability or metrics were added.
+- Navigation renders the hierarchy supplied by the existing list DTO (three levels). Arbitrary-depth lazy traversal remains; no API contract was expanded. Search is local resource-title/keyword filtering, not a new full-text backend capability.
+- Superadmin real global-authority capture, invitation-specific captures, hosted visual/browser CI and independent approved-baseline comparison remain unrun. Existing guards/layout coverage are preserved; owner fixture authority is insufficient for superadmin.
+- Development log retains a Yjs duplicate-import warning during Fast Refresh; no production CRDT diagnosis or source change was made. Passing backend collaboration regressions remain in the192-test gate.
+
+CHANGELOG.md and DESIGN.md updated. Stop after committing group2; do not start Phase3.
+
+---
+
 # Phase 2b — app shell in progress
 
 On `upgrade/enterprise`; no push or Phase3. Read frontend guidance, DESIGN.md, prior gallery code/evidence and previous audit/authorization context. Root AGENTS.md remains absent. Production backend/API/authentication contracts are unchanged.

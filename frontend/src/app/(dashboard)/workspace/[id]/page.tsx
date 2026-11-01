@@ -11,7 +11,6 @@ import { Workspace } from '@/types';
 import { getInitials, generateColor } from '@/lib/utils';
 import { ActivityFeed } from '@/components/workspace/activity-feed';
 import { WorkspaceStats } from '@/components/workspace/workspace-stats';
-import { PresenceBar } from '@/components/workspace/presence-bar';
 import {
   FileText,
   Kanban,
@@ -103,17 +102,17 @@ export default function WorkspacePage() {
   };
 
   return (
-    <div className="p-6 max-w-6xl mx-auto space-y-6 animate-fade-in">
+    <div className="workspace-overview p-4 md:p-8 max-w-6xl mx-auto space-y-6 animate-fade-in">
       {/* Workspace Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 glass-card p-6 border-white/10 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl -z-10" />
 
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center gap-4">
           <div className="w-14 h-14 rounded-2xl gradient-primary flex items-center justify-center text-3xl shadow-lg glow-sm">
             {workspace.icon || '💻'}
           </div>
           <div>
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-3">
               <h1 className="text-xl font-bold text-foreground tracking-tight">{workspace.name}</h1>
               <span className="px-2 py-0.5 text-[10px] font-semibold rounded-full bg-primary/15 text-primary border border-primary/30 flex items-center gap-1">
                 <Sparkles className="w-3 h-3" /> Pro Workspace
@@ -127,8 +126,7 @@ export default function WorkspacePage() {
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
-          <PresenceBar />
+        <div className="flex flex-wrap items-center gap-3">
           <button
             onClick={() => setShowInvite(true)}
             className="flex items-center gap-1.5 px-4 py-2 rounded-xl gradient-primary text-white text-xs font-semibold hover:opacity-90 transition-all shadow-md glow-sm"
@@ -145,7 +143,7 @@ export default function WorkspacePage() {
       <div className="grid md:grid-cols-2 gap-4">
         {/* Multi-Agent Background Workers */}
         <div className="glass-card p-5 border-white/10 relative overflow-hidden flex flex-col justify-between">
-          <div className="flex items-center justify-between mb-3">
+          <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
             <div className="flex items-center gap-2.5">
               <div className="w-8 h-8 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
                 <Cpu className="w-4 h-4" />
@@ -203,7 +201,7 @@ export default function WorkspacePage() {
 
         {/* GitHub Live Repository Pipeline */}
         <div className="glass-card p-5 border-white/10 relative overflow-hidden flex flex-col justify-between">
-          <div className="flex items-center justify-between mb-3">
+          <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
             <div className="flex items-center gap-2.5">
               <div className="w-8 h-8 rounded-xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center text-sky-400">
                 <GitBranch className="w-4 h-4" />
@@ -279,7 +277,7 @@ export default function WorkspacePage() {
             href={item.href}
             className={`glass-card-hover p-5 relative overflow-hidden bg-gradient-to-br ${item.gradient} border-white/10 group`}
           >
-            <div className="flex items-center justify-between mb-3">
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
               <div
                 className={`p-2.5 rounded-xl bg-background/50 backdrop-blur-md ${item.iconColor} border border-white/10`}
               >

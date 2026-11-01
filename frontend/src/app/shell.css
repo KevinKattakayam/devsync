@@ -180,3 +180,45 @@
     max-width: 100%;
   }
 }
+.shell-copilot-trigger {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  z-index: 30;
+  box-shadow: var(--shadow-popover);
+}
+.shell-copilot {
+  display: flex;
+  flex-direction: column;
+  left: auto;
+  right: 0;
+  width: min(28rem, 100vw);
+}
+.shell-copilot a {
+  color: var(--primary);
+  text-decoration: underline;
+}
+.shell-copilot pre {
+  overflow-x: auto;
+}
+
+.app-shell[data-focus] .shell-copilot-trigger {
+  display: none;
+}
+@media (max-width: 767px) {
+  .shell-route .ProseMirror {
+    padding: 0.75rem 1rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .workspace-overview .flex {
+    flex-wrap: wrap;
+  }
+  .workspace-overview :where(.flex, .grid) > * {
+    min-width: 0;
+  }
+  .workspace-overview {
+    overflow-wrap: anywhere;
+  }
+}

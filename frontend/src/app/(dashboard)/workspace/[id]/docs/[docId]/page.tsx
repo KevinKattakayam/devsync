@@ -407,7 +407,7 @@ function EditorInner({
                 onMouseDown={(e) => e.preventDefault()}
                 onClick={() => setShowAiMenu(!showAiMenu)}
                 disabled={aiLoading}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg gradient-primary text-white text-xs font-medium hover:opacity-90 disabled:opacity-50 transition-all shadow-lg shadow-primary/20"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary text-primary-foreground text-xs font-medium hover:opacity-90 disabled:opacity-50 transition-all shadow-lg shadow-primary/20"
               >
                 {aiLoading ? (
                   <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -455,7 +455,7 @@ function EditorInner({
                       <button
                         type="submit"
                         disabled={!customPrompt.trim()}
-                        className="p-1.5 rounded-lg gradient-primary text-white disabled:opacity-40 hover:opacity-90 transition-all"
+                        className="p-1.5 rounded-lg bg-primary text-primary-foreground disabled:opacity-40 hover:opacity-90 transition-all"
                       >
                         <Send className="w-3 h-3" />
                       </button>
@@ -533,7 +533,7 @@ function EditorInner({
               {selectedTextRange ? (
                 <button
                   onClick={handleReplaceSelection}
-                  className="px-3 py-1.5 rounded-lg gradient-primary text-white text-xs font-semibold flex items-center gap-1.5 transition-all shadow-md shadow-primary/20 hover:opacity-90"
+                  className="px-3 py-1.5 rounded-lg bg-primary text-primary-foreground text-xs font-semibold flex items-center gap-1.5 transition-all shadow-md shadow-primary/20 hover:opacity-90"
                 >
                   <RefreshCw className="w-3.5 h-3.5" /> Replace selection
                 </button>
@@ -543,7 +543,7 @@ function EditorInner({
                 className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all ${
                   selectedTextRange
                     ? 'bg-white/10 hover:bg-white/15 text-foreground'
-                    : 'gradient-primary text-white shadow-md shadow-primary/20 hover:opacity-90'
+                    : 'bg-primary text-primary-foreground shadow-md shadow-primary/20 hover:opacity-90'
                 }`}
               >
                 <CornerDownLeft className="w-3.5 h-3.5" /> Insert into document
@@ -636,7 +636,7 @@ function EditorInner({
                       e.stopPropagation();
                       toast.success(`Restored to ${v.title}`);
                     }}
-                    className="mt-2 w-full flex items-center justify-center gap-1.5 px-2.5 py-1.5 rounded-lg gradient-primary text-white text-[11px] font-semibold"
+                    className="mt-2 w-full flex items-center justify-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-primary text-primary-foreground text-[11px] font-semibold"
                   >
                     <RotateCcw className="w-3 h-3" /> Restore This Checkpoint
                   </button>

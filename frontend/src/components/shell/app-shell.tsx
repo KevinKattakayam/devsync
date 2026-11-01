@@ -81,7 +81,7 @@ function Shell({ children, user }: { children: ReactNode; user: User }) {
   const workspaces = snapshot?.workspaces || [];
   const workspace = workspaces.find((item) => item.id === workspaceId);
   const documents = snapshot?.documents || [];
-  const people = useWorkspacePresence(workspaceId, workspace?.members);
+  const people = useWorkspacePresence(workspaceId, workspace?.members, user.name);
   const previousPath = useRef(pathname);
   useEffect(() => {
     if (previousPath.current !== pathname) {
@@ -251,6 +251,7 @@ function Shell({ children, user }: { children: ReactNode; user: User }) {
       </nav>
       <div
         className="shell-connection"
+        role="status"
         aria-label={isConnected ? 'Server connected' : 'Server disconnected'}
       >
         <span
@@ -361,6 +362,11 @@ function Shell({ children, user }: { children: ReactNode; user: User }) {
                 </>
               )}
             </div>
+            {people.length > 0 && (
+              <div className="lg:hidden" aria-label={`${people.length} workspace members online`}>
+                <AvatarStack people={people.slice(0, 1)} max={1} />
+              </div>
+            )}
             <CommandPalette
               key={`${user.id}:${workspaceId || ''}`}
               open={commandsOpen}

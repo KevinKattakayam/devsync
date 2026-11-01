@@ -36,13 +36,13 @@ export function CommandPalette({
     snippets: Snippet[];
   }>();
   const [creating, setCreating] = useState(false);
+  const workspaceId = workspace?.id;
   useEffect(() => {
-    if (!open || !workspace) return;
+    if (!open || !workspaceId) return;
     let disposed = false;
-    void Promise.all([boardApi.list(workspace.id), snippetApi.list(workspace.id)])
+    void Promise.all([boardApi.list(workspaceId), snippetApi.list(workspaceId)])
       .then(([boards, snippets]) => {
-        if (!disposed)
-          setResources({ workspaceId: workspace.id, boards: boards.data, snippets: snippets.data });
+        if (!disposed) setResources({ workspaceId, boards: boards.data, snippets: snippets.data });
       })
       .catch(() => {
         if (!disposed) {
@@ -53,7 +53,7 @@ export function CommandPalette({
     return () => {
       disposed = true;
     };
-  }, [open, workspace]);
+  }, [open, workspaceId]);
   const navigate = (path: string) => () => router.push(path);
   const actions: CommandAction[] = [
     {

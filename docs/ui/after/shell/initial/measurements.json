@@ -1,0 +1,10 @@
+[
+  {
+    "route": "/dashboard",
+    "width": 360,
+    "viewport": 360,
+    "document": 360,
+    "main": 360,
+    "scroll": 360
+  }
+]

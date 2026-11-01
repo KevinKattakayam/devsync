@@ -1,3 +1,10 @@
+# Phase 2b — shell acceptance and review
+
+- Complete mobile Drawer, scoped presence using the existing join DTO, keyboard commands/help, Copilot focus handling, mobile title fix and narrow-route wrapping. Preserve backend and API contracts.
+- Correct foundation CSS layer ordering and dark primary action text; disable only the fixture's development indicator.
+- Add40 real final shell captures,40 Playwright visual baselines, shell axe and prior-incomplete focus/contrast review. Final6 browser tests pass; baseline creation is not an independent visual comparison. Record unresolved open-Popover reference confirmation and broader product-screen work explicitly.
+- Final gates: frontend Node4 files +26 component tests, backend192 tests, lint/format/types and both builds pass. i18n deferred; no Phase3 or push.
+
 # Phase 2b — shared app shell
 
 - Replace the logged-in layout with neutral navigation, collapsible rail, workspace switcher, nested document disclosures, breadcrumbs, user menu, focus mode and mobile Drawer.

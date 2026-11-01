@@ -57,12 +57,12 @@ Radix primitives own modal focus trapping/restoration, Escape, menu/select navig
 
 The command control filters supplied actions, supports arrows/Enter/Escape, announces empty results and keeps active options visible. Product data fetching and permission-aware creation await shell integration. Gallery examples are explicitly demonstration data, without backend calls. `/design-system` is development-only and returns not-found in production. Theme selection supports light/dark/system; interactive examples expose focus/open/selected states. The gallery is not an authenticated shell capture.
 
-## App-shell layout model — implementation deferred
+## App-shell layout model — implemented in Phase 2b
 
 Desktop: 240px collapsible navigation (56px rail), 48px topbar and flexible min-width:0 content. Sidebar contains workspace switcher, named navigation, nested disclosure document links and connection status. Topbar contains breadcrumbs, command launcher, actual presence and user menu. Use existing authorized data. Focus mode hides navigation chrome and retains an exit control. Cmd/Ctrl+K opens search/navigate/create/theme commands; ? opens help outside editable fields.
 
-Below 768px navigation leaves the document flow for a modal drawer. Content fills the viewport from 360px with wrapping actions, no page-level horizontal scroll. Include skip-to-main, aria-current and a main landmark. Document title inputs need min-width:0, available width and separately wrapping metadata. The known zero-width title at 390px remains open until structural work and seed/fixture browser validation.
+Below 768px navigation leaves the document flow for a modal drawer. Content fills the viewport from 360px with wrapping actions, no page-level horizontal scroll. Include skip-to-main, aria-current and a main landmark. Document title inputs need min-width:0, available width and separately wrapping metadata. Phase 2b fixes the zero-width document title; fixture browser measurements show 358px at390px in dark/light.
 
 ## Remaining acceptance work
 
-Integrate controls into the shell; migrate product-page fixed colors; fix mobile titles; run browser axe on all shell states; capture 1440/390 dark/light states; critique hierarchy, spacing, contrast, alignment, density, spec consistency and mobile; fix/repeat once; add shell Playwright visual tests. English/Hindi/Tamil i18n is last. No Phase 3 work.
+Phase2b integrates the shared shell, fixes mobile title sizing and records40 final shell states, browser axe, review/corrections and Playwright baselines in [after/shell](after/shell/README.md). Remaining: product-page fixed-color/dialog migration, residual ghost-control outlines, direct open-Popover reference confirmation, broader screen-reader/browser review and hosted visual CI. English/Hindi/Tamil i18n is deferred. No Phase3 work.

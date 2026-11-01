@@ -46,6 +46,7 @@ export function useShellData(
 export function useWorkspacePresence(
   workspaceId: string | undefined,
   members: Workspace['members'] | undefined,
+  userName: string,
 ) {
   const { socket, isConnected } = useSocket();
   const [presence, setPresence] = useState<{ workspaceId: string; users: PresenceUser[] }>();
@@ -56,13 +57,13 @@ export function useWorkspacePresence(
       if (!disposed) setPresence({ workspaceId, users });
     };
     socket.on('workspace:users', receive);
-    socket.emit('workspace:join', { workspaceId });
+    socket.emit('workspace:join', { workspaceId, userName: userName.slice(0, 191) });
     return () => {
       disposed = true;
       socket.off('workspace:users', receive);
       socket.emit('workspace:leave', { workspaceId });
     };
-  }, [socket, isConnected, workspaceId]);
+  }, [socket, isConnected, workspaceId, userName]);
   const allowed = new Set(members?.map((member) => member.user.id));
   return isConnected && workspaceId && presence?.workspaceId === workspaceId
     ? presence.users.filter((person) => allowed.has(person.id))

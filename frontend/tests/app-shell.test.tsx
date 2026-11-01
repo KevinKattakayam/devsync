@@ -1,4 +1,4 @@
-import { cleanup, render, screen, waitFor } from '@testing-library/react';
+import { cleanup, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
 import { AppShell } from '../src/components/shell/app-shell';
@@ -123,7 +123,9 @@ for (const role of ['OWNER', 'VIEWER']) {
       await waitFor(() => expect(state.create).toHaveBeenCalledWith('one'));
       await waitFor(() => expect(state.push).toHaveBeenCalledWith('/workspace/one/docs/created'));
     } else {
-      expect(screen.getByRole('status').textContent).toBe('No matching commands.');
+      expect(within(screen.getByRole('dialog')).getByRole('status').textContent).toBe(
+        'No matching commands.',
+      );
       expect(state.create).not.toHaveBeenCalled();
     }
   });

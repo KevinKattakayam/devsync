@@ -43,7 +43,7 @@ export async function prepare() {
     resolve(target, 'next.config.ts'),
     `
 if (process.env.NODE_ENV !== 'development') throw new Error('Fixture frontend is development-only');
-export default { env: {
+export default { devIndicators: false, env: {
   NEXT_PUBLIC_API_URL: 'http://127.0.0.1:5501/api',
   NEXT_PUBLIC_SOCKET_URL: 'http://127.0.0.1:5501',
   NEXT_PUBLIC_YJS_URL: 'ws://127.0.0.1:5501'
