@@ -1,0 +1,65 @@
+
+> frontend@0.1.0 lint
+> eslint --max-warnings=0
+
+
+> frontend@0.1.0 format:check
+> prettier --check . --ignore-unknown
+
+Checking formatting...
+All matched files use Prettier code style!
+
+> frontend@0.1.0 typecheck
+> tsc --noEmit
+
+
+> frontend@0.1.0 test
+> node --test tests/*.test.mjs && vitest run
+
+TAP version 13
+# Subtest: tests/dependency-policy.test.mjs
+ok 1 - tests/dependency-policy.test.mjs
+  ---
+  duration_ms: 84.903193
+  type: 'test'
+  ...
+# Subtest: tests/fixture-isolation.test.mjs
+ok 2 - tests/fixture-isolation.test.mjs
+  ---
+  duration_ms: 126.982957
+  type: 'test'
+  ...
+# Subtest: tests/markdown.test.mjs
+ok 3 - tests/markdown.test.mjs
+  ---
+  duration_ms: 587.287288
+  type: 'test'
+  ...
+# Subtest: tests/theme-contrast.test.mjs
+ok 4 - tests/theme-contrast.test.mjs
+  ---
+  duration_ms: 83.471132
+  type: 'test'
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 605.350978
+
+ RUN  v5.0.5 /home/kevin/devsync/frontend
+
+
+ Test Files  10 passed (10)
+      Tests  51 passed (51)
+   Start at  01:09:21
+   Duration  5.88s (environment 46%, tests 34%, import 18%, transform 1%)
+
+Environment  jsdom was created 10 times · 14.50s total, 46% of tracked time
+             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+             learn more: https://vitest.dev/guide/improving-performance#test-environments
+

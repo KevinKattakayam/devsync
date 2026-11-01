@@ -1,0 +1,18 @@
+
+> devsync-backend@1.0.0 lint
+> eslint src prisma testing
+
+
+> devsync-backend@1.0.0 format:check
+> prettier --check . --ignore-unknown
+
+Checking formatting...
+All matched files use Prettier code style!
+
+> devsync-backend@1.0.0 typecheck
+> tsc --noEmit && tsc -p tsconfig.seed.json && tsc -p tsconfig.testing.json
+
+testing/browser/kanban.spec.ts(67,11): error TS7053: Element implicitly has an 'any' type because expression of type '0' can't be used to index type '{ columns: { id: string; tasks: { id: string; }[]; }[]; }'.
+  Property '0' does not exist on type '{ columns: { id: string; tasks: { id: string; }[]; }[]; }'.
+testing/browser/kanban.spec.ts(68,20): error TS7006: Parameter 'c' implicitly has an 'any' type.
+testing/browser/kanban.spec.ts(69,27): error TS7006: Parameter 't' implicitly has an 'any' type.

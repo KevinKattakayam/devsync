@@ -1,3 +1,17 @@
+# Phase 3d — bounded Kanban access and movement increment
+
+On upgrade/enterprise, no push or3e. Root AGENTS.md absent; frontend guidance, PROGRESS, AUTHZ_MATRIX and DESIGN read. Scope prioritizes A movement and detail drawer. Native pointer dragging is retained; a named Radix Move selector provides a keyboard alternative (not a new keyboard drag sensor). Radix task drawer replaces the custom modal; title/description/priority/date remain existing API edits. Server-authorized canWrite gates moves, creation and drawer editing. Viewer controls are read-only; backend policy remains authoritative. No backend production code, transport, data model or contract changed.
+
+Added labeled board skeleton, load/access retry, clearer empty state and honest failure toasts (removed unsupported automatic-retry claims). Moves are optimistic and use the existing central endpoint, with authorized Undo restoring original column/position and refreshing canonical data. Failure refreshes canonical data; no snapshot-based undo that overwrites unrelated cards. Existing local-first board record remains unchanged.
+
+Gates pass: frontend lint/format/types,9 Node tests across4 files,51 component tests and production build. Backend first gate failed on the new test response-array annotation; corrected without any/suppression. Retry lint/format/all types,16 suites/192 tests and build pass. Initial browser5/5 passes with8 board/drawer captures and axe results; final keyboard-only selection and capture framing review follow. Logs in ui/phase3d-evidence.
+
+Deferred within the timebox: A custom keyboard drag sensors/reordering/animations; new labels/assignee editing; filters/saved views, list/table views, swimlanes, WIP, calendar/timeline and bulk actions. B snippets redesign, preview highlighting, grid/list, search/filter improvements, versioning and pre-save secret warnings are not started. Existing snippets remain unchanged; new tests cover viewer edit denial. No snippets screenshots are claimed.
+
+Per-page acceptance still incomplete: create/edit/delete optimistic Undo, receipt-bound create retry, route error boundary, exhaustive loading/empty/failure screenshots, populated360px coverage, full pointer/realtime-concurrency regression and all drawer fields main-flow tests. Legacy board record LWW/concurrent rollback and failed creates remaining local need separate data-safe work; not redesigned here. Existing analytics/modal styling and avatar generated colors remain legacy. Native date/priority inputs are retained. Stop after review documentation; no3e.
+
+---
+
 # Phase 3c — bounded editor delivery; stop here
 
 On `upgrade/enterprise`; local commits only, no push/deployment/3d. Root AGENTS.md is absent; frontend guidance, progress, authorization matrix and DESIGN were read. Delivered the highest-priority existing-schema part of **A**: focused canvas, floating selection formatting with keyboard fallback, filtered slash menu with arrows/Enter/Escape, table/task insertion and contextual table/code controls. No backend production code, API contracts, CRDT schema, transport/authentication/authorization or migrations changed.

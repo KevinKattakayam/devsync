@@ -1,3 +1,9 @@
+# Phase 3d — Kanban movement and task drawer
+
+- Add named keyboard move controls alongside native dragging, server-scope edit gating, move Undo via existing authorization and canonical refresh on failure.
+- Replace custom task modal with Radix Drawer; add loading/access retry and honest error feedback. Preserve backend contracts and local-first transport.
+- Add seeded move/drawer browser coverage and viewer/cross-workspace denial checks; defer remaining Kanban and snippets redesign within the timebox.
+
 # Phase 3c — editor acceptance and review
 
 - Preserve cached content on metadata failure; put read-only semantics on the actual editor textbox, retain visible canvas focus, and enlarge task targets.
