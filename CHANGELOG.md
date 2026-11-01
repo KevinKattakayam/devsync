@@ -1,3 +1,8 @@
+# Phase1c — browser fixture foundation and evidence
+
+- I02/C01: production Clerk authentication retained behind trusted composition; separate guarded test-only login executable and negative production-route/credential checks.186 backend tests and full gates pass. Browser adapter, acceptance flow and E2E remain unfinished.
+- I09: original-main landing500 reproduced; worktree-only public-root workaround yields real1440px/390px home captures. Authenticated interiors remain incomplete. Local CI verification and exact remaining work/human actions are recorded.
+
 # Phase1c — atomic create idempotency group
 
 - G09/D07/I02: atomic RLS-protected create receipts for all current durable REST/SCIM creates; authority/scope/body binding, concurrent duplicate fencing, rollback, TTL and replay permission checks. OpenAPI header contracts, real SQL fault injection and183 passing backend tests. Repository list matches the existing OWNER route; provider fixtures are isolated.

@@ -15,10 +15,10 @@
     "db:seed": "tsx prisma/seed.ts",
     "db:crdt": "tsx prisma/migrate-crdt.ts",
     "db:studio": "npx prisma studio",
-    "lint": "eslint src prisma",
+    "lint": "eslint src prisma testing",
     "format": "prettier --write . --ignore-unknown",
     "format:check": "prettier --check . --ignore-unknown",
-    "typecheck": "tsc --noEmit && tsc -p tsconfig.seed.json",
+    "typecheck": "tsc --noEmit && tsc -p tsconfig.seed.json && tsc -p tsconfig.testing.json",
     "openapi:generate": "NODE_ENV=test tsx src/scripts/openapi.ts --write",
     "openapi:check": "NODE_ENV=test tsx src/scripts/openapi.ts --check",
     "db:migrate:dev": "prisma migrate dev"

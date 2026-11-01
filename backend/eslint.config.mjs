@@ -3,7 +3,7 @@ import tseslint from 'typescript-eslint';
 // Syntax-aware type checking remains tsc's job. Lint enforces syntax correctness
 // for every existing TS file without inventing exemptions for audited legacy code.
 export default tseslint.config({
-  files: ['src/**/*.ts', 'prisma/**/*.ts'],
+  files: ['src/**/*.ts', 'prisma/**/*.ts', 'testing/**/*.ts'],
   languageOptions: { parser: tseslint.parser },
   plugins: { '@typescript-eslint': tseslint.plugin },
   rules: {

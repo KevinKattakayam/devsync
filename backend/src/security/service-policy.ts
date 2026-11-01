@@ -1,5 +1,5 @@
 import { createHash, createHmac, timingSafeEqual } from 'crypto';
-import { getAuth } from '@clerk/express';
+import { requestSubject } from './authentication';
 import type { Request } from 'express';
 import Stripe from 'stripe';
 import { prisma } from '../lib/prisma';
@@ -108,7 +108,7 @@ export async function withSuperadminAccess<T>(
       return operation(tx);
     let clerkId: string | null;
     try {
-      clerkId = getAuth(req).userId;
+      clerkId = await requestSubject(req);
     } catch {
       throw new ForbiddenError('Access denied');
     }

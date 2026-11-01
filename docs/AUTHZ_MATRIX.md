@@ -138,3 +138,7 @@ Embedding lease claims are a private scheduler operation, never an HTTP or socke
 ## Interpretation
 
 Workspace-owner checks are correctly present on workspace mutations, invitations and repository configuration, and document/snippet mutations derive workspace from their resource. Task moves check same-workspace destinations. Critical bypasses D01/D02 are repaired by group1 regressions; D03/D04/D05/D06/D07 and application-level D08 checks are repaired; composite hierarchy migration is now tested on a fresh database; existing-data adoption still requires operator verification. Converted task create/update validate an active assignee membership in the authorized workspace (D09). Only OWNER can update roles; transactional workspace serialization forbids demoting the last owner. Removing OWNER remains forbidden under the existing contract. SCIM token authority is explicit and tenant-scoped; it cannot grant or alter OWNER, rebind existing identities or mutate shared global profiles.
+
+## Test-only composition boundary
+
+Production server always uses Clerk. The separate backend/testing executable refuses production mode and ordinary database names, requires a random run capability and binds loopback. Its login routes/signing provider are outside src/dist and Docker context. Request-scoped fixture strategy cannot be selected by an HTTP field or production environment flag. Default-app tests reject fixture routes/credentials. This is a tested backend fixture, not a passing browser workflow or a replacement authentication deployment.

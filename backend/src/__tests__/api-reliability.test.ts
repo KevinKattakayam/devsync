@@ -155,3 +155,18 @@ it('counts successful and failed AI operations without recording input data', as
     (await aiErrors.get()).values.find((value) => value.labels.provider === 'groq')?.value,
   ).toBeGreaterThan(0);
 });
+
+it('I02 the normal app has no fixture login route and rejects fixture-shaped credentials', async () => {
+  expect(
+    (await request(app).post('/__test/login').send({ email: 'sample-owner@devsync.invalid' }))
+      .status,
+  ).toBe(404);
+  expect(
+    (
+      await request(app)
+        .get('/api/v1/auth/me')
+        .set('Authorization', 'Bearer fixture.signature')
+        .set('Cookie', 'devsync_fixture_session=fixture.signature')
+    ).status,
+  ).toBe(401);
+});

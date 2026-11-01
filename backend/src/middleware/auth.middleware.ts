@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { getAuth, clerkClient } from '@clerk/express';
+import { requestSubject, identityProfile } from '../security/authentication';
 import { UnauthorizedError } from '../utils/errors';
 import { prisma } from '../lib/prisma';
 import { withIdentityProfileAccess } from '../security/service-policy';
@@ -19,12 +19,12 @@ export async function authMiddleware(
   next: NextFunction,
 ): Promise<void> {
   try {
-    const auth = getAuth(req);
-    if (!auth.userId) throw new UnauthorizedError('Authentication required');
+    const clerkId = await requestSubject(req);
+    if (!clerkId) throw new UnauthorizedError('Authentication required');
 
-    let user = await prisma.user.findUnique({ where: { clerkId: auth.userId } });
+    let user = await prisma.user.findUnique({ where: { clerkId } });
     if (!user) {
-      user = await syncClerkUser(auth.userId);
+      user = await syncClerkUser(clerkId);
     }
 
     if (!user.isActive) throw new UnauthorizedError('Invalid or expired session');
@@ -46,11 +46,11 @@ export async function optionalAuth(
   next: NextFunction,
 ): Promise<void> {
   try {
-    const auth = getAuth(req);
-    if (auth.userId) {
-      let user = await prisma.user.findUnique({ where: { clerkId: auth.userId } });
+    const clerkId = await requestSubject(req);
+    if (clerkId) {
+      let user = await prisma.user.findUnique({ where: { clerkId } });
       if (!user) {
-        user = await syncClerkUser(auth.userId);
+        user = await syncClerkUser(clerkId);
       }
       if (user?.isActive) req.user = { userId: user.id, clerkId: user.clerkId, email: user.email };
     }
@@ -62,20 +62,14 @@ export async function optionalAuth(
 
 /** Creates/refreshes the local profile after a successful Clerk OAuth/SSO login. */
 export async function syncClerkUser(clerkId: string) {
-  const clerkUser = await clerkClient.users.getUser(clerkId);
-  const email = clerkUser.primaryEmailAddress?.emailAddress;
-  if (!email)
-    throw new UnauthorizedError('Your identity provider did not provide an email address');
-  const name =
-    [clerkUser.firstName, clerkUser.lastName].filter(Boolean).join(' ') ||
-    clerkUser.username ||
-    null;
+  const profile = await identityProfile(clerkId);
+  const { email, name } = profile;
 
   return withIdentityProfileAccess(clerkId, (tx) =>
     tx.user.upsert({
       where: { clerkId },
-      create: { clerkId, email, name, avatar: clerkUser.imageUrl },
-      update: { email, name, avatar: clerkUser.imageUrl },
+      create: { clerkId, email, name, avatar: profile.avatar },
+      update: { email, name, avatar: profile.avatar },
     }),
   );
 }

@@ -14,6 +14,12 @@ import { createTenantPrismaClient, TenantPrismaClient } from '../lib/tenant-pris
 import { withDatabase } from '../lib/prisma';
 import { logger } from '../observability/logger';
 import { idempotentCreate } from '../lib/create-idempotency';
+import {
+  createFixtureAuthentication,
+  validateFixtureConfiguration,
+} from '../../testing/fixture-auth';
+import { withAuthentication } from '../security/authentication';
+import { authMiddleware } from '../middleware/auth.middleware';
 import * as documents from '../controllers/document.controller';
 import * as snippets from '../controllers/snippet.controller';
 import * as tasks from '../controllers/task.controller';
@@ -1797,4 +1803,84 @@ it('G09 JSON null is a completed receipt, and a thrown create leaves no receipt 
     ),
   ).rejects.toThrow('Fixture failure');
   expect(await admin.apiIdempotencyRecord.count()).toBe(before);
+});
+
+it('I02 isolated fixture login authenticates only seeded identities and revokes its session on logout', async () => {
+  const secret = randomBytes(32).toString('hex');
+  await admin.user.create({
+    data: {
+      id: 'fixture-browser-owner',
+      clerkId: 'user_fixture_owner',
+      email: 'sample-owner@devsync.invalid',
+      name: 'Sample owner',
+    },
+  });
+  const fixture = createFixtureAuthentication(db, secret),
+    harness = express();
+  harness.use(express.json());
+  harness.use('/__test', fixture.router);
+  harness.use((_req, _res, next) =>
+    withDatabase(db, () => withAuthentication(fixture.strategy, next)),
+  );
+  harness.get('/me', authMiddleware, getMe);
+  harness.use(errorMiddleware);
+  const browser = request.agent(harness);
+  expect(
+    (await browser.post('/__test/login').send({ email: 'sample-owner@devsync.invalid' })).status,
+  ).toBe(401);
+  expect(
+    (
+      await browser
+        .post('/__test/login')
+        .set('x-e2e-run-secret', secret)
+        .send({ email: 'owner@example.test' })
+    ).status,
+  ).toBe(401);
+  const login = await browser
+    .post('/__test/login')
+    .set('x-e2e-run-secret', secret)
+    .send({ email: 'sample-owner@devsync.invalid' });
+  expect(login.status).toBe(200);
+  expect(String(login.headers['set-cookie'])).toContain('HttpOnly');
+  expect(String(login.headers['set-cookie'])).toContain('SameSite=Strict');
+  expect((await browser.get('/me')).body.id).toBe('fixture-browser-owner');
+  const token = (await browser.get('/__test/token')).body.token as string;
+  expect((await fixture.identifyRealtime(token)).id).toBe('fixture-browser-owner');
+  expect((await request(harness).get('/me').set('Authorization', `Bearer ${token}`)).status).toBe(
+    200,
+  );
+  expect((await browser.post('/__test/logout')).status).toBe(204);
+  expect((await browser.get('/me')).status).toBe(401);
+  await expect(fixture.identifyRealtime(token)).rejects.toThrow('Expired fixture session');
+});
+it('I02 fixture configuration cannot start in production or target an ordinary database', async () => {
+  const secret = randomBytes(32).toString('hex');
+  expect(() =>
+    validateFixtureConfiguration({
+      NODE_ENV: 'production',
+      DATABASE_URL: 'postgresql://localhost/devsync_e2e_fixture',
+      E2E_RUN_SECRET: secret,
+    }),
+  ).toThrow('NODE_ENV=test');
+  expect(() =>
+    validateFixtureConfiguration({
+      NODE_ENV: 'test',
+      DATABASE_URL: 'postgresql://localhost/devsync',
+      E2E_RUN_SECRET: secret,
+    }),
+  ).toThrow('isolated');
+  expect(() =>
+    validateFixtureConfiguration({
+      NODE_ENV: 'test',
+      DATABASE_URL: 'postgresql://localhost/devsync_e2e_fixture',
+      E2E_RUN_SECRET: 'weak',
+    }),
+  ).toThrow('random');
+  expect(
+    validateFixtureConfiguration({
+      NODE_ENV: 'test',
+      DATABASE_URL: 'postgresql://localhost/devsync_e2e_fixture',
+      E2E_RUN_SECRET: secret,
+    }),
+  ).toEqual({ secret });
 });

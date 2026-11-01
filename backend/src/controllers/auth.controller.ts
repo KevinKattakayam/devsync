@@ -5,7 +5,7 @@ import { withPrincipalAccess } from '../security/workspace-policy';
 import { prisma } from '../lib/prisma';
 import { syncClerkUser } from '../middleware/auth.middleware';
 
-import { getAuth } from '@clerk/express';
+import { requestSubject } from '../security/authentication';
 import { verifyToken } from '@clerk/backend';
 
 export const updateMeSchema = z
@@ -19,8 +19,7 @@ export async function syncMe(req: Request, res: Response, next: NextFunction) {
   try {
     let clerkId: string | null = null;
     try {
-      const auth = getAuth(req);
-      if (auth?.userId) clerkId = auth.userId;
+      clerkId = await requestSubject(req);
     } catch {}
 
     if (!clerkId) {

@@ -9,6 +9,6 @@ function walk(folder) { for (const entry of fs.readdirSync(folder, { withFileTyp
   text.split('\n').forEach((line, index) => { if (/@ts-(ignore|nocheck)|eslint-disable/.test(line)) results.suppressions.push({file, line: index + 1}); });
  }
 }}
-for (const folder of ['backend/src', 'backend/prisma', 'frontend/src', 'frontend/tests']) walk(folder);
+for (const folder of ['backend/src', 'backend/prisma', 'backend/testing', 'frontend/src', 'frontend/tests']) walk(folder);
 fs.writeFileSync('docs/phase1c-evidence/remaining-type-escapes.json', JSON.stringify(results, null, 2) + '\n');
 console.log(JSON.stringify({ explicitAny: results.explicitAny.length, suppressions: results.suppressions.length }));
