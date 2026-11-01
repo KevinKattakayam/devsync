@@ -1,6 +1,7 @@
 'use client';
 
 import { errorMessage } from '@/lib/errors';
+import { z } from 'zod';
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
@@ -36,6 +37,7 @@ export default function WorkspacePage() {
   const [workspace, setWorkspace] = useState<Workspace | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [showInvite, setShowInvite] = useState(false);
+  const [invitationLink, setInvitationLink] = useState('');
   const [inviteEmail, setInviteEmail] = useState('');
   const [inviteRole, setInviteRole] = useState('EDITOR');
 
@@ -47,17 +49,6 @@ export default function WorkspacePage() {
       };
     }
   }, [socket, workspace, user]);
-
-  const loadWorkspace = async () => {
-    try {
-      const { data } = await workspaceApi.get(id);
-      setWorkspace(data);
-    } catch {
-      toast.error('Failed to load workspace');
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   useEffect(() => {
     let disposed = false;
@@ -80,11 +71,14 @@ export default function WorkspacePage() {
   const handleInvite = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await workspaceApi.invite(id, { email: inviteEmail, role: inviteRole });
-      toast.success('Invitation sent successfully');
-      setShowInvite(false);
+      const response = await workspaceApi.createInvitation(id, {
+        email: inviteEmail,
+        role: inviteRole,
+      });
+      const invitation = z.object({ id: z.string() }).parse(response.data);
+      setInvitationLink(`${window.location.origin}/invitations/${invitation.id}`);
+      toast.success('Invitation created. Share the link with your teammate.');
       setInviteEmail('');
-      loadWorkspace();
     } catch (err: unknown) {
       toast.error(errorMessage(err, 'Failed to invite member'));
     }
@@ -381,6 +375,12 @@ export default function WorkspacePage() {
             onClick={(e) => e.stopPropagation()}
           >
             <h2 className="text-sm font-bold text-foreground mb-1">Invite Workspace Teammate</h2>
+            {invitationLink && (
+              <p className="text-xs break-all my-3">
+                Share this invitation link: <a href={invitationLink}>{invitationLink}</a>. Your
+                teammate must sign in with their verified email. No email has been sent.
+              </p>
+            )}
             <p className="text-xs text-muted-foreground mb-4">
               Grant access to documents, boards & code snippets.
             </p>
@@ -427,7 +427,7 @@ export default function WorkspacePage() {
                   type="submit"
                   className="flex-1 py-2.5 rounded-xl gradient-primary text-white text-xs font-semibold hover:opacity-90 transition-opacity shadow-md glow-sm"
                 >
-                  Send Invitation
+                  Create Invitation
                 </button>
               </div>
             </form>

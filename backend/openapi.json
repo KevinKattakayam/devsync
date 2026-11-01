@@ -2277,6 +2277,134 @@
         }
       }
     },
+    "/api/v1/workspaces/{id}/invitations": {
+      "post": {
+        "operationId": "post__api_v1_workspaces__id__invitations",
+        "security": [
+          {
+            "ClerkSession": []
+          },
+          {
+            "ClerkCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "type": "string",
+              "pattern": "^[\\x21-\\x7e]{1,128}$"
+            },
+            "description": "Optional atomic create receipt; same authority and logical scope, 24-hour window. Different payload with the same key returns409. Authorization is rechecked on replay."
+          }
+        ],
+        "x-validation-complete": false,
+        "responses": {
+          "2XX": {
+            "description": "Success; response schema has not yet been registered"
+          },
+          "default": {
+            "description": "Error; legacy error string plus code and requestId",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "maxLength": 254,
+                    "format": "email",
+                    "pattern": "^(?:[A-Za-z0-9_'+\\-]+\\.)*[A-Za-z0-9_'+\\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+                  },
+                  "role": {
+                    "type": "string",
+                    "enum": [
+                      "EDITOR",
+                      "VIEWER"
+                    ]
+                  }
+                },
+                "required": [
+                  "email",
+                  "role"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/workspaces/{id}/invitations/{invitationId}": {
+      "delete": {
+        "operationId": "delete__api_v1_workspaces__id__invitations__invitationId_",
+        "security": [
+          {
+            "ClerkSession": []
+          },
+          {
+            "ClerkCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "invitationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "x-validation-complete": false,
+        "responses": {
+          "2XX": {
+            "description": "Success; response schema has not yet been registered"
+          },
+          "default": {
+            "description": "Error; legacy error string plus code and requestId",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/workspaces/{id}/invite": {
       "post": {
         "operationId": "post__api_v1_workspaces__id__invite",
@@ -2629,6 +2757,58 @@
                   "code",
                   "language"
                 ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/workspaces/invitations/{invitationId}/accept": {
+      "post": {
+        "operationId": "post__api_v1_workspaces_invitations__invitationId__accept",
+        "security": [
+          {
+            "ClerkSession": []
+          },
+          {
+            "ClerkCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "invitationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "x-validation-complete": false,
+        "responses": {
+          "2XX": {
+            "description": "Success; response schema has not yet been registered"
+          },
+          "default": {
+            "description": "Error; legacy error string plus code and requestId",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "type": "object",
+                "properties": {},
+                "additionalProperties": false
               }
             }
           }

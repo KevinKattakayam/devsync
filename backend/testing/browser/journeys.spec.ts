@@ -1,5 +1,6 @@
 import { test, expect, BrowserContext } from '@playwright/test';
 import { z } from 'zod';
+import { PrismaClient } from '@prisma/client';
 
 const api = 'http://127.0.0.1:5501';
 const workspace = 'devsync-sample';
@@ -179,4 +180,163 @@ test('owner moves a Kanban card and saves a snippet', async ({ page, context }) 
   await expect(page.getByText(title, { exact: true })).toBeVisible();
   await page.reload();
   await expect(page.getByText(title, { exact: true })).toBeVisible();
+});
+
+for (const role of ['EDITOR', 'VIEWER'] as const) {
+  test(`owner invites by email, recipient accepts with ${role}, reuse cannot restore removed membership`, async ({
+    browser,
+  }) => {
+    const owner = await browser.newContext(),
+      recipient = await browser.newContext();
+    try {
+      await login(owner, 'owner');
+      await login(recipient, role === 'EDITOR' ? 'editor' : 'viewer');
+      const created = await owner.request.post(`${api}/api/workspaces`, {
+        data: { name: `Invitation ${role} ${Date.now()}` },
+      });
+      expect(created.status()).toBe(201);
+      const workspaceId = z.object({ id: z.string() }).parse(await created.json()).id;
+      expect((await recipient.request.get(`${api}/api/workspaces/${workspaceId}`)).status()).toBe(
+        403,
+      );
+      const page = await owner.newPage();
+      await page.goto(`/workspace/${workspaceId}`);
+      await page.getByRole('button', { name: 'Invite Member', exact: true }).first().click();
+      await page
+        .getByPlaceholder('teammate@company.com')
+        .fill(`sample-${role.toLowerCase()}@devsync.invalid`);
+      await page.getByRole('combobox').selectOption(role);
+      await page.getByRole('button', { name: 'Create Invitation', exact: true }).click();
+      const link = await page.locator('a[href*="/invitations/"]').getAttribute('href');
+      if (!link) throw new Error('Invitation link missing');
+      const invitationId = link.split('/').pop();
+      const accept = await recipient.newPage();
+      await accept.goto(link);
+      await accept.getByRole('button', { name: 'Accept invitation', exact: true }).click();
+      await expect(accept.getByRole('status')).toHaveText(
+        `Invitation accepted. Your role is ${role}.`,
+      );
+      const members = z
+        .object({
+          members: z.array(
+            z.object({ id: z.string(), role: z.string(), user: z.object({ email: z.string() }) }),
+          ),
+        })
+        .parse(
+          await (await owner.request.get(`${api}/api/workspaces/${workspaceId}`)).json(),
+        ).members;
+      const member = members.find(
+        (item) => item.user.email === `sample-${role.toLowerCase()}@devsync.invalid`,
+      );
+      expect(member?.role).toBe(role);
+      expect(
+        (
+          await owner.request.delete(`${api}/api/workspaces/${workspaceId}/members/${member!.id}`)
+        ).ok(),
+      ).toBe(true);
+      const reused = await recipient.request.post(
+        `${api}/api/workspaces/invitations/${invitationId}/accept`,
+        { data: {} },
+      );
+      expect(reused.status()).toBe(400);
+      expect((await recipient.request.get(`${api}/api/workspaces/${workspaceId}`)).status()).toBe(
+        403,
+      );
+    } finally {
+      await owner.close();
+      await recipient.close();
+    }
+  });
+}
+test('invitation recipient binding, expiry, revocation, payload validation and concurrent acceptance', async ({
+  browser,
+}) => {
+  const owner = await browser.newContext(),
+    editor = await browser.newContext(),
+    viewer = await browser.newContext();
+  const adminUrl = process.env.E2E_ADMIN_DATABASE_URL;
+  if (!adminUrl || !new URL(adminUrl).pathname.startsWith('/devsync_e2e_'))
+    throw new Error('Isolated invitation clock fixture required');
+  const admin = new PrismaClient({ datasourceUrl: adminUrl });
+  try {
+    await login(owner, 'owner');
+    await login(editor, 'editor');
+    await login(viewer, 'viewer');
+    const workspaceId = z.object({ id: z.string() }).parse(
+      await (
+        await owner.request.post(`${api}/api/workspaces`, {
+          data: { name: `Negative invitations ${Date.now()}` },
+        })
+      ).json(),
+    ).id;
+    async function invite() {
+      const response = await owner.request.post(
+        `${api}/api/workspaces/${workspaceId}/invitations`,
+        { data: { email: 'sample-editor@devsync.invalid', role: 'EDITOR' } },
+      );
+      expect(response.status()).toBe(201);
+      return z.object({ id: z.string() }).parse(await response.json()).id;
+    }
+    const expired = await invite();
+    await admin.workspaceInvitation.update({
+      where: { id: expired },
+      data: { expiresAt: new Date(0) },
+    });
+    const page = await editor.newPage();
+    await page.goto(`/invitations/${expired}`);
+    await page.getByRole('button', { name: 'Accept invitation', exact: true }).click();
+    await expect(page.getByRole('status')).toHaveText(
+      'Invitation expired, revoked or already accepted',
+    );
+    const revoked = await invite();
+    expect(
+      (
+        await owner.request.delete(`${api}/api/workspaces/${workspaceId}/invitations/${revoked}`)
+      ).status(),
+    ).toBe(204);
+    expect(
+      (
+        await editor.request.post(`${api}/api/workspaces/invitations/${revoked}/accept`, {
+          data: {},
+        })
+      ).status(),
+    ).toBe(400);
+    const current = await invite();
+    expect(
+      (
+        await viewer.request.post(`${api}/api/workspaces/invitations/${current}/accept`, {
+          data: {},
+        })
+      ).status(),
+    ).toBe(403);
+    expect(
+      (
+        await editor.request.post(`${api}/api/workspaces/invitations/${current}/accept`, {
+          data: { role: 'OWNER' },
+        })
+      ).status(),
+    ).toBe(400);
+    const responses = await Promise.all(
+      [1, 2].map(() =>
+        editor.request.post(`${api}/api/workspaces/invitations/${current}/accept`, { data: {} }),
+      ),
+    );
+    expect(responses.map((response) => response.status()).sort()).toEqual([200, 400]);
+    const preserved = await invite();
+    expect(
+      (
+        await editor.request.post(`${api}/api/workspaces/invitations/${preserved}/accept`, {
+          data: {},
+        })
+      ).status(),
+    ).toBe(200);
+    const viewerCreate = await viewer.request.post(
+      `${api}/api/workspaces/${workspaceId}/invitations`,
+      { data: { email: 'sample-viewer@devsync.invalid', role: 'VIEWER' } },
+    );
+    expect(viewerCreate.status()).toBe(403);
+  } finally {
+    await admin.$disconnect();
+    await Promise.all([owner.close(), editor.close(), viewer.close()]);
+  }
 });

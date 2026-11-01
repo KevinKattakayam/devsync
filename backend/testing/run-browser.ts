@@ -42,6 +42,7 @@ async function main() {
       ...process.env,
       NODE_ENV: 'test',
       DATABASE_URL: postgres.getConnectionUri(),
+      E2E_ADMIN_DATABASE_URL: postgres.getConnectionUri(),
       REDIS_URL: `redis://${redis.getHost()}:${redis.getMappedPort(6379)}`,
       CLERK_SECRET_KEY: '',
       CLERK_PUBLISHABLE_KEY: '',

@@ -45,6 +45,10 @@ export const workspaceApi = {
   delete: (id: string) => api.delete(`/workspaces/${id}`),
   invite: (id: string, data: { email: string; role: string }) =>
     api.post(`/workspaces/${id}/invite`, data),
+  createInvitation: (id: string, data: { email: string; role: string }) =>
+    api.post(`/workspaces/${id}/invitations`, data),
+  acceptInvitation: (id: string) =>
+    api.post(`/workspaces/invitations/${encodeURIComponent(id)}/accept`, {}),
   removeMember: (id: string, memberId: string) =>
     api.delete(`/workspaces/${id}/members/${memberId}`),
   search: (id: string, query: string, limit = 10) =>

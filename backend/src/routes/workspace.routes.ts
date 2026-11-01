@@ -54,11 +54,31 @@ import {
   updateRepositorySchema,
 } from '../controllers/github-repository.controller';
 import { workspaceSearch } from '../controllers/search.controller';
+import {
+  createInvitation,
+  acceptPendingInvitation,
+  revokeInvitation,
+  invitationSchema,
+  acceptInvitationSchema,
+} from '../controllers/invitation.controller';
 
 const router = Router();
 
 // All workspace routes require auth
 router.use(authMiddleware);
+router.post(
+  '/invitations/:invitationId/accept',
+  validate(acceptInvitationSchema),
+  acceptPendingInvitation,
+);
+router.post(
+  '/:id/invitations',
+  requireOwner(),
+  idempotencyKeyHeader,
+  validate(invitationSchema),
+  createInvitation,
+);
+router.delete('/:id/invitations/:invitationId', requireOwner(), revokeInvitation);
 
 // Workspace CRUD
 router.post('/', idempotencyKeyHeader, validate(createWorkspaceSchema), createWorkspace);

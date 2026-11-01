@@ -53,6 +53,21 @@ model Workspace {
   scimExternalIdentities ScimExternalIdentity[]
   tokenUsage TokenUsage[]
   embeddingJobs EmbeddingJob[]
+  invitations WorkspaceInvitation[]
+}
+
+model WorkspaceInvitation {
+  id String @id @default(cuid())
+  workspaceId String
+  email String
+  role Role
+  expiresAt DateTime
+  acceptedAt DateTime?
+  revokedAt DateTime?
+  createdAt DateTime @default(now())
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  @@index([workspaceId])
+  @@index([email])
 }
 
 model TokenUsage {

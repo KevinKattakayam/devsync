@@ -142,3 +142,13 @@ Workspace-owner checks are correctly present on workspace mutations, invitations
 ## Test-only composition boundary
 
 Production server always uses Clerk. The separate backend/testing executable refuses production mode and ordinary database names, requires a random run capability and binds loopback. Its login routes/signing provider are outside src/dist and Docker context. Request-scoped fixture strategy cannot be selected by an HTTP field or production environment flag. Default-app tests reject fixture routes/credentials. This is a tested backend fixture, not a passing browser workflow or a replacement authentication deployment.
+
+## Phase1e pending invitations
+
+| Route | Authority / transaction | Verification |
+| --- | --- | --- |
+| POST /api[/v1]/workspaces/:id/invitations | Active OWNER, unsuspended tenant, strict email + EDITOR/VIEWER body; seven-day expiry, tenant RLS, atomic invitation/activity/create receipt | Playwright email-addressed UI invitations for both grant roles |
+| POST /api[/v1]/workspaces/invitations/:invitationId/accept | Active principal with matching verified provider email; recipient RLS discovery, locked tenant/user/invitation recheck; pending, unrevoked and unexpired; strict empty body; atomic member/acceptance/activity | Wrong-recipient and role injection rejected; concurrent acceptance has one winner; expired, revoked and reused links rejected; reuse cannot restore removed membership |
+| DELETE /api[/v1]/workspaces/:id/invitations/:invitationId | Active OWNER in the URL tenant, pending invitation bound to that tenant | Real HTTP revocation and subsequent acceptance denial |
+
+Legacy immediate-add /invite remains unchanged. The link carries an identifier, not recipient authority. No email delivery is claimed. Existing memberships retain their current role on acceptance. See ADR018.
