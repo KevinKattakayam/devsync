@@ -180,3 +180,8 @@ FEATURE_ASYNC_DIGEST defaults off; new v2 digest routes use central current acti
 ## Phase 5b deployment boundaries
 
 Frontend `GET /healthz` is public liveness only and returns no workspace data. Explicit local mode without Clerk keys renders setup guidance; private page requests redirect to login and protected backend identity requests remain401. Production startup requires configured Clerk keys and HTTPS/WSS origins. No fixture authentication is enabled in these images. Local initialization uses separate administrative credentials for migrations/seeds/grants; API/worker receive only a NOSUPERUSER NOBYPASSRLS runtime role. Existing route, central authorization and CRDT contracts are retained. Actual clean-clone checks and configuration validation tests are recorded in [deployment/RESULTS.md](deployment/RESULTS.md).
+
+
+## Phase 5a-2 CRDT session renewal
+
+The browser periodically requests an uncached access token for an already authenticated Hocuspocus provider and sends it using the existing token-sync protocol. This does not grant authority: the server still verifies the same principal, active session, current workspace membership and writer role; expiry, revocation, principal substitution and viewer write denials remain enforced. Failed renewal clears local write permission and exposes offline status. Network resources and renewal timers are disposed on room/account change or unmount. No new HTTP route or contract version is introduced. Background timer suspension and real Clerk behavior are not certified by the fixture journey.

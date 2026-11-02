@@ -3,6 +3,8 @@
 - Classify the two secret-scanner matches as exact non-credentials; add narrowly scoped exceptions and five detection regression cases, keeping all default rules.
 - Remove unused npm/npx/Yarn from runtime images; current scans reduce High entries42 to32 per image, retaining1 Critical and all unresolved release gates.
 - Preserve current-image/filesystem scan output, required app gates and exact blocker inventory under docs/quality/phase5a-2.
+- Renew authenticated CRDT sessions with uncached tokens, timer cleanup and fail-closed errors; add two unit regressions and stronger shell readiness assertions.
+- Record final browser2 passed/4 failed; all four original visual differences remain. Keep baselines/tolerance unchanged and defer further instrumentation, Lighthouse and load execution under the timebox.
 
 # Phase 5b — containers, gated CI and deployment configuration
 

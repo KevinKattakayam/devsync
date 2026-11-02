@@ -13,9 +13,11 @@ const workspace = 'devsync-sample';
 const doc = 'devsync-sample-doc';
 const pass =
   process.env.E2E_QUALITY || process.env.E2E_SHELL_PASS === 'final' ? 'final' : 'initial';
-const output = process.env.E2E_QUALITY
-  ? resolve(__dirname, '../../../docs/quality/shell')
-  : resolve(__dirname, '../../../docs/ui/after/shell', pass);
+const output = process.env.E2E_SHELL_OUTPUT
+  ? resolve(__dirname, '../../..', process.env.E2E_SHELL_OUTPUT)
+  : process.env.E2E_QUALITY
+    ? resolve(__dirname, '../../../docs/quality/shell')
+    : resolve(__dirname, '../../../docs/ui/after/shell', pass);
 const reports: {
   theme: string;
   width: number;
@@ -116,6 +118,11 @@ for (const theme of ['dark', 'light'] as const)
         await page.goto(`/workspace/${workspace}/docs/${doc}`);
         await expect(page.getByLabel('Document title', { exact: true })).toHaveValue('Welcome');
         await expect(page.locator('.ProseMirror')).toHaveAttribute('contenteditable', 'true');
+        // Write permission and Socket.IO presence do not prove the CRDT handshake/ack completed.
+        await expect(page.getByText('Saved', { exact: true })).toBeVisible();
+        await expect(
+          page.getByRole('status').filter({ hasText: 'Offline (Saving Locally)' }),
+        ).toHaveCount(0);
         await expect(page.getByLabel('Server connected', { exact: true })).toBeAttached();
         await expect(
           page.getByRole('button', {

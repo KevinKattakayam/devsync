@@ -1,0 +1,13 @@
+[
+  {
+    "gate": "lint",
+    "command": [
+      "npm",
+      "run",
+      "lint"
+    ],
+    "exitCode": 1,
+    "elapsedSeconds": 7.162,
+    "output": "frontend-lint.txt"
+  }
+]

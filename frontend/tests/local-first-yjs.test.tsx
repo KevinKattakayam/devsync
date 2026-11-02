@@ -8,7 +8,13 @@ import { useLocalFirstYDoc } from '@/lib/local-first-yjs';
 // Only the network transport is simulated here. TipTap/Yjs and IndexedDB
 // persistence run in these tests; backend tests exercise the actual protocol.
 const transport = vi.hoisted(() => ({
-  providers: [] as { config: HocuspocusProviderConfiguration; document: Doc; destroyed: boolean }[],
+  providers: [] as {
+    config: HocuspocusProviderConfiguration;
+    document: Doc;
+    destroyed: boolean;
+    isAuthenticated: boolean;
+    tokenSends: number;
+  }[],
   sockets: [] as { destroyed: boolean }[],
 }));
 vi.mock('@hocuspocus/provider', () => ({
@@ -23,10 +29,16 @@ vi.mock('@hocuspocus/provider', () => ({
   },
   HocuspocusProvider: class {
     destroyed = false;
+    isAuthenticated = true;
+    tokenSends = 0;
     document: Doc;
     constructor(readonly config: HocuspocusProviderConfiguration) {
       this.document = config.document!;
       transport.providers.push(this);
+    }
+    async sendToken() {
+      if (typeof this.config.token === 'function') await this.config.token();
+      this.tokenSends += 1;
     }
     attach() {
       this.config.onAuthenticated?.({ scope: 'read-write' });
@@ -39,6 +51,7 @@ vi.mock('@hocuspocus/provider', () => ({
 }));
 afterEach(() => {
   cleanup();
+  vi.restoreAllMocks();
   transport.providers.length = 0;
   transport.sockets.length = 0;
 });
@@ -85,4 +98,55 @@ it('uses a fresh token callback and exposes actual pending acknowledgements', as
   });
   expect(view.result.current.pending).toBe(false);
   expect(view.result.current.canWrite).toBe(false);
+});
+
+it('renews authenticated sessions with an uncached token and cancels renewal on unmount', async () => {
+  const interval = vi.spyOn(window, 'setInterval');
+  const clear = vi.spyOn(window, 'clearInterval');
+  const token = vi
+    .fn<(options?: { skipCache?: boolean }) => Promise<string | null>>()
+    .mockResolvedValue('synthetic-access');
+  const view = renderHook(() => useLocalFirstYDoc('document:ws:renewal', token, 'alice'));
+  await waitFor(() => expect(view.result.current.canWrite).toBe(true));
+  const index = interval.mock.calls.findIndex(([, delay]) => delay === 20000);
+  const refresh = interval.mock.calls[index]?.[0];
+  if (typeof refresh !== 'function') throw new Error('Missing renewal callback');
+  const handle = interval.mock.results[index].value;
+  const provider = transport.providers[0];
+  await act(async () => {
+    refresh();
+  });
+  expect(token).toHaveBeenLastCalledWith({ skipCache: true });
+  expect(provider.tokenSends).toBe(1);
+  provider.isAuthenticated = false;
+  await act(async () => {
+    refresh();
+  });
+  expect(provider.tokenSends).toBe(1);
+  view.unmount();
+  expect(clear).toHaveBeenCalledWith(handle);
+  await act(async () => {
+    refresh();
+  });
+  expect(provider.tokenSends).toBe(1);
+});
+
+it('fails closed on renewal failure without exposing provider error text', async () => {
+  const interval = vi.spyOn(window, 'setInterval');
+  const token = vi
+    .fn<(options?: { skipCache?: boolean }) => Promise<string | null>>()
+    .mockResolvedValue('synthetic-access');
+  const view = renderHook(() => useLocalFirstYDoc('document:ws:renewal-failure', token, 'alice'));
+  await waitFor(() => expect(view.result.current.canWrite).toBe(true));
+  const refresh = interval.mock.calls.find(([, delay]) => delay === 20000)?.[0];
+  if (typeof refresh !== 'function') throw new Error('Missing renewal callback');
+  token.mockRejectedValue(new Error('Private provider diagnostic'));
+  await act(async () => {
+    refresh();
+  });
+  expect(view.result.current.canWrite).toBe(false);
+  expect(view.result.current.syncStatus).toBe('offline');
+  const callback = transport.providers[0].config.token;
+  if (typeof callback !== 'function') throw new Error('Missing token callback');
+  await expect(callback()).rejects.toThrow('Authentication required');
 });

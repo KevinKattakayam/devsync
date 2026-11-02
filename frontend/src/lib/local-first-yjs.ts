@@ -27,7 +27,7 @@ const leases = new WeakMap<Y.Doc, number>();
  */
 export function useLocalFirstYDoc(
   room: string,
-  getToken: () => Promise<string | null>,
+  getToken: (options?: { skipCache?: boolean }) => Promise<string | null>,
   principal: string | undefined,
 ): LocalFirstYDoc {
   const document = useMemo(
@@ -58,6 +58,8 @@ export function useLocalFirstYDoc(
 
     let remote: HocuspocusProvider | null = null;
     let socket: HocuspocusProviderWebsocket | null = null;
+    let tokenRefresh: number | undefined;
+    let refreshingToken = false;
     void getToken()
       .then((token) => {
         if (!token || disposed) return;
@@ -79,9 +81,14 @@ export function useLocalFirstYDoc(
           name: room,
           document,
           token: async () => {
-            const current = await getToken();
-            if (!current) throw new Error('Authentication required');
-            return current;
+            try {
+              const current = await getToken({ skipCache: true });
+              if (!current || disposed) throw new Error('Authentication required');
+              return current;
+            } catch {
+              // The provider may surface this reason; never forward identity-provider errors.
+              throw new Error('Authentication required');
+            }
           },
           onAuthenticated: ({ scope }) => {
             if (!disposed) setWritableDocument(scope === 'read-write' ? document : null);
@@ -93,6 +100,7 @@ export function useLocalFirstYDoc(
             if (!disposed) {
               setWritableDocument(null);
               setSyncStatus('offline');
+              setHealth('offline');
             }
           },
           onStatus: () => {
@@ -116,6 +124,24 @@ export function useLocalFirstYDoc(
           },
         });
         remote.attach();
+        // Short-lived access tokens must renew before the server's expiry sweep.
+        // Renewal still runs the server's identity, membership and role policy.
+        tokenRefresh = window.setInterval(() => {
+          if (disposed || !remote?.isAuthenticated || refreshingToken) return;
+          refreshingToken = true;
+          void remote
+            .sendToken()
+            .catch(() => {
+              if (!disposed) {
+                setWritableDocument(null);
+                setSyncStatus('offline');
+                setHealth('offline');
+              }
+            })
+            .finally(() => {
+              refreshingToken = false;
+            });
+        }, 20000);
         if (!disposed) setProvider(remote);
       })
       .catch(() => {
@@ -145,6 +171,7 @@ export function useLocalFirstYDoc(
 
     return () => {
       disposed = true;
+      if (tokenRefresh !== undefined) window.clearInterval(tokenRefresh);
       remote?.destroy();
       socket?.destroy();
       void persistence.destroy();

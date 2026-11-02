@@ -720,5 +720,17 @@
         "counts": {}
       }
     ]
+  },
+  "frontend-renewal-final": {
+    "counts": {
+      "LOW": 83,
+      "HIGH": 32,
+      "MEDIUM": 98,
+      "UNKNOWN": 2,
+      "CRITICAL": 1
+    },
+    "image": "devsync-frontend:phase5a-2-renewal",
+    "imageId": "sha256:36942b6d387b33c7ea31b51f64acd2344557fa9dc90903b89751cba842235296",
+    "scope": "Includes the final client token-renewal source; runtime dependencies, base and Dockerfile unchanged since security group."
   }
 }

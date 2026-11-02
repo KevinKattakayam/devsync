@@ -34,3 +34,11 @@ The vulnerability-only filesystem scan excludes dependency trees, Git, .worktree
 Both apps pass lint, format, strict types, tests and build. Backend28 suites/259 tests; frontend17 files/74 component tests plus the separate Node runner. Both changed Docker runner images build successfully. Workflow actionlint exits0 without diagnostics. Raw command output and per-gate exit/timing records are retained here. Scanner regression first lacked Docker socket access inside the sandbox; the authorized rerun passed. An initial history triage attempt used the wrong container user and returned no parseable report; no raw captures were exposed. The repository-owner scan succeeded. No fixture assertion, security threshold or test was removed or weakened.
 
 Exception syntax follows [Gitleaks8.30.0 configuration documentation](https://github.com/gitleaks/gitleaks/blob/v8.30.0/README.md#configuration). The exact-match exceptions are reviewed false positives, not a scanner-wide pass claim.
+
+## Visual follow-up and remaining scope
+
+See [VISUAL_REVIEW.md](VISUAL_REVIEW.md) for each of the four image-triplet dispositions and actual failed runs. None is approved as an intentional baseline change. Final browser2 passed/4 failed(7.8m), with the original pixel counts unchanged. Seven reached shell axe reports show0 violations and5 incomplete rule occurrences; no all-state accessibility pass. The tested client renewal improvement passes76 frontend component tests but does not close those failures. No third cycle or baseline update.
+
+Lighthouse and local Compose/k6 latency/editor-capacity execution were not attempted under the explicit half-scope timebox. These are deferred measurements, not zero scores or proof the environment cannot run them. Native pointer drag, OS security entries and earlier operational/audit deferrals remain unresolved. No hosted CI, live provider login, production load or deployment claim.
+
+The final frontend renewal source was also built into `devsync-frontend:phase5a-2-renewal` and scanned once after that source change: 83 LOW, 32 HIGH, 98 MEDIUM, 2 UNKNOWN, 1 CRITICAL. Full raw output is frontend-renewal-final.json; the unchanged backend security-group image remains the final backend runtime source. Build/scan reports retain image identities; no changed image is represented by the stale April report.
