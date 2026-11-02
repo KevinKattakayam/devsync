@@ -1,0 +1,21 @@
+[
+  {
+    "file": "backend/src/__tests__/resource-mutations.integration.test.ts",
+    "commit": "9109dd7f384734ca0a4262145aac9ccd867737d3",
+    "line": 570,
+    "contains_fixture_marker": true,
+    "contains_placeholder_marker": false,
+    "classification": "Synthetic fixture marker in test source; not a deployed provider credential."
+  },
+  {
+    "file": "backend/.env.example",
+    "commit": "cc57728b582e5e5df639ee764994e7a8b63210f6",
+    "line": 4,
+    "contains_fixture_marker": false,
+    "contains_placeholder_marker": false,
+    "classification": "Reported span starts at a blank Clerk assignment. Capture was redacted; manual span-level triage remains incomplete. No live credential exposure proven, no key removal claimed.",
+    "setting_name": "CLERK_SECRET_KEY",
+    "matches_local_configured_key": false,
+    "reported_start_line_assignment_is_empty": true
+  }
+]

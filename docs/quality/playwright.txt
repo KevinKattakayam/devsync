@@ -1,0 +1,151 @@
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": PostgreSQL database "devsync_e2e_browser", schema "public" at "localhost:32916"
+
+14 migrations found in prisma/migrations
+
+Applying migration `20260729000000_baseline`
+Applying migration `20260729180000_enterprise_platform`
+Applying migration `20260815000000_phase_3_tenant_rls`
+Applying migration `20260815001000_scim_provisioning`
+Applying migration `20260815002000_commercial_billing`
+Applying migration `20261031000000_tenant_indexes`
+Applying migration `20261031010000_crdt_journal`
+Applying migration `202611010001_canonical_revision`
+Applying migration `202611010002_embedding_authority`
+Applying migration `202611010003_atomic_create_idempotency`
+Applying migration `202611010004_workspace_invitations`
+Applying migration `202611020001_decision_receipts`
+Applying migration `202611020002_snippet_safety`
+Applying migration `202611020003_async_digest`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20260729000000_baseline/
+    └─ migration.sql
+  └─ 20260729180000_enterprise_platform/
+    └─ migration.sql
+  └─ 20260815000000_phase_3_tenant_rls/
+    └─ migration.sql
+  └─ 20260815001000_scim_provisioning/
+    └─ migration.sql
+  └─ 20260815002000_commercial_billing/
+    └─ migration.sql
+  └─ 20261031000000_tenant_indexes/
+    └─ migration.sql
+  └─ 20261031010000_crdt_journal/
+    └─ migration.sql
+  └─ 202611010001_canonical_revision/
+    └─ migration.sql
+  └─ 202611010002_embedding_authority/
+    └─ migration.sql
+  └─ 202611010003_atomic_create_idempotency/
+    └─ migration.sql
+  └─ 202611010004_workspace_invitations/
+    └─ migration.sql
+  └─ 202611020001_decision_receipts/
+    └─ migration.sql
+  └─ 202611020002_snippet_safety/
+    └─ migration.sql
+  └─ 202611020003_async_digest/
+    └─ migration.sql
+      
+All migrations have been successfully applied.
+Sample workspace seeded. Sign in with the supplied Clerk test identities.
+/home/kevin/devsync/.worktrees/frontend-fixture
+Isolated fixture server ready
+▲ Next.js 16.4.3 (webpack)
+- Local:         http://127.0.0.1:3001
+- Network:       http://127.0.0.1:3001
+✓ Ready in 400ms
+✓ Running next.config.ts took 35ms
+
+✓ Generated AGENTS.md for AI agents. Set `agentRules: false` in next.config to disable.
+○ Compiling /(auth)/login/[[...rest]]/page ...
+ GET /login 200 in 1589ms (next.js: 1122ms, proxy.ts: 76ms, application-code: 390ms)
+
+Running 21 tests using 1 worker
+
+(node:212788) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 testing/browser/contracts.spec.ts:8:5 › Zod response contracts match real authenticated resource and service operations (1.9s)
+ GET /dashboard 200 in 3.1s (next.js: 2.7s, proxy.ts: 10ms, application-code: 340ms)
+ GET /login 200 in 105ms (next.js: 49ms, proxy.ts: 5ms, application-code: 51ms)
+ GET /login 200 in 46ms (next.js: 12ms, proxy.ts: 8ms, application-code: 25ms)
+  ✓   2 testing/browser/journeys.spec.ts:10:7 › owner signs in and signs out with server session invalidation (5.4s)
+ GET /dashboard 200 in 59ms (next.js: 3ms, proxy.ts: 6ms, application-code: 49ms)
+ GET /login 200 in 108ms (next.js: 45ms, proxy.ts: 4ms, application-code: 59ms)
+ GET /login 200 in 43ms (next.js: 10ms, proxy.ts: 6ms, application-code: 27ms)
+  ✓   3 testing/browser/journeys.spec.ts:10:7 › editor signs in and signs out with server session invalidation (2.2s)
+ GET /dashboard 200 in 57ms (next.js: 2ms, proxy.ts: 10ms, application-code: 45ms)
+ GET /login 200 in 90ms (next.js: 42ms, proxy.ts: 5ms, application-code: 44ms)
+ GET /login 200 in 44ms (next.js: 10ms, proxy.ts: 6ms, application-code: 28ms)
+  ✓   4 testing/browser/journeys.spec.ts:10:7 › viewer signs in and signs out with server session invalidation (2.2s)
+ GET /dashboard 200 in 61ms (next.js: 2ms, proxy.ts: 5ms, application-code: 54ms)
+ GET /dashboard 200 in 47ms (next.js: 2ms, proxy.ts: 4ms, application-code: 41ms)
+  ✓   5 testing/browser/journeys.spec.ts:22:5 › owner creates a workspace from the dashboard (3.8s)
+○ Compiling /(dashboard)/workspace/[id]/docs/[docId]/page ...
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 5.3s (next.js: 4.8s, proxy.ts: 10ms, application-code: 472ms)
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 5.3s (next.js: 4.8s, proxy.ts: 12ms, application-code: 473ms)
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 5.3s (next.js: 4.8s, proxy.ts: 12ms, application-code: 473ms)
+  ✓   6 testing/browser/journeys.spec.ts:33:5 › two contexts edit the same document and both edits merge; viewer is read-only (8.5s)
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 117ms (next.js: 61ms, proxy.ts: 6ms, application-code: 49ms)
+  ✓   7 testing/browser/journeys.spec.ts:73:5 › owner removes an editor with an open document and access closes within seconds (2.2s)
+Yjs was already imported. This breaks constructor checks and will lead to issues! - https://github.com/yjs/yjs/issues/438
+ GET /workspace/devsync-sample/kanban 200 in 3.1s (next.js: 2.9s, proxy.ts: 4ms, application-code: 218ms)
+  ✘   8 testing/browser/journeys.spec.ts:111:5 › owner moves a Kanban card and saves a snippet (4.0m)
+(node:229774) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+○ Compiling /(dashboard)/workspace/[id]/page ...
+ GET /workspace/cmvz5a18000bfqryod65x0qtg 200 in 4.8s (next.js: 4.4s, proxy.ts: 8ms, application-code: 354ms)
+ GET /workspace/cmvz5a18000bfqryod65x0qtg 200 in 214ms (next.js: 108ms, proxy.ts: 8ms, application-code: 97ms)
+ GET /invitations/cmvz5a6rv00c4qryoic5v2eyp 200 in 28.0s (next.js: 27.4s, proxy.ts: 7ms, application-code: 533ms)
+ GET /workspace/cmvz5a18000bfqryod65x0qtg 200 in 231ms (next.js: 96ms, proxy.ts: 8ms, application-code: 127ms)
+  ✘   9 testing/browser/journeys.spec.ts:160:7 › owner invites by email, recipient accepts with EDITOR, reuse cannot restore removed membership (38.0s)
+(node:231089) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ GET /workspace/cmvz5avoz00cmqryocp57plro 200 in 142ms (next.js: 64ms, proxy.ts: 6ms, application-code: 71ms)
+ GET /invitations/cmvz5axik00ddqryoc361vokz 200 in 141ms (next.js: 70ms, proxy.ts: 6ms, application-code: 66ms)
+  ✘  10 testing/browser/journeys.spec.ts:160:7 › owner invites by email, recipient accepts with VIEWER, reuse cannot restore removed membership (4.5s)
+(node:231651) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ GET /invitations/cmvz5b0fn00e7qryovge24kwp 200 in 133ms (next.js: 66ms, proxy.ts: 6ms, application-code: 62ms)
+  ✘  11 testing/browser/journeys.spec.ts:225:5 › invitation recipient binding, expiry, revocation, payload validation and concurrent acceptance (2.5s)
+(node:232103) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+○ Compiling /api/auth/reset/route ...
+ GET /api/auth/reset?redirect=https%3A%2F%2Fattacker.invalid 307 in 3.7s (next.js: 3.6s, proxy.ts: 5ms, application-code: 72ms)
+  ✘  12 testing/browser/quality.spec.ts:8:9 › quality fixes dark 1440 (3.8s)
+(node:232520) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ GET /api/auth/reset?redirect=https%3A%2F%2Fattacker.invalid 307 in 13ms (next.js: 3ms, proxy.ts: 5ms, application-code: 6ms)
+  ✘  13 testing/browser/quality.spec.ts:8:9 › quality fixes dark 390 (82ms)
+(node:232687) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ GET /api/auth/reset?redirect=https%3A%2F%2Fattacker.invalid 307 in 9ms (next.js: 1.3ms, proxy.ts: 3ms, application-code: 4ms)
+  ✘  14 testing/browser/quality.spec.ts:8:9 › quality fixes light 1440 (62ms)
+(node:232836) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ GET /api/auth/reset?redirect=https%3A%2F%2Fattacker.invalid 307 in 17ms (next.js: 3ms, proxy.ts: 6ms, application-code: 8ms)
+  ✘  15 testing/browser/quality.spec.ts:8:9 › quality fixes light 390 (101ms)
+(node:233018) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Yjs was already imported. This breaks constructor checks and will lead to issues! - https://github.com/yjs/yjs/issues/438
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 3.0s (next.js: 2.5s, proxy.ts: 4ms, application-code: 451ms)
+  ✘  16 testing/browser/shell.spec.ts:104:9 › dark 1440 shell states, keyboard access and visual baseline (1.1m)
+(node:237252) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 165ms (next.js: 74ms, proxy.ts: 7ms, application-code: 84ms)
+  ✘  17 testing/browser/shell.spec.ts:104:9 › dark 390 shell states, keyboard access and visual baseline (1.3m)
+(node:239899) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }
+prisma:error Error in PostgreSQL connection: Error { kind: Closed, cause: None }

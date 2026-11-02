@@ -14,7 +14,7 @@ for (const role of ['owner', 'editor', 'viewer'] as const) {
     await login(context, role);
     await page.goto('/dashboard');
     await page.getByRole('button', { name: new RegExp(`Sample ${role}$`) }).click();
-    await page.getByRole('button', { name: 'Sign Out', exact: true }).click();
+    await page.getByRole('menuitem', { name: 'Sign Out', exact: true }).click();
     await expect(page).toHaveURL(/\/login/);
     expect((await context.request.get(`${api}/__test/me`)).status()).toBe(401);
   });
@@ -187,7 +187,7 @@ for (const role of ['EDITOR', 'VIEWER'] as const) {
       const accept = await recipient.newPage();
       await accept.goto(link);
       await accept.getByRole('button', { name: 'Accept invitation', exact: true }).click();
-      await expect(accept.getByRole('status')).toHaveText(
+      await expect(accept.locator('#route-content').getByRole('status')).toHaveText(
         `Invitation accepted. Your role is ${role}.`,
       );
       const members = z
@@ -259,7 +259,7 @@ test('invitation recipient binding, expiry, revocation, payload validation and c
     const page = await editor.newPage();
     await page.goto(`/invitations/${expired}`);
     await page.getByRole('button', { name: 'Accept invitation', exact: true }).click();
-    await expect(page.getByRole('status')).toHaveText(
+    await expect(page.locator('#route-content').getByRole('status')).toHaveText(
       'Invitation expired, revoked or already accepted',
     );
     const revoked = await invite();

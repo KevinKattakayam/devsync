@@ -11,8 +11,11 @@ declare global {
 }
 const workspace = 'devsync-sample';
 const doc = 'devsync-sample-doc';
-const pass = process.env.E2E_SHELL_PASS === 'final' ? 'final' : 'initial';
-const output = resolve(__dirname, '../../../docs/ui/after/shell', pass);
+const pass =
+  process.env.E2E_QUALITY || process.env.E2E_SHELL_PASS === 'final' ? 'final' : 'initial';
+const output = process.env.E2E_QUALITY
+  ? resolve(__dirname, '../../../docs/quality/shell')
+  : resolve(__dirname, '../../../docs/ui/after/shell', pass);
 const reports: {
   theme: string;
   width: number;
@@ -77,7 +80,7 @@ async function settle(page: Page) {
     .evaluateAll((elements) =>
       Promise.all(
         elements.flatMap((element) =>
-          element.getAnimations().map((animation) => animation.finished),
+          element.getAnimations().map((animation) => animation.finished.catch(() => undefined)),
         ),
       ),
     );

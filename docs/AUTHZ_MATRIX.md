@@ -66,7 +66,7 @@ Every application `/api/...` router below is also mounted at `/api/v1/...` with 
 | `POST /api/workspaces/:id/snippets` | Clerk + local principal | OWNER / EDITOR | Zod body | `backend/src/routes/workspace.routes.ts:59` |
 | `GET /api/health` | Public | None (operational endpoint) | N/A | `backend/src/app.ts:54` |
 | `GET /api/ready` | Public | None (operational endpoint) | N/A | `backend/src/app.ts:60` |
-| `GET /api/auth/reset (Next)` | Public | No user/workspace check; arbitrary redirect and cookie clearing | No redirect allowlist | `frontend/src/app/api/auth/reset/route.ts:4` |
+| `GET /api/auth/reset (Next)` | Public | Public cookie-clearing GET; logout-CSRF/provider revocation unresolved | Same-origin root-relative destination; relative Location header | `frontend/src/app/api/auth/reset/route.ts:4` |
 | `POST /api/superadmin/workspaces/:workspaceId/kill-switch (Next)` | Clerk currentUser | publicMetadata.systemRole=SUPER_ADMIN; forwards service token | Zod reason; encoded workspace ID | `frontend/src/app/api/superadmin/workspaces/[workspaceId]/kill-switch/route.ts:7` |
 
 ## Socket.io input events

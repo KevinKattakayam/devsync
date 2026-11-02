@@ -1,0 +1,37 @@
+{
+  "baselineUpdated": false,
+  "cases": [
+    {
+      "case": "shell-light-390-shell-stat-11d6d--access-and-visual-baseline",
+      "differentPixels": 11719,
+      "reportedRoundedRatio": 0.04,
+      "snapshot": "light-390-default.png",
+      "status": "failed",
+      "maxDiffPixelRatio": 0.002
+    },
+    {
+      "case": "shell-dark-390-shell-state-40feb--access-and-visual-baseline",
+      "differentPixels": 3007,
+      "reportedRoundedRatio": 0.01,
+      "snapshot": "dark-390-commands.png",
+      "status": "failed",
+      "maxDiffPixelRatio": 0.002
+    },
+    {
+      "case": "shell-light-1440-shell-sta-4b595--access-and-visual-baseline",
+      "differentPixels": 7867,
+      "reportedRoundedRatio": 0.01,
+      "snapshot": "light-1440-default.png",
+      "status": "failed",
+      "maxDiffPixelRatio": 0.002
+    },
+    {
+      "case": "shell-dark-1440-shell-stat-778c6--access-and-visual-baseline",
+      "differentPixels": 3337,
+      "reportedRoundedRatio": 0.01,
+      "snapshot": "dark-1440-commands-empty.png",
+      "status": "failed",
+      "maxDiffPixelRatio": 0.002
+    }
+  ]
+}

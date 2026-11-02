@@ -1,0 +1,22 @@
+[
+  {
+    "theme": "light",
+    "width": 390,
+    "state": "title",
+    "bounds": {
+      "x": 16,
+      "y": 81,
+      "width": 358,
+      "height": 36
+    }
+  },
+  {
+    "theme": "light",
+    "width": 390,
+    "state": "default",
+    "viewport": 390,
+    "document": 390,
+    "main": 390,
+    "scroll": 390
+  }
+]

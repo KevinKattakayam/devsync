@@ -1,0 +1,206 @@
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": PostgreSQL database "devsync_e2e_browser", schema "public" at "localhost:32769"
+
+14 migrations found in prisma/migrations
+
+Applying migration `20260729000000_baseline`
+Applying migration `20260729180000_enterprise_platform`
+Applying migration `20260815000000_phase_3_tenant_rls`
+Applying migration `20260815001000_scim_provisioning`
+Applying migration `20260815002000_commercial_billing`
+Applying migration `20261031000000_tenant_indexes`
+Applying migration `20261031010000_crdt_journal`
+Applying migration `202611010001_canonical_revision`
+Applying migration `202611010002_embedding_authority`
+Applying migration `202611010003_atomic_create_idempotency`
+Applying migration `202611010004_workspace_invitations`
+Applying migration `202611020001_decision_receipts`
+Applying migration `202611020002_snippet_safety`
+Applying migration `202611020003_async_digest`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20260729000000_baseline/
+    └─ migration.sql
+  └─ 20260729180000_enterprise_platform/
+    └─ migration.sql
+  └─ 20260815000000_phase_3_tenant_rls/
+    └─ migration.sql
+  └─ 20260815001000_scim_provisioning/
+    └─ migration.sql
+  └─ 20260815002000_commercial_billing/
+    └─ migration.sql
+  └─ 20261031000000_tenant_indexes/
+    └─ migration.sql
+  └─ 20261031010000_crdt_journal/
+    └─ migration.sql
+  └─ 202611010001_canonical_revision/
+    └─ migration.sql
+  └─ 202611010002_embedding_authority/
+    └─ migration.sql
+  └─ 202611010003_atomic_create_idempotency/
+    └─ migration.sql
+  └─ 202611010004_workspace_invitations/
+    └─ migration.sql
+  └─ 202611020001_decision_receipts/
+    └─ migration.sql
+  └─ 202611020002_snippet_safety/
+    └─ migration.sql
+  └─ 202611020003_async_digest/
+    └─ migration.sql
+      
+All migrations have been successfully applied.
+Sample workspace seeded. Sign in with the supplied Clerk test identities.
+/home/kevin/devsync/.worktrees/frontend-fixture
+Isolated fixture server ready
+▲ Next.js 16.4.3 (webpack)
+- Local:         http://127.0.0.1:3001
+- Network:       http://127.0.0.1:3001
+✓ Ready in 432ms
+✓ Running next.config.ts took 34ms
+
+✓ Generated AGENTS.md for AI agents. Set `agentRules: false` in next.config to disable.
+○ Compiling /(auth)/login/[[...rest]]/page ...
+ GET /login 200 in 569ms (proxy.ts: 65ms)
+ GET /login 200 in 1130ms (next.js: 669ms, proxy.ts: 6ms, application-code: 455ms)
+
+Running 7 tests using 1 worker
+
+(node:9906) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ GET /workspace/cmvz6jh2r00038z8aenhri1eq 200 in 3.4s (next.js: 3.1s, proxy.ts: 9ms, application-code: 289ms)
+ GET /workspace/cmvz6jh2r00038z8aenhri1eq 200 in 149ms (next.js: 56ms, proxy.ts: 9ms, application-code: 84ms)
+ GET /invitations/cmvz6jlbo000q8z8ar6kfy6q6 200 in 2.8s (next.js: 2.6s, proxy.ts: 4ms, application-code: 209ms)
+ GET /workspace/cmvz6jh2r00038z8aenhri1eq 200 in 134ms (next.js: 48ms, proxy.ts: 4ms, application-code: 82ms)
+  ✓  1 testing/browser/journeys.spec.ts:160:7 › owner invites by email, recipient accepts with EDITOR, reuse cannot restore removed membership (10.3s)
+ GET /workspace/cmvz6jouv001a8z8adegemekp 200 in 64ms (next.js: 4ms, proxy.ts: 6ms, application-code: 54ms)
+ GET /invitations/cmvz6jqan001z8z8ahquxciuk 200 in 112ms (next.js: 61ms, proxy.ts: 5ms, application-code: 46ms)
+  ✓  2 testing/browser/journeys.spec.ts:160:7 › owner invites by email, recipient accepts with VIEWER, reuse cannot restore removed membership (3.8s)
+ GET /invitations/cmvz6jrwa002x8z8a2ikqaavt 200 in 135ms (next.js: 60ms, proxy.ts: 3ms, application-code: 71ms)
+  ✓  3 testing/browser/journeys.spec.ts:225:5 › invitation recipient binding, expiry, revocation, payload validation and concurrent acceptance (2.1s)
+ GET /api/auth/reset?redirect=https%3A%2F%2Fattacker.invalid 307 in 1818ms (next.js: 1744ms, proxy.ts: 5ms, application-code: 70ms)
+ GET /settings/billing 200 in 3.3s (next.js: 3.0s, proxy.ts: 5ms, application-code: 255ms)
+ GET /workspace/devsync-sample 200 in 129ms (next.js: 69ms, proxy.ts: 4ms, application-code: 56ms)
+  ✘  4 testing/browser/quality.spec.ts:8:9 › quality fixes dark 1440 (9.1s)
+(node:12118) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ GET /api/auth/reset?redirect=https%3A%2F%2Fattacker.invalid 307 in 44ms (next.js: 8ms, proxy.ts: 5ms, application-code: 31ms)
+ GET /settings/billing 200 in 57ms (next.js: 3ms, proxy.ts: 5ms, application-code: 49ms)
+ GET /workspace/devsync-sample 200 in 141ms (next.js: 82ms, proxy.ts: 7ms, application-code: 52ms)
+  ✘  5 testing/browser/quality.spec.ts:8:9 › quality fixes dark 390 (4.2s)
+(node:12616) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ GET /api/auth/reset?redirect=https%3A%2F%2Fattacker.invalid 307 in 17ms (next.js: 3ms, proxy.ts: 6ms, application-code: 8ms)
+ GET /settings/billing 200 in 48ms (next.js: 3ms, proxy.ts: 5ms, application-code: 39ms)
+ GET /workspace/devsync-sample 200 in 118ms (next.js: 54ms, proxy.ts: 6ms, application-code: 59ms)
+  ✘  6 testing/browser/quality.spec.ts:8:9 › quality fixes light 1440 (4.2s)
+(node:13198) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ GET /api/auth/reset?redirect=https%3A%2F%2Fattacker.invalid 307 in 16ms (next.js: 2.0ms, proxy.ts: 10ms, application-code: 4ms)
+ GET /settings/billing 200 in 58ms (next.js: 3ms, proxy.ts: 5ms, application-code: 49ms)
+ GET /workspace/devsync-sample 200 in 130ms (next.js: 75ms, proxy.ts: 6ms, application-code: 49ms)
+  ✘  7 testing/browser/quality.spec.ts:8:9 › quality fixes light 390 (3.9s)
+
+
+  1) testing/browser/quality.spec.ts:8:9 › quality fixes dark 1440 ─────────────────────────────────
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "color-contrast",
+    + ]
+
+      55 |             animations: 'disabled',
+      56 |           });
+    > 57 |           expect(result.violations.map((item) => item.id)).toEqual([]);
+         |                                                            ^
+      58 |           expect(
+      59 |             await page.evaluate(() => document.documentElement.scrollWidth),
+      60 |           ).toBeLessThanOrEqual(width);
+        at /home/kevin/devsync/backend/testing/browser/quality.spec.ts:57:60
+
+    Error Context: test-results/quality-quality-fixes-dark-1440/error-context.md
+
+  2) testing/browser/quality.spec.ts:8:9 › quality fixes dark 390 ──────────────────────────────────
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "color-contrast",
+    + ]
+
+      55 |             animations: 'disabled',
+      56 |           });
+    > 57 |           expect(result.violations.map((item) => item.id)).toEqual([]);
+         |                                                            ^
+      58 |           expect(
+      59 |             await page.evaluate(() => document.documentElement.scrollWidth),
+      60 |           ).toBeLessThanOrEqual(width);
+        at /home/kevin/devsync/backend/testing/browser/quality.spec.ts:57:60
+
+    Error Context: test-results/quality-quality-fixes-dark-390/error-context.md
+
+  3) testing/browser/quality.spec.ts:8:9 › quality fixes light 1440 ────────────────────────────────
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "color-contrast",
+    + ]
+
+      55 |             animations: 'disabled',
+      56 |           });
+    > 57 |           expect(result.violations.map((item) => item.id)).toEqual([]);
+         |                                                            ^
+      58 |           expect(
+      59 |             await page.evaluate(() => document.documentElement.scrollWidth),
+      60 |           ).toBeLessThanOrEqual(width);
+        at /home/kevin/devsync/backend/testing/browser/quality.spec.ts:57:60
+
+    Error Context: test-results/quality-quality-fixes-light-1440/error-context.md
+
+  4) testing/browser/quality.spec.ts:8:9 › quality fixes light 390 ─────────────────────────────────
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "color-contrast",
+    + ]
+
+      55 |             animations: 'disabled',
+      56 |           });
+    > 57 |           expect(result.violations.map((item) => item.id)).toEqual([]);
+         |                                                            ^
+      58 |           expect(
+      59 |             await page.evaluate(() => document.documentElement.scrollWidth),
+      60 |           ).toBeLessThanOrEqual(width);
+        at /home/kevin/devsync/backend/testing/browser/quality.spec.ts:57:60
+
+    Error Context: test-results/quality-quality-fixes-light-390/error-context.md
+
+  4 failed
+    testing/browser/quality.spec.ts:8:9 › quality fixes dark 1440 ──────────────────────────────────
+    testing/browser/quality.spec.ts:8:9 › quality fixes dark 390 ───────────────────────────────────
+    testing/browser/quality.spec.ts:8:9 › quality fixes light 1440 ─────────────────────────────────
+    testing/browser/quality.spec.ts:8:9 › quality fixes light 390 ──────────────────────────────────
+  3 passed (42.5s)
+[?25h
+Browser orchestration command exited 1
