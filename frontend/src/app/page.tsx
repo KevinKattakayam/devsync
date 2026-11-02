@@ -156,7 +156,7 @@ export default function LandingPage() {
             className="text-[11px] font-semibold uppercase tracking-[0.08em] text-zinc-600"
             style={{ fontFamily: "'JetBrains Mono', monospace" }}
           >
-            ⚡ Local-first. Enterprise ready.
+            Documents, tasks and snippets.
           </span>
         </div>
 
@@ -169,7 +169,7 @@ export default function LandingPage() {
         <p className="mx-auto mt-7 max-w-2xl text-lg leading-relaxed text-zinc-500">
           Unify your Kanban, architecture docs, and code snippets in a single, lightning-fast
           workspace.{' '}
-          <span className="font-medium text-zinc-700">Zero context switching. Infinite scale.</span>
+          <span className="font-medium text-zinc-700">Keep project context together.</span>
         </p>
 
         {/* CTA Buttons */}
@@ -198,16 +198,19 @@ export default function LandingPage() {
           </span>
           <span className="inline-flex items-center gap-1.5">
             <Check className="h-3.5 w-3.5 text-emerald-500" />
-            SSO &amp; SCIM enabled
+            Role-based workspace access
           </span>
           <span className="inline-flex items-center gap-1.5">
             <Check className="h-3.5 w-3.5 text-emerald-500" />
-            End-to-End Encrypted
+            Content is processed by the server
           </span>
         </div>
 
-        {/* ── Product Mockup — Floating Glassmorphic ── */}
+        {/* ── Illustrative preview — not live workspace data ── */}
         <div className="mx-auto mt-20 max-w-6xl">
+          <p className="mb-3 text-sm text-zinc-600">
+            Illustrative interface preview — example data, not live activity or a health report.
+          </p>
           <div className="rounded-2xl border border-zinc-200/80 bg-white/60 p-2.5 shadow-[0_30px_80px_-15px_rgba(0,0,0,0.08)] backdrop-blur-2xl">
             <div className="overflow-hidden rounded-xl border border-zinc-200/60 bg-white text-left shadow-sm">
               {/* Mockup title bar */}
@@ -418,7 +421,7 @@ export default function LandingPage() {
               <div className="mt-5 grid grid-cols-2 gap-3">
                 {(
                   [
-                    ['SSO', 'Connected'],
+                    ['SSO', 'Requires configuration'],
                     ['Collaboration', 'Live'],
                     ['AI context', 'Scoped'],
                     ['Webhooks', 'Verified'],

@@ -2,7 +2,7 @@
 
 import { Workspace } from '@/types';
 import { FileText, Kanban, Code2, Users, TrendingUp } from 'lucide-react';
-import { getInitials, generateColor } from '@/lib/utils';
+import { getInitials } from '@/lib/utils';
 
 interface WorkspaceStatsProps {
   workspace: Workspace;
@@ -76,8 +76,7 @@ export function WorkspaceStats({ workspace }: WorkspaceStatsProps) {
               {workspace.members?.slice(0, 3).map((m) => (
                 <div
                   key={m.id}
-                  className="w-6 h-6 rounded-full border border-background flex items-center justify-center text-[9px] font-bold text-white shadow-sm"
-                  style={{ backgroundColor: generateColor(m.user.email || '') }}
+                  className="w-6 h-6 rounded-full border border-background flex items-center justify-center text-[9px] font-bold text-foreground bg-secondary shadow-sm"
                   title={m.user.name || m.user.email}
                 >
                   {getInitials(m.user.name || '?')}

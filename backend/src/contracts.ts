@@ -564,7 +564,7 @@ add('GET', '/api/auth/reset', z.never(), '307', {
     },
   },
   description:
-    'Frontend cookie reset. Existing arbitrary redirect behavior is documented, not changed by this contract group.',
+    'Frontend cookie reset. Redirect destinations are constrained to same-origin root-relative paths; invalid destinations fall back to /login. Legacy GET cookie-clearing remains supported.',
 });
 add('POST', '/api/superadmin/workspaces/{workspaceId}/kill-switch', killResponse, '200', {
   surface: 'frontend',

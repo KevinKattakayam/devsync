@@ -91,7 +91,7 @@
             }
           }
         },
-        "description": "Frontend cookie reset. Existing arbitrary redirect behavior is documented, not changed by this contract group.",
+        "description": "Frontend cookie reset. Redirect destinations are constrained to same-origin root-relative paths; invalid destinations fall back to /login. Legacy GET cookie-clearing remains supported.",
         "servers": [
           {
             "url": "http://localhost:3000",

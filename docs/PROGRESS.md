@@ -1,3 +1,11 @@
+# Phase 5a — quality and practical finding fixes, group 1
+
+On upgrade/enterprise, no push/deployment or Phase5b. Root AGENTS.md absent; frontend guidance, open PROGRESS items, immutable AUDIT narrative and authority matrix were read. Timebox prioritizes practical Medium/Low fixes and security/coverage evidence. New GCM tag-length SAST finding fixed without changing valid v1 ciphertext format; tests reject shortened tags and tampering. Reset redirect constrained to same-origin paths with relative Location through proxy normalization; legacy GET cookie-clearing/CSRF remains open. Billing and overview no longer claim invented plans/worker/repository health; landing removes unsupported E2E encryption/scale/SSO claims. Measured overview contrast failures corrected with existing semantic tokens. README now has a bounded feature matrix and setup links; SECURITY.md supplies honest private-disclosure guidance without inventing a license/contact/SLA.
+
+Actual core gates: both lint/format/strict types/build pass; backend27 suites/256 tests; frontend16 files/72 component tests plus the Node runner. Coverage/raw scanner reports are being finalized under docs/quality; no model, provider sign-in or capacity result invented. The earlier broad E2E attempt exposed pointer drag failure and stale shell/status selectors; no assertions or baselines weakened. Final affected browser/visual results are pending this group1 commit and will be recorded separately. PWA/offline, Lighthouse, sustained editor capacity, current-branch container scans and other exact limits remain open; see the forthcoming quality report and finding ledger. No5b work started.
+
+---
+
 # Phase 3f follow-up — AI cost and safety; stop here
 
 On upgrade/enterprise, local commits only; no push, new product feature or Phase5. Read available frontend AGENTS guidance (root AGENTS.md absent), AI audit findings, Phase3e/3f notes, authority matrix, DESIGN and AI service code. This follow-up supersedes the earlier3f failure-settlement and missing-browser-evidence notes below, without claiming actual token/currency accounting.

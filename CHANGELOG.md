@@ -1,3 +1,10 @@
+# Phase 5a — practical audit fixes
+
+- Require full AES-GCM authentication tags and reject malformed/tampered encrypted-secret envelopes while retaining valid v1 ciphertext behavior.
+- Constrain reset redirect destinations and preserve browser origin through relative Location; retain the documented legacy GET/logout-CSRF limitation.
+- Replace unsupported landing, billing and overview claims with explicit limits; fix measured overview contrast using semantic tokens.
+- Correct README feature/setup/license claims and add private-disclosure guidance. Quality evidence and remaining failures are recorded separately.
+
 # Phase 3f follow-up — AI reservation settlement
 
 - Atomically refund confirmed pre-provider failures once; retain conservative charges for ambiguous/partial attempts and preserve legacy cumulative admissions.
