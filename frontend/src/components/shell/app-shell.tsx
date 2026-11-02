@@ -47,9 +47,11 @@ import { useShellData, useWorkspacePresence } from './use-shell-data';
 export function AppShell({
   children,
   decisionReceiptsEnabled = false,
+  snippetSafetyEnabled = false,
 }: {
   children: ReactNode;
   decisionReceiptsEnabled?: boolean;
+  snippetSafetyEnabled?: boolean;
 }) {
   const { user, isLoading, isAuthenticated } = useAuth();
   const router = useRouter();
@@ -65,7 +67,12 @@ export function AppShell({
     );
   if (!isAuthenticated || !user) return null;
   return (
-    <Shell key={user.id} user={user} decisionReceiptsEnabled={decisionReceiptsEnabled}>
+    <Shell
+      key={user.id}
+      user={user}
+      decisionReceiptsEnabled={decisionReceiptsEnabled}
+      snippetSafetyEnabled={snippetSafetyEnabled}
+    >
       {children}
     </Shell>
   );
@@ -74,10 +81,12 @@ function Shell({
   children,
   user,
   decisionReceiptsEnabled,
+  snippetSafetyEnabled,
 }: {
   children: ReactNode;
   user: User;
   decisionReceiptsEnabled: boolean;
+  snippetSafetyEnabled: boolean;
 }) {
   const pathname = usePathname();
   const router = useRouter();
@@ -147,6 +156,9 @@ function Shell({
     { path: '', label: 'Overview', icon: LayoutDashboard },
     { path: '/docs', label: 'Documents', icon: FileText },
     { path: '/kanban', label: 'Sprint board', icon: Kanban },
+    ...(snippetSafetyEnabled
+      ? [{ path: '/snippets/safety', label: 'Snippet safety', icon: Code2 }]
+      : []),
     { path: '/snippets', label: 'Code snippets', icon: Code2 },
     ...(decisionReceiptsEnabled
       ? [{ path: '/decisions', label: 'Decisions', icon: FileText }]
@@ -225,9 +237,7 @@ function Shell({
                 onClick={closeNavigation}
                 aria-label={item.label}
                 aria-current={
-                  (item.path ? pathname.startsWith(base + item.path) : pathname === base)
-                    ? 'page'
-                    : undefined
+                  (item.path ? section?.path === item.path : pathname === base) ? 'page' : undefined
                 }
                 className="shell-nav-link"
               >

@@ -8,6 +8,12 @@ import {
   sourceKindSchema,
 } from './services/decision-receipts';
 import { decisionSourcesQuery, decisionSourceQuery } from './routes/decision-receipts.routes';
+import {
+  safetyInputSchema,
+  safetySaveSchema,
+  safetyFindingsQuery,
+} from './routes/snippet-safety.routes';
+import { findingTypes } from './security/snippet-preflight';
 import { workspaceSearchSchema } from './schemas/search.schema';
 
 /** Transport DTOs: scalar columns follow Prisma; selected relations remain explicit. */
@@ -379,6 +385,30 @@ add('POST', `${base}/superadmin/workspaces/{workspaceId}/kill-switch`, killRespo
 add('POST', '/scim/v2/Users', scim, '201');
 add('PATCH', '/scim/v2/Users/{externalId}', scim);
 noContent('DELETE', '/scim/v2/Users/{externalId}');
+
+const safetyBase = '/api/v2/workspaces/{workspaceId}/snippet-safety';
+const safetyFinding = z.object({ type: z.enum(findingTypes), maskedPreview: z.string() }).strict();
+add(
+  'POST',
+  `${safetyBase}/preflight`,
+  z.object({ content: safetyInputSchema, findings: z.array(safetyFinding) }).strict(),
+  '200',
+  { body: safetyInputSchema },
+);
+add('GET', `${safetyBase}/findings`, z.array(safetyFinding), '200', { query: safetyFindingsQuery });
+add(
+  'POST',
+  `${safetyBase}/save`,
+  z.object({ snippet, findings: z.array(safetyFinding) }).strict(),
+  '201',
+  {
+    body: safetySaveSchema,
+    responses: {
+      '200': { schema: z.object({ snippet, findings: z.array(safetyFinding) }).strict() },
+      '201': { schema: z.object({ snippet, findings: z.array(safetyFinding) }).strict() },
+    },
+  },
+);
 
 const decisionsBase = '/api/v2/workspaces/{workspaceId}/decisions';
 const receiptDto = model('DecisionReceipt');

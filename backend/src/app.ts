@@ -13,6 +13,7 @@ import snippetRoutes from './routes/snippet.routes';
 import { aiUsage } from './middleware/ai-quota.middleware';
 import { authMiddleware } from './middleware/auth.middleware';
 import aiRoutes from './routes/ai.routes';
+import snippetSafetyRoutes from './routes/snippet-safety.routes';
 import decisionReceiptRoutes from './routes/decision-receipts.routes';
 import githubWebhookRoutes from './routes/github-webhook.routes';
 import ingestionRoutes from './routes/ingestion.routes';
@@ -66,6 +67,11 @@ mountApi('/workspaces', workspaceRoutes);
 mountApi('/documents', documentRoutes);
 mountApi('/tasks', taskRoutes);
 mountApi('/snippets', snippetRoutes);
+app.use('/api/v2/workspaces/:workspaceId/snippet-safety', snippetSafetyRoutes);
+mounts.push({
+  prefix: '/api/v2/workspaces/:workspaceId/snippet-safety',
+  router: snippetSafetyRoutes,
+});
 mountApi('/ai', aiRoutes);
 app.use('/api/v2/workspaces/:workspaceId/decisions', decisionReceiptRoutes);
 mounts.push({ prefix: '/api/v2/workspaces/:workspaceId/decisions', router: decisionReceiptRoutes });

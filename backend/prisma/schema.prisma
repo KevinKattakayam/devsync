@@ -217,6 +217,8 @@ model Snippet {
   workspaceId String
   author      User      @relation(fields: [authorId], references: [id])
   workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  safetyFindings SnippetSafetyFinding[]
+  @@unique([id, workspaceId])
   @@index([workspaceId, updatedAt])
 
 }
@@ -355,4 +357,14 @@ model DecisionReceipt {
   supersedes DecisionReceipt[] @relation("DecisionSupersession")
   @@unique([id, workspaceId])
   @@index([workspaceId, createdAt])
+}
+
+model SnippetSafetyFinding {
+  id String @id @default(cuid())
+  workspaceId String
+  snippetId String
+  type String
+  maskedPreview String
+  snippet Snippet @relation(fields: [snippetId, workspaceId], references: [id, workspaceId], onDelete: Cascade, onUpdate: Restrict)
+  @@index([workspaceId, snippetId])
 }

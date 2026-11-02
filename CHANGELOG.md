@@ -1,3 +1,11 @@
+# Phase 4b — P04 snippet safety preflight
+
+- Add feature-flagged local/server preflight and explicitly confirmed redacted create/edit through versioned v2 endpoints; reject legacy detected-value writes when enabled.
+- Persist only constant finding types/masks with forced tenant RLS and a composite FK; atomically store masked content/activity/receipts/outbox and protect index disclosure.
+- Add design-system composer, readable preview, viewer metadata, skeleton/empty/error/retry states and keyboard support; correct nested navigation selection.
+- Verify234 backend tests,73 frontend tests, four final seeded Playwright journeys and28 final axe captures with zero violations. Document heuristic/historical-data limits and forward-only rollback.
+- P04 only; no new paid API/key, other feature or push.
+
 # Phase 4b — P02 decision receipts
 
 - Add feature-flagged, tenant-isolated document/task decision receipts with exact revision-bound quotes, editable drafts, explicit owner acceptance and immutable supersession.

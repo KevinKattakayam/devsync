@@ -1,5 +1,6 @@
 import { createHash, randomUUID } from 'crypto';
 import OpenAI from 'openai';
+import { preflightSnippet, redactSnippetText } from '../security/snippet-preflight';
 import { AiQuota } from './ai-quota';
 import { redis } from '../lib/redis';
 import { Prisma } from '@prisma/client';
@@ -141,7 +142,15 @@ async function embeddingText(tx: TenantTransaction, kind: EmbeddingKind, id: str
     };
   }
   if (kind === 'snippet') {
-    const item = await tx.snippet.findUniqueOrThrow({ where: { id } });
+    const stored = await tx.snippet.findUniqueOrThrow({ where: { id } });
+    const item =
+      process.env.FEATURE_SNIPPET_SAFETY === 'true'
+        ? {
+            ...stored,
+            ...preflightSnippet({ ...stored, description: stored.description ?? undefined })
+              .content,
+          }
+        : stored;
     return {
       text: `${item.title}\n${item.description || ''}\n${item.language}\n${item.code}`.trim(),
       hash: item.embeddingHash,
@@ -193,7 +202,7 @@ export async function semanticWorkspaceContext(
   try {
     const values = await embed(query, actorId, workspaceId);
     if (!values) return [];
-    return await withWorkspaceAccess(
+    const results = await withWorkspaceAccess(
       actorId,
       workspaceId,
       READ_ROLES,
@@ -210,6 +219,17 @@ export async function semanticWorkspaceContext(
         WHERE b."workspaceId" = ${workspaceId} AND t.embedding IS NOT NULL
       ) context ORDER BY score DESC LIMIT ${Math.max(1, Math.min(20, limit))}`,
     );
+    return process.env.FEATURE_SNIPPET_SAFETY === 'true'
+      ? results.map((item) =>
+          item.type === 'snippet'
+            ? {
+                ...item,
+                title: redactSnippetText(item.title).text,
+                body: redactSnippetText(item.body).text,
+              }
+            : item,
+        )
+      : results;
   } catch (error) {
     console.warn(
       '[Embedding] Semantic workspace context query skipped:',

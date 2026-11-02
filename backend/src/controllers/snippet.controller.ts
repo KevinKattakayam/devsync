@@ -1,6 +1,14 @@
 import { idempotentCreate } from '../lib/create-idempotency';
 import { Request, Response, NextFunction } from 'express';
 import { z } from 'zod';
+import { preflightSnippet, type SnippetFields } from '../security/snippet-preflight';
+import { BadRequestError } from '../utils/errors';
+function enforceSafety(input: SnippetFields) {
+  if (process.env.FEATURE_SNIPPET_SAFETY === 'true' && preflightSnippet(input).findings.length)
+    throw new BadRequestError(
+      'Potential secret detected. Use snippet safety preflight to review and redact before saving.',
+    );
+}
 import { queueEmbedding } from '../services/embedding.service';
 import {
   READ_ROLES,
@@ -36,7 +44,14 @@ export async function getSnippets(req: Request, res: Response, next: NextFunctio
         orderBy: { updatedAt: 'desc' },
       }),
     );
-    res.json(snippets);
+    res.json(
+      process.env.FEATURE_SNIPPET_SAFETY === 'true'
+        ? snippets.map((item) => ({
+            ...item,
+            ...preflightSnippet({ ...item, description: item.description ?? undefined }).content,
+          }))
+        : snippets,
+    );
   } catch (error) {
     next(error);
   }
@@ -50,8 +65,9 @@ export async function createSnippet(req: Request, res: Response, next: NextFunct
       req.user!.userId,
       workspaceId,
       WRITE_ROLES,
-      async (tx) =>
-        idempotentCreate(
+      async (tx) => {
+        enforceSafety(data);
+        return idempotentCreate(
           tx,
           req.user!.userId,
           ['snippet.create', workspaceId],
@@ -73,7 +89,8 @@ export async function createSnippet(req: Request, res: Response, next: NextFunct
             await queueEmbedding('snippet', result.id, tx, workspaceId, req.user!.userId);
             return result;
           },
-        ),
+        );
+      },
     );
     res.status(201).json(snippet);
   } catch (error) {
@@ -91,6 +108,16 @@ export async function updateSnippet(req: Request, res: Response, next: NextFunct
       snippetId,
       WRITE_ROLES,
       async (tx, workspaceId) => {
+        if (process.env.FEATURE_SNIPPET_SAFETY === 'true') {
+          const existing = await tx.snippet.findUniqueOrThrow({ where: { id: snippetId } });
+          const merged = createSnippetSchema.safeParse({
+            ...existing,
+            ...data,
+            description: data.description ?? existing.description ?? undefined,
+          });
+          if (!merged.success) throw new BadRequestError('Snippet safety input limit exceeded');
+          enforceSafety(merged.data);
+        }
         const result = await tx.snippet.update({
           where: { id: snippetId },
           data,

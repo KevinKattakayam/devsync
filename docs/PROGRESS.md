@@ -1,3 +1,39 @@
+# Phase 4b — P04 snippet safety preflight delivered; STOP
+
+Built **P04 only** on `upgrade/enterprise`; local commit only, no push. Root AGENTS.md is absent; frontend guidance, progress, authorization matrix, P04 proposal, DESIGN and actual snippet/indexing code were read. No other proposal or Phase4c work was started.
+
+## Delivered
+
+- A local browser preview plus authoritative server rescan removes detected values across code, title, description and language. New v2 preflight does not persist anything; explicit confirmed save writes only redacted content and constant finding type/masked preview. No save-anyway path or secret-restoring Undo. Inputs and redacted outputs are bounded; masking growth past a field limit fails before storage.
+- Forward-only Prisma migration adds forced-RLS finding storage with a same-workspace snippet FK and a CHECK requiring the exact constant mask. No candidate values, prefixes/suffixes, candidate hashes or raw excerpts are stored as findings. Create idempotency uses only sanitized content/findings; generic activity and embedding outbox commit atomically with safe content. Safe edits check updatedAt, clear omitted descriptions rather than retaining older content, and clear the old vector/hash before reindexing.
+- Central current OWNER/EDITOR policy protects scan/save; current readers, including VIEWER, can read only same-tenant finding metadata. Foreign snippets/metadata cannot be bound to another workspace, including by a member of both. With the feature enabled, legacy writes reject detected values before their write/activity/receipt/outbox; existing legacy/v1 DTOs remain unchanged. Snippet-list projections and embedding/semantic snippet reads mask old matches in memory before disclosure.
+- **FEATURE_SNIPPET_SAFETY=true** independently enables the new API and server-rendered page/nav; default false in examples. The design-system composer supports create/edit, readable locked preview, explicit save, stale-edit guidance, loading skeletons, empty/read-only states, failure/retry and route boundary. Keyboard review focuses its result; native fields and Radix Select retain keyboard access. Screenshot review corrected duplicate current navigation on the nested route and added an assertion for that state.
+- Original bounded detector heuristics cover selected private keys, prefixed tokens/identifiers, bearer values, credential assignments and URI user/password components. No external rule package, paid detector API, validation service or LLM is used. Browser/server copies serve the independent Docker build contexts; shared semantic parity fixtures cover both. Detection is not credential validation or a guarantee of no secrets.
+
+## Actual validation
+
+Backend lint/format, application/seed/testing strict types, **24 suites / 234 tests**, and production build pass. Integration tests migrate real disposable PostgreSQL and use a non-owner/non-bypass role, actual request-log sink and an explicitly synthetic embedding adapter. They cover safe/non-persisting preview, redacted create/edit/idempotent receipts/activity/index disclosure, viewer/foreign denials, same-workspace IDs/FK/RLS, removal/suspension, stale saves, legacy bypass rejection, output growth and mask-only database storage. Unit cases cover all seven heuristic families, truncation, fields, punctuation, placeholders, bounds, idempotent masking and browser/server parity. Existing security, CRDT and data-layer suites remain passing.
+
+Frontend lint/format/strict types, **9 Node tests + 14 files / 64 component tests**, and webpack production build pass. Initial and final seeded fixture Playwright runs both pass **4 tests**; final **4 passed (35.2s)** at1440/390 dark/light. Real API/database paths cover confirmed create, edit, saved metadata, read-only viewer UI and mutation denial, legacy rejection, keyboard review/Select and retry. Only the unavailable-preflight step intercepts a network failure. **28 final screenshots/28 axe reports record zero violations**, including hovered Save redacted snippet. Raw incomplete items and honest critique: [ui/after/snippet-safety/REVIEW.md](ui/after/snippet-safety/REVIEW.md); final artifacts are in final/. Actual command outputs were shown in the session; final browser log is /tmp/devsync-snippet-safety-browser-final.log, not a fabricated committed transcript.
+
+Failures fixed: missing updatedAt in the dedicated safe-edit client type; a component test adapter used the wrong argument signature; a mask-text assertion needed scoping to the review panel. No assertion/test was removed or weakened and no rule was disabled. Output-growth validation, mask-only storage and omitted-description clearing were added as regression cases. The final omitted-description hardening is covered by backend integration; the unchanged browser UI was not rebuilt or rerun for that isolated server-path change. No live credentials, paid provider calls, model results or scanner accuracy metrics were used or claimed.
+
+## Exact limits and deferrals
+
+These finite heuristics can miss unknown, short, encoded, obfuscated, split or unsupported multiline values and can remove harmless examples. A clean result is not a safety certificate. Original browser fields exist only transiently in memory for explicit server rescan and are cleared on reset/unmount/success; requests use the existing authenticated transport. Masks are irreversible and do not revoke provider credentials. Latest P04 findings are not a complete audit history. Legacy clean writes retain their existing replacement semantics; the new safe-edit endpoint adds expectedUpdatedAt checks.
+
+No automatic historical database/backups/activity/idempotency/vector cleanup was performed. Older source data can remain at rest until an explicitly reviewed save or separate operator cleanup; in-memory list masking is not a database purge. Existing stored/downloaded copies cannot be remotely erased. Unsupported oversized old data can fail closed. Bulk cleanup, new exports, provider validation/revocation, extra rule engines, version history and unrelated Code Vault redesign were not started. PWA remains deferred to Phase5.
+
+Review confirms semantic-token contrast and reachable scrolling states; axe incompletes involve text outside the visible scrollport/under sticky/transient UI and the existing Copilot trigger, not ignored violations. Screen-reader, additional engines, high zoom,360px and detection-quality/large-corpus performance evaluation were not completed in this timebox. No extra act run, unchanged build repetition, provider experiment or evidence audit was performed.
+
+## Requires human action
+
+Deploy the forward migration, appropriate runtime privileges and FEATURE_SNIPPET_SAFETY=true consistently on API/frontend/indexing workers. Roll back by disabling the flag and retaining the additive schema/masked content; raw values cannot be recovered. No paid API/key is needed; existing optional embedding configuration remains separate. Historical cleanup and actual provider key rotation require explicit operator/owner action and are not automated by P04.
+
+See [features/snippet-safety-preflight.md](features/snippet-safety-preflight.md) for design, rules/licensing, limits, security/privacy, API and rollback. Commit this feature, then STOP; do not start another feature.
+
+---
+
 # Phase 4b — P02 decision receipts delivered; STOP
 
 Built **P02 only** on `upgrade/enterprise`, with local commit only and no push. Root AGENTS.md is absent; frontend guidance, progress, authorization matrix, proposals and DESIGN were read. The approved manual workflow is complete: source-backed drafts, explicit owner acceptance and supersession. No other proposal, Phase4c or PWA work was started.
