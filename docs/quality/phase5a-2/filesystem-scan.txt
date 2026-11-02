@@ -1,0 +1,13 @@
+2026-11-02T13:39:59Z	INFO	[vuln] Vulnerability scanning is enabled
+2026-11-02T13:40:11Z	INFO	[npm] To collect the license information of packages, "npm install" needs to be performed beforehand	dir=".kilo/worktrees/thread-platypus/backend/node_modules"
+2026-11-02T13:40:11Z	INFO	[npm] To collect the license information of packages, "npm install" needs to be performed beforehand	dir=".kilo/worktrees/thread-platypus/frontend/node_modules"
+2026-11-02T13:40:12Z	INFO	[npm] To collect the license information of packages, "npm install" needs to be performed beforehand	dir="docs/phase1a-evidence/dependency-resolution/frontend/node_modules"
+2026-11-02T13:40:12Z	INFO	Suppressing dependencies for development and testing. To display them, try the '--include-dev-deps' flag.
+2026-11-02T13:40:12Z	INFO	Number of language-specific files	num=8
+2026-11-02T13:40:12Z	INFO	[npm] Detecting vulnerabilities...
+
+📣 [34mNotices:[0m
+  - Version 0.76.1 of Trivy is now available, current version is 0.68.2
+
+To suppress version checks, run Trivy scans with the --skip-version-check flag
+

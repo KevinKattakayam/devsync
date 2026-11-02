@@ -1,3 +1,15 @@
+# Phase 5a-2 — security group complete; visual investigation next
+
+On upgrade/enterprise, no push/act/deployment or Phase5c. Root AGENTS.md absent; frontend guidance, progress, authorization matrix, quality ledger/raw evidence and deployment results read. Highest-priority bounded scope: security triage/current image scans and the four visual failures. Lighthouse and local Compose/k6 REST/WebSocket measurements are deferred under the half-scope timebox; this environment has not produced those numbers, and no impossibility or production capacity claim is made.
+
+Release blocker inventory: two secret matches (one previously unclassified), current-image security unknowns/cached-image Critical+High, dependency advisories, four shell visual failures, native Kanban pointer drag with no move PATCH, and unexecuted hosted/operational release gates. Full itemized inventory and older C02/E03/AI settlement/production deferrals: [quality/phase5a-2/README.md](quality/phase5a-2/README.md). These are not all closed by this increment.
+
+Completed: classified both Gitleaks captures in memory as non-credentials; no key exposed/rotated or history rewritten. Added exact capture+file+rule exceptions while retaining every default detection rule; five scanner regression cases pass, including new values in both files. Final history scan66 commits/zero findings. Removed npm/npx/Yarn only from runtime images; tooling/build stages retain them. Current-image initial backend/frontend each1 Critical/42 High; final each1 Critical/32 High. Remaining OS entries have no fixed versions listed and **remain release blockers**, without user risk acceptance or severity suppression. Filesystem scan132 High/14 Critical all originate in old .kilo worktree/audit-evidence lockfiles; current app/hosting lock targets0 High/Critical. Raw results and exact scopes retained; vulnerability-only scans do not certify secrets or IaC.
+
+Security group gates: backend28 suites/259 tests and frontend17 files/74 component tests plus Node runner pass; both lint/format/strict types/build, both changed Docker image builds and workflow lint pass. No threshold/test weakened. First Docker socket access/ownership attempts failed safely; authorized corrected runs passed. No hosted CI or real Clerk login attempted.
+
+---
+
 # Phase 5b — local container verification complete; hosted rollout pending
 
 Local upgrade/enterprise; no push, act, hosted job or deployment. Phase5a pending evidence was preserved separately as0120530. Multi-stage non-root images, liveness/readiness checks, local generated credential volumes, automatic migration/sample seeding and non-bypass runtime grants are implemented. API/worker do not mount administrative credentials. User chose keyless startup with setup guidance; no test login or authority bypass is enabled.

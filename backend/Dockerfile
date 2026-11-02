@@ -20,6 +20,8 @@ FROM dependencies AS production-dependencies
 RUN npm prune --omit=dev --ignore-scripts
 
 FROM base AS runner
+# Runtime launches Node directly; package-manager tooling is build/migration-tooling only.
+RUN rm -rf /usr/local/lib/node_modules/npm /opt/yarn-* /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/yarn /usr/local/bin/yarnpkg
 ENV NODE_ENV=production
 ENV PORT=5000
 ENV DEPLOYMENT_MODE=production

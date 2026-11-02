@@ -1,3 +1,9 @@
+# Phase 5a-2 — bounded security blocker follow-up
+
+- Classify the two secret-scanner matches as exact non-credentials; add narrowly scoped exceptions and five detection regression cases, keeping all default rules.
+- Remove unused npm/npx/Yarn from runtime images; current scans reduce High entries42 to32 per image, retaining1 Critical and all unresolved release gates.
+- Preserve current-image/filesystem scan output, required app gates and exact blocker inventory under docs/quality/phase5a-2.
+
 # Phase 5b — containers, gated CI and deployment configuration
 
 - Add multi-stage non-root application images with health checks and separate migration tooling.

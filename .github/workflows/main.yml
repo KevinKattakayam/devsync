@@ -128,10 +128,12 @@ jobs:
         with:
           node-version: 22
       - run: mkdir -p security
+      - name: Verify narrowly scoped scanner exceptions
+        run: python3 tools/quality/gitleaks-regression.py
       - name: Gitleaks history (redact before upload)
         run: |
           status=0
-          docker run --rm --user "$(id -u):$(id -g)" -v "$PWD:/repo:ro" -v "$PWD/security:/reports" zricethezav/gitleaks@sha256:691af3c7c5a48b16f187ce3446d5f194838f91238f27270ed36eef6359a574d9 git /repo --log-opts=--all --redact=100 --report-format=json --report-path=/reports/gitleaks.json || status=$?
+          docker run --rm --user "$(id -u):$(id -g)" -v "$PWD:/repo:ro" -v "$PWD/security:/reports" zricethezav/gitleaks@sha256:691af3c7c5a48b16f187ce3446d5f194838f91238f27270ed36eef6359a574d9 git /repo --config=/repo/.gitleaks.toml --log-opts=--all --redact=100 --report-format=json --report-path=/reports/gitleaks.json || status=$?
           node tools/ci/redact-report.mjs gitleaks security/gitleaks.json security/gitleaks-redacted.json
           exit "$status"
       - name: Semgrep

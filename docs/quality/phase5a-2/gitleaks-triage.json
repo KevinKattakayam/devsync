@@ -1,0 +1,25 @@
+{
+  "exitCode": 1,
+  "findings": [
+    {
+      "File": "backend/src/__tests__/resource-mutations.integration.test.ts",
+      "Commit": "9109dd7f384734ca0a4262145aac9ccd867737d3",
+      "StartLine": 570,
+      "EndLine": 570,
+      "RuleID": "generic-api-key",
+      "Fingerprint": "9109dd7f384734ca0a4262145aac9ccd867737d3:backend/src/__tests__/resource-mutations.integration.test.ts:generic-api-key:570",
+      "classification": "Exact synthetic webhook fixture in denied foreign-resource mutation test",
+      "confirmedKnownNonCredential": true
+    },
+    {
+      "File": "backend/.env.example",
+      "Commit": "cc57728b582e5e5df639ee764994e7a8b63210f6",
+      "StartLine": 4,
+      "EndLine": 5,
+      "RuleID": "generic-api-key",
+      "Fingerprint": "cc57728b582e5e5df639ee764994e7a8b63210f6:backend/.env.example:generic-api-key:4",
+      "classification": "The captured value is exactly the following public variable name plus its assignment operator; both Clerk values are empty. Not a credential.",
+      "confirmedKnownNonCredential": true
+    }
+  ]
+}
