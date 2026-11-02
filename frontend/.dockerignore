@@ -5,6 +5,5 @@ node_modules
 coverage
 *.tsbuildinfo
 npm-debug.log*
-testing
 test-results
 playwright-report
