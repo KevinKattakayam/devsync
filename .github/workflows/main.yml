@@ -148,7 +148,7 @@ jobs:
           path: security/*-redacted.json
           if-no-files-found: warn
   containers:
-    needs: [quality, coverage, source-security, e2e, compose]
+    needs: [quality, coverage, source-security, e2e, compose, hosting-config]
     permissions:
       contents: read
       packages: write
@@ -281,3 +281,19 @@ jobs:
           name: clean-clone-compose
           path: docs/deployment/evidence/clean-clone/
           if-no-files-found: error
+
+  hosting-config:
+    needs: quality
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: .railway/package-lock.json
+      - run: npm ci --prefix .railway
+      - run: npm run typecheck --prefix .railway
+      - run: npm audit --prefix .railway --audit-level=high

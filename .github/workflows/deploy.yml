@@ -50,8 +50,16 @@ jobs:
           RAILWAY_SERVICE_ID: ${{ vars.RAILWAY_SERVICE_ID }}
           RAILWAY_WORKER_SERVICE_ID: ${{ vars.RAILWAY_WORKER_SERVICE_ID }}
           BACKEND_URL: ${{ vars.BACKEND_URL }}
+          RAILWAY_PROJECT_ID: ${{ vars.RAILWAY_PROJECT_ID }}
+          RAILWAY_ENVIRONMENT_ID: ${{ vars.RAILWAY_ENVIRONMENT_ID }}
+          RAILWAY_API_SERVICE_NAME: ${{ vars.RAILWAY_API_SERVICE_NAME }}
+          RAILWAY_WORKER_SERVICE_NAME: ${{ vars.RAILWAY_WORKER_SERVICE_NAME }}
         run: |
           test -n "$RAILWAY_TOKEN" && test -n "$RAILWAY_SERVICE_ID" && test -n "$RAILWAY_WORKER_SERVICE_ID" && test -n "$BACKEND_URL"
+          test -n "$RAILWAY_PROJECT_ID" && test -n "$RAILWAY_ENVIRONMENT_ID"
+          npm ci --prefix .railway
+          npx --yes @railway/cli@5.71.0 link --project "$RAILWAY_PROJECT_ID" --environment "$RAILWAY_ENVIRONMENT_ID"
+          npx --yes @railway/cli@5.71.0 config plan --detailed-exit-code
           npx --yes @railway/cli@5.71.0 up --service "$RAILWAY_SERVICE_ID" --ci
           npx --yes @railway/cli@5.71.0 up --service "$RAILWAY_WORKER_SERVICE_ID" --ci
           curl --fail --retry 12 --retry-delay 5 --retry-all-errors "$BACKEND_URL/api/ready"

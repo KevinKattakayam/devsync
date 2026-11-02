@@ -1,0 +1,271 @@
+ Image devsync_phase5b_9fa166d55e-initialize Building 
+ Image devsync_phase5b_9fa166d55e-backend Building 
+ Image devsync_phase5b_9fa166d55e-frontend Building 
+ Image devsync_phase5b_9fa166d55e-bootstrap Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 2.52kB done
+#1 DONE 0.0s
+
+#2 [backend internal] load build definition from Dockerfile
+#2 transferring dockerfile: 1.38kB done
+#2 DONE 0.0s
+
+#3 [frontend internal] load build definition from Dockerfile
+#3 transferring dockerfile: 1.46kB done
+#3 DONE 0.0s
+
+#4 [frontend internal] load metadata for docker.io/library/node:22-bookworm-slim
+#4 DONE 2.1s
+
+#5 [backend internal] load .dockerignore
+#5 transferring context: 166B done
+#5 DONE 0.0s
+
+#6 [frontend internal] load .dockerignore
+#6 transferring context: 140B done
+#6 DONE 0.0s
+
+#7 [frontend base 1/3] FROM docker.io/library/node:22-bookworm-slim@sha256:4b150b48b4116e2a22f2c39cc27025fbf4f153e2078fd3b14d159fdb5c7279da
+#7 DONE 0.0s
+
+#8 [frontend base 2/3] WORKDIR /app
+#8 CACHED
+
+#9 [bootstrap internal] load build context
+#9 transferring context: 2.09MB 0.0s done
+#9 DONE 0.0s
+
+#10 [frontend internal] load build context
+#10 transferring context: 1.03MB 0.0s done
+#10 DONE 0.0s
+
+#11 [backend base 3/3] RUN apt-get update && apt-get install -y --no-install-recommends openssl ca-certificates && rm -rf /var/lib/apt/lists/*
+#11 CACHED
+
+#12 [backend build 1/3] COPY . .
+#12 CACHED
+
+#13 [backend dependencies 2/3] COPY prisma/schema.prisma ./prisma/schema.prisma
+#13 CACHED
+
+#14 [backend dependencies 3/3] RUN npm ci
+#14 CACHED
+
+#15 [backend dependencies 1/3] COPY package.json package-lock.json ./
+#15 CACHED
+
+#16 [backend build 2/3] RUN npm run build && npx tsc -p tsconfig.seed-build.json
+#16 CACHED
+
+#17 [backend build 3/3] RUN mkdir -p /state/admin /state/runtime && chown -R node:node /state
+#17 CACHED
+
+#18 [backend runner 1/6] COPY --from=production-dependencies --chown=node:node /app/node_modules ./node_modules
+#18 CACHED
+
+#19 [backend production-dependencies 1/1] RUN npm prune --omit=dev --ignore-scripts
+#19 CACHED
+
+#20 [backend runner 2/6] COPY --from=build --chown=node:node /app/dist ./dist
+#20 CACHED
+
+#21 [backend runner 5/6] COPY --from=build --chown=node:node /app/docker ./docker
+#21 CACHED
+
+#22 [backend runner 4/6] COPY --from=build --chown=node:node /app/prisma/migrations ./prisma/migrations
+#22 CACHED
+
+#23 [backend runner 3/6] COPY --from=build --chown=node:node /app/prisma/schema.prisma ./prisma/schema.prisma
+#23 CACHED
+
+#24 [backend runner 6/6] COPY --from=build --chown=node:node /app/package.json ./package.json
+#24 CACHED
+
+#25 [frontend dependencies 1/2] COPY package.json package-lock.json ./
+#25 CACHED
+
+#26 [frontend dependencies 2/2] RUN npm ci
+#26 CACHED
+
+#27 [backend] exporting to image
+#27 exporting layers done
+#27 writing image sha256:6640ea424bfff9a78328aa5c4a792b7762dd1ac3c682b2effe928e64f4ff35e1 done
+#27 naming to docker.io/library/devsync_phase5b_9fa166d55e-backend done
+#27 DONE 0.0s
+
+#28 [initialize] exporting to image
+#28 exporting layers done
+#28 writing image sha256:647b2457b69c1adb29adac9db6ffdf63df6b0aafefcf248fba05922af117e7a5 done
+#28 naming to docker.io/library/devsync_phase5b_9fa166d55e-initialize done
+#28 DONE 0.0s
+
+#29 [bootstrap] exporting to image
+#29 exporting layers done
+#29 writing image sha256:2e001aa3c7728b91a82818b2477e7800d2da309de60b1cc831b6639442b5bc6c done
+#29 naming to docker.io/library/devsync_phase5b_9fa166d55e-bootstrap done
+#29 DONE 0.0s
+
+#30 [frontend build 1/3] COPY . .
+#30 DONE 0.2s
+
+#31 [backend] resolving provenance for metadata file
+#31 DONE 0.0s
+
+#32 [bootstrap] resolving provenance for metadata file
+#32 DONE 0.0s
+
+#33 [initialize] resolving provenance for metadata file
+#33 DONE 0.0s
+
+#34 [frontend build 2/3] RUN npm run build -- --webpack
+#34 0.301 
+#34 0.301 > frontend@0.1.0 build
+#34 0.301 > next build --webpack
+#34 0.301 
+#34 0.724 ▲ Next.js 16.4.3 (webpack)
+#34 0.765 ✓ Running next.config.ts took 40ms
+#34 0.782 
+#34 0.815   Creating an optimized production build ...
+#34 35.78 ✓ Compiled successfully in 31.8s
+#34 35.79   Running TypeScript ...
+#34 47.17   Finished TypeScript in 11.4s ...
+#34 47.17   Collecting page data using 7 workers ...
+#34 50.94   Generating static pages using 7 workers (0/8) ...
+#34 51.83   Generating static pages using 7 workers (2/8) 
+#34 51.83   Generating static pages using 7 workers (4/8) 
+#34 51.83   Generating static pages using 7 workers (6/8) 
+#34 51.83 ✓ Generating static pages using 7 workers (8/8) in 888ms
+#34 52.58   Finalizing page optimization ...
+#34 52.58   Collecting build traces ...
+#34 74.48 
+#34 74.48 Route (app)
+#34 74.48 ┌ ○ /
+#34 74.48 ├ ○ /_not-found
+#34 74.48 ├ ƒ /api/auth/reset
+#34 74.48 ├ ƒ /api/superadmin/workspaces/[workspaceId]/kill-switch
+#34 74.48 ├ ƒ /dashboard
+#34 74.48 ├ ○ /design-system
+#34 74.48 ├ ƒ /healthz
+#34 74.48 ├ ƒ /invitations/[id]
+#34 74.48 ├ ƒ /login/[[...rest]]
+#34 74.48 ├ ƒ /settings/billing
+#34 74.48 ├ ƒ /sign-in/[[...rest]]
+#34 74.48 ├ ƒ /sign-up/[[...rest]]
+#34 74.48 ├ ƒ /signup/[[...rest]]
+#34 74.48 ├ ƒ /superadmin
+#34 74.48 ├ ƒ /workspace/[id]
+#34 74.48 ├ ƒ /workspace/[id]/decisions
+#34 74.48 ├ ƒ /workspace/[id]/digest
+#34 74.48 ├ ƒ /workspace/[id]/digest/activity/[activityId]
+#34 74.48 ├ ƒ /workspace/[id]/docs
+#34 74.48 ├ ƒ /workspace/[id]/docs/[docId]
+#34 74.48 ├ ƒ /workspace/[id]/kanban
+#34 74.48 ├ ƒ /workspace/[id]/settings
+#34 74.48 ├ ƒ /workspace/[id]/snippets
+#34 74.48 └ ƒ /workspace/[id]/snippets/safety
+#34 74.48 
+#34 74.48 
+#34 74.48 ƒ Proxy (Middleware)
+#34 74.48 
+#34 74.48 ○  (Static)   prerendered as static content
+#34 74.48 ƒ  (Dynamic)  server-rendered on demand
+#34 74.48 
+#34 DONE 74.6s
+
+#35 [frontend build 3/3] RUN node -e "require('fs').writeFileSync('build-settings.json', JSON.stringify({mode:process.env.DEPLOYMENT_MODE,clerk:process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || ''}))"
+#35 DONE 0.2s
+
+#36 [frontend runner 1/5] COPY --from=build --chown=node:node /app/public ./public
+#36 DONE 0.1s
+
+#37 [frontend runner 2/5] COPY --from=build --chown=node:node /app/.next/standalone ./
+#37 DONE 0.4s
+
+#38 [frontend runner 3/5] COPY --from=build --chown=node:node /app/.next/static ./.next/static
+#38 DONE 0.1s
+
+#39 [frontend runner 4/5] COPY --from=build --chown=node:node /app/docker ./docker
+#39 DONE 0.0s
+
+#40 [frontend runner 5/5] COPY --from=build --chown=node:node /app/build-settings.json ./build-settings.json
+#40 DONE 0.0s
+
+#41 [frontend] exporting to image
+#41 exporting layers
+#41 exporting layers 0.4s done
+#41 writing image sha256:9589ac7cb767b013ba8e528ad05cf0657dde618117d906339f9e76c8805514c2 done
+#41 naming to docker.io/library/devsync_phase5b_9fa166d55e-frontend done
+#41 DONE 0.4s
+
+#42 [frontend] resolving provenance for metadata file
+#42 DONE 0.0s
+ Image devsync_phase5b_9fa166d55e-frontend Built 
+ Image devsync_phase5b_9fa166d55e-bootstrap Built 
+ Image devsync_phase5b_9fa166d55e-initialize Built 
+ Image devsync_phase5b_9fa166d55e-backend Built 
+ Network devsync_phase5b_9fa166d55e_default Creating 
+ Volume devsync_phase5b_9fa166d55e_redis_data Creating 
+ Volume devsync_phase5b_9fa166d55e_runtime_credentials Creating 
+ Volume devsync_phase5b_9fa166d55e_runtime_credentials Creating 
+ Volume devsync_phase5b_9fa166d55e_postgres_data Creating 
+ Volume devsync_phase5b_9fa166d55e_postgres_data Creating 
+ Network devsync_phase5b_9fa166d55e_default Creating 
+ Volume devsync_phase5b_9fa166d55e_redis_data Creating 
+ Volume devsync_phase5b_9fa166d55e_admin_credentials Creating 
+ Volume devsync_phase5b_9fa166d55e_admin_credentials Creating 
+ Volume devsync_phase5b_9fa166d55e_runtime_credentials Created 
+ Volume devsync_phase5b_9fa166d55e_runtime_credentials Created 
+ Volume devsync_phase5b_9fa166d55e_admin_credentials Created 
+ Volume devsync_phase5b_9fa166d55e_admin_credentials Created 
+ Volume devsync_phase5b_9fa166d55e_redis_data Created 
+ Volume devsync_phase5b_9fa166d55e_redis_data Created 
+ Volume devsync_phase5b_9fa166d55e_postgres_data Created 
+ Volume devsync_phase5b_9fa166d55e_postgres_data Created 
+ Network devsync_phase5b_9fa166d55e_default Created 
+ Network devsync_phase5b_9fa166d55e_default Created 
+ Container devsync_phase5b_9fa166d55e-redis-1 Creating 
+ Container devsync_phase5b_9fa166d55e-bootstrap-1 Creating 
+ Container devsync_phase5b_9fa166d55e-redis-1 Created 
+ Container devsync_phase5b_9fa166d55e-bootstrap-1 Created 
+ Container devsync_phase5b_9fa166d55e-postgres-1 Creating 
+ Container devsync_phase5b_9fa166d55e-postgres-1 Created 
+ Container devsync_phase5b_9fa166d55e-initialize-1 Creating 
+ Container devsync_phase5b_9fa166d55e-initialize-1 Created 
+ Container devsync_phase5b_9fa166d55e-backend-1 Creating 
+ Container devsync_phase5b_9fa166d55e-backend-1 Created 
+ Container devsync_phase5b_9fa166d55e-frontend-1 Creating 
+ Container devsync_phase5b_9fa166d55e-frontend-1 Created 
+ Container devsync_phase5b_9fa166d55e-bootstrap-1 Starting 
+ Container devsync_phase5b_9fa166d55e-redis-1 Starting 
+ Container devsync_phase5b_9fa166d55e-bootstrap-1 Started 
+ Container devsync_phase5b_9fa166d55e-bootstrap-1 Waiting 
+ Container devsync_phase5b_9fa166d55e-redis-1 Started 
+ Container devsync_phase5b_9fa166d55e-bootstrap-1 Exited 
+ Container devsync_phase5b_9fa166d55e-postgres-1 Starting 
+ Container devsync_phase5b_9fa166d55e-postgres-1 Started 
+ Container devsync_phase5b_9fa166d55e-postgres-1 Waiting 
+ Container devsync_phase5b_9fa166d55e-postgres-1 Healthy 
+ Container devsync_phase5b_9fa166d55e-initialize-1 Starting 
+ Container devsync_phase5b_9fa166d55e-initialize-1 Started 
+ Container devsync_phase5b_9fa166d55e-initialize-1 Waiting 
+ Container devsync_phase5b_9fa166d55e-redis-1 Waiting 
+ Container devsync_phase5b_9fa166d55e-redis-1 Healthy 
+ Container devsync_phase5b_9fa166d55e-initialize-1 Exited 
+ Container devsync_phase5b_9fa166d55e-backend-1 Starting 
+ Container devsync_phase5b_9fa166d55e-backend-1 Started 
+ Container devsync_phase5b_9fa166d55e-backend-1 Waiting 
+ Container devsync_phase5b_9fa166d55e-backend-1 Healthy 
+ Container devsync_phase5b_9fa166d55e-frontend-1 Starting 
+ Container devsync_phase5b_9fa166d55e-frontend-1 Started 
+ Container devsync_phase5b_9fa166d55e-postgres-1 Waiting 
+ Container devsync_phase5b_9fa166d55e-redis-1 Waiting 
+ Container devsync_phase5b_9fa166d55e-initialize-1 Waiting 
+ Container devsync_phase5b_9fa166d55e-backend-1 Waiting 
+ Container devsync_phase5b_9fa166d55e-frontend-1 Waiting 
+ Container devsync_phase5b_9fa166d55e-bootstrap-1 Waiting 
+ Container devsync_phase5b_9fa166d55e-redis-1 Healthy 
+ Container devsync_phase5b_9fa166d55e-initialize-1 Exited 
+ Container devsync_phase5b_9fa166d55e-bootstrap-1 Exited 
+ Container devsync_phase5b_9fa166d55e-backend-1 Healthy 
+ Container devsync_phase5b_9fa166d55e-postgres-1 Healthy 
+ Container devsync_phase5b_9fa166d55e-frontend-1 Healthy 

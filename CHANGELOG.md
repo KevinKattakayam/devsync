@@ -5,6 +5,8 @@
 - Add local identity setup guidance and explicit production configuration validation without enabling fixture authentication.
 - Add coverage-drop gating, security/E2E/Compose jobs and reviewed manual preview/production workflows; retain SBOM/provenance and publish only scanned images after all gates.
 - Document exact Vercel/Railway settings, separate migration/runtime authority, backups/restores and honest hosted verification limits.
+- Verify the complete keyless Compose graph from a clean checkout in85.625s using Docker cache; preserve raw results and the initial build failure.
+- Adopt supported Railway IaC with locked SDK, strict types and a no-drift deployment gate; retain legacy examples outside auto-discovery and require account migration/review before rollout.
 
 # Phase 5a — practical audit fixes and bounded quality evidence
 
