@@ -1,5 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
+import { validateEnvironment } from './config-environment';
+validateEnvironment(process.env);
 
 import { startTelemetry, stopTelemetry } from './observability/telemetry';
 import { startReporting, stopReporting } from './observability/reporting';

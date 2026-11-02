@@ -47,7 +47,7 @@ app.use(
   }),
 );
 app.use(express.urlencoded({ extended: true }));
-if (process.env.NODE_ENV !== 'test') app.use(clerkMiddleware());
+if (process.env.NODE_ENV !== 'test' && process.env.CLERK_SECRET_KEY) app.use(clerkMiddleware());
 app.use(generalLimiter);
 
 /** One router implementation for both contracts; no copied authorization handlers. */

@@ -1,3 +1,9 @@
+# Phase 5b — container foundation
+
+- Add multi-stage non-root application images with health checks and separate migration tooling.
+- Add local Compose credential initialization, migrations/seeds and a non-bypass runtime database role; keep administrative credentials out of the API container.
+- Add local identity setup guidance and explicit production configuration validation without enabling fixture authentication.
+
 # Phase 5a — practical audit fixes and bounded quality evidence
 
 - Require full AES-GCM authentication tags and reject malformed/tampered encrypted-secret envelopes while retaining valid v1 ciphertext behavior.

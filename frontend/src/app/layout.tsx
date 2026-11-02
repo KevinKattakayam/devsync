@@ -20,28 +20,43 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${GeistSans.variable} ${GeistMono.variable} min-h-screen`}>
-        <ClerkProvider
-          appearance={{
-            variables: {
-              colorPrimary: 'var(--primary)',
-            },
-          }}
-        >
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-            enableSystem
-            disableTransitionOnChange
+        {process.env.DEPLOYMENT_MODE === 'local' &&
+        !process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY ? (
+          <main className="mx-auto max-w-2xl space-y-4 p-8">
+            <h1 className="text-2xl font-semibold">DevSync local setup</h1>
+            <p>
+              The local services and sample data can start without identity keys. Protected
+              workspace access requires your Clerk configuration.
+            </p>
+            <p>
+              Set the Clerk keys and real seed user IDs described in DEPLOYMENT.md, then rebuild. No
+              test login or authentication bypass is enabled.
+            </p>
+          </main>
+        ) : (
+          <ClerkProvider
+            appearance={{
+              variables: {
+                colorPrimary: 'var(--primary)',
+              },
+            }}
           >
-            <AuthProvider>
-              <SocketProvider>
-                {children}
-                <SyncStatusManager />
-                <Toast />
-              </SocketProvider>
-            </AuthProvider>
-          </ThemeProvider>
-        </ClerkProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="dark"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <AuthProvider>
+                <SocketProvider>
+                  {children}
+                  <SyncStatusManager />
+                  <Toast />
+                </SocketProvider>
+              </AuthProvider>
+            </ThemeProvider>
+          </ClerkProvider>
+        )}
       </body>
     </html>
   );

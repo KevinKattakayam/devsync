@@ -1,3 +1,4 @@
+import { NextResponse, type NextRequest, type NextFetchEvent } from 'next/server';
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 
 const isPublicRoute = createRouteMatcher([
@@ -9,11 +10,21 @@ const isPublicRoute = createRouteMatcher([
   '/api/auth/reset(.*)',
 ]);
 
-export default clerkMiddleware(async (auth, request) => {
+const authenticatedProxy = clerkMiddleware(async (auth, request) => {
   if (!isPublicRoute(request)) {
     await auth.protect();
   }
 });
+
+export default function proxy(request: NextRequest, event: NextFetchEvent) {
+  if (request.nextUrl.pathname === '/healthz') return NextResponse.next();
+  if (process.env.DEPLOYMENT_MODE === 'local' && !process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY) {
+    return isPublicRoute(request)
+      ? NextResponse.next()
+      : NextResponse.redirect(new URL('/login', request.url));
+  }
+  return authenticatedProxy(request, event);
+}
 
 export const config = {
   matcher: [

@@ -10,8 +10,9 @@ root = Path(__file__).resolve().parents[2]
 service = sys.argv[1]
 if service not in ('backend', 'frontend'):
     raise SystemExit('Choose backend or frontend')
-output = root / 'docs' / 'quality'
-output.mkdir(exist_ok=True)
+output = root / (sys.argv[2] if len(sys.argv) > 2 else 'docs/quality')
+output.resolve().relative_to(root)
+output.mkdir(parents=True, exist_ok=True)
 commands = [('lint', ['npm', 'run', 'lint']), ('format', ['npm', 'run', 'format:check']),
             ('types', ['npm', 'run', 'typecheck']), ('tests', ['npm', 'test']),
             ('build', ['npm', 'run', 'build'] + (['--', '--webpack'] if service == 'frontend' else []))]

@@ -1,3 +1,9 @@
+# Phase 5b — container foundation, group 1
+
+On upgrade/enterprise, no push or Phase5c. Preserved Phase5a evidence in its own0120530 commit; its visual failures and measurement deferrals remain open. Added multi-stage non-root application images/health checks, generated local credentials in separate administrative/runtime volumes, automatic migration/sample seeding, non-bypass runtime role provisioning and a Compose health/completion dependency graph. Unconfigured local identity shows setup guidance; no production fixture login or authority bypass. Production settings fail closed before container startup. Current group gates pass for both apps (lint/format/types/tests/build), and Compose configuration validates. Clean-clone startup is the next verification; no startup success claimed yet. CI/production deployment/backup notes remain in progress.
+
+---
+
 # Phase 5a — bounded quality evidence finalized; remaining work open
 
 Local upgrade/enterprise; no push/deployment. Core fixes committed as7d33e55: explicit16-byte AES-GCM authentication tags with tamper regressions, root-relative reset destinations/relative Location, honest billing/overview/landing claims, measured overview contrast fixes, accurate README and private disclosure guidance. Legacy GET cookie clearing/CSRF remains unresolved. No license grant, provider sign-in or capacity claim invented.

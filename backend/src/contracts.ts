@@ -536,6 +536,9 @@ add(
   },
 );
 
+add('GET', '/healthz', z.object({ status: z.literal('ok') }).strict(), '200', {
+  surface: 'frontend',
+});
 add('GET', '/metrics', z.string(), '200', {
   surface: 'app',
   responses: { '200': { schema: z.string(), mime: 'text/plain' } },
