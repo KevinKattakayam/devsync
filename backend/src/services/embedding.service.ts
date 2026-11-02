@@ -1,5 +1,6 @@
 import { createHash, randomUUID } from 'crypto';
 import OpenAI from 'openai';
+import { boundedProvider, rejectedBeforeAdmission } from './ai-provider';
 import { preflightSnippet, redactSnippetText } from '../security/snippet-preflight';
 import { AiQuota } from './ai-quota';
 import { redis } from '../lib/redis';
@@ -30,17 +31,18 @@ function textFromJson(value: unknown): string {
 async function embed(text: string, actorId: string, workspaceId: string) {
   if (!client) return null;
   const release = await new AiQuota(redis).acquire(actorId, workspaceId);
+  let refund = false;
   try {
-    const result = await client.embeddings.create({ model, input: text.slice(0, 30000) });
+    const result = await boundedProvider((signal) =>
+      client.embeddings.create({ model, input: text.slice(0, 30000) }, { signal }),
+    );
     return vectorSchema.parse(result.data[0]?.embedding);
   } catch (error) {
-    console.warn(
-      '[Embedding] Provider unavailable',
-      error instanceof Error ? error.name : 'UnknownError',
-    );
+    refund = rejectedBeforeAdmission(error);
+    console.warn('[Embedding] Provider unavailable');
     return null;
   } finally {
-    await release().catch(() => undefined);
+    await release(refund).catch(() => undefined);
   }
 }
 function vector(values: number[]) {

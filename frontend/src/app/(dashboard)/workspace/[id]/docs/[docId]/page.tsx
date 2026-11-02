@@ -218,7 +218,9 @@ function EditorInner({
           error && typeof error === 'object' && 'status' in error ? error.status : undefined;
         setAiError(
           status === 429
-            ? 'AI request limit reached. Check usage in workspace settings or wait for active requests to finish.'
+            ? error instanceof Error
+              ? error.message
+              : 'AI request limit reached. Check AI usage in settings.'
             : status === 503
               ? 'AI is temporarily unavailable. Your documents remain available.'
               : 'AI could not finish. Try again; partial output cannot be applied.',

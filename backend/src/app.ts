@@ -13,6 +13,7 @@ import snippetRoutes from './routes/snippet.routes';
 import { aiUsage } from './middleware/ai-quota.middleware';
 import { authMiddleware } from './middleware/auth.middleware';
 import aiRoutes from './routes/ai.routes';
+import aiV3Routes from './routes/ai-v3.routes';
 import asyncDigestRoutes from './routes/async-digest.routes';
 import snippetSafetyRoutes from './routes/snippet-safety.routes';
 import decisionReceiptRoutes from './routes/decision-receipts.routes';
@@ -74,6 +75,8 @@ mounts.push({
   router: snippetSafetyRoutes,
 });
 mountApi('/ai', aiRoutes);
+app.use('/api/v3/ai', aiV3Routes);
+mounts.push({ prefix: '/api/v3/ai', router: aiV3Routes });
 app.use('/api/v2/workspaces/:workspaceId/digest', asyncDigestRoutes);
 mounts.push({ prefix: '/api/v2/workspaces/:workspaceId/digest', router: asyncDigestRoutes });
 app.use('/api/v2/workspaces/:workspaceId/decisions', decisionReceiptRoutes);

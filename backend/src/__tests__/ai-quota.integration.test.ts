@@ -105,3 +105,52 @@ it('resets UTC calendar periods and expires abandoned concurrency leases', async
   ).toBe(1);
   await release();
 });
+it('refunds confirmed pre-provider failures exactly once under parallel settlement', async () => {
+  const quota = new AiQuota(redis, { ...defaultAiLimits, userDaily: 1 });
+  const release = await quota.acquire('actor', 'workspace');
+  await Promise.all(Array.from({ length: 10 }, () => release(true)));
+  expect((await quota.chargedUsage('actor', 'workspace')).user.daily).toBe(0);
+  expect((await quota.chargedUsage('actor', 'workspace')).workspace.monthly).toBe(0);
+  expect((await quota.usage('actor', 'workspace')).user.daily).toBe(1);
+  await (
+    await quota.acquire('actor', 'workspace')
+  )();
+  expect((await quota.chargedUsage('actor', 'workspace')).user.daily).toBe(1);
+});
+it('never refunds an already settled ambiguous attempt and reports typed UTC reset', async () => {
+  const quota = new AiQuota(redis, { ...defaultAiLimits, userDaily: 1 });
+  const now = new Date('2026-11-02T12:00:00Z');
+  const release = await quota.acquire('actor', 'workspace', now);
+  await release();
+  await release(true);
+  await expect(quota.acquire('actor', 'workspace', now)).rejects.toMatchObject({
+    statusCode: 429,
+    limit: {
+      type: 'AI_QUOTA_EXCEEDED',
+      scope: 'user',
+      period: 'daily',
+      resetAt: '2026-11-03T00:00:00.000Z',
+    },
+    retryAfter: 43200,
+  });
+});
+it('admits provider operations only after reservation, including parallel exhaustion', async () => {
+  const quota = new AiQuota(redis, { ...defaultAiLimits, userDaily: 2, userConcurrent: 20 });
+  const provider = jest.fn(async () => 'output');
+  const outcomes = await Promise.allSettled(
+    Array.from({ length: 20 }, async () => {
+      const release = await quota.acquire('actor', 'workspace');
+      try {
+        return await provider();
+      } finally {
+        await release();
+      }
+    }),
+  );
+  expect(outcomes.filter((result) => result.status === 'fulfilled')).toHaveLength(2);
+  expect(provider).toHaveBeenCalledTimes(2);
+  await expect(quota.acquire('actor', 'workspace')).rejects.toThrow('quota exceeded');
+  expect(provider).toHaveBeenCalledTimes(2);
+  expect((await quota.chargedUsage('another', 'elsewhere')).workspace.daily).toBe(0);
+  expect((await quota.chargedUsage('another', 'workspace')).user.daily).toBe(0);
+});

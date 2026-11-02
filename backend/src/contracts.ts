@@ -1,3 +1,5 @@
+import { aiCompleteSchema } from './services/ai-schema';
+import { aiUsageV3Query } from './services/ai-schema';
 import { Prisma } from '@prisma/client';
 import { z } from 'zod';
 import {
@@ -473,6 +475,47 @@ const aiAllowance = z
     monthlyLimit: z.number().int().positive(),
   })
   .strict();
+const aiLimitDetail = z
+  .object({
+    type: z.enum(['AI_QUOTA_EXCEEDED', 'AI_CONCURRENCY_EXCEEDED']),
+    scope: z.enum(['user', 'workspace']),
+    period: z.enum(['daily', 'monthly', 'concurrent']),
+    resetAt: z.iso.datetime(),
+  })
+  .strict();
+add(
+  'GET',
+  '/api/v3/ai/usage',
+  z
+    .object({
+      unit: z.literal('charged reservations'),
+      period: z.literal('UTC calendar day/month'),
+      userScope: z.literal('global account'),
+      settlement: z.literal(
+        'Pre-provider and explicit pre-admission failures are refunded; ambiguous or partial attempts remain charged.',
+      ),
+      resets: z.object({ daily: z.iso.datetime(), monthly: z.iso.datetime() }).strict(),
+      concurrency: z
+        .object({
+          userLimit: z.number().int().positive(),
+          workspaceLimit: z.number().int().positive(),
+        })
+        .strict(),
+      user: aiAllowance,
+      workspace: aiAllowance,
+    })
+    .strict(),
+  '200',
+  { query: aiUsageV3Query },
+);
+add('POST', '/api/v3/ai/complete', aiEventSchema, '200', {
+  body: aiCompleteSchema,
+  events: aiEventSchema,
+  responses: {
+    '200': { schema: aiEventSchema, mime: 'text/event-stream' },
+    '429': { schema: apiErrorSchema.extend({ limit: aiLimitDetail }) },
+  },
+});
 add(
   'GET',
   '/api/v2/ai/usage',

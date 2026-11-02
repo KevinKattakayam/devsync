@@ -24,7 +24,7 @@ export async function meteredAiRequest(
     const requestId = randomUUID();
     req.billingRequestId = requestId;
     res.once('finish', () => {
-      if (res.statusCode < 400) {
+      if (res.statusCode < 400 && req.aiQuotaRefund !== true) {
         const text = `${req.body?.prompt || ''}\n${req.body?.context || ''}`;
         void recordTokenUsage(
           workspaceId,

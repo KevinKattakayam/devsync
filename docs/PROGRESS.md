@@ -1,3 +1,11 @@
+# Phase 3f follow-up — reservation settlement, group 1
+
+Quota/failure hardening only, on upgrade/enterprise; no push or Phase5. Read available frontend AGENTS guidance (root AGENTS.md absent), AI audit findings, Phase3e/3f notes, authority matrix, DESIGN and AI code. Preserve global personal allowance and isolated workspace counters. Added atomic one-time confirmed-pre-provider refunds, conservative ambiguous/partial charges, versioned v3 usage/typed reset errors, hard provider and Redis deadlines, bounded output and one explicit429 backoff retry without ambiguous replay. Settings adopts v3 and clears old totals on workspace switch; legacy DTOs/cumulative counters remain supported. See ADR020 and AI_COST_SAFETY.md. No Prisma migration required.
+
+Actual group1 gates: both lint/format/strict types pass; backend26 suites/253 tests and production build pass; frontend4 Node test-file subtests and15 files/71 component tests plus webpack build pass. Initial sandbox backend tests failed for missing container/socket access; rerun outside sandbox passed. Initial frontend build failed parsing TypeScript configuration inside sandbox; outside-sandbox build passed. No tests weakened. Browser acceptance is the next group, not yet claimed. Evaluation scaffold remains present and contains no dataset/results. Actual token/dollar reconciliation, exactly-once remote billing and embedding outbox deduplication remain deferred. PWA/offline is Phase5.
+
+---
+
 # Phase 4b — P06 evidence-only async digest delivered; STOP
 
 Built **P06 only** on `upgrade/enterprise`, local commit only, no push. Root AGENTS.md is absent; frontend guidance, progress, authorization matrix, P06 proposal, DESIGN and the actual activity/resource policies were read. No other feature, Phase4c or PWA work was started.

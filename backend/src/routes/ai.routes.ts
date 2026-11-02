@@ -1,3 +1,4 @@
+import { boundAiRequest } from './ai-v3.routes';
 import { admitAi } from '../middleware/ai-quota.middleware';
 import { Router } from 'express';
 import { authMiddleware } from '../middleware/auth.middleware';
@@ -13,6 +14,7 @@ router.post(
   '/complete',
   aiLimiter,
   validate(aiCompleteSchema),
+  boundAiRequest,
   admitAi,
   meteredAiRequest,
   aiComplete,

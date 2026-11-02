@@ -141,16 +141,39 @@ export const aiApi = {
     signal?: AbortSignal,
   ) =>
     (async () => {
-      const response = await fetch(`${API_URL}/ai/complete`, {
-        signal,
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${(await tokenGetter?.()) || ''}`,
+      const response = await fetch(
+        `${API_URL.replace(/\/v1\/?$/, '').replace(/\/$/, '')}/v3/ai/complete`,
+        {
+          signal,
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${(await tokenGetter?.()) || ''}`,
+          },
+          body: JSON.stringify(data),
         },
-        body: JSON.stringify(data),
-      });
-      if (!response.ok)
+      );
+      if (!response.ok) {
+        if (response.status === 429) {
+          const body: unknown = await response.json().catch(() => null);
+          if (body && typeof body === 'object' && 'limit' in body) {
+            const limit = body.limit;
+            if (
+              limit &&
+              typeof limit === 'object' &&
+              'resetAt' in limit &&
+              typeof limit.resetAt === 'string' &&
+              Number.isFinite(Date.parse(limit.resetAt))
+            ) {
+              throw Object.assign(
+                new Error(
+                  `AI request limit reached. Reset or retry by ${new Date(limit.resetAt).toISOString()}. Check AI usage in settings.`,
+                ),
+                { status: 429 },
+              );
+            }
+          }
+        }
         throw Object.assign(
           new Error(
             response.status === 429
@@ -163,6 +186,7 @@ export const aiApi = {
             status: response.status,
           },
         );
+      }
       return response;
     })(),
 };

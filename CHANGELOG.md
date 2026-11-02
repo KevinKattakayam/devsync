@@ -1,3 +1,9 @@
+# Phase 3f follow-up — AI reservation settlement
+
+- Atomically refund confirmed pre-provider failures once; retain conservative charges for ambiguous/partial attempts and preserve legacy cumulative admissions.
+- Add versioned usage/reset error contracts, bounded Redis/provider operations, safe429 backoff and output limits; show resets and concurrency in settings.
+- Add parallel admission/refund, timeout/output and privacy policy regressions; record operational tradeoffs in ADR020.
+
 # Phase 4b — P06 evidence-only async digest
 
 - Add a feature-flagged personal digest of recorded creation events with typed source pointers, reauthorized source proofs and deterministic pagination; no model or generated claims.

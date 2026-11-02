@@ -26,7 +26,7 @@ for (const theme of ['dark', 'light'] as const)
         await page.goto(`/workspace/devsync-sample/docs/${id}`);
         await expect(page.locator('.ProseMirror')).toHaveAttribute('contenteditable', 'true');
         let failure = false;
-        await context.route('**/api/ai/complete', (route) =>
+        await context.route('**/api/v3/ai/complete', (route) =>
           route.fulfill({
             status: 200,
             contentType: 'text/event-stream',
