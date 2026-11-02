@@ -1,3 +1,4 @@
+import { digestSource } from '../services/async-digest';
 import { idempotentCreate } from '../lib/create-idempotency';
 import { Request, Response, NextFunction } from 'express';
 import { z } from 'zod';
@@ -81,6 +82,7 @@ export async function createSnippet(req: Request, res: Response, next: NextFunct
             await tx.activity.create({
               data: {
                 type: 'snippet_created',
+                metadata: digestSource('snippet', result.id, result.updatedAt.toISOString()),
                 message: `added snippet "${result.title}"`,
                 userId: req.user!.userId,
                 workspaceId,

@@ -1,3 +1,4 @@
+import { digestSource } from '../services/async-digest';
 import { idempotentCreate } from '../lib/create-idempotency';
 import { Request, Response, NextFunction } from 'express';
 import { z } from 'zod';
@@ -268,6 +269,7 @@ export async function createTask(req: Request, res: Response, next: NextFunction
           await tx.activity.create({
             data: {
               type: 'task_created',
+              metadata: digestSource('task', result.id, result.updatedAt.toISOString()),
               message: `created task "${result.title}"`,
               userId: req.user!.userId,
               workspaceId,

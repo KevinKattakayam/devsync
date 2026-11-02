@@ -1,3 +1,4 @@
+import { digestSource } from '../services/async-digest';
 import { Router } from 'express';
 import { z } from 'zod';
 import { authMiddleware } from '../middleware/auth.middleware';
@@ -138,6 +139,7 @@ router.post('/save', validate(safetySaveSchema), async (req, res, next) => {
             await tx.activity.create({
               data: {
                 type: 'snippet_created',
+                metadata: digestSource('snippet', snippet.id, snippet.updatedAt.toISOString()),
                 message: 'added a snippet through safety preflight',
                 userId: req.user!.userId,
                 workspaceId,

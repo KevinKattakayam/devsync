@@ -1,3 +1,39 @@
+# Phase 4b — P06 evidence-only async digest delivered; STOP
+
+Built **P06 only** on `upgrade/enterprise`, local commit only, no push. Root AGENTS.md is absent; frontend guidance, progress, authorization matrix, P06 proposal, DESIGN and the actual activity/resource policies were read. No other feature, Phase4c or PWA work was started.
+
+## Delivered
+
+- Deterministic, personal, opt-in in-app digest of actual document/snippet/task creation records. Existing producer transactions attach versioned source IDs/revisions to their existing activity; no event counts or historical achievements are fabricated. Entries use the recorded message/timestamp and link to a reauthorized source-record page with exact activity/source identity and revision. Recognized sensitive-looking spans are masked in memory and labelled; no digest content copy is stored.
+- Source policy is applied before pagination: current active principal/member and unsuspended tenant, existing same-workspace document/snippet/task, unarchived document, valid event/source-kind/revision binding. Administrative, AI-authored, unknown, old unlinked and unavailable-source records are omitted without hidden IDs/counts. Source proofs and acknowledgments recheck the same policy even after initial rendering. An owner in two workspaces cannot cross-bind a source.
+- Seven-day database-timestamp window,25 events/page, stable equal-time ID ordering, scope/revision-bound cursors with30-minute expiry, explicit own acknowledgment and monotonic checkpoint. Fetching does not mark seen. Concurrent initial preference writes serialize; stale actions/cursors conflict rather than overwriting another tab's choice. Viewers can control their own delivery, without modifying resource/admin state or another member's preference.
+- Forward-only migration adds only personal preferences/checkpoints with user/workspace cascade and forced tenant+actor RLS. Source metadata is additive JSON on existing records, not a backfill or content snapshot. All new APIs are versioned `/api/v2/workspaces/:workspaceId/digest`; existing legacy/v1 DTOs and CRDT/resource mutation behavior are preserved.
+- **FEATURE_ASYNC_DIGEST=true** gates the page/navigation and API independently; default false in both examples. Design-system pages include loading skeletons, honest empty state, error/retry boundaries, plain-text rendering, keyboard controls, exact-source proof and a native UTC window disclosure. No AI model, paid API/key, provider adapter or external messaging is required.
+
+## Actual validation
+
+Backend lint/format, application/seed/testing strict types, **26 suites / 245 tests**, and production build pass. Final browser-spec lint/format/types also pass. Unit tests cover source metadata, cursor codec and forged authority fields. Real migrated PostgreSQL tests use a non-owner/non-bypass RLS role and actual document/snippet/task producers; verify message/timestamp equality, current source access, actor+tenant RLS, viewer personal access, cross-workspace forged bindings, admin/AI/unlinked omission, archive/delete proof/ack denial, equal-time pagination without duplicates, private monotonic checkpoints, concurrent subscriptions, cursor scope/expiry, masking and revocation/suspension. Existing security/collaboration/data suites remain passing.
+
+Frontend lint/format/strict types, **9 Node tests + 15 files / 70 component tests**, and webpack production build pass. Component cases cover explicit opt-in, no off-state activity fetch, source links/plain text, empty/access retry, explicit checkpoint, cursor navigation and unavailable-source retry. Initial Playwright **4 passed (51.4s)**; final **4 passed (52.2s)** at1440/390 dark/light using seeded fixture login, real producer activity and source APIs. Visible messages are compared to actual Activity records. Journeys verify independent viewer/owner checkpoints, source permalink, source withdrawal, opt-out, forged recipient denial, failure/retry and keyboard UTC disclosure. Only network-error simulation is intercepted.
+
+**32 final screenshots / 32 axe reports show zero violations**. Raw incompletes, screenshot critique and the mobile density correction are in [ui/after/async-digest/REVIEW.md](ui/after/async-digest/REVIEW.md); authoritative artifacts are in final/. Initial captures remain for review comparison. Actual command output was shown in-session; the final browser log is /tmp/devsync-async-digest-browser-final.log, not a fabricated committed transcript. No test/assertion was removed or weakened, no rule was disabled and no model/benchmark/quality result was invented.
+
+## Exact limits and deferrals
+
+This bounded event set is creation activity, not complete change history: continuous CRDT edits, saves/moves/deletes without supported records, old unlinked events, decisions, administrative events and AI summaries are not synthesized into digest lines. Human next-question annotations would require a separately recorded source and policy to satisfy the every-line-evidence requirement; they are not rendered as placeholders. Scheduled email/chat, broadcast recipients, notifications, historical backfill, snapshot/diff/restore and new task/snippet detail views were not started. Every entry's exact source is the recorded-activity proof; secondary task/snippet navigation opens the existing collection with the source ID listed.
+
+Sources can change or disappear between requests. Recorded revision is not a retained historical content snapshot, factual verification, consensus or a current-status guarantee. Empty means no eligible events in that window, not no work. An acknowledgment includes earlier chronological pages and does not prove review/completion. Opt-out retains the private checkpoint; metadata persists until user/workspace deletion or a future explicit retention process. Earlier rendered text may remain until refresh/close; no new passive browser-eviction or remote-erasure promise is introduced. Cursor encoding is not authentication; policy is repeated for every read/action.
+
+Initial screenshot review found verbose mobile coverage/window text and a redundant opt-in toast. Copy was shortened, UTC bounds moved to a keyboard-operated disclosure, and on/off feedback stays inline. A review edit script stopped before writing; its in-progress checks were cancelled, the patch was applied directly, and final checks passed. No passing validation is claimed for the interrupted runs. Final axe incompletes concern the existing Copilot trigger under transient UI; manual token/screenshot review is documented.360px, high zoom, other engines, screen readers and large-workspace performance were not measured in this timebox. No act, provider experiment, additional audit or unrelated work was performed.
+
+## Requires human action
+
+Deploy the forward migration with normal runtime privileges, then opt in to FEATURE_ASYNC_DIGEST=true on backend/frontend. Roll back by disabling it and retaining additive schema/metadata; no destructive down migration. No paid API/key or real Clerk sign-in is required for this feature's fixture tests. PWA remains Phase5; earlier operational/provider actions are unchanged.
+
+See [features/async-digest.md](features/async-digest.md) for design, permissions, coverage, privacy, retention, cursor semantics and rollback. Commit this feature and STOP.
+
+---
+
 # Phase 4b — P04 snippet safety preflight delivered; STOP
 
 Built **P04 only** on `upgrade/enterprise`; local commit only, no push. Root AGENTS.md is absent; frontend guidance, progress, authorization matrix, P04 proposal, DESIGN and actual snippet/indexing code were read. No other proposal or Phase4c work was started.

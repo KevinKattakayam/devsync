@@ -13,6 +13,14 @@ import {
   safetySaveSchema,
   safetyFindingsQuery,
 } from './routes/snippet-safety.routes';
+import {
+  digestPreferenceSchema,
+  digestItemSchema,
+  digestPreferenceWrite,
+  digestAckSchema,
+  digestQuerySchema,
+  digestPageSchema,
+} from './services/async-digest';
 import { findingTypes } from './security/snippet-preflight';
 import { workspaceSearchSchema } from './schemas/search.schema';
 
@@ -385,6 +393,15 @@ add('POST', `${base}/superadmin/workspaces/{workspaceId}/kill-switch`, killRespo
 add('POST', '/scim/v2/Users', scim, '201');
 add('PATCH', '/scim/v2/Users/{externalId}', scim);
 noContent('DELETE', '/scim/v2/Users/{externalId}');
+
+const digestBase = '/api/v2/workspaces/{workspaceId}/digest';
+add('GET', `${digestBase}/preferences`, digestPreferenceSchema);
+add('GET', `${digestBase}/events/{activityId}`, digestItemSchema);
+add('PUT', `${digestBase}/preferences`, digestPreferenceSchema, '200', {
+  body: digestPreferenceWrite,
+});
+add('GET', `${digestBase}/items`, digestPageSchema, '200', { query: digestQuerySchema });
+add('POST', `${digestBase}/acknowledge`, digestPreferenceSchema, '200', { body: digestAckSchema });
 
 const safetyBase = '/api/v2/workspaces/{workspaceId}/snippet-safety';
 const safetyFinding = z.object({ type: z.enum(findingTypes), maskedPreview: z.string() }).strict();

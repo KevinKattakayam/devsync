@@ -42,6 +42,9 @@ async function main() {
     const env = {
       ...process.env,
       NODE_ENV: 'test',
+      FEATURE_ASYNC_DIGEST: process.env.E2E_ASYNC_DIGEST
+        ? 'true'
+        : process.env.FEATURE_ASYNC_DIGEST,
       FEATURE_SNIPPET_SAFETY: process.env.E2E_SNIPPET_SAFETY
         ? 'true'
         : process.env.FEATURE_SNIPPET_SAFETY,

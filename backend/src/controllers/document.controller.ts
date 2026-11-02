@@ -1,3 +1,4 @@
+import { digestSource } from '../services/async-digest';
 import { idempotentCreate } from '../lib/create-idempotency';
 import { Request, Response, NextFunction } from 'express';
 import { z } from 'zod';
@@ -131,6 +132,7 @@ export async function createDocument(req: Request, res: Response, next: NextFunc
               await tx.activity.create({
                 data: {
                   type: 'doc_created',
+                  metadata: digestSource('document', result.id, String(result.crdtRevision)),
                   message: `created document "${result.title}"`,
                   userId: req.user!.userId,
                   workspaceId,

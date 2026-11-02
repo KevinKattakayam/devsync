@@ -48,10 +48,12 @@ export function AppShell({
   children,
   decisionReceiptsEnabled = false,
   snippetSafetyEnabled = false,
+  asyncDigestEnabled = false,
 }: {
   children: ReactNode;
   decisionReceiptsEnabled?: boolean;
   snippetSafetyEnabled?: boolean;
+  asyncDigestEnabled?: boolean;
 }) {
   const { user, isLoading, isAuthenticated } = useAuth();
   const router = useRouter();
@@ -71,6 +73,7 @@ export function AppShell({
       key={user.id}
       user={user}
       decisionReceiptsEnabled={decisionReceiptsEnabled}
+      asyncDigestEnabled={asyncDigestEnabled}
       snippetSafetyEnabled={snippetSafetyEnabled}
     >
       {children}
@@ -82,11 +85,13 @@ function Shell({
   user,
   decisionReceiptsEnabled,
   snippetSafetyEnabled,
+  asyncDigestEnabled,
 }: {
   children: ReactNode;
   user: User;
   decisionReceiptsEnabled: boolean;
   snippetSafetyEnabled: boolean;
+  asyncDigestEnabled: boolean;
 }) {
   const pathname = usePathname();
   const router = useRouter();
@@ -163,6 +168,7 @@ function Shell({
     ...(decisionReceiptsEnabled
       ? [{ path: '/decisions', label: 'Decisions', icon: FileText }]
       : []),
+    ...(asyncDigestEnabled ? [{ path: '/digest', label: 'Async digest', icon: FileText }] : []),
     { path: '/settings', label: 'Settings', icon: Settings },
   ];
   const section = sections.find((item) => item.path && pathname.startsWith(base + item.path));

@@ -1,3 +1,11 @@
+# Phase 4b — P06 evidence-only async digest
+
+- Add a feature-flagged personal digest of recorded creation events with typed source pointers, reauthorized source proofs and deterministic pagination; no model or generated claims.
+- Add forward-only actor/tenant-RLS preferences, explicit opt-in and private monotonic checkpoints; filter unavailable/foreign/admin/AI/unlinked sources before paging.
+- Add design-system pages, skeleton/empty/retry states and keyboard UTC window disclosure; retain exact evidence and coverage limits.
+- Verify245 backend tests,79 frontend tests and four final seeded Playwright journeys;32 final axe reports show zero violations. Document raw incompletes, retention and rollback.
+- P06 only; no paid API/key, other feature or push.
+
 # Phase 4b — P04 snippet safety preflight
 
 - Add feature-flagged local/server preflight and explicitly confirmed redacted create/edit through versioned v2 endpoints; reject legacy detected-value writes when enabled.

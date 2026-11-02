@@ -23,6 +23,7 @@ model User {
   snippets     Snippet[]
   tasks        Task[]
   memberships  WorkspaceMember[]
+  asyncDigestPreferences AsyncDigestPreference[]
   scimExternalIdentities ScimExternalIdentity[]
 }
 
@@ -55,6 +56,7 @@ model Workspace {
   embeddingJobs EmbeddingJob[]
   invitations WorkspaceInvitation[]
   decisionReceipts DecisionReceipt[]
+  asyncDigestPreferences AsyncDigestPreference[]
 }
 
 model WorkspaceInvitation {
@@ -367,4 +369,17 @@ model SnippetSafetyFinding {
   maskedPreview String
   snippet Snippet @relation(fields: [snippetId, workspaceId], references: [id, workspaceId], onDelete: Cascade, onUpdate: Restrict)
   @@index([workspaceId, snippetId])
+}
+
+model AsyncDigestPreference {
+  workspaceId String
+  userId String
+  enabled Boolean @default(false)
+  revision Int @default(0)
+  acknowledgedAt DateTime?
+  acknowledgedId String?
+  updatedAt DateTime @updatedAt
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@id([workspaceId, userId])
 }
