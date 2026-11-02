@@ -150,6 +150,7 @@ export default function KanbanPage() {
     }
     setDraggedTask(task);
     e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', task.id);
   };
   const handleDragOver = (e: React.DragEvent, columnId: string) => {
     e.preventDefault();
@@ -311,27 +312,48 @@ export default function KanbanPage() {
                   const priority =
                     priorityConfig[task.priority?.toUpperCase()] || priorityConfig.MEDIUM;
                   return (
-                    <div
-                      key={task.id}
-                      draggable={canWrite && !busy}
-                      onDragStart={(e) => handleDragStart(e, task)}
-                      role="group"
-                      aria-label={task.title}
-                      onDoubleClick={() => {
-                        setSelectedTask(task);
-                        setShowTaskModal(true);
-                      }}
-                      className={`rounded-lg bg-card p-3 transition-opacity group ${draggedTask?.id === task.id ? 'opacity-50' : ''}`}
-                    >
-                      <button
-                        className="text-left text-sm font-medium break-words"
-                        onClick={() => {
+                    <div key={task.id} className="rounded-lg bg-card p-3">
+                      <div
+                        draggable={canWrite && !busy}
+                        onDragStart={(e) => handleDragStart(e, task)}
+                        role="group"
+                        aria-label={task.title}
+                        onDoubleClick={() => {
                           setSelectedTask(task);
                           setShowTaskModal(true);
                         }}
+                        className={`transition-opacity group ${draggedTask?.id === task.id ? 'opacity-50' : ''}`}
                       >
-                        {task.title}
-                      </button>
+                        <button
+                          className="text-left text-sm font-medium break-words"
+                          onClick={() => {
+                            setSelectedTask(task);
+                            setShowTaskModal(true);
+                          }}
+                        >
+                          {task.title}
+                        </button>
+                        {task.description && (
+                          <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
+                            {task.description}
+                          </p>
+                        )}
+                        <div className="flex items-center gap-2 mt-2">
+                          <span
+                            className={`text-xs px-1.5 py-0.5 rounded-full font-medium ${priority.color} ${priority.bg}`}
+                          >
+                            {priority.label}
+                          </span>
+                          {task.assignee && (
+                            <div
+                              className="w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-medium text-white ml-auto"
+                              style={{ backgroundColor: generateColor(task.assignee.email || '') }}
+                            >
+                              {getInitials(task.assignee.name || '?')}
+                            </div>
+                          )}
+                        </div>
+                      </div>
                       {canWrite && (
                         <div className="mt-3">
                           <Select
@@ -348,26 +370,6 @@ export default function KanbanPage() {
                           />
                         </div>
                       )}
-                      {task.description && (
-                        <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
-                          {task.description}
-                        </p>
-                      )}
-                      <div className="flex items-center gap-2 mt-2">
-                        <span
-                          className={`text-xs px-1.5 py-0.5 rounded-full font-medium ${priority.color} ${priority.bg}`}
-                        >
-                          {priority.label}
-                        </span>
-                        {task.assignee && (
-                          <div
-                            className="w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-medium text-white ml-auto"
-                            style={{ backgroundColor: generateColor(task.assignee.email || '') }}
-                          >
-                            {getInitials(task.assignee.name || '?')}
-                          </div>
-                        )}
-                      </div>
                     </div>
                   );
                 })}

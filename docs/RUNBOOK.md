@@ -1,3 +1,5 @@
+> Current runtime follow-up: the application bases now use pinned Node22/Alpine. Local scans show0 Critical/0 High, backend4 Medium/frontend0 findings; see [current inventory](../VULNERABILITIES.md) for platform tradeoffs and [latest progress](PROGRESS.md). The Debian-specific Phase5a-3 risk section below is historical; capability/no-new-privileges and separate authority requirements still apply.
+
 # Operations runbook
 
 These are configuration and operating instructions, not a claim that hosted CI, Vercel, Railway, real Clerk login or a production restore was executed here. Current measured results are in [FINAL_REPORT.md](FINAL_REPORT.md) and [Phase5a-3](quality/phase5a-3/README.md); [Phase5b](deployment/RESULTS.md) records the earlier delivery. These are operating procedures, not evidence of hosted execution.
@@ -89,7 +91,7 @@ The psql example runs from repository root. Update grants deliberately if the pr
 
 ## GitHub Actions and deployment gates
 
-main.yml defines Quality: cached installs, lint, format, strict types, tests/coverage, contract check, builds, High/Critical dependency/container gates, redacted Gitleaks history scan, Semgrep, fixture E2E/visual matrix and clean-clone Compose. Official actions are pinned to verified commits; scanner images to digests. No act. Hosted job results remain unverified until you push. The Phase5a-3 shell suite passes after reviewed redesign-only baseline updates. Remaining44 High entries per image still block the unchanged container gate; accepted-risk documentation is not a hosted CI exception. Other unverified jobs must remain required.
+main.yml defines Quality: cached installs, lint, format, strict types, tests/coverage, contract check, builds, High/Critical dependency/container gates, redacted Gitleaks history scan, Semgrep, fixture E2E/visual matrix and clean-clone Compose. Official actions are pinned to verified commits; scanner images to digests. No act. Hosted job results remain unverified until you push. The Phase5a-3 shell suite passes after reviewed redesign-only baseline updates. Current local Alpine runtime scans have0 High/Critical, backend4 Medium/frontend0 findings; the unchanged container gate still needs hosted execution. See the current vulnerability inventory. Other unverified jobs must remain required.
 
 Coverage checks compare every statements/branches/functions/lines percentage with the successful Quality artifact for the base commit. Missing artifacts fail closed after adoption. The first adoption only uses the checked-in measured Phase5a baseline; baseline data/algorithm are reviewed code and locally tested. An improvement becomes the next base artifact, so later drops above the old floor still fail. Configure artifact retention for your branch cadence and protect required Quality checks; missing retained base artifacts require an explicit recovery/re-run, not silently skipping the gate.
 
@@ -124,7 +126,7 @@ A dump contains one database, not all cluster roles; retain required role/owners
 
 Primary references: [Compose startup ordering](https://docs.docker.com/compose/how-tos/startup-order/), [Vercel Git deployment configuration](https://vercel.com/docs/project-configuration/git-configuration), [Vercel Actions deployment](https://vercel.com/kb/guide/how-can-i-use-github-actions-with-vercel), [Railway configuration](https://docs.railway.com/config-as-code/reference), [PostgreSQL dump](https://www.postgresql.org/docs/16/app-pgdump.html), [PostgreSQL restore](https://www.postgresql.org/docs/16/app-pgrestore.html). Provider-specific settings and hosted entitlements must be confirmed in the actual account.
 
-## Phase 5a-3 runtime risk conditions
+## Historical Phase 5a-3 Debian runtime risk conditions
 
 Application images pin Node22/Debian13 by digest and omit unused mount/umount/nsenter/infocmp executables. Compose API/worker/frontend run as UID1000 with all capabilities dropped and no-new-privileges. Production must enforce equivalent controls and avoid privileged operators/user-controlled native SQL or ACL execution; Docker USER alone is not that guarantee. The remaining44 High entries per image are accepted under the conditions listed in [the vulnerability inventory](quality/phase5a-3/VULNERABILITIES.md). Critical count is0 in these local scans, not an all-clear or actual host assessment. No scanner ignores or CI gate exceptions were introduced.
 

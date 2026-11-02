@@ -1,6 +1,6 @@
 # Architecture
 
-This describes the tracked implementation on `upgrade/enterprise` after Phase5a-3, not a running production installation. [FINAL_REPORT.md](FINAL_REPORT.md) separates source behavior from executed tests. [ARCHITECTURE_CURRENT.md](ARCHITECTURE_CURRENT.md) is the historical Phase0 snapshot.
+This describes the tracked implementation on `upgrade/enterprise` after the runtime and Kanban follow-up, not a running production installation. [FINAL_REPORT.md](FINAL_REPORT.md) separates source behavior from executed tests. [ARCHITECTURE_CURRENT.md](ARCHITECTURE_CURRENT.md) is the historical Phase0 snapshot.
 
 ## System
 
@@ -25,7 +25,7 @@ flowchart LR
   S[Stripe signed webhook] --> A
 ```
 
-Next16.4.3/React19.2.4, strict TypeScript, Tailwind4 semantic tokens, Radix primitives, Lucide icons and Geist fonts form the frontend. TipTap3.32.2 edits Yjs content. Express4, Prisma5.22, PostgreSQL/pgvector, Socket.io, Hocuspocus, Redis and BullMQ form the backend. Local containers use PostgreSQL16 and pinned Node22/Debian13 application bases. Versions are taken from the [frontend](../frontend/package.json) and [backend](../backend/package.json) manifests/locks and [Compose](../docker-compose.yml), not a compatibility promise for arbitrary versions.
+Next16.4.3/React19.2.4, strict TypeScript, Tailwind4 semantic tokens, Radix primitives, Lucide icons and Geist fonts form the frontend. TipTap3.32.2 edits Yjs content. Express4, Prisma5.22, PostgreSQL/pgvector, Socket.io, Hocuspocus, Redis and BullMQ form the backend. Local containers use PostgreSQL16 and pinned Node22/Alpine application bases. Versions are taken from the [frontend](../frontend/package.json) and [backend](../backend/package.json) manifests/locks and [Compose](../docker-compose.yml), not a compatibility promise for arbitrary versions.
 
 The API starts HTTP, Socket.io and Hocuspocus. A dedicated worker starts BullMQ consumers and the SQL embedding-outbox poller. API polling is optional via RUN_EMBEDDING_WORKER_IN_API. Worker process liveness does not establish progress. The ingestion queue name does not mean isolated OCR/PDF processing is delivered: extraction still has documented isolation/deadline gaps. Cloudinary service code is not an exposed upload product. Sources: [server](../backend/src/server.ts), [worker](../backend/src/worker.ts), [queues](../backend/src/lib/queue.ts), [embedding runner](../backend/src/services/embedding-runner.ts).
 
@@ -161,4 +161,4 @@ flowchart LR
   CI -.-> W
 ```
 
-This is the configured target, not verified hosted deployment. Local Compose additionally runs bootstrap/migration/seed helpers and keyless setup guidance. API/worker receive runtime credentials only. Production migration is explicit; pre-deploy migrate-status is not DDL. Railway configuration preserves account secrets; protected environments, domains, TLS, CI settings and actual host isolation need human setup. Raw images retain44 High entries each with bounded accepted-risk conditions; required CI gates remain blocking. Terraform/Kubernetes material is not a verified alternative rollout. Sources: [RUNBOOK.md](RUNBOOK.md), [Railway IaC](../.railway/railway.ts), [Vercel config](../frontend/vercel.json), [workflows](../.github/workflows), [runtime risk inventory](quality/phase5a-3/VULNERABILITIES.md).
+This is the configured target, not verified hosted deployment. Local Compose additionally runs bootstrap/migration/seed helpers and keyless setup guidance. API/worker receive runtime credentials only. Production migration is explicit; pre-deploy migrate-status is not DDL. Railway configuration preserves account secrets; protected environments, domains, TLS, CI settings and actual host isolation need human setup. Current local runtime scans show0 High/Critical, backend4 Medium/frontend0 findings; unchanged required CI gates still need hosted execution. See the [current inventory](../VULNERABILITIES.md), including musl support limits. Terraform/Kubernetes material is not a verified alternative rollout. Sources: [RUNBOOK.md](RUNBOOK.md), [Railway IaC](../.railway/railway.ts), [Vercel config](../frontend/vercel.json), [workflows](../.github/workflows), [runtime risk inventory](quality/phase5a-3/VULNERABILITIES.md).

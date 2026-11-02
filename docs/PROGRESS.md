@@ -1,3 +1,38 @@
+# Runtime and Kanban follow-up — two requested items complete; STOP
+
+On upgrade/enterprise only, no push or deployment. Read AGENTS, current progress/final report and the container inventory. No API/WebSocket change, test modification, baseline refresh or security/coverage gate relaxation.
+
+## Containers
+
+Latest Node22 Trixie tag resolves to the existing pinned digest. Built both runtime candidates on official Node22/Alpine3.24, pinned manifest fe4f6d74e20370acb04ad889077d14d0f64a9c8ea6a42bc60cddf1e844699914; backend uses stable apk OpenSSL/CA. Same Trivy0.68.2 database comparison: backend **0C/44H/75M/60L/8U → 0C/0H/4M/0L/0U**; frontend **0C/44H/71M/60L/8U → zero findings**. Raw scans/builds/IDs: [quality/runtime-followup](quality/runtime-followup/README.md). No suppression or CI exception; the existing High/Critical gate is unchanged.
+
+Selected Alpine removes the affected Debian package footprint; it is not a claim all CVEs were patched in Debian. Node's musl platform has a lower/experimental support tier, documented in the [current inventory](../VULNERABILITIES.md). Local amd64 builds and startup work; other architectures and production are unverified. Runtime retains non-root and Compose capability/no-new-privileges controls. BusyBox multi-call applets remain; tool-path absence is not universal removal. Build/migration tooling has not been claimed clean.
+
+All four remaining backend Medium rows are glob CVE-2026-118773 (two copies, fixed14.0.2) and minimatch CVE-2026-118764 (two copies, fixed11.0.1). Reachability/non-exploitability **not verified**; major dependency compatibility changes deferred, no waiver. Full targets/installed versions and2026-11-02 review date are in VULNERABILITIES.md. No selected-runtime finding is missing a listed fixed version. Historical unpatched Debian rows and their bounded acceptance reasons remain in the prior inventory, explicitly superseded for runtime selection.
+
+Final exact-image isolated Compose graph passes **30.322s** with migration/seed, all app services UID1000, liveness200, protected401 and unconfigured readiness503; seed count1. Cache/concurrent local work means this is functional startup, not a benchmark. Initial candidate20.733s retained separately. Only the helper's random project/volumes were removed; no private env copied.
+
+## Kanban and visuals
+
+Reproduced original core **10 passed/1 failed(2.6m)**. Native pointer-down hit the card's Move combobox, opened a modal listbox and made the drop destination inert. Moved the keyboard selector outside the draggable surface and supplied task-ID native transfer data; server mutation/authority remains unchanged. First correction's extra child draggable caused a strict locator error; that intermediate10-pass/1-fail result is retained. Removed the duplicate child. Final unchanged core **11 passed/0 failed(1.5m)**, including pointer drag/server persistence, snippet save/reload, viewer denial and invitations. No test edited or weakened.
+
+| Previously failing visual case | Current result and disposition |
+| --- | --- |
+| Dark1440 | Pass; no current regression or outdated baseline detected. |
+| Dark390 | Pass; no current regression or outdated baseline detected. |
+| Light1440 | Pass; no current regression or outdated baseline detected. |
+| Light390 | Pass; no current regression or outdated baseline detected. |
+
+Final shell run:7 passed/0 failed(1.4m),40 unchanged screenshot comparisons;40 axe reports,0 violations,26 incomplete rule occurrences retained, not treated as passes. No baselines updated. Earlier Phase5a-3 triplet review classified offline/settling as real defects and the remaining Phase3c editor-mask drift as intentional redesign; that historical evidence is retained, not refreshed again here.
+
+## Gates and remaining work
+
+Both apps pass lint, format, strict types, tests and build. Backend28 suites/260 tests; frontend17 files/76 component tests plus9 Node tests. Raw commands/exits/output in quality/runtime-followup/gates/. Frontend coverage statements/lines41.19/41.67 →41.18/41.65 from a component-uncovered transfer assignment; branch/function38.62/39.47 unchanged. No coverage floor modified; hosted coverage comparison remains unexecuted.
+
+The former44 High runtime blocker and pointer-drag failure are closed for these local artifacts/journeys. Four Medium runtime rows, hosted CI, real Clerk, production hosting/isolation/restore/PITR, manual accessibility, Lighthouse/load and other previously documented product/security/privacy gaps remain. No new measurement or provider/deployment result is invented. Only the two requested items were addressed. Commit and STOP.
+
+---
+
 # Phase 5c — documentation handoff complete; STOP
 
 Documentation only on upgrade/enterprise; no application code, API/WebSocket contract, migration, test/baseline, workflow or image changes. Root AGENTS.md exists and was read; earlier absence notes below are historical. Current authorization, design, audit, progress, quality and deployment evidence were checked against implementation. No push, deployment, key rotation or new product work.

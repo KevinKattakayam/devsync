@@ -1,3 +1,15 @@
+# Runtime and Kanban follow-up
+
+This update supersedes the Phase5c snapshot's44-High runtime and pointer-drag blockers below. Same-database Trivy scans: backend0C/44H/75M/60L/8U → **0C/0H/4M/0L/0U**; frontend0C/44H/71M/60L/8U → **zero findings**. Both runtimes pin the tested official Node22 Alpine variant; musl support/architecture tradeoffs and every remaining package/CVE/fixed version are explicit in [VULNERABILITIES.md](../VULNERABILITIES.md). Four Medium dependency rows remain; their non-exploitability is not verified. No scanner suppression, CI exception or weakened gate.
+
+Final exact-image isolated Compose startup passes30.322s with migrations/seed and protected access still denied without identity keys. Core browser suite **11 passed/0 failed**, including the unchanged original native drag/server persistence journey; pre-fix10/1 and intermediate10/1 logs retained. Fix is in the card layout: the Move combobox is outside the draggable surface so pointer-down cannot open its modal listbox during drag.
+
+Final shell run:7 passed/0 failed(1.4m),40 unchanged screenshot comparisons;40 axe reports,0 violations,26 incomplete rule occurrences retained, not treated as passes. Each of dark1440/dark390/light1440/light390 passes its existing baseline; no current regression/outdated-baseline failure, no new baseline update. Historical defect/redesign classifications remain in Phase5a-3.
+
+Both app lint, format, strict types, tests and build pass:260 backend tests,76 component tests plus9 frontend Node tests. Frontend statement/line coverage41.18/41.65 (previous41.19/41.67); no threshold altered. Hosted CI/coverage, real Clerk, deployment/recovery, performance/capacity and previously deferred security/privacy/product work remain unverified/open. No push or deployment. [Actual raw outputs, scans, screenshots and limitations](quality/runtime-followup/README.md); [current progress](PROGRESS.md). The report below retains the earlier documentation-session snapshot rather than relabeling old evidence.
+
+---
+
 # Final report — documentation handoff
 
 Phase5c, `upgrade/enterprise`. This is an evidence inventory, not production approval. Application behavior was not changed in this session. Earlier measurements retain their original scope/date; no fresh security scan, browser run, hosted deployment, provider sign-in or performance benchmark is implied by the documentation refresh. [Progress](PROGRESS.md) retains chronological failures and deferrals.

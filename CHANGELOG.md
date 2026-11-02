@@ -1,3 +1,9 @@
+# Runtime security and Kanban follow-up
+
+- Compare current Debian and rebuilt pinned Node22 Alpine runtimes with unsuppressed Trivy output: remove44 High entries per runtime; backend4 Medium remain, frontend zero findings. Document musl support limits and every remaining CVE without changing security gates.
+- Verify exact final-image isolated Compose migrations/seeds/startup and both app gates, retaining actual raw output.
+- Fix native Kanban dragging by separating the Move combobox from the draggable surface. Unchanged core11/11 and shell7/7 pass, with40 existing visual comparisons and no baseline updates.
+
 # Phase 5c — source-backed documentation and handoff
 
 - Rewrite README around actual features, screenshots, clone/setup commands and measured limits.

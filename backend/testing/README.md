@@ -12,7 +12,7 @@ node tools/ci/browser.mjs shell
 
 The helper also accepts `core`, `ai-cost`, `editor`, `kanban`, `settings`, `dashboard`, `decisions`, `snippet-safety` and `async-digest`. Run suites sequentially on a constrained host. It launches `testing/run-browser.ts` with NODE_ENV=test and the selected suite flags. The runner creates disposable PostgreSQL/Redis containers, migrates/seeds, grants a non-bypass runtime role, generates the frontend adapter and starts loopback servers, then cleans up its own processes/services. E2E_CHROMIUM_PATH can select an existing compatible browser executable; paths in historical logs are machine-specific.
 
-The latest Phase5a-3 shell selection passed7 tests; the broader native pointer-drag journey remains open. These fixture journeys do not prove successful hosted CI, real Clerk login, provider billing or production capacity. Raw [quality records](../../docs/quality/phase5a-3/README.md) retain failures/incompletes. Never weaken assertions or refresh a screenshot merely to remove a failure.
+The latest Phase5a-3 shell selection passed7 tests; the unchanged broader core suite now passes11 tests after the pointer-drag fix. These fixture journeys do not prove successful hosted CI, real Clerk login, provider billing or production capacity. Raw [quality records](../../docs/quality/phase5a-3/README.md) retain failures/incompletes. Never weaken assertions or refresh a screenshot merely to remove a failure.
 
 ## Manual fixture server
 

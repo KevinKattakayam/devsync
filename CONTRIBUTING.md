@@ -44,7 +44,7 @@ Install a compatible Playwright Chromium using the backend toolchain, or set E2E
 node tools/ci/browser.mjs shell
 ```
 
-The same helper accepts `core`, `ai-cost`, `editor`, `kanban`, `settings`, `dashboard`, `decisions`, `snippet-safety` and `async-digest`. These are selectable suites, not a claim they all passed in one current run. The latest recorded shell run has7 passes; native pointer drag in the broader core journey remains open. See [fixture instructions](backend/testing/README.md) and [quality evidence](docs/quality/phase5a-3/README.md). Do not use real Clerk sign-in for fixture screenshots unless the task specifically requires provider verification.
+The same helper accepts `core`, `ai-cost`, `editor`, `kanban`, `settings`, `dashboard`, `decisions`, `snippet-safety` and `async-digest`. These are selectable suites, not a claim they all passed in one current run. The latest recorded shell run has7 passes; the unchanged broader core suite now passes11 tests after the pointer-drag fix. See [fixture instructions](backend/testing/README.md) and [quality evidence](docs/quality/phase5a-3/README.md). Do not use real Clerk sign-in for fixture screenshots unless the task specifically requires provider verification.
 
 Keep screenshot/axe output under the task's evidence directory, retain raw incomplete/failed results, and never record test capabilities, tokens or private user content. Baseline updates require viewing expected/actual/diff, establishing the intended design change and documenting each reason; comparison tolerances and independent keyboard/server assertions remain required.
 
