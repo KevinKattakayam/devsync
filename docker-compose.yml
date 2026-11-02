@@ -78,6 +78,8 @@ services:
         condition: service_completed_successfully
       redis:
         condition: service_healthy
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
     init: true
     stop_grace_period: 30s
 
@@ -99,6 +101,8 @@ services:
     depends_on:
       backend:
         condition: service_healthy
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
     init: true
     stop_grace_period: 30s
 
@@ -119,6 +123,8 @@ services:
     depends_on:
       backend:
         condition: service_healthy
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
     init: true
     stop_grace_period: 30s
 

@@ -1,0 +1,50 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.68kB done
+#1 DONE 0.0s
+
+#2 [base 1/2] FROM docker.io/library/node:22-trixie-slim@sha256:2117f713a417f3aff682ac8f5bc2ebbdf1beed51f36e67ab1e0fd3866b6d2d8f
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/node:22-trixie-slim@sha256:2117f713a417f3aff682ac8f5bc2ebbdf1beed51f36e67ab1e0fd3866b6d2d8f
+#3 DONE 0.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 177B done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 10.03kB 0.0s done
+#5 DONE 0.0s
+
+#6 [base 3/3] RUN apt-get update && apt-get install -y --no-install-recommends openssl ca-certificates && rm -rf /var/lib/apt/lists/*
+#6 CACHED
+
+#7 [dependencies 2/3] COPY prisma/schema.prisma ./prisma/schema.prisma
+#7 CACHED
+
+#8 [dependencies 3/3] RUN npm ci
+#8 CACHED
+
+#9 [build 2/3] RUN npm run build && npx tsc -p tsconfig.seed-build.json
+#9 CACHED
+
+#10 [base 2/2] WORKDIR /app
+#10 CACHED
+
+#11 [dependencies 1/3] COPY package.json package-lock.json ./
+#11 CACHED
+
+#12 [build 1/3] COPY . .
+#12 CACHED
+
+#13 [build 3/3] RUN mkdir -p /state/admin /state/runtime && chown -R node:node /state
+#13 CACHED
+
+#14 exporting to image
+#14 exporting layers
+#14 exporting layers 8.0s done
+#14 writing image sha256:319762b1305408c533461215034a451ba5fe6595ff93cbbc1837282d877f7136 done
+#14 naming to docker.io/library/devsync-tooling:phase5a-3 done
+#14 DONE 8.1s

@@ -1,0 +1,60 @@
+{
+  "project": "devsync_phase5a3_d6115b5116",
+  "status": "passed",
+  "checks": {
+    "backend": {
+      "uid": 1000,
+      "capSysAdmin": false,
+      "noNewPrivileges": true,
+      "mountToolsPresent": false,
+      "fstabEntries": 0,
+      "systemdHomedPresent": false,
+      "archiveTarModulePresent": false,
+      "infocmpPresent": false,
+      "packages": [
+        "bsdutils\t1:2.41.5-0+deb13u1",
+        "gzip\t1.13-1+deb13u1",
+        "libacl1\t2.3.2-2+b1",
+        "libsystemd0\t257.13-1~deb13u1",
+        "libtinfo6\t6.5+20250216-2",
+        "libudev1\t257.13-1~deb13u1",
+        "ncurses-base\t6.5+20250216-2",
+        "ncurses-bin\t6.5+20250216-2",
+        "perl-base\t5.40.1-6+deb13u1",
+        "util-linux\t2.41.5-0+deb13u1",
+        "zlib1g\t1:1.3.dfsg+really1.3.1-1+b1"
+      ]
+    },
+    "frontend": {
+      "uid": 1000,
+      "capSysAdmin": false,
+      "noNewPrivileges": true,
+      "mountToolsPresent": false,
+      "fstabEntries": 0,
+      "systemdHomedPresent": false,
+      "archiveTarModulePresent": false,
+      "infocmpPresent": false,
+      "packages": [
+        "bsdutils\t1:2.41.5-0+deb13u1",
+        "gzip\t1.13-1+deb13u1",
+        "libacl1\t2.3.2-2+b1",
+        "libsystemd0\t257.13-1~deb13u1",
+        "libtinfo6\t6.5+20250216-2",
+        "libudev1\t257.13-1~deb13u1",
+        "ncurses-base\t6.5+20250216-2",
+        "ncurses-bin\t6.5+20250216-2",
+        "perl-base\t5.40.1-6+deb13u1",
+        "util-linux\t2.41.5-0+deb13u1",
+        "zlib1g\t1:1.3.dfsg+really1.3.1-1+b1"
+      ]
+    },
+    "workerUid": 1000,
+    "frontendHealth": 200,
+    "setupGuidance": true,
+    "backendHealth": 200,
+    "privateIdentity": 401,
+    "unconfiguredReadiness": 503,
+    "sampleWorkspaces": 1
+  },
+  "startupSeconds": 19.249
+}
