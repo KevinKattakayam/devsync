@@ -1,3 +1,59 @@
+# Phase 5a-3 — requested runtime and visual work complete; STOP
+
+Work on upgrade/enterprise only, no push. Root AGENTS.md remains absent; the user's supplied AGENTS.md rules apply, and frontend/AGENTS.md, progress and Phase5a-2 README were read. Only the two requested items: runtime image findings and the four visuals. No Lighthouse/load test/Phase5c, real provider sign-in, deployment or new product scope.
+
+## Runtime findings and accepted risks
+
+Saved per-image inventory:1 Critical/32 High, all Debian12 system packages in inherited base OS layer44a87794b739, no npm High/Critical entries. [Exact original package/CVE/version/layer/fixed-version inventory](quality/phase5a-3/VULNERABILITIES.md). The saved scan's missing FixedVersion did not mean no patch existed in newer supported suites. Both Dockerfiles now pin Node22 Trixie to digest2117f713a417f3aff682ac8f5bc2ebbdf1beed51f36e67ab1e0fd3866b6d2d8f. No apt-get upgrade or unstable package mixing. Critical zlib1g CVE-2023-45853 is fixed by installed1:1.3.dfsg+really1.3.1-1+b1; gzip CVE-2026-41992 and util-linux CVE-2026-53613/53615 are also remediated.
+
+Final Trivy0.68.2 reports: **backend0 Critical/44 High/75 Medium/60 Low/8 Unknown; frontend0 Critical/44 High/71 Medium/60 Low/8 Unknown**. High counts increase32→44, including newer util-linux feature CVEs and SQLite; this is not a claim that all vulnerability counts improved. Every raw finding remains visible. No ignore/VEX/severity suppression or CI threshold change; existing High gate still fails. Source/package counts are not exploit counts.
+
+Per this session's instruction, the following are **accepted risks under the tested hardened runtime conditions**, pending stable-suite patches. No patched Trixie package is listed in the scan/linked Debian tracker; upstream/unstable fixes are explicitly recorded in the detailed inventory. This is not an assertion that no patch exists anywhere, a blanket non-exploitability claim or proof of production host configuration.
+
+| Packages (both images) | CVEs | Accepted-risk reason / verified limit |
+| --- | --- | --- |
+| bsdutils, libblkid1, liblastlog2-2, libmount1, libsmartcols1, libuuid1, login, mount, util-linux | CVE-2026-76642, CVE-2026-78408, CVE-2026-78409, CVE-2026-78410 | Mount/umount/nsenter entry points removed; fstab empty; services UID1000, all capabilities dropped and no-new-privileges enabled. Documented privileged mount/namespace prerequisites are absent in tested Compose. Unstable util-linux2.42.3/2.42.4 fixes are not mixed into stable images. |
+| libacl1 | CVE-2026-54369 | Non-root services with privilege gain disabled; no privileged application ACL caller established. Native-library reachability not exhaustively proven. Stable ABI-compatible patch absent; upstream/unstable2.4.0 adds ABI. |
+| libsystemd0, libudev1 | CVE-2026-16742 | systemd-homed/homectl absent; no homed-managed login service. Source-package-associated shared libraries remain reported. |
+| libtinfo6, ncurses-base, ncurses-bin | CVE-2025-69720 | Vulnerable infocmp CLI removed and absence verified; dpkg metadata retained. Advisory's analyze_string path belongs to that CLI. |
+| perl-base | CVE-2026-9538 | Runtime cannot load affected Archive::Tar; the vulnerable module is absent from minimal Perl installation. |
+| libsqlite3-0 | CVE-2026-119373 | App database is PostgreSQL; no SQLite/FTS5 application use found. No exhaustive native-library reachability proof; introducing untrusted FTS5 queries invalidates acceptance. Upstream3.54.0 patch exists; Debian stable/unstable tracker still lists no packaged fix. |
+
+Reassess all acceptances when stable fixes appear or before changing privilege, tools or exposed data paths. [Every accepted package/CVE/image/layer row](quality/phase5a-3/accepted-risks.json) and source links/rationale are retained. Production must enforce equivalent isolation; no actual hosting controls verified here.
+
+Compose base-upgrade run passed20.02s. Final hardened rebuilt-image Compose run passed **19.249s**: migrations/seeds, API/frontend/worker healthy and UID1000, frontend/API health200, setup guidance, protected identity401, unconfigured readiness503, one sample workspace. Runtime probes verify no SYS_ADMIN/no-new-privileges, removed mount tools/infocmp, empty fstab and absent homed/Archive::Tar. Only its random project/volumes were removed. These are local functional startup times with Docker cache, not performance benchmarks.
+
+## Visual and renewal fixes
+
+All four original expected/actual/diff triplets viewed. The offline warnings were real unintended captured states (a), not a redesign to accept by baseline refresh. New regression first fails on the second token renewal. Hocuspocus copies hook context while passive expiry checks retain connection.context; update the authoritative connection and return renewed identity for the hook copy. Central identity/member/role/expiry policy remains, no API/WebSocket contract change. Real non-bypass integration coverage includes three successive callback renewals, policy after the old expiry and three actual wire renewals; principal-swap, passive-expiry and viewer tests remain.
+
+A second defect was the screenshot helper waiting for CSS animations in the closed Formatting disclosure. Connection expiry previously unmounted controls and released that wait into an offline screenshot. The helper now waits on visible overlays only; an additive browser regression covers a closed disclosure and visible overlay. No security control, existing assertion or tolerance relaxed. Visual mismatches are accumulated as soft assertions to collect all states for review; **any mismatch still fails its test**, with the original0.002 tolerance. Added absence-of-offline assertion at every capture.
+
+After the helper fix:4 passed/3 failed(1.1m), default light states now pass, and remaining command-modal differences are smaller editor-mask geometry. Source history proves the intentional Phase3c removal of the500px card (0782410), while baselines were captured in Phase2b(ec1161b). Viewed all eleven remaining expected/actual/diff triplets. Each is (b): the intentional Phase3c editor redesign shortens the existing content mask, exposing already-existing modal/drawer footer/backdrop pixels; no offline state or product-layout regression is accepted. Selectively updated only these eleven files, after verifying saved/online/editable capture metadata. Unchanged0.002 tolerance and40 screenshot assertions. No blanket regeneration. Each reason and old/new hash is in quality/phase5a-3/baseline-review.json.
+
+| Updated baseline | Written reason |
+| --- | --- |
+| dark-390-commands-linux.png | Phase3c shorter editor mask now exposes the last command rows/footer; connected state and palette layout remain correct. |
+| light-1440-commands-linux.png | Phase3c shorter editor mask exposes the lower command palette and backdrop formerly covered by the tall editor mask. |
+| light-1440-commands-empty-linux.png | Phase3c shorter editor mask exposes the lower empty-results caption and modal edge. |
+| light-1440-help-linux.png | Phase3c shorter editor mask exposes the bottom shortcut row and modal edge. |
+| light-1440-copilot-linux.png | Phase3c shorter editor mask exposes more of the existing Copilot backdrop; drawer header/input unchanged. |
+| light-390-commands-linux.png | Phase3c shorter editor mask exposes the last command rows/footer in the existing mobile palette. |
+| light-390-commands-empty-linux.png | Phase3c shorter editor mask exposes the bottom empty-results caption and modal edge. |
+| light-390-help-linux.png | Phase3c shorter editor mask exposes the bottom shortcut row and modal edge. |
+| light-390-mobile-navigation-linux.png | Phase3c shorter editor mask exposes more of the existing navigation drawer backdrop. |
+| light-390-document-tree-linux.png | Phase3c shorter editor mask exposes more of the existing expanded-tree drawer backdrop. |
+| light-390-workspace-menu-linux.png | Phase3c shorter editor mask exposes more of the existing workspace-switcher drawer backdrop. |
+
+
+Final accepted browser run **7 passed/0 failed(1.1m)**, including all four original visual cases. **40 screenshot comparisons/40 shell axe reports,0 violations/26 incomplete rule occurrences**, preserved unsuppressed. Local seeded/test-only login, no real Clerk. New helper regression and existing360px viewer403/gallery journeys pass. Full dispositions and all actual intermediate failures: [quality/phase5a-3/VISUAL_REVIEW.md](quality/phase5a-3/VISUAL_REVIEW.md); final data: quality/phase5a-3/RESULTS.json. No further test/build/scanner cycle after this final pass.
+
+Gates: backend28 suites/**260 tests**, frontend17 files/**76 component tests** plus Node runner; both lint/format/strict types/build pass. Original failing renewal regression and initial partial-coverage failure retained; no coverage gate disabled. Initial diagnostic NodeList typing failed, fixed with Array.from. Concurrent backend run259 passed/1 failed on existing policy deadline; final serial run260 passed in65.37s, same controls/deadlines. Interrupted environment-restart/build/browser attempts and superseded partial-fix runs retained without passing claims.
+
+What remains:44 High image entries accepted only under the written hardening conditions; stable patches and equivalent production isolation still need future review. No CI suppression was added, so existing High gates still block release. Hosted CI/provider/restore checks, earlier Moderate/Low advisories, native pointer drag and earlier audit deferrals remain outside this session. No Lighthouse or load run by instruction; no Phase5c, push, deployment or new feature. Commit in small local commits and STOP.
+
+---
+
 # Phase 5a-2 — bounded follow-up committed; release blockers remain
 
 On upgrade/enterprise, no push/act/deployment or Phase5c. Root AGENTS.md absent; frontend guidance, progress, authorization matrix, quality ledger/raw evidence and deployment results read. Highest-priority bounded scope: security triage/current image scans and the four visual failures. Lighthouse and local Compose/k6 REST/WebSocket measurements are deferred under the half-scope timebox; this environment has not produced those numbers, and no impossibility or production capacity claim is made.

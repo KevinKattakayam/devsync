@@ -1,0 +1,122 @@
+{
+  "elapsed": 85351,
+  "saved": false,
+  "offline": true,
+  "editorCount": 1,
+  "editable": "false",
+  "routeHeight": 416,
+  "transport": [
+    {
+      "event": "created",
+      "elapsed": 7779
+    },
+    {
+      "event": "sent",
+      "elapsed": 7798
+    },
+    {
+      "event": "sent",
+      "elapsed": 7798
+    },
+    {
+      "event": "sent",
+      "elapsed": 7798
+    },
+    {
+      "event": "received",
+      "elapsed": 7854
+    },
+    {
+      "event": "received",
+      "elapsed": 7938
+    },
+    {
+      "event": "sent",
+      "elapsed": 7938
+    },
+    {
+      "event": "received",
+      "elapsed": 8072
+    },
+    {
+      "event": "sent",
+      "elapsed": 8072
+    },
+    {
+      "event": "sent",
+      "elapsed": 8072
+    },
+    {
+      "event": "sent",
+      "elapsed": 8072
+    },
+    {
+      "event": "sent",
+      "elapsed": 8072
+    },
+    {
+      "event": "received",
+      "elapsed": 8080
+    },
+    {
+      "event": "received",
+      "elapsed": 8080
+    },
+    {
+      "event": "received",
+      "elapsed": 8080
+    },
+    {
+      "event": "received",
+      "elapsed": 8089
+    },
+    {
+      "event": "received",
+      "elapsed": 8096
+    },
+    {
+      "event": "sent",
+      "elapsed": 25772
+    },
+    {
+      "event": "received",
+      "elapsed": 25788
+    },
+    {
+      "event": "sent",
+      "elapsed": 27774
+    },
+    {
+      "event": "sent",
+      "elapsed": 43771
+    },
+    {
+      "event": "received",
+      "elapsed": 43785
+    },
+    {
+      "event": "sent",
+      "elapsed": 47779
+    },
+    {
+      "event": "sent",
+      "elapsed": 58771
+    },
+    {
+      "event": "received",
+      "elapsed": 58967
+    },
+    {
+      "event": "sent",
+      "elapsed": 76387
+    },
+    {
+      "event": "received",
+      "elapsed": 85232
+    },
+    {
+      "event": "closed",
+      "elapsed": 85320
+    }
+  ]
+}

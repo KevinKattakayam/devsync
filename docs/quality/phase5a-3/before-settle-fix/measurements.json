@@ -1,0 +1,13 @@
+[
+  {
+    "theme": "light",
+    "width": 390,
+    "state": "title",
+    "bounds": {
+      "x": 16,
+      "y": 81,
+      "width": 358,
+      "height": 36
+    }
+  }
+]

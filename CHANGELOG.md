@@ -1,3 +1,10 @@
+# Phase 5a-3 — runtime CVE remediation and shell test fixes
+
+- Pin both Node22 runtime bases to Debian13 by digest; remediate the saved zlib Critical and document every original/final finding. Final images0 Critical/44 High each; accept remaining stable-suite risks with explicit conditions, retaining unfiltered reports and CI gates.
+- Remove unused mount/nsenter/infocmp executables without deleting package metadata; drop all application-service capabilities and enable no-new-privileges in Compose. Final isolated startup passes19.249s with migrations/seeds and protected access still denied without identity keys.
+- Fix repeated CRDT renewal across Hocuspocus context copies; add real-policy and wire regressions. Verify260 backend tests and76 frontend component tests, both builds and strict gates.
+- Correct shell screenshot settling for hidden formatting animations; update eleven individually reviewed Phase3c mask-extent baselines with written reasons and unchanged tolerance. Final7 browser tests pass;40 shell axe reports show0 violations, with raw incompletes retained.
+
 # Phase 5a-2 — bounded security blocker follow-up
 
 - Classify the two secret-scanner matches as exact non-credentials; add narrowly scoped exceptions and five detection regression cases, keeping all default rules.

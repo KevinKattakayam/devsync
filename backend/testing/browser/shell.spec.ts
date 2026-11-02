@@ -78,7 +78,7 @@ test.afterAll(async () => {
 async function settle(page: Page) {
   await page.evaluate(() => document.fonts.ready);
   await page
-    .locator('.ui-floating, .ui-dialog, .ui-drawer')
+    .locator('.ui-floating:visible, .ui-dialog:visible, .ui-drawer:visible')
     .evaluateAll((elements) =>
       Promise.all(
         elements.flatMap((element) =>
@@ -115,6 +115,45 @@ for (const theme of ['dark', 'light'] as const)
         await login(context, 'owner');
         await context.addInitScript((theme) => localStorage.setItem('theme', theme), theme);
         const page = await context.newPage();
+        const transport: { event: string; elapsed: number }[] = [];
+        const started = Date.now();
+        page.on('websocket', (socket) => {
+          if (!socket.url().includes('/yjs')) return;
+          const record = (event: string) => {
+            if (transport.length < 200) transport.push({ event, elapsed: Date.now() - started });
+          };
+          record('created');
+          socket.on('framesent', () => record('sent'));
+          socket.on('framereceived', () => record('received'));
+          socket.on('close', () => record('closed'));
+          socket.on('socketerror', () => record('error'));
+        });
+        async function recordState(stage: string) {
+          const state = await page.evaluate(() => ({
+            saved: Array.from(document.querySelectorAll('[role="status"]')).some(
+              (node) => node.textContent === 'Saved',
+            ),
+            offline: Array.from(document.querySelectorAll('[role="status"]')).some((node) =>
+              node.textContent?.includes('Offline (Saving Locally)'),
+            ),
+            editorCount: document.querySelectorAll('.ProseMirror').length,
+            editable: document.querySelector('.ProseMirror')?.getAttribute('contenteditable'),
+            routeHeight: document.querySelector('#route-content')?.getBoundingClientRect().height,
+            animations: Array.from(
+              document.querySelectorAll('.ui-floating, .ui-dialog, .ui-drawer'),
+            ).flatMap((element) =>
+              element.getAnimations().map((animation) => ({
+                hasLayoutRect: element.getClientRects().length > 0,
+                state: animation.playState,
+                pending: animation.pending,
+              })),
+            ),
+          }));
+          await writeFile(
+            resolve(output, `diagnostic-${theme}-${width}-${stage}.json`),
+            JSON.stringify({ elapsed: Date.now() - started, ...state, transport }, null, 2),
+          );
+        }
         await page.goto(`/workspace/${workspace}/docs/${doc}`);
         await expect(page.getByLabel('Document title', { exact: true })).toHaveValue('Welcome');
         await expect(page.locator('.ProseMirror')).toHaveAttribute('contenteditable', 'true');
@@ -132,7 +171,9 @@ for (const theme of ['dark', 'light'] as const)
         ).toBeAttached();
         await page.addScriptTag({ content: axe.source });
         async function capture(state: string) {
+          await recordState(`${state}-before-settle`);
           await settle(page);
+          await recordState(`${state}-before-axe`);
           const result = await page.evaluate(async () => {
             const report = await window.axe.run(
               {
@@ -144,6 +185,12 @@ for (const theme of ['dark', 'light'] as const)
             );
             return { violations: report.violations, incomplete: report.incomplete };
           });
+          await recordState(`${state}-after-axe`);
+          await expect(
+            page
+              .getByRole('status', { includeHidden: true })
+              .filter({ hasText: 'Offline (Saving Locally)' }),
+          ).toHaveCount(0);
           reports.push({ theme, width, state, ...result });
           await writeFile(
             resolve(output, `axe-${theme}-${width}.json`),
@@ -177,7 +224,8 @@ for (const theme of ['dark', 'light'] as const)
             ),
           ).toEqual([]);
           if (pass === 'final')
-            await expect(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+            // Keep failures fatal to the test, but collect every state for image-by-image review.
+            await expect.soft(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
               animations: 'disabled',
               mask: [page.locator('#route-content')],
               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
@@ -428,4 +476,29 @@ test('review prior gallery incomplete items by focus, relationships and computed
     }
   }
   await writeFile(resolve(output, 'gallery-manual-review.json'), JSON.stringify(reviews, null, 2));
+});
+
+test('visual settling skips the pending animation inside a closed formatting disclosure', async ({
+  page,
+}) => {
+  test.setTimeout(10000);
+  // Synthetic DOM regression for the real editor's closed <details> control.
+  await page.setContent(`
+    <style>
+      @keyframes enter { from { opacity: 0; } to { opacity: 1; } }
+      .ui-floating { animation: enter 150ms ease-out; }
+    </style>
+    <details><summary>Formatting</summary><div class="ui-floating">Hidden formatting controls</div></details>
+    <div class="ui-floating" aria-label="Visible overlay">Visible controls</div>
+  `);
+  await expect(page.getByText('Hidden formatting controls')).toBeHidden();
+  await settle(page);
+  await expect(page.getByLabel('Visible overlay')).toBeVisible();
+  expect(
+    await page
+      .getByLabel('Visible overlay')
+      .evaluate((element) =>
+        element.getAnimations().every((animation) => animation.playState === 'finished'),
+      ),
+  ).toBe(true);
 });

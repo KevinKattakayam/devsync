@@ -1,0 +1,272 @@
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": PostgreSQL database "devsync_e2e_browser", schema "public" at "localhost:32810"
+
+14 migrations found in prisma/migrations
+
+Applying migration `20260729000000_baseline`
+Applying migration `20260729180000_enterprise_platform`
+Applying migration `20260815000000_phase_3_tenant_rls`
+Applying migration `20260815001000_scim_provisioning`
+Applying migration `20260815002000_commercial_billing`
+Applying migration `20261031000000_tenant_indexes`
+Applying migration `20261031010000_crdt_journal`
+Applying migration `202611010001_canonical_revision`
+Applying migration `202611010002_embedding_authority`
+Applying migration `202611010003_atomic_create_idempotency`
+Applying migration `202611010004_workspace_invitations`
+Applying migration `202611020001_decision_receipts`
+Applying migration `202611020002_snippet_safety`
+Applying migration `202611020003_async_digest`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20260729000000_baseline/
+    └─ migration.sql
+  └─ 20260729180000_enterprise_platform/
+    └─ migration.sql
+  └─ 20260815000000_phase_3_tenant_rls/
+    └─ migration.sql
+  └─ 20260815001000_scim_provisioning/
+    └─ migration.sql
+  └─ 20260815002000_commercial_billing/
+    └─ migration.sql
+  └─ 20261031000000_tenant_indexes/
+    └─ migration.sql
+  └─ 20261031010000_crdt_journal/
+    └─ migration.sql
+  └─ 202611010001_canonical_revision/
+    └─ migration.sql
+  └─ 202611010002_embedding_authority/
+    └─ migration.sql
+  └─ 202611010003_atomic_create_idempotency/
+    └─ migration.sql
+  └─ 202611010004_workspace_invitations/
+    └─ migration.sql
+  └─ 202611020001_decision_receipts/
+    └─ migration.sql
+  └─ 202611020002_snippet_safety/
+    └─ migration.sql
+  └─ 202611020003_async_digest/
+    └─ migration.sql
+      
+All migrations have been successfully applied.
+Sample workspace seeded. Sign in with the supplied Clerk test identities.
+/home/kevin/devsync/.worktrees/frontend-fixture
+Isolated fixture server ready
+▲ Next.js 16.4.3 (webpack)
+- Local:         http://127.0.0.1:3001
+- Network:       http://127.0.0.1:3001
+✓ Ready in 343ms
+✓ Running next.config.ts took 30ms
+
+✓ Generated AGENTS.md for AI agents. Set `agentRules: false` in next.config to disable.
+○ Compiling /(auth)/login/[[...rest]]/page ...
+ GET /login 200 in 421ms (proxy.ts: 69ms)
+ GET /login 200 in 867ms (next.js: 519ms, proxy.ts: 4ms, application-code: 344ms)
+
+Running 7 tests using 1 worker
+
+(node:101246) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+○ Compiling /(dashboard)/workspace/[id]/docs/[docId]/page ...
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 4.4s (next.js: 4.1s, proxy.ts: 9ms, application-code: 357ms)
+dark 1440 default: axe 0 violations, 0 incomplete
+dark 1440 commands: axe 0 violations, 2 incomplete
+dark 1440 commands-empty: axe 0 violations, 1 incomplete
+dark 1440 help: axe 0 violations, 1 incomplete
+dark 1440 focus: axe 0 violations, 0 incomplete
+dark 1440 user-menu: axe 0 violations, 0 incomplete
+dark 1440 workspace-menu: axe 0 violations, 0 incomplete
+dark 1440 document-tree: axe 0 violations, 0 incomplete
+dark 1440 collapsed: axe 0 violations, 0 incomplete
+dark 1440 copilot: axe 0 violations, 1 incomplete
+  ✓  1 testing/browser/shell.spec.ts:106:9 › dark 1440 shell states, keyboard access and visual baseline (9.6s)
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 128ms (next.js: 60ms, proxy.ts: 4ms, application-code: 65ms)
+dark 390 default: axe 0 violations, 0 incomplete
+dark 390 commands: axe 0 violations, 2 incomplete
+  ✘  2 testing/browser/shell.spec.ts:106:9 › dark 390 shell states, keyboard access and visual baseline (2.5s)
+(node:102358) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 91ms (next.js: 46ms, proxy.ts: 3ms, application-code: 42ms)
+light 1440 default: axe 0 violations, 0 incomplete
+light 1440 commands: axe 0 violations, 2 incomplete
+  ✘  3 testing/browser/shell.spec.ts:106:9 › light 1440 shell states, keyboard access and visual baseline (3.2s)
+(node:102814) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 95ms (next.js: 49ms, proxy.ts: 5ms, application-code: 40ms)
+light 390 default: axe 0 violations, 0 incomplete
+light 390 commands: axe 0 violations, 2 incomplete
+  ✘  4 testing/browser/shell.spec.ts:106:9 › light 390 shell states, keyboard access and visual baseline (2.8s)
+(node:103226) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ GET /dashboard 200 in 2.2s (next.js: 1934ms, proxy.ts: 4ms, application-code: 222ms)
+ GET /dashboard 200 in 100ms (next.js: 12ms, proxy.ts: 10ms, application-code: 78ms)
+ GET /workspace/devsync-sample 200 in 2.2s (next.js: 2.1s, proxy.ts: 3ms, application-code: 149ms)
+ GET /workspace/devsync-sample 200 in 103ms (next.js: 50ms, proxy.ts: 6ms, application-code: 47ms)
+ GET /workspace/devsync-sample/docs 200 in 2.2s (next.js: 2.1s, proxy.ts: 3ms, application-code: 136ms)
+Yjs was already imported. This breaks constructor checks and will lead to issues! - https://github.com/yjs/yjs/issues/438
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 316ms (next.js: 65ms, proxy.ts: 4ms, application-code: 248ms)
+○ Compiling /(dashboard)/workspace/[id]/kanban/page ...
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 160ms (next.js: 77ms, proxy.ts: 6ms, application-code: 77ms)
+Yjs was already imported. This breaks constructor checks and will lead to issues! - https://github.com/yjs/yjs/issues/438
+ GET /workspace/devsync-sample/kanban 200 in 6.6s (next.js: 6.2s, proxy.ts: 4ms, application-code: 340ms)
+○ Compiling /(dashboard)/workspace/[id]/snippets/page ...
+ GET /workspace/devsync-sample/kanban 200 in 159ms (next.js: 78ms, proxy.ts: 7ms, application-code: 74ms)
+ GET /workspace/devsync-sample/snippets 200 in 5.8s (next.js: 5.5s, proxy.ts: 3ms, application-code: 291ms)
+ GET /workspace/devsync-sample/snippets 200 in 121ms (next.js: 66ms, proxy.ts: 4ms, application-code: 51ms)
+ GET /workspace/devsync-sample/settings 200 in 2.7s (next.js: 2.5s, proxy.ts: 3ms, application-code: 188ms)
+⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ GET /settings/billing 200 in 1852ms (next.js: 1638ms, proxy.ts: 4ms, application-code: 210ms)
+Yjs was already imported. This breaks constructor checks and will lead to issues! - https://github.com/yjs/yjs/issues/438
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 260ms (next.js: 68ms, proxy.ts: 3ms, application-code: 189ms)
+  ✓  5 testing/browser/shell.spec.ts:298:5 › 360px route coverage and viewer commands retain read-only authority (36.9s)
+ GET /design-system 200 in 2.2s (next.js: 1973ms, proxy.ts: 4ms, application-code: 233ms)
+ GET /design-system 200 in 84ms (next.js: 2ms, proxy.ts: 4ms, application-code: 78ms)
+  ✓  6 testing/browser/shell.spec.ts:346:5 › review prior gallery incomplete items by focus, relationships and computed color (7.0s)
+  ✓  7 testing/browser/shell.spec.ts:475:5 › visual settling skips the pending animation inside a closed formatting disclosure (288ms)
+
+
+  1) testing/browser/shell.spec.ts:106:9 › dark 390 shell states, keyboard access and visual baseline 
+
+    Error: expect(page).toHaveScreenshot(expected) failed
+
+      859 pixels (ratio 0.01 of all image pixels) are different.
+
+      Snapshot: dark-390-commands.png
+
+    Call log:
+      - Expect "toHaveScreenshot(dark-390-commands.png)" with timeout 15000ms
+        - verifying given screenshot expectation
+      - taking page screenshot
+        - disabled all CSS animations
+      - waiting for fonts to load...
+      - fonts loaded
+      - 859 pixels (ratio 0.01 of all image pixels) are different.
+      - waiting 100ms before taking screenshot
+      - taking page screenshot
+        - disabled all CSS animations
+      - waiting for fonts to load...
+      - fonts loaded
+      - captured a stable screenshot
+      - 859 pixels (ratio 0.01 of all image pixels) are different.
+
+
+      220 |           ).toEqual([]);
+      221 |           if (pass === 'final')
+    > 222 |             await expect(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |                                ^
+      223 |               animations: 'disabled',
+      224 |               mask: [page.locator('#route-content')],
+      225 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:222:32)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:237:9
+
+    attachment #1: dark-390-commands (image/png) ───────────────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/dark-390-commands-linux.png
+    Received: test-results/shell-dark-390-shell-state-40feb--access-and-visual-baseline/dark-390-commands-actual.png
+    Diff:     test-results/shell-dark-390-shell-state-40feb--access-and-visual-baseline/dark-390-commands-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/shell-dark-390-shell-state-40feb--access-and-visual-baseline/error-context.md
+
+    Error Context: test-results/shell-dark-390-shell-state-40feb--access-and-visual-baseline/error-context.md
+
+  2) testing/browser/shell.spec.ts:106:9 › light 1440 shell states, keyboard access and visual baseline 
+
+    Error: expect(page).toHaveScreenshot(expected) failed
+
+      125830 pixels (ratio 0.09 of all image pixels) are different.
+
+      Snapshot: light-1440-commands.png
+
+    Call log:
+      - Expect "toHaveScreenshot(light-1440-commands.png)" with timeout 15000ms
+        - verifying given screenshot expectation
+      - taking page screenshot
+        - disabled all CSS animations
+      - waiting for fonts to load...
+      - fonts loaded
+      - 125830 pixels (ratio 0.09 of all image pixels) are different.
+      - waiting 100ms before taking screenshot
+      - taking page screenshot
+        - disabled all CSS animations
+      - waiting for fonts to load...
+      - fonts loaded
+      - captured a stable screenshot
+      - 125830 pixels (ratio 0.09 of all image pixels) are different.
+
+
+      220 |           ).toEqual([]);
+      221 |           if (pass === 'final')
+    > 222 |             await expect(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |                                ^
+      223 |               animations: 'disabled',
+      224 |               mask: [page.locator('#route-content')],
+      225 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:222:32)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:237:9
+
+    attachment #1: light-1440-commands (image/png) ─────────────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/light-1440-commands-linux.png
+    Received: test-results/shell-light-1440-shell-sta-4b595--access-and-visual-baseline/light-1440-commands-actual.png
+    Diff:     test-results/shell-light-1440-shell-sta-4b595--access-and-visual-baseline/light-1440-commands-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/shell-light-1440-shell-sta-4b595--access-and-visual-baseline/error-context.md
+
+    Error Context: test-results/shell-light-1440-shell-sta-4b595--access-and-visual-baseline/error-context.md
+
+  3) testing/browser/shell.spec.ts:106:9 › light 390 shell states, keyboard access and visual baseline 
+
+    Error: expect(page).toHaveScreenshot(expected) failed
+
+      32803 pixels (ratio 0.09 of all image pixels) are different.
+
+      Snapshot: light-390-commands.png
+
+    Call log:
+      - Expect "toHaveScreenshot(light-390-commands.png)" with timeout 15000ms
+        - verifying given screenshot expectation
+      - taking page screenshot
+        - disabled all CSS animations
+      - waiting for fonts to load...
+      - fonts loaded
+      - 32803 pixels (ratio 0.09 of all image pixels) are different.
+      - waiting 100ms before taking screenshot
+      - taking page screenshot
+        - disabled all CSS animations
+      - waiting for fonts to load...
+      - fonts loaded
+      - captured a stable screenshot
+      - 32803 pixels (ratio 0.09 of all image pixels) are different.
+
+
+      220 |           ).toEqual([]);
+      221 |           if (pass === 'final')
+    > 222 |             await expect(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |                                ^
+      223 |               animations: 'disabled',
+      224 |               mask: [page.locator('#route-content')],
+      225 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:222:32)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:237:9
+
+    attachment #1: light-390-commands (image/png) ──────────────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/light-390-commands-linux.png
+    Received: test-results/shell-light-390-shell-stat-11d6d--access-and-visual-baseline/light-390-commands-actual.png
+    Diff:     test-results/shell-light-390-shell-stat-11d6d--access-and-visual-baseline/light-390-commands-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/shell-light-390-shell-stat-11d6d--access-and-visual-baseline/error-context.md
+
+    Error Context: test-results/shell-light-390-shell-stat-11d6d--access-and-visual-baseline/error-context.md
+
+  3 failed
+    testing/browser/shell.spec.ts:106:9 › dark 390 shell states, keyboard access and visual baseline 
+    testing/browser/shell.spec.ts:106:9 › light 1440 shell states, keyboard access and visual baseline 
+    testing/browser/shell.spec.ts:106:9 › light 390 shell states, keyboard access and visual baseline 
+  4 passed (1.1m)
+[?25h
+Browser orchestration command exited 1

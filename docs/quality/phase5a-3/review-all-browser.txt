@@ -1,0 +1,607 @@
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": PostgreSQL database "devsync_e2e_browser", schema "public" at "localhost:32813"
+
+14 migrations found in prisma/migrations
+
+Applying migration `20260729000000_baseline`
+Applying migration `20260729180000_enterprise_platform`
+Applying migration `20260815000000_phase_3_tenant_rls`
+Applying migration `20260815001000_scim_provisioning`
+Applying migration `20260815002000_commercial_billing`
+Applying migration `20261031000000_tenant_indexes`
+Applying migration `20261031010000_crdt_journal`
+Applying migration `202611010001_canonical_revision`
+Applying migration `202611010002_embedding_authority`
+Applying migration `202611010003_atomic_create_idempotency`
+Applying migration `202611010004_workspace_invitations`
+Applying migration `202611020001_decision_receipts`
+Applying migration `202611020002_snippet_safety`
+Applying migration `202611020003_async_digest`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20260729000000_baseline/
+    └─ migration.sql
+  └─ 20260729180000_enterprise_platform/
+    └─ migration.sql
+  └─ 20260815000000_phase_3_tenant_rls/
+    └─ migration.sql
+  └─ 20260815001000_scim_provisioning/
+    └─ migration.sql
+  └─ 20260815002000_commercial_billing/
+    └─ migration.sql
+  └─ 20261031000000_tenant_indexes/
+    └─ migration.sql
+  └─ 20261031010000_crdt_journal/
+    └─ migration.sql
+  └─ 202611010001_canonical_revision/
+    └─ migration.sql
+  └─ 202611010002_embedding_authority/
+    └─ migration.sql
+  └─ 202611010003_atomic_create_idempotency/
+    └─ migration.sql
+  └─ 202611010004_workspace_invitations/
+    └─ migration.sql
+  └─ 202611020001_decision_receipts/
+    └─ migration.sql
+  └─ 202611020002_snippet_safety/
+    └─ migration.sql
+  └─ 202611020003_async_digest/
+    └─ migration.sql
+      
+All migrations have been successfully applied.
+Sample workspace seeded. Sign in with the supplied Clerk test identities.
+/home/kevin/devsync/.worktrees/frontend-fixture
+Isolated fixture server ready
+▲ Next.js 16.4.3 (webpack)
+- Local:         http://127.0.0.1:3001
+- Network:       http://127.0.0.1:3001
+✓ Ready in 343ms
+✓ Running next.config.ts took 30ms
+
+✓ Generated AGENTS.md for AI agents. Set `agentRules: false` in next.config to disable.
+○ Compiling /(auth)/login/[[...rest]]/page ...
+ GET /login 200 in 1200ms (next.js: 851ms, proxy.ts: 76ms, application-code: 274ms)
+ GET /login 200 in 76ms (next.js: 25ms, proxy.ts: 5ms, application-code: 46ms)
+
+Running 7 tests using 1 worker
+
+(node:110165) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+○ Compiling /(dashboard)/workspace/[id]/docs/[docId]/page ...
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 4.4s (next.js: 4.0s, proxy.ts: 9ms, application-code: 349ms)
+dark 1440 default: axe 0 violations, 0 incomplete
+dark 1440 commands: axe 0 violations, 2 incomplete
+dark 1440 commands-empty: axe 0 violations, 1 incomplete
+dark 1440 help: axe 0 violations, 1 incomplete
+dark 1440 focus: axe 0 violations, 0 incomplete
+dark 1440 user-menu: axe 0 violations, 0 incomplete
+dark 1440 workspace-menu: axe 0 violations, 0 incomplete
+dark 1440 document-tree: axe 0 violations, 0 incomplete
+dark 1440 collapsed: axe 0 violations, 0 incomplete
+dark 1440 copilot: axe 0 violations, 1 incomplete
+  ✓  1 testing/browser/shell.spec.ts:106:9 › dark 1440 shell states, keyboard access and visual baseline (9.4s)
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 77ms (next.js: 35ms, proxy.ts: 3ms, application-code: 40ms)
+dark 390 default: axe 0 violations, 0 incomplete
+dark 390 commands: axe 0 violations, 2 incomplete
+dark 390 commands-empty: axe 0 violations, 1 incomplete
+dark 390 help: axe 0 violations, 1 incomplete
+dark 390 focus: axe 0 violations, 0 incomplete
+dark 390 user-menu: axe 0 violations, 0 incomplete
+dark 390 mobile-navigation: axe 0 violations, 1 incomplete
+dark 390 document-tree: axe 0 violations, 1 incomplete
+dark 390 workspace-menu: axe 0 violations, 0 incomplete
+dark 390 copilot: axe 0 violations, 2 incomplete
+  ✘  2 testing/browser/shell.spec.ts:106:9 › dark 390 shell states, keyboard access and visual baseline (4.4s)
+(node:111395) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 89ms (next.js: 33ms, proxy.ts: 5ms, application-code: 52ms)
+light 1440 default: axe 0 violations, 0 incomplete
+light 1440 commands: axe 0 violations, 2 incomplete
+light 1440 commands-empty: axe 0 violations, 1 incomplete
+light 1440 help: axe 0 violations, 1 incomplete
+light 1440 focus: axe 0 violations, 0 incomplete
+light 1440 user-menu: axe 0 violations, 0 incomplete
+light 1440 workspace-menu: axe 0 violations, 0 incomplete
+light 1440 document-tree: axe 0 violations, 0 incomplete
+light 1440 collapsed: axe 0 violations, 0 incomplete
+light 1440 copilot: axe 0 violations, 1 incomplete
+  ✘  3 testing/browser/shell.spec.ts:106:9 › light 1440 shell states, keyboard access and visual baseline (7.9s)
+(node:112150) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 102ms (next.js: 32ms, proxy.ts: 6ms, application-code: 64ms)
+light 390 default: axe 0 violations, 0 incomplete
+light 390 commands: axe 0 violations, 2 incomplete
+light 390 commands-empty: axe 0 violations, 1 incomplete
+light 390 help: axe 0 violations, 1 incomplete
+light 390 focus: axe 0 violations, 0 incomplete
+light 390 user-menu: axe 0 violations, 0 incomplete
+light 390 mobile-navigation: axe 0 violations, 1 incomplete
+light 390 document-tree: axe 0 violations, 1 incomplete
+light 390 workspace-menu: axe 0 violations, 0 incomplete
+light 390 copilot: axe 0 violations, 2 incomplete
+  ✘  4 testing/browser/shell.spec.ts:106:9 › light 390 shell states, keyboard access and visual baseline (5.8s)
+(node:112763) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ GET /dashboard 200 in 2.1s (next.js: 1915ms, proxy.ts: 4ms, application-code: 214ms)
+ GET /dashboard 200 in 83ms (next.js: 13ms, proxy.ts: 8ms, application-code: 62ms)
+ GET /workspace/devsync-sample 200 in 2.3s (next.js: 2.1s, proxy.ts: 3ms, application-code: 168ms)
+ GET /workspace/devsync-sample 200 in 95ms (next.js: 40ms, proxy.ts: 6ms, application-code: 49ms)
+ GET /workspace/devsync-sample/docs 200 in 2.5s (next.js: 2.3s, proxy.ts: 3ms, application-code: 160ms)
+Yjs was already imported. This breaks constructor checks and will lead to issues! - https://github.com/yjs/yjs/issues/438
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 287ms (next.js: 58ms, proxy.ts: 4ms, application-code: 224ms)
+○ Compiling /(dashboard)/workspace/[id]/kanban/page ...
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 137ms (next.js: 60ms, proxy.ts: 6ms, application-code: 72ms)
+Yjs was already imported. This breaks constructor checks and will lead to issues! - https://github.com/yjs/yjs/issues/438
+ GET /workspace/devsync-sample/kanban 200 in 5.3s (next.js: 5.0s, proxy.ts: 3ms, application-code: 318ms)
+ GET /workspace/devsync-sample/kanban 200 in 128ms (next.js: 61ms, proxy.ts: 6ms, application-code: 62ms)
+ GET /workspace/devsync-sample/snippets 200 in 3.8s (next.js: 3.6s, proxy.ts: 4ms, application-code: 247ms)
+ GET /workspace/devsync-sample/snippets 200 in 125ms (next.js: 71ms, proxy.ts: 6ms, application-code: 48ms)
+ GET /workspace/devsync-sample/settings 200 in 2.7s (next.js: 2.5s, proxy.ts: 4ms, application-code: 167ms)
+⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ GET /settings/billing 200 in 1938ms (next.js: 1730ms, proxy.ts: 4ms, application-code: 204ms)
+Yjs was already imported. This breaks constructor checks and will lead to issues! - https://github.com/yjs/yjs/issues/438
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 227ms (next.js: 53ms, proxy.ts: 3ms, application-code: 171ms)
+  ✓  5 testing/browser/shell.spec.ts:304:5 › 360px route coverage and viewer commands retain read-only authority (34.3s)
+ GET /design-system 200 in 2.3s (next.js: 2.0s, proxy.ts: 4ms, application-code: 241ms)
+ GET /design-system 200 in 76ms (next.js: 1.3ms, proxy.ts: 3ms, application-code: 72ms)
+  ✓  6 testing/browser/shell.spec.ts:352:5 › review prior gallery incomplete items by focus, relationships and computed color (7.0s)
+  ✓  7 testing/browser/shell.spec.ts:481:5 › visual settling skips the pending animation inside a closed formatting disclosure (244ms)
+
+
+  1) testing/browser/shell.spec.ts:106:9 › dark 390 shell states, keyboard access and visual baseline 
+
+    Error: expect(page).toHaveScreenshot(expected) failed
+
+      859 pixels (ratio 0.01 of all image pixels) are different.
+
+      Snapshot: dark-390-commands.png
+
+    Call log:
+      - Expect "soft toHaveScreenshot(dark-390-commands.png)" with timeout 15000ms
+        - verifying given screenshot expectation
+      - taking page screenshot
+        - disabled all CSS animations
+      - waiting for fonts to load...
+      - fonts loaded
+      - 859 pixels (ratio 0.01 of all image pixels) are different.
+      - waiting 100ms before taking screenshot
+      - taking page screenshot
+        - disabled all CSS animations
+      - waiting for fonts to load...
+      - fonts loaded
+      - captured a stable screenshot
+      - 859 pixels (ratio 0.01 of all image pixels) are different.
+
+
+      226 |           if (pass === 'final')
+      227 |             // Keep failures fatal to the test, but collect every state for image-by-image review.
+    > 228 |             await expect.soft(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |                                     ^
+      229 |               animations: 'disabled',
+      230 |               mask: [page.locator('#route-content')],
+      231 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:228:37)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:243:9
+
+    attachment #1: dark-390-commands (image/png) ───────────────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/dark-390-commands-linux.png
+    Received: test-results/shell-dark-390-shell-state-40feb--access-and-visual-baseline/dark-390-commands-actual.png
+    Diff:     test-results/shell-dark-390-shell-state-40feb--access-and-visual-baseline/dark-390-commands-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/shell-dark-390-shell-state-40feb--access-and-visual-baseline/error-context.md
+
+    Error Context: test-results/shell-dark-390-shell-state-40feb--access-and-visual-baseline/error-context.md
+
+  2) testing/browser/shell.spec.ts:106:9 › light 1440 shell states, keyboard access and visual baseline 
+
+    Error: expect(page).toHaveScreenshot(expected) failed
+
+      125830 pixels (ratio 0.09 of all image pixels) are different.
+
+      Snapshot: light-1440-commands.png
+
+    Call log:
+      - Expect "soft toHaveScreenshot(light-1440-commands.png)" with timeout 15000ms
+        - verifying given screenshot expectation
+      - taking page screenshot
+        - disabled all CSS animations
+      - waiting for fonts to load...
+      - fonts loaded
+      - 125830 pixels (ratio 0.09 of all image pixels) are different.
+      - waiting 100ms before taking screenshot
+      - taking page screenshot
+        - disabled all CSS animations
+      - waiting for fonts to load...
+      - fonts loaded
+      - captured a stable screenshot
+      - 125830 pixels (ratio 0.09 of all image pixels) are different.
+
+
+      226 |           if (pass === 'final')
+      227 |             // Keep failures fatal to the test, but collect every state for image-by-image review.
+    > 228 |             await expect.soft(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |                                     ^
+      229 |               animations: 'disabled',
+      230 |               mask: [page.locator('#route-content')],
+      231 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:228:37)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:243:9
+
+    Error: expect(page).toHaveScreenshot(expected) failed
+
+      189794 pixels (ratio 0.14 of all image pixels) are different.
+
+      Snapshot: light-1440-commands-empty.png
+
+    Call log:
+      - Expect "soft toHaveScreenshot(light-1440-commands-empty.png)" with timeout 15000ms
+        - verifying given screenshot expectation
+      - taking page screenshot
+        - disabled all CSS animations
+      - waiting for fonts to load...
+      - fonts loaded
+      - 189794 pixels (ratio 0.14 of all image pixels) are different.
+      - waiting 100ms before taking screenshot
+      - taking page screenshot
+        - disabled all CSS animations
+      - waiting for fonts to load...
+      - fonts loaded
+      - captured a stable screenshot
+      - 189794 pixels (ratio 0.14 of all image pixels) are different.
+
+
+      226 |           if (pass === 'final')
+      227 |             // Keep failures fatal to the test, but collect every state for image-by-image review.
+    > 228 |             await expect.soft(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |                                     ^
+      229 |               animations: 'disabled',
+      230 |               mask: [page.locator('#route-content')],
+      231 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:228:37)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:245:9
+
+    Error: expect(page).toHaveScreenshot(expected) failed
+
+      182211 pixels (ratio 0.13 of all image pixels) are different.
+
+      Snapshot: light-1440-help.png
+
+    Call log:
+      - Expect "soft toHaveScreenshot(light-1440-help.png)" with timeout 15000ms
+        - verifying given screenshot expectation
+      - taking page screenshot
+        - disabled all CSS animations
+      - waiting for fonts to load...
+      - fonts loaded
+      - 182211 pixels (ratio 0.13 of all image pixels) are different.
+      - waiting 100ms before taking screenshot
+      - taking page screenshot
+        - disabled all CSS animations
+      - waiting for fonts to load...
+      - fonts loaded
+      - captured a stable screenshot
+      - 182211 pixels (ratio 0.13 of all image pixels) are different.
+
+
+      226 |           if (pass === 'final')
+      227 |             // Keep failures fatal to the test, but collect every state for image-by-image review.
+    > 228 |             await expect.soft(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |                                     ^
+      229 |               animations: 'disabled',
+      230 |               mask: [page.locator('#route-content')],
+      231 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:228:37)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:256:9
+
+    Error: expect(page).toHaveScreenshot(expected) failed
+
+      133855 pixels (ratio 0.10 of all image pixels) are different.
+
+      Snapshot: light-1440-copilot.png
+
+    Call log:
+      - Expect "soft toHaveScreenshot(light-1440-copilot.png)" with timeout 15000ms
+        - verifying given screenshot expectation
+      - taking page screenshot
+        - disabled all CSS animations
+      - waiting for fonts to load...
+      - fonts loaded
+      - 133855 pixels (ratio 0.10 of all image pixels) are different.
+      - waiting 100ms before taking screenshot
+      - taking page screenshot
+        - disabled all CSS animations
+      - waiting for fonts to load...
+      - fonts loaded
+      - captured a stable screenshot
+      - 133855 pixels (ratio 0.10 of all image pixels) are different.
+
+
+      226 |           if (pass === 'final')
+      227 |             // Keep failures fatal to the test, but collect every state for image-by-image review.
+    > 228 |             await expect.soft(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |                                     ^
+      229 |               animations: 'disabled',
+      230 |               mask: [page.locator('#route-content')],
+      231 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:228:37)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:296:9
+
+    attachment #1: light-1440-commands (image/png) ─────────────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/light-1440-commands-linux.png
+    Received: test-results/shell-light-1440-shell-sta-4b595--access-and-visual-baseline/light-1440-commands-actual.png
+    Diff:     test-results/shell-light-1440-shell-sta-4b595--access-and-visual-baseline/light-1440-commands-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: light-1440-commands-empty (image/png) ───────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/light-1440-commands-empty-linux.png
+    Received: test-results/shell-light-1440-shell-sta-4b595--access-and-visual-baseline/light-1440-commands-empty-actual.png
+    Diff:     test-results/shell-light-1440-shell-sta-4b595--access-and-visual-baseline/light-1440-commands-empty-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #3: light-1440-help (image/png) ─────────────────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/light-1440-help-linux.png
+    Received: test-results/shell-light-1440-shell-sta-4b595--access-and-visual-baseline/light-1440-help-actual.png
+    Diff:     test-results/shell-light-1440-shell-sta-4b595--access-and-visual-baseline/light-1440-help-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #4: light-1440-copilot (image/png) ──────────────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/light-1440-copilot-linux.png
+    Received: test-results/shell-light-1440-shell-sta-4b595--access-and-visual-baseline/light-1440-copilot-actual.png
+    Diff:     test-results/shell-light-1440-shell-sta-4b595--access-and-visual-baseline/light-1440-copilot-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/shell-light-1440-shell-sta-4b595--access-and-visual-baseline/error-context.md
+
+    Error Context: test-results/shell-light-1440-shell-sta-4b595--access-and-visual-baseline/error-context.md
+
+  3) testing/browser/shell.spec.ts:106:9 › light 390 shell states, keyboard access and visual baseline 
+
+    Error: expect(page).toHaveScreenshot(expected) failed
+
+      32803 pixels (ratio 0.09 of all image pixels) are different.
+
+      Snapshot: light-390-commands.png
+
+    Call log:
+      - Expect "soft toHaveScreenshot(light-390-commands.png)" with timeout 15000ms
+        - verifying given screenshot expectation
+      - taking page screenshot
+        - disabled all CSS animations
+      - waiting for fonts to load...
+      - fonts loaded
+      - 32803 pixels (ratio 0.09 of all image pixels) are different.
+      - waiting 100ms before taking screenshot
+      - taking page screenshot
+        - disabled all CSS animations
+      - waiting for fonts to load...
+      - fonts loaded
+      - captured a stable screenshot
+      - 32803 pixels (ratio 0.09 of all image pixels) are different.
+
+
+      226 |           if (pass === 'final')
+      227 |             // Keep failures fatal to the test, but collect every state for image-by-image review.
+    > 228 |             await expect.soft(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |                                     ^
+      229 |               animations: 'disabled',
+      230 |               mask: [page.locator('#route-content')],
+      231 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:228:37)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:243:9
+
+    Error: expect(page).toHaveScreenshot(expected) failed
+
+      77284 pixels (ratio 0.20 of all image pixels) are different.
+
+      Snapshot: light-390-commands-empty.png
+
+    Call log:
+      - Expect "soft toHaveScreenshot(light-390-commands-empty.png)" with timeout 15000ms
+        - verifying given screenshot expectation
+      - taking page screenshot
+        - disabled all CSS animations
+      - waiting for fonts to load...
+      - fonts loaded
+      - 77284 pixels (ratio 0.20 of all image pixels) are different.
+      - waiting 100ms before taking screenshot
+      - taking page screenshot
+        - disabled all CSS animations
+      - waiting for fonts to load...
+      - fonts loaded
+      - captured a stable screenshot
+      - 77284 pixels (ratio 0.20 of all image pixels) are different.
+
+
+      226 |           if (pass === 'final')
+      227 |             // Keep failures fatal to the test, but collect every state for image-by-image review.
+    > 228 |             await expect.soft(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |                                     ^
+      229 |               animations: 'disabled',
+      230 |               mask: [page.locator('#route-content')],
+      231 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:228:37)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:245:9
+
+    Error: expect(page).toHaveScreenshot(expected) failed
+
+      68511 pixels (ratio 0.18 of all image pixels) are different.
+
+      Snapshot: light-390-help.png
+
+    Call log:
+      - Expect "soft toHaveScreenshot(light-390-help.png)" with timeout 15000ms
+        - verifying given screenshot expectation
+      - taking page screenshot
+        - disabled all CSS animations
+      - waiting for fonts to load...
+      - fonts loaded
+      - 68511 pixels (ratio 0.18 of all image pixels) are different.
+      - waiting 100ms before taking screenshot
+      - taking page screenshot
+        - disabled all CSS animations
+      - waiting for fonts to load...
+      - fonts loaded
+      - captured a stable screenshot
+      - 68511 pixels (ratio 0.18 of all image pixels) are different.
+
+
+      226 |           if (pass === 'final')
+      227 |             // Keep failures fatal to the test, but collect every state for image-by-image review.
+    > 228 |             await expect.soft(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |                                     ^
+      229 |               animations: 'disabled',
+      230 |               mask: [page.locator('#route-content')],
+      231 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:228:37)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:256:9
+
+    Error: expect(page).toHaveScreenshot(expected) failed
+
+      15959 pixels (ratio 0.05 of all image pixels) are different.
+
+      Snapshot: light-390-mobile-navigation.png
+
+    Call log:
+      - Expect "soft toHaveScreenshot(light-390-mobile-navigation.png)" with timeout 15000ms
+        - verifying given screenshot expectation
+      - taking page screenshot
+        - disabled all CSS animations
+      - waiting for fonts to load...
+      - fonts loaded
+      - 15959 pixels (ratio 0.05 of all image pixels) are different.
+      - waiting 100ms before taking screenshot
+      - taking page screenshot
+        - disabled all CSS animations
+      - waiting for fonts to load...
+      - fonts loaded
+      - captured a stable screenshot
+      - 15959 pixels (ratio 0.05 of all image pixels) are different.
+
+
+      226 |           if (pass === 'final')
+      227 |             // Keep failures fatal to the test, but collect every state for image-by-image review.
+    > 228 |             await expect.soft(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |                                     ^
+      229 |               animations: 'disabled',
+      230 |               mask: [page.locator('#route-content')],
+      231 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:228:37)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:285:11
+
+    Error: expect(page).toHaveScreenshot(expected) failed
+
+      15959 pixels (ratio 0.05 of all image pixels) are different.
+
+      Snapshot: light-390-document-tree.png
+
+    Call log:
+      - Expect "soft toHaveScreenshot(light-390-document-tree.png)" with timeout 15000ms
+        - verifying given screenshot expectation
+      - taking page screenshot
+        - disabled all CSS animations
+      - waiting for fonts to load...
+      - fonts loaded
+      - 15959 pixels (ratio 0.05 of all image pixels) are different.
+      - waiting 100ms before taking screenshot
+      - taking page screenshot
+        - disabled all CSS animations
+      - waiting for fonts to load...
+      - fonts loaded
+      - captured a stable screenshot
+      - 15959 pixels (ratio 0.05 of all image pixels) are different.
+
+
+      226 |           if (pass === 'final')
+      227 |             // Keep failures fatal to the test, but collect every state for image-by-image review.
+    > 228 |             await expect.soft(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |                                     ^
+      229 |               animations: 'disabled',
+      230 |               mask: [page.locator('#route-content')],
+      231 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:228:37)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:288:11
+
+    Error: expect(page).toHaveScreenshot(expected) failed
+
+      15959 pixels (ratio 0.05 of all image pixels) are different.
+
+      Snapshot: light-390-workspace-menu.png
+
+    Call log:
+      - Expect "soft toHaveScreenshot(light-390-workspace-menu.png)" with timeout 15000ms
+        - verifying given screenshot expectation
+      - taking page screenshot
+        - disabled all CSS animations
+      - waiting for fonts to load...
+      - fonts loaded
+      - 15959 pixels (ratio 0.05 of all image pixels) are different.
+      - waiting 100ms before taking screenshot
+      - taking page screenshot
+        - disabled all CSS animations
+      - waiting for fonts to load...
+      - fonts loaded
+      - captured a stable screenshot
+      - 15959 pixels (ratio 0.05 of all image pixels) are different.
+
+
+      226 |           if (pass === 'final')
+      227 |             // Keep failures fatal to the test, but collect every state for image-by-image review.
+    > 228 |             await expect.soft(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |                                     ^
+      229 |               animations: 'disabled',
+      230 |               mask: [page.locator('#route-content')],
+      231 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:228:37)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:290:11
+
+    attachment #1: light-390-commands (image/png) ──────────────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/light-390-commands-linux.png
+    Received: test-results/shell-light-390-shell-stat-11d6d--access-and-visual-baseline/light-390-commands-actual.png
+    Diff:     test-results/shell-light-390-shell-stat-11d6d--access-and-visual-baseline/light-390-commands-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: light-390-commands-empty (image/png) ────────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/light-390-commands-empty-linux.png
+    Received: test-results/shell-light-390-shell-stat-11d6d--access-and-visual-baseline/light-390-commands-empty-actual.png
+    Diff:     test-results/shell-light-390-shell-stat-11d6d--access-and-visual-baseline/light-390-commands-empty-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #3: light-390-help (image/png) ──────────────────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/light-390-help-linux.png
+    Received: test-results/shell-light-390-shell-stat-11d6d--access-and-visual-baseline/light-390-help-actual.png
+    Diff:     test-results/shell-light-390-shell-stat-11d6d--access-and-visual-baseline/light-390-help-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #4: light-390-mobile-navigation (image/png) ─────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/light-390-mobile-navigation-linux.png
+    Received: test-results/shell-light-390-shell-stat-11d6d--access-and-visual-baseline/light-390-mobile-navigation-actual.png
+    Diff:     test-results/shell-light-390-shell-stat-11d6d--access-and-visual-baseline/light-390-mobile-navigation-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #5: light-390-document-tree (image/png) ─────────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/light-390-document-tree-linux.png
+    Received: test-results/shell-light-390-shell-stat-11d6d--access-and-visual-baseline/light-390-document-tree-actual.png
+    Diff:     test-results/shell-light-390-shell-stat-11d6d--access-and-visual-baseline/light-390-document-tree-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #6: light-390-workspace-menu (image/png) ────────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/light-390-workspace-menu-linux.png
+    Received: test-results/shell-light-390-shell-stat-11d6d--access-and-visual-baseline/light-390-workspace-menu-actual.png
+    Diff:     test-results/shell-light-390-shell-stat-11d6d--access-and-visual-baseline/light-390-workspace-menu-diff.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/shell-light-390-shell-stat-11d6d--access-and-visual-baseline/error-context.md
+
+    Error Context: test-results/shell-light-390-shell-stat-11d6d--access-and-visual-baseline/error-context.md
+
+  3 failed
+    testing/browser/shell.spec.ts:106:9 › dark 390 shell states, keyboard access and visual baseline 
+    testing/browser/shell.spec.ts:106:9 › light 1440 shell states, keyboard access and visual baseline 
+    testing/browser/shell.spec.ts:106:9 › light 390 shell states, keyboard access and visual baseline 
+  4 passed (1.2m)
+[?25h
+Browser orchestration command exited 1
