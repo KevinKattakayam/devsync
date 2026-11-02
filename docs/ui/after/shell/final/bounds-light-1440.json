@@ -1,0 +1,103 @@
+[
+  {
+    "theme": "light",
+    "width": 1440,
+    "state": "title",
+    "bounds": {
+      "x": 424,
+      "y": 83,
+      "width": 832,
+      "height": 36
+    }
+  },
+  {
+    "theme": "light",
+    "width": 1440,
+    "state": "default",
+    "viewport": 1440,
+    "document": 1440,
+    "main": 1200,
+    "scroll": 1200
+  },
+  {
+    "theme": "light",
+    "width": 1440,
+    "state": "commands",
+    "viewport": 1440,
+    "document": 1440,
+    "main": 1200,
+    "scroll": 1200
+  },
+  {
+    "theme": "light",
+    "width": 1440,
+    "state": "commands-empty",
+    "viewport": 1440,
+    "document": 1440,
+    "main": 1200,
+    "scroll": 1200
+  },
+  {
+    "theme": "light",
+    "width": 1440,
+    "state": "help",
+    "viewport": 1440,
+    "document": 1440,
+    "main": 1200,
+    "scroll": 1200
+  },
+  {
+    "theme": "light",
+    "width": 1440,
+    "state": "focus",
+    "viewport": 1440,
+    "document": 1440,
+    "main": 1440,
+    "scroll": 1440
+  },
+  {
+    "theme": "light",
+    "width": 1440,
+    "state": "user-menu",
+    "viewport": 1440,
+    "document": 1440,
+    "main": 1200,
+    "scroll": 1200
+  },
+  {
+    "theme": "light",
+    "width": 1440,
+    "state": "workspace-menu",
+    "viewport": 1440,
+    "document": 1440,
+    "main": 1200,
+    "scroll": 1200
+  },
+  {
+    "theme": "light",
+    "width": 1440,
+    "state": "document-tree",
+    "viewport": 1440,
+    "document": 1440,
+    "main": 1200,
+    "scroll": 1200
+  },
+  {
+    "theme": "light",
+    "width": 1440,
+    "state": "collapsed",
+    "viewport": 1440,
+    "document": 1440,
+    "main": 1384,
+    "scroll": 1384
+  },
+  {
+    "theme": "light",
+    "width": 1440,
+    "state": "copilot",
+    "viewport": 1440,
+    "document": 1440,
+    "main": 1200,
+    "scroll": 1200
+  }
+]

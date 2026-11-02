@@ -1,0 +1,6 @@
+
+> devsync-backend@1.0.0 typecheck
+> tsc --noEmit && tsc -p tsconfig.seed.json
+
+src/services/yjs.service.ts(6,17): error TS4058: Return type of exported function has or is using name 'Context' from external module "/home/kevin/devsync/backend/src/services/collaboration-server" but cannot be named.
+src/services/yjs.service.ts(10,17): error TS4058: Return type of exported function has or is using name 'Context' from external module "/home/kevin/devsync/backend/src/services/collaboration-server" but cannot be named.

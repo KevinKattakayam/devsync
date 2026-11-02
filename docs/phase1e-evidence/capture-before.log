@@ -1,0 +1,784 @@
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": PostgreSQL database "devsync_e2e_browser", schema "public" at "localhost:32773"
+
+11 migrations found in prisma/migrations
+
+Applying migration `20260729000000_baseline`
+Applying migration `20260729180000_enterprise_platform`
+Applying migration `20260815000000_phase_3_tenant_rls`
+Applying migration `20260815001000_scim_provisioning`
+Applying migration `20260815002000_commercial_billing`
+Applying migration `20261031000000_tenant_indexes`
+Applying migration `20261031010000_crdt_journal`
+Applying migration `202611010001_canonical_revision`
+Applying migration `202611010002_embedding_authority`
+Applying migration `202611010003_atomic_create_idempotency`
+Applying migration `202611010004_workspace_invitations`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20260729000000_baseline/
+    └─ migration.sql
+  └─ 20260729180000_enterprise_platform/
+    └─ migration.sql
+  └─ 20260815000000_phase_3_tenant_rls/
+    └─ migration.sql
+  └─ 20260815001000_scim_provisioning/
+    └─ migration.sql
+  └─ 20260815002000_commercial_billing/
+    └─ migration.sql
+  └─ 20261031000000_tenant_indexes/
+    └─ migration.sql
+  └─ 20261031010000_crdt_journal/
+    └─ migration.sql
+  └─ 202611010001_canonical_revision/
+    └─ migration.sql
+  └─ 202611010002_embedding_authority/
+    └─ migration.sql
+  └─ 202611010003_atomic_create_idempotency/
+    └─ migration.sql
+  └─ 202611010004_workspace_invitations/
+    └─ migration.sql
+      
+All migrations have been successfully applied.
+Sample workspace seeded. Sign in with the supplied Clerk test identities.
+/home/kevin/devsync/.worktrees/frontend-fixture
+Isolated fixture server ready
+{"level":30,"time":1793527395101,"service":"devsync-api","req":{"id":"82b85df0-d1e2-4e85-9f17-1b8e2d515b38","method":"GET"},"requestId":"82b85df0-d1e2-4e85-9f17-1b8e2d515b38","res":{"statusCode":200},"responseTime":12,"msg":"request completed"}
+▲ Next.js 16.2.4 (webpack)
+- Local:         http://127.0.0.1:3001
+- Network:       http://127.0.0.1:3001
+✓ Ready in 686ms
+
+○ Compiling /login/[[...rest]] ...
+Attention: Clerk collects telemetry data from its SDKs when connected to development instances.
+The data collected is used to inform Clerk's product roadmap.
+To learn more, including how to opt-out from the telemetry program, visit: https://clerk.com/docs/telemetry.
+
+ GET /login 200 in 2.1s (next.js: 853ms, proxy.ts: 563ms, application-code: 638ms)
+ GET /login 200 in 126ms (next.js: 26ms, proxy.ts: 7ms, application-code: 93ms)
+
+Running 1 test using 1 worker
+
+(node:14895) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1793527419320,"service":"devsync-api","req":{"id":"8681362d-62dc-4b67-ad08-ba2a0d415b2b","method":"GET"},"requestId":"8681362d-62dc-4b67-ad08-ba2a0d415b2b","res":{"statusCode":200},"responseTime":14,"msg":"request completed"}
+ GET / 200 in 1384ms (next.js: 975ms, proxy.ts: 11ms, application-code: 397ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+ GET /login 200 in 130ms (next.js: 51ms, proxy.ts: 3ms, application-code: 76ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+ GET /login/SignIn_clerk_catchall_check_1793527425029 200 in 106ms (next.js: 37ms, proxy.ts: 4ms, application-code: 65ms)
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+ GET /signup 200 in 1672ms (next.js: 1397ms, proxy.ts: 5ms, application-code: 270ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+ GET /signup/SignUp_clerk_catchall_check_1793527428942 200 in 129ms (next.js: 42ms, proxy.ts: 6ms, application-code: 81ms)
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+ GET /sign-in 200 in 1632ms (next.js: 1406ms, proxy.ts: 4ms, application-code: 222ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+ GET /sign-in/SignIn_clerk_catchall_check_1793527432833 200 in 92ms (next.js: 30ms, proxy.ts: 5ms, application-code: 57ms)
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+ GET /sign-up 200 in 1644ms (next.js: 1440ms, proxy.ts: 4ms, application-code: 200ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+ GET /sign-up/SignUp_clerk_catchall_check_1793527436571 200 in 101ms (next.js: 39ms, proxy.ts: 6ms, application-code: 56ms)
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ GET /dashboard 200 in 3.4s (next.js: 3.0s, proxy.ts: 3ms, application-code: 407ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+{"level":30,"time":1793527441799,"service":"devsync-api","req":{"id":"07f0c54c-5e6e-447a-9c7f-2f0d11a1d332","method":"GET"},"requestId":"07f0c54c-5e6e-447a-9c7f-2f0d11a1d332","res":{"statusCode":200},"responseTime":54,"msg":"request completed"}
+{"level":30,"time":1793527441824,"service":"devsync-api","req":{"id":"649d1810-2950-4398-a1cf-4ba3bfe49e31","method":"GET"},"requestId":"649d1810-2950-4398-a1cf-4ba3bfe49e31","res":{"statusCode":304},"responseTime":23,"msg":"request completed"}
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ GET /settings/billing 200 in 1196ms (next.js: 956ms, proxy.ts: 3ms, application-code: 237ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+ GET /workspace/devsync-sample 200 in 2.2s (next.js: 1950ms, proxy.ts: 3ms, application-code: 218ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+{"level":30,"time":1793527448557,"service":"devsync-api","req":{"id":"d0460465-6930-4063-81b7-3a3b32db6bde","method":"GET"},"requestId":"d0460465-6930-4063-81b7-3a3b32db6bde","res":{"statusCode":200},"responseTime":37,"msg":"request completed"}
+{"level":30,"time":1793527448577,"service":"devsync-api","req":{"id":"456cafc3-2519-4147-8658-4ce1fe000154","method":"GET"},"requestId":"456cafc3-2519-4147-8658-4ce1fe000154","res":{"statusCode":304},"responseTime":19,"msg":"request completed"}
+{"level":30,"time":1793527448709,"service":"devsync-api","req":{"id":"510b240a-5404-4278-893b-5be937806acf","method":"GET"},"requestId":"510b240a-5404-4278-893b-5be937806acf","res":{"statusCode":200},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527448724,"service":"devsync-api","req":{"id":"44bb5a69-cb13-450a-84b9-e98459c4fafa","method":"GET"},"requestId":"44bb5a69-cb13-450a-84b9-e98459c4fafa","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+ GET /workspace/devsync-sample/docs 200 in 1981ms (next.js: 1764ms, proxy.ts: 3ms, application-code: 214ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+{"level":30,"time":1793527452488,"service":"devsync-api","req":{"id":"fd1e1c80-4f2b-45ba-bfd3-37598b3091a0","method":"GET"},"requestId":"fd1e1c80-4f2b-45ba-bfd3-37598b3091a0","res":{"statusCode":200},"responseTime":22,"msg":"request completed"}
+{"level":30,"time":1793527452503,"service":"devsync-api","req":{"id":"cd1df91f-536f-4c2f-bb59-67fa5dd0b96e","method":"GET"},"requestId":"cd1df91f-536f-4c2f-bb59-67fa5dd0b96e","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 4.2s (next.js: 3.9s, proxy.ts: 12ms, application-code: 373ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+{"level":30,"time":1793527458752,"service":"devsync-api","req":{"id":"678b4a9c-0a1d-4d62-b349-ad914f00c780","method":"GET"},"requestId":"678b4a9c-0a1d-4d62-b349-ad914f00c780","res":{"statusCode":200},"responseTime":107,"msg":"request completed"}
+{"level":30,"time":1793527458770,"service":"devsync-api","req":{"id":"57dfa083-8b3b-41c6-ac1f-878bf07625b0","method":"GET"},"requestId":"57dfa083-8b3b-41c6-ac1f-878bf07625b0","res":{"statusCode":200},"responseTime":16,"msg":"request completed"}
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+Yjs was already imported. This breaks constructor checks and will lead to issues! - https://github.com/yjs/yjs/issues/438
+ GET /workspace/devsync-sample/kanban 200 in 2.3s (next.js: 2.1s, proxy.ts: 4ms, application-code: 246ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+{"level":30,"time":1793527462591,"service":"devsync-api","req":{"id":"6b2071d7-30d8-40b8-9b12-60aad7d3093c","method":"GET"},"requestId":"6b2071d7-30d8-40b8-9b12-60aad7d3093c","res":{"statusCode":200},"responseTime":26,"msg":"request completed"}
+{"level":30,"time":1793527462611,"service":"devsync-api","req":{"id":"1d089b7c-62fa-4799-81cd-0f2f62065441","method":"GET"},"requestId":"1d089b7c-62fa-4799-81cd-0f2f62065441","res":{"statusCode":304},"responseTime":18,"msg":"request completed"}
+{"level":30,"time":1793527462642,"service":"devsync-api","req":{"id":"965002dd-d6d1-4884-8567-21a781eb8ae8","method":"GET"},"requestId":"965002dd-d6d1-4884-8567-21a781eb8ae8","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527462659,"service":"devsync-api","req":{"id":"e0c476ba-eb33-4f21-8bb5-3ad1d3d6742c","method":"GET"},"requestId":"e0c476ba-eb33-4f21-8bb5-3ad1d3d6742c","res":{"statusCode":304},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793527462676,"service":"devsync-api","req":{"id":"71439af7-143b-41df-99fe-20be9b7f5547","method":"GET"},"requestId":"71439af7-143b-41df-99fe-20be9b7f5547","res":{"statusCode":304},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793527462693,"service":"devsync-api","req":{"id":"c6c7de49-1f26-484a-8903-59324c221982","method":"GET"},"requestId":"c6c7de49-1f26-484a-8903-59324c221982","res":{"statusCode":304},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793527462712,"service":"devsync-api","req":{"id":"ff7d34ed-9211-4081-86f8-3a4552d3d23e","method":"GET"},"requestId":"ff7d34ed-9211-4081-86f8-3a4552d3d23e","res":{"statusCode":304},"responseTime":18,"msg":"request completed"}
+{"level":30,"time":1793527462728,"service":"devsync-api","req":{"id":"5a2ee236-b4f0-4486-9220-b429a4f4efec","method":"GET"},"requestId":"5a2ee236-b4f0-4486-9220-b429a4f4efec","res":{"statusCode":304},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793527462747,"service":"devsync-api","req":{"id":"18a9e5fd-c415-46e0-b15a-946807fadbc0","method":"GET"},"requestId":"18a9e5fd-c415-46e0-b15a-946807fadbc0","res":{"statusCode":304},"responseTime":17,"msg":"request completed"}
+{"level":30,"time":1793527462771,"service":"devsync-api","req":{"id":"593a4709-4414-499a-ac04-b412a223bca1","method":"GET"},"requestId":"593a4709-4414-499a-ac04-b412a223bca1","res":{"statusCode":304},"responseTime":22,"msg":"request completed"}
+{"level":30,"time":1793527462793,"service":"devsync-api","req":{"id":"a67e9b45-7fc6-47b2-b28b-5377dd862ca0","method":"GET"},"requestId":"a67e9b45-7fc6-47b2-b28b-5377dd862ca0","res":{"statusCode":304},"responseTime":20,"msg":"request completed"}
+{"level":30,"time":1793527462811,"service":"devsync-api","req":{"id":"a7ac9945-6cf0-450a-acc4-792b096bf189","method":"GET"},"requestId":"a7ac9945-6cf0-450a-acc4-792b096bf189","res":{"statusCode":304},"responseTime":16,"msg":"request completed"}
+{"level":30,"time":1793527462828,"service":"devsync-api","req":{"id":"351f98cd-4d24-44e0-8249-ed244927b3ef","method":"GET"},"requestId":"351f98cd-4d24-44e0-8249-ed244927b3ef","res":{"statusCode":304},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793527462848,"service":"devsync-api","req":{"id":"d691e238-29e0-466b-b956-df4b67aef835","method":"GET"},"requestId":"d691e238-29e0-466b-b956-df4b67aef835","res":{"statusCode":304},"responseTime":19,"msg":"request completed"}
+{"level":30,"time":1793527462868,"service":"devsync-api","req":{"id":"11310940-44f6-4179-9265-55df6dcc2868","method":"GET"},"requestId":"11310940-44f6-4179-9265-55df6dcc2868","res":{"statusCode":304},"responseTime":18,"msg":"request completed"}
+{"level":30,"time":1793527462886,"service":"devsync-api","req":{"id":"55ae9c0a-c15d-479c-9199-82627a45c3a5","method":"GET"},"requestId":"55ae9c0a-c15d-479c-9199-82627a45c3a5","res":{"statusCode":304},"responseTime":17,"msg":"request completed"}
+{"level":30,"time":1793527462904,"service":"devsync-api","req":{"id":"793bf1e4-c66c-4519-9901-8f276b69c3a0","method":"GET"},"requestId":"793bf1e4-c66c-4519-9901-8f276b69c3a0","res":{"statusCode":304},"responseTime":17,"msg":"request completed"}
+{"level":30,"time":1793527462920,"service":"devsync-api","req":{"id":"c4df669e-f69b-4f51-a7e6-75e97f16397c","method":"GET"},"requestId":"c4df669e-f69b-4f51-a7e6-75e97f16397c","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793527462937,"service":"devsync-api","req":{"id":"656dd060-79b4-4000-99a1-8f4709877582","method":"GET"},"requestId":"656dd060-79b4-4000-99a1-8f4709877582","res":{"statusCode":304},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793527462953,"service":"devsync-api","req":{"id":"cda88654-6653-4243-8740-e048295521d8","method":"GET"},"requestId":"cda88654-6653-4243-8740-e048295521d8","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793527462968,"service":"devsync-api","req":{"id":"7b255052-9659-4bf7-90e8-c19af2998321","method":"GET"},"requestId":"7b255052-9659-4bf7-90e8-c19af2998321","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793527462983,"service":"devsync-api","req":{"id":"695f9407-1263-4872-9e1f-d0fe49e8cc8e","method":"GET"},"requestId":"695f9407-1263-4872-9e1f-d0fe49e8cc8e","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793527462998,"service":"devsync-api","req":{"id":"21fffdad-ba43-4bbb-8a99-1d9c94f783bb","method":"GET"},"requestId":"21fffdad-ba43-4bbb-8a99-1d9c94f783bb","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793527463012,"service":"devsync-api","req":{"id":"42f650be-e4cc-4323-8091-a8a88b8ff9d4","method":"GET"},"requestId":"42f650be-e4cc-4323-8091-a8a88b8ff9d4","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527463061,"service":"devsync-api","req":{"id":"1d628e49-1a2f-4809-a7b5-f52072515066","method":"GET"},"requestId":"1d628e49-1a2f-4809-a7b5-f52072515066","res":{"statusCode":304},"responseTime":16,"msg":"request completed"}
+{"level":30,"time":1793527463084,"service":"devsync-api","req":{"id":"e922a3b4-ef94-4b12-aafc-28e3faf72e27","method":"GET"},"requestId":"e922a3b4-ef94-4b12-aafc-28e3faf72e27","res":{"statusCode":304},"responseTime":21,"msg":"request completed"}
+{"level":30,"time":1793527463100,"service":"devsync-api","req":{"id":"6126df0d-8118-4790-9fbe-5befd6f8153f","method":"GET"},"requestId":"6126df0d-8118-4790-9fbe-5befd6f8153f","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793527463117,"service":"devsync-api","req":{"id":"b2a13f43-85ab-4627-94eb-f9c3ac25e702","method":"GET"},"requestId":"b2a13f43-85ab-4627-94eb-f9c3ac25e702","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527463141,"service":"devsync-api","req":{"id":"efa41d8e-b069-42e0-9acc-b596cc0670d3","method":"GET"},"requestId":"efa41d8e-b069-42e0-9acc-b596cc0670d3","res":{"statusCode":304},"responseTime":22,"msg":"request completed"}
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+{"level":30,"time":1793527463161,"service":"devsync-api","req":{"id":"7613488a-47e3-4a88-a986-a921a6991e2a","method":"GET"},"requestId":"7613488a-47e3-4a88-a986-a921a6991e2a","res":{"statusCode":304},"responseTime":18,"msg":"request completed"}
+{"level":30,"time":1793527463182,"service":"devsync-api","req":{"id":"bdae8d1b-77a9-49c3-8076-9751f9dc24b5","method":"GET"},"requestId":"bdae8d1b-77a9-49c3-8076-9751f9dc24b5","res":{"statusCode":304},"responseTime":20,"msg":"request completed"}
+{"level":30,"time":1793527463203,"service":"devsync-api","req":{"id":"65ab49d5-fdc8-4d54-af9e-41152888f90e","method":"GET"},"requestId":"65ab49d5-fdc8-4d54-af9e-41152888f90e","res":{"statusCode":304},"responseTime":20,"msg":"request completed"}
+{"level":30,"time":1793527463221,"service":"devsync-api","req":{"id":"b030711c-01cb-44b3-9c56-c16adba24d22","method":"GET"},"requestId":"b030711c-01cb-44b3-9c56-c16adba24d22","res":{"statusCode":304},"responseTime":17,"msg":"request completed"}
+{"level":30,"time":1793527463240,"service":"devsync-api","req":{"id":"10ef0051-5a9e-43bf-a58e-e3b674823572","method":"GET"},"requestId":"10ef0051-5a9e-43bf-a58e-e3b674823572","res":{"statusCode":304},"responseTime":18,"msg":"request completed"}
+{"level":30,"time":1793527463258,"service":"devsync-api","req":{"id":"7e5196d0-d3a3-40e4-9884-9d45494d608f","method":"GET"},"requestId":"7e5196d0-d3a3-40e4-9884-9d45494d608f","res":{"statusCode":304},"responseTime":16,"msg":"request completed"}
+{"level":30,"time":1793527463275,"service":"devsync-api","req":{"id":"ec9c8412-8220-469b-81ec-9665e121d915","method":"GET"},"requestId":"ec9c8412-8220-469b-81ec-9665e121d915","res":{"statusCode":304},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793527463293,"service":"devsync-api","req":{"id":"d67a3f9b-7f86-4c9c-a81b-0debada28a81","method":"GET"},"requestId":"d67a3f9b-7f86-4c9c-a81b-0debada28a81","res":{"statusCode":304},"responseTime":16,"msg":"request completed"}
+{"level":30,"time":1793527463307,"service":"devsync-api","req":{"id":"ac7a18bb-c1ca-43c7-af46-9cefbf7484c4","method":"GET"},"requestId":"ac7a18bb-c1ca-43c7-af46-9cefbf7484c4","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527463321,"service":"devsync-api","req":{"id":"c4203fa2-cad6-4b40-8822-fb62c7177a3c","method":"GET"},"requestId":"c4203fa2-cad6-4b40-8822-fb62c7177a3c","res":{"statusCode":304},"responseTime":12,"msg":"request completed"}
+{"level":30,"time":1793527463339,"service":"devsync-api","req":{"id":"b0da6421-a731-421e-a3e8-b9ef45a05202","method":"GET"},"requestId":"b0da6421-a731-421e-a3e8-b9ef45a05202","res":{"statusCode":304},"responseTime":16,"msg":"request completed"}
+{"level":30,"time":1793527463356,"service":"devsync-api","req":{"id":"709ead60-487e-4db2-a4da-f7d2bd841850","method":"GET"},"requestId":"709ead60-487e-4db2-a4da-f7d2bd841850","res":{"statusCode":304},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793527463370,"service":"devsync-api","req":{"id":"2490851d-957a-4f3c-972d-0faaf7f37dea","method":"GET"},"requestId":"2490851d-957a-4f3c-972d-0faaf7f37dea","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527463386,"service":"devsync-api","req":{"id":"da534dda-82ef-4826-8dd0-2f5535607bf2","method":"GET"},"requestId":"da534dda-82ef-4826-8dd0-2f5535607bf2","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793527463402,"service":"devsync-api","req":{"id":"51257255-6a80-42b7-a41f-8dde929b39b6","method":"GET"},"requestId":"51257255-6a80-42b7-a41f-8dde929b39b6","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793527463418,"service":"devsync-api","req":{"id":"5acf004c-3711-4836-a6c1-f6d656406897","method":"GET"},"requestId":"5acf004c-3711-4836-a6c1-f6d656406897","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793527463434,"service":"devsync-api","req":{"id":"513854ac-29e3-40a5-a210-fcc5a4447cc5","method":"GET"},"requestId":"513854ac-29e3-40a5-a210-fcc5a4447cc5","res":{"statusCode":304},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793527463450,"service":"devsync-api","req":{"id":"5338c53e-e713-41f8-8402-e57057360409","method":"GET"},"requestId":"5338c53e-e713-41f8-8402-e57057360409","res":{"statusCode":304},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793527463470,"service":"devsync-api","req":{"id":"5e3d8a3f-bbd1-4518-90bc-ff0fd661bc1c","method":"GET"},"requestId":"5e3d8a3f-bbd1-4518-90bc-ff0fd661bc1c","res":{"statusCode":304},"responseTime":18,"msg":"request completed"}
+{"level":30,"time":1793527463488,"service":"devsync-api","req":{"id":"c2e87880-53cb-408c-a1b5-d659923357f4","method":"GET"},"requestId":"c2e87880-53cb-408c-a1b5-d659923357f4","res":{"statusCode":304},"responseTime":16,"msg":"request completed"}
+{"level":30,"time":1793527463503,"service":"devsync-api","req":{"id":"94154b62-fa35-4347-aff8-2035ffcf88a6","method":"GET"},"requestId":"94154b62-fa35-4347-aff8-2035ffcf88a6","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793527463521,"service":"devsync-api","req":{"id":"e1757240-6b13-48e0-9e31-a740d2231921","method":"GET"},"requestId":"e1757240-6b13-48e0-9e31-a740d2231921","res":{"statusCode":304},"responseTime":16,"msg":"request completed"}
+{"level":30,"time":1793527463612,"service":"devsync-api","req":{"id":"af80e321-4cb6-4baa-87b0-7f323d48deca","method":"GET"},"requestId":"af80e321-4cb6-4baa-87b0-7f323d48deca","res":{"statusCode":304},"responseTime":90,"msg":"request completed"}
+{"level":30,"time":1793527463658,"service":"devsync-api","req":{"id":"08bbc1ad-1311-4ab1-9f92-d71074b826b6","method":"GET"},"requestId":"08bbc1ad-1311-4ab1-9f92-d71074b826b6","res":{"statusCode":304},"responseTime":35,"msg":"request completed"}
+{"level":30,"time":1793527463687,"service":"devsync-api","req":{"id":"7f6369cb-d7a8-48b3-80d2-f9292f542374","method":"GET"},"requestId":"7f6369cb-d7a8-48b3-80d2-f9292f542374","res":{"statusCode":304},"responseTime":27,"msg":"request completed"}
+{"level":30,"time":1793527463708,"service":"devsync-api","req":{"id":"09ce6846-c57a-4672-8b20-cf1ff005cce3","method":"GET"},"requestId":"09ce6846-c57a-4672-8b20-cf1ff005cce3","res":{"statusCode":304},"responseTime":20,"msg":"request completed"}
+{"level":30,"time":1793527463730,"service":"devsync-api","req":{"id":"2305f8d5-c878-4f24-bc29-b35a4d77b90d","method":"GET"},"requestId":"2305f8d5-c878-4f24-bc29-b35a4d77b90d","res":{"statusCode":304},"responseTime":19,"msg":"request completed"}
+{"level":30,"time":1793527463758,"service":"devsync-api","req":{"id":"09b4f936-e0d1-49a4-86bd-0a5ee7d6490a","method":"GET"},"requestId":"09b4f936-e0d1-49a4-86bd-0a5ee7d6490a","res":{"statusCode":304},"responseTime":26,"msg":"request completed"}
+{"level":30,"time":1793527463800,"service":"devsync-api","req":{"id":"e2220e8a-a868-484b-a790-c37c151f99ad","method":"GET"},"requestId":"e2220e8a-a868-484b-a790-c37c151f99ad","res":{"statusCode":304},"responseTime":37,"msg":"request completed"}
+{"level":30,"time":1793527463832,"service":"devsync-api","req":{"id":"8a119166-9b80-41df-ac7e-5124ce0bda0a","method":"GET"},"requestId":"8a119166-9b80-41df-ac7e-5124ce0bda0a","res":{"statusCode":304},"responseTime":29,"msg":"request completed"}
+{"level":30,"time":1793527463861,"service":"devsync-api","req":{"id":"9548f2bc-0170-4484-86d7-facf33e2bf5d","method":"GET"},"requestId":"9548f2bc-0170-4484-86d7-facf33e2bf5d","res":{"statusCode":304},"responseTime":27,"msg":"request completed"}
+{"level":30,"time":1793527463905,"service":"devsync-api","req":{"id":"97906d9b-2528-4e46-9082-236b30dfa16d","method":"GET"},"requestId":"97906d9b-2528-4e46-9082-236b30dfa16d","res":{"statusCode":304},"responseTime":39,"msg":"request completed"}
+{"level":30,"time":1793527463936,"service":"devsync-api","req":{"id":"c6eb204f-d655-4d7f-b468-9fd4dbf824e9","method":"GET"},"requestId":"c6eb204f-d655-4d7f-b468-9fd4dbf824e9","res":{"statusCode":304},"responseTime":28,"msg":"request completed"}
+{"level":30,"time":1793527463952,"service":"devsync-api","req":{"id":"60a35953-a440-432f-bc4e-10fd9e5f1b40","method":"GET"},"requestId":"60a35953-a440-432f-bc4e-10fd9e5f1b40","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793527463966,"service":"devsync-api","req":{"id":"2eca86b2-6fb2-4f4e-a046-1a2eb9bedb5b","method":"GET"},"requestId":"2eca86b2-6fb2-4f4e-a046-1a2eb9bedb5b","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527463984,"service":"devsync-api","req":{"id":"11305d96-5dd1-4f94-8415-5bd652586442","method":"GET"},"requestId":"11305d96-5dd1-4f94-8415-5bd652586442","res":{"statusCode":304},"responseTime":16,"msg":"request completed"}
+{"level":30,"time":1793527464002,"service":"devsync-api","req":{"id":"0f9a504a-464e-4d01-b2d3-234dfdc7e622","method":"GET"},"requestId":"0f9a504a-464e-4d01-b2d3-234dfdc7e622","res":{"statusCode":304},"responseTime":16,"msg":"request completed"}
+{"level":30,"time":1793527464019,"service":"devsync-api","req":{"id":"67942321-74da-4c91-b155-95e9c31fe7ff","method":"GET"},"requestId":"67942321-74da-4c91-b155-95e9c31fe7ff","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793527464036,"service":"devsync-api","req":{"id":"349d1d7b-0616-49cc-a784-a14a1159728f","method":"GET"},"requestId":"349d1d7b-0616-49cc-a784-a14a1159728f","res":{"statusCode":304},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793527464052,"service":"devsync-api","req":{"id":"f327f943-596c-4820-8ed8-d46ac7c5dd8f","method":"GET"},"requestId":"f327f943-596c-4820-8ed8-d46ac7c5dd8f","res":{"statusCode":304},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793527464068,"service":"devsync-api","req":{"id":"61cd3878-85b4-4d9b-81e9-d1314845546b","method":"GET"},"requestId":"61cd3878-85b4-4d9b-81e9-d1314845546b","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793527464086,"service":"devsync-api","req":{"id":"dcf3c91e-d4f5-4e41-81db-fbcb4c0e546e","method":"GET"},"requestId":"dcf3c91e-d4f5-4e41-81db-fbcb4c0e546e","res":{"statusCode":304},"responseTime":17,"msg":"request completed"}
+{"level":30,"time":1793527464103,"service":"devsync-api","req":{"id":"d5e364c5-7fa1-47b2-b950-5548d6da22e4","method":"GET"},"requestId":"d5e364c5-7fa1-47b2-b950-5548d6da22e4","res":{"statusCode":304},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793527464123,"service":"devsync-api","req":{"id":"24c73a87-1665-4b9f-b66f-46bc4990ede2","method":"GET"},"requestId":"24c73a87-1665-4b9f-b66f-46bc4990ede2","res":{"statusCode":304},"responseTime":19,"msg":"request completed"}
+{"level":30,"time":1793527464140,"service":"devsync-api","req":{"id":"2907dc4b-bb05-4931-90a5-482295f1916b","method":"GET"},"requestId":"2907dc4b-bb05-4931-90a5-482295f1916b","res":{"statusCode":304},"responseTime":16,"msg":"request completed"}
+{"level":30,"time":1793527464158,"service":"devsync-api","req":{"id":"24769598-0223-4f88-998d-28f1c270dfaf","method":"GET"},"requestId":"24769598-0223-4f88-998d-28f1c270dfaf","res":{"statusCode":304},"responseTime":16,"msg":"request completed"}
+{"level":30,"time":1793527464174,"service":"devsync-api","req":{"id":"73398599-a8ee-4b2e-adee-2f4287f9237a","method":"GET"},"requestId":"73398599-a8ee-4b2e-adee-2f4287f9237a","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793527464195,"service":"devsync-api","req":{"id":"356cba36-658d-4d86-83ec-8925a1ec0071","method":"GET"},"requestId":"356cba36-658d-4d86-83ec-8925a1ec0071","res":{"statusCode":304},"responseTime":19,"msg":"request completed"}
+{"level":30,"time":1793527464212,"service":"devsync-api","req":{"id":"5667ec8d-e2a8-4fd4-8bfb-b645217a6b42","method":"GET"},"requestId":"5667ec8d-e2a8-4fd4-8bfb-b645217a6b42","res":{"statusCode":304},"responseTime":16,"msg":"request completed"}
+{"level":30,"time":1793527464233,"service":"devsync-api","req":{"id":"b83c02b6-3add-42fc-951b-fc1ab1db5fb0","method":"GET"},"requestId":"b83c02b6-3add-42fc-951b-fc1ab1db5fb0","res":{"statusCode":304},"responseTime":19,"msg":"request completed"}
+{"level":30,"time":1793527464249,"service":"devsync-api","req":{"id":"f41d7974-6c7d-4253-85ce-3ed896093ba9","method":"GET"},"requestId":"f41d7974-6c7d-4253-85ce-3ed896093ba9","res":{"statusCode":304},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793527464263,"service":"devsync-api","req":{"id":"e64c63d9-86e6-4ab7-9bcb-76ba2e728a1c","method":"GET"},"requestId":"e64c63d9-86e6-4ab7-9bcb-76ba2e728a1c","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527464281,"service":"devsync-api","req":{"id":"be32365b-cea6-4817-9ab3-44fed22b8bce","method":"GET"},"requestId":"be32365b-cea6-4817-9ab3-44fed22b8bce","res":{"statusCode":304},"responseTime":16,"msg":"request completed"}
+{"level":30,"time":1793527464297,"service":"devsync-api","req":{"id":"fc6516f4-7e2b-4c47-9aa3-21ee5e21e659","method":"GET"},"requestId":"fc6516f4-7e2b-4c47-9aa3-21ee5e21e659","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793527464312,"service":"devsync-api","req":{"id":"1ad6ac43-1b0d-468c-9aee-3b3ab7aa7f83","method":"GET"},"requestId":"1ad6ac43-1b0d-468c-9aee-3b3ab7aa7f83","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793527464327,"service":"devsync-api","req":{"id":"079a00b1-ed25-42bd-9144-945f5412e7c0","method":"GET"},"requestId":"079a00b1-ed25-42bd-9144-945f5412e7c0","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527464344,"service":"devsync-api","req":{"id":"2637be95-74a4-4147-8d72-0a8aec63e7e1","method":"GET"},"requestId":"2637be95-74a4-4147-8d72-0a8aec63e7e1","res":{"statusCode":304},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793527464360,"service":"devsync-api","req":{"id":"ee484ae3-2327-40d7-8a9d-0562a4cc7045","method":"GET"},"requestId":"ee484ae3-2327-40d7-8a9d-0562a4cc7045","res":{"statusCode":304},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793527464376,"service":"devsync-api","req":{"id":"861d3606-549f-4aec-a106-e20ab89835b7","method":"GET"},"requestId":"861d3606-549f-4aec-a106-e20ab89835b7","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793527464391,"service":"devsync-api","req":{"id":"9ecccb75-a77c-4f2f-8f59-c2fa4e0823d8","method":"GET"},"requestId":"9ecccb75-a77c-4f2f-8f59-c2fa4e0823d8","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793527464406,"service":"devsync-api","req":{"id":"91b0766e-72da-457b-adb8-65f729b15379","method":"GET"},"requestId":"91b0766e-72da-457b-adb8-65f729b15379","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527464424,"service":"devsync-api","req":{"id":"8f45d4be-db56-400c-ba4f-afe2b0eb21db","method":"GET"},"requestId":"8f45d4be-db56-400c-ba4f-afe2b0eb21db","res":{"statusCode":304},"responseTime":16,"msg":"request completed"}
+{"level":30,"time":1793527464439,"service":"devsync-api","req":{"id":"28595b39-f5f7-45d1-b991-5d49aceae404","method":"GET"},"requestId":"28595b39-f5f7-45d1-b991-5d49aceae404","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793527464455,"service":"devsync-api","req":{"id":"b7d166ae-73f2-4e4c-b842-0cd04fdb30e5","method":"GET"},"requestId":"b7d166ae-73f2-4e4c-b842-0cd04fdb30e5","res":{"statusCode":304},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793527464472,"service":"devsync-api","req":{"id":"81375c54-d0be-4f72-9fdd-24507392c786","method":"GET"},"requestId":"81375c54-d0be-4f72-9fdd-24507392c786","res":{"statusCode":304},"responseTime":16,"msg":"request completed"}
+{"level":30,"time":1793527464491,"service":"devsync-api","req":{"id":"8c095fe4-0435-4ca0-9f1c-6c8405b0b831","method":"GET"},"requestId":"8c095fe4-0435-4ca0-9f1c-6c8405b0b831","res":{"statusCode":304},"responseTime":17,"msg":"request completed"}
+{"level":30,"time":1793527464513,"service":"devsync-api","req":{"id":"88d68afe-51f3-44b1-9068-a18d1e650cdc","method":"GET"},"requestId":"88d68afe-51f3-44b1-9068-a18d1e650cdc","res":{"statusCode":304},"responseTime":20,"msg":"request completed"}
+{"level":30,"time":1793527464530,"service":"devsync-api","req":{"id":"4abd61a3-b634-4362-b88b-bbd58db560f8","method":"GET"},"requestId":"4abd61a3-b634-4362-b88b-bbd58db560f8","res":{"statusCode":304},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793527464551,"service":"devsync-api","req":{"id":"3bf1f5d7-c994-4c46-9630-2713c7619a84","method":"GET"},"requestId":"3bf1f5d7-c994-4c46-9630-2713c7619a84","res":{"statusCode":304},"responseTime":19,"msg":"request completed"}
+{"level":30,"time":1793527464569,"service":"devsync-api","req":{"id":"e0f14617-94fe-4574-9b99-101474c9ef98","method":"GET"},"requestId":"e0f14617-94fe-4574-9b99-101474c9ef98","res":{"statusCode":304},"responseTime":17,"msg":"request completed"}
+{"level":30,"time":1793527464589,"service":"devsync-api","req":{"id":"2ad22873-030b-4d1f-a836-ea1b800dd47f","method":"GET"},"requestId":"2ad22873-030b-4d1f-a836-ea1b800dd47f","res":{"statusCode":304},"responseTime":18,"msg":"request completed"}
+{"level":30,"time":1793527464609,"service":"devsync-api","req":{"id":"0f06f197-4009-4a5c-a35f-bb233c73c2d7","method":"GET"},"requestId":"0f06f197-4009-4a5c-a35f-bb233c73c2d7","res":{"statusCode":304},"responseTime":17,"msg":"request completed"}
+{"level":30,"time":1793527464624,"service":"devsync-api","req":{"id":"9327c3ad-e76d-41b9-89e8-b4d520d95654","method":"GET"},"requestId":"9327c3ad-e76d-41b9-89e8-b4d520d95654","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793527464642,"service":"devsync-api","req":{"id":"e1871965-f1f0-48b5-a912-dce4709ed3be","method":"GET"},"requestId":"e1871965-f1f0-48b5-a912-dce4709ed3be","res":{"statusCode":304},"responseTime":17,"msg":"request completed"}
+{"level":30,"time":1793527464659,"service":"devsync-api","req":{"id":"e9ca48c9-441e-4b40-8006-6acac25ea1ed","method":"GET"},"requestId":"e9ca48c9-441e-4b40-8006-6acac25ea1ed","res":{"statusCode":304},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793527464675,"service":"devsync-api","req":{"id":"dff863f5-86b1-4cdd-bbbc-f2aedcf01c85","method":"GET"},"requestId":"dff863f5-86b1-4cdd-bbbc-f2aedcf01c85","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793527464692,"service":"devsync-api","req":{"id":"42837b47-4817-46ae-82cf-19601b3a6b5f","method":"GET"},"requestId":"42837b47-4817-46ae-82cf-19601b3a6b5f","res":{"statusCode":304},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793527464707,"service":"devsync-api","req":{"id":"cb814552-49ee-4d16-a80d-2c438d382845","method":"GET"},"requestId":"cb814552-49ee-4d16-a80d-2c438d382845","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527464724,"service":"devsync-api","req":{"id":"cbe2d576-efea-4916-b1cc-28fabd1ddf26","method":"GET"},"requestId":"cbe2d576-efea-4916-b1cc-28fabd1ddf26","res":{"statusCode":304},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793527464740,"service":"devsync-api","req":{"id":"ce103772-8f30-4ffb-b5e4-e278741bf91d","method":"GET"},"requestId":"ce103772-8f30-4ffb-b5e4-e278741bf91d","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793527464755,"service":"devsync-api","req":{"id":"5dafb6a7-f4a2-4a02-81cc-8a642debca01","method":"GET"},"requestId":"5dafb6a7-f4a2-4a02-81cc-8a642debca01","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527464772,"service":"devsync-api","req":{"id":"e3b564c6-b1ae-4137-ac34-5a886e129f11","method":"GET"},"requestId":"e3b564c6-b1ae-4137-ac34-5a886e129f11","res":{"statusCode":304},"responseTime":16,"msg":"request completed"}
+{"level":30,"time":1793527464788,"service":"devsync-api","req":{"id":"2929417c-9a95-4fc7-9e73-f1dcfca9fdc9","method":"GET"},"requestId":"2929417c-9a95-4fc7-9e73-f1dcfca9fdc9","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793527464804,"service":"devsync-api","req":{"id":"8f49e0ef-ac3d-4d32-9cca-a793dcbde694","method":"GET"},"requestId":"8f49e0ef-ac3d-4d32-9cca-a793dcbde694","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793527464822,"service":"devsync-api","req":{"id":"87863ae3-c92b-455a-8b9c-38f5042365f2","method":"GET"},"requestId":"87863ae3-c92b-455a-8b9c-38f5042365f2","res":{"statusCode":304},"responseTime":16,"msg":"request completed"}
+{"level":30,"time":1793527464844,"service":"devsync-api","req":{"id":"1bc0d778-f88f-4acf-900c-af2ffa9baeec","method":"GET"},"requestId":"1bc0d778-f88f-4acf-900c-af2ffa9baeec","res":{"statusCode":304},"responseTime":21,"msg":"request completed"}
+{"level":30,"time":1793527464861,"service":"devsync-api","req":{"id":"7a0e8fd1-57f2-4eb7-b809-fd6ef2a02457","method":"GET"},"requestId":"7a0e8fd1-57f2-4eb7-b809-fd6ef2a02457","res":{"statusCode":304},"responseTime":16,"msg":"request completed"}
+{"level":30,"time":1793527464880,"service":"devsync-api","req":{"id":"ff83453d-0533-4b06-a309-7b6f42180ec5","method":"GET"},"requestId":"ff83453d-0533-4b06-a309-7b6f42180ec5","res":{"statusCode":304},"responseTime":17,"msg":"request completed"}
+{"level":30,"time":1793527464896,"service":"devsync-api","req":{"id":"cfb24546-dde7-473c-a314-28bc2b8b9a84","method":"GET"},"requestId":"cfb24546-dde7-473c-a314-28bc2b8b9a84","res":{"statusCode":304},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793527464911,"service":"devsync-api","req":{"id":"c412ba45-1f67-4103-ba38-69f6c6f84a9d","method":"GET"},"requestId":"c412ba45-1f67-4103-ba38-69f6c6f84a9d","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527464933,"service":"devsync-api","req":{"id":"a93fd706-c929-4567-9390-7470e3d99f11","method":"GET"},"requestId":"a93fd706-c929-4567-9390-7470e3d99f11","res":{"statusCode":304},"responseTime":20,"msg":"request completed"}
+{"level":30,"time":1793527464954,"service":"devsync-api","req":{"id":"b5903680-937b-43da-a7b8-915b7b7011eb","method":"GET"},"requestId":"b5903680-937b-43da-a7b8-915b7b7011eb","res":{"statusCode":304},"responseTime":19,"msg":"request completed"}
+{"level":30,"time":1793527464970,"service":"devsync-api","req":{"id":"e87122ca-6045-4a4c-b15c-62e0e68b099a","method":"GET"},"requestId":"e87122ca-6045-4a4c-b15c-62e0e68b099a","res":{"statusCode":304},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793527464987,"service":"devsync-api","req":{"id":"854e38ab-af5e-4d65-ab5f-d53e6ecf27b6","method":"GET"},"requestId":"854e38ab-af5e-4d65-ab5f-d53e6ecf27b6","res":{"statusCode":304},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793527465004,"service":"devsync-api","req":{"id":"e3795541-efc6-4cec-b15a-0d63dc6ac10c","method":"GET"},"requestId":"e3795541-efc6-4cec-b15a-0d63dc6ac10c","res":{"statusCode":304},"responseTime":16,"msg":"request completed"}
+{"level":30,"time":1793527465019,"service":"devsync-api","req":{"id":"2ca03708-e9b9-4d19-8eb2-9dbf75adf704","method":"GET"},"requestId":"2ca03708-e9b9-4d19-8eb2-9dbf75adf704","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793527465035,"service":"devsync-api","req":{"id":"b90a7e5f-6afb-4ffa-9809-c76371081f5f","method":"GET"},"requestId":"b90a7e5f-6afb-4ffa-9809-c76371081f5f","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793527465050,"service":"devsync-api","req":{"id":"62d35669-e53d-48b0-bc42-480e66251f8d","method":"GET"},"requestId":"62d35669-e53d-48b0-bc42-480e66251f8d","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793527465065,"service":"devsync-api","req":{"id":"3efc6514-8c6c-4e34-b421-c636e39c1bde","method":"GET"},"requestId":"3efc6514-8c6c-4e34-b421-c636e39c1bde","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527465081,"service":"devsync-api","req":{"id":"c9152ff7-9ebb-4985-a348-de31c60c850e","method":"GET"},"requestId":"c9152ff7-9ebb-4985-a348-de31c60c850e","res":{"statusCode":304},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793527465095,"service":"devsync-api","req":{"id":"f5bdcf4d-ad61-4e13-b682-9ce4d5f58d00","method":"GET"},"requestId":"f5bdcf4d-ad61-4e13-b682-9ce4d5f58d00","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527465109,"service":"devsync-api","req":{"id":"51d94b6a-a299-48cb-950b-0f23a5d556fa","method":"GET"},"requestId":"51d94b6a-a299-48cb-950b-0f23a5d556fa","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527465123,"service":"devsync-api","req":{"id":"01a280a2-00b0-4e59-abc2-54006c94b4ed","method":"GET"},"requestId":"01a280a2-00b0-4e59-abc2-54006c94b4ed","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527465136,"service":"devsync-api","req":{"id":"4040a5ce-7722-4a90-bb68-e8c9c1eeff3a","method":"GET"},"requestId":"4040a5ce-7722-4a90-bb68-e8c9c1eeff3a","res":{"statusCode":304},"responseTime":11,"msg":"request completed"}
+{"level":30,"time":1793527465150,"service":"devsync-api","req":{"id":"96b58bd6-bb1a-4370-8ff6-91db02a18586","method":"GET"},"requestId":"96b58bd6-bb1a-4370-8ff6-91db02a18586","res":{"statusCode":304},"responseTime":12,"msg":"request completed"}
+{"level":30,"time":1793527465164,"service":"devsync-api","req":{"id":"2dcc5562-5f0d-46f6-bb47-d865b82fac68","method":"GET"},"requestId":"2dcc5562-5f0d-46f6-bb47-d865b82fac68","res":{"statusCode":304},"responseTime":12,"msg":"request completed"}
+{"level":30,"time":1793527465179,"service":"devsync-api","req":{"id":"f12f23ab-58a1-4035-877c-5562244db428","method":"GET"},"requestId":"f12f23ab-58a1-4035-877c-5562244db428","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527465196,"service":"devsync-api","req":{"id":"b5d61c18-af20-4c67-ac53-f8a6bcc4318d","method":"GET"},"requestId":"b5d61c18-af20-4c67-ac53-f8a6bcc4318d","res":{"statusCode":304},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793527465213,"service":"devsync-api","req":{"id":"fac0a1f1-4671-4bfb-918d-428626cc5992","method":"GET"},"requestId":"fac0a1f1-4671-4bfb-918d-428626cc5992","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527465232,"service":"devsync-api","req":{"id":"d96967b3-5109-4f21-91ce-65fe426add36","method":"GET"},"requestId":"d96967b3-5109-4f21-91ce-65fe426add36","res":{"statusCode":304},"responseTime":17,"msg":"request completed"}
+{"level":30,"time":1793527465251,"service":"devsync-api","req":{"id":"00804dc1-21cc-4f26-bd0b-e2a165c0c53b","method":"GET"},"requestId":"00804dc1-21cc-4f26-bd0b-e2a165c0c53b","res":{"statusCode":304},"responseTime":17,"msg":"request completed"}
+{"level":30,"time":1793527465265,"service":"devsync-api","req":{"id":"22e8edfa-8aa1-4554-8a86-5862f7eff955","method":"GET"},"requestId":"22e8edfa-8aa1-4554-8a86-5862f7eff955","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527465280,"service":"devsync-api","req":{"id":"e93e48c8-fe12-4fdb-a439-b5eede505148","method":"GET"},"requestId":"e93e48c8-fe12-4fdb-a439-b5eede505148","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527465294,"service":"devsync-api","req":{"id":"a5822e5c-6e55-4fc3-a889-f63c51c118ff","method":"GET"},"requestId":"a5822e5c-6e55-4fc3-a889-f63c51c118ff","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527465309,"service":"devsync-api","req":{"id":"acd0f94b-d955-401e-b0a9-3552bb8c7b19","method":"GET"},"requestId":"acd0f94b-d955-401e-b0a9-3552bb8c7b19","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793527465323,"service":"devsync-api","req":{"id":"e1287993-3601-4e11-a8b8-550970997c16","method":"GET"},"requestId":"e1287993-3601-4e11-a8b8-550970997c16","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527465337,"service":"devsync-api","req":{"id":"e3135945-8f9f-4f46-a837-df35ba4a905d","method":"GET"},"requestId":"e3135945-8f9f-4f46-a837-df35ba4a905d","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527465350,"service":"devsync-api","req":{"id":"8a91c90e-e5d1-4685-bd8c-9d34c24d0f9d","method":"GET"},"requestId":"8a91c90e-e5d1-4685-bd8c-9d34c24d0f9d","res":{"statusCode":304},"responseTime":12,"msg":"request completed"}
+{"level":30,"time":1793527465365,"service":"devsync-api","req":{"id":"61bbf9f3-4f56-4c8f-8d15-e80a35cf8352","method":"GET"},"requestId":"61bbf9f3-4f56-4c8f-8d15-e80a35cf8352","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793527465379,"service":"devsync-api","req":{"id":"826774e4-6d5e-42ed-b8a2-d2b1fb43875c","method":"GET"},"requestId":"826774e4-6d5e-42ed-b8a2-d2b1fb43875c","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527465393,"service":"devsync-api","req":{"id":"610f421e-7001-456e-b1f5-787fe0697a09","method":"GET"},"requestId":"610f421e-7001-456e-b1f5-787fe0697a09","res":{"statusCode":304},"responseTime":11,"msg":"request completed"}
+{"level":30,"time":1793527465404,"service":"devsync-api","req":{"id":"456708d9-90c9-40e0-99cf-9650b6d2487c","method":"GET"},"requestId":"456708d9-90c9-40e0-99cf-9650b6d2487c","res":{"statusCode":304},"responseTime":10,"msg":"request completed"}
+{"level":30,"time":1793527465419,"service":"devsync-api","req":{"id":"4b512906-f7ad-4e4c-8c50-d28b4691816d","method":"GET"},"requestId":"4b512906-f7ad-4e4c-8c50-d28b4691816d","res":{"statusCode":304},"responseTime":12,"msg":"request completed"}
+{"level":30,"time":1793527465433,"service":"devsync-api","req":{"id":"c80bcee2-b68b-4105-b62c-d50bb4ba5b89","method":"GET"},"requestId":"c80bcee2-b68b-4105-b62c-d50bb4ba5b89","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527465448,"service":"devsync-api","req":{"id":"9ae1ec86-9a86-4f8f-be4a-3ac68e5ca405","method":"GET"},"requestId":"9ae1ec86-9a86-4f8f-be4a-3ac68e5ca405","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527465463,"service":"devsync-api","req":{"id":"5962bc49-70fa-4f6d-99e0-1afded12c35d","method":"GET"},"requestId":"5962bc49-70fa-4f6d-99e0-1afded12c35d","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527465478,"service":"devsync-api","req":{"id":"1a0ca986-3e18-40f7-9f2e-8ada5857414a","method":"GET"},"requestId":"1a0ca986-3e18-40f7-9f2e-8ada5857414a","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527465492,"service":"devsync-api","req":{"id":"415819aa-4417-4d97-8771-8a5fab316490","method":"GET"},"requestId":"415819aa-4417-4d97-8771-8a5fab316490","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527465506,"service":"devsync-api","req":{"id":"1f03421c-a7e6-440e-bf1c-d86c013a4fb2","method":"GET"},"requestId":"1f03421c-a7e6-440e-bf1c-d86c013a4fb2","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527465520,"service":"devsync-api","req":{"id":"6cea99e8-6267-46df-bb5e-821a73f39ba0","method":"GET"},"requestId":"6cea99e8-6267-46df-bb5e-821a73f39ba0","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527465537,"service":"devsync-api","req":{"id":"3a3a39c6-2500-40c1-ac20-3d20796d6e2a","method":"GET"},"requestId":"3a3a39c6-2500-40c1-ac20-3d20796d6e2a","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793527465552,"service":"devsync-api","req":{"id":"17c5af38-42cd-44cb-be3d-d381b69668b5","method":"GET"},"requestId":"17c5af38-42cd-44cb-be3d-d381b69668b5","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527465573,"service":"devsync-api","req":{"id":"d8d29c07-83a5-40c5-aac5-ffff674f259d","method":"GET"},"requestId":"d8d29c07-83a5-40c5-aac5-ffff674f259d","res":{"statusCode":304},"responseTime":19,"msg":"request completed"}
+{"level":30,"time":1793527465601,"service":"devsync-api","req":{"id":"b9b718d3-cae0-4e31-b552-aa374f00e185","method":"GET"},"requestId":"b9b718d3-cae0-4e31-b552-aa374f00e185","res":{"statusCode":304},"responseTime":25,"msg":"request completed"}
+{"level":30,"time":1793527465619,"service":"devsync-api","req":{"id":"398c27ae-17c7-4f59-9f64-aaa9ea9f4546","method":"GET"},"requestId":"398c27ae-17c7-4f59-9f64-aaa9ea9f4546","res":{"statusCode":304},"responseTime":16,"msg":"request completed"}
+{"level":30,"time":1793527465634,"service":"devsync-api","req":{"id":"a38f95e6-80da-4fd9-a47c-86c39b34c3da","method":"GET"},"requestId":"a38f95e6-80da-4fd9-a47c-86c39b34c3da","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527465648,"service":"devsync-api","req":{"id":"bfa8a945-0d20-41a5-97fa-d2d094cdfafe","method":"GET"},"requestId":"bfa8a945-0d20-41a5-97fa-d2d094cdfafe","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527465664,"service":"devsync-api","req":{"id":"235a7ce6-fda2-45e7-bbb1-26495db97f20","method":"GET"},"requestId":"235a7ce6-fda2-45e7-bbb1-26495db97f20","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793527465678,"service":"devsync-api","req":{"id":"61c41478-5828-4acd-bf31-98ea36e7a81a","method":"GET"},"requestId":"61c41478-5828-4acd-bf31-98ea36e7a81a","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527465692,"service":"devsync-api","req":{"id":"f58314d8-68b4-44dc-90f0-865d4e0ea42f","method":"GET"},"requestId":"f58314d8-68b4-44dc-90f0-865d4e0ea42f","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527465707,"service":"devsync-api","req":{"id":"ba182464-2394-4b0f-a550-7396a5cb58b5","method":"GET"},"requestId":"ba182464-2394-4b0f-a550-7396a5cb58b5","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527465724,"service":"devsync-api","req":{"id":"dc76695f-2011-42f6-be29-54ddec9cab2e","method":"GET"},"requestId":"dc76695f-2011-42f6-be29-54ddec9cab2e","res":{"statusCode":304},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793527465742,"service":"devsync-api","req":{"id":"1ef40e6b-7741-46b6-a4b3-c4171952c8cb","method":"GET"},"requestId":"1ef40e6b-7741-46b6-a4b3-c4171952c8cb","res":{"statusCode":304},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793527465756,"service":"devsync-api","req":{"id":"ba2ad4e7-58ff-43bb-afaf-37766da7a140","method":"GET"},"requestId":"ba2ad4e7-58ff-43bb-afaf-37766da7a140","res":{"statusCode":304},"responseTime":12,"msg":"request completed"}
+{"level":30,"time":1793527465770,"service":"devsync-api","req":{"id":"526a3651-03ee-402b-b24d-27733ff452ef","method":"GET"},"requestId":"526a3651-03ee-402b-b24d-27733ff452ef","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527465785,"service":"devsync-api","req":{"id":"4d3973ce-0423-476d-85cc-d98a57f0e6ab","method":"GET"},"requestId":"4d3973ce-0423-476d-85cc-d98a57f0e6ab","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527465800,"service":"devsync-api","req":{"id":"60ea9267-70bd-444a-957a-85a4ec4060ea","method":"GET"},"requestId":"60ea9267-70bd-444a-957a-85a4ec4060ea","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527465814,"service":"devsync-api","req":{"id":"fe8e5453-9002-4b19-a66d-f66c858f45a1","method":"GET"},"requestId":"fe8e5453-9002-4b19-a66d-f66c858f45a1","res":{"statusCode":304},"responseTime":12,"msg":"request completed"}
+{"level":30,"time":1793527465830,"service":"devsync-api","req":{"id":"28217148-7a35-4af2-b9f3-274d3ae0ddb1","method":"GET"},"requestId":"28217148-7a35-4af2-b9f3-274d3ae0ddb1","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527465844,"service":"devsync-api","req":{"id":"3ce0ec5a-4639-4a4f-b814-d5bd7d7c61d2","method":"GET"},"requestId":"3ce0ec5a-4639-4a4f-b814-d5bd7d7c61d2","res":{"statusCode":304},"responseTime":12,"msg":"request completed"}
+{"level":30,"time":1793527465859,"service":"devsync-api","req":{"id":"fb522bed-de85-437e-b33a-f103011c9fb5","method":"GET"},"requestId":"fb522bed-de85-437e-b33a-f103011c9fb5","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527465872,"service":"devsync-api","req":{"id":"b8ff2244-880d-4073-b6c1-894724b5f058","method":"GET"},"requestId":"b8ff2244-880d-4073-b6c1-894724b5f058","res":{"statusCode":304},"responseTime":11,"msg":"request completed"}
+{"level":30,"time":1793527465887,"service":"devsync-api","req":{"id":"48c22bc4-ab8e-4d79-ad40-a893d6708bd3","method":"GET"},"requestId":"48c22bc4-ab8e-4d79-ad40-a893d6708bd3","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527465906,"service":"devsync-api","req":{"id":"eac0e6a3-d997-471e-a41b-95be05ce47c8","method":"GET"},"requestId":"eac0e6a3-d997-471e-a41b-95be05ce47c8","res":{"statusCode":304},"responseTime":17,"msg":"request completed"}
+Hocuspocus: closing connection d488077d-3ed0-4284-9747-803a35453d0b: unauthenticated message queue length limit exceeded for "kanban:devsync-sample" (17 > maxUnauthenticatedQueueMessages 16).
+{"level":30,"time":1793527465930,"service":"devsync-api","req":{"id":"cab281a8-74c0-4f69-913f-6e26875aabe3","method":"GET"},"requestId":"cab281a8-74c0-4f69-913f-6e26875aabe3","res":{"statusCode":304},"responseTime":21,"msg":"request completed"}
+{"level":30,"time":1793527465945,"service":"devsync-api","req":{"id":"cb513014-e30a-4c9f-ac70-5b28cd3ae916","method":"GET"},"requestId":"cb513014-e30a-4c9f-ac70-5b28cd3ae916","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527465963,"service":"devsync-api","req":{"id":"974df6f8-30aa-4962-b682-93b778cfe9c8","method":"GET"},"requestId":"974df6f8-30aa-4962-b682-93b778cfe9c8","res":{"statusCode":304},"responseTime":17,"msg":"request completed"}
+{"level":30,"time":1793527465976,"service":"devsync-api","req":{"id":"30b6268a-3af3-4312-a5cf-a827a353aaa7","method":"GET"},"requestId":"30b6268a-3af3-4312-a5cf-a827a353aaa7","res":{"statusCode":304},"responseTime":11,"msg":"request completed"}
+{"level":30,"time":1793527465991,"service":"devsync-api","req":{"id":"f3d715b0-2a22-449e-9ec4-052acbe553fd","method":"GET"},"requestId":"f3d715b0-2a22-449e-9ec4-052acbe553fd","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527466006,"service":"devsync-api","req":{"id":"d10ce8ac-081c-4da9-bc4b-9d039a783e0e","method":"GET"},"requestId":"d10ce8ac-081c-4da9-bc4b-9d039a783e0e","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+ GET /workspace/devsync-sample/snippets 200 in 3.0s (next.js: 2.7s, proxy.ts: 8ms, application-code: 289ms)
+{"level":30,"time":1793527466012,"service":"devsync-api","req":{"id":"db4c30c1-d3e8-41e1-a29f-3112604bc8a3","method":"GET"},"requestId":"system","res":{"statusCode":null},"responseTime":3,"msg":"request aborted"}
+{"level":30,"time":1793527467368,"service":"devsync-api","req":{"id":"49256861-391e-4d0b-9524-af364c4afbe5","method":"GET"},"requestId":"49256861-391e-4d0b-9524-af364c4afbe5","res":{"statusCode":200},"responseTime":16,"msg":"request completed"}
+{"level":30,"time":1793527467381,"service":"devsync-api","req":{"id":"6fb995f6-5ab7-4d7f-8e10-f52846349d48","method":"GET"},"requestId":"6fb995f6-5ab7-4d7f-8e10-f52846349d48","res":{"statusCode":304},"responseTime":12,"msg":"request completed"}
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+ GET /workspace/devsync-sample/settings 200 in 2.3s (next.js: 2.1s, proxy.ts: 5ms, application-code: 224ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+⨯ Error: Clerk: auth() was called but Clerk can't detect usage of clerkMiddleware(). Please ensure the following:
+- Your middleware or proxy file exists at ./src/middleware.(ts|js) or proxy.(ts|js)
+- clerkMiddleware() is used in your Next.js middleware or proxy file.
+- Your middleware or proxy matcher is configured to match this route or page.
+- If you are using the src directory, make sure the middleware or proxy file is inside of it.
+
+If you've verified your configuration and are still seeing this error, there may be a runtime issue or a problem communicating with Clerk.
+
+For more details, see https://clerk.com/err/auth-middleware
+
+    at async SuperadminLayout (src/app/(superadmin)/layout.tsx:5:16)
+  3 |
+  4 | export default async function SuperadminLayout({ children }: Readonly<{ children: React.Rea...
+> 5 |   const user = await currentUser();
+    |                ^
+  6 |   if (user?.publicMetadata.systemRole !== 'SUPER_ADMIN') redirect('/dashboard');
+  7 |   return <main className="min-h-screen bg-background text-foreground"><div className="mx-au...
+  8 | } {
+  digest: '3243398307'
+}
+⨯ TypeError: fetch failed
+    at async loadMetrics (src/app/(superadmin)/superadmin/page.tsx:6:20)
+    at async SuperadminDashboard (src/app/(superadmin)/superadmin/page.tsx:12:19)
+  4 |
+  5 | async function loadMetrics(): Promise<Metrics> {
+> 6 |   const response = await fetch(`${process.env.BACKEND_URL || 'http://localhost:5000'}/api/s...
+    |                    ^
+  7 |   if (!response.ok) redirect('/dashboard');
+  8 |   return response.json() as Promise<Metrics>;
+  9 | } {
+  digest: '3349125238',
+  [cause]: Error: connect ECONNREFUSED 127.0.0.1:5000
+      at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:5000) {
+    errno: -111,
+    code: 'ECONNREFUSED',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 5000
+  }
+}
+ GET /superadmin 500 in 1710ms (next.js: 1368ms, proxy.ts: 3ms, application-code: 339ms)
+⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+{"level":30,"time":1793527473660,"service":"devsync-api","req":{"id":"b47a072e-df65-42db-a197-7f0a8162a69a","method":"GET"},"requestId":"b47a072e-df65-42db-a197-7f0a8162a69a","res":{"statusCode":200},"responseTime":14,"msg":"request completed"}
+ GET / 200 in 97ms (next.js: 31ms, proxy.ts: 4ms, application-code: 62ms)
+ GET /login 200 in 170ms (next.js: 79ms, proxy.ts: 5ms, application-code: 87ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+ GET /login/SignIn_clerk_catchall_check_1793527477286 200 in 131ms (next.js: 51ms, proxy.ts: 5ms, application-code: 74ms)
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+ GET /signup 200 in 128ms (next.js: 49ms, proxy.ts: 11ms, application-code: 69ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+ GET /signup/SignUp_clerk_catchall_check_1793527479739 200 in 134ms (next.js: 49ms, proxy.ts: 5ms, application-code: 81ms)
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+ GET /sign-in 200 in 147ms (next.js: 51ms, proxy.ts: 3ms, application-code: 93ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+ GET /sign-in/SignIn_clerk_catchall_check_1793527481902 200 in 129ms (next.js: 42ms, proxy.ts: 10ms, application-code: 77ms)
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+ GET /sign-up 200 in 119ms (next.js: 53ms, proxy.ts: 3ms, application-code: 63ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+ GET /sign-up/SignUp_clerk_catchall_check_1793527483948 200 in 123ms (next.js: 42ms, proxy.ts: 4ms, application-code: 77ms)
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+ GET /dashboard 200 in 87ms (next.js: 20ms, proxy.ts: 14ms, application-code: 53ms)
+{"level":30,"time":1793527485685,"service":"devsync-api","req":{"id":"52f27f5b-30b3-4a9f-a9c4-90091c2a6522","method":"GET"},"requestId":"52f27f5b-30b3-4a9f-a9c4-90091c2a6522","res":{"statusCode":200},"responseTime":16,"msg":"request completed"}
+{"level":30,"time":1793527485698,"service":"devsync-api","req":{"id":"44d1cda3-966e-42a3-add3-3482593ea872","method":"GET"},"requestId":"44d1cda3-966e-42a3-add3-3482593ea872","res":{"statusCode":304},"responseTime":12,"msg":"request completed"}
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+ GET /settings/billing 200 in 87ms (next.js: 21ms, proxy.ts: 6ms, application-code: 60ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+ GET /workspace/devsync-sample 200 in 143ms (next.js: 81ms, proxy.ts: 7ms, application-code: 56ms)
+{"level":30,"time":1793527489378,"service":"devsync-api","req":{"id":"a3e4f8cd-5b68-4e5a-850a-ba158c00f837","method":"GET"},"requestId":"a3e4f8cd-5b68-4e5a-850a-ba158c00f837","res":{"statusCode":200},"responseTime":18,"msg":"request completed"}
+{"level":30,"time":1793527489397,"service":"devsync-api","req":{"id":"5d77197a-78b2-4e81-baea-d8e335fd8495","method":"GET"},"requestId":"5d77197a-78b2-4e81-baea-d8e335fd8495","res":{"statusCode":304},"responseTime":17,"msg":"request completed"}
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+{"level":30,"time":1793527489541,"service":"devsync-api","req":{"id":"d7466b6e-7b24-4799-9031-aaa0542ae893","method":"GET"},"requestId":"d7466b6e-7b24-4799-9031-aaa0542ae893","res":{"statusCode":200},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793527489551,"service":"devsync-api","req":{"id":"3ecf30f3-904b-4191-ac43-6b1fde0f6a1c","method":"GET"},"requestId":"3ecf30f3-904b-4191-ac43-6b1fde0f6a1c","res":{"statusCode":304},"responseTime":9,"msg":"request completed"}
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+ GET /workspace/devsync-sample/docs 200 in 146ms (next.js: 76ms, proxy.ts: 4ms, application-code: 65ms)
+{"level":30,"time":1793527491150,"service":"devsync-api","req":{"id":"4b76916e-7fc9-47be-91ba-cc4d1713178a","method":"GET"},"requestId":"4b76916e-7fc9-47be-91ba-cc4d1713178a","res":{"statusCode":200},"responseTime":17,"msg":"request completed"}
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+{"level":30,"time":1793527491166,"service":"devsync-api","req":{"id":"b8dde55f-818c-4c83-b08a-ecfbf08d57ba","method":"GET"},"requestId":"b8dde55f-818c-4c83-b08a-ecfbf08d57ba","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+Yjs was already imported. This breaks constructor checks and will lead to issues! - https://github.com/yjs/yjs/issues/438
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 301ms (next.js: 93ms, proxy.ts: 9ms, application-code: 200ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+{"level":30,"time":1793527506689,"service":"devsync-api","req":{"id":"933b252f-ba67-4e36-99b1-909fa8504c71","method":"GET"},"requestId":"933b252f-ba67-4e36-99b1-909fa8504c71","res":{"statusCode":200},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527506704,"service":"devsync-api","req":{"id":"c7fca498-18e7-4ab5-acab-ed4647d81b9a","method":"GET"},"requestId":"c7fca498-18e7-4ab5-acab-ed4647d81b9a","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+ GET /workspace/devsync-sample/kanban 200 in 146ms (next.js: 66ms, proxy.ts: 3ms, application-code: 77ms)
+{"level":30,"time":1793527508354,"service":"devsync-api","req":{"id":"8c3f1cee-cfd5-400d-8945-e5dee1065f20","method":"GET"},"requestId":"8c3f1cee-cfd5-400d-8945-e5dee1065f20","res":{"statusCode":200},"responseTime":18,"msg":"request completed"}
+{"level":30,"time":1793527508365,"service":"devsync-api","req":{"id":"dc2dac30-7f25-4daf-a214-e83503aef4d7","method":"GET"},"requestId":"dc2dac30-7f25-4daf-a214-e83503aef4d7","res":{"statusCode":304},"responseTime":10,"msg":"request completed"}
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+{"level":30,"time":1793527508411,"service":"devsync-api","req":{"id":"5d848fbc-2370-4043-ab93-265b71afd6d4","method":"GET"},"requestId":"5d848fbc-2370-4043-ab93-265b71afd6d4","res":{"statusCode":304},"responseTime":11,"msg":"request completed"}
+{"level":30,"time":1793527508424,"service":"devsync-api","req":{"id":"051214cf-7d53-439e-83dd-7d52940f5656","method":"GET"},"requestId":"051214cf-7d53-439e-83dd-7d52940f5656","res":{"statusCode":304},"responseTime":12,"msg":"request completed"}
+{"level":30,"time":1793527508440,"service":"devsync-api","req":{"id":"96ced794-f42e-4744-aa7a-287319956b0a","method":"GET"},"requestId":"96ced794-f42e-4744-aa7a-287319956b0a","res":{"statusCode":304},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793527508454,"service":"devsync-api","req":{"id":"e38ad367-57d7-4752-a1f6-07b568510a6a","method":"GET"},"requestId":"e38ad367-57d7-4752-a1f6-07b568510a6a","res":{"statusCode":304},"responseTime":12,"msg":"request completed"}
+{"level":30,"time":1793527508466,"service":"devsync-api","req":{"id":"8b87d618-153d-456a-bc8f-ae9ea248bb83","method":"GET"},"requestId":"8b87d618-153d-456a-bc8f-ae9ea248bb83","res":{"statusCode":304},"responseTime":11,"msg":"request completed"}
+{"level":30,"time":1793527508481,"service":"devsync-api","req":{"id":"0c614973-a76b-4038-8977-b4590ee3056b","method":"GET"},"requestId":"0c614973-a76b-4038-8977-b4590ee3056b","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527508496,"service":"devsync-api","req":{"id":"dedbd06e-ea8a-4d96-8a8e-8860ec9291ba","method":"GET"},"requestId":"dedbd06e-ea8a-4d96-8a8e-8860ec9291ba","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793527508512,"service":"devsync-api","req":{"id":"e951bb35-38a2-4fa5-bc41-e081c038b915","method":"GET"},"requestId":"e951bb35-38a2-4fa5-bc41-e081c038b915","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793527508527,"service":"devsync-api","req":{"id":"007d0c80-c66e-44cd-ac47-98eb8559650e","method":"GET"},"requestId":"007d0c80-c66e-44cd-ac47-98eb8559650e","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793527508542,"service":"devsync-api","req":{"id":"443613d2-6515-4b34-a200-1108cf89e68e","method":"GET"},"requestId":"443613d2-6515-4b34-a200-1108cf89e68e","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527508555,"service":"devsync-api","req":{"id":"cebd9d33-e036-4aeb-829f-0ad298310452","method":"GET"},"requestId":"cebd9d33-e036-4aeb-829f-0ad298310452","res":{"statusCode":304},"responseTime":12,"msg":"request completed"}
+{"level":30,"time":1793527508571,"service":"devsync-api","req":{"id":"2ee28b4a-0734-4df3-9a10-c36063b4fbb4","method":"GET"},"requestId":"2ee28b4a-0734-4df3-9a10-c36063b4fbb4","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793527508585,"service":"devsync-api","req":{"id":"797d4ab5-7e5b-4dc0-9a9c-068aef07b7d4","method":"GET"},"requestId":"797d4ab5-7e5b-4dc0-9a9c-068aef07b7d4","res":{"statusCode":304},"responseTime":12,"msg":"request completed"}
+{"level":30,"time":1793527508601,"service":"devsync-api","req":{"id":"7a7ffd1a-b165-439c-bde6-fec027609bf1","method":"GET"},"requestId":"7a7ffd1a-b165-439c-bde6-fec027609bf1","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793527508615,"service":"devsync-api","req":{"id":"0c36c3e9-f74e-4fcd-b9bd-b591dad019e7","method":"GET"},"requestId":"0c36c3e9-f74e-4fcd-b9bd-b591dad019e7","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527508629,"service":"devsync-api","req":{"id":"7239d5c0-63ba-4a0c-9061-1f34e0f27422","method":"GET"},"requestId":"7239d5c0-63ba-4a0c-9061-1f34e0f27422","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527508642,"service":"devsync-api","req":{"id":"b940d766-dd43-4e7b-8299-289ec5b4114b","method":"GET"},"requestId":"b940d766-dd43-4e7b-8299-289ec5b4114b","res":{"statusCode":304},"responseTime":12,"msg":"request completed"}
+{"level":30,"time":1793527508655,"service":"devsync-api","req":{"id":"4982a4b9-f7a6-4250-84ab-402e6ce8e67f","method":"GET"},"requestId":"4982a4b9-f7a6-4250-84ab-402e6ce8e67f","res":{"statusCode":304},"responseTime":12,"msg":"request completed"}
+{"level":30,"time":1793527508668,"service":"devsync-api","req":{"id":"90424402-d02a-4ea4-bcd5-9020757216fe","method":"GET"},"requestId":"90424402-d02a-4ea4-bcd5-9020757216fe","res":{"statusCode":304},"responseTime":12,"msg":"request completed"}
+{"level":30,"time":1793527508683,"service":"devsync-api","req":{"id":"9222ef27-b6c4-486f-a9b3-7053c93adcde","method":"GET"},"requestId":"9222ef27-b6c4-486f-a9b3-7053c93adcde","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793527508697,"service":"devsync-api","req":{"id":"f4d471a5-23ae-42ca-b752-5d5b8bd17e9a","method":"GET"},"requestId":"f4d471a5-23ae-42ca-b752-5d5b8bd17e9a","res":{"statusCode":304},"responseTime":12,"msg":"request completed"}
+{"level":30,"time":1793527508713,"service":"devsync-api","req":{"id":"cc05fb5c-cc1e-4f4a-838b-1d999bf97af9","method":"GET"},"requestId":"cc05fb5c-cc1e-4f4a-838b-1d999bf97af9","res":{"statusCode":304},"responseTime":12,"msg":"request completed"}
+{"level":30,"time":1793527508727,"service":"devsync-api","req":{"id":"b7a02505-7abf-4b55-a6aa-53be351e040c","method":"GET"},"requestId":"b7a02505-7abf-4b55-a6aa-53be351e040c","res":{"statusCode":304},"responseTime":12,"msg":"request completed"}
+{"level":30,"time":1793527508745,"service":"devsync-api","req":{"id":"70b9cc91-fa75-4b9f-99aa-51b357e99709","method":"GET"},"requestId":"70b9cc91-fa75-4b9f-99aa-51b357e99709","res":{"statusCode":304},"responseTime":16,"msg":"request completed"}
+{"level":30,"time":1793527508784,"service":"devsync-api","req":{"id":"3d55ed66-c5d6-430a-813a-4970c1f556a6","method":"GET"},"requestId":"3d55ed66-c5d6-430a-813a-4970c1f556a6","res":{"statusCode":304},"responseTime":36,"msg":"request completed"}
+{"level":30,"time":1793527508810,"service":"devsync-api","req":{"id":"c9c74915-6f4e-4e11-9de4-078cb412a980","method":"GET"},"requestId":"c9c74915-6f4e-4e11-9de4-078cb412a980","res":{"statusCode":304},"responseTime":12,"msg":"request completed"}
+{"level":30,"time":1793527508830,"service":"devsync-api","req":{"id":"57b4eb1d-6d50-4eeb-942a-0276b502e719","method":"GET"},"requestId":"57b4eb1d-6d50-4eeb-942a-0276b502e719","res":{"statusCode":304},"responseTime":16,"msg":"request completed"}
+{"level":30,"time":1793527508846,"service":"devsync-api","req":{"id":"c5b40413-3374-46a8-82a7-6f81609a99f3","method":"GET"},"requestId":"c5b40413-3374-46a8-82a7-6f81609a99f3","res":{"statusCode":304},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793527508863,"service":"devsync-api","req":{"id":"f7608cca-176c-4d8b-ba15-862588db3773","method":"GET"},"requestId":"f7608cca-176c-4d8b-ba15-862588db3773","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793527508882,"service":"devsync-api","req":{"id":"2929e1ff-74be-4607-b6db-c03e3dde2da7","method":"GET"},"requestId":"2929e1ff-74be-4607-b6db-c03e3dde2da7","res":{"statusCode":304},"responseTime":17,"msg":"request completed"}
+{"level":30,"time":1793527508903,"service":"devsync-api","req":{"id":"ff69f1cd-819b-4126-b0b3-845b8f7ca5ac","method":"GET"},"requestId":"ff69f1cd-819b-4126-b0b3-845b8f7ca5ac","res":{"statusCode":304},"responseTime":19,"msg":"request completed"}
+{"level":30,"time":1793527508926,"service":"devsync-api","req":{"id":"df89d113-779c-47f6-990d-2ad5d4b701ff","method":"GET"},"requestId":"df89d113-779c-47f6-990d-2ad5d4b701ff","res":{"statusCode":304},"responseTime":21,"msg":"request completed"}
+{"level":30,"time":1793527508947,"service":"devsync-api","req":{"id":"c904f97d-162f-492b-9c88-18cf148312fe","method":"GET"},"requestId":"c904f97d-162f-492b-9c88-18cf148312fe","res":{"statusCode":304},"responseTime":19,"msg":"request completed"}
+{"level":30,"time":1793527508968,"service":"devsync-api","req":{"id":"1a966da3-0702-4ab7-b2c6-93f8da05ae69","method":"GET"},"requestId":"1a966da3-0702-4ab7-b2c6-93f8da05ae69","res":{"statusCode":304},"responseTime":19,"msg":"request completed"}
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+{"level":30,"time":1793527508987,"service":"devsync-api","req":{"id":"2109cb31-7404-4cd0-8f8f-d8f0f1a2524b","method":"GET"},"requestId":"2109cb31-7404-4cd0-8f8f-d8f0f1a2524b","res":{"statusCode":304},"responseTime":17,"msg":"request completed"}
+ GET /workspace/devsync-sample/snippets 200 in 185ms (next.js: 92ms, proxy.ts: 5ms, application-code: 89ms)
+{"level":30,"time":1793527508995,"service":"devsync-api","req":{"id":"68e5e6b1-3bdd-47cc-980f-2ca659a0a5b8","method":"GET"},"requestId":"system","res":{"statusCode":null},"responseTime":6,"msg":"request aborted"}
+{"level":30,"time":1793527510042,"service":"devsync-api","req":{"id":"624f4ded-9dd5-4778-abba-a550574e268a","method":"GET"},"requestId":"624f4ded-9dd5-4778-abba-a550574e268a","res":{"statusCode":200},"responseTime":18,"msg":"request completed"}
+{"level":30,"time":1793527510054,"service":"devsync-api","req":{"id":"345e2fe8-4497-43f2-b92e-81cd0d95f5b1","method":"GET"},"requestId":"345e2fe8-4497-43f2-b92e-81cd0d95f5b1","res":{"statusCode":304},"responseTime":11,"msg":"request completed"}
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+ GET /workspace/devsync-sample/settings 200 in 138ms (next.js: 58ms, proxy.ts: 3ms, application-code: 76ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+⨯ Error: Clerk: auth() was called but Clerk can't detect usage of clerkMiddleware(). Please ensure the following:
+- Your middleware or proxy file exists at ./src/middleware.(ts|js) or proxy.(ts|js)
+- clerkMiddleware() is used in your Next.js middleware or proxy file.
+- Your middleware or proxy matcher is configured to match this route or page.
+- If you are using the src directory, make sure the middleware or proxy file is inside of it.
+
+If you've verified your configuration and are still seeing this error, there may be a runtime issue or a problem communicating with Clerk.
+
+For more details, see https://clerk.com/err/auth-middleware
+
+    at async SuperadminLayout (src/app/(superadmin)/layout.tsx:5:16)
+  3 |
+  4 | export default async function SuperadminLayout({ children }: Readonly<{ children: React.Rea...
+> 5 |   const user = await currentUser();
+    |                ^
+  6 |   if (user?.publicMetadata.systemRole !== 'SUPER_ADMIN') redirect('/dashboard');
+  7 |   return <main className="min-h-screen bg-background text-foreground"><div className="mx-au...
+  8 | } {
+  digest: '3243398307'
+}
+⨯ TypeError: fetch failed
+    at async loadMetrics (src/app/(superadmin)/superadmin/page.tsx:6:20)
+    at async SuperadminDashboard (src/app/(superadmin)/superadmin/page.tsx:12:19)
+  4 |
+  5 | async function loadMetrics(): Promise<Metrics> {
+> 6 |   const response = await fetch(`${process.env.BACKEND_URL || 'http://localhost:5000'}/api/s...
+    |                    ^
+  7 |   if (!response.ok) redirect('/dashboard');
+  8 |   return response.json() as Promise<Metrics>;
+  9 | } {
+  digest: '3349125238',
+  [cause]: Error: connect ECONNREFUSED 127.0.0.1:5000
+      at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:5000) {
+    errno: -111,
+    code: 'ECONNREFUSED',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 5000
+  }
+}
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+ GET /superadmin 500 in 109ms (next.js: 3ms, proxy.ts: 5ms, application-code: 101ms)
+{"target":"before","captured":25,"unavailable":[{"path":"/superadmin","width":1440,"error":"HTTP 500"},{"path":"/workspace/devsync-sample/docs","width":390,"error":"\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed"},{"path":"/superadmin","width":390,"error":"HTTP 500"}]}
+  ✓  1 testing/browser/capture.spec.ts:6:5 › capture public and authenticated page evidence at both requested widths (1.6m)
+
+  1 passed (1.6m)
+[?25h

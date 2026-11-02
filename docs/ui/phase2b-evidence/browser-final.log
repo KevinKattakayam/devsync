@@ -1,0 +1,921 @@
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": PostgreSQL database "devsync_e2e_browser", schema "public" at "localhost:32833"
+
+11 migrations found in prisma/migrations
+
+Applying migration `20260729000000_baseline`
+Applying migration `20260729180000_enterprise_platform`
+Applying migration `20260815000000_phase_3_tenant_rls`
+Applying migration `20260815001000_scim_provisioning`
+Applying migration `20260815002000_commercial_billing`
+Applying migration `20261031000000_tenant_indexes`
+Applying migration `20261031010000_crdt_journal`
+Applying migration `202611010001_canonical_revision`
+Applying migration `202611010002_embedding_authority`
+Applying migration `202611010003_atomic_create_idempotency`
+Applying migration `202611010004_workspace_invitations`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20260729000000_baseline/
+    └─ migration.sql
+  └─ 20260729180000_enterprise_platform/
+    └─ migration.sql
+  └─ 20260815000000_phase_3_tenant_rls/
+    └─ migration.sql
+  └─ 20260815001000_scim_provisioning/
+    └─ migration.sql
+  └─ 20260815002000_commercial_billing/
+    └─ migration.sql
+  └─ 20261031000000_tenant_indexes/
+    └─ migration.sql
+  └─ 20261031010000_crdt_journal/
+    └─ migration.sql
+  └─ 202611010001_canonical_revision/
+    └─ migration.sql
+  └─ 202611010002_embedding_authority/
+    └─ migration.sql
+  └─ 202611010003_atomic_create_idempotency/
+    └─ migration.sql
+  └─ 202611010004_workspace_invitations/
+    └─ migration.sql
+      
+All migrations have been successfully applied.
+Sample workspace seeded. Sign in with the supplied Clerk test identities.
+/home/kevin/devsync/.worktrees/frontend-fixture
+Isolated fixture server ready
+{"level":30,"time":1793546288782,"service":"devsync-api","req":{"id":"3eb7f4d0-2f38-4590-913d-e2578415b089","method":"GET"},"requestId":"3eb7f4d0-2f38-4590-913d-e2578415b089","res":{"statusCode":200},"responseTime":5,"msg":"request completed"}
+▲ Next.js 16.4.3 (webpack)
+- Local:         http://127.0.0.1:3001
+- Network:       http://127.0.0.1:3001
+✓ Ready in 439ms
+✓ Running next.config.ts took 34ms
+○ Compiling /instrumentation ...
+
+✓ Generated AGENTS.md for AI agents. Set `agentRules: false` in next.config to disable.
+○ Compiling /(auth)/login/[[...rest]]/page ...
+ GET /login 200 in 1264ms (next.js: 892ms, proxy.ts: 61ms, application-code: 311ms)
+
+Running 6 tests using 1 worker
+
+(node:229437) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1793546314847,"service":"devsync-api","req":{"id":"5faaf9bb-a1d0-4742-af68-42fa2d4f4523","method":"GET"},"requestId":"5faaf9bb-a1d0-4742-af68-42fa2d4f4523","res":{"statusCode":200},"responseTime":12,"msg":"request completed"}
+{"level":30,"time":1793546314889,"service":"devsync-api","req":{"id":"fd3af820-bcf3-47dd-9364-a790cb6f0b1d","method":"GET"},"requestId":"fd3af820-bcf3-47dd-9364-a790cb6f0b1d","res":{"statusCode":200},"responseTime":30,"msg":"request completed"}
+{"level":30,"time":1793546314927,"service":"devsync-api","req":{"id":"95ede60c-643c-4157-9f62-1002457abe5a","method":"POST"},"requestId":"95ede60c-643c-4157-9f62-1002457abe5a","res":{"statusCode":201},"responseTime":32,"msg":"request completed"}
+{"level":30,"time":1793546314952,"service":"devsync-api","req":{"id":"c6909ec5-16b1-48b5-8d41-9370d484b44a","method":"POST"},"requestId":"c6909ec5-16b1-48b5-8d41-9370d484b44a","res":{"statusCode":201},"responseTime":19,"msg":"request completed"}
+{"level":30,"time":1793546314999,"service":"devsync-api","req":{"id":"afdd4bda-7f2c-4254-be64-4a735bfc0963","method":"GET"},"requestId":"afdd4bda-7f2c-4254-be64-4a735bfc0963","res":{"statusCode":200},"responseTime":6,"msg":"request completed"}
+○ Compiling /(dashboard)/workspace/[id]/docs/[docId]/page ...
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 4.6s (next.js: 4.2s, proxy.ts: 9ms, application-code: 348ms)
+{"level":30,"time":1793546320851,"service":"devsync-api","req":{"id":"23c35705-b323-4339-b64e-7bae36560790","method":"GET"},"requestId":"23c35705-b323-4339-b64e-7bae36560790","res":{"statusCode":200},"responseTime":44,"msg":"request completed"}
+{"level":30,"time":1793546320863,"service":"devsync-api","req":{"id":"e939b283-3071-4557-837e-aa340da05fab","method":"GET"},"requestId":"e939b283-3071-4557-837e-aa340da05fab","res":{"statusCode":200},"responseTime":53,"msg":"request completed"}
+{"level":30,"time":1793546320886,"service":"devsync-api","req":{"id":"9614baa9-59c7-4eee-98d7-896e7e84fd13","method":"GET"},"requestId":"9614baa9-59c7-4eee-98d7-896e7e84fd13","res":{"statusCode":200},"responseTime":72,"msg":"request completed"}
+{"level":30,"time":1793546320900,"service":"devsync-api","req":{"id":"240d106d-f11d-47a6-abd5-fb356715d3bd","method":"GET"},"requestId":"240d106d-f11d-47a6-abd5-fb356715d3bd","res":{"statusCode":200},"responseTime":47,"msg":"request completed"}
+{"level":30,"time":1793546320914,"service":"devsync-api","req":{"id":"39a05049-04ab-4633-aa03-fe56d25ec3fe","method":"GET"},"requestId":"39a05049-04ab-4633-aa03-fe56d25ec3fe","res":{"statusCode":200},"responseTime":26,"msg":"request completed"}
+{"level":30,"time":1793546320916,"service":"devsync-api","req":{"id":"b855af04-8017-4f12-aa95-5453e9a0a31b","method":"GET"},"requestId":"b855af04-8017-4f12-aa95-5453e9a0a31b","res":{"statusCode":304},"responseTime":47,"msg":"request completed"}
+dark 1440 default: axe 0 violations, 1 incomplete
+{"level":30,"time":1793546321856,"service":"devsync-api","req":{"id":"1684ed6e-46fe-4752-9874-10b144c5aee5","method":"GET"},"requestId":"1684ed6e-46fe-4752-9874-10b144c5aee5","res":{"statusCode":200},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793546321858,"service":"devsync-api","req":{"id":"f6667c94-0bc5-4532-b20c-76a778154fd5","method":"GET"},"requestId":"f6667c94-0bc5-4532-b20c-76a778154fd5","res":{"statusCode":200},"responseTime":18,"msg":"request completed"}
+{"level":30,"time":1793546321858,"service":"devsync-api","req":{"id":"bf5e57e4-698b-4ce2-836c-51dedaf19a87","method":"GET"},"requestId":"bf5e57e4-698b-4ce2-836c-51dedaf19a87","res":{"statusCode":200},"responseTime":19,"msg":"request completed"}
+{"level":30,"time":1793546321865,"service":"devsync-api","req":{"id":"e67ef195-1ebb-4eaf-a433-cbd111093ae3","method":"GET"},"requestId":"e67ef195-1ebb-4eaf-a433-cbd111093ae3","res":{"statusCode":304},"responseTime":27,"msg":"request completed"}
+dark 1440 commands: axe 0 violations, 2 incomplete
+dark 1440 commands-empty: axe 0 violations, 1 incomplete
+{"level":30,"time":1793546322774,"service":"devsync-api","req":{"id":"ec3f8f60-c561-4603-9049-4ef5185b2ea5","method":"GET"},"requestId":"ec3f8f60-c561-4603-9049-4ef5185b2ea5","res":{"statusCode":304},"responseTime":10,"msg":"request completed"}
+{"level":30,"time":1793546322775,"service":"devsync-api","req":{"id":"05d21b7e-20ad-46fa-890c-236995115ab8","method":"GET"},"requestId":"05d21b7e-20ad-46fa-890c-236995115ab8","res":{"statusCode":304},"responseTime":12,"msg":"request completed"}
+{"level":30,"time":1793546322905,"service":"devsync-api","req":{"id":"f700e325-2b14-4fed-bc17-dc629ec4bba7","method":"PATCH"},"requestId":"f700e325-2b14-4fed-bc17-dc629ec4bba7","res":{"statusCode":200},"responseTime":16,"msg":"request completed"}
+dark 1440 help: axe 0 violations, 1 incomplete
+dark 1440 focus: axe 0 violations, 1 incomplete
+dark 1440 user-menu: axe 0 violations, 0 incomplete
+dark 1440 workspace-menu: axe 0 violations, 0 incomplete
+dark 1440 document-tree: axe 0 violations, 1 incomplete
+dark 1440 collapsed: axe 1 violations, 1 incomplete
+  ✘  1 testing/browser/shell.spec.ts:93:9 › dark 1440 shell states, keyboard access and visual baseline (10.3s)
+(node:230593) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1793546326064,"service":"devsync-api","req":{"id":"8ac5dde5-ce7d-4bff-8aab-5069a9e07cbc","method":"GET"},"requestId":"8ac5dde5-ce7d-4bff-8aab-5069a9e07cbc","res":{"statusCode":200},"responseTime":8,"msg":"request completed"}
+{"level":30,"time":1793546326085,"service":"devsync-api","req":{"id":"b96c80f6-c690-471a-b317-e02c007fa6ba","method":"GET"},"requestId":"b96c80f6-c690-471a-b317-e02c007fa6ba","res":{"statusCode":200},"responseTime":9,"msg":"request completed"}
+{"level":30,"time":1793546326148,"service":"devsync-api","req":{"id":"e9e4f89f-f3d2-4ca3-b21a-e246b27090bd","method":"GET"},"requestId":"e9e4f89f-f3d2-4ca3-b21a-e246b27090bd","res":{"statusCode":200},"responseTime":6,"msg":"request completed"}
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 117ms (next.js: 57ms, proxy.ts: 5ms, application-code: 55ms)
+{"level":30,"time":1793546327859,"service":"devsync-api","req":{"id":"82ec6317-74cb-447f-ac2e-27569919a78c","method":"GET"},"requestId":"82ec6317-74cb-447f-ac2e-27569919a78c","res":{"statusCode":200},"responseTime":17,"msg":"request completed"}
+{"level":30,"time":1793546327860,"service":"devsync-api","req":{"id":"1dbc165f-745a-48c9-a2b8-1f19ac3b439c","method":"GET"},"requestId":"1dbc165f-745a-48c9-a2b8-1f19ac3b439c","res":{"statusCode":200},"responseTime":22,"msg":"request completed"}
+{"level":30,"time":1793546327869,"service":"devsync-api","req":{"id":"09b7116f-c09e-451f-9465-e4a3d33a4abf","method":"GET"},"requestId":"09b7116f-c09e-451f-9465-e4a3d33a4abf","res":{"statusCode":200},"responseTime":30,"msg":"request completed"}
+{"level":30,"time":1793546327878,"service":"devsync-api","req":{"id":"353f833f-8f47-4b49-a9c8-18220967130d","method":"GET"},"requestId":"353f833f-8f47-4b49-a9c8-18220967130d","res":{"statusCode":304},"responseTime":17,"msg":"request completed"}
+{"level":30,"time":1793546327884,"service":"devsync-api","req":{"id":"73d296c0-b3e6-44d4-98cf-2ed4f0e72548","method":"GET"},"requestId":"73d296c0-b3e6-44d4-98cf-2ed4f0e72548","res":{"statusCode":304},"responseTime":20,"msg":"request completed"}
+{"level":30,"time":1793546327891,"service":"devsync-api","req":{"id":"207b320e-02a5-44c7-be7e-e83a667d11f3","method":"GET"},"requestId":"207b320e-02a5-44c7-be7e-e83a667d11f3","res":{"statusCode":304},"responseTime":19,"msg":"request completed"}
+dark 390 default: axe 0 violations, 1 incomplete
+dark 390 commands: axe 0 violations, 2 incomplete
+{"level":30,"time":1793546328811,"service":"devsync-api","req":{"id":"0da21d4b-0524-4c58-a6dc-023d22d9f9e6","method":"GET"},"requestId":"0da21d4b-0524-4c58-a6dc-023d22d9f9e6","res":{"statusCode":200},"responseTime":10,"msg":"request completed"}
+{"level":30,"time":1793546328814,"service":"devsync-api","req":{"id":"fff0b382-9d38-47c8-8e0c-1fbf0f843260","method":"GET"},"requestId":"fff0b382-9d38-47c8-8e0c-1fbf0f843260","res":{"statusCode":200},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793546328816,"service":"devsync-api","req":{"id":"2d1884c3-1f02-41e7-b750-4b818a7c7bdd","method":"GET"},"requestId":"2d1884c3-1f02-41e7-b750-4b818a7c7bdd","res":{"statusCode":200},"responseTime":16,"msg":"request completed"}
+{"level":30,"time":1793546328821,"service":"devsync-api","req":{"id":"589efee1-479d-4b05-b2db-f90832ac31f6","method":"GET"},"requestId":"589efee1-479d-4b05-b2db-f90832ac31f6","res":{"statusCode":304},"responseTime":22,"msg":"request completed"}
+dark 390 commands-empty: axe 0 violations, 1 incomplete
+{"level":30,"time":1793546329395,"service":"devsync-api","req":{"id":"86cb4e39-dc41-4db7-b7ce-1d3c4bec7bdb","method":"GET"},"requestId":"86cb4e39-dc41-4db7-b7ce-1d3c4bec7bdb","res":{"statusCode":304},"responseTime":10,"msg":"request completed"}
+{"level":30,"time":1793546329398,"service":"devsync-api","req":{"id":"e87f5d33-e567-4cdd-bed6-8780567e0720","method":"GET"},"requestId":"e87f5d33-e567-4cdd-bed6-8780567e0720","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793546329544,"service":"devsync-api","req":{"id":"5c4eb4f0-daf1-4045-b154-4b835c1553f7","method":"PATCH"},"requestId":"5c4eb4f0-daf1-4045-b154-4b835c1553f7","res":{"statusCode":200},"responseTime":16,"msg":"request completed"}
+dark 390 help: axe 0 violations, 1 incomplete
+dark 390 focus: axe 0 violations, 1 incomplete
+dark 390 user-menu: axe 0 violations, 0 incomplete
+dark 390 mobile-navigation: axe 0 violations, 2 incomplete
+dark 390 document-tree: axe 0 violations, 2 incomplete
+dark 390 workspace-menu: axe 0 violations, 0 incomplete
+dark 390 copilot: axe 0 violations, 2 incomplete
+  ✘  2 testing/browser/shell.spec.ts:93:9 › dark 390 shell states, keyboard access and visual baseline (5.9s)
+(node:231273) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1793546332725,"service":"devsync-api","req":{"id":"2585b477-e547-4c17-9a22-ae7844409b24","method":"GET"},"requestId":"2585b477-e547-4c17-9a22-ae7844409b24","res":{"statusCode":200},"responseTime":8,"msg":"request completed"}
+{"level":30,"time":1793546332743,"service":"devsync-api","req":{"id":"9e14ac0e-9509-4a3e-8772-a767fa23c27c","method":"GET"},"requestId":"9e14ac0e-9509-4a3e-8772-a767fa23c27c","res":{"statusCode":200},"responseTime":10,"msg":"request completed"}
+{"level":30,"time":1793546332800,"service":"devsync-api","req":{"id":"189ea5ef-1881-46f0-a67f-9a05045cb8b8","method":"GET"},"requestId":"189ea5ef-1881-46f0-a67f-9a05045cb8b8","res":{"statusCode":200},"responseTime":6,"msg":"request completed"}
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 122ms (next.js: 56ms, proxy.ts: 6ms, application-code: 60ms)
+{"level":30,"time":1793546334597,"service":"devsync-api","req":{"id":"54a5269f-909d-465c-afc1-b661e347f229","method":"GET"},"requestId":"54a5269f-909d-465c-afc1-b661e347f229","res":{"statusCode":200},"responseTime":23,"msg":"request completed"}
+{"level":30,"time":1793546334598,"service":"devsync-api","req":{"id":"35432059-cbb6-4c4b-a2a2-25b34e0540de","method":"GET"},"requestId":"35432059-cbb6-4c4b-a2a2-25b34e0540de","res":{"statusCode":200},"responseTime":19,"msg":"request completed"}
+{"level":30,"time":1793546334605,"service":"devsync-api","req":{"id":"723445a5-ed1f-4b30-b18d-b1177a57ca86","method":"GET"},"requestId":"723445a5-ed1f-4b30-b18d-b1177a57ca86","res":{"statusCode":200},"responseTime":28,"msg":"request completed"}
+{"level":30,"time":1793546334622,"service":"devsync-api","req":{"id":"ce04b04d-60eb-4ff7-ad27-01b82481bf42","method":"GET"},"requestId":"ce04b04d-60eb-4ff7-ad27-01b82481bf42","res":{"statusCode":304},"responseTime":20,"msg":"request completed"}
+{"level":30,"time":1793546334627,"service":"devsync-api","req":{"id":"31a38ee2-be96-4c59-88bd-153f74a89bba","method":"GET"},"requestId":"31a38ee2-be96-4c59-88bd-153f74a89bba","res":{"statusCode":304},"responseTime":27,"msg":"request completed"}
+{"level":30,"time":1793546334632,"service":"devsync-api","req":{"id":"03195c04-d731-43eb-b475-2b35a7fbc9fe","method":"GET"},"requestId":"03195c04-d731-43eb-b475-2b35a7fbc9fe","res":{"statusCode":304},"responseTime":25,"msg":"request completed"}
+light 1440 default: axe 0 violations, 1 incomplete
+light 1440 commands: axe 0 violations, 2 incomplete
+{"level":30,"time":1793546335747,"service":"devsync-api","req":{"id":"564bf986-9a22-4703-b7cf-91e4d8172c48","method":"GET"},"requestId":"564bf986-9a22-4703-b7cf-91e4d8172c48","res":{"statusCode":200},"responseTime":10,"msg":"request completed"}
+{"level":30,"time":1793546335750,"service":"devsync-api","req":{"id":"07154c63-60f6-4226-b01e-0c04fa79f90a","method":"GET"},"requestId":"07154c63-60f6-4226-b01e-0c04fa79f90a","res":{"statusCode":200},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793546335751,"service":"devsync-api","req":{"id":"dadfbe43-b76c-416f-b521-56db3f49ded6","method":"GET"},"requestId":"dadfbe43-b76c-416f-b521-56db3f49ded6","res":{"statusCode":200},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793546335754,"service":"devsync-api","req":{"id":"6fb18aaa-2ef0-4ee4-a653-0888e25dc5b2","method":"GET"},"requestId":"6fb18aaa-2ef0-4ee4-a653-0888e25dc5b2","res":{"statusCode":304},"responseTime":19,"msg":"request completed"}
+light 1440 commands-empty: axe 0 violations, 1 incomplete
+{"level":30,"time":1793546336560,"service":"devsync-api","req":{"id":"4cc24844-db15-4fb6-8651-df8cd473d8da","method":"GET"},"requestId":"4cc24844-db15-4fb6-8651-df8cd473d8da","res":{"statusCode":304},"responseTime":10,"msg":"request completed"}
+{"level":30,"time":1793546336563,"service":"devsync-api","req":{"id":"e4da067a-95d3-442d-ad25-bb479c994915","method":"GET"},"requestId":"e4da067a-95d3-442d-ad25-bb479c994915","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793546336700,"service":"devsync-api","req":{"id":"432b8d89-cdd1-4b90-b87b-bc277d4df7ec","method":"PATCH"},"requestId":"432b8d89-cdd1-4b90-b87b-bc277d4df7ec","res":{"statusCode":200},"responseTime":19,"msg":"request completed"}
+light 1440 help: axe 0 violations, 1 incomplete
+light 1440 focus: axe 0 violations, 1 incomplete
+light 1440 user-menu: axe 0 violations, 0 incomplete
+light 1440 workspace-menu: axe 0 violations, 0 incomplete
+light 1440 document-tree: axe 0 violations, 1 incomplete
+light 1440 collapsed: axe 1 violations, 1 incomplete
+  ✘  3 testing/browser/shell.spec.ts:93:9 › light 1440 shell states, keyboard access and visual baseline (6.5s)
+(node:232007) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1793546340095,"service":"devsync-api","req":{"id":"6b744ef2-60f5-41d5-849d-b64a3995e115","method":"GET"},"requestId":"6b744ef2-60f5-41d5-849d-b64a3995e115","res":{"statusCode":200},"responseTime":8,"msg":"request completed"}
+{"level":30,"time":1793546340115,"service":"devsync-api","req":{"id":"dd10c060-8898-4b59-a722-dc5e89b33ff6","method":"GET"},"requestId":"dd10c060-8898-4b59-a722-dc5e89b33ff6","res":{"statusCode":200},"responseTime":10,"msg":"request completed"}
+{"level":30,"time":1793546340173,"service":"devsync-api","req":{"id":"b8c23ad3-d658-4b20-b052-80c423ff9914","method":"GET"},"requestId":"b8c23ad3-d658-4b20-b052-80c423ff9914","res":{"statusCode":200},"responseTime":6,"msg":"request completed"}
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 137ms (next.js: 52ms, proxy.ts: 7ms, application-code: 78ms)
+{"level":30,"time":1793546341928,"service":"devsync-api","req":{"id":"a1b2ecd8-da2c-4155-930b-550f06138eb7","method":"GET"},"requestId":"a1b2ecd8-da2c-4155-930b-550f06138eb7","res":{"statusCode":200},"responseTime":22,"msg":"request completed"}
+{"level":30,"time":1793546341933,"service":"devsync-api","req":{"id":"ac92269e-de78-4fb4-9822-f946dcf0300a","method":"GET"},"requestId":"ac92269e-de78-4fb4-9822-f946dcf0300a","res":{"statusCode":200},"responseTime":21,"msg":"request completed"}
+{"level":30,"time":1793546341938,"service":"devsync-api","req":{"id":"18042866-3432-417f-9613-0caf5631659a","method":"GET"},"requestId":"18042866-3432-417f-9613-0caf5631659a","res":{"statusCode":200},"responseTime":29,"msg":"request completed"}
+{"level":30,"time":1793546341955,"service":"devsync-api","req":{"id":"3125475a-144e-47c1-ac12-19d0c50866a6","method":"GET"},"requestId":"3125475a-144e-47c1-ac12-19d0c50866a6","res":{"statusCode":304},"responseTime":25,"msg":"request completed"}
+{"level":30,"time":1793546341956,"service":"devsync-api","req":{"id":"1f22b83f-d37a-43ac-8dfa-268502d77278","method":"GET"},"requestId":"1f22b83f-d37a-43ac-8dfa-268502d77278","res":{"statusCode":304},"responseTime":21,"msg":"request completed"}
+{"level":30,"time":1793546341963,"service":"devsync-api","req":{"id":"84edbb93-3827-49c9-98ed-1f265cff83f3","method":"GET"},"requestId":"84edbb93-3827-49c9-98ed-1f265cff83f3","res":{"statusCode":304},"responseTime":22,"msg":"request completed"}
+light 390 default: axe 0 violations, 1 incomplete
+{"level":30,"time":1793546342847,"service":"devsync-api","req":{"id":"a4332e0e-3c9a-4e42-84a9-db7caf2643b4","method":"GET"},"requestId":"a4332e0e-3c9a-4e42-84a9-db7caf2643b4","res":{"statusCode":200},"responseTime":26,"msg":"request completed"}
+{"level":30,"time":1793546342853,"service":"devsync-api","req":{"id":"024a7178-f93b-48e2-854b-e546a588a7ed","method":"GET"},"requestId":"024a7178-f93b-48e2-854b-e546a588a7ed","res":{"statusCode":200},"responseTime":33,"msg":"request completed"}
+{"level":30,"time":1793546342863,"service":"devsync-api","req":{"id":"8cafb091-2926-4335-b8bd-ee584c2a258b","method":"GET"},"requestId":"8cafb091-2926-4335-b8bd-ee584c2a258b","res":{"statusCode":200},"responseTime":40,"msg":"request completed"}
+{"level":30,"time":1793546342864,"service":"devsync-api","req":{"id":"89409f6b-6041-45e3-ac36-c2b1cd463e67","method":"GET"},"requestId":"89409f6b-6041-45e3-ac36-c2b1cd463e67","res":{"statusCode":304},"responseTime":42,"msg":"request completed"}
+light 390 commands: axe 0 violations, 2 incomplete
+light 390 commands-empty: axe 0 violations, 1 incomplete
+{"level":30,"time":1793546343497,"service":"devsync-api","req":{"id":"9cf8002c-4fca-4de8-9144-c1d9efd7026c","method":"GET"},"requestId":"9cf8002c-4fca-4de8-9144-c1d9efd7026c","res":{"statusCode":304},"responseTime":10,"msg":"request completed"}
+{"level":30,"time":1793546343501,"service":"devsync-api","req":{"id":"9530c8b7-12b1-44b1-bde0-0820d691b9c2","method":"GET"},"requestId":"9530c8b7-12b1-44b1-bde0-0820d691b9c2","res":{"statusCode":304},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793546343639,"service":"devsync-api","req":{"id":"c855697a-34a6-4dce-a881-bb17ac4a9dd8","method":"PATCH"},"requestId":"c855697a-34a6-4dce-a881-bb17ac4a9dd8","res":{"statusCode":200},"responseTime":22,"msg":"request completed"}
+light 390 help: axe 0 violations, 1 incomplete
+light 390 focus: axe 0 violations, 1 incomplete
+light 390 user-menu: axe 0 violations, 0 incomplete
+light 390 mobile-navigation: axe 0 violations, 2 incomplete
+light 390 document-tree: axe 0 violations, 2 incomplete
+light 390 workspace-menu: axe 0 violations, 0 incomplete
+light 390 copilot: axe 0 violations, 2 incomplete
+  ✘  4 testing/browser/shell.spec.ts:93:9 › light 390 shell states, keyboard access and visual baseline (6.0s)
+(node:232694) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1793546346814,"service":"devsync-api","req":{"id":"d972663a-56b2-4076-b495-d99abd8dc0f1","method":"GET"},"requestId":"d972663a-56b2-4076-b495-d99abd8dc0f1","res":{"statusCode":200},"responseTime":6,"msg":"request completed"}
+{"level":30,"time":1793546346833,"service":"devsync-api","req":{"id":"617fbc0d-3c51-46cd-9a26-84baa9c2673c","method":"GET"},"requestId":"617fbc0d-3c51-46cd-9a26-84baa9c2673c","res":{"statusCode":200},"responseTime":12,"msg":"request completed"}
+{"level":30,"time":1793546346885,"service":"devsync-api","req":{"id":"e395d503-ad99-423f-ba14-5ba28364d8d2","method":"GET"},"requestId":"e395d503-ad99-423f-ba14-5ba28364d8d2","res":{"statusCode":200},"responseTime":6,"msg":"request completed"}
+ GET /dashboard 200 in 2.4s (next.js: 2.1s, proxy.ts: 6ms, application-code: 243ms)
+{"level":30,"time":1793546350494,"service":"devsync-api","req":{"id":"2795479e-44ff-47f1-94c8-6adabe606cfc","method":"GET"},"requestId":"2795479e-44ff-47f1-94c8-6adabe606cfc","res":{"statusCode":200},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793546350508,"service":"devsync-api","req":{"id":"cfd537bd-71ae-4fd7-a60d-4d79a76ab399","method":"GET"},"requestId":"cfd537bd-71ae-4fd7-a60d-4d79a76ab399","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793546350530,"service":"devsync-api","req":{"id":"81f805d8-1eae-49d8-bb5b-b2b6358a0088","method":"GET"},"requestId":"81f805d8-1eae-49d8-bb5b-b2b6358a0088","res":{"statusCode":304},"responseTime":18,"msg":"request completed"}
+{"level":30,"time":1793546350552,"service":"devsync-api","req":{"id":"d2ea103e-55f1-41ac-b04b-4a39a6b67fae","method":"GET"},"requestId":"d2ea103e-55f1-41ac-b04b-4a39a6b67fae","res":{"statusCode":304},"responseTime":21,"msg":"request completed"}
+ GET /dashboard 200 in 98ms (next.js: 15ms, proxy.ts: 12ms, application-code: 72ms)
+ GET /workspace/devsync-sample 200 in 2.6s (next.js: 2.4s, proxy.ts: 4ms, application-code: 152ms)
+{"level":30,"time":1793546354069,"service":"devsync-api","req":{"id":"697abfbe-5536-46cf-86cd-2bf846bfd8e2","method":"GET"},"requestId":"697abfbe-5536-46cf-86cd-2bf846bfd8e2","res":{"statusCode":200},"responseTime":17,"msg":"request completed"}
+{"level":30,"time":1793546354074,"service":"devsync-api","req":{"id":"7444abbe-c57f-46cf-81c9-ce2514ba8579","method":"GET"},"requestId":"7444abbe-c57f-46cf-81c9-ce2514ba8579","res":{"statusCode":304},"responseTime":21,"msg":"request completed"}
+{"level":30,"time":1793546354078,"service":"devsync-api","req":{"id":"4583b395-e233-4f33-a14c-65ccd2e1180d","method":"GET"},"requestId":"4583b395-e233-4f33-a14c-65ccd2e1180d","res":{"statusCode":200},"responseTime":20,"msg":"request completed"}
+{"level":30,"time":1793546354090,"service":"devsync-api","req":{"id":"81714c75-4a55-469d-a55b-2dfacdcec7e5","method":"GET"},"requestId":"81714c75-4a55-469d-a55b-2dfacdcec7e5","res":{"statusCode":304},"responseTime":19,"msg":"request completed"}
+{"level":30,"time":1793546354096,"service":"devsync-api","req":{"id":"42679481-23be-4a0b-b0d2-bb042c3b416f","method":"GET"},"requestId":"42679481-23be-4a0b-b0d2-bb042c3b416f","res":{"statusCode":304},"responseTime":17,"msg":"request completed"}
+{"level":30,"time":1793546354097,"service":"devsync-api","req":{"id":"3c7c5b89-5e1f-4125-9671-f22b46a07cc5","method":"GET"},"requestId":"3c7c5b89-5e1f-4125-9671-f22b46a07cc5","res":{"statusCode":304},"responseTime":22,"msg":"request completed"}
+  ✘  5 testing/browser/shell.spec.ts:222:5 › 360px route coverage and viewer commands retain read-only authority (7.4s)
+(node:233499) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1793546355004,"service":"devsync-api","req":{"id":"bbc4f313-6b99-47f6-9a5e-9c0705e850f4","method":"GET"},"requestId":"bbc4f313-6b99-47f6-9a5e-9c0705e850f4","res":{"statusCode":200},"responseTime":5,"msg":"request completed"}
+{"level":30,"time":1793546355022,"service":"devsync-api","req":{"id":"83dc1bbd-f4e8-44e5-bde9-3db1cddc37eb","method":"GET"},"requestId":"83dc1bbd-f4e8-44e5-bde9-3db1cddc37eb","res":{"statusCode":200},"responseTime":11,"msg":"request completed"}
+{"level":30,"time":1793546355073,"service":"devsync-api","req":{"id":"af9e5115-b8db-426a-bf80-fb75fdec4c08","method":"GET"},"requestId":"af9e5115-b8db-426a-bf80-fb75fdec4c08","res":{"statusCode":200},"responseTime":6,"msg":"request completed"}
+ GET /design-system 200 in 3.3s (next.js: 3.0s, proxy.ts: 3ms, application-code: 270ms)
+{"level":30,"time":1793546362284,"service":"devsync-api","req":{"id":"12cfca6a-5f1e-4e43-a07e-1cb0ead0f0be","method":"GET"},"requestId":"12cfca6a-5f1e-4e43-a07e-1cb0ead0f0be","res":{"statusCode":200},"responseTime":14,"msg":"request completed"}
+ GET /design-system 200 in 107ms (next.js: 5ms, proxy.ts: 4ms, application-code: 98ms)
+  ✓  6 testing/browser/shell.spec.ts:270:5 › review prior gallery incomplete items by focus, relationships and computed color (10.1s)
+
+
+  1) testing/browser/shell.spec.ts:93:9 › dark 1440 shell states, keyboard access and visual baseline 
+
+    Error: A snapshot doesn't exist at /home/kevin/devsync/backend/testing/browser/shell.spec.ts-snapshots/dark-1440-default-linux.png, writing actual.
+
+      144 |           ).toEqual([]);
+      145 |           if (pass === 'final')
+    > 146 |             await expect(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |             ^
+      147 |               animations: 'disabled',
+      148 |               mask: [page.locator('#route-content')],
+      149 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:146:13)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:156:9
+
+    Error: A snapshot doesn't exist at /home/kevin/devsync/backend/testing/browser/shell.spec.ts-snapshots/dark-1440-commands-linux.png, writing actual.
+
+      144 |           ).toEqual([]);
+      145 |           if (pass === 'final')
+    > 146 |             await expect(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |             ^
+      147 |               animations: 'disabled',
+      148 |               mask: [page.locator('#route-content')],
+      149 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:146:13)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:161:9
+
+    Error: A snapshot doesn't exist at /home/kevin/devsync/backend/testing/browser/shell.spec.ts-snapshots/dark-1440-commands-empty-linux.png, writing actual.
+
+      144 |           ).toEqual([]);
+      145 |           if (pass === 'final')
+    > 146 |             await expect(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |             ^
+      147 |               animations: 'disabled',
+      148 |               mask: [page.locator('#route-content')],
+      149 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:146:13)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:163:9
+
+    Error: A snapshot doesn't exist at /home/kevin/devsync/backend/testing/browser/shell.spec.ts-snapshots/dark-1440-help-linux.png, writing actual.
+
+      144 |           ).toEqual([]);
+      145 |           if (pass === 'final')
+    > 146 |             await expect(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |             ^
+      147 |               animations: 'disabled',
+      148 |               mask: [page.locator('#route-content')],
+      149 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:146:13)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:174:9
+
+    Error: A snapshot doesn't exist at /home/kevin/devsync/backend/testing/browser/shell.spec.ts-snapshots/dark-1440-focus-linux.png, writing actual.
+
+      144 |           ).toEqual([]);
+      145 |           if (pass === 'final')
+    > 146 |             await expect(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |             ^
+      147 |               animations: 'disabled',
+      148 |               mask: [page.locator('#route-content')],
+      149 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:146:13)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:182:9
+
+    Error: A snapshot doesn't exist at /home/kevin/devsync/backend/testing/browser/shell.spec.ts-snapshots/dark-1440-user-menu-linux.png, writing actual.
+
+      144 |           ).toEqual([]);
+      145 |           if (pass === 'final')
+    > 146 |             await expect(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |             ^
+      147 |               animations: 'disabled',
+      148 |               mask: [page.locator('#route-content')],
+      149 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:146:13)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:185:9
+
+    Error: A snapshot doesn't exist at /home/kevin/devsync/backend/testing/browser/shell.spec.ts-snapshots/dark-1440-workspace-menu-linux.png, writing actual.
+
+      144 |           ).toEqual([]);
+      145 |           if (pass === 'final')
+    > 146 |             await expect(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |             ^
+      147 |               animations: 'disabled',
+      148 |               mask: [page.locator('#route-content')],
+      149 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:146:13)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:189:11
+
+    Error: A snapshot doesn't exist at /home/kevin/devsync/backend/testing/browser/shell.spec.ts-snapshots/dark-1440-document-tree-linux.png, writing actual.
+
+      144 |           ).toEqual([]);
+      145 |           if (pass === 'final')
+    > 146 |             await expect(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |             ^
+      147 |               animations: 'disabled',
+      148 |               mask: [page.locator('#route-content')],
+      149 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:146:13)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:195:11
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "aria-prohibited-attr: .shell-connection",
+    + ]
+
+      142 |               (item) => `${item.id}: ${item.nodes.map((node) => node.target.join(' ')).join(', ')}`,
+      143 |             ),
+    > 144 |           ).toEqual([]);
+          |             ^
+      145 |           if (pass === 'final')
+      146 |             await expect(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+      147 |               animations: 'disabled',
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:144:13)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:198:11
+
+    attachment #1: dark-1440-default (image/png) ───────────────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/dark-1440-default-linux.png
+    Received: test-results/shell-dark-1440-shell-stat-778c6--access-and-visual-baseline/dark-1440-default-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: dark-1440-commands (image/png) ──────────────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/dark-1440-commands-linux.png
+    Received: test-results/shell-dark-1440-shell-stat-778c6--access-and-visual-baseline/dark-1440-commands-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #3: dark-1440-commands-empty (image/png) ────────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/dark-1440-commands-empty-linux.png
+    Received: test-results/shell-dark-1440-shell-stat-778c6--access-and-visual-baseline/dark-1440-commands-empty-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #4: dark-1440-help (image/png) ──────────────────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/dark-1440-help-linux.png
+    Received: test-results/shell-dark-1440-shell-stat-778c6--access-and-visual-baseline/dark-1440-help-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #5: dark-1440-focus (image/png) ─────────────────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/dark-1440-focus-linux.png
+    Received: test-results/shell-dark-1440-shell-stat-778c6--access-and-visual-baseline/dark-1440-focus-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #6: dark-1440-user-menu (image/png) ─────────────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/dark-1440-user-menu-linux.png
+    Received: test-results/shell-dark-1440-shell-stat-778c6--access-and-visual-baseline/dark-1440-user-menu-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #7: dark-1440-workspace-menu (image/png) ────────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/dark-1440-workspace-menu-linux.png
+    Received: test-results/shell-dark-1440-shell-stat-778c6--access-and-visual-baseline/dark-1440-workspace-menu-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #8: dark-1440-document-tree (image/png) ─────────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/dark-1440-document-tree-linux.png
+    Received: test-results/shell-dark-1440-shell-stat-778c6--access-and-visual-baseline/dark-1440-document-tree-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/shell-dark-1440-shell-stat-778c6--access-and-visual-baseline/error-context.md
+
+    Error Context: test-results/shell-dark-1440-shell-stat-778c6--access-and-visual-baseline/error-context.md
+
+  2) testing/browser/shell.spec.ts:93:9 › dark 390 shell states, keyboard access and visual baseline 
+
+    Error: A snapshot doesn't exist at /home/kevin/devsync/backend/testing/browser/shell.spec.ts-snapshots/dark-390-default-linux.png, writing actual.
+
+      144 |           ).toEqual([]);
+      145 |           if (pass === 'final')
+    > 146 |             await expect(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |             ^
+      147 |               animations: 'disabled',
+      148 |               mask: [page.locator('#route-content')],
+      149 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:146:13)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:156:9
+
+    Error: A snapshot doesn't exist at /home/kevin/devsync/backend/testing/browser/shell.spec.ts-snapshots/dark-390-commands-linux.png, writing actual.
+
+      144 |           ).toEqual([]);
+      145 |           if (pass === 'final')
+    > 146 |             await expect(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |             ^
+      147 |               animations: 'disabled',
+      148 |               mask: [page.locator('#route-content')],
+      149 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:146:13)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:161:9
+
+    Error: A snapshot doesn't exist at /home/kevin/devsync/backend/testing/browser/shell.spec.ts-snapshots/dark-390-commands-empty-linux.png, writing actual.
+
+      144 |           ).toEqual([]);
+      145 |           if (pass === 'final')
+    > 146 |             await expect(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |             ^
+      147 |               animations: 'disabled',
+      148 |               mask: [page.locator('#route-content')],
+      149 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:146:13)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:163:9
+
+    Error: A snapshot doesn't exist at /home/kevin/devsync/backend/testing/browser/shell.spec.ts-snapshots/dark-390-help-linux.png, writing actual.
+
+      144 |           ).toEqual([]);
+      145 |           if (pass === 'final')
+    > 146 |             await expect(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |             ^
+      147 |               animations: 'disabled',
+      148 |               mask: [page.locator('#route-content')],
+      149 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:146:13)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:174:9
+
+    Error: A snapshot doesn't exist at /home/kevin/devsync/backend/testing/browser/shell.spec.ts-snapshots/dark-390-focus-linux.png, writing actual.
+
+      144 |           ).toEqual([]);
+      145 |           if (pass === 'final')
+    > 146 |             await expect(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |             ^
+      147 |               animations: 'disabled',
+      148 |               mask: [page.locator('#route-content')],
+      149 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:146:13)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:182:9
+
+    Error: A snapshot doesn't exist at /home/kevin/devsync/backend/testing/browser/shell.spec.ts-snapshots/dark-390-user-menu-linux.png, writing actual.
+
+      144 |           ).toEqual([]);
+      145 |           if (pass === 'final')
+    > 146 |             await expect(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |             ^
+      147 |               animations: 'disabled',
+      148 |               mask: [page.locator('#route-content')],
+      149 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:146:13)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:185:9
+
+    Error: A snapshot doesn't exist at /home/kevin/devsync/backend/testing/browser/shell.spec.ts-snapshots/dark-390-mobile-navigation-linux.png, writing actual.
+
+      144 |           ).toEqual([]);
+      145 |           if (pass === 'final')
+    > 146 |             await expect(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |             ^
+      147 |               animations: 'disabled',
+      148 |               mask: [page.locator('#route-content')],
+      149 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:146:13)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:203:11
+
+    Error: A snapshot doesn't exist at /home/kevin/devsync/backend/testing/browser/shell.spec.ts-snapshots/dark-390-document-tree-linux.png, writing actual.
+
+      144 |           ).toEqual([]);
+      145 |           if (pass === 'final')
+    > 146 |             await expect(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |             ^
+      147 |               animations: 'disabled',
+      148 |               mask: [page.locator('#route-content')],
+      149 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:146:13)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:206:11
+
+    Error: A snapshot doesn't exist at /home/kevin/devsync/backend/testing/browser/shell.spec.ts-snapshots/dark-390-workspace-menu-linux.png, writing actual.
+
+      144 |           ).toEqual([]);
+      145 |           if (pass === 'final')
+    > 146 |             await expect(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |             ^
+      147 |               animations: 'disabled',
+      148 |               mask: [page.locator('#route-content')],
+      149 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:146:13)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:208:11
+
+    Error: A snapshot doesn't exist at /home/kevin/devsync/backend/testing/browser/shell.spec.ts-snapshots/dark-390-copilot-linux.png, writing actual.
+
+      144 |           ).toEqual([]);
+      145 |           if (pass === 'final')
+    > 146 |             await expect(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |             ^
+      147 |               animations: 'disabled',
+      148 |               mask: [page.locator('#route-content')],
+      149 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:146:13)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:214:9
+
+    attachment #1: dark-390-default (image/png) ────────────────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/dark-390-default-linux.png
+    Received: test-results/shell-dark-390-shell-state-40feb--access-and-visual-baseline/dark-390-default-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: dark-390-commands (image/png) ───────────────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/dark-390-commands-linux.png
+    Received: test-results/shell-dark-390-shell-state-40feb--access-and-visual-baseline/dark-390-commands-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #3: dark-390-commands-empty (image/png) ─────────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/dark-390-commands-empty-linux.png
+    Received: test-results/shell-dark-390-shell-state-40feb--access-and-visual-baseline/dark-390-commands-empty-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #4: dark-390-help (image/png) ───────────────────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/dark-390-help-linux.png
+    Received: test-results/shell-dark-390-shell-state-40feb--access-and-visual-baseline/dark-390-help-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #5: dark-390-focus (image/png) ──────────────────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/dark-390-focus-linux.png
+    Received: test-results/shell-dark-390-shell-state-40feb--access-and-visual-baseline/dark-390-focus-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #6: dark-390-user-menu (image/png) ──────────────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/dark-390-user-menu-linux.png
+    Received: test-results/shell-dark-390-shell-state-40feb--access-and-visual-baseline/dark-390-user-menu-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #7: dark-390-mobile-navigation (image/png) ──────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/dark-390-mobile-navigation-linux.png
+    Received: test-results/shell-dark-390-shell-state-40feb--access-and-visual-baseline/dark-390-mobile-navigation-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #8: dark-390-document-tree (image/png) ──────────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/dark-390-document-tree-linux.png
+    Received: test-results/shell-dark-390-shell-state-40feb--access-and-visual-baseline/dark-390-document-tree-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #9: dark-390-workspace-menu (image/png) ─────────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/dark-390-workspace-menu-linux.png
+    Received: test-results/shell-dark-390-shell-state-40feb--access-and-visual-baseline/dark-390-workspace-menu-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #10: dark-390-copilot (image/png) ───────────────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/dark-390-copilot-linux.png
+    Received: test-results/shell-dark-390-shell-state-40feb--access-and-visual-baseline/dark-390-copilot-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/shell-dark-390-shell-state-40feb--access-and-visual-baseline/error-context.md
+
+    Error Context: test-results/shell-dark-390-shell-state-40feb--access-and-visual-baseline/error-context.md
+
+  3) testing/browser/shell.spec.ts:93:9 › light 1440 shell states, keyboard access and visual baseline 
+
+    Error: A snapshot doesn't exist at /home/kevin/devsync/backend/testing/browser/shell.spec.ts-snapshots/light-1440-default-linux.png, writing actual.
+
+      144 |           ).toEqual([]);
+      145 |           if (pass === 'final')
+    > 146 |             await expect(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |             ^
+      147 |               animations: 'disabled',
+      148 |               mask: [page.locator('#route-content')],
+      149 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:146:13)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:156:9
+
+    Error: A snapshot doesn't exist at /home/kevin/devsync/backend/testing/browser/shell.spec.ts-snapshots/light-1440-commands-linux.png, writing actual.
+
+      144 |           ).toEqual([]);
+      145 |           if (pass === 'final')
+    > 146 |             await expect(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |             ^
+      147 |               animations: 'disabled',
+      148 |               mask: [page.locator('#route-content')],
+      149 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:146:13)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:161:9
+
+    Error: A snapshot doesn't exist at /home/kevin/devsync/backend/testing/browser/shell.spec.ts-snapshots/light-1440-commands-empty-linux.png, writing actual.
+
+      144 |           ).toEqual([]);
+      145 |           if (pass === 'final')
+    > 146 |             await expect(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |             ^
+      147 |               animations: 'disabled',
+      148 |               mask: [page.locator('#route-content')],
+      149 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:146:13)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:163:9
+
+    Error: A snapshot doesn't exist at /home/kevin/devsync/backend/testing/browser/shell.spec.ts-snapshots/light-1440-help-linux.png, writing actual.
+
+      144 |           ).toEqual([]);
+      145 |           if (pass === 'final')
+    > 146 |             await expect(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |             ^
+      147 |               animations: 'disabled',
+      148 |               mask: [page.locator('#route-content')],
+      149 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:146:13)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:174:9
+
+    Error: A snapshot doesn't exist at /home/kevin/devsync/backend/testing/browser/shell.spec.ts-snapshots/light-1440-focus-linux.png, writing actual.
+
+      144 |           ).toEqual([]);
+      145 |           if (pass === 'final')
+    > 146 |             await expect(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |             ^
+      147 |               animations: 'disabled',
+      148 |               mask: [page.locator('#route-content')],
+      149 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:146:13)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:182:9
+
+    Error: A snapshot doesn't exist at /home/kevin/devsync/backend/testing/browser/shell.spec.ts-snapshots/light-1440-user-menu-linux.png, writing actual.
+
+      144 |           ).toEqual([]);
+      145 |           if (pass === 'final')
+    > 146 |             await expect(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |             ^
+      147 |               animations: 'disabled',
+      148 |               mask: [page.locator('#route-content')],
+      149 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:146:13)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:185:9
+
+    Error: A snapshot doesn't exist at /home/kevin/devsync/backend/testing/browser/shell.spec.ts-snapshots/light-1440-workspace-menu-linux.png, writing actual.
+
+      144 |           ).toEqual([]);
+      145 |           if (pass === 'final')
+    > 146 |             await expect(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |             ^
+      147 |               animations: 'disabled',
+      148 |               mask: [page.locator('#route-content')],
+      149 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:146:13)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:189:11
+
+    Error: A snapshot doesn't exist at /home/kevin/devsync/backend/testing/browser/shell.spec.ts-snapshots/light-1440-document-tree-linux.png, writing actual.
+
+      144 |           ).toEqual([]);
+      145 |           if (pass === 'final')
+    > 146 |             await expect(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |             ^
+      147 |               animations: 'disabled',
+      148 |               mask: [page.locator('#route-content')],
+      149 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:146:13)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:195:11
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "aria-prohibited-attr: .shell-connection",
+    + ]
+
+      142 |               (item) => `${item.id}: ${item.nodes.map((node) => node.target.join(' ')).join(', ')}`,
+      143 |             ),
+    > 144 |           ).toEqual([]);
+          |             ^
+      145 |           if (pass === 'final')
+      146 |             await expect(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+      147 |               animations: 'disabled',
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:144:13)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:198:11
+
+    attachment #1: light-1440-default (image/png) ──────────────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/light-1440-default-linux.png
+    Received: test-results/shell-light-1440-shell-sta-4b595--access-and-visual-baseline/light-1440-default-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: light-1440-commands (image/png) ─────────────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/light-1440-commands-linux.png
+    Received: test-results/shell-light-1440-shell-sta-4b595--access-and-visual-baseline/light-1440-commands-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #3: light-1440-commands-empty (image/png) ───────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/light-1440-commands-empty-linux.png
+    Received: test-results/shell-light-1440-shell-sta-4b595--access-and-visual-baseline/light-1440-commands-empty-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #4: light-1440-help (image/png) ─────────────────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/light-1440-help-linux.png
+    Received: test-results/shell-light-1440-shell-sta-4b595--access-and-visual-baseline/light-1440-help-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #5: light-1440-focus (image/png) ────────────────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/light-1440-focus-linux.png
+    Received: test-results/shell-light-1440-shell-sta-4b595--access-and-visual-baseline/light-1440-focus-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #6: light-1440-user-menu (image/png) ────────────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/light-1440-user-menu-linux.png
+    Received: test-results/shell-light-1440-shell-sta-4b595--access-and-visual-baseline/light-1440-user-menu-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #7: light-1440-workspace-menu (image/png) ───────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/light-1440-workspace-menu-linux.png
+    Received: test-results/shell-light-1440-shell-sta-4b595--access-and-visual-baseline/light-1440-workspace-menu-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #8: light-1440-document-tree (image/png) ────────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/light-1440-document-tree-linux.png
+    Received: test-results/shell-light-1440-shell-sta-4b595--access-and-visual-baseline/light-1440-document-tree-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/shell-light-1440-shell-sta-4b595--access-and-visual-baseline/error-context.md
+
+    Error Context: test-results/shell-light-1440-shell-sta-4b595--access-and-visual-baseline/error-context.md
+
+  4) testing/browser/shell.spec.ts:93:9 › light 390 shell states, keyboard access and visual baseline 
+
+    Error: A snapshot doesn't exist at /home/kevin/devsync/backend/testing/browser/shell.spec.ts-snapshots/light-390-default-linux.png, writing actual.
+
+      144 |           ).toEqual([]);
+      145 |           if (pass === 'final')
+    > 146 |             await expect(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |             ^
+      147 |               animations: 'disabled',
+      148 |               mask: [page.locator('#route-content')],
+      149 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:146:13)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:156:9
+
+    Error: A snapshot doesn't exist at /home/kevin/devsync/backend/testing/browser/shell.spec.ts-snapshots/light-390-commands-linux.png, writing actual.
+
+      144 |           ).toEqual([]);
+      145 |           if (pass === 'final')
+    > 146 |             await expect(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |             ^
+      147 |               animations: 'disabled',
+      148 |               mask: [page.locator('#route-content')],
+      149 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:146:13)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:161:9
+
+    Error: A snapshot doesn't exist at /home/kevin/devsync/backend/testing/browser/shell.spec.ts-snapshots/light-390-commands-empty-linux.png, writing actual.
+
+      144 |           ).toEqual([]);
+      145 |           if (pass === 'final')
+    > 146 |             await expect(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |             ^
+      147 |               animations: 'disabled',
+      148 |               mask: [page.locator('#route-content')],
+      149 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:146:13)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:163:9
+
+    Error: A snapshot doesn't exist at /home/kevin/devsync/backend/testing/browser/shell.spec.ts-snapshots/light-390-help-linux.png, writing actual.
+
+      144 |           ).toEqual([]);
+      145 |           if (pass === 'final')
+    > 146 |             await expect(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |             ^
+      147 |               animations: 'disabled',
+      148 |               mask: [page.locator('#route-content')],
+      149 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:146:13)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:174:9
+
+    Error: A snapshot doesn't exist at /home/kevin/devsync/backend/testing/browser/shell.spec.ts-snapshots/light-390-focus-linux.png, writing actual.
+
+      144 |           ).toEqual([]);
+      145 |           if (pass === 'final')
+    > 146 |             await expect(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |             ^
+      147 |               animations: 'disabled',
+      148 |               mask: [page.locator('#route-content')],
+      149 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:146:13)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:182:9
+
+    Error: A snapshot doesn't exist at /home/kevin/devsync/backend/testing/browser/shell.spec.ts-snapshots/light-390-user-menu-linux.png, writing actual.
+
+      144 |           ).toEqual([]);
+      145 |           if (pass === 'final')
+    > 146 |             await expect(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |             ^
+      147 |               animations: 'disabled',
+      148 |               mask: [page.locator('#route-content')],
+      149 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:146:13)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:185:9
+
+    Error: A snapshot doesn't exist at /home/kevin/devsync/backend/testing/browser/shell.spec.ts-snapshots/light-390-mobile-navigation-linux.png, writing actual.
+
+      144 |           ).toEqual([]);
+      145 |           if (pass === 'final')
+    > 146 |             await expect(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |             ^
+      147 |               animations: 'disabled',
+      148 |               mask: [page.locator('#route-content')],
+      149 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:146:13)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:203:11
+
+    Error: A snapshot doesn't exist at /home/kevin/devsync/backend/testing/browser/shell.spec.ts-snapshots/light-390-document-tree-linux.png, writing actual.
+
+      144 |           ).toEqual([]);
+      145 |           if (pass === 'final')
+    > 146 |             await expect(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |             ^
+      147 |               animations: 'disabled',
+      148 |               mask: [page.locator('#route-content')],
+      149 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:146:13)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:206:11
+
+    Error: A snapshot doesn't exist at /home/kevin/devsync/backend/testing/browser/shell.spec.ts-snapshots/light-390-workspace-menu-linux.png, writing actual.
+
+      144 |           ).toEqual([]);
+      145 |           if (pass === 'final')
+    > 146 |             await expect(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |             ^
+      147 |               animations: 'disabled',
+      148 |               mask: [page.locator('#route-content')],
+      149 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:146:13)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:208:11
+
+    Error: A snapshot doesn't exist at /home/kevin/devsync/backend/testing/browser/shell.spec.ts-snapshots/light-390-copilot-linux.png, writing actual.
+
+      144 |           ).toEqual([]);
+      145 |           if (pass === 'final')
+    > 146 |             await expect(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
+          |             ^
+      147 |               animations: 'disabled',
+      148 |               mask: [page.locator('#route-content')],
+      149 |               maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+        at capture (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:146:13)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:214:9
+
+    attachment #1: light-390-default (image/png) ───────────────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/light-390-default-linux.png
+    Received: test-results/shell-light-390-shell-stat-11d6d--access-and-visual-baseline/light-390-default-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: light-390-commands (image/png) ──────────────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/light-390-commands-linux.png
+    Received: test-results/shell-light-390-shell-stat-11d6d--access-and-visual-baseline/light-390-commands-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #3: light-390-commands-empty (image/png) ────────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/light-390-commands-empty-linux.png
+    Received: test-results/shell-light-390-shell-stat-11d6d--access-and-visual-baseline/light-390-commands-empty-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #4: light-390-help (image/png) ──────────────────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/light-390-help-linux.png
+    Received: test-results/shell-light-390-shell-stat-11d6d--access-and-visual-baseline/light-390-help-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #5: light-390-focus (image/png) ─────────────────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/light-390-focus-linux.png
+    Received: test-results/shell-light-390-shell-stat-11d6d--access-and-visual-baseline/light-390-focus-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #6: light-390-user-menu (image/png) ─────────────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/light-390-user-menu-linux.png
+    Received: test-results/shell-light-390-shell-stat-11d6d--access-and-visual-baseline/light-390-user-menu-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #7: light-390-mobile-navigation (image/png) ─────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/light-390-mobile-navigation-linux.png
+    Received: test-results/shell-light-390-shell-stat-11d6d--access-and-visual-baseline/light-390-mobile-navigation-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #8: light-390-document-tree (image/png) ─────────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/light-390-document-tree-linux.png
+    Received: test-results/shell-light-390-shell-stat-11d6d--access-and-visual-baseline/light-390-document-tree-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #9: light-390-workspace-menu (image/png) ────────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/light-390-workspace-menu-linux.png
+    Received: test-results/shell-light-390-shell-stat-11d6d--access-and-visual-baseline/light-390-workspace-menu-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #10: light-390-copilot (image/png) ──────────────────────────────────────────────────
+    Expected: testing/browser/shell.spec.ts-snapshots/light-390-copilot-linux.png
+    Received: test-results/shell-light-390-shell-stat-11d6d--access-and-visual-baseline/light-390-copilot-actual.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/shell-light-390-shell-stat-11d6d--access-and-visual-baseline/error-context.md
+
+    Error Context: test-results/shell-light-390-shell-stat-11d6d--access-and-visual-baseline/error-context.md
+
+  5) testing/browser/shell.spec.ts:222:5 › 360px route coverage and viewer commands retain read-only authority 
+
+    Error: Horizontal overflow on http://127.0.0.1:3001/workspace/devsync-sample
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 361
+    Received:    491
+
+      84 |   expect(bounds.document).toBeLessThanOrEqual(bounds.viewport);
+      85 |   if (bounds.main && bounds.scroll)
+    > 86 |     expect(bounds.scroll, `Horizontal overflow on ${page.url()}`).toBeLessThanOrEqual(
+         |                                                                   ^
+      87 |       bounds.main + 1,
+      88 |     );
+      89 |   return bounds;
+        at noPageOverflow (/home/kevin/devsync/backend/testing/browser/shell.spec.ts:86:67)
+        at /home/kevin/devsync/backend/testing/browser/shell.spec.ts:245:22
+
+    Error Context: test-results/shell-360px-route-coverage-95b00--retain-read-only-authority/error-context.md
+
+    Error Context: test-results/shell-360px-route-coverage-95b00--retain-read-only-authority/error-context.md
+
+  5 failed
+    testing/browser/shell.spec.ts:93:9 › dark 1440 shell states, keyboard access and visual baseline 
+    testing/browser/shell.spec.ts:93:9 › dark 390 shell states, keyboard access and visual baseline 
+    testing/browser/shell.spec.ts:93:9 › light 1440 shell states, keyboard access and visual baseline 
+    testing/browser/shell.spec.ts:93:9 › light 390 shell states, keyboard access and visual baseline 
+    testing/browser/shell.spec.ts:222:5 › 360px route coverage and viewer commands retain read-only authority 
+  1 passed (51.6s)
+[?25h
+Browser orchestration command exited 1

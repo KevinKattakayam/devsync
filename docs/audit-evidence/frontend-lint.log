@@ -1,0 +1,887 @@
+
+> frontend@0.1.0 lint
+> eslint
+
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/dashboard/page.tsx
+   9:34  warning  'Users' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       @typescript-eslint/no-unused-vars
+   9:62  warning  'Sparkles' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @typescript-eslint/no-unused-vars
+   9:72  warning  'TrendingUp' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  @typescript-eslint/no-unused-vars
+  20:21  error    Error: Cannot access variable before it is declared
+
+`loadWorkspaces` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/dashboard/page.tsx:20:21
+  18 |   const [creating, setCreating] = useState(false);
+  19 |
+> 20 |   useEffect(() => { loadWorkspaces(); }, []);
+     |                     ^^^^^^^^^^^^^^ `loadWorkspaces` accessed before it is declared
+  21 |
+  22 |   const loadWorkspaces = async () => {
+  23 |     try { const { data } = await workspaceApi.list(); setWorkspaces(data); }
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/dashboard/page.tsx:22:3
+  20 |   useEffect(() => { loadWorkspaces(); }, []);
+  21 |
+> 22 |   const loadWorkspaces = async () => {
+     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 23 |     try { const { data } = await workspaceApi.list(); setWorkspaces(data); }
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 24 |     catch { toast.error("Failed to load workspaces"); }
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 25 |     finally { setIsLoading(false); }
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 26 |   };
+     | ^^^^^ `loadWorkspaces` is declared here
+  27 |
+  28 |   const createWorkspace = async (e: React.FormEvent) => {
+  29 |     e.preventDefault();  react-hooks/immutability
+  38:19  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-explicit-any
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/layout.tsx
+  11:11  warning  'User' is defined but never used                  @typescript-eslint/no-unused-vars
+  11:32  warning  'Sparkles' is defined but never used              @typescript-eslint/no-unused-vars
+  20:24  warning  'onlineUsers' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/settings/billing/page.tsx
+  4:43  warning  'Shield' is defined but never used  @typescript-eslint/no-unused-vars
+  4:51  warning  'Cpu' is defined but never used     @typescript-eslint/no-unused-vars
+  4:56  warning  'Users' is defined but never used   @typescript-eslint/no-unused-vars
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/workspace/[id]/docs/[docId]/page.tsx
+   19:10  warning  'useSyncHealthStore' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @typescript-eslint/no-unused-vars
+   24:43  warning  'LinkIcon' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-unused-vars
+   26:30  warning  'FileCheck' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             @typescript-eslint/no-unused-vars
+   48:9   error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-explicit-any
+   49:13  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-explicit-any
+   54:26  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-explicit-any
+  125:44  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-explicit-any
+  177:21  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-explicit-any
+  213:61  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-explicit-any
+  228:12  error    Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/workspace/[id]/docs/[docId]/page.tsx:228:12
+  226 |       {editor && (
+  227 |         <div className="glass-card px-2 py-1.5 mb-4 flex items-center gap-0.5 flex-wrap sticky top-0 z-10">
+> 228 |           <ToolBtn onClick={() => editor.chain().focus().toggleBold().run()} active={editor.isActive('bold')} title="Bold"><Bold className="w-4 h-4" /></ToolBtn>
+      |            ^^^^^^^ This component is created during render
+  229 |           <ToolBtn onClick={() => editor.chain().focus().toggleItalic().run()} active={editor.isActive('italic')} title="Italic"><Italic className="w-4 h-4" /></ToolBtn>
+  230 |           <ToolBtn onClick={() => editor.chain().focus().toggleStrike().run()} active={editor.isActive('strike')} title="Strike"><Strikethrough className="w-4 h-4" /></ToolBtn>
+  231 |           <ToolBtn onClick={() => editor.chain().focus().toggleCode().run()} active={editor.isActive('code')} title="Code"><Code className="w-4 h-4" /></ToolBtn>
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/workspace/[id]/docs/[docId]/page.tsx:213:19
+  211 |   };
+  212 |
+> 213 |   const ToolBtn = ({ onClick, active, children, title: t }: any) => (
+      |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 214 |     <button
+      | ^^^^^^^^^^^
+> 215 |       onMouseDown={(e) => e.preventDefault()} // Prevent stealing focus / selection from editor
+      | ^^^^^^^^^^^
+> 216 |       onClick={onClick}
+      | ^^^^^^^^^^^
+> 217 |       title={t}
+      | ^^^^^^^^^^^
+> 218 |       className={`w-8 h-8 rounded flex items-center justify-center transition-colors ${active ? 'bg-primary/20 text-primary' : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'}`}>
+      | ^^^^^^^^^^^
+> 219 |       {children}
+      | ^^^^^^^^^^^
+> 220 |     </button>
+      | ^^^^^^^^^^^
+> 221 |   );
+      | ^^^^ The component is created during render here
+  222 |
+  223 |   return (
+  224 |     <>                                                                                                                                                                                                                          react-hooks/static-components
+  229:12  error    Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/workspace/[id]/docs/[docId]/page.tsx:229:12
+  227 |         <div className="glass-card px-2 py-1.5 mb-4 flex items-center gap-0.5 flex-wrap sticky top-0 z-10">
+  228 |           <ToolBtn onClick={() => editor.chain().focus().toggleBold().run()} active={editor.isActive('bold')} title="Bold"><Bold className="w-4 h-4" /></ToolBtn>
+> 229 |           <ToolBtn onClick={() => editor.chain().focus().toggleItalic().run()} active={editor.isActive('italic')} title="Italic"><Italic className="w-4 h-4" /></ToolBtn>
+      |            ^^^^^^^ This component is created during render
+  230 |           <ToolBtn onClick={() => editor.chain().focus().toggleStrike().run()} active={editor.isActive('strike')} title="Strike"><Strikethrough className="w-4 h-4" /></ToolBtn>
+  231 |           <ToolBtn onClick={() => editor.chain().focus().toggleCode().run()} active={editor.isActive('code')} title="Code"><Code className="w-4 h-4" /></ToolBtn>
+  232 |           <div className="w-px h-5 bg-border mx-1" />
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/workspace/[id]/docs/[docId]/page.tsx:213:19
+  211 |   };
+  212 |
+> 213 |   const ToolBtn = ({ onClick, active, children, title: t }: any) => (
+      |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 214 |     <button
+      | ^^^^^^^^^^^
+> 215 |       onMouseDown={(e) => e.preventDefault()} // Prevent stealing focus / selection from editor
+      | ^^^^^^^^^^^
+> 216 |       onClick={onClick}
+      | ^^^^^^^^^^^
+> 217 |       title={t}
+      | ^^^^^^^^^^^
+> 218 |       className={`w-8 h-8 rounded flex items-center justify-center transition-colors ${active ? 'bg-primary/20 text-primary' : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'}`}>
+      | ^^^^^^^^^^^
+> 219 |       {children}
+      | ^^^^^^^^^^^
+> 220 |     </button>
+      | ^^^^^^^^^^^
+> 221 |   );
+      | ^^^^ The component is created during render here
+  222 |
+  223 |   return (
+  224 |     <>                                                                                                                                                                                       react-hooks/static-components
+  230:12  error    Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/workspace/[id]/docs/[docId]/page.tsx:230:12
+  228 |           <ToolBtn onClick={() => editor.chain().focus().toggleBold().run()} active={editor.isActive('bold')} title="Bold"><Bold className="w-4 h-4" /></ToolBtn>
+  229 |           <ToolBtn onClick={() => editor.chain().focus().toggleItalic().run()} active={editor.isActive('italic')} title="Italic"><Italic className="w-4 h-4" /></ToolBtn>
+> 230 |           <ToolBtn onClick={() => editor.chain().focus().toggleStrike().run()} active={editor.isActive('strike')} title="Strike"><Strikethrough className="w-4 h-4" /></ToolBtn>
+      |            ^^^^^^^ This component is created during render
+  231 |           <ToolBtn onClick={() => editor.chain().focus().toggleCode().run()} active={editor.isActive('code')} title="Code"><Code className="w-4 h-4" /></ToolBtn>
+  232 |           <div className="w-px h-5 bg-border mx-1" />
+  233 |           <ToolBtn onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()} active={editor.isActive('heading', { level: 1 })} title="H1"><Heading1 className="w-4 h-4" /></ToolBtn>
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/workspace/[id]/docs/[docId]/page.tsx:213:19
+  211 |   };
+  212 |
+> 213 |   const ToolBtn = ({ onClick, active, children, title: t }: any) => (
+      |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 214 |     <button
+      | ^^^^^^^^^^^
+> 215 |       onMouseDown={(e) => e.preventDefault()} // Prevent stealing focus / selection from editor
+      | ^^^^^^^^^^^
+> 216 |       onClick={onClick}
+      | ^^^^^^^^^^^
+> 217 |       title={t}
+      | ^^^^^^^^^^^
+> 218 |       className={`w-8 h-8 rounded flex items-center justify-center transition-colors ${active ? 'bg-primary/20 text-primary' : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'}`}>
+      | ^^^^^^^^^^^
+> 219 |       {children}
+      | ^^^^^^^^^^^
+> 220 |     </button>
+      | ^^^^^^^^^^^
+> 221 |   );
+      | ^^^^ The component is created during render here
+  222 |
+  223 |   return (
+  224 |     <>                                                                                               react-hooks/static-components
+  231:12  error    Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/workspace/[id]/docs/[docId]/page.tsx:231:12
+  229 |           <ToolBtn onClick={() => editor.chain().focus().toggleItalic().run()} active={editor.isActive('italic')} title="Italic"><Italic className="w-4 h-4" /></ToolBtn>
+  230 |           <ToolBtn onClick={() => editor.chain().focus().toggleStrike().run()} active={editor.isActive('strike')} title="Strike"><Strikethrough className="w-4 h-4" /></ToolBtn>
+> 231 |           <ToolBtn onClick={() => editor.chain().focus().toggleCode().run()} active={editor.isActive('code')} title="Code"><Code className="w-4 h-4" /></ToolBtn>
+      |            ^^^^^^^ This component is created during render
+  232 |           <div className="w-px h-5 bg-border mx-1" />
+  233 |           <ToolBtn onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()} active={editor.isActive('heading', { level: 1 })} title="H1"><Heading1 className="w-4 h-4" /></ToolBtn>
+  234 |           <ToolBtn onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()} active={editor.isActive('heading', { level: 2 })} title="H2"><Heading2 className="w-4 h-4" /></ToolBtn>
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/workspace/[id]/docs/[docId]/page.tsx:213:19
+  211 |   };
+  212 |
+> 213 |   const ToolBtn = ({ onClick, active, children, title: t }: any) => (
+      |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 214 |     <button
+      | ^^^^^^^^^^^
+> 215 |       onMouseDown={(e) => e.preventDefault()} // Prevent stealing focus / selection from editor
+      | ^^^^^^^^^^^
+> 216 |       onClick={onClick}
+      | ^^^^^^^^^^^
+> 217 |       title={t}
+      | ^^^^^^^^^^^
+> 218 |       className={`w-8 h-8 rounded flex items-center justify-center transition-colors ${active ? 'bg-primary/20 text-primary' : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'}`}>
+      | ^^^^^^^^^^^
+> 219 |       {children}
+      | ^^^^^^^^^^^
+> 220 |     </button>
+      | ^^^^^^^^^^^
+> 221 |   );
+      | ^^^^ The component is created during render here
+  222 |
+  223 |   return (
+  224 |     <>                                                             react-hooks/static-components
+  233:12  error    Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/workspace/[id]/docs/[docId]/page.tsx:233:12
+  231 |           <ToolBtn onClick={() => editor.chain().focus().toggleCode().run()} active={editor.isActive('code')} title="Code"><Code className="w-4 h-4" /></ToolBtn>
+  232 |           <div className="w-px h-5 bg-border mx-1" />
+> 233 |           <ToolBtn onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()} active={editor.isActive('heading', { level: 1 })} title="H1"><Heading1 className="w-4 h-4" /></ToolBtn>
+      |            ^^^^^^^ This component is created during render
+  234 |           <ToolBtn onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()} active={editor.isActive('heading', { level: 2 })} title="H2"><Heading2 className="w-4 h-4" /></ToolBtn>
+  235 |           <ToolBtn onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()} active={editor.isActive('heading', { level: 3 })} title="H3"><Heading3 className="w-4 h-4" /></ToolBtn>
+  236 |           <div className="w-px h-5 bg-border mx-1" />
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/workspace/[id]/docs/[docId]/page.tsx:213:19
+  211 |   };
+  212 |
+> 213 |   const ToolBtn = ({ onClick, active, children, title: t }: any) => (
+      |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 214 |     <button
+      | ^^^^^^^^^^^
+> 215 |       onMouseDown={(e) => e.preventDefault()} // Prevent stealing focus / selection from editor
+      | ^^^^^^^^^^^
+> 216 |       onClick={onClick}
+      | ^^^^^^^^^^^
+> 217 |       title={t}
+      | ^^^^^^^^^^^
+> 218 |       className={`w-8 h-8 rounded flex items-center justify-center transition-colors ${active ? 'bg-primary/20 text-primary' : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'}`}>
+      | ^^^^^^^^^^^
+> 219 |       {children}
+      | ^^^^^^^^^^^
+> 220 |     </button>
+      | ^^^^^^^^^^^
+> 221 |   );
+      | ^^^^ The component is created during render here
+  222 |
+  223 |   return (
+  224 |     <>                                                                                                                                                              react-hooks/static-components
+  234:12  error    Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/workspace/[id]/docs/[docId]/page.tsx:234:12
+  232 |           <div className="w-px h-5 bg-border mx-1" />
+  233 |           <ToolBtn onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()} active={editor.isActive('heading', { level: 1 })} title="H1"><Heading1 className="w-4 h-4" /></ToolBtn>
+> 234 |           <ToolBtn onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()} active={editor.isActive('heading', { level: 2 })} title="H2"><Heading2 className="w-4 h-4" /></ToolBtn>
+      |            ^^^^^^^ This component is created during render
+  235 |           <ToolBtn onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()} active={editor.isActive('heading', { level: 3 })} title="H3"><Heading3 className="w-4 h-4" /></ToolBtn>
+  236 |           <div className="w-px h-5 bg-border mx-1" />
+  237 |           <ToolBtn onClick={() => editor.chain().focus().toggleBulletList().run()} active={editor.isActive('bulletList')} title="Bullet List"><List className="w-4 h-4" /></ToolBtn>
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/workspace/[id]/docs/[docId]/page.tsx:213:19
+  211 |   };
+  212 |
+> 213 |   const ToolBtn = ({ onClick, active, children, title: t }: any) => (
+      |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 214 |     <button
+      | ^^^^^^^^^^^
+> 215 |       onMouseDown={(e) => e.preventDefault()} // Prevent stealing focus / selection from editor
+      | ^^^^^^^^^^^
+> 216 |       onClick={onClick}
+      | ^^^^^^^^^^^
+> 217 |       title={t}
+      | ^^^^^^^^^^^
+> 218 |       className={`w-8 h-8 rounded flex items-center justify-center transition-colors ${active ? 'bg-primary/20 text-primary' : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'}`}>
+      | ^^^^^^^^^^^
+> 219 |       {children}
+      | ^^^^^^^^^^^
+> 220 |     </button>
+      | ^^^^^^^^^^^
+> 221 |   );
+      | ^^^^ The component is created during render here
+  222 |
+  223 |   return (
+  224 |     <>                                                                                                                                           react-hooks/static-components
+  235:12  error    Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/workspace/[id]/docs/[docId]/page.tsx:235:12
+  233 |           <ToolBtn onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()} active={editor.isActive('heading', { level: 1 })} title="H1"><Heading1 className="w-4 h-4" /></ToolBtn>
+  234 |           <ToolBtn onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()} active={editor.isActive('heading', { level: 2 })} title="H2"><Heading2 className="w-4 h-4" /></ToolBtn>
+> 235 |           <ToolBtn onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()} active={editor.isActive('heading', { level: 3 })} title="H3"><Heading3 className="w-4 h-4" /></ToolBtn>
+      |            ^^^^^^^ This component is created during render
+  236 |           <div className="w-px h-5 bg-border mx-1" />
+  237 |           <ToolBtn onClick={() => editor.chain().focus().toggleBulletList().run()} active={editor.isActive('bulletList')} title="Bullet List"><List className="w-4 h-4" /></ToolBtn>
+  238 |           <ToolBtn onClick={() => editor.chain().focus().toggleOrderedList().run()} active={editor.isActive('orderedList')} title="Ordered List"><ListOrdered className="w-4 h-4" /></ToolBtn>
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/workspace/[id]/docs/[docId]/page.tsx:213:19
+  211 |   };
+  212 |
+> 213 |   const ToolBtn = ({ onClick, active, children, title: t }: any) => (
+      |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 214 |     <button
+      | ^^^^^^^^^^^
+> 215 |       onMouseDown={(e) => e.preventDefault()} // Prevent stealing focus / selection from editor
+      | ^^^^^^^^^^^
+> 216 |       onClick={onClick}
+      | ^^^^^^^^^^^
+> 217 |       title={t}
+      | ^^^^^^^^^^^
+> 218 |       className={`w-8 h-8 rounded flex items-center justify-center transition-colors ${active ? 'bg-primary/20 text-primary' : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'}`}>
+      | ^^^^^^^^^^^
+> 219 |       {children}
+      | ^^^^^^^^^^^
+> 220 |     </button>
+      | ^^^^^^^^^^^
+> 221 |   );
+      | ^^^^ The component is created during render here
+  222 |
+  223 |   return (
+  224 |     <>  react-hooks/static-components
+  237:12  error    Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/workspace/[id]/docs/[docId]/page.tsx:237:12
+  235 |           <ToolBtn onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()} active={editor.isActive('heading', { level: 3 })} title="H3"><Heading3 className="w-4 h-4" /></ToolBtn>
+  236 |           <div className="w-px h-5 bg-border mx-1" />
+> 237 |           <ToolBtn onClick={() => editor.chain().focus().toggleBulletList().run()} active={editor.isActive('bulletList')} title="Bullet List"><List className="w-4 h-4" /></ToolBtn>
+      |            ^^^^^^^ This component is created during render
+  238 |           <ToolBtn onClick={() => editor.chain().focus().toggleOrderedList().run()} active={editor.isActive('orderedList')} title="Ordered List"><ListOrdered className="w-4 h-4" /></ToolBtn>
+  239 |           <ToolBtn onClick={() => editor.chain().focus().toggleTaskList().run()} active={editor.isActive('taskList')} title="Task List"><CheckSquare className="w-4 h-4" /></ToolBtn>
+  240 |           <ToolBtn onClick={() => editor.chain().focus().toggleBlockquote().run()} active={editor.isActive('blockquote')} title="Quote"><Quote className="w-4 h-4" /></ToolBtn>
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/workspace/[id]/docs/[docId]/page.tsx:213:19
+  211 |   };
+  212 |
+> 213 |   const ToolBtn = ({ onClick, active, children, title: t }: any) => (
+      |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 214 |     <button
+      | ^^^^^^^^^^^
+> 215 |       onMouseDown={(e) => e.preventDefault()} // Prevent stealing focus / selection from editor
+      | ^^^^^^^^^^^
+> 216 |       onClick={onClick}
+      | ^^^^^^^^^^^
+> 217 |       title={t}
+      | ^^^^^^^^^^^
+> 218 |       className={`w-8 h-8 rounded flex items-center justify-center transition-colors ${active ? 'bg-primary/20 text-primary' : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'}`}>
+      | ^^^^^^^^^^^
+> 219 |       {children}
+      | ^^^^^^^^^^^
+> 220 |     </button>
+      | ^^^^^^^^^^^
+> 221 |   );
+      | ^^^^ The component is created during render here
+  222 |
+  223 |   return (
+  224 |     <>                                    react-hooks/static-components
+  238:12  error    Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/workspace/[id]/docs/[docId]/page.tsx:238:12
+  236 |           <div className="w-px h-5 bg-border mx-1" />
+  237 |           <ToolBtn onClick={() => editor.chain().focus().toggleBulletList().run()} active={editor.isActive('bulletList')} title="Bullet List"><List className="w-4 h-4" /></ToolBtn>
+> 238 |           <ToolBtn onClick={() => editor.chain().focus().toggleOrderedList().run()} active={editor.isActive('orderedList')} title="Ordered List"><ListOrdered className="w-4 h-4" /></ToolBtn>
+      |            ^^^^^^^ This component is created during render
+  239 |           <ToolBtn onClick={() => editor.chain().focus().toggleTaskList().run()} active={editor.isActive('taskList')} title="Task List"><CheckSquare className="w-4 h-4" /></ToolBtn>
+  240 |           <ToolBtn onClick={() => editor.chain().focus().toggleBlockquote().run()} active={editor.isActive('blockquote')} title="Quote"><Quote className="w-4 h-4" /></ToolBtn>
+  241 |           <ToolBtn onClick={() => editor.chain().focus().setHorizontalRule().run()} title="Divider"><Minus className="w-4 h-4" /></ToolBtn>
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/workspace/[id]/docs/[docId]/page.tsx:213:19
+  211 |   };
+  212 |
+> 213 |   const ToolBtn = ({ onClick, active, children, title: t }: any) => (
+      |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 214 |     <button
+      | ^^^^^^^^^^^
+> 215 |       onMouseDown={(e) => e.preventDefault()} // Prevent stealing focus / selection from editor
+      | ^^^^^^^^^^^
+> 216 |       onClick={onClick}
+      | ^^^^^^^^^^^
+> 217 |       title={t}
+      | ^^^^^^^^^^^
+> 218 |       className={`w-8 h-8 rounded flex items-center justify-center transition-colors ${active ? 'bg-primary/20 text-primary' : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'}`}>
+      | ^^^^^^^^^^^
+> 219 |       {children}
+      | ^^^^^^^^^^^
+> 220 |     </button>
+      | ^^^^^^^^^^^
+> 221 |   );
+      | ^^^^ The component is created during render here
+  222 |
+  223 |   return (
+  224 |     <>                                                                                            react-hooks/static-components
+  239:12  error    Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/workspace/[id]/docs/[docId]/page.tsx:239:12
+  237 |           <ToolBtn onClick={() => editor.chain().focus().toggleBulletList().run()} active={editor.isActive('bulletList')} title="Bullet List"><List className="w-4 h-4" /></ToolBtn>
+  238 |           <ToolBtn onClick={() => editor.chain().focus().toggleOrderedList().run()} active={editor.isActive('orderedList')} title="Ordered List"><ListOrdered className="w-4 h-4" /></ToolBtn>
+> 239 |           <ToolBtn onClick={() => editor.chain().focus().toggleTaskList().run()} active={editor.isActive('taskList')} title="Task List"><CheckSquare className="w-4 h-4" /></ToolBtn>
+      |            ^^^^^^^ This component is created during render
+  240 |           <ToolBtn onClick={() => editor.chain().focus().toggleBlockquote().run()} active={editor.isActive('blockquote')} title="Quote"><Quote className="w-4 h-4" /></ToolBtn>
+  241 |           <ToolBtn onClick={() => editor.chain().focus().setHorizontalRule().run()} title="Divider"><Minus className="w-4 h-4" /></ToolBtn>
+  242 |           <div className="w-px h-5 bg-border mx-1" />
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/workspace/[id]/docs/[docId]/page.tsx:213:19
+  211 |   };
+  212 |
+> 213 |   const ToolBtn = ({ onClick, active, children, title: t }: any) => (
+      |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 214 |     <button
+      | ^^^^^^^^^^^
+> 215 |       onMouseDown={(e) => e.preventDefault()} // Prevent stealing focus / selection from editor
+      | ^^^^^^^^^^^
+> 216 |       onClick={onClick}
+      | ^^^^^^^^^^^
+> 217 |       title={t}
+      | ^^^^^^^^^^^
+> 218 |       className={`w-8 h-8 rounded flex items-center justify-center transition-colors ${active ? 'bg-primary/20 text-primary' : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'}`}>
+      | ^^^^^^^^^^^
+> 219 |       {children}
+      | ^^^^^^^^^^^
+> 220 |     </button>
+      | ^^^^^^^^^^^
+> 221 |   );
+      | ^^^^ The component is created during render here
+  222 |
+  223 |   return (
+  224 |     <>                                                                                            react-hooks/static-components
+  240:12  error    Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/workspace/[id]/docs/[docId]/page.tsx:240:12
+  238 |           <ToolBtn onClick={() => editor.chain().focus().toggleOrderedList().run()} active={editor.isActive('orderedList')} title="Ordered List"><ListOrdered className="w-4 h-4" /></ToolBtn>
+  239 |           <ToolBtn onClick={() => editor.chain().focus().toggleTaskList().run()} active={editor.isActive('taskList')} title="Task List"><CheckSquare className="w-4 h-4" /></ToolBtn>
+> 240 |           <ToolBtn onClick={() => editor.chain().focus().toggleBlockquote().run()} active={editor.isActive('blockquote')} title="Quote"><Quote className="w-4 h-4" /></ToolBtn>
+      |            ^^^^^^^ This component is created during render
+  241 |           <ToolBtn onClick={() => editor.chain().focus().setHorizontalRule().run()} title="Divider"><Minus className="w-4 h-4" /></ToolBtn>
+  242 |           <div className="w-px h-5 bg-border mx-1" />
+  243 |           <ToolBtn onClick={() => editor.chain().focus().undo().run()} title="Undo"><Undo className="w-4 h-4" /></ToolBtn>
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/workspace/[id]/docs/[docId]/page.tsx:213:19
+  211 |   };
+  212 |
+> 213 |   const ToolBtn = ({ onClick, active, children, title: t }: any) => (
+      |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 214 |     <button
+      | ^^^^^^^^^^^
+> 215 |       onMouseDown={(e) => e.preventDefault()} // Prevent stealing focus / selection from editor
+      | ^^^^^^^^^^^
+> 216 |       onClick={onClick}
+      | ^^^^^^^^^^^
+> 217 |       title={t}
+      | ^^^^^^^^^^^
+> 218 |       className={`w-8 h-8 rounded flex items-center justify-center transition-colors ${active ? 'bg-primary/20 text-primary' : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'}`}>
+      | ^^^^^^^^^^^
+> 219 |       {children}
+      | ^^^^^^^^^^^
+> 220 |     </button>
+      | ^^^^^^^^^^^
+> 221 |   );
+      | ^^^^ The component is created during render here
+  222 |
+  223 |   return (
+  224 |     <>                                                                                                                                                      react-hooks/static-components
+  241:12  error    Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/workspace/[id]/docs/[docId]/page.tsx:241:12
+  239 |           <ToolBtn onClick={() => editor.chain().focus().toggleTaskList().run()} active={editor.isActive('taskList')} title="Task List"><CheckSquare className="w-4 h-4" /></ToolBtn>
+  240 |           <ToolBtn onClick={() => editor.chain().focus().toggleBlockquote().run()} active={editor.isActive('blockquote')} title="Quote"><Quote className="w-4 h-4" /></ToolBtn>
+> 241 |           <ToolBtn onClick={() => editor.chain().focus().setHorizontalRule().run()} title="Divider"><Minus className="w-4 h-4" /></ToolBtn>
+      |            ^^^^^^^ This component is created during render
+  242 |           <div className="w-px h-5 bg-border mx-1" />
+  243 |           <ToolBtn onClick={() => editor.chain().focus().undo().run()} title="Undo"><Undo className="w-4 h-4" /></ToolBtn>
+  244 |           <ToolBtn onClick={() => editor.chain().focus().redo().run()} title="Redo"><Redo className="w-4 h-4" /></ToolBtn>
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/workspace/[id]/docs/[docId]/page.tsx:213:19
+  211 |   };
+  212 |
+> 213 |   const ToolBtn = ({ onClick, active, children, title: t }: any) => (
+      |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 214 |     <button
+      | ^^^^^^^^^^^
+> 215 |       onMouseDown={(e) => e.preventDefault()} // Prevent stealing focus / selection from editor
+      | ^^^^^^^^^^^
+> 216 |       onClick={onClick}
+      | ^^^^^^^^^^^
+> 217 |       title={t}
+      | ^^^^^^^^^^^
+> 218 |       className={`w-8 h-8 rounded flex items-center justify-center transition-colors ${active ? 'bg-primary/20 text-primary' : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'}`}>
+      | ^^^^^^^^^^^
+> 219 |       {children}
+      | ^^^^^^^^^^^
+> 220 |     </button>
+      | ^^^^^^^^^^^
+> 221 |   );
+      | ^^^^ The component is created during render here
+  222 |
+  223 |   return (
+  224 |     <>                                                                                                                                                                                                                          react-hooks/static-components
+  243:12  error    Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/workspace/[id]/docs/[docId]/page.tsx:243:12
+  241 |           <ToolBtn onClick={() => editor.chain().focus().setHorizontalRule().run()} title="Divider"><Minus className="w-4 h-4" /></ToolBtn>
+  242 |           <div className="w-px h-5 bg-border mx-1" />
+> 243 |           <ToolBtn onClick={() => editor.chain().focus().undo().run()} title="Undo"><Undo className="w-4 h-4" /></ToolBtn>
+      |            ^^^^^^^ This component is created during render
+  244 |           <ToolBtn onClick={() => editor.chain().focus().redo().run()} title="Redo"><Redo className="w-4 h-4" /></ToolBtn>
+  245 |           <div className="flex-1" />
+  246 |           <div className="flex items-center gap-2">
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/workspace/[id]/docs/[docId]/page.tsx:213:19
+  211 |   };
+  212 |
+> 213 |   const ToolBtn = ({ onClick, active, children, title: t }: any) => (
+      |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 214 |     <button
+      | ^^^^^^^^^^^
+> 215 |       onMouseDown={(e) => e.preventDefault()} // Prevent stealing focus / selection from editor
+      | ^^^^^^^^^^^
+> 216 |       onClick={onClick}
+      | ^^^^^^^^^^^
+> 217 |       title={t}
+      | ^^^^^^^^^^^
+> 218 |       className={`w-8 h-8 rounded flex items-center justify-center transition-colors ${active ? 'bg-primary/20 text-primary' : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'}`}>
+      | ^^^^^^^^^^^
+> 219 |       {children}
+      | ^^^^^^^^^^^
+> 220 |     </button>
+      | ^^^^^^^^^^^
+> 221 |   );
+      | ^^^^ The component is created during render here
+  222 |
+  223 |   return (
+  224 |     <>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       react-hooks/static-components
+  244:12  error    Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/workspace/[id]/docs/[docId]/page.tsx:244:12
+  242 |           <div className="w-px h-5 bg-border mx-1" />
+  243 |           <ToolBtn onClick={() => editor.chain().focus().undo().run()} title="Undo"><Undo className="w-4 h-4" /></ToolBtn>
+> 244 |           <ToolBtn onClick={() => editor.chain().focus().redo().run()} title="Redo"><Redo className="w-4 h-4" /></ToolBtn>
+      |            ^^^^^^^ This component is created during render
+  245 |           <div className="flex-1" />
+  246 |           <div className="flex items-center gap-2">
+  247 |             <button
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/workspace/[id]/docs/[docId]/page.tsx:213:19
+  211 |   };
+  212 |
+> 213 |   const ToolBtn = ({ onClick, active, children, title: t }: any) => (
+      |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 214 |     <button
+      | ^^^^^^^^^^^
+> 215 |       onMouseDown={(e) => e.preventDefault()} // Prevent stealing focus / selection from editor
+      | ^^^^^^^^^^^
+> 216 |       onClick={onClick}
+      | ^^^^^^^^^^^
+> 217 |       title={t}
+      | ^^^^^^^^^^^
+> 218 |       className={`w-8 h-8 rounded flex items-center justify-center transition-colors ${active ? 'bg-primary/20 text-primary' : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'}`}>
+      | ^^^^^^^^^^^
+> 219 |       {children}
+      | ^^^^^^^^^^^
+> 220 |     </button>
+      | ^^^^^^^^^^^
+> 221 |   );
+      | ^^^^ The component is created during render here
+  222 |
+  223 |   return (
+  224 |     <>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               react-hooks/static-components
+  455:26  warning  'setConnectedUsers' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            @typescript-eslint/no-unused-vars
+  464:5   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/workspace/[id]/docs/[docId]/page.tsx:464:5
+  462 |
+  463 |   useEffect(() => {
+> 464 |     setConnectionStatus(syncStatus);
+      |     ^^^^^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  465 |     setSaving(!localReady);
+  466 |   }, [localReady, syncStatus]);
+  467 |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                react-hooks/set-state-in-effect
+  484:21  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/workspace/[id]/docs/[docId]/page.tsx:484:21
+  482 |
+  483 |   useEffect(() => {
+> 484 |     if (docId) void loadDoc();
+      |                     ^^^^^^^ Avoid calling setState() directly within an effect
+  485 |   }, [docId, loadDoc]);
+  486 |
+  487 |   const saveTitle = async () => {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   react-hooks/set-state-in-effect
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/workspace/[id]/docs/page.tsx
+   10:21  warning  'BookOpen' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     @typescript-eslint/no-unused-vars
+   10:31  warning  'Layers' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       @typescript-eslint/no-unused-vars
+   10:39  warning  'ShieldAlert' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  @typescript-eslint/no-unused-vars
+   10:52  warning  'Cpu' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-unused-vars
+   10:57  warning  'FileUp' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       @typescript-eslint/no-unused-vars
+   78:10  warning  'showUploadModal' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     @typescript-eslint/no-unused-vars
+   81:29  error    Error: Cannot access variable before it is declared
+
+`loadDocs` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/workspace/[id]/docs/page.tsx:81:29
+  79 |   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  80 |
+> 81 |   useEffect(() => { if (id) loadDocs(); }, [id]);
+     |                             ^^^^^^^^ `loadDocs` accessed before it is declared
+  82 |
+  83 |   const loadDocs = async () => {
+  84 |     try {
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/workspace/[id]/docs/page.tsx:83:3
+  81 |   useEffect(() => { if (id) loadDocs(); }, [id]);
+  82 |
+> 83 |   const loadDocs = async () => {
+     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 84 |     try {
+     | ^^^^^^^^^
+> 85 |       const { data } = await documentApi.list(id);
+     | ^^^^^^^^^
+> 86 |       setDocs(data);
+     | ^^^^^^^^^
+> 87 |     } catch {
+     | ^^^^^^^^^
+> 88 |       toast.error("Failed to load documents");
+     | ^^^^^^^^^
+> 89 |     } finally {
+     | ^^^^^^^^^
+> 90 |       setIsLoading(false);
+     | ^^^^^^^^^
+> 91 |     }
+     | ^^^^^^^^^
+> 92 |   };
+     | ^^^^^ `loadDocs` is declared here
+  93 |
+  94 |   const createDoc = async () => {
+  95 |     try {  react-hooks/immutability
+   81:44  warning  React Hook useEffect has a missing dependency: 'loadDocs'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              react-hooks/exhaustive-deps
+  146:19  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/workspace/[id]/kanban/page.tsx
+   8:25  warning  'GripVertical' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @typescript-eslint/no-unused-vars
+   8:39  warning  'Calendar' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+  48:30  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/workspace/[id]/kanban/page.tsx:48:30
+  46 |
+  47 |   useEffect(() => {
+> 48 |     if (localBoards.value) { setBoards(localBoards.value); setIsLoading(false); }
+     |                              ^^^^^^^^^ Avoid calling setState() directly within an effect
+  49 |   }, [localBoards.value]);
+  50 |   useEffect(() => { if (id) void loadBoards(); }, [id, loadBoards]);
+  51 |                                                                       react-hooks/set-state-in-effect
+  50:34  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/workspace/[id]/kanban/page.tsx:50:34
+  48 |     if (localBoards.value) { setBoards(localBoards.value); setIsLoading(false); }
+  49 |   }, [localBoards.value]);
+> 50 |   useEffect(() => { if (id) void loadBoards(); }, [id, loadBoards]);
+     |                                  ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  51 |
+  52 |   const persistBoards = useCallback((next: Board[]): void => {
+  53 |     setBoards(next);  react-hooks/set-state-in-effect
+  80:51  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @typescript-eslint/no-explicit-any
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/workspace/[id]/page.tsx
+  27:29  error    Error: Cannot access variable before it is declared
+
+`loadWorkspace` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/workspace/[id]/page.tsx:27:29
+  25 |   const [inviteRole, setInviteRole] = useState('EDITOR');
+  26 |
+> 27 |   useEffect(() => { if (id) loadWorkspace(); }, [id]);
+     |                             ^^^^^^^^^^^^^ `loadWorkspace` accessed before it is declared
+  28 |
+  29 |   useEffect(() => {
+  30 |     if (socket && workspace && user) {
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/workspace/[id]/page.tsx:36:3
+  34 |   }, [socket, workspace, user]);
+  35 |
+> 36 |   const loadWorkspace = async () => {
+     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 37 |     try {
+     | ^^^^^^^^^
+> 38 |       const { data } = await workspaceApi.get(id);
+     | ^^^^^^^^^
+> 39 |       setWorkspace(data);
+     | ^^^^^^^^^
+> 40 |     } catch {
+     | ^^^^^^^^^
+> 41 |       toast.error("Failed to load workspace");
+     | ^^^^^^^^^
+> 42 |     } finally {
+     | ^^^^^^^^^
+> 43 |       setIsLoading(false);
+     | ^^^^^^^^^
+> 44 |     }
+     | ^^^^^^^^^
+> 45 |   };
+     | ^^^^^ `loadWorkspace` is declared here
+  46 |
+  47 |   const handleInvite = async (e: React.FormEvent) => {
+  48 |     e.preventDefault();  react-hooks/immutability
+  27:49  warning  React Hook useEffect has a missing dependency: 'loadWorkspace'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     react-hooks/exhaustive-deps
+  55:19  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             @typescript-eslint/no-explicit-any
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/workspace/[id]/settings/page.tsx
+  6:11  warning  'id' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/workspace/[id]/snippets/page.tsx
+   10:29  warning  'HelpCircle' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  @typescript-eslint/no-unused-vars
+   10:41  warning  'RefreshCw' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   @typescript-eslint/no-unused-vars
+   36:29  error    Error: Cannot access variable before it is declared
+
+`loadSnippets` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/workspace/[id]/snippets/page.tsx:36:29
+  34 |   const [aiGenPrompt, setAiGenPrompt] = useState("");
+  35 |
+> 36 |   useEffect(() => { if (id) loadSnippets(); }, [id]);
+     |                             ^^^^^^^^^^^^ `loadSnippets` accessed before it is declared
+  37 |
+  38 |   const loadSnippets = async () => {
+  39 |     try {
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/app/(dashboard)/workspace/[id]/snippets/page.tsx:38:3
+  36 |   useEffect(() => { if (id) loadSnippets(); }, [id]);
+  37 |
+> 38 |   const loadSnippets = async () => {
+     |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 39 |     try {
+     | ^^^^^^^^^
+> 40 |       const { data } = await snippetApi.list(id);
+     | ^^^^^^^^^
+> 41 |       setSnippets(data);
+     | ^^^^^^^^^
+> 42 |     } catch {
+     | ^^^^^^^^^
+> 43 |       toast.error("Failed to load code snippets");
+     | ^^^^^^^^^
+> 44 |     } finally {
+     | ^^^^^^^^^
+> 45 |       setIsLoading(false);
+     | ^^^^^^^^^
+> 46 |     }
+     | ^^^^^^^^^
+> 47 |   };
+     | ^^^^^ `loadSnippets` is declared here
+  48 |
+  49 |   const createSnippet = async (e: React.FormEvent) => {
+  50 |     e.preventDefault();  react-hooks/immutability
+   36:48  warning  React Hook useEffect has a missing dependency: 'loadSnippets'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         react-hooks/exhaustive-deps
+  112:14  warning  'err' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-unused-vars
+  112:19  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-explicit-any
+  132:19  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-explicit-any
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/components/ai-copilot-drawer.tsx
+    5:17  warning  'documentApi' is defined but never used                      @typescript-eslint/no-unused-vars
+    5:30  warning  'snippetApi' is defined but never used                       @typescript-eslint/no-unused-vars
+    5:42  warning  'boardApi' is defined but never used                         @typescript-eslint/no-unused-vars
+    8:9   warning  'ChevronDown' is defined but never used                      @typescript-eslint/no-unused-vars
+    8:29  warning  'Terminal' is defined but never used                         @typescript-eslint/no-unused-vars
+    8:39  warning  'ExternalLink' is defined but never used                     @typescript-eslint/no-unused-vars
+   70:11  error    'workspaceContext' is never reassigned. Use 'const' instead  prefer-const
+  103:19  error    Unexpected any. Specify a different type                     @typescript-eslint/no-explicit-any
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/components/command-palette.tsx
+   3:31  warning  'useCallback' is defined but never used   @typescript-eslint/no-unused-vars
+   5:10  warning  'useAuth' is defined but never used       @typescript-eslint/no-unused-vars
+   9:36  warning  'Sparkles' is defined but never used      @typescript-eslint/no-unused-vars
+  10:9   warning  'ArrowRight' is defined but never used    @typescript-eslint/no-unused-vars
+  11:17  warning  'Folder' is defined but never used        @typescript-eslint/no-unused-vars
+  11:25  warning  'ExternalLink' is defined but never used  @typescript-eslint/no-unused-vars
+  11:39  warning  'X' is defined but never used             @typescript-eslint/no-unused-vars
+  11:42  warning  'Terminal' is defined but never used      @typescript-eslint/no-unused-vars
+  20:9   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/components/sprint-analytics-modal.tsx
+   3:17  warning  'Task' is defined but never used                    @typescript-eslint/no-unused-vars
+   5:43  warning  'Clock' is defined but never used                   @typescript-eslint/no-unused-vars
+   6:3   warning  'AlertTriangle' is defined but never used           @typescript-eslint/no-unused-vars
+  20:9   warning  'backlogColumn' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/components/workspace/activity-feed.tsx
+   7:57  warning  'FolderPlus' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  @typescript-eslint/no-unused-vars
+   7:95  warning  'Filter' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      @typescript-eslint/no-unused-vars
+  33:7   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/components/workspace/activity-feed.tsx:33:7
+  31 |   useEffect(() => {
+  32 |     if (initialActivities.length === 0) {
+> 33 |       fetchActivities();
+     |       ^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  34 |     }
+  35 |     const interval = setInterval(fetchActivities, 12000);
+  36 |     return () => clearInterval(interval);  react-hooks/set-state-in-effect
+  37:6   warning  React Hook useEffect has missing dependencies: 'fetchActivities' and 'initialActivities.length'. Either include them or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     react-hooks/exhaustive-deps
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/components/workspace/presence-bar.tsx
+  5:16  warning  'Sparkles' is defined but never used  @typescript-eslint/no-unused-vars
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/components/workspace/workspace-stats.tsx
+  4:42  warning  'CheckCircle2' is defined but never used  @typescript-eslint/no-unused-vars
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/hooks/use-crdt-garbage-collector.ts
+  12:7  error  Error: This value cannot be modified
+
+Modifying component props or hook arguments is not allowed. Consider using a local variable instead.
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/hooks/use-crdt-garbage-collector.ts:12:7
+  10 |   useEffect(() => {
+  11 |     const collect = (): void => {
+> 12 |       document.gc = true;
+     |       ^^^^^^^^ `document` cannot be modified
+  13 |       const activities = document.getMap<string>('record:resolved-activities');
+  14 |       const cutoff = Date.now() - SEVEN_DAYS;
+  15 |       document.transact(() => activities.forEach((value, key) => {  react-hooks/immutability
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/lib/api.ts
+  37:30  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  53:30  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  70:36  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  72:34  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  88:39  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  90:30  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/lib/tiptap-collaboration-cursor.ts
+   5:13  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  49:31  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/providers/socket-provider.tsx
+  10:16  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  22:50  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  46:45  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/proxy.ts
+  2:10  warning  'NextResponse' is defined but never used  @typescript-eslint/no-unused-vars
+  3:15  warning  'NextRequest' is defined but never used   @typescript-eslint/no-unused-vars
+
+/home/kevin/devsync/docs/audit-evidence/runtime/frontend/src/types/index.ts
+  37:12  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  94:14  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+✖ 105 problems (52 errors, 53 warnings)
+  1 error and 0 warnings potentially fixable with the `--fix` option.
+

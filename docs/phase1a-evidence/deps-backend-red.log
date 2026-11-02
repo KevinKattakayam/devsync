@@ -1,0 +1,58 @@
+
+> devsync-backend@1.0.0 test
+> jest --runInBand --runTestsByPath src/__tests__/dependency-policy.test.ts
+
+FAIL src/__tests__/dependency-policy.test.ts (5.969 s)
+  ● I01 express meets the verified advisory remediation floor
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 4022003
+    Received:    4022001
+
+       8 |   const installed = version(name);
+       9 |   const actual = installed[0] * 1000000 + installed[1] * 1000 + installed[2];
+    > 10 |   expect(actual).toBeGreaterThanOrEqual(floor[0] * 1000000 + floor[1] * 1000 + floor[2]);
+         |                  ^
+      11 | });
+      12 |
+
+      at src/__tests__/dependency-policy.test.ts:10:18
+
+  ● I01 multer meets the verified advisory remediation floor
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 2005000
+    Received:    NaN
+
+       8 |   const installed = version(name);
+       9 |   const actual = installed[0] * 1000000 + installed[1] * 1000 + installed[2];
+    > 10 |   expect(actual).toBeGreaterThanOrEqual(floor[0] * 1000000 + floor[1] * 1000 + floor[2]);
+         |                  ^
+      11 | });
+      12 |
+
+      at src/__tests__/dependency-policy.test.ts:10:18
+
+  ● I01 zod meets the verified advisory remediation floor
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 4006007
+    Received:    3025076
+
+       8 |   const installed = version(name);
+       9 |   const actual = installed[0] * 1000000 + installed[1] * 1000 + installed[2];
+    > 10 |   expect(actual).toBeGreaterThanOrEqual(floor[0] * 1000000 + floor[1] * 1000 + floor[2]);
+         |                  ^
+      11 | });
+      12 |
+
+      at src/__tests__/dependency-policy.test.ts:10:18
+
+Test Suites: 1 failed, 1 total
+Tests:       3 failed, 3 total
+Snapshots:   0 total
+Time:        6.24 s
+Ran all test suites within paths "src/__tests__/dependency-policy.test.ts".

@@ -1,0 +1,11 @@
+
+> devsync-backend@1.0.0 test
+> jest --runInBand
+
+[0mGET /api/health [32m200[0m 1.342 ms - 54[0m
+
+Test Suites: 7 passed, 7 total
+Tests:       48 passed, 48 total
+Snapshots:   0 total
+Time:        40.544 s
+Ran all test suites.

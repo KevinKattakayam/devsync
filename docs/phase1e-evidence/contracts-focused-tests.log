@@ -1,0 +1,9 @@
+
+> devsync-backend@1.0.0 test
+> jest --runInBand --runTestsByPath src/__tests__/contracts.test.ts --coverage=false
+
+Test Suites: 1 passed, 1 total
+Tests:       5 passed, 5 total
+Snapshots:   0 total
+Time:        24.144 s
+Ran all test suites within paths "src/__tests__/contracts.test.ts".

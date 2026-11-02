@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { useAuth } from "@/providers/auth-provider";
+import Link from 'next/link';
+import { useAuth } from '@/providers/auth-provider';
 import {
   ArrowRight,
   Check,
@@ -16,7 +16,7 @@ import {
   Sparkles,
   Users,
   Zap,
-} from "lucide-react";
+} from 'lucide-react';
 
 /* ──────────────────────────────────────────────────
    Feature cards data
@@ -24,27 +24,27 @@ import {
 const features = [
   {
     icon: FileText,
-    title: "Docs that move with the work",
-    text: "Collaborative specs, decisions, and technical notes with live cursors and offline-safe sync.",
-    accent: "bg-indigo-50 text-indigo-600",
+    title: 'Docs that move with the work',
+    text: 'Collaborative specs, decisions, and technical notes with live cursors and offline-safe sync.',
+    accent: 'bg-indigo-50 text-indigo-600',
   },
   {
     icon: Kanban,
-    title: "Delivery in one clear view",
-    text: "Prioritized work, review flow, and GitHub-powered task movement without status-chasing.",
-    accent: "bg-violet-50 text-violet-600",
+    title: 'Delivery in one clear view',
+    text: 'Prioritized work, review flow, and GitHub-powered task movement without status-chasing.',
+    accent: 'bg-violet-50 text-violet-600',
   },
   {
     icon: Sparkles,
     title: "AI with your team's context",
-    text: "Semantic workspace retrieval and visible source citations make answers useful and explainable.",
-    accent: "bg-amber-50 text-amber-600",
+    text: 'Semantic workspace retrieval and visible source citations make answers useful and explainable.',
+    accent: 'bg-amber-50 text-amber-600',
   },
   {
     icon: ShieldCheck,
-    title: "Ready for real teams",
-    text: "SSO-ready identity, role-based access, tenant isolation, and signed webhook automation.",
-    accent: "bg-emerald-50 text-emerald-600",
+    title: 'Ready for real teams',
+    text: 'SSO-ready identity, role-based access, tenant isolation, and signed webhook automation.',
+    accent: 'bg-emerald-50 text-emerald-600',
   },
 ];
 
@@ -54,18 +54,18 @@ const features = [
 const securityItems = [
   {
     icon: LockKeyhole,
-    title: "Identity that fits your organization",
-    text: "Google, GitHub, enterprise SSO, and durable workspace roles.",
+    title: 'Identity that fits your organization',
+    text: 'Google, GitHub, enterprise SSO, and durable workspace roles.',
   },
   {
     icon: Users,
-    title: "Privacy by workspace",
-    text: "Every search, AI retrieval, document, and workflow action is tenant-scoped.",
+    title: 'Privacy by workspace',
+    text: 'Every search, AI retrieval, document, and workflow action is tenant-scoped.',
   },
   {
     icon: ShieldCheck,
-    title: "Automation you can trust",
-    text: "Signed GitHub webhook delivery and idempotent workflow transitions.",
+    title: 'Automation you can trust',
+    text: 'Signed GitHub webhook delivery and idempotent workflow transitions.',
   },
 ];
 
@@ -74,12 +74,11 @@ const securityItems = [
    ────────────────────────────────────────────────── */
 export default function LandingPage() {
   const { isAuthenticated } = useAuth();
-  const primaryHref = isAuthenticated ? "/dashboard" : "/signup";
-  const primaryLabel = isAuthenticated ? "Open workspace" : "Start for free";
+  const primaryHref = isAuthenticated ? '/dashboard' : '/signup';
+  const primaryLabel = isAuthenticated ? 'Open workspace' : 'Start for free';
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#FAFAFA] text-zinc-900 selection:bg-indigo-200/60">
-
       {/* ── Atmospheric mesh gradient ── */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
         <div className="absolute left-1/2 top-[-10%] h-[900px] w-[900px] -translate-x-1/2 rounded-full bg-indigo-100/60 blur-[140px]" />
@@ -92,8 +91,8 @@ export default function LandingPage() {
         className="pointer-events-none absolute inset-0 opacity-[0.35]"
         aria-hidden="true"
         style={{
-          backgroundImage: "radial-gradient(circle, #d4d4d8 0.8px, transparent 0.8px)",
-          backgroundSize: "24px 24px",
+          backgroundImage: 'radial-gradient(circle, #d4d4d8 0.8px, transparent 0.8px)',
+          backgroundSize: '24px 24px',
         }}
       />
 
@@ -103,7 +102,10 @@ export default function LandingPage() {
       <nav className="fixed inset-x-0 top-0 z-50 border-b border-zinc-200/60 bg-white/60 backdrop-blur-2xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-8">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 font-semibold tracking-tight text-zinc-900">
+          <Link
+            href="/"
+            className="flex items-center gap-2.5 font-semibold tracking-tight text-zinc-900"
+          >
             <span className="grid h-8 w-8 place-items-center rounded-lg bg-zinc-900 shadow-sm">
               <Zap className="h-4 w-4 fill-white text-white" />
             </span>
@@ -112,9 +114,15 @@ export default function LandingPage() {
 
           {/* Nav links */}
           <div className="hidden items-center gap-8 text-[13px] font-medium text-zinc-500 md:flex">
-            <a href="#platform" className="transition hover:text-zinc-900">Platform</a>
-            <a href="#security" className="transition hover:text-zinc-900">Security</a>
-            <a href="#workflow" className="transition hover:text-zinc-900">Workflow</a>
+            <a href="#platform" className="transition hover:text-zinc-900">
+              Platform
+            </a>
+            <a href="#security" className="transition hover:text-zinc-900">
+              Security
+            </a>
+            <a href="#workflow" className="transition hover:text-zinc-900">
+              Workflow
+            </a>
           </div>
 
           {/* Auth */}
@@ -139,7 +147,6 @@ export default function LandingPage() {
           HERO SECTION
           ════════════════════════════════════════════ */}
       <section className="relative z-10 mx-auto max-w-7xl px-6 pb-8 pt-32 text-center lg:px-8 lg:pt-40">
-
         {/* Badge */}
         <div className="mb-8 inline-flex items-center gap-2.5 rounded-full border border-zinc-200 bg-white/80 px-4 py-1.5 shadow-sm backdrop-blur-sm">
           <span className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-50">
@@ -149,21 +156,20 @@ export default function LandingPage() {
             className="text-[11px] font-semibold uppercase tracking-[0.08em] text-zinc-600"
             style={{ fontFamily: "'JetBrains Mono', monospace" }}
           >
-            ⚡ Local-first. Enterprise ready.
+            Documents, tasks and snippets.
           </span>
         </div>
 
         {/* Headline */}
         <h1 className="mx-auto max-w-4xl text-[clamp(2.5rem,5.5vw,4.5rem)] font-extrabold leading-[1.05] tracking-[-0.035em] text-zinc-900">
-          The collaboration engine{" "}
-          <span className="text-zinc-400">for high-velocity teams.</span>
+          The collaboration engine <span className="text-zinc-400">for high-velocity teams.</span>
         </h1>
 
         {/* Sub-headline */}
         <p className="mx-auto mt-7 max-w-2xl text-lg leading-relaxed text-zinc-500">
-          Unify your Kanban, architecture docs, and code snippets in a single,
-          lightning-fast workspace.{" "}
-          <span className="font-medium text-zinc-700">Zero context switching. Infinite scale.</span>
+          Unify your Kanban, architecture docs, and code snippets in a single, lightning-fast
+          workspace.{' '}
+          <span className="font-medium text-zinc-700">Keep project context together.</span>
         </p>
 
         {/* CTA Buttons */}
@@ -192,19 +198,21 @@ export default function LandingPage() {
           </span>
           <span className="inline-flex items-center gap-1.5">
             <Check className="h-3.5 w-3.5 text-emerald-500" />
-            SSO &amp; SCIM enabled
+            Role-based workspace access
           </span>
           <span className="inline-flex items-center gap-1.5">
             <Check className="h-3.5 w-3.5 text-emerald-500" />
-            End-to-End Encrypted
+            Content is processed by the server
           </span>
         </div>
 
-        {/* ── Product Mockup — Floating Glassmorphic ── */}
+        {/* ── Illustrative preview — not live workspace data ── */}
         <div className="mx-auto mt-20 max-w-6xl">
+          <p className="mb-3 text-sm text-zinc-600">
+            Illustrative interface preview — example data, not live activity or a health report.
+          </p>
           <div className="rounded-2xl border border-zinc-200/80 bg-white/60 p-2.5 shadow-[0_30px_80px_-15px_rgba(0,0,0,0.08)] backdrop-blur-2xl">
             <div className="overflow-hidden rounded-xl border border-zinc-200/60 bg-white text-left shadow-sm">
-
               {/* Mockup title bar */}
               <div className="flex h-11 items-center gap-3 border-b border-zinc-100 bg-zinc-50/80 px-4">
                 <div className="flex gap-1.5">
@@ -220,7 +228,6 @@ export default function LandingPage() {
 
               {/* Mockup body */}
               <div className="grid min-h-[360px] grid-cols-1 md:grid-cols-[190px_1fr_230px]">
-
                 {/* Sidebar */}
                 <aside className="hidden border-r border-zinc-100 bg-zinc-50/50 p-4 md:block">
                   <div className="mb-7 flex items-center gap-2 text-sm font-semibold text-zinc-800">
@@ -231,18 +238,18 @@ export default function LandingPage() {
                   </div>
                   {(
                     [
-                      [FileText, "Docs"],
-                      [Kanban, "Delivery"],
-                      [Code2, "Snippets"],
-                      [GitPullRequest, "Integrations"],
+                      [FileText, 'Docs'],
+                      [Kanban, 'Delivery'],
+                      [Code2, 'Snippets'],
+                      [GitPullRequest, 'Integrations'],
                     ] as const
                   ).map(([Icon, label]) => (
                     <div
                       key={label}
                       className={`mb-1 flex items-center gap-2 rounded-md px-2 py-2 text-xs font-medium transition ${
-                        label === "Delivery"
-                          ? "bg-zinc-900 text-white shadow-sm"
-                          : "text-zinc-500 hover:bg-zinc-100 hover:text-zinc-700"
+                        label === 'Delivery'
+                          ? 'bg-zinc-900 text-white shadow-sm'
+                          : 'text-zinc-500 hover:bg-zinc-100 hover:text-zinc-700'
                       }`}
                     >
                       <Icon className="h-3.5 w-3.5" />
@@ -276,9 +283,9 @@ export default function LandingPage() {
                   <div className="grid gap-3 sm:grid-cols-3">
                     {(
                       [
-                        ["Backlog", "3", "bg-zinc-100 text-zinc-600"],
-                        ["In review", "4", "bg-amber-50 text-amber-600"],
-                        ["Ready to ship", "5", "bg-emerald-50 text-emerald-600"],
+                        ['Backlog', '3', 'bg-zinc-100 text-zinc-600'],
+                        ['In review', '4', 'bg-amber-50 text-amber-600'],
+                        ['Ready to ship', '5', 'bg-emerald-50 text-emerald-600'],
                       ] as const
                     ).map(([name, count, badge]) => (
                       <div
@@ -287,7 +294,9 @@ export default function LandingPage() {
                       >
                         <div className="mb-4 flex items-center justify-between text-xs">
                           <span className="font-medium text-zinc-500">{name}</span>
-                          <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${badge}`}>
+                          <span
+                            className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${badge}`}
+                          >
                             {count}
                           </span>
                         </div>
@@ -312,8 +321,8 @@ export default function LandingPage() {
                     Workspace AI
                   </div>
                   <p className="mt-4 text-xs leading-5 text-zinc-500">
-                    &quot;The release plan has 2 open API dependencies and 4 tasks
-                    ready for review.&quot;
+                    &quot;The release plan has 2 open API dependencies and 4 tasks ready for
+                    review.&quot;
                   </p>
                   <div className="mt-5 border-t border-zinc-100 pt-3">
                     <p
@@ -362,12 +371,8 @@ export default function LandingPage() {
                 <span className={`grid h-11 w-11 place-items-center rounded-xl ${accent}`}>
                   <Icon className="h-5 w-5" />
                 </span>
-                <h3 className="mt-5 text-lg font-bold text-zinc-900">
-                  {title}
-                </h3>
-                <p className="mt-2 max-w-md text-sm leading-6 text-zinc-500">
-                  {text}
-                </p>
+                <h3 className="mt-5 text-lg font-bold text-zinc-900">{title}</h3>
+                <p className="mt-2 max-w-md text-sm leading-6 text-zinc-500">{text}</p>
               </article>
             ))}
           </div>
@@ -397,9 +402,7 @@ export default function LandingPage() {
                   </span>
                   <div>
                     <h3 className="text-sm font-bold text-zinc-900">{title}</h3>
-                    <p className="mt-1 text-sm leading-6 text-zinc-500">
-                      {text}
-                    </p>
+                    <p className="mt-1 text-sm leading-6 text-zinc-500">{text}</p>
                   </div>
                 </div>
               ))}
@@ -418,22 +421,18 @@ export default function LandingPage() {
               <div className="mt-5 grid grid-cols-2 gap-3">
                 {(
                   [
-                    ["SSO", "Connected"],
-                    ["Collaboration", "Live"],
-                    ["AI context", "Scoped"],
-                    ["Webhooks", "Verified"],
+                    ['SSO', 'Requires configuration'],
+                    ['Collaboration', 'Live'],
+                    ['AI context', 'Scoped'],
+                    ['Webhooks', 'Verified'],
                   ] as const
                 ).map(([label, value]) => (
                   <div
                     key={label}
                     className="rounded-xl border border-zinc-100 bg-zinc-50/60 p-3.5"
                   >
-                    <p className="text-[11px] font-medium text-zinc-400">
-                      {label}
-                    </p>
-                    <p className="mt-1 text-sm font-bold text-emerald-600">
-                      {value}
-                    </p>
+                    <p className="text-[11px] font-medium text-zinc-400">{label}</p>
+                    <p className="mt-1 text-sm font-bold text-emerald-600">{value}</p>
                   </div>
                 ))}
               </div>
@@ -448,7 +447,10 @@ export default function LandingPage() {
       <section id="workflow" className="relative z-10 px-6 pb-28 lg:px-8">
         <div className="mx-auto max-w-5xl overflow-hidden rounded-3xl border border-zinc-200/80 bg-white/70 px-7 py-16 text-center shadow-[0_30px_80px_-15px_rgba(0,0,0,0.06)] backdrop-blur-2xl sm:px-14">
           {/* Subtle background glow inside CTA */}
-          <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-3xl" aria-hidden="true">
+          <div
+            className="pointer-events-none absolute inset-0 overflow-hidden rounded-3xl"
+            aria-hidden="true"
+          >
             <div className="absolute left-1/2 top-1/2 h-[400px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-50/80 blur-[100px]" />
           </div>
 
@@ -463,8 +465,7 @@ export default function LandingPage() {
               Make your next release the calmest one yet.
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-sm leading-6 text-zinc-500">
-              Start with a workspace. Bring in your team. Let DevSync keep the
-              context connected.
+              Start with a workspace. Bring in your team. Let DevSync keep the context connected.
             </p>
             <Link
               href={primaryHref}
@@ -485,9 +486,7 @@ export default function LandingPage() {
           <span className="flex items-center gap-2 font-medium text-zinc-600">
             <Zap className="h-3.5 w-3.5 text-zinc-400" /> DevSync
           </span>
-          <span>
-            © {new Date().getFullYear()} DevSync. Built for teams that ship.
-          </span>
+          <span>© {new Date().getFullYear()} DevSync. Built for teams that ship.</span>
         </div>
       </footer>
     </main>

@@ -1,0 +1,232 @@
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": PostgreSQL database "devsync_e2e_browser", schema "public" at "localhost:32839"
+
+11 migrations found in prisma/migrations
+
+Applying migration `20260729000000_baseline`
+Applying migration `20260729180000_enterprise_platform`
+Applying migration `20260815000000_phase_3_tenant_rls`
+Applying migration `20260815001000_scim_provisioning`
+Applying migration `20260815002000_commercial_billing`
+Applying migration `20261031000000_tenant_indexes`
+Applying migration `20261031010000_crdt_journal`
+Applying migration `202611010001_canonical_revision`
+Applying migration `202611010002_embedding_authority`
+Applying migration `202611010003_atomic_create_idempotency`
+Applying migration `202611010004_workspace_invitations`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20260729000000_baseline/
+    └─ migration.sql
+  └─ 20260729180000_enterprise_platform/
+    └─ migration.sql
+  └─ 20260815000000_phase_3_tenant_rls/
+    └─ migration.sql
+  └─ 20260815001000_scim_provisioning/
+    └─ migration.sql
+  └─ 20260815002000_commercial_billing/
+    └─ migration.sql
+  └─ 20261031000000_tenant_indexes/
+    └─ migration.sql
+  └─ 20261031010000_crdt_journal/
+    └─ migration.sql
+  └─ 202611010001_canonical_revision/
+    └─ migration.sql
+  └─ 202611010002_embedding_authority/
+    └─ migration.sql
+  └─ 202611010003_atomic_create_idempotency/
+    └─ migration.sql
+  └─ 202611010004_workspace_invitations/
+    └─ migration.sql
+      
+All migrations have been successfully applied.
+Sample workspace seeded. Sign in with the supplied Clerk test identities.
+/home/kevin/devsync/.worktrees/frontend-fixture
+Isolated fixture server ready
+{"level":30,"time":1793562995179,"service":"devsync-api","req":{"id":"4aafa992-ba6e-4fc0-b75d-229638076256","method":"GET"},"requestId":"4aafa992-ba6e-4fc0-b75d-229638076256","res":{"statusCode":200},"responseTime":5,"msg":"request completed"}
+▲ Next.js 16.4.3 (webpack)
+- Local:         http://127.0.0.1:3001
+- Network:       http://127.0.0.1:3001
+✓ Ready in 453ms
+✓ Running next.config.ts took 41ms
+
+✓ Generated AGENTS.md for AI agents. Set `agentRules: false` in next.config to disable.
+○ Compiling /(auth)/login/[[...rest]]/page ...
+ GET /login 200 in 1077ms (proxy.ts: 74ms)
+ GET /login 200 in 104ms (next.js: 33ms, proxy.ts: 8ms, application-code: 63ms)
+
+Running 4 tests using 1 worker
+
+(node:138765) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1793563023754,"service":"devsync-api","req":{"id":"6b1a3cb8-bac0-4e35-bf06-e494ea13a36a","method":"GET"},"requestId":"6b1a3cb8-bac0-4e35-bf06-e494ea13a36a","res":{"statusCode":200},"responseTime":25,"msg":"request completed"}
+{"level":30,"time":1793563023875,"service":"devsync-api","req":{"id":"48f82876-4261-4993-a580-483bb5f5e785","method":"POST"},"requestId":"48f82876-4261-4993-a580-483bb5f5e785","res":{"statusCode":201},"responseTime":99,"msg":"request completed"}
+○ Compiling /(dashboard)/workspace/[id]/docs/[docId]/page ...
+ GET /workspace/devsync-sample/docs/cmvy946b50003dqkqm8ykcsdh 200 in 6.1s (next.js: 5.6s, proxy.ts: 12ms, application-code: 494ms)
+{"level":30,"time":1793563031693,"service":"devsync-api","req":{"id":"b52ab468-9b40-4862-9fcc-d0bcdb88f70d","method":"GET"},"requestId":"b52ab468-9b40-4862-9fcc-d0bcdb88f70d","res":{"statusCode":200},"responseTime":55,"msg":"request completed"}
+{"level":30,"time":1793563031698,"service":"devsync-api","req":{"id":"eb13460e-172b-42cc-9b94-43f0d64696be","method":"GET"},"requestId":"eb13460e-172b-42cc-9b94-43f0d64696be","res":{"statusCode":200},"responseTime":51,"msg":"request completed"}
+{"level":30,"time":1793563031704,"service":"devsync-api","req":{"id":"f081c161-d9b8-491e-aa9c-9b088299c4bd","method":"GET"},"requestId":"f081c161-d9b8-491e-aa9c-9b088299c4bd","res":{"statusCode":200},"responseTime":63,"msg":"request completed"}
+{"level":30,"time":1793563031730,"service":"devsync-api","req":{"id":"9ade5086-f05e-4f82-922d-447d112ae1e0","method":"GET"},"requestId":"9ade5086-f05e-4f82-922d-447d112ae1e0","res":{"statusCode":304},"responseTime":30,"msg":"request completed"}
+{"level":30,"time":1793563031736,"service":"devsync-api","req":{"id":"a3feccfd-0103-4c4e-8cc1-b1b01615a7db","method":"GET"},"requestId":"a3feccfd-0103-4c4e-8cc1-b1b01615a7db","res":{"statusCode":304},"responseTime":40,"msg":"request completed"}
+{"level":30,"time":1793563031746,"service":"devsync-api","req":{"id":"b0b97602-5219-46ac-9dba-90eba5db0e81","method":"GET"},"requestId":"b0b97602-5219-46ac-9dba-90eba5db0e81","res":{"statusCode":304},"responseTime":37,"msg":"request completed"}
+  ✘  1 testing/browser/ai.spec.ts:8:9 › dark 1440 AI transport fixture labels, references and partial failure (10.0s)
+(node:139642) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1793563034546,"service":"devsync-api","req":{"id":"aac1b844-1be8-4945-8500-bebb667ad00f","method":"GET"},"requestId":"aac1b844-1be8-4945-8500-bebb667ad00f","res":{"statusCode":200},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793563034603,"service":"devsync-api","req":{"id":"e48aa421-7970-43d6-b3e4-0e981c4a7a54","method":"POST"},"requestId":"e48aa421-7970-43d6-b3e4-0e981c4a7a54","res":{"statusCode":201},"responseTime":38,"msg":"request completed"}
+ GET /workspace/devsync-sample/docs/cmvy94el6001qdqkq3bx5gq3q 200 in 125ms (next.js: 46ms, proxy.ts: 8ms, application-code: 71ms)
+{"level":30,"time":1793563036373,"service":"devsync-api","req":{"id":"6986e3ca-f1db-43de-80c5-21d67a6473ff","method":"GET"},"requestId":"6986e3ca-f1db-43de-80c5-21d67a6473ff","res":{"statusCode":200},"responseTime":28,"msg":"request completed"}
+{"level":30,"time":1793563036374,"service":"devsync-api","req":{"id":"6d703a21-7c60-4a4e-8233-940dc580b2d2","method":"GET"},"requestId":"6d703a21-7c60-4a4e-8233-940dc580b2d2","res":{"statusCode":200},"responseTime":33,"msg":"request completed"}
+{"level":30,"time":1793563036380,"service":"devsync-api","req":{"id":"399d67e6-2ecd-46d1-8184-218dac508d91","method":"GET"},"requestId":"399d67e6-2ecd-46d1-8184-218dac508d91","res":{"statusCode":200},"responseTime":37,"msg":"request completed"}
+{"level":30,"time":1793563036396,"service":"devsync-api","req":{"id":"ac18ba82-f0d9-4e8a-ab5f-8977eb01dc90","method":"GET"},"requestId":"ac18ba82-f0d9-4e8a-ab5f-8977eb01dc90","res":{"statusCode":304},"responseTime":21,"msg":"request completed"}
+{"level":30,"time":1793563036402,"service":"devsync-api","req":{"id":"22a71170-a0a3-4200-9037-1c7a85f621b7","method":"GET"},"requestId":"22a71170-a0a3-4200-9037-1c7a85f621b7","res":{"statusCode":304},"responseTime":25,"msg":"request completed"}
+{"level":30,"time":1793563036405,"service":"devsync-api","req":{"id":"65c6c381-c412-4ee9-98aa-7af5287dc723","method":"GET"},"requestId":"65c6c381-c412-4ee9-98aa-7af5287dc723","res":{"statusCode":304},"responseTime":23,"msg":"request completed"}
+  ✘  2 testing/browser/ai.spec.ts:8:9 › dark 390 AI transport fixture labels, references and partial failure (3.7s)
+(node:140097) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1793563039091,"service":"devsync-api","req":{"id":"ca083a60-6173-4151-b03c-2290ef1f9d79","method":"GET"},"requestId":"ca083a60-6173-4151-b03c-2290ef1f9d79","res":{"statusCode":200},"responseTime":8,"msg":"request completed"}
+{"level":30,"time":1793563039145,"service":"devsync-api","req":{"id":"0615f6cf-d6b2-4d35-a8fe-b5e5ceffc5d5","method":"POST"},"requestId":"0615f6cf-d6b2-4d35-a8fe-b5e5ceffc5d5","res":{"statusCode":201},"responseTime":39,"msg":"request completed"}
+ GET /workspace/devsync-sample/docs/cmvy94i3b003cdqkq0bah9vg7 200 in 117ms (next.js: 42ms, proxy.ts: 5ms, application-code: 70ms)
+{"level":30,"time":1793563040994,"service":"devsync-api","req":{"id":"7451ab8e-3eaf-4f63-8146-89f25f0b5064","method":"GET"},"requestId":"7451ab8e-3eaf-4f63-8146-89f25f0b5064","res":{"statusCode":200},"responseTime":42,"msg":"request completed"}
+{"level":30,"time":1793563040999,"service":"devsync-api","req":{"id":"ecb93221-70b3-4f19-94d7-d939e611b6bf","method":"GET"},"requestId":"ecb93221-70b3-4f19-94d7-d939e611b6bf","res":{"statusCode":200},"responseTime":36,"msg":"request completed"}
+{"level":30,"time":1793563041006,"service":"devsync-api","req":{"id":"911510a8-6eaf-49b3-93cc-87b244bab35a","method":"GET"},"requestId":"911510a8-6eaf-49b3-93cc-87b244bab35a","res":{"statusCode":200},"responseTime":44,"msg":"request completed"}
+{"level":30,"time":1793563041033,"service":"devsync-api","req":{"id":"113afb37-ad0c-43b0-a837-4c5fd57324f9","method":"GET"},"requestId":"113afb37-ad0c-43b0-a837-4c5fd57324f9","res":{"statusCode":304},"responseTime":33,"msg":"request completed"}
+{"level":30,"time":1793563041040,"service":"devsync-api","req":{"id":"3bd82a81-c7d3-481f-b395-89150c3563d2","method":"GET"},"requestId":"3bd82a81-c7d3-481f-b395-89150c3563d2","res":{"statusCode":304},"responseTime":43,"msg":"request completed"}
+{"level":30,"time":1793563041058,"service":"devsync-api","req":{"id":"a243dd67-3755-45eb-a40e-fcf286f3f3ea","method":"GET"},"requestId":"a243dd67-3755-45eb-a40e-fcf286f3f3ea","res":{"statusCode":304},"responseTime":49,"msg":"request completed"}
+  ✘  3 testing/browser/ai.spec.ts:8:9 › light 1440 AI transport fixture labels, references and partial failure (3.8s)
+(node:140590) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1793563043937,"service":"devsync-api","req":{"id":"eb979fde-0bbe-4b93-b7fb-8a605d0dbb63","method":"GET"},"requestId":"eb979fde-0bbe-4b93-b7fb-8a605d0dbb63","res":{"statusCode":200},"responseTime":10,"msg":"request completed"}
+{"level":30,"time":1793563043997,"service":"devsync-api","req":{"id":"59748ac8-04e5-4396-bc62-9cc467193c91","method":"POST"},"requestId":"59748ac8-04e5-4396-bc62-9cc467193c91","res":{"statusCode":201},"responseTime":40,"msg":"request completed"}
+ GET /workspace/devsync-sample/docs/cmvy94lu40050dqkqs5sqg79g 200 in 119ms (next.js: 49ms, proxy.ts: 6ms, application-code: 64ms)
+{"level":30,"time":1793563045944,"service":"devsync-api","req":{"id":"3d113bd5-5732-4276-bb82-1c1d2b6f5f9c","method":"GET"},"requestId":"3d113bd5-5732-4276-bb82-1c1d2b6f5f9c","res":{"statusCode":200},"responseTime":29,"msg":"request completed"}
+{"level":30,"time":1793563045948,"service":"devsync-api","req":{"id":"aaaa31a8-cb86-4fc9-90d5-e0f1c0d4f653","method":"GET"},"requestId":"aaaa31a8-cb86-4fc9-90d5-e0f1c0d4f653","res":{"statusCode":200},"responseTime":30,"msg":"request completed"}
+{"level":30,"time":1793563045962,"service":"devsync-api","req":{"id":"90f146e6-014d-4ff6-a8e1-28754c56ea63","method":"GET"},"requestId":"90f146e6-014d-4ff6-a8e1-28754c56ea63","res":{"statusCode":200},"responseTime":45,"msg":"request completed"}
+{"level":30,"time":1793563045974,"service":"devsync-api","req":{"id":"df24e8b6-f02c-4657-8e0f-988744b01fbd","method":"GET"},"requestId":"df24e8b6-f02c-4657-8e0f-988744b01fbd","res":{"statusCode":304},"responseTime":21,"msg":"request completed"}
+{"level":30,"time":1793563045984,"service":"devsync-api","req":{"id":"2fe84ecd-8be7-4563-b12d-d746eed3969f","method":"GET"},"requestId":"2fe84ecd-8be7-4563-b12d-d746eed3969f","res":{"statusCode":304},"responseTime":35,"msg":"request completed"}
+{"level":30,"time":1793563046009,"service":"devsync-api","req":{"id":"906e07cd-4f4c-4ab1-8da6-2fd2fe026298","method":"GET"},"requestId":"906e07cd-4f4c-4ab1-8da6-2fd2fe026298","res":{"statusCode":304},"responseTime":46,"msg":"request completed"}
+  ✘  4 testing/browser/ai.spec.ts:8:9 › light 390 AI transport fixture labels, references and partial failure (3.8s)
+
+
+  1) testing/browser/ai.spec.ts:8:9 › dark 1440 AI transport fixture labels, references and partial failure 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('alert')
+    Expected substring: "partial output cannot be applied"
+    Error: strict mode violation: getByRole('alert') resolved to 2 elements:
+        1) <p role="alert">AI could not finish. Try again; partial output ca…</p> aka getByText('AI could not finish. Try')
+        2) <div role="alert" aria-live="assertive" id="__next-route-announcer__"></div> aka locator('[id="__next-route-announcer__"]')
+
+    Call log:
+      - Expect "toContainText" with timeout 15000ms
+      - waiting for getByRole('alert')
+        - locator resolved to <div role="alert" aria-live="assertive" id="__next-route-announcer__"></div>
+        - unexpected value ""
+
+
+      89 |         failure = true;
+      90 |         await generate();
+    > 91 |         await expect(page.getByRole('alert')).toContainText('partial output cannot be applied');
+         |                                               ^
+      92 |         await expect(
+      93 |           page.getByRole('button', { name: 'Insert into document', exact: true }),
+      94 |         ).toBeDisabled();
+        at /home/kevin/devsync/backend/testing/browser/ai.spec.ts:91:47
+
+    Error Context: test-results/ai-dark-1440-AI-transport--124ae-erences-and-partial-failure/error-context.md
+
+  2) testing/browser/ai.spec.ts:8:9 › dark 390 AI transport fixture labels, references and partial failure 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('alert')
+    Expected substring: "partial output cannot be applied"
+    Error: strict mode violation: getByRole('alert') resolved to 2 elements:
+        1) <p role="alert">AI could not finish. Try again; partial output ca…</p> aka getByText('AI could not finish. Try')
+        2) <div role="alert" aria-live="assertive" id="__next-route-announcer__"></div> aka locator('[id="__next-route-announcer__"]')
+
+    Call log:
+      - Expect "toContainText" with timeout 15000ms
+      - waiting for getByRole('alert')
+        - locator resolved to <div role="alert" aria-live="assertive" id="__next-route-announcer__"></div>
+        - unexpected value ""
+
+
+      89 |         failure = true;
+      90 |         await generate();
+    > 91 |         await expect(page.getByRole('alert')).toContainText('partial output cannot be applied');
+         |                                               ^
+      92 |         await expect(
+      93 |           page.getByRole('button', { name: 'Insert into document', exact: true }),
+      94 |         ).toBeDisabled();
+        at /home/kevin/devsync/backend/testing/browser/ai.spec.ts:91:47
+
+    Error Context: test-results/ai-dark-390-AI-transport-f-32ca6-erences-and-partial-failure/error-context.md
+
+  3) testing/browser/ai.spec.ts:8:9 › light 1440 AI transport fixture labels, references and partial failure 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('alert')
+    Expected substring: "partial output cannot be applied"
+    Error: strict mode violation: getByRole('alert') resolved to 2 elements:
+        1) <p role="alert">AI could not finish. Try again; partial output ca…</p> aka getByText('AI could not finish. Try')
+        2) <div role="alert" aria-live="assertive" id="__next-route-announcer__"></div> aka locator('[id="__next-route-announcer__"]')
+
+    Call log:
+      - Expect "toContainText" with timeout 15000ms
+      - waiting for getByRole('alert')
+        - locator resolved to <div role="alert" aria-live="assertive" id="__next-route-announcer__"></div>
+        - unexpected value ""
+
+
+      89 |         failure = true;
+      90 |         await generate();
+    > 91 |         await expect(page.getByRole('alert')).toContainText('partial output cannot be applied');
+         |                                               ^
+      92 |         await expect(
+      93 |           page.getByRole('button', { name: 'Insert into document', exact: true }),
+      94 |         ).toBeDisabled();
+        at /home/kevin/devsync/backend/testing/browser/ai.spec.ts:91:47
+
+    Error Context: test-results/ai-light-1440-AI-transport-b59a4-erences-and-partial-failure/error-context.md
+
+  4) testing/browser/ai.spec.ts:8:9 › light 390 AI transport fixture labels, references and partial failure 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('alert')
+    Expected substring: "partial output cannot be applied"
+    Error: strict mode violation: getByRole('alert') resolved to 2 elements:
+        1) <p role="alert">AI could not finish. Try again; partial output ca…</p> aka getByText('AI could not finish. Try')
+        2) <div role="alert" aria-live="assertive" id="__next-route-announcer__"></div> aka locator('[id="__next-route-announcer__"]')
+
+    Call log:
+      - Expect "toContainText" with timeout 15000ms
+      - waiting for getByRole('alert')
+        - locator resolved to <div role="alert" aria-live="assertive" id="__next-route-announcer__"></div>
+        - unexpected value ""
+
+
+      89 |         failure = true;
+      90 |         await generate();
+    > 91 |         await expect(page.getByRole('alert')).toContainText('partial output cannot be applied');
+         |                                               ^
+      92 |         await expect(
+      93 |           page.getByRole('button', { name: 'Insert into document', exact: true }),
+      94 |         ).toBeDisabled();
+        at /home/kevin/devsync/backend/testing/browser/ai.spec.ts:91:47
+
+    Error Context: test-results/ai-light-390-AI-transport--1e4a7-erences-and-partial-failure/error-context.md
+
+  4 failed
+    testing/browser/ai.spec.ts:8:9 › dark 1440 AI transport fixture labels, references and partial failure 
+    testing/browser/ai.spec.ts:8:9 › dark 390 AI transport fixture labels, references and partial failure 
+    testing/browser/ai.spec.ts:8:9 › light 1440 AI transport fixture labels, references and partial failure 
+    testing/browser/ai.spec.ts:8:9 › light 390 AI transport fixture labels, references and partial failure 
+[?25h
+Browser orchestration command exited 1

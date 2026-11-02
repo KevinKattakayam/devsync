@@ -1,0 +1,9 @@
+# ADR013: attributed AI and ingestion operations
+
+Context: AI balance lookup preceded membership checks; search used unscoped RLS queries; upload parsing preceded authorization; ingestion wrote JSON independently of live documents; offline usage had no actor and globally colliding client action IDs.
+
+Decision: central active-user/workspace policy runs before balance/provider access and upload parsing. Ingestion checks again before extraction and commits document Yjs state, JSON projection, activity and embedding outbox in one authorized tenant transaction. PDF parser resources are closed in finally. Search reads run in the authorized tenant transaction, excluding archived documents. AI request data is bounded by a Zod schema and document/retrieved context is labeled as untrusted JSON data. Provider deadlines/retries are bounded; these are defenses, not a guarantee that a model ignores injection.
+
+Usage writes require an attributed local actor and the central policy. PostgreSQL INSERT ON CONFLICT plus field verification handles usage replay; offline keys bind workspace, actor and action ID. Offline reconciliation receives the server's last authenticated connection context, not an actor from the action JSON. Without such a context the server leaves actions pending rather than inventing authority. Provider metadata updates recheck authorization.
+
+Consequences: historical pending offline actions may need a subsequent authenticated edit to be reconsidered; durable per-action attribution and a full worker lifecycle remain open. Usage still estimates input tokens and does not implement atomic per-user/provider cost reservation, actual output accounting or a complete failure-delivery outbox. Billing/SCIM/GitHub service authorities are separate remaining work. No external AI/provider call is made by the new integration fixture; actual PostgreSQL policies, HTTP handlers and CRDT state are exercised.

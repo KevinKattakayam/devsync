@@ -1,0 +1,37 @@
+{
+  "baselineUpdated": false,
+  "toleranceChanged": false,
+  "backendTests": 259,
+  "frontendComponentTests": 76,
+  "scannerRegressionCasesPassed": 5,
+  "historyCommitsScanned": 66,
+  "historyFindingsAfterExactExceptions": 0,
+  "frontendFinalImage": {
+    "LOW": 83,
+    "HIGH": 32,
+    "MEDIUM": 98,
+    "UNKNOWN": 2,
+    "CRITICAL": 1
+  },
+  "initialBrowser": {
+    "passed": 3,
+    "failed": 3,
+    "durationMinutesReported": 6.2
+  },
+  "finalBrowser": {
+    "passed": 2,
+    "failed": 4,
+    "durationMinutesReported": 7.8,
+    "shellAxeReports": 7,
+    "shellAxeViolations": 0,
+    "shellAxeIncompleteRuleOccurrences": 5
+  },
+  "deferred": [
+    "Further diagnosis/fix of all four visual failures",
+    "Native Kanban pointer drag",
+    "Remaining OS vulnerabilities and prior dependency advisories",
+    "Lighthouse landing/dashboard/editor mobile+desktop",
+    "Executed local Compose k6 REST and WebSocket editor test",
+    "Hosted CI and production/provider/restore verification"
+  ]
+}

@@ -1,0 +1,594 @@
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": PostgreSQL database "devsync_e2e_browser", schema "public" at "localhost:32776"
+
+11 migrations found in prisma/migrations
+
+Applying migration `20260729000000_baseline`
+Applying migration `20260729180000_enterprise_platform`
+Applying migration `20260815000000_phase_3_tenant_rls`
+Applying migration `20260815001000_scim_provisioning`
+Applying migration `20260815002000_commercial_billing`
+Applying migration `20261031000000_tenant_indexes`
+Applying migration `20261031010000_crdt_journal`
+Applying migration `202611010001_canonical_revision`
+Applying migration `202611010002_embedding_authority`
+Applying migration `202611010003_atomic_create_idempotency`
+Applying migration `202611010004_workspace_invitations`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20260729000000_baseline/
+    └─ migration.sql
+  └─ 20260729180000_enterprise_platform/
+    └─ migration.sql
+  └─ 20260815000000_phase_3_tenant_rls/
+    └─ migration.sql
+  └─ 20260815001000_scim_provisioning/
+    └─ migration.sql
+  └─ 20260815002000_commercial_billing/
+    └─ migration.sql
+  └─ 20261031000000_tenant_indexes/
+    └─ migration.sql
+  └─ 20261031010000_crdt_journal/
+    └─ migration.sql
+  └─ 202611010001_canonical_revision/
+    └─ migration.sql
+  └─ 202611010002_embedding_authority/
+    └─ migration.sql
+  └─ 202611010003_atomic_create_idempotency/
+    └─ migration.sql
+  └─ 202611010004_workspace_invitations/
+    └─ migration.sql
+      
+All migrations have been successfully applied.
+Sample workspace seeded. Sign in with the supplied Clerk test identities.
+/home/kevin/devsync/.worktrees/frontend-fixture
+Isolated fixture server ready
+{"level":30,"time":1793528017131,"service":"devsync-api","req":{"id":"54e6223f-20c0-47cc-860b-db79385a5c8e","method":"GET"},"requestId":"54e6223f-20c0-47cc-860b-db79385a5c8e","res":{"statusCode":200},"responseTime":13,"msg":"request completed"}
+▲ Next.js 16.4.3 (webpack)
+- Local:         http://127.0.0.1:3001
+- Network:       http://127.0.0.1:3001
+✓ Ready in 679ms
+✓ Running next.config.ts took 158ms
+
+✓ Generated AGENTS.md for AI agents. Set `agentRules: false` in next.config to disable.
+○ Compiling /(auth)/login/[[...rest]]/page ...
+Attention: Clerk collects telemetry data from its SDKs when connected to development instances.
+The data collected is used to inform Clerk's product roadmap.
+To learn more, including how to opt-out from the telemetry program, visit: https://clerk.com/docs/telemetry.
+
+ GET /login 200 in 1943ms (next.js: 1271ms, proxy.ts: 114ms, application-code: 558ms)
+
+Running 1 test using 1 worker
+
+(node:26692) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1793528048169,"service":"devsync-api","req":{"id":"1d8fcce0-996d-424d-bcd9-d62c92755ff0","method":"GET"},"requestId":"1d8fcce0-996d-424d-bcd9-d62c92755ff0","res":{"statusCode":200},"responseTime":25,"msg":"request completed"}
+ GET / 200 in 2.5s (next.js: 2.1s, proxy.ts: 7ms, application-code: 470ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+ GET /login 200 in 169ms (next.js: 55ms, proxy.ts: 4ms, application-code: 110ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+ GET /login/SignIn_clerk_catchall_check_1793528055291 200 in 167ms (next.js: 62ms, proxy.ts: 6ms, application-code: 99ms)
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+ GET /login 200 in 211ms (next.js: 54ms, proxy.ts: 7ms, application-code: 151ms)
+ GET /signup 200 in 3.2s (next.js: 2.9s, proxy.ts: 5ms, application-code: 293ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+ GET /signup/SignUp_clerk_catchall_check_1793528061565 200 in 159ms (next.js: 70ms, proxy.ts: 11ms, application-code: 79ms)
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+ GET /signup 200 in 179ms (next.js: 56ms, proxy.ts: 9ms, application-code: 114ms)
+ GET /sign-in 200 in 3.5s (next.js: 3.1s, proxy.ts: 10ms, application-code: 352ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+ GET /sign-in/SignIn_clerk_catchall_check_1793528068451 200 in 192ms (next.js: 99ms, proxy.ts: 9ms, application-code: 84ms)
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+ GET /sign-in 200 in 167ms (next.js: 55ms, proxy.ts: 8ms, application-code: 104ms)
+ GET /sign-up 200 in 3.6s (next.js: 3.4s, proxy.ts: 6ms, application-code: 226ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+ GET /sign-up/SignUp_clerk_catchall_check_1793528074431 200 in 143ms (next.js: 62ms, proxy.ts: 6ms, application-code: 75ms)
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+○ Compiling /(dashboard)/dashboard/page ...
+⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ GET /dashboard 200 in 4.3s (next.js: 4.0s, proxy.ts: 5ms, application-code: 323ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+{"level":30,"time":1793528080726,"service":"devsync-api","req":{"id":"651e2b0e-cdc6-4e70-9a45-273d660a1f1d","method":"GET"},"requestId":"651e2b0e-cdc6-4e70-9a45-273d660a1f1d","res":{"statusCode":200},"responseTime":46,"msg":"request completed"}
+{"level":30,"time":1793528080748,"service":"devsync-api","req":{"id":"d81794bc-5e3e-49a8-84ca-69427fc3b109","method":"GET"},"requestId":"d81794bc-5e3e-49a8-84ca-69427fc3b109","res":{"statusCode":304},"responseTime":20,"msg":"request completed"}
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+ GET /dashboard 200 in 51ms (next.js: 8ms, proxy.ts: 10ms, application-code: 33ms)
+ GET /settings/billing 200 in 2.4s (next.js: 2.0s, proxy.ts: 7ms, application-code: 366ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+ GET /settings/billing 200 in 75ms (next.js: 8ms, proxy.ts: 7ms, application-code: 60ms)
+ GET /workspace/devsync-sample 200 in 4.1s (next.js: 3.9s, proxy.ts: 3ms, application-code: 255ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+{"level":30,"time":1793528091028,"service":"devsync-api","req":{"id":"1b93ec8f-5dd1-4135-b078-3f729586d0e3","method":"GET"},"requestId":"1b93ec8f-5dd1-4135-b078-3f729586d0e3","res":{"statusCode":200},"responseTime":37,"msg":"request completed"}
+{"level":30,"time":1793528091048,"service":"devsync-api","req":{"id":"f62ea760-c07b-4118-a318-795dc14c98e7","method":"GET"},"requestId":"f62ea760-c07b-4118-a318-795dc14c98e7","res":{"statusCode":304},"responseTime":17,"msg":"request completed"}
+{"level":30,"time":1793528091149,"service":"devsync-api","req":{"id":"96744759-e3ce-453d-a7f8-143c14b9ac9c","method":"GET"},"requestId":"96744759-e3ce-453d-a7f8-143c14b9ac9c","res":{"statusCode":200},"responseTime":19,"msg":"request completed"}
+{"level":30,"time":1793528091161,"service":"devsync-api","req":{"id":"0b3dabdd-9881-42a2-88a7-43e2c527764b","method":"GET"},"requestId":"0b3dabdd-9881-42a2-88a7-43e2c527764b","res":{"statusCode":304},"responseTime":11,"msg":"request completed"}
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+ GET /workspace/devsync-sample 200 in 160ms (next.js: 61ms, proxy.ts: 7ms, application-code: 92ms)
+ GET /workspace/devsync-sample/docs 200 in 3.4s (next.js: 3.2s, proxy.ts: 8ms, application-code: 226ms)
+{"level":30,"time":1793528096585,"service":"devsync-api","req":{"id":"f9f4438d-2fa1-4878-a6cd-627d5688a828","method":"GET"},"requestId":"f9f4438d-2fa1-4878-a6cd-627d5688a828","res":{"statusCode":200},"responseTime":33,"msg":"request completed"}
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+{"level":30,"time":1793528096605,"service":"devsync-api","req":{"id":"fdf6d5d7-45fa-4749-bede-30deeda6eab2","method":"GET"},"requestId":"fdf6d5d7-45fa-4749-bede-30deeda6eab2","res":{"statusCode":304},"responseTime":18,"msg":"request completed"}
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+○ Compiling /(dashboard)/workspace/[id]/docs/[docId]/page ...
+ GET /workspace/devsync-sample/docs 200 in 248ms (next.js: 112ms, proxy.ts: 7ms, application-code: 129ms)
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 7.0s (next.js: 6.4s, proxy.ts: 8ms, application-code: 615ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+{"level":30,"time":1793528106649,"service":"devsync-api","req":{"id":"ffb5dbc8-e940-4665-9154-76a35d79f67c","method":"GET"},"requestId":"ffb5dbc8-e940-4665-9154-76a35d79f67c","res":{"statusCode":200},"responseTime":109,"msg":"request completed"}
+{"level":30,"time":1793528106678,"service":"devsync-api","req":{"id":"b1db00ca-be22-4432-922c-bed0ec411ef5","method":"GET"},"requestId":"b1db00ca-be22-4432-922c-bed0ec411ef5","res":{"statusCode":200},"responseTime":25,"msg":"request completed"}
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+○ Compiling /(dashboard)/workspace/[id]/kanban/page ...
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 220ms (next.js: 87ms, proxy.ts: 9ms, application-code: 124ms)
+Yjs was already imported. This breaks constructor checks and will lead to issues! - https://github.com/yjs/yjs/issues/438
+ GET /workspace/devsync-sample/kanban 200 in 6.3s (next.js: 5.9s, proxy.ts: 4ms, application-code: 443ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+{"level":30,"time":1793528115398,"service":"devsync-api","req":{"id":"59530d92-d680-4635-85ca-7b935f75d4bf","method":"GET"},"requestId":"59530d92-d680-4635-85ca-7b935f75d4bf","res":{"statusCode":200},"responseTime":32,"msg":"request completed"}
+{"level":30,"time":1793528115421,"service":"devsync-api","req":{"id":"be6eed13-4d37-4016-b575-ae0476904e3b","method":"GET"},"requestId":"be6eed13-4d37-4016-b575-ae0476904e3b","res":{"statusCode":304},"responseTime":21,"msg":"request completed"}
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+ GET /workspace/devsync-sample/kanban 200 in 179ms (next.js: 82ms, proxy.ts: 6ms, application-code: 92ms)
+ GET /workspace/devsync-sample/snippets 200 in 4.8s (next.js: 4.4s, proxy.ts: 3ms, application-code: 330ms)
+{"level":30,"time":1793528122214,"service":"devsync-api","req":{"id":"3e36ab23-b0d2-4879-bde8-85060c0194fd","method":"GET"},"requestId":"3e36ab23-b0d2-4879-bde8-85060c0194fd","res":{"statusCode":200},"responseTime":24,"msg":"request completed"}
+{"level":30,"time":1793528122228,"service":"devsync-api","req":{"id":"c01419d7-3402-400d-9f31-743634e4e96d","method":"GET"},"requestId":"c01419d7-3402-400d-9f31-743634e4e96d","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+ GET /workspace/devsync-sample/snippets 200 in 203ms (next.js: 98ms, proxy.ts: 6ms, application-code: 100ms)
+ GET /workspace/devsync-sample/settings 200 in 7.4s (next.js: 6.7s, proxy.ts: 4ms, application-code: 652ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+⨯ Error: Clerk: auth() was called but Clerk can't detect usage of clerkMiddleware(). Please ensure the following:
+- Your middleware or proxy file exists at ./src/middleware.(ts|js) or proxy.(ts|js)
+- clerkMiddleware() is used in your Next.js middleware or proxy file.
+- Your middleware or proxy matcher is configured to match this route or page.
+- If you are using the src directory, make sure the middleware or proxy file is inside of it.
+
+If you've verified your configuration and are still seeing this error, there may be a runtime issue or a problem communicating with Clerk.
+
+For more details, see https://clerk.com/err/auth-middleware
+
+    at async SuperadminLayout (src/app/(superadmin)/layout.tsx:7:16)
+   5 |   children,
+   6 | }: Readonly<{ children: React.ReactNode }>) {
+>  7 |   const user = await currentUser();
+     |                ^
+   8 |   if (user?.publicMetadata.systemRole !== 'SUPER_ADMIN') redirect('/dashboard');
+   9 |   return (
+  10 |     <main className="min-h-screen bg-background text-foreground"> {
+  digest: '2075580579'
+}
+⨯ TypeError: fetch failed
+    at async loadMetrics (src/app/(superadmin)/superadmin/page.tsx:12:20)
+    at async SuperadminDashboard (src/app/(superadmin)/superadmin/page.tsx:24:19)
+  10 |
+  11 | async function loadMetrics(): Promise<Metrics> {
+> 12 |   const response = await fetch(
+     |                    ^
+  13 |     `${process.env.BACKEND_URL || 'http://localhost:5000'}/api/superadmin/metrics`,
+  14 |     {
+  15 |       headers: { 'x-superadmin-service-token': process.env.SUPERADMIN_SERVICE_TOKEN || '' }, {
+  digest: '3349125238',
+  [cause]: Error: connect ECONNREFUSED 127.0.0.1:5000
+      at ignore-listed frames {
+    errno: -111,
+    code: 'ECONNREFUSED',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 5000
+  }
+}
+ GET /superadmin 500 in 4.1s (next.js: 3.0s, proxy.ts: 15ms, application-code: 1069ms)
+ GET /workspace/devsync-sample/settings 200 in 467ms (next.js: 164ms, proxy.ts: 92ms, application-code: 211ms)
+{"level":30,"time":1793528140715,"service":"devsync-api","req":{"id":"54148408-403f-486c-ba1a-e791f6bc96d4","method":"GET"},"requestId":"54148408-403f-486c-ba1a-e791f6bc96d4","res":{"statusCode":200},"responseTime":14,"msg":"request completed"}
+ GET / 200 in 2.8s (next.js: 2.4s, proxy.ts: 26ms, application-code: 319ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+ GET /login 200 in 3.6s (next.js: 3.2s, proxy.ts: 5ms, application-code: 471ms)
+ GET / 200 in 66ms (next.js: 13ms, proxy.ts: 16ms, application-code: 36ms)
+⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+ GET /login/SignIn_clerk_catchall_check_1793528152917 200 in 235ms (next.js: 86ms, proxy.ts: 9ms, application-code: 140ms)
+○ Compiling /(auth)/signup/[[...rest]]/page ...
+ GET /signup 200 in 3.7s (next.js: 3.3s, proxy.ts: 6ms, application-code: 372ms)
+ GET /login 200 in 148ms (next.js: 85ms, proxy.ts: 8ms, application-code: 55ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+ GET /signup/SignUp_clerk_catchall_check_1793528160454 200 in 265ms (next.js: 127ms, proxy.ts: 7ms, application-code: 132ms)
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+ GET /sign-in 200 in 3.3s (next.js: 2.9s, proxy.ts: 9ms, application-code: 340ms)
+ GET /signup 200 in 156ms (next.js: 100ms, proxy.ts: 7ms, application-code: 50ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+ GET /sign-up 200 in 214ms (next.js: 110ms, proxy.ts: 3ms, application-code: 101ms)
+ GET /sign-in/SignIn_clerk_catchall_check_1793528179784 200 in 215ms (next.js: 90ms, proxy.ts: 16ms, application-code: 109ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+ GET /sign-up/SignUp_clerk_catchall_check_1793528183257 200 in 268ms (next.js: 120ms, proxy.ts: 7ms, application-code: 142ms)
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+ GET /dashboard 200 in 101ms (next.js: 20ms, proxy.ts: 10ms, application-code: 71ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+{"level":30,"time":1793528186737,"service":"devsync-api","req":{"id":"12bb85a8-1a48-4fb7-b9de-62eeeb0c7e9b","method":"GET"},"requestId":"12bb85a8-1a48-4fb7-b9de-62eeeb0c7e9b","res":{"statusCode":200},"responseTime":66,"msg":"request completed"}
+{"level":30,"time":1793528186777,"service":"devsync-api","req":{"id":"5acc3ccf-fcd8-49fc-94ff-362dc2b2a919","method":"GET"},"requestId":"5acc3ccf-fcd8-49fc-94ff-362dc2b2a919","res":{"statusCode":304},"responseTime":35,"msg":"request completed"}
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+○ Compiling /(dashboard)/settings/billing/page ...
+⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ GET /dashboard 200 in 83ms (next.js: 19ms, proxy.ts: 16ms, application-code: 48ms)
+ GET /settings/billing 200 in 7.2s (next.js: 6.7s, proxy.ts: 13ms, application-code: 477ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+○ Compiling /(dashboard)/workspace/[id]/page ...
+ GET /workspace/devsync-sample 200 in 6.1s (next.js: 5.4s, proxy.ts: 7ms, application-code: 638ms)
+ GET /settings/billing 200 in 86ms (next.js: 17ms, proxy.ts: 17ms, application-code: 53ms)
+⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+{"level":30,"time":1793528205781,"service":"devsync-api","req":{"id":"2ff6b0ae-3faf-4a58-9223-edbddf2beee8","method":"GET"},"requestId":"2ff6b0ae-3faf-4a58-9223-edbddf2beee8","res":{"statusCode":200},"responseTime":38,"msg":"request completed"}
+{"level":30,"time":1793528205803,"service":"devsync-api","req":{"id":"ac230ac7-4e8c-48a5-8798-db84e9def9d6","method":"GET"},"requestId":"ac230ac7-4e8c-48a5-8798-db84e9def9d6","res":{"statusCode":304},"responseTime":19,"msg":"request completed"}
+{"level":30,"time":1793528205920,"service":"devsync-api","req":{"id":"d2329242-141e-42cd-a16a-a5d46bf90619","method":"GET"},"requestId":"d2329242-141e-42cd-a16a-a5d46bf90619","res":{"statusCode":200},"responseTime":23,"msg":"request completed"}
+{"level":30,"time":1793528205934,"service":"devsync-api","req":{"id":"b13656f8-5ec5-4e56-a11e-33d06b98a2d5","method":"GET"},"requestId":"b13656f8-5ec5-4e56-a11e-33d06b98a2d5","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+ GET /workspace/devsync-sample/docs 200 in 3.5s (next.js: 2.9s, proxy.ts: 4ms, application-code: 534ms)
+ GET /workspace/devsync-sample 200 in 223ms (next.js: 136ms, proxy.ts: 17ms, application-code: 70ms)
+⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+{"level":30,"time":1793528266325,"service":"devsync-api","req":{"id":"280ba86b-c345-4f6b-9fbb-6941472395b3","method":"GET"},"requestId":"280ba86b-c345-4f6b-9fbb-6941472395b3","res":{"statusCode":200},"responseTime":40,"msg":"request completed"}
+{"level":30,"time":1793528266356,"service":"devsync-api","req":{"id":"c5346b61-686a-4c56-8906-69072c604545","method":"GET"},"requestId":"c5346b61-686a-4c56-8906-69072c604545","res":{"statusCode":304},"responseTime":26,"msg":"request completed"}
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+○ Compiling /(dashboard)/workspace/[id]/docs/[docId]/page ...
+Yjs was already imported. This breaks constructor checks and will lead to issues! - https://github.com/yjs/yjs/issues/438
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 5.9s (next.js: 4.9s, proxy.ts: 8ms, application-code: 975ms)
+ GET /workspace/devsync-sample/docs 200 in 200ms (next.js: 124ms, proxy.ts: 15ms, application-code: 60ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+{"level":30,"time":1793528289163,"service":"devsync-api","req":{"id":"373e1e38-a918-4305-890a-a580bd3ef4c4","method":"GET"},"requestId":"373e1e38-a918-4305-890a-a580bd3ef4c4","res":{"statusCode":200},"responseTime":29,"msg":"request completed"}
+{"level":30,"time":1793528289190,"service":"devsync-api","req":{"id":"f29a95c1-2bc8-4440-a193-e055f371cc70","method":"GET"},"requestId":"f29a95c1-2bc8-4440-a193-e055f371cc70","res":{"statusCode":304},"responseTime":24,"msg":"request completed"}
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+○ Compiling /(dashboard)/workspace/[id]/kanban/page ...
+Yjs was already imported. This breaks constructor checks and will lead to issues! - https://github.com/yjs/yjs/issues/438
+⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ GET /workspace/devsync-sample/kanban 200 in 6.0s (next.js: 5.5s, proxy.ts: 5ms, application-code: 462ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+{"level":30,"time":1793528297164,"service":"devsync-api","req":{"id":"a37c9e49-6a12-4522-889b-f415a0b391ab","method":"GET"},"requestId":"a37c9e49-6a12-4522-889b-f415a0b391ab","res":{"statusCode":200},"responseTime":36,"msg":"request completed"}
+{"level":30,"time":1793528297192,"service":"devsync-api","req":{"id":"cdbff935-5af7-46b1-9b8d-8e31a3818706","method":"GET"},"requestId":"cdbff935-5af7-46b1-9b8d-8e31a3818706","res":{"statusCode":304},"responseTime":26,"msg":"request completed"}
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+ GET /workspace/devsync-sample/snippets 200 in 205ms (next.js: 98ms, proxy.ts: 3ms, application-code: 103ms)
+{"level":30,"time":1793528298937,"service":"devsync-api","req":{"id":"c30defe4-c77a-4ee7-a0a1-d51a985f02e6","method":"GET"},"requestId":"c30defe4-c77a-4ee7-a0a1-d51a985f02e6","res":{"statusCode":200},"responseTime":12,"msg":"request completed"}
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+{"level":30,"time":1793528298954,"service":"devsync-api","req":{"id":"fcea60af-e61c-446c-aafa-2a7055d506f9","method":"GET"},"requestId":"fcea60af-e61c-446c-aafa-2a7055d506f9","res":{"statusCode":304},"responseTime":15,"msg":"request completed"}
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+ GET /workspace/devsync-sample/settings 200 in 2.9s (next.js: 2.5s, proxy.ts: 6ms, application-code: 362ms)
+ GET /workspace/devsync-sample/snippets 200 in 163ms (next.js: 99ms, proxy.ts: 12ms, application-code: 52ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js:40:1032)
+[browser] Clerk: Structural CSS detected that may break on updates.
+
+Found:
+  - CSS ".cl-rootBox .cl-card"
+
+These selectors depend on the internal DOM structure of Clerk's components, which may change when Clerk deploys component updates.
+To prevent breaking changes, install @clerk/ui and pass it to ClerkProvider:
+
+  import { ui } from '@clerk/ui'
+  <ClerkProvider ui={ui}>
+
+Learn more: https://clerk.com/docs/reference/components/versioning
+(code=structural_css_pin_clerk_ui) (https://apt-kingfish-78.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js:35:1730)
+○ Compiling /(superadmin)/superadmin/page ...
+⨯ Error: Clerk: auth() was called but Clerk can't detect usage of clerkMiddleware(). Please ensure the following:
+- Your middleware or proxy file exists at ./src/middleware.(ts|js) or proxy.(ts|js)
+- clerkMiddleware() is used in your Next.js middleware or proxy file.
+- Your middleware or proxy matcher is configured to match this route or page.
+- If you are using the src directory, make sure the middleware or proxy file is inside of it.
+
+If you've verified your configuration and are still seeing this error, there may be a runtime issue or a problem communicating with Clerk.
+
+For more details, see https://clerk.com/err/auth-middleware
+
+    at async SuperadminLayout (src/app/(superadmin)/layout.tsx:7:16)
+   5 |   children,
+   6 | }: Readonly<{ children: React.ReactNode }>) {
+>  7 |   const user = await currentUser();
+     |                ^
+   8 |   if (user?.publicMetadata.systemRole !== 'SUPER_ADMIN') redirect('/dashboard');
+   9 |   return (
+  10 |     <main className="min-h-screen bg-background text-foreground"> {
+  digest: '2075580579'
+}
+⨯ TypeError: fetch failed
+    at async loadMetrics (src/app/(superadmin)/superadmin/page.tsx:12:20)
+    at async SuperadminDashboard (src/app/(superadmin)/superadmin/page.tsx:24:19)
+  10 |
+  11 | async function loadMetrics(): Promise<Metrics> {
+> 12 |   const response = await fetch(
+     |                    ^
+  13 |     `${process.env.BACKEND_URL || 'http://localhost:5000'}/api/superadmin/metrics`,
+  14 |     {
+  15 |       headers: { 'x-superadmin-service-token': process.env.SUPERADMIN_SERVICE_TOKEN || '' }, {
+  digest: '3349125238',
+  [cause]: Error: connect ECONNREFUSED 127.0.0.1:5000
+      at ignore-listed frames {
+    errno: -111,
+    code: 'ECONNREFUSED',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 5000
+  }
+}
+ GET /superadmin 500 in 4.0s (next.js: 3.5s, proxy.ts: 7ms, application-code: 539ms)
+ GET /workspace/devsync-sample/settings 200 in 234ms (next.js: 136ms, proxy.ts: 46ms, application-code: 52ms)
+{"target":"current","captured":24,"unavailable":[{"path":"/superadmin","width":1440,"error":"HTTP 500"},{"path":"/sign-in","width":390,"error":"\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed"},{"path":"/workspace/devsync-sample/docs","width":390,"error":"\u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed"},{"path":"/superadmin","width":390,"error":"HTTP 500"}]}
+  ✓  1 testing/browser/capture.spec.ts:6:5 › capture public and authenticated page evidence at both requested widths (4.4m)
+
+  1 passed (4.4m)
+[?25h

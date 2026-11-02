@@ -1,0 +1,3347 @@
+[
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "default",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "targets": [
+          [
+            "span[aria-label=\"1 more collaborators\"]"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "dialog",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-hidden-focus",
+        "targets": [
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(1)"
+          ],
+          [
+            "a"
+          ],
+          [
+            "#design-main"
+          ],
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(15)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "drawer",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-hidden-focus",
+        "targets": [
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(1)"
+          ],
+          [
+            "a"
+          ],
+          [
+            "#design-main"
+          ],
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(15)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "popover",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "targets": [
+          [
+            "span[aria-label=\"1 more collaborators\"]"
+          ]
+        ]
+      },
+      {
+        "id": "aria-valid-attr-value",
+        "targets": [
+          [
+            "button[aria-controls=\"radix-_R_75klritmlb_\"]"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "menu",
+    "violations": [
+      {
+        "id": "aria-hidden-focus",
+        "impact": "serious",
+        "tags": [
+          "cat.name-role-value",
+          "wcag2a",
+          "wcag412",
+          "TTv5",
+          "TT6.a",
+          "EN-301-549",
+          "EN-9.4.1.2",
+          "RGAAv4",
+          "RGAA-10.8.1"
+        ],
+        "description": "Ensure aria-hidden elements are not focusable nor contain focusable elements",
+        "help": "ARIA hidden element must not be focusable or contain focusable elements",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/aria-hidden-focus?application=axeAPI",
+        "nodes": [
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "focusable-not-tabbable",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<a href=\"#design-main\" class=\"ui-skip-link\" data-aria-hidden=\"true\" aria-hidden=\"true\">Skip to components</a>",
+                    "target": [
+                      "a"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Focusable content should have tabindex=\"-1\", be removed from the DOM, or not be hidden with aria-hidden"
+              }
+            ],
+            "none": [],
+            "impact": "serious",
+            "html": "<a href=\"#design-main\" class=\"ui-skip-link\" data-aria-hidden=\"true\" aria-hidden=\"true\">Skip to components</a>",
+            "target": [
+              "a"
+            ],
+            "failureSummary": "Fix all of the following:\n  Focusable content should have tabindex=\"-1\", be removed from the DOM, or not be hidden with aria-hidden"
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "focusable-disabled",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<button type=\"button\" role=\"combobox\" aria-expanded=\"false\" aria-autocomplete=\"none\" dir=\"ltr\" data-state=\"closed\" aria-label=\"Color theme\" class=\"ui-input flex items-center justify-between gap-2\">",
+                    "target": [
+                      "button[aria-label=\"Color theme\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"primary\" data-size=\"default\" class=\"ui-button\">primary</button>",
+                    "target": [
+                      ".ui-button[data-variant=\"primary\"][data-size=\"default\"]:nth-child(1)"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">secondary</button>",
+                    "target": [
+                      ".gap-3.flex-wrap.items-center > .ui-button[data-variant=\"secondary\"][data-size=\"default\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button\">ghost</button>",
+                    "target": [
+                      ".ui-button[data-variant=\"ghost\"][data-size=\"default\"]:nth-child(3)"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"destructive\" data-size=\"default\" class=\"ui-button\">destructive</button>",
+                    "target": [
+                      "button[data-variant=\"destructive\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"primary\" data-size=\"compact\" class=\"ui-button\">Compact</button>",
+                    "target": [
+                      "button[data-size=\"compact\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button data-state=\"closed\" aria-label=\"Workspace settings\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button\">",
+                    "target": [
+                      "button[aria-label=\"Workspace settings\"]"
+                    ]
+                  },
+                  {
+                    "html": "<input placeholder=\"Untitled document\" class=\"ui-input\">",
+                    "target": [
+                      "input[placeholder=\"Untitled document\"]"
+                    ]
+                  },
+                  {
+                    "html": "<input readonly=\"\" class=\"ui-input\" value=\"Architecture decisions\">",
+                    "target": [
+                      "input[readonly=\"\"]"
+                    ]
+                  },
+                  {
+                    "html": "<input aria-invalid=\"true\" aria-describedby=\"name-error\" class=\"ui-input\">",
+                    "target": [
+                      "input[aria-describedby=\"name-error\"]"
+                    ]
+                  },
+                  {
+                    "html": "<textarea placeholder=\"Add context for your team…\" class=\"ui-input min-h-24 resize-y\"></textarea>",
+                    "target": [
+                      "textarea[placeholder=\"Add context for your team…\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"combobox\" aria-expanded=\"false\" aria-autocomplete=\"none\" dir=\"ltr\" data-state=\"closed\" aria-label=\"Destination\" class=\"ui-input flex items-center justify-between gap-2\">",
+                    "target": [
+                      "button[aria-label=\"Destination\"]"
+                    ]
+                  },
+                  {
+                    "html": "<textarea aria-invalid=\"true\" aria-describedby=\"notes-error\" class=\"ui-input min-h-24 resize-y\"></textarea>",
+                    "target": [
+                      "textarea[aria-describedby=\"notes-error\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"checkbox\" aria-checked=\"false\" data-state=\"unchecked\" value=\"on\" class=\"ui-checkbox\"></button>",
+                    "target": [
+                      ".min-h-9.gap-2:nth-child(1) > .ui-checkbox[role=\"checkbox\"][data-state=\"unchecked\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"checkbox\" aria-checked=\"true\" data-state=\"checked\" value=\"on\" class=\"ui-checkbox\">",
+                    "target": [
+                      ".ui-checkbox[role=\"checkbox\"][data-state=\"checked\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"checkbox\" aria-checked=\"mixed\" data-state=\"indeterminate\" value=\"on\" class=\"ui-checkbox\">",
+                    "target": [
+                      ".ui-checkbox[data-state=\"indeterminate\"][role=\"checkbox\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"switch\" aria-checked=\"false\" data-state=\"unchecked\" value=\"on\" class=\"ui-switch\"><span data-state=\"unchecked\" class=\"ui-switch-thumb\"></span></button>",
+                    "target": [
+                      ".min-h-9.gap-2:nth-child(5) > .ui-switch[role=\"switch\"][data-state=\"unchecked\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"switch\" aria-checked=\"true\" data-state=\"checked\" value=\"on\" class=\"ui-switch\"><span data-state=\"checked\" class=\"ui-switch-thumb\"></span></button>",
+                    "target": [
+                      ".ui-switch[role=\"switch\"][data-state=\"checked\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Open dialog</button>",
+                    "target": [
+                      ".gap-3.flex-wrap.flex > button[aria-haspopup=\"dialog\"][data-state=\"closed\"][data-variant=\"secondary\"]:nth-child(1)"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Open drawer</button>",
+                    "target": [
+                      "button[aria-haspopup=\"dialog\"][data-state=\"closed\"][data-variant=\"secondary\"]:nth-child(2)"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Open popover</button>",
+                    "target": [
+                      "button[aria-haspopup=\"dialog\"][data-state=\"closed\"][data-variant=\"secondary\"]:nth-child(3)"
+                    ]
+                  },
+                  {
+                    "html": "<button id=\"radix-_R_95klritmlb_\" aria-haspopup=\"menu\" aria-expanded=\"true\" data-state=\"open\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\" aria-controls=\"radix-_R_95klritmlbH1_\" data-radix-popper-side=\"top\" data-radix-popper-align=\"end\">Open menu</button>",
+                    "target": [
+                      "#radix-_R_95klritmlb_"
+                    ]
+                  },
+                  {
+                    "html": "<button data-state=\"closed\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button\">Focus for tooltip</button>",
+                    "target": [
+                      ".border-t.py-6.md\\:grid-cols-\\[12rem_1fr\\]:nth-child(5) > .min-w-0.space-y-4 > .gap-3.flex-wrap.flex > button[data-variant=\"ghost\"][data-state=\"closed\"][data-size=\"default\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Success toast</button>",
+                    "target": [
+                      ".gap-3.flex-wrap.flex:nth-child(2) > .ui-button[data-variant=\"secondary\"][data-size=\"default\"]:nth-child(1)"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Error toast</button>",
+                    "target": [
+                      ".gap-3.flex-wrap.flex:nth-child(2) > .ui-button[data-variant=\"secondary\"][data-size=\"default\"]:nth-child(2)"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Neutral toast</button>",
+                    "target": [
+                      ".gap-3.flex-wrap.flex:nth-child(2) > .ui-button[data-variant=\"secondary\"][data-size=\"default\"]:nth-child(3)"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"primary\" data-size=\"default\" class=\"ui-button\">",
+                    "target": [
+                      ".flex-col > .ui-button[data-variant=\"primary\"][data-size=\"default\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Commands <kbd class=\"rounded-sm border border-border bg-secondary px-1.5 py-0.5 font-mono text-xs text-muted-foreground\">⌘ / Ctrl K</kbd></button>",
+                    "target": [
+                      ".min-w-0.space-y-4 > button[aria-haspopup=\"dialog\"][data-state=\"closed\"][data-variant=\"secondary\"]"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Focusable content should be disabled, be removed from the DOM, or not be hidden with aria-hidden"
+              },
+              {
+                "id": "focusable-not-tabbable",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<div role=\"tablist\" aria-orientation=\"horizontal\" aria-label=\"Example resource type\" class=\"flex flex-wrap gap-1 border-b border-border\" tabindex=\"0\" data-orientation=\"horizontal\" style=\"outline:none\">",
+                    "target": [
+                      ".gap-1"
+                    ]
+                  },
+                  {
+                    "html": "<div data-state=\"active\" data-orientation=\"horizontal\" role=\"tabpanel\" aria-labelledby=\"radix-_R_16klritmlb_-trigger-docs\" id=\"radix-_R_16klritmlb_-content-docs\" tabindex=\"0\" class=\"py-4\" style=\"animation-duration:0s\">",
+                    "target": [
+                      "#radix-_R_16klritmlb_-content-docs"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Focusable content should have tabindex=\"-1\", be removed from the DOM, or not be hidden with aria-hidden"
+              }
+            ],
+            "none": [],
+            "impact": "serious",
+            "html": "<main id=\"design-main\" tabindex=\"-1\" class=\"mx-auto max-w-5xl px-4 py-8 text-foreground md:px-8\" data-aria-hidden=\"true\" aria-hidden=\"true\">",
+            "target": [
+              "#design-main"
+            ],
+            "failureSummary": "Fix all of the following:\n  Focusable content should be disabled, be removed from the DOM, or not be hidden with aria-hidden\n  Focusable content should have tabindex=\"-1\", be removed from the DOM, or not be hidden with aria-hidden"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "aria-hidden-focus",
+        "targets": [
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(1)"
+          ],
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(14)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "select",
+    "violations": [
+      {
+        "id": "aria-hidden-focus",
+        "impact": "serious",
+        "tags": [
+          "cat.name-role-value",
+          "wcag2a",
+          "wcag412",
+          "TTv5",
+          "TT6.a",
+          "EN-301-549",
+          "EN-9.4.1.2",
+          "RGAAv4",
+          "RGAA-10.8.1"
+        ],
+        "description": "Ensure aria-hidden elements are not focusable nor contain focusable elements",
+        "help": "ARIA hidden element must not be focusable or contain focusable elements",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/aria-hidden-focus?application=axeAPI",
+        "nodes": [
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "focusable-not-tabbable",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<a href=\"#design-main\" class=\"ui-skip-link\" data-aria-hidden=\"true\" aria-hidden=\"true\">Skip to components</a>",
+                    "target": [
+                      "a"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Focusable content should have tabindex=\"-1\", be removed from the DOM, or not be hidden with aria-hidden"
+              }
+            ],
+            "none": [],
+            "impact": "serious",
+            "html": "<a href=\"#design-main\" class=\"ui-skip-link\" data-aria-hidden=\"true\" aria-hidden=\"true\">Skip to components</a>",
+            "target": [
+              "a"
+            ],
+            "failureSummary": "Fix all of the following:\n  Focusable content should have tabindex=\"-1\", be removed from the DOM, or not be hidden with aria-hidden"
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "focusable-disabled",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<button type=\"button\" role=\"combobox\" aria-expanded=\"false\" aria-autocomplete=\"none\" dir=\"ltr\" data-state=\"closed\" aria-label=\"Color theme\" class=\"ui-input flex items-center justify-between gap-2\">",
+                    "target": [
+                      "button[aria-label=\"Color theme\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"primary\" data-size=\"default\" class=\"ui-button\">primary</button>",
+                    "target": [
+                      ".ui-button[data-variant=\"primary\"][data-size=\"default\"]:nth-child(1)"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">secondary</button>",
+                    "target": [
+                      ".gap-3.flex-wrap.items-center > .ui-button[data-variant=\"secondary\"][data-size=\"default\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button\">ghost</button>",
+                    "target": [
+                      ".ui-button[data-variant=\"ghost\"][data-size=\"default\"]:nth-child(3)"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"destructive\" data-size=\"default\" class=\"ui-button\">destructive</button>",
+                    "target": [
+                      "button[data-variant=\"destructive\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"primary\" data-size=\"compact\" class=\"ui-button\">Compact</button>",
+                    "target": [
+                      "button[data-size=\"compact\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button data-state=\"closed\" aria-label=\"Workspace settings\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button\">",
+                    "target": [
+                      "button[aria-label=\"Workspace settings\"]"
+                    ]
+                  },
+                  {
+                    "html": "<input placeholder=\"Untitled document\" class=\"ui-input\">",
+                    "target": [
+                      "input[placeholder=\"Untitled document\"]"
+                    ]
+                  },
+                  {
+                    "html": "<input readonly=\"\" class=\"ui-input\" value=\"Architecture decisions\">",
+                    "target": [
+                      "input[readonly=\"\"]"
+                    ]
+                  },
+                  {
+                    "html": "<input aria-invalid=\"true\" aria-describedby=\"name-error\" class=\"ui-input\">",
+                    "target": [
+                      "input[aria-describedby=\"name-error\"]"
+                    ]
+                  },
+                  {
+                    "html": "<textarea placeholder=\"Add context for your team…\" class=\"ui-input min-h-24 resize-y\"></textarea>",
+                    "target": [
+                      "textarea[placeholder=\"Add context for your team…\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"combobox\" aria-expanded=\"true\" aria-autocomplete=\"none\" dir=\"ltr\" data-state=\"open\" aria-label=\"Destination\" class=\"ui-input flex items-center justify-between gap-2\" aria-controls=\"radix-_R_2d3klritmlb_\" data-radix-popper-side=\"bottom\" data-radix-popper-align=\"start\">",
+                    "target": [
+                      "button[aria-label=\"Destination\"]"
+                    ]
+                  },
+                  {
+                    "html": "<textarea aria-invalid=\"true\" aria-describedby=\"notes-error\" class=\"ui-input min-h-24 resize-y\"></textarea>",
+                    "target": [
+                      "textarea[aria-describedby=\"notes-error\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"checkbox\" aria-checked=\"false\" data-state=\"unchecked\" value=\"on\" class=\"ui-checkbox\"></button>",
+                    "target": [
+                      ".min-h-9.gap-2:nth-child(1) > .ui-checkbox[role=\"checkbox\"][value=\"on\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"checkbox\" aria-checked=\"true\" data-state=\"checked\" value=\"on\" class=\"ui-checkbox\">",
+                    "target": [
+                      ".ui-checkbox[role=\"checkbox\"][data-state=\"checked\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"checkbox\" aria-checked=\"mixed\" data-state=\"indeterminate\" value=\"on\" class=\"ui-checkbox\">",
+                    "target": [
+                      ".ui-checkbox[data-state=\"indeterminate\"][role=\"checkbox\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"switch\" aria-checked=\"false\" data-state=\"unchecked\" value=\"on\" class=\"ui-switch\"><span data-state=\"unchecked\" class=\"ui-switch-thumb\"></span></button>",
+                    "target": [
+                      ".min-h-9.gap-2:nth-child(5) > .ui-switch[role=\"switch\"][value=\"on\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"switch\" aria-checked=\"true\" data-state=\"checked\" value=\"on\" class=\"ui-switch\"><span data-state=\"checked\" class=\"ui-switch-thumb\"></span></button>",
+                    "target": [
+                      ".ui-switch[role=\"switch\"][data-state=\"checked\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Open dialog</button>",
+                    "target": [
+                      ".gap-3.flex-wrap.flex > button[aria-haspopup=\"dialog\"][data-state=\"closed\"][data-variant=\"secondary\"]:nth-child(1)"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Open drawer</button>",
+                    "target": [
+                      "button[aria-haspopup=\"dialog\"][data-state=\"closed\"][data-variant=\"secondary\"]:nth-child(2)"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Open popover</button>",
+                    "target": [
+                      "button[aria-haspopup=\"dialog\"][data-state=\"closed\"][data-variant=\"secondary\"]:nth-child(3)"
+                    ]
+                  },
+                  {
+                    "html": "<button id=\"radix-_R_95klritmlb_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Open menu</button>",
+                    "target": [
+                      "#radix-_R_95klritmlb_"
+                    ]
+                  },
+                  {
+                    "html": "<button data-state=\"closed\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button\">Focus for tooltip</button>",
+                    "target": [
+                      ".border-t.py-6.md\\:grid-cols-\\[12rem_1fr\\]:nth-child(5) > .min-w-0.space-y-4 > .gap-3.flex-wrap.flex > button[data-variant=\"ghost\"][data-state=\"closed\"][data-size=\"default\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Success toast</button>",
+                    "target": [
+                      ".gap-3.flex-wrap.flex:nth-child(2) > .ui-button[data-variant=\"secondary\"][data-size=\"default\"]:nth-child(1)"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Error toast</button>",
+                    "target": [
+                      ".gap-3.flex-wrap.flex:nth-child(2) > .ui-button[data-variant=\"secondary\"][data-size=\"default\"]:nth-child(2)"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Neutral toast</button>",
+                    "target": [
+                      ".gap-3.flex-wrap.flex:nth-child(2) > .ui-button[data-variant=\"secondary\"][data-size=\"default\"]:nth-child(3)"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"primary\" data-size=\"default\" class=\"ui-button\">",
+                    "target": [
+                      ".flex-col > .ui-button[data-variant=\"primary\"][data-size=\"default\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Commands <kbd class=\"rounded-sm border border-border bg-secondary px-1.5 py-0.5 font-mono text-xs text-muted-foreground\">⌘ / Ctrl K</kbd></button>",
+                    "target": [
+                      ".min-w-0.space-y-4 > button[aria-haspopup=\"dialog\"][data-state=\"closed\"][data-variant=\"secondary\"]"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Focusable content should be disabled, be removed from the DOM, or not be hidden with aria-hidden"
+              },
+              {
+                "id": "focusable-not-tabbable",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<div role=\"tablist\" aria-orientation=\"horizontal\" aria-label=\"Example resource type\" class=\"flex flex-wrap gap-1 border-b border-border\" tabindex=\"0\" data-orientation=\"horizontal\" style=\"outline:none\">",
+                    "target": [
+                      ".gap-1"
+                    ]
+                  },
+                  {
+                    "html": "<div data-state=\"active\" data-orientation=\"horizontal\" role=\"tabpanel\" aria-labelledby=\"radix-_R_16klritmlb_-trigger-docs\" id=\"radix-_R_16klritmlb_-content-docs\" tabindex=\"0\" class=\"py-4\" style=\"animation-duration:0s\">",
+                    "target": [
+                      "#radix-_R_16klritmlb_-content-docs"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Focusable content should have tabindex=\"-1\", be removed from the DOM, or not be hidden with aria-hidden"
+              }
+            ],
+            "none": [],
+            "impact": "serious",
+            "html": "<main id=\"design-main\" tabindex=\"-1\" class=\"mx-auto max-w-5xl px-4 py-8 text-foreground md:px-8\" data-aria-hidden=\"true\" aria-hidden=\"true\">",
+            "target": [
+              "#design-main"
+            ],
+            "failureSummary": "Fix all of the following:\n  Focusable content should be disabled, be removed from the DOM, or not be hidden with aria-hidden\n  Focusable content should have tabindex=\"-1\", be removed from the DOM, or not be hidden with aria-hidden"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "aria-hidden-focus",
+        "targets": [
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(1)"
+          ],
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(14)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "commands",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-hidden-focus",
+        "targets": [
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(1)"
+          ],
+          [
+            "a"
+          ],
+          [
+            "#design-main"
+          ],
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(15)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "commands-empty",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-hidden-focus",
+        "targets": [
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(1)"
+          ],
+          [
+            "a"
+          ],
+          [
+            "#design-main"
+          ],
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(15)"
+          ]
+        ]
+      },
+      {
+        "id": "aria-required-children",
+        "targets": [
+          [
+            "#_r_i_-list"
+          ]
+        ]
+      },
+      {
+        "id": "color-contrast",
+        "targets": [
+          [
+            "#radix-_R_39klritmlbH2_"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "tooltip",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "targets": [
+          [
+            "span[aria-label=\"1 more collaborators\"]"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "toast",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "targets": [
+          [
+            "span[aria-label=\"1 more collaborators\"]"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "dark",
+    "width": 390,
+    "state": "default",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "targets": [
+          [
+            "span[aria-label=\"1 more collaborators\"]"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "dark",
+    "width": 390,
+    "state": "dialog",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-hidden-focus",
+        "targets": [
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(1)"
+          ],
+          [
+            "a"
+          ],
+          [
+            "#design-main"
+          ],
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(15)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "dark",
+    "width": 390,
+    "state": "drawer",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-hidden-focus",
+        "targets": [
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(1)"
+          ],
+          [
+            "a"
+          ],
+          [
+            "#design-main"
+          ],
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(15)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "dark",
+    "width": 390,
+    "state": "popover",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "targets": [
+          [
+            "span[aria-label=\"1 more collaborators\"]"
+          ]
+        ]
+      },
+      {
+        "id": "aria-valid-attr-value",
+        "targets": [
+          [
+            "button[aria-controls=\"radix-_R_75klritmlb_\"]"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "dark",
+    "width": 390,
+    "state": "menu",
+    "violations": [
+      {
+        "id": "aria-hidden-focus",
+        "impact": "serious",
+        "tags": [
+          "cat.name-role-value",
+          "wcag2a",
+          "wcag412",
+          "TTv5",
+          "TT6.a",
+          "EN-301-549",
+          "EN-9.4.1.2",
+          "RGAAv4",
+          "RGAA-10.8.1"
+        ],
+        "description": "Ensure aria-hidden elements are not focusable nor contain focusable elements",
+        "help": "ARIA hidden element must not be focusable or contain focusable elements",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/aria-hidden-focus?application=axeAPI",
+        "nodes": [
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "focusable-not-tabbable",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<a href=\"#design-main\" class=\"ui-skip-link\" data-aria-hidden=\"true\" aria-hidden=\"true\">Skip to components</a>",
+                    "target": [
+                      "a"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Focusable content should have tabindex=\"-1\", be removed from the DOM, or not be hidden with aria-hidden"
+              }
+            ],
+            "none": [],
+            "impact": "serious",
+            "html": "<a href=\"#design-main\" class=\"ui-skip-link\" data-aria-hidden=\"true\" aria-hidden=\"true\">Skip to components</a>",
+            "target": [
+              "a"
+            ],
+            "failureSummary": "Fix all of the following:\n  Focusable content should have tabindex=\"-1\", be removed from the DOM, or not be hidden with aria-hidden"
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "focusable-disabled",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<button type=\"button\" role=\"combobox\" aria-expanded=\"false\" aria-autocomplete=\"none\" dir=\"ltr\" data-state=\"closed\" aria-label=\"Color theme\" class=\"ui-input flex items-center justify-between gap-2\">",
+                    "target": [
+                      "button[aria-label=\"Color theme\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"primary\" data-size=\"default\" class=\"ui-button\">primary</button>",
+                    "target": [
+                      ".ui-button[data-variant=\"primary\"][data-size=\"default\"]:nth-child(1)"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">secondary</button>",
+                    "target": [
+                      ".gap-3.flex-wrap.items-center > .ui-button[data-variant=\"secondary\"][data-size=\"default\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button\">ghost</button>",
+                    "target": [
+                      ".ui-button[data-variant=\"ghost\"][data-size=\"default\"]:nth-child(3)"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"destructive\" data-size=\"default\" class=\"ui-button\">destructive</button>",
+                    "target": [
+                      "button[data-variant=\"destructive\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"primary\" data-size=\"compact\" class=\"ui-button\">Compact</button>",
+                    "target": [
+                      "button[data-size=\"compact\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button data-state=\"closed\" aria-label=\"Workspace settings\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button\">",
+                    "target": [
+                      "button[aria-label=\"Workspace settings\"]"
+                    ]
+                  },
+                  {
+                    "html": "<input placeholder=\"Untitled document\" class=\"ui-input\">",
+                    "target": [
+                      "input[placeholder=\"Untitled document\"]"
+                    ]
+                  },
+                  {
+                    "html": "<input readonly=\"\" class=\"ui-input\" value=\"Architecture decisions\">",
+                    "target": [
+                      "input[readonly=\"\"]"
+                    ]
+                  },
+                  {
+                    "html": "<input aria-invalid=\"true\" aria-describedby=\"name-error\" class=\"ui-input\">",
+                    "target": [
+                      "input[aria-describedby=\"name-error\"]"
+                    ]
+                  },
+                  {
+                    "html": "<textarea placeholder=\"Add context for your team…\" class=\"ui-input min-h-24 resize-y\"></textarea>",
+                    "target": [
+                      "textarea[placeholder=\"Add context for your team…\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"combobox\" aria-expanded=\"false\" aria-autocomplete=\"none\" dir=\"ltr\" data-state=\"closed\" aria-label=\"Destination\" class=\"ui-input flex items-center justify-between gap-2\">",
+                    "target": [
+                      "button[aria-label=\"Destination\"]"
+                    ]
+                  },
+                  {
+                    "html": "<textarea aria-invalid=\"true\" aria-describedby=\"notes-error\" class=\"ui-input min-h-24 resize-y\"></textarea>",
+                    "target": [
+                      "textarea[aria-describedby=\"notes-error\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"checkbox\" aria-checked=\"false\" data-state=\"unchecked\" value=\"on\" class=\"ui-checkbox\"></button>",
+                    "target": [
+                      ".min-h-9.gap-2:nth-child(1) > .ui-checkbox[role=\"checkbox\"][data-state=\"unchecked\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"checkbox\" aria-checked=\"true\" data-state=\"checked\" value=\"on\" class=\"ui-checkbox\">",
+                    "target": [
+                      ".ui-checkbox[role=\"checkbox\"][data-state=\"checked\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"checkbox\" aria-checked=\"mixed\" data-state=\"indeterminate\" value=\"on\" class=\"ui-checkbox\">",
+                    "target": [
+                      ".ui-checkbox[data-state=\"indeterminate\"][role=\"checkbox\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"switch\" aria-checked=\"false\" data-state=\"unchecked\" value=\"on\" class=\"ui-switch\"><span data-state=\"unchecked\" class=\"ui-switch-thumb\"></span></button>",
+                    "target": [
+                      ".min-h-9.gap-2:nth-child(5) > .ui-switch[role=\"switch\"][data-state=\"unchecked\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"switch\" aria-checked=\"true\" data-state=\"checked\" value=\"on\" class=\"ui-switch\"><span data-state=\"checked\" class=\"ui-switch-thumb\"></span></button>",
+                    "target": [
+                      ".ui-switch[role=\"switch\"][data-state=\"checked\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Open dialog</button>",
+                    "target": [
+                      ".gap-3.flex-wrap.flex > button[aria-haspopup=\"dialog\"][data-state=\"closed\"][data-variant=\"secondary\"]:nth-child(1)"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Open drawer</button>",
+                    "target": [
+                      "button[aria-haspopup=\"dialog\"][data-state=\"closed\"][data-variant=\"secondary\"]:nth-child(2)"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Open popover</button>",
+                    "target": [
+                      "button[aria-haspopup=\"dialog\"][data-state=\"closed\"][data-variant=\"secondary\"]:nth-child(3)"
+                    ]
+                  },
+                  {
+                    "html": "<button id=\"radix-_R_95klritmlb_\" aria-haspopup=\"menu\" aria-expanded=\"true\" data-state=\"open\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\" aria-controls=\"radix-_R_95klritmlbH1_\" data-radix-popper-side=\"bottom\" data-radix-popper-align=\"end\">Open menu</button>",
+                    "target": [
+                      "#radix-_R_95klritmlb_"
+                    ]
+                  },
+                  {
+                    "html": "<button data-state=\"closed\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button\">Focus for tooltip</button>",
+                    "target": [
+                      ".border-t.py-6.md\\:grid-cols-\\[12rem_1fr\\]:nth-child(5) > .min-w-0.space-y-4 > .gap-3.flex-wrap.flex > button[data-variant=\"ghost\"][data-state=\"closed\"][data-size=\"default\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Success toast</button>",
+                    "target": [
+                      ".gap-3.flex-wrap.flex:nth-child(2) > .ui-button[data-variant=\"secondary\"][data-size=\"default\"]:nth-child(1)"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Error toast</button>",
+                    "target": [
+                      ".gap-3.flex-wrap.flex:nth-child(2) > .ui-button[data-variant=\"secondary\"][data-size=\"default\"]:nth-child(2)"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Neutral toast</button>",
+                    "target": [
+                      ".gap-3.flex-wrap.flex:nth-child(2) > .ui-button[data-variant=\"secondary\"][data-size=\"default\"]:nth-child(3)"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"primary\" data-size=\"default\" class=\"ui-button\">",
+                    "target": [
+                      ".flex-col > .ui-button[data-variant=\"primary\"][data-size=\"default\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Commands <kbd class=\"rounded-sm border border-border bg-secondary px-1.5 py-0.5 font-mono text-xs text-muted-foreground\">⌘ / Ctrl K</kbd></button>",
+                    "target": [
+                      ".min-w-0.space-y-4 > button[aria-haspopup=\"dialog\"][data-state=\"closed\"][data-variant=\"secondary\"]"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Focusable content should be disabled, be removed from the DOM, or not be hidden with aria-hidden"
+              },
+              {
+                "id": "focusable-not-tabbable",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<div role=\"tablist\" aria-orientation=\"horizontal\" aria-label=\"Example resource type\" class=\"flex flex-wrap gap-1 border-b border-border\" tabindex=\"0\" data-orientation=\"horizontal\" style=\"outline:none\">",
+                    "target": [
+                      ".gap-1"
+                    ]
+                  },
+                  {
+                    "html": "<div data-state=\"active\" data-orientation=\"horizontal\" role=\"tabpanel\" aria-labelledby=\"radix-_R_16klritmlb_-trigger-docs\" id=\"radix-_R_16klritmlb_-content-docs\" tabindex=\"0\" class=\"py-4\" style=\"animation-duration:0s\">",
+                    "target": [
+                      "#radix-_R_16klritmlb_-content-docs"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Focusable content should have tabindex=\"-1\", be removed from the DOM, or not be hidden with aria-hidden"
+              }
+            ],
+            "none": [],
+            "impact": "serious",
+            "html": "<main id=\"design-main\" tabindex=\"-1\" class=\"mx-auto max-w-5xl px-4 py-8 text-foreground md:px-8\" data-aria-hidden=\"true\" aria-hidden=\"true\">",
+            "target": [
+              "#design-main"
+            ],
+            "failureSummary": "Fix all of the following:\n  Focusable content should be disabled, be removed from the DOM, or not be hidden with aria-hidden\n  Focusable content should have tabindex=\"-1\", be removed from the DOM, or not be hidden with aria-hidden"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "aria-hidden-focus",
+        "targets": [
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(1)"
+          ],
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(14)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "dark",
+    "width": 390,
+    "state": "select",
+    "violations": [
+      {
+        "id": "aria-hidden-focus",
+        "impact": "serious",
+        "tags": [
+          "cat.name-role-value",
+          "wcag2a",
+          "wcag412",
+          "TTv5",
+          "TT6.a",
+          "EN-301-549",
+          "EN-9.4.1.2",
+          "RGAAv4",
+          "RGAA-10.8.1"
+        ],
+        "description": "Ensure aria-hidden elements are not focusable nor contain focusable elements",
+        "help": "ARIA hidden element must not be focusable or contain focusable elements",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/aria-hidden-focus?application=axeAPI",
+        "nodes": [
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "focusable-not-tabbable",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<a href=\"#design-main\" class=\"ui-skip-link\" data-aria-hidden=\"true\" aria-hidden=\"true\">Skip to components</a>",
+                    "target": [
+                      "a"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Focusable content should have tabindex=\"-1\", be removed from the DOM, or not be hidden with aria-hidden"
+              }
+            ],
+            "none": [],
+            "impact": "serious",
+            "html": "<a href=\"#design-main\" class=\"ui-skip-link\" data-aria-hidden=\"true\" aria-hidden=\"true\">Skip to components</a>",
+            "target": [
+              "a"
+            ],
+            "failureSummary": "Fix all of the following:\n  Focusable content should have tabindex=\"-1\", be removed from the DOM, or not be hidden with aria-hidden"
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "focusable-disabled",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<button type=\"button\" role=\"combobox\" aria-expanded=\"false\" aria-autocomplete=\"none\" dir=\"ltr\" data-state=\"closed\" aria-label=\"Color theme\" class=\"ui-input flex items-center justify-between gap-2\">",
+                    "target": [
+                      "button[aria-label=\"Color theme\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"primary\" data-size=\"default\" class=\"ui-button\">primary</button>",
+                    "target": [
+                      ".ui-button[data-variant=\"primary\"][data-size=\"default\"]:nth-child(1)"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">secondary</button>",
+                    "target": [
+                      ".gap-3.flex-wrap.items-center > .ui-button[data-variant=\"secondary\"][data-size=\"default\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button\">ghost</button>",
+                    "target": [
+                      ".ui-button[data-variant=\"ghost\"][data-size=\"default\"]:nth-child(3)"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"destructive\" data-size=\"default\" class=\"ui-button\">destructive</button>",
+                    "target": [
+                      "button[data-variant=\"destructive\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"primary\" data-size=\"compact\" class=\"ui-button\">Compact</button>",
+                    "target": [
+                      "button[data-size=\"compact\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button data-state=\"closed\" aria-label=\"Workspace settings\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button\">",
+                    "target": [
+                      "button[aria-label=\"Workspace settings\"]"
+                    ]
+                  },
+                  {
+                    "html": "<input placeholder=\"Untitled document\" class=\"ui-input\">",
+                    "target": [
+                      "input[placeholder=\"Untitled document\"]"
+                    ]
+                  },
+                  {
+                    "html": "<input readonly=\"\" class=\"ui-input\" value=\"Architecture decisions\">",
+                    "target": [
+                      "input[readonly=\"\"]"
+                    ]
+                  },
+                  {
+                    "html": "<input aria-invalid=\"true\" aria-describedby=\"name-error\" class=\"ui-input\">",
+                    "target": [
+                      "input[aria-describedby=\"name-error\"]"
+                    ]
+                  },
+                  {
+                    "html": "<textarea placeholder=\"Add context for your team…\" class=\"ui-input min-h-24 resize-y\"></textarea>",
+                    "target": [
+                      "textarea[placeholder=\"Add context for your team…\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"combobox\" aria-expanded=\"true\" aria-autocomplete=\"none\" dir=\"ltr\" data-state=\"open\" aria-label=\"Destination\" class=\"ui-input flex items-center justify-between gap-2\" aria-controls=\"radix-_R_2d3klritmlb_\" data-radix-popper-side=\"bottom\" data-radix-popper-align=\"start\">",
+                    "target": [
+                      "button[aria-label=\"Destination\"]"
+                    ]
+                  },
+                  {
+                    "html": "<textarea aria-invalid=\"true\" aria-describedby=\"notes-error\" class=\"ui-input min-h-24 resize-y\"></textarea>",
+                    "target": [
+                      "textarea[aria-describedby=\"notes-error\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"checkbox\" aria-checked=\"false\" data-state=\"unchecked\" value=\"on\" class=\"ui-checkbox\"></button>",
+                    "target": [
+                      ".min-h-9.gap-2:nth-child(1) > .ui-checkbox[role=\"checkbox\"][value=\"on\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"checkbox\" aria-checked=\"true\" data-state=\"checked\" value=\"on\" class=\"ui-checkbox\">",
+                    "target": [
+                      ".ui-checkbox[role=\"checkbox\"][data-state=\"checked\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"checkbox\" aria-checked=\"mixed\" data-state=\"indeterminate\" value=\"on\" class=\"ui-checkbox\">",
+                    "target": [
+                      ".ui-checkbox[data-state=\"indeterminate\"][role=\"checkbox\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"switch\" aria-checked=\"false\" data-state=\"unchecked\" value=\"on\" class=\"ui-switch\"><span data-state=\"unchecked\" class=\"ui-switch-thumb\"></span></button>",
+                    "target": [
+                      ".min-h-9.gap-2:nth-child(5) > .ui-switch[role=\"switch\"][value=\"on\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"switch\" aria-checked=\"true\" data-state=\"checked\" value=\"on\" class=\"ui-switch\"><span data-state=\"checked\" class=\"ui-switch-thumb\"></span></button>",
+                    "target": [
+                      ".ui-switch[role=\"switch\"][data-state=\"checked\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Open dialog</button>",
+                    "target": [
+                      ".gap-3.flex-wrap.flex > button[aria-haspopup=\"dialog\"][data-state=\"closed\"][data-variant=\"secondary\"]:nth-child(1)"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Open drawer</button>",
+                    "target": [
+                      "button[aria-haspopup=\"dialog\"][data-state=\"closed\"][data-variant=\"secondary\"]:nth-child(2)"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Open popover</button>",
+                    "target": [
+                      "button[aria-haspopup=\"dialog\"][data-state=\"closed\"][data-variant=\"secondary\"]:nth-child(3)"
+                    ]
+                  },
+                  {
+                    "html": "<button id=\"radix-_R_95klritmlb_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Open menu</button>",
+                    "target": [
+                      "#radix-_R_95klritmlb_"
+                    ]
+                  },
+                  {
+                    "html": "<button data-state=\"closed\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button\">Focus for tooltip</button>",
+                    "target": [
+                      ".border-t.py-6.md\\:grid-cols-\\[12rem_1fr\\]:nth-child(5) > .min-w-0.space-y-4 > .gap-3.flex-wrap.flex > button[data-variant=\"ghost\"][data-state=\"closed\"][data-size=\"default\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Success toast</button>",
+                    "target": [
+                      ".gap-3.flex-wrap.flex:nth-child(2) > .ui-button[data-variant=\"secondary\"][data-size=\"default\"]:nth-child(1)"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Error toast</button>",
+                    "target": [
+                      ".gap-3.flex-wrap.flex:nth-child(2) > .ui-button[data-variant=\"secondary\"][data-size=\"default\"]:nth-child(2)"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Neutral toast</button>",
+                    "target": [
+                      ".gap-3.flex-wrap.flex:nth-child(2) > .ui-button[data-variant=\"secondary\"][data-size=\"default\"]:nth-child(3)"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"primary\" data-size=\"default\" class=\"ui-button\">",
+                    "target": [
+                      ".flex-col > .ui-button[data-variant=\"primary\"][data-size=\"default\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Commands <kbd class=\"rounded-sm border border-border bg-secondary px-1.5 py-0.5 font-mono text-xs text-muted-foreground\">⌘ / Ctrl K</kbd></button>",
+                    "target": [
+                      ".min-w-0.space-y-4 > button[aria-haspopup=\"dialog\"][data-state=\"closed\"][data-variant=\"secondary\"]"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Focusable content should be disabled, be removed from the DOM, or not be hidden with aria-hidden"
+              },
+              {
+                "id": "focusable-not-tabbable",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<div role=\"tablist\" aria-orientation=\"horizontal\" aria-label=\"Example resource type\" class=\"flex flex-wrap gap-1 border-b border-border\" tabindex=\"0\" data-orientation=\"horizontal\" style=\"outline:none\">",
+                    "target": [
+                      ".gap-1"
+                    ]
+                  },
+                  {
+                    "html": "<div data-state=\"active\" data-orientation=\"horizontal\" role=\"tabpanel\" aria-labelledby=\"radix-_R_16klritmlb_-trigger-docs\" id=\"radix-_R_16klritmlb_-content-docs\" tabindex=\"0\" class=\"py-4\" style=\"animation-duration:0s\">",
+                    "target": [
+                      "#radix-_R_16klritmlb_-content-docs"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Focusable content should have tabindex=\"-1\", be removed from the DOM, or not be hidden with aria-hidden"
+              }
+            ],
+            "none": [],
+            "impact": "serious",
+            "html": "<main id=\"design-main\" tabindex=\"-1\" class=\"mx-auto max-w-5xl px-4 py-8 text-foreground md:px-8\" data-aria-hidden=\"true\" aria-hidden=\"true\">",
+            "target": [
+              "#design-main"
+            ],
+            "failureSummary": "Fix all of the following:\n  Focusable content should be disabled, be removed from the DOM, or not be hidden with aria-hidden\n  Focusable content should have tabindex=\"-1\", be removed from the DOM, or not be hidden with aria-hidden"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "aria-hidden-focus",
+        "targets": [
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(1)"
+          ],
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(14)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "dark",
+    "width": 390,
+    "state": "commands",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-hidden-focus",
+        "targets": [
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(1)"
+          ],
+          [
+            "a"
+          ],
+          [
+            "#design-main"
+          ],
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(15)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "dark",
+    "width": 390,
+    "state": "commands-empty",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-hidden-focus",
+        "targets": [
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(1)"
+          ],
+          [
+            "a"
+          ],
+          [
+            "#design-main"
+          ],
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(15)"
+          ]
+        ]
+      },
+      {
+        "id": "aria-required-children",
+        "targets": [
+          [
+            "#_r_i_-list"
+          ]
+        ]
+      },
+      {
+        "id": "color-contrast",
+        "targets": [
+          [
+            "#radix-_R_39klritmlbH2_"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "dark",
+    "width": 390,
+    "state": "tooltip",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "targets": [
+          [
+            "span[aria-label=\"1 more collaborators\"]"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "dark",
+    "width": 390,
+    "state": "toast",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "targets": [
+          [
+            "span[aria-label=\"1 more collaborators\"]"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "light",
+    "width": 1440,
+    "state": "default",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "targets": [
+          [
+            "span[aria-label=\"1 more collaborators\"]"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "light",
+    "width": 1440,
+    "state": "dialog",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-hidden-focus",
+        "targets": [
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(1)"
+          ],
+          [
+            "a"
+          ],
+          [
+            "#design-main"
+          ],
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(15)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "light",
+    "width": 1440,
+    "state": "drawer",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-hidden-focus",
+        "targets": [
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(1)"
+          ],
+          [
+            "a"
+          ],
+          [
+            "#design-main"
+          ],
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(15)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "light",
+    "width": 1440,
+    "state": "popover",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "targets": [
+          [
+            "span[aria-label=\"1 more collaborators\"]"
+          ]
+        ]
+      },
+      {
+        "id": "aria-valid-attr-value",
+        "targets": [
+          [
+            "button[aria-controls=\"radix-_R_75klritmlb_\"]"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "light",
+    "width": 1440,
+    "state": "menu",
+    "violations": [
+      {
+        "id": "aria-hidden-focus",
+        "impact": "serious",
+        "tags": [
+          "cat.name-role-value",
+          "wcag2a",
+          "wcag412",
+          "TTv5",
+          "TT6.a",
+          "EN-301-549",
+          "EN-9.4.1.2",
+          "RGAAv4",
+          "RGAA-10.8.1"
+        ],
+        "description": "Ensure aria-hidden elements are not focusable nor contain focusable elements",
+        "help": "ARIA hidden element must not be focusable or contain focusable elements",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/aria-hidden-focus?application=axeAPI",
+        "nodes": [
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "focusable-not-tabbable",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<a href=\"#design-main\" class=\"ui-skip-link\" data-aria-hidden=\"true\" aria-hidden=\"true\">Skip to components</a>",
+                    "target": [
+                      "a"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Focusable content should have tabindex=\"-1\", be removed from the DOM, or not be hidden with aria-hidden"
+              }
+            ],
+            "none": [],
+            "impact": "serious",
+            "html": "<a href=\"#design-main\" class=\"ui-skip-link\" data-aria-hidden=\"true\" aria-hidden=\"true\">Skip to components</a>",
+            "target": [
+              "a"
+            ],
+            "failureSummary": "Fix all of the following:\n  Focusable content should have tabindex=\"-1\", be removed from the DOM, or not be hidden with aria-hidden"
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "focusable-disabled",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<button type=\"button\" role=\"combobox\" aria-expanded=\"false\" aria-autocomplete=\"none\" dir=\"ltr\" data-state=\"closed\" aria-label=\"Color theme\" class=\"ui-input flex items-center justify-between gap-2\">",
+                    "target": [
+                      "button[aria-label=\"Color theme\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"primary\" data-size=\"default\" class=\"ui-button\">primary</button>",
+                    "target": [
+                      ".ui-button[data-variant=\"primary\"][data-size=\"default\"]:nth-child(1)"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">secondary</button>",
+                    "target": [
+                      ".gap-3.flex-wrap.items-center > .ui-button[data-variant=\"secondary\"][data-size=\"default\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button\">ghost</button>",
+                    "target": [
+                      ".ui-button[data-variant=\"ghost\"][data-size=\"default\"]:nth-child(3)"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"destructive\" data-size=\"default\" class=\"ui-button\">destructive</button>",
+                    "target": [
+                      "button[data-variant=\"destructive\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"primary\" data-size=\"compact\" class=\"ui-button\">Compact</button>",
+                    "target": [
+                      "button[data-size=\"compact\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button data-state=\"closed\" aria-label=\"Workspace settings\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button\">",
+                    "target": [
+                      "button[aria-label=\"Workspace settings\"]"
+                    ]
+                  },
+                  {
+                    "html": "<input placeholder=\"Untitled document\" class=\"ui-input\">",
+                    "target": [
+                      "input[placeholder=\"Untitled document\"]"
+                    ]
+                  },
+                  {
+                    "html": "<input readonly=\"\" class=\"ui-input\" value=\"Architecture decisions\">",
+                    "target": [
+                      "input[readonly=\"\"]"
+                    ]
+                  },
+                  {
+                    "html": "<input aria-invalid=\"true\" aria-describedby=\"name-error\" class=\"ui-input\">",
+                    "target": [
+                      "input[aria-describedby=\"name-error\"]"
+                    ]
+                  },
+                  {
+                    "html": "<textarea placeholder=\"Add context for your team…\" class=\"ui-input min-h-24 resize-y\"></textarea>",
+                    "target": [
+                      "textarea[placeholder=\"Add context for your team…\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"combobox\" aria-expanded=\"false\" aria-autocomplete=\"none\" dir=\"ltr\" data-state=\"closed\" aria-label=\"Destination\" class=\"ui-input flex items-center justify-between gap-2\">",
+                    "target": [
+                      "button[aria-label=\"Destination\"]"
+                    ]
+                  },
+                  {
+                    "html": "<textarea aria-invalid=\"true\" aria-describedby=\"notes-error\" class=\"ui-input min-h-24 resize-y\"></textarea>",
+                    "target": [
+                      "textarea[aria-describedby=\"notes-error\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"checkbox\" aria-checked=\"false\" data-state=\"unchecked\" value=\"on\" class=\"ui-checkbox\"></button>",
+                    "target": [
+                      ".min-h-9.gap-2:nth-child(1) > .ui-checkbox[role=\"checkbox\"][data-state=\"unchecked\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"checkbox\" aria-checked=\"true\" data-state=\"checked\" value=\"on\" class=\"ui-checkbox\">",
+                    "target": [
+                      ".ui-checkbox[role=\"checkbox\"][data-state=\"checked\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"checkbox\" aria-checked=\"mixed\" data-state=\"indeterminate\" value=\"on\" class=\"ui-checkbox\">",
+                    "target": [
+                      ".ui-checkbox[data-state=\"indeterminate\"][role=\"checkbox\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"switch\" aria-checked=\"false\" data-state=\"unchecked\" value=\"on\" class=\"ui-switch\"><span data-state=\"unchecked\" class=\"ui-switch-thumb\"></span></button>",
+                    "target": [
+                      ".min-h-9.gap-2:nth-child(5) > .ui-switch[role=\"switch\"][data-state=\"unchecked\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"switch\" aria-checked=\"true\" data-state=\"checked\" value=\"on\" class=\"ui-switch\"><span data-state=\"checked\" class=\"ui-switch-thumb\"></span></button>",
+                    "target": [
+                      ".ui-switch[role=\"switch\"][data-state=\"checked\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Open dialog</button>",
+                    "target": [
+                      ".gap-3.flex-wrap.flex > button[aria-haspopup=\"dialog\"][data-state=\"closed\"][data-variant=\"secondary\"]:nth-child(1)"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Open drawer</button>",
+                    "target": [
+                      "button[aria-haspopup=\"dialog\"][data-state=\"closed\"][data-variant=\"secondary\"]:nth-child(2)"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Open popover</button>",
+                    "target": [
+                      "button[aria-haspopup=\"dialog\"][data-state=\"closed\"][data-variant=\"secondary\"]:nth-child(3)"
+                    ]
+                  },
+                  {
+                    "html": "<button id=\"radix-_R_95klritmlb_\" aria-haspopup=\"menu\" aria-expanded=\"true\" data-state=\"open\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\" aria-controls=\"radix-_R_95klritmlbH1_\" data-radix-popper-side=\"top\" data-radix-popper-align=\"end\">Open menu</button>",
+                    "target": [
+                      "#radix-_R_95klritmlb_"
+                    ]
+                  },
+                  {
+                    "html": "<button data-state=\"closed\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button\">Focus for tooltip</button>",
+                    "target": [
+                      ".border-t.py-6.md\\:grid-cols-\\[12rem_1fr\\]:nth-child(5) > .min-w-0.space-y-4 > .gap-3.flex-wrap.flex > button[data-variant=\"ghost\"][data-state=\"closed\"][data-size=\"default\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Success toast</button>",
+                    "target": [
+                      ".gap-3.flex-wrap.flex:nth-child(2) > .ui-button[data-variant=\"secondary\"][data-size=\"default\"]:nth-child(1)"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Error toast</button>",
+                    "target": [
+                      ".gap-3.flex-wrap.flex:nth-child(2) > .ui-button[data-variant=\"secondary\"][data-size=\"default\"]:nth-child(2)"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Neutral toast</button>",
+                    "target": [
+                      ".gap-3.flex-wrap.flex:nth-child(2) > .ui-button[data-variant=\"secondary\"][data-size=\"default\"]:nth-child(3)"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"primary\" data-size=\"default\" class=\"ui-button\">",
+                    "target": [
+                      ".flex-col > .ui-button[data-variant=\"primary\"][data-size=\"default\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Commands <kbd class=\"rounded-sm border border-border bg-secondary px-1.5 py-0.5 font-mono text-xs text-muted-foreground\">⌘ / Ctrl K</kbd></button>",
+                    "target": [
+                      ".min-w-0.space-y-4 > button[aria-haspopup=\"dialog\"][data-state=\"closed\"][data-variant=\"secondary\"]"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Focusable content should be disabled, be removed from the DOM, or not be hidden with aria-hidden"
+              },
+              {
+                "id": "focusable-not-tabbable",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<div role=\"tablist\" aria-orientation=\"horizontal\" aria-label=\"Example resource type\" class=\"flex flex-wrap gap-1 border-b border-border\" tabindex=\"0\" data-orientation=\"horizontal\" style=\"outline:none\">",
+                    "target": [
+                      ".gap-1"
+                    ]
+                  },
+                  {
+                    "html": "<div data-state=\"active\" data-orientation=\"horizontal\" role=\"tabpanel\" aria-labelledby=\"radix-_R_16klritmlb_-trigger-docs\" id=\"radix-_R_16klritmlb_-content-docs\" tabindex=\"0\" class=\"py-4\" style=\"animation-duration:0s\">",
+                    "target": [
+                      "#radix-_R_16klritmlb_-content-docs"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Focusable content should have tabindex=\"-1\", be removed from the DOM, or not be hidden with aria-hidden"
+              }
+            ],
+            "none": [],
+            "impact": "serious",
+            "html": "<main id=\"design-main\" tabindex=\"-1\" class=\"mx-auto max-w-5xl px-4 py-8 text-foreground md:px-8\" data-aria-hidden=\"true\" aria-hidden=\"true\">",
+            "target": [
+              "#design-main"
+            ],
+            "failureSummary": "Fix all of the following:\n  Focusable content should be disabled, be removed from the DOM, or not be hidden with aria-hidden\n  Focusable content should have tabindex=\"-1\", be removed from the DOM, or not be hidden with aria-hidden"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "aria-hidden-focus",
+        "targets": [
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(1)"
+          ],
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(14)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "light",
+    "width": 1440,
+    "state": "select",
+    "violations": [
+      {
+        "id": "aria-hidden-focus",
+        "impact": "serious",
+        "tags": [
+          "cat.name-role-value",
+          "wcag2a",
+          "wcag412",
+          "TTv5",
+          "TT6.a",
+          "EN-301-549",
+          "EN-9.4.1.2",
+          "RGAAv4",
+          "RGAA-10.8.1"
+        ],
+        "description": "Ensure aria-hidden elements are not focusable nor contain focusable elements",
+        "help": "ARIA hidden element must not be focusable or contain focusable elements",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/aria-hidden-focus?application=axeAPI",
+        "nodes": [
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "focusable-not-tabbable",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<a href=\"#design-main\" class=\"ui-skip-link\" data-aria-hidden=\"true\" aria-hidden=\"true\">Skip to components</a>",
+                    "target": [
+                      "a"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Focusable content should have tabindex=\"-1\", be removed from the DOM, or not be hidden with aria-hidden"
+              }
+            ],
+            "none": [],
+            "impact": "serious",
+            "html": "<a href=\"#design-main\" class=\"ui-skip-link\" data-aria-hidden=\"true\" aria-hidden=\"true\">Skip to components</a>",
+            "target": [
+              "a"
+            ],
+            "failureSummary": "Fix all of the following:\n  Focusable content should have tabindex=\"-1\", be removed from the DOM, or not be hidden with aria-hidden"
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "focusable-disabled",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<button type=\"button\" role=\"combobox\" aria-expanded=\"false\" aria-autocomplete=\"none\" dir=\"ltr\" data-state=\"closed\" aria-label=\"Color theme\" class=\"ui-input flex items-center justify-between gap-2\">",
+                    "target": [
+                      "button[aria-label=\"Color theme\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"primary\" data-size=\"default\" class=\"ui-button\">primary</button>",
+                    "target": [
+                      ".ui-button[data-variant=\"primary\"][data-size=\"default\"]:nth-child(1)"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">secondary</button>",
+                    "target": [
+                      ".gap-3.flex-wrap.items-center > .ui-button[data-variant=\"secondary\"][data-size=\"default\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button\">ghost</button>",
+                    "target": [
+                      ".ui-button[data-variant=\"ghost\"][data-size=\"default\"]:nth-child(3)"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"destructive\" data-size=\"default\" class=\"ui-button\">destructive</button>",
+                    "target": [
+                      "button[data-variant=\"destructive\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"primary\" data-size=\"compact\" class=\"ui-button\">Compact</button>",
+                    "target": [
+                      "button[data-size=\"compact\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button data-state=\"closed\" aria-label=\"Workspace settings\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button\">",
+                    "target": [
+                      "button[aria-label=\"Workspace settings\"]"
+                    ]
+                  },
+                  {
+                    "html": "<input placeholder=\"Untitled document\" class=\"ui-input\">",
+                    "target": [
+                      "input[placeholder=\"Untitled document\"]"
+                    ]
+                  },
+                  {
+                    "html": "<input readonly=\"\" class=\"ui-input\" value=\"Architecture decisions\">",
+                    "target": [
+                      "input[readonly=\"\"]"
+                    ]
+                  },
+                  {
+                    "html": "<input aria-invalid=\"true\" aria-describedby=\"name-error\" class=\"ui-input\">",
+                    "target": [
+                      "input[aria-describedby=\"name-error\"]"
+                    ]
+                  },
+                  {
+                    "html": "<textarea placeholder=\"Add context for your team…\" class=\"ui-input min-h-24 resize-y\"></textarea>",
+                    "target": [
+                      "textarea[placeholder=\"Add context for your team…\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"combobox\" aria-expanded=\"true\" aria-autocomplete=\"none\" dir=\"ltr\" data-state=\"open\" aria-label=\"Destination\" class=\"ui-input flex items-center justify-between gap-2\" aria-controls=\"radix-_R_2d3klritmlb_\" data-radix-popper-side=\"bottom\" data-radix-popper-align=\"start\">",
+                    "target": [
+                      "button[aria-label=\"Destination\"]"
+                    ]
+                  },
+                  {
+                    "html": "<textarea aria-invalid=\"true\" aria-describedby=\"notes-error\" class=\"ui-input min-h-24 resize-y\"></textarea>",
+                    "target": [
+                      "textarea[aria-describedby=\"notes-error\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"checkbox\" aria-checked=\"false\" data-state=\"unchecked\" value=\"on\" class=\"ui-checkbox\"></button>",
+                    "target": [
+                      ".min-h-9.gap-2:nth-child(1) > .ui-checkbox[role=\"checkbox\"][value=\"on\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"checkbox\" aria-checked=\"true\" data-state=\"checked\" value=\"on\" class=\"ui-checkbox\">",
+                    "target": [
+                      ".ui-checkbox[role=\"checkbox\"][data-state=\"checked\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"checkbox\" aria-checked=\"mixed\" data-state=\"indeterminate\" value=\"on\" class=\"ui-checkbox\">",
+                    "target": [
+                      ".ui-checkbox[data-state=\"indeterminate\"][role=\"checkbox\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"switch\" aria-checked=\"false\" data-state=\"unchecked\" value=\"on\" class=\"ui-switch\"><span data-state=\"unchecked\" class=\"ui-switch-thumb\"></span></button>",
+                    "target": [
+                      ".min-h-9.gap-2:nth-child(5) > .ui-switch[role=\"switch\"][value=\"on\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"switch\" aria-checked=\"true\" data-state=\"checked\" value=\"on\" class=\"ui-switch\"><span data-state=\"checked\" class=\"ui-switch-thumb\"></span></button>",
+                    "target": [
+                      ".ui-switch[role=\"switch\"][data-state=\"checked\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Open dialog</button>",
+                    "target": [
+                      ".gap-3.flex-wrap.flex > button[aria-haspopup=\"dialog\"][data-state=\"closed\"][data-variant=\"secondary\"]:nth-child(1)"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Open drawer</button>",
+                    "target": [
+                      "button[aria-haspopup=\"dialog\"][data-state=\"closed\"][data-variant=\"secondary\"]:nth-child(2)"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Open popover</button>",
+                    "target": [
+                      "button[aria-haspopup=\"dialog\"][data-state=\"closed\"][data-variant=\"secondary\"]:nth-child(3)"
+                    ]
+                  },
+                  {
+                    "html": "<button id=\"radix-_R_95klritmlb_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Open menu</button>",
+                    "target": [
+                      "#radix-_R_95klritmlb_"
+                    ]
+                  },
+                  {
+                    "html": "<button data-state=\"closed\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button\">Focus for tooltip</button>",
+                    "target": [
+                      ".border-t.py-6.md\\:grid-cols-\\[12rem_1fr\\]:nth-child(5) > .min-w-0.space-y-4 > .gap-3.flex-wrap.flex > button[data-variant=\"ghost\"][data-state=\"closed\"][data-size=\"default\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Success toast</button>",
+                    "target": [
+                      ".gap-3.flex-wrap.flex:nth-child(2) > .ui-button[data-variant=\"secondary\"][data-size=\"default\"]:nth-child(1)"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Error toast</button>",
+                    "target": [
+                      ".gap-3.flex-wrap.flex:nth-child(2) > .ui-button[data-variant=\"secondary\"][data-size=\"default\"]:nth-child(2)"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Neutral toast</button>",
+                    "target": [
+                      ".gap-3.flex-wrap.flex:nth-child(2) > .ui-button[data-variant=\"secondary\"][data-size=\"default\"]:nth-child(3)"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"primary\" data-size=\"default\" class=\"ui-button\">",
+                    "target": [
+                      ".flex-col > .ui-button[data-variant=\"primary\"][data-size=\"default\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Commands <kbd class=\"rounded-sm border border-border bg-secondary px-1.5 py-0.5 font-mono text-xs text-muted-foreground\">⌘ / Ctrl K</kbd></button>",
+                    "target": [
+                      ".min-w-0.space-y-4 > button[aria-haspopup=\"dialog\"][data-state=\"closed\"][data-variant=\"secondary\"]"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Focusable content should be disabled, be removed from the DOM, or not be hidden with aria-hidden"
+              },
+              {
+                "id": "focusable-not-tabbable",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<div role=\"tablist\" aria-orientation=\"horizontal\" aria-label=\"Example resource type\" class=\"flex flex-wrap gap-1 border-b border-border\" tabindex=\"0\" data-orientation=\"horizontal\" style=\"outline:none\">",
+                    "target": [
+                      ".gap-1"
+                    ]
+                  },
+                  {
+                    "html": "<div data-state=\"active\" data-orientation=\"horizontal\" role=\"tabpanel\" aria-labelledby=\"radix-_R_16klritmlb_-trigger-docs\" id=\"radix-_R_16klritmlb_-content-docs\" tabindex=\"0\" class=\"py-4\" style=\"animation-duration:0s\">",
+                    "target": [
+                      "#radix-_R_16klritmlb_-content-docs"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Focusable content should have tabindex=\"-1\", be removed from the DOM, or not be hidden with aria-hidden"
+              }
+            ],
+            "none": [],
+            "impact": "serious",
+            "html": "<main id=\"design-main\" tabindex=\"-1\" class=\"mx-auto max-w-5xl px-4 py-8 text-foreground md:px-8\" data-aria-hidden=\"true\" aria-hidden=\"true\">",
+            "target": [
+              "#design-main"
+            ],
+            "failureSummary": "Fix all of the following:\n  Focusable content should be disabled, be removed from the DOM, or not be hidden with aria-hidden\n  Focusable content should have tabindex=\"-1\", be removed from the DOM, or not be hidden with aria-hidden"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "aria-hidden-focus",
+        "targets": [
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(1)"
+          ],
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(14)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "light",
+    "width": 1440,
+    "state": "commands",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-hidden-focus",
+        "targets": [
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(1)"
+          ],
+          [
+            "a"
+          ],
+          [
+            "#design-main"
+          ],
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(15)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "light",
+    "width": 1440,
+    "state": "commands-empty",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-hidden-focus",
+        "targets": [
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(1)"
+          ],
+          [
+            "a"
+          ],
+          [
+            "#design-main"
+          ],
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(15)"
+          ]
+        ]
+      },
+      {
+        "id": "aria-required-children",
+        "targets": [
+          [
+            "#_r_i_-list"
+          ]
+        ]
+      },
+      {
+        "id": "color-contrast",
+        "targets": [
+          [
+            "#radix-_R_39klritmlbH2_"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "light",
+    "width": 1440,
+    "state": "tooltip",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "targets": [
+          [
+            "span[aria-label=\"1 more collaborators\"]"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "light",
+    "width": 1440,
+    "state": "toast",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "targets": [
+          [
+            "span[aria-label=\"1 more collaborators\"]"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "light",
+    "width": 390,
+    "state": "default",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "targets": [
+          [
+            "span[aria-label=\"1 more collaborators\"]"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "light",
+    "width": 390,
+    "state": "dialog",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-hidden-focus",
+        "targets": [
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(1)"
+          ],
+          [
+            "a"
+          ],
+          [
+            "#design-main"
+          ],
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(15)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "light",
+    "width": 390,
+    "state": "drawer",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-hidden-focus",
+        "targets": [
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(1)"
+          ],
+          [
+            "a"
+          ],
+          [
+            "#design-main"
+          ],
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(15)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "light",
+    "width": 390,
+    "state": "popover",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "targets": [
+          [
+            "span[aria-label=\"1 more collaborators\"]"
+          ]
+        ]
+      },
+      {
+        "id": "aria-valid-attr-value",
+        "targets": [
+          [
+            "button[aria-controls=\"radix-_R_75klritmlb_\"]"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "light",
+    "width": 390,
+    "state": "menu",
+    "violations": [
+      {
+        "id": "aria-hidden-focus",
+        "impact": "serious",
+        "tags": [
+          "cat.name-role-value",
+          "wcag2a",
+          "wcag412",
+          "TTv5",
+          "TT6.a",
+          "EN-301-549",
+          "EN-9.4.1.2",
+          "RGAAv4",
+          "RGAA-10.8.1"
+        ],
+        "description": "Ensure aria-hidden elements are not focusable nor contain focusable elements",
+        "help": "ARIA hidden element must not be focusable or contain focusable elements",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/aria-hidden-focus?application=axeAPI",
+        "nodes": [
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "focusable-not-tabbable",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<a href=\"#design-main\" class=\"ui-skip-link\" data-aria-hidden=\"true\" aria-hidden=\"true\">Skip to components</a>",
+                    "target": [
+                      "a"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Focusable content should have tabindex=\"-1\", be removed from the DOM, or not be hidden with aria-hidden"
+              }
+            ],
+            "none": [],
+            "impact": "serious",
+            "html": "<a href=\"#design-main\" class=\"ui-skip-link\" data-aria-hidden=\"true\" aria-hidden=\"true\">Skip to components</a>",
+            "target": [
+              "a"
+            ],
+            "failureSummary": "Fix all of the following:\n  Focusable content should have tabindex=\"-1\", be removed from the DOM, or not be hidden with aria-hidden"
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "focusable-disabled",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<button type=\"button\" role=\"combobox\" aria-expanded=\"false\" aria-autocomplete=\"none\" dir=\"ltr\" data-state=\"closed\" aria-label=\"Color theme\" class=\"ui-input flex items-center justify-between gap-2\">",
+                    "target": [
+                      "button[aria-label=\"Color theme\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"primary\" data-size=\"default\" class=\"ui-button\">primary</button>",
+                    "target": [
+                      ".ui-button[data-variant=\"primary\"][data-size=\"default\"]:nth-child(1)"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">secondary</button>",
+                    "target": [
+                      ".gap-3.flex-wrap.items-center > .ui-button[data-variant=\"secondary\"][data-size=\"default\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button\">ghost</button>",
+                    "target": [
+                      ".ui-button[data-variant=\"ghost\"][data-size=\"default\"]:nth-child(3)"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"destructive\" data-size=\"default\" class=\"ui-button\">destructive</button>",
+                    "target": [
+                      "button[data-variant=\"destructive\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"primary\" data-size=\"compact\" class=\"ui-button\">Compact</button>",
+                    "target": [
+                      "button[data-size=\"compact\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button data-state=\"closed\" aria-label=\"Workspace settings\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button\">",
+                    "target": [
+                      "button[aria-label=\"Workspace settings\"]"
+                    ]
+                  },
+                  {
+                    "html": "<input placeholder=\"Untitled document\" class=\"ui-input\">",
+                    "target": [
+                      "input[placeholder=\"Untitled document\"]"
+                    ]
+                  },
+                  {
+                    "html": "<input readonly=\"\" class=\"ui-input\" value=\"Architecture decisions\">",
+                    "target": [
+                      "input[readonly=\"\"]"
+                    ]
+                  },
+                  {
+                    "html": "<input aria-invalid=\"true\" aria-describedby=\"name-error\" class=\"ui-input\">",
+                    "target": [
+                      "input[aria-describedby=\"name-error\"]"
+                    ]
+                  },
+                  {
+                    "html": "<textarea placeholder=\"Add context for your team…\" class=\"ui-input min-h-24 resize-y\"></textarea>",
+                    "target": [
+                      "textarea[placeholder=\"Add context for your team…\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"combobox\" aria-expanded=\"false\" aria-autocomplete=\"none\" dir=\"ltr\" data-state=\"closed\" aria-label=\"Destination\" class=\"ui-input flex items-center justify-between gap-2\">",
+                    "target": [
+                      "button[aria-label=\"Destination\"]"
+                    ]
+                  },
+                  {
+                    "html": "<textarea aria-invalid=\"true\" aria-describedby=\"notes-error\" class=\"ui-input min-h-24 resize-y\"></textarea>",
+                    "target": [
+                      "textarea[aria-describedby=\"notes-error\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"checkbox\" aria-checked=\"false\" data-state=\"unchecked\" value=\"on\" class=\"ui-checkbox\"></button>",
+                    "target": [
+                      ".min-h-9.gap-2:nth-child(1) > .ui-checkbox[role=\"checkbox\"][data-state=\"unchecked\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"checkbox\" aria-checked=\"true\" data-state=\"checked\" value=\"on\" class=\"ui-checkbox\">",
+                    "target": [
+                      ".ui-checkbox[role=\"checkbox\"][data-state=\"checked\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"checkbox\" aria-checked=\"mixed\" data-state=\"indeterminate\" value=\"on\" class=\"ui-checkbox\">",
+                    "target": [
+                      ".ui-checkbox[data-state=\"indeterminate\"][role=\"checkbox\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"switch\" aria-checked=\"false\" data-state=\"unchecked\" value=\"on\" class=\"ui-switch\"><span data-state=\"unchecked\" class=\"ui-switch-thumb\"></span></button>",
+                    "target": [
+                      ".min-h-9.gap-2:nth-child(5) > .ui-switch[role=\"switch\"][data-state=\"unchecked\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"switch\" aria-checked=\"true\" data-state=\"checked\" value=\"on\" class=\"ui-switch\"><span data-state=\"checked\" class=\"ui-switch-thumb\"></span></button>",
+                    "target": [
+                      ".ui-switch[role=\"switch\"][data-state=\"checked\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Open dialog</button>",
+                    "target": [
+                      ".gap-3.flex-wrap.flex > button[aria-haspopup=\"dialog\"][data-state=\"closed\"][data-variant=\"secondary\"]:nth-child(1)"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Open drawer</button>",
+                    "target": [
+                      "button[aria-haspopup=\"dialog\"][data-state=\"closed\"][data-variant=\"secondary\"]:nth-child(2)"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Open popover</button>",
+                    "target": [
+                      "button[aria-haspopup=\"dialog\"][data-state=\"closed\"][data-variant=\"secondary\"]:nth-child(3)"
+                    ]
+                  },
+                  {
+                    "html": "<button id=\"radix-_R_95klritmlb_\" aria-haspopup=\"menu\" aria-expanded=\"true\" data-state=\"open\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\" aria-controls=\"radix-_R_95klritmlbH1_\" data-radix-popper-side=\"bottom\" data-radix-popper-align=\"end\">Open menu</button>",
+                    "target": [
+                      "#radix-_R_95klritmlb_"
+                    ]
+                  },
+                  {
+                    "html": "<button data-state=\"closed\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button\">Focus for tooltip</button>",
+                    "target": [
+                      ".border-t.py-6.md\\:grid-cols-\\[12rem_1fr\\]:nth-child(5) > .min-w-0.space-y-4 > .gap-3.flex-wrap.flex > button[data-variant=\"ghost\"][data-state=\"closed\"][data-size=\"default\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Success toast</button>",
+                    "target": [
+                      ".gap-3.flex-wrap.flex:nth-child(2) > .ui-button[data-variant=\"secondary\"][data-size=\"default\"]:nth-child(1)"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Error toast</button>",
+                    "target": [
+                      ".gap-3.flex-wrap.flex:nth-child(2) > .ui-button[data-variant=\"secondary\"][data-size=\"default\"]:nth-child(2)"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Neutral toast</button>",
+                    "target": [
+                      ".gap-3.flex-wrap.flex:nth-child(2) > .ui-button[data-variant=\"secondary\"][data-size=\"default\"]:nth-child(3)"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"primary\" data-size=\"default\" class=\"ui-button\">",
+                    "target": [
+                      ".flex-col > .ui-button[data-variant=\"primary\"][data-size=\"default\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Commands <kbd class=\"rounded-sm border border-border bg-secondary px-1.5 py-0.5 font-mono text-xs text-muted-foreground\">⌘ / Ctrl K</kbd></button>",
+                    "target": [
+                      ".min-w-0.space-y-4 > button[aria-haspopup=\"dialog\"][data-state=\"closed\"][data-variant=\"secondary\"]"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Focusable content should be disabled, be removed from the DOM, or not be hidden with aria-hidden"
+              },
+              {
+                "id": "focusable-not-tabbable",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<div role=\"tablist\" aria-orientation=\"horizontal\" aria-label=\"Example resource type\" class=\"flex flex-wrap gap-1 border-b border-border\" tabindex=\"0\" data-orientation=\"horizontal\" style=\"outline:none\">",
+                    "target": [
+                      ".gap-1"
+                    ]
+                  },
+                  {
+                    "html": "<div data-state=\"active\" data-orientation=\"horizontal\" role=\"tabpanel\" aria-labelledby=\"radix-_R_16klritmlb_-trigger-docs\" id=\"radix-_R_16klritmlb_-content-docs\" tabindex=\"0\" class=\"py-4\" style=\"animation-duration:0s\">",
+                    "target": [
+                      "#radix-_R_16klritmlb_-content-docs"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Focusable content should have tabindex=\"-1\", be removed from the DOM, or not be hidden with aria-hidden"
+              }
+            ],
+            "none": [],
+            "impact": "serious",
+            "html": "<main id=\"design-main\" tabindex=\"-1\" class=\"mx-auto max-w-5xl px-4 py-8 text-foreground md:px-8\" data-aria-hidden=\"true\" aria-hidden=\"true\">",
+            "target": [
+              "#design-main"
+            ],
+            "failureSummary": "Fix all of the following:\n  Focusable content should be disabled, be removed from the DOM, or not be hidden with aria-hidden\n  Focusable content should have tabindex=\"-1\", be removed from the DOM, or not be hidden with aria-hidden"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "aria-hidden-focus",
+        "targets": [
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(1)"
+          ],
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(14)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "light",
+    "width": 390,
+    "state": "select",
+    "violations": [
+      {
+        "id": "aria-hidden-focus",
+        "impact": "serious",
+        "tags": [
+          "cat.name-role-value",
+          "wcag2a",
+          "wcag412",
+          "TTv5",
+          "TT6.a",
+          "EN-301-549",
+          "EN-9.4.1.2",
+          "RGAAv4",
+          "RGAA-10.8.1"
+        ],
+        "description": "Ensure aria-hidden elements are not focusable nor contain focusable elements",
+        "help": "ARIA hidden element must not be focusable or contain focusable elements",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/aria-hidden-focus?application=axeAPI",
+        "nodes": [
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "focusable-not-tabbable",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<a href=\"#design-main\" class=\"ui-skip-link\" data-aria-hidden=\"true\" aria-hidden=\"true\">Skip to components</a>",
+                    "target": [
+                      "a"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Focusable content should have tabindex=\"-1\", be removed from the DOM, or not be hidden with aria-hidden"
+              }
+            ],
+            "none": [],
+            "impact": "serious",
+            "html": "<a href=\"#design-main\" class=\"ui-skip-link\" data-aria-hidden=\"true\" aria-hidden=\"true\">Skip to components</a>",
+            "target": [
+              "a"
+            ],
+            "failureSummary": "Fix all of the following:\n  Focusable content should have tabindex=\"-1\", be removed from the DOM, or not be hidden with aria-hidden"
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "focusable-disabled",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<button type=\"button\" role=\"combobox\" aria-expanded=\"false\" aria-autocomplete=\"none\" dir=\"ltr\" data-state=\"closed\" aria-label=\"Color theme\" class=\"ui-input flex items-center justify-between gap-2\">",
+                    "target": [
+                      "button[aria-label=\"Color theme\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"primary\" data-size=\"default\" class=\"ui-button\">primary</button>",
+                    "target": [
+                      ".ui-button[data-variant=\"primary\"][data-size=\"default\"]:nth-child(1)"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">secondary</button>",
+                    "target": [
+                      ".gap-3.flex-wrap.items-center > .ui-button[data-variant=\"secondary\"][data-size=\"default\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button\">ghost</button>",
+                    "target": [
+                      ".ui-button[data-variant=\"ghost\"][data-size=\"default\"]:nth-child(3)"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"destructive\" data-size=\"default\" class=\"ui-button\">destructive</button>",
+                    "target": [
+                      "button[data-variant=\"destructive\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"primary\" data-size=\"compact\" class=\"ui-button\">Compact</button>",
+                    "target": [
+                      "button[data-size=\"compact\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button data-state=\"closed\" aria-label=\"Workspace settings\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button\">",
+                    "target": [
+                      "button[aria-label=\"Workspace settings\"]"
+                    ]
+                  },
+                  {
+                    "html": "<input placeholder=\"Untitled document\" class=\"ui-input\">",
+                    "target": [
+                      "input[placeholder=\"Untitled document\"]"
+                    ]
+                  },
+                  {
+                    "html": "<input readonly=\"\" class=\"ui-input\" value=\"Architecture decisions\">",
+                    "target": [
+                      "input[readonly=\"\"]"
+                    ]
+                  },
+                  {
+                    "html": "<input aria-invalid=\"true\" aria-describedby=\"name-error\" class=\"ui-input\">",
+                    "target": [
+                      "input[aria-describedby=\"name-error\"]"
+                    ]
+                  },
+                  {
+                    "html": "<textarea placeholder=\"Add context for your team…\" class=\"ui-input min-h-24 resize-y\"></textarea>",
+                    "target": [
+                      "textarea[placeholder=\"Add context for your team…\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"combobox\" aria-expanded=\"true\" aria-autocomplete=\"none\" dir=\"ltr\" data-state=\"open\" aria-label=\"Destination\" class=\"ui-input flex items-center justify-between gap-2\" aria-controls=\"radix-_R_2d3klritmlb_\" data-radix-popper-side=\"bottom\" data-radix-popper-align=\"start\">",
+                    "target": [
+                      "button[aria-label=\"Destination\"]"
+                    ]
+                  },
+                  {
+                    "html": "<textarea aria-invalid=\"true\" aria-describedby=\"notes-error\" class=\"ui-input min-h-24 resize-y\"></textarea>",
+                    "target": [
+                      "textarea[aria-describedby=\"notes-error\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"checkbox\" aria-checked=\"false\" data-state=\"unchecked\" value=\"on\" class=\"ui-checkbox\"></button>",
+                    "target": [
+                      ".min-h-9.gap-2:nth-child(1) > .ui-checkbox[role=\"checkbox\"][value=\"on\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"checkbox\" aria-checked=\"true\" data-state=\"checked\" value=\"on\" class=\"ui-checkbox\">",
+                    "target": [
+                      ".ui-checkbox[role=\"checkbox\"][data-state=\"checked\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"checkbox\" aria-checked=\"mixed\" data-state=\"indeterminate\" value=\"on\" class=\"ui-checkbox\">",
+                    "target": [
+                      ".ui-checkbox[data-state=\"indeterminate\"][role=\"checkbox\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"switch\" aria-checked=\"false\" data-state=\"unchecked\" value=\"on\" class=\"ui-switch\"><span data-state=\"unchecked\" class=\"ui-switch-thumb\"></span></button>",
+                    "target": [
+                      ".min-h-9.gap-2:nth-child(5) > .ui-switch[role=\"switch\"][value=\"on\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" role=\"switch\" aria-checked=\"true\" data-state=\"checked\" value=\"on\" class=\"ui-switch\"><span data-state=\"checked\" class=\"ui-switch-thumb\"></span></button>",
+                    "target": [
+                      ".ui-switch[role=\"switch\"][data-state=\"checked\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Open dialog</button>",
+                    "target": [
+                      ".gap-3.flex-wrap.flex > button[aria-haspopup=\"dialog\"][data-state=\"closed\"][data-variant=\"secondary\"]:nth-child(1)"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Open drawer</button>",
+                    "target": [
+                      "button[aria-haspopup=\"dialog\"][data-state=\"closed\"][data-variant=\"secondary\"]:nth-child(2)"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Open popover</button>",
+                    "target": [
+                      "button[aria-haspopup=\"dialog\"][data-state=\"closed\"][data-variant=\"secondary\"]:nth-child(3)"
+                    ]
+                  },
+                  {
+                    "html": "<button id=\"radix-_R_95klritmlb_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Open menu</button>",
+                    "target": [
+                      "#radix-_R_95klritmlb_"
+                    ]
+                  },
+                  {
+                    "html": "<button data-state=\"closed\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button\">Focus for tooltip</button>",
+                    "target": [
+                      ".border-t.py-6.md\\:grid-cols-\\[12rem_1fr\\]:nth-child(5) > .min-w-0.space-y-4 > .gap-3.flex-wrap.flex > button[data-variant=\"ghost\"][data-state=\"closed\"][data-size=\"default\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Success toast</button>",
+                    "target": [
+                      ".gap-3.flex-wrap.flex:nth-child(2) > .ui-button[data-variant=\"secondary\"][data-size=\"default\"]:nth-child(1)"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Error toast</button>",
+                    "target": [
+                      ".gap-3.flex-wrap.flex:nth-child(2) > .ui-button[data-variant=\"secondary\"][data-size=\"default\"]:nth-child(2)"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Neutral toast</button>",
+                    "target": [
+                      ".gap-3.flex-wrap.flex:nth-child(2) > .ui-button[data-variant=\"secondary\"][data-size=\"default\"]:nth-child(3)"
+                    ]
+                  },
+                  {
+                    "html": "<button type=\"button\" data-variant=\"primary\" data-size=\"default\" class=\"ui-button\">",
+                    "target": [
+                      ".flex-col > .ui-button[data-variant=\"primary\"][data-size=\"default\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Commands <kbd class=\"rounded-sm border border-border bg-secondary px-1.5 py-0.5 font-mono text-xs text-muted-foreground\">⌘ / Ctrl K</kbd></button>",
+                    "target": [
+                      ".min-w-0.space-y-4 > button[aria-haspopup=\"dialog\"][data-state=\"closed\"][data-variant=\"secondary\"]"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Focusable content should be disabled, be removed from the DOM, or not be hidden with aria-hidden"
+              },
+              {
+                "id": "focusable-not-tabbable",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<div role=\"tablist\" aria-orientation=\"horizontal\" aria-label=\"Example resource type\" class=\"flex flex-wrap gap-1 border-b border-border\" tabindex=\"0\" data-orientation=\"horizontal\" style=\"outline:none\">",
+                    "target": [
+                      ".gap-1"
+                    ]
+                  },
+                  {
+                    "html": "<div data-state=\"active\" data-orientation=\"horizontal\" role=\"tabpanel\" aria-labelledby=\"radix-_R_16klritmlb_-trigger-docs\" id=\"radix-_R_16klritmlb_-content-docs\" tabindex=\"0\" class=\"py-4\" style=\"animation-duration:0s\">",
+                    "target": [
+                      "#radix-_R_16klritmlb_-content-docs"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Focusable content should have tabindex=\"-1\", be removed from the DOM, or not be hidden with aria-hidden"
+              }
+            ],
+            "none": [],
+            "impact": "serious",
+            "html": "<main id=\"design-main\" tabindex=\"-1\" class=\"mx-auto max-w-5xl px-4 py-8 text-foreground md:px-8\" data-aria-hidden=\"true\" aria-hidden=\"true\">",
+            "target": [
+              "#design-main"
+            ],
+            "failureSummary": "Fix all of the following:\n  Focusable content should be disabled, be removed from the DOM, or not be hidden with aria-hidden\n  Focusable content should have tabindex=\"-1\", be removed from the DOM, or not be hidden with aria-hidden"
+          }
+        ]
+      },
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ],
+        "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/color-contrast?application=axeAPI",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#b0b0b1",
+                  "bgColor": "#f6f6f6",
+                  "contrastRatio": 2,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": null,
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<div role=\"option\" aria-labelledby=\"radix-_r_c_\" aria-selected=\"true\" data-state=\"checked\" tabindex=\"-1\" class=\"ui-menu-item\" data-radix-collection-item=\"\" data-highlighted=\"\">",
+                    "target": [
+                      "div[aria-labelledby=\"radix-_r_c_\"]"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element has insufficient color contrast of 2 (foreground color: #b0b0b1, background color: #f6f6f6, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<span id=\"radix-_r_c_\">Documents</span>",
+            "target": [
+              "#radix-_r_c_"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 2 (foreground color: #b0b0b1, background color: #f6f6f6, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#b4b4b5",
+                  "bgColor": "#fcfcfc",
+                  "contrastRatio": 2.01,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": null,
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<div data-side=\"bottom\" data-align=\"start\" role=\"listbox\" id=\"radix-_R_2d3klritmlb...\" data-state=\"open\" dir=\"ltr\" class=\"ui-floating z-50 min...\" tabindex=\"-1\" style=\"box-sizing: border-b...\">",
+                    "target": [
+                      "#radix-_R_2d3klritmlb_"
+                    ]
+                  },
+                  {
+                    "html": "<body class=\"__variable_4294ec __variable_0e1432 min-h-screen\" style=\"pointer-events: none;\" data-scroll-locked=\"1\">",
+                    "target": [
+                      "body"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element has insufficient color contrast of 2.01 (foreground color: #b4b4b5, background color: #fcfcfc, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<span id=\"radix-_r_d_\">Sprint board</span>",
+            "target": [
+              "#radix-_r_d_"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 2.01 (foreground color: #b4b4b5, background color: #fcfcfc, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "aria-hidden-focus",
+        "targets": [
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(1)"
+          ],
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(14)"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "light",
+    "width": 390,
+    "state": "commands",
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ],
+        "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/color-contrast?application=axeAPI",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#a5a6a7",
+                  "bgColor": "#d3d3d5",
+                  "contrastRatio": 1.63,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": null,
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<div id=\"_r_i_-docs\" role=\"option\" aria-selected=\"true\" class=\"ui-command-option\">Navigate to example documents</div>",
+                    "target": [
+                      "#_r_i_-docs"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element has insufficient color contrast of 1.63 (foreground color: #a5a6a7, background color: #d3d3d5, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<div id=\"_r_i_-docs\" role=\"option\" aria-selected=\"true\" class=\"ui-command-option\">Navigate to example documents</div>",
+            "target": [
+              "#_r_i_-docs"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.63 (foreground color: #a5a6a7, background color: #d3d3d5, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#a5a6a7",
+                  "bgColor": "#d9d9da",
+                  "contrastRatio": 1.72,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": null,
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<div role=\"dialog\" id=\"radix-_R_39klritmlb_\" data-state=\"open\" class=\"ui-dialog\" tabindex=\"-1\" aria-labelledby=\"radix-_R_39klritmlbH1_\" aria-describedby=\"radix-_R_39klritmlbH2_\" style=\"pointer-events: auto;\">",
+                    "target": [
+                      "#radix-_R_39klritmlb_"
+                    ]
+                  },
+                  {
+                    "html": "<div data-state=\"open\" class=\"ui-overlay\" data-aria-hidden=\"true\" aria-hidden=\"true\" style=\"pointer-events: auto;\"></div>",
+                    "target": [
+                      ".ui-overlay"
+                    ]
+                  },
+                  {
+                    "html": "<div aria-hidden=\"true\" class=\"animate-pulse rounded-md bg-secondary h-16 w-full\"></div>",
+                    "target": [
+                      ".h-16"
+                    ]
+                  },
+                  {
+                    "html": "<body class=\"__variable_4294ec __variable_0e1432 min-h-screen\" style=\"pointer-events: none;\" data-scroll-locked=\"1\">",
+                    "target": [
+                      "body"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element has insufficient color contrast of 1.72 (foreground color: #a5a6a7, background color: #d9d9da, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<div id=\"_r_i_-create\" role=\"option\" aria-selected=\"false\" class=\"ui-command-option\">Create example document</div>",
+            "target": [
+              "#_r_i_-create"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.72 (foreground color: #a5a6a7, background color: #d9d9da, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#a8a8a9",
+                  "bgColor": "#dddddd",
+                  "contrastRatio": 1.74,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": null,
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<div role=\"dialog\" id=\"radix-_R_39klritmlb_\" data-state=\"open\" class=\"ui-dialog\" tabindex=\"-1\" aria-labelledby=\"radix-_R_39klritmlbH1_\" aria-describedby=\"radix-_R_39klritmlbH2_\" style=\"pointer-events: auto;\">",
+                    "target": [
+                      "#radix-_R_39klritmlb_"
+                    ]
+                  },
+                  {
+                    "html": "<div data-state=\"open\" class=\"ui-overlay\" data-aria-hidden=\"true\" aria-hidden=\"true\" style=\"pointer-events: auto;\"></div>",
+                    "target": [
+                      ".ui-overlay"
+                    ]
+                  },
+                  {
+                    "html": "<body class=\"__variable_4294ec __variable_0e1432 min-h-screen\" style=\"pointer-events: none;\" data-scroll-locked=\"1\">",
+                    "target": [
+                      "body"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element has insufficient color contrast of 1.74 (foreground color: #a8a8a9, background color: #dddddd, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<div id=\"_r_i_-dark\" role=\"option\" aria-selected=\"false\" class=\"ui-command-option\">Switch theme to dark</div>",
+            "target": [
+              "#_r_i_-dark"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.74 (foreground color: #a8a8a9, background color: #dddddd, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#a8a8a9",
+                  "bgColor": "#dddddd",
+                  "contrastRatio": 1.74,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": null,
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<div role=\"dialog\" id=\"radix-_R_39klritmlb_\" data-state=\"open\" class=\"ui-dialog\" tabindex=\"-1\" aria-labelledby=\"radix-_R_39klritmlbH1_\" aria-describedby=\"radix-_R_39klritmlbH2_\" style=\"pointer-events: auto;\">",
+                    "target": [
+                      "#radix-_R_39klritmlb_"
+                    ]
+                  },
+                  {
+                    "html": "<div data-state=\"open\" class=\"ui-overlay\" data-aria-hidden=\"true\" aria-hidden=\"true\" style=\"pointer-events: auto;\"></div>",
+                    "target": [
+                      ".ui-overlay"
+                    ]
+                  },
+                  {
+                    "html": "<body class=\"__variable_4294ec __variable_0e1432 min-h-screen\" style=\"pointer-events: none;\" data-scroll-locked=\"1\">",
+                    "target": [
+                      "body"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element has insufficient color contrast of 1.74 (foreground color: #a8a8a9, background color: #dddddd, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<div id=\"_r_i_-light\" role=\"option\" aria-selected=\"false\" class=\"ui-command-option\">Switch theme to light</div>",
+            "target": [
+              "#_r_i_-light"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.74 (foreground color: #a8a8a9, background color: #dddddd, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#a8a8a9",
+                  "bgColor": "#dddddd",
+                  "contrastRatio": 1.74,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": null,
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<div role=\"dialog\" id=\"radix-_R_39klritmlb_\" data-state=\"open\" class=\"ui-dialog\" tabindex=\"-1\" aria-labelledby=\"radix-_R_39klritmlbH1_\" aria-describedby=\"radix-_R_39klritmlbH2_\" style=\"pointer-events: auto;\">",
+                    "target": [
+                      "#radix-_R_39klritmlb_"
+                    ]
+                  },
+                  {
+                    "html": "<div data-state=\"open\" class=\"ui-overlay\" data-aria-hidden=\"true\" aria-hidden=\"true\" style=\"pointer-events: auto;\"></div>",
+                    "target": [
+                      ".ui-overlay"
+                    ]
+                  },
+                  {
+                    "html": "<body class=\"__variable_4294ec __variable_0e1432 min-h-screen\" style=\"pointer-events: none;\" data-scroll-locked=\"1\">",
+                    "target": [
+                      "body"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element has insufficient color contrast of 1.74 (foreground color: #a8a8a9, background color: #dddddd, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<div id=\"_r_i_-system\" role=\"option\" aria-selected=\"false\" class=\"ui-command-option\">Switch theme to system</div>",
+            "target": [
+              "#_r_i_-system"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.74 (foreground color: #a8a8a9, background color: #dddddd, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "fgColor": "#bbbcbf",
+                  "bgColor": "#dddddd",
+                  "contrastRatio": 1.39,
+                  "fontSize": "9.0pt (12px)",
+                  "fontWeight": "normal",
+                  "messageKey": null,
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<div role=\"dialog\" id=\"radix-_R_39klritmlb_\" data-state=\"open\" class=\"ui-dialog\" tabindex=\"-1\" aria-labelledby=\"radix-_R_39klritmlbH1_\" aria-describedby=\"radix-_R_39klritmlbH2_\" style=\"pointer-events: auto;\">",
+                    "target": [
+                      "#radix-_R_39klritmlb_"
+                    ]
+                  },
+                  {
+                    "html": "<div data-state=\"open\" class=\"ui-overlay\" data-aria-hidden=\"true\" aria-hidden=\"true\" style=\"pointer-events: auto;\"></div>",
+                    "target": [
+                      ".ui-overlay"
+                    ]
+                  },
+                  {
+                    "html": "<body class=\"__variable_4294ec __variable_0e1432 min-h-screen\" style=\"pointer-events: none;\" data-scroll-locked=\"1\">",
+                    "target": [
+                      "body"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element has insufficient color contrast of 1.39 (foreground color: #bbbcbf, background color: #dddddd, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<p role=\"status\" class=\"mt-3 text-xs text-muted-foreground\">6 commands</p>",
+            "target": [
+              ".mt-3.text-xs[role=\"status\"]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.39 (foreground color: #bbbcbf, background color: #dddddd, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "aria-hidden-focus",
+        "targets": [
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(1)"
+          ],
+          [
+            "a"
+          ],
+          [
+            "#design-main"
+          ],
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(15)"
+          ]
+        ]
+      },
+      {
+        "id": "color-contrast",
+        "targets": [
+          [
+            "#radix-_R_39klritmlbH1_"
+          ],
+          [
+            "#radix-_R_39klritmlbH2_"
+          ],
+          [
+            "input[aria-label=\"Search commands\"]"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "light",
+    "width": 390,
+    "state": "commands-empty",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-hidden-focus",
+        "targets": [
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(1)"
+          ],
+          [
+            "a"
+          ],
+          [
+            "#design-main"
+          ],
+          [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"][aria-hidden=\"true\"]:nth-child(15)"
+          ]
+        ]
+      },
+      {
+        "id": "aria-required-children",
+        "targets": [
+          [
+            "#_r_i_-list"
+          ]
+        ]
+      },
+      {
+        "id": "color-contrast",
+        "targets": [
+          [
+            "#radix-_R_39klritmlbH2_"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "light",
+    "width": 390,
+    "state": "tooltip",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "targets": [
+          [
+            "span[aria-label=\"1 more collaborators\"]"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "light",
+    "width": 390,
+    "state": "toast",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "targets": [
+          [
+            "span[aria-label=\"1 more collaborators\"]"
+          ]
+        ]
+      }
+    ]
+  }
+]

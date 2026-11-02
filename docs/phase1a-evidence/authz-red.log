@@ -1,0 +1,414 @@
+
+> devsync-backend@1.0.0 test
+> jest --runInBand --runTestsByPath src/__tests__/authorization-boundaries.test.ts
+
+FAIL src/__tests__/authorization-boundaries.test.ts (8.138 s)
+  ● D05 rejects cross-workspace member patch despite ownership of URL workspace
+
+    expect(received).toContain(expected) // indexOf
+
+    Expected value: 200
+    Received array: [403, 404]
+
+      47 | it.each(['patch', 'delete'] as const)('D05 rejects cross-workspace member %s despite ownership of URL workspace', async method => {
+      48 |   const response = await request(app)[method]('/workspaces/a/members/member-b').send({ role: 'OWNER' });
+    > 49 |   expect([403, 404]).toContain(response.status); expect(db.workspaceMember.update).not.toHaveBeenCalled(); expect(db.workspaceMember.delete).not.toHaveBeenCalled();
+         |                      ^
+      50 | });
+      51 | it.each(['VIEWER', 'EDITOR', null] as const)('D05 rejects role escalation/removal by %s', async actorRole => {
+      52 |   role = actorRole;
+
+      at src/__tests__/authorization-boundaries.test.ts:49:22
+
+  ● D05 rejects cross-workspace member delete despite ownership of URL workspace
+
+    expect(received).toContain(expected) // indexOf
+
+    Expected value: 200
+    Received array: [403, 404]
+
+      47 | it.each(['patch', 'delete'] as const)('D05 rejects cross-workspace member %s despite ownership of URL workspace', async method => {
+      48 |   const response = await request(app)[method]('/workspaces/a/members/member-b').send({ role: 'OWNER' });
+    > 49 |   expect([403, 404]).toContain(response.status); expect(db.workspaceMember.update).not.toHaveBeenCalled(); expect(db.workspaceMember.delete).not.toHaveBeenCalled();
+         |                      ^
+      50 | });
+      51 | it.each(['VIEWER', 'EDITOR', null] as const)('D05 rejects role escalation/removal by %s', async actorRole => {
+      52 |   role = actorRole;
+
+      at src/__tests__/authorization-boundaries.test.ts:49:22
+
+  ● D06 rejects foreign board columns for VIEWER
+
+    expect(received).toContain(expected) // indexOf
+
+    Expected value: 201
+    Received array: [403, 404]
+
+      54 | });
+      55 | it.each(['VIEWER', 'EDITOR', 'OWNER', null] as const)('D06 rejects foreign board columns for %s', async actorRole => {
+    > 56 |   role = actorRole; expect([403, 404]).toContain((await request(app).post('/boards/board-b/columns').send({ name: 'Injected' })).status); expect(db.column.create).not.toHaveBeenCalled();
+         |                                        ^
+      57 | });
+      58 | it('D08 rejects a parent document in another workspace', async () => {
+      59 |   expect([403, 404]).toContain((await request(app).post('/workspaces/a/documents').send({ parentId: 'document-b', title: 'child' })).status); expect(db.document.create).not.toHaveBeenCalled();
+
+      at src/__tests__/authorization-boundaries.test.ts:56:40
+
+  ● D06 rejects foreign board columns for EDITOR
+
+    expect(received).toContain(expected) // indexOf
+
+    Expected value: 201
+    Received array: [403, 404]
+
+      54 | });
+      55 | it.each(['VIEWER', 'EDITOR', 'OWNER', null] as const)('D06 rejects foreign board columns for %s', async actorRole => {
+    > 56 |   role = actorRole; expect([403, 404]).toContain((await request(app).post('/boards/board-b/columns').send({ name: 'Injected' })).status); expect(db.column.create).not.toHaveBeenCalled();
+         |                                        ^
+      57 | });
+      58 | it('D08 rejects a parent document in another workspace', async () => {
+      59 |   expect([403, 404]).toContain((await request(app).post('/workspaces/a/documents').send({ parentId: 'document-b', title: 'child' })).status); expect(db.document.create).not.toHaveBeenCalled();
+
+      at src/__tests__/authorization-boundaries.test.ts:56:40
+
+  ● D06 rejects foreign board columns for OWNER
+
+    expect(received).toContain(expected) // indexOf
+
+    Expected value: 201
+    Received array: [403, 404]
+
+      54 | });
+      55 | it.each(['VIEWER', 'EDITOR', 'OWNER', null] as const)('D06 rejects foreign board columns for %s', async actorRole => {
+    > 56 |   role = actorRole; expect([403, 404]).toContain((await request(app).post('/boards/board-b/columns').send({ name: 'Injected' })).status); expect(db.column.create).not.toHaveBeenCalled();
+         |                                        ^
+      57 | });
+      58 | it('D08 rejects a parent document in another workspace', async () => {
+      59 |   expect([403, 404]).toContain((await request(app).post('/workspaces/a/documents').send({ parentId: 'document-b', title: 'child' })).status); expect(db.document.create).not.toHaveBeenCalled();
+
+      at src/__tests__/authorization-boundaries.test.ts:56:40
+
+  ● D06 rejects foreign board columns for null
+
+    expect(received).toContain(expected) // indexOf
+
+    Expected value: 201
+    Received array: [403, 404]
+
+      54 | });
+      55 | it.each(['VIEWER', 'EDITOR', 'OWNER', null] as const)('D06 rejects foreign board columns for %s', async actorRole => {
+    > 56 |   role = actorRole; expect([403, 404]).toContain((await request(app).post('/boards/board-b/columns').send({ name: 'Injected' })).status); expect(db.column.create).not.toHaveBeenCalled();
+         |                                        ^
+      57 | });
+      58 | it('D08 rejects a parent document in another workspace', async () => {
+      59 |   expect([403, 404]).toContain((await request(app).post('/workspaces/a/documents').send({ parentId: 'document-b', title: 'child' })).status); expect(db.document.create).not.toHaveBeenCalled();
+
+      at src/__tests__/authorization-boundaries.test.ts:56:40
+
+  ● D08 rejects a parent document in another workspace
+
+    expect(received).toContain(expected) // indexOf
+
+    Expected value: 201
+    Received array: [403, 404]
+
+      57 | });
+      58 | it('D08 rejects a parent document in another workspace', async () => {
+    > 59 |   expect([403, 404]).toContain((await request(app).post('/workspaces/a/documents').send({ parentId: 'document-b', title: 'child' })).status); expect(db.document.create).not.toHaveBeenCalled();
+         |                      ^
+      60 | });
+      61 |
+      62 | type Handler = (payload: unknown) => void | Promise<void>;
+
+      at Object.<anonymous> (src/__tests__/authorization-boundaries.test.ts:59:22)
+
+  ● D03/D04 workspace:join cannot target another workspace
+
+    expect(jest.fn()).not.toHaveBeenCalled()
+
+    Expected number of calls: 0
+    Received number of calls: 1
+
+    1: "workspace:b"
+
+      72 |   const socket = socketFixture();
+      73 |   await socket.handlers.get(event)?.({ workspaceId: 'b', userName: 'Forged', documentId: 'document-b', cursor: { anchor: 0 }, taskId: 'task-b', task: { id: 'task-b', columnId: 'column-b' }, fromColumnId: 'column-b', toColumnId: 'column-b', position: 0 });
+    > 74 |   expect(socket.join).not.toHaveBeenCalled(); expect(socket.broadcast).not.toHaveBeenCalled();
+         |                           ^
+      75 | });
+      76 | it.each(events.filter(event => event.startsWith('kanban:')))('D04 viewer cannot relay %s', async event => {
+      77 |   role = 'VIEWER'; const socket = socketFixture();
+
+      at src/__tests__/authorization-boundaries.test.ts:74:27
+
+  ● D03/D04 workspace:leave cannot target another workspace
+
+    expect(jest.fn()).not.toHaveBeenCalled()
+
+    Expected number of calls: 0
+    Received number of calls: 1
+
+    1: "workspace:users", []
+
+      72 |   const socket = socketFixture();
+      73 |   await socket.handlers.get(event)?.({ workspaceId: 'b', userName: 'Forged', documentId: 'document-b', cursor: { anchor: 0 }, taskId: 'task-b', task: { id: 'task-b', columnId: 'column-b' }, fromColumnId: 'column-b', toColumnId: 'column-b', position: 0 });
+    > 74 |   expect(socket.join).not.toHaveBeenCalled(); expect(socket.broadcast).not.toHaveBeenCalled();
+         |                                                                            ^
+      75 | });
+      76 | it.each(events.filter(event => event.startsWith('kanban:')))('D04 viewer cannot relay %s', async event => {
+      77 |   role = 'VIEWER'; const socket = socketFixture();
+
+      at src/__tests__/authorization-boundaries.test.ts:74:76
+
+  ● D03/D04 cursor:update cannot target another workspace
+
+    expect(jest.fn()).not.toHaveBeenCalled()
+
+    Expected number of calls: 0
+    Received number of calls: 1
+
+    1: "cursor:updated", {"cursor": {"anchor": 0}, "userId": "owner"}
+
+      72 |   const socket = socketFixture();
+      73 |   await socket.handlers.get(event)?.({ workspaceId: 'b', userName: 'Forged', documentId: 'document-b', cursor: { anchor: 0 }, taskId: 'task-b', task: { id: 'task-b', columnId: 'column-b' }, fromColumnId: 'column-b', toColumnId: 'column-b', position: 0 });
+    > 74 |   expect(socket.join).not.toHaveBeenCalled(); expect(socket.broadcast).not.toHaveBeenCalled();
+         |                                                                            ^
+      75 | });
+      76 | it.each(events.filter(event => event.startsWith('kanban:')))('D04 viewer cannot relay %s', async event => {
+      77 |   role = 'VIEWER'; const socket = socketFixture();
+
+      at src/__tests__/authorization-boundaries.test.ts:74:76
+
+  ● D03/D04 kanban:task-created cannot target another workspace
+
+    expect(jest.fn()).not.toHaveBeenCalled()
+
+    Expected number of calls: 0
+    Received number of calls: 1
+
+    1: "kanban:task-created", {"task": {"columnId": "column-b", "id": "task-b"}, "userId": "owner"}
+
+      72 |   const socket = socketFixture();
+      73 |   await socket.handlers.get(event)?.({ workspaceId: 'b', userName: 'Forged', documentId: 'document-b', cursor: { anchor: 0 }, taskId: 'task-b', task: { id: 'task-b', columnId: 'column-b' }, fromColumnId: 'column-b', toColumnId: 'column-b', position: 0 });
+    > 74 |   expect(socket.join).not.toHaveBeenCalled(); expect(socket.broadcast).not.toHaveBeenCalled();
+         |                                                                            ^
+      75 | });
+      76 | it.each(events.filter(event => event.startsWith('kanban:')))('D04 viewer cannot relay %s', async event => {
+      77 |   role = 'VIEWER'; const socket = socketFixture();
+
+      at src/__tests__/authorization-boundaries.test.ts:74:76
+
+  ● D03/D04 kanban:task-updated cannot target another workspace
+
+    expect(jest.fn()).not.toHaveBeenCalled()
+
+    Expected number of calls: 0
+    Received number of calls: 1
+
+    1: "kanban:task-updated", {"task": {"columnId": "column-b", "id": "task-b"}, "userId": "owner"}
+
+      72 |   const socket = socketFixture();
+      73 |   await socket.handlers.get(event)?.({ workspaceId: 'b', userName: 'Forged', documentId: 'document-b', cursor: { anchor: 0 }, taskId: 'task-b', task: { id: 'task-b', columnId: 'column-b' }, fromColumnId: 'column-b', toColumnId: 'column-b', position: 0 });
+    > 74 |   expect(socket.join).not.toHaveBeenCalled(); expect(socket.broadcast).not.toHaveBeenCalled();
+         |                                                                            ^
+      75 | });
+      76 | it.each(events.filter(event => event.startsWith('kanban:')))('D04 viewer cannot relay %s', async event => {
+      77 |   role = 'VIEWER'; const socket = socketFixture();
+
+      at src/__tests__/authorization-boundaries.test.ts:74:76
+
+  ● D03/D04 kanban:task-deleted cannot target another workspace
+
+    expect(jest.fn()).not.toHaveBeenCalled()
+
+    Expected number of calls: 0
+    Received number of calls: 1
+
+    1: "kanban:task-deleted", {"taskId": "task-b", "userId": "owner"}
+
+      72 |   const socket = socketFixture();
+      73 |   await socket.handlers.get(event)?.({ workspaceId: 'b', userName: 'Forged', documentId: 'document-b', cursor: { anchor: 0 }, taskId: 'task-b', task: { id: 'task-b', columnId: 'column-b' }, fromColumnId: 'column-b', toColumnId: 'column-b', position: 0 });
+    > 74 |   expect(socket.join).not.toHaveBeenCalled(); expect(socket.broadcast).not.toHaveBeenCalled();
+         |                                                                            ^
+      75 | });
+      76 | it.each(events.filter(event => event.startsWith('kanban:')))('D04 viewer cannot relay %s', async event => {
+      77 |   role = 'VIEWER'; const socket = socketFixture();
+
+      at src/__tests__/authorization-boundaries.test.ts:74:76
+
+  ● D03/D04 kanban:task-moved cannot target another workspace
+
+    expect(jest.fn()).not.toHaveBeenCalled()
+
+    Expected number of calls: 0
+    Received number of calls: 1
+
+    1: "kanban:task-moved", {"fromColumnId": "column-b", "position": 0, "task": {"columnId": "column-b", "id": "task-b"}, "taskId": "task-b", "toColumnId": "column-b", "userId": "owner"}
+
+      72 |   const socket = socketFixture();
+      73 |   await socket.handlers.get(event)?.({ workspaceId: 'b', userName: 'Forged', documentId: 'document-b', cursor: { anchor: 0 }, taskId: 'task-b', task: { id: 'task-b', columnId: 'column-b' }, fromColumnId: 'column-b', toColumnId: 'column-b', position: 0 });
+    > 74 |   expect(socket.join).not.toHaveBeenCalled(); expect(socket.broadcast).not.toHaveBeenCalled();
+         |                                                                            ^
+      75 | });
+      76 | it.each(events.filter(event => event.startsWith('kanban:')))('D04 viewer cannot relay %s', async event => {
+      77 |   role = 'VIEWER'; const socket = socketFixture();
+
+      at src/__tests__/authorization-boundaries.test.ts:74:76
+
+  ● D04 viewer cannot relay kanban:task-created
+
+    expect(jest.fn()).not.toHaveBeenCalled()
+
+    Expected number of calls: 0
+    Received number of calls: 1
+
+    1: "kanban:task-created", {"task": {"id": "task-b"}, "userId": "owner"}
+
+      76 | it.each(events.filter(event => event.startsWith('kanban:')))('D04 viewer cannot relay %s', async event => {
+      77 |   role = 'VIEWER'; const socket = socketFixture();
+    > 78 |   await socket.handlers.get(event)?.({ workspaceId: 'a', taskId: 'task-b', task: { id: 'task-b' }, fromColumnId: 'column-b', toColumnId: 'column-b', position: 0 }); expect(socket.broadcast).not.toHaveBeenCalled();
+         |                                                                                                                                                                                                   ^
+      79 | });
+      80 | it.each(events.filter(event => event.startsWith('kanban:')))('D04 editor cannot relay foreign resource via %s', async event => {
+      81 |   role = 'EDITOR'; const socket = socketFixture();
+
+      at src/__tests__/authorization-boundaries.test.ts:78:195
+
+  ● D04 viewer cannot relay kanban:task-updated
+
+    expect(jest.fn()).not.toHaveBeenCalled()
+
+    Expected number of calls: 0
+    Received number of calls: 1
+
+    1: "kanban:task-updated", {"task": {"id": "task-b"}, "userId": "owner"}
+
+      76 | it.each(events.filter(event => event.startsWith('kanban:')))('D04 viewer cannot relay %s', async event => {
+      77 |   role = 'VIEWER'; const socket = socketFixture();
+    > 78 |   await socket.handlers.get(event)?.({ workspaceId: 'a', taskId: 'task-b', task: { id: 'task-b' }, fromColumnId: 'column-b', toColumnId: 'column-b', position: 0 }); expect(socket.broadcast).not.toHaveBeenCalled();
+         |                                                                                                                                                                                                   ^
+      79 | });
+      80 | it.each(events.filter(event => event.startsWith('kanban:')))('D04 editor cannot relay foreign resource via %s', async event => {
+      81 |   role = 'EDITOR'; const socket = socketFixture();
+
+      at src/__tests__/authorization-boundaries.test.ts:78:195
+
+  ● D04 viewer cannot relay kanban:task-deleted
+
+    expect(jest.fn()).not.toHaveBeenCalled()
+
+    Expected number of calls: 0
+    Received number of calls: 1
+
+    1: "kanban:task-deleted", {"taskId": "task-b", "userId": "owner"}
+
+      76 | it.each(events.filter(event => event.startsWith('kanban:')))('D04 viewer cannot relay %s', async event => {
+      77 |   role = 'VIEWER'; const socket = socketFixture();
+    > 78 |   await socket.handlers.get(event)?.({ workspaceId: 'a', taskId: 'task-b', task: { id: 'task-b' }, fromColumnId: 'column-b', toColumnId: 'column-b', position: 0 }); expect(socket.broadcast).not.toHaveBeenCalled();
+         |                                                                                                                                                                                                   ^
+      79 | });
+      80 | it.each(events.filter(event => event.startsWith('kanban:')))('D04 editor cannot relay foreign resource via %s', async event => {
+      81 |   role = 'EDITOR'; const socket = socketFixture();
+
+      at src/__tests__/authorization-boundaries.test.ts:78:195
+
+  ● D04 viewer cannot relay kanban:task-moved
+
+    expect(jest.fn()).not.toHaveBeenCalled()
+
+    Expected number of calls: 0
+    Received number of calls: 1
+
+    1: "kanban:task-moved", {"fromColumnId": "column-b", "position": 0, "task": {"id": "task-b"}, "taskId": "task-b", "toColumnId": "column-b", "userId": "owner"}
+
+      76 | it.each(events.filter(event => event.startsWith('kanban:')))('D04 viewer cannot relay %s', async event => {
+      77 |   role = 'VIEWER'; const socket = socketFixture();
+    > 78 |   await socket.handlers.get(event)?.({ workspaceId: 'a', taskId: 'task-b', task: { id: 'task-b' }, fromColumnId: 'column-b', toColumnId: 'column-b', position: 0 }); expect(socket.broadcast).not.toHaveBeenCalled();
+         |                                                                                                                                                                                                   ^
+      79 | });
+      80 | it.each(events.filter(event => event.startsWith('kanban:')))('D04 editor cannot relay foreign resource via %s', async event => {
+      81 |   role = 'EDITOR'; const socket = socketFixture();
+
+      at src/__tests__/authorization-boundaries.test.ts:78:195
+
+  ● D04 editor cannot relay foreign resource via kanban:task-created
+
+    expect(jest.fn()).not.toHaveBeenCalled()
+
+    Expected number of calls: 0
+    Received number of calls: 1
+
+    1: "kanban:task-created", {"task": {"id": "task-b"}, "userId": "owner"}
+
+      80 | it.each(events.filter(event => event.startsWith('kanban:')))('D04 editor cannot relay foreign resource via %s', async event => {
+      81 |   role = 'EDITOR'; const socket = socketFixture();
+    > 82 |   await socket.handlers.get(event)?.({ workspaceId: 'a', taskId: 'task-b', task: { id: 'task-b' }, fromColumnId: 'column-b', toColumnId: 'column-b', position: 0 }); expect(socket.broadcast).not.toHaveBeenCalled();
+         |                                                                                                                                                                                                   ^
+      83 | });
+      84 | it('D03 permits a workspace member to join the correct room', async () => {
+      85 |   role = 'VIEWER'; const socket = socketFixture(); await socket.handlers.get('workspace:join')?.({ workspaceId: 'a', userName: 'Owner' }); expect(socket.join).toHaveBeenCalledWith('workspace:a');
+
+      at src/__tests__/authorization-boundaries.test.ts:82:195
+
+  ● D04 editor cannot relay foreign resource via kanban:task-updated
+
+    expect(jest.fn()).not.toHaveBeenCalled()
+
+    Expected number of calls: 0
+    Received number of calls: 1
+
+    1: "kanban:task-updated", {"task": {"id": "task-b"}, "userId": "owner"}
+
+      80 | it.each(events.filter(event => event.startsWith('kanban:')))('D04 editor cannot relay foreign resource via %s', async event => {
+      81 |   role = 'EDITOR'; const socket = socketFixture();
+    > 82 |   await socket.handlers.get(event)?.({ workspaceId: 'a', taskId: 'task-b', task: { id: 'task-b' }, fromColumnId: 'column-b', toColumnId: 'column-b', position: 0 }); expect(socket.broadcast).not.toHaveBeenCalled();
+         |                                                                                                                                                                                                   ^
+      83 | });
+      84 | it('D03 permits a workspace member to join the correct room', async () => {
+      85 |   role = 'VIEWER'; const socket = socketFixture(); await socket.handlers.get('workspace:join')?.({ workspaceId: 'a', userName: 'Owner' }); expect(socket.join).toHaveBeenCalledWith('workspace:a');
+
+      at src/__tests__/authorization-boundaries.test.ts:82:195
+
+  ● D04 editor cannot relay foreign resource via kanban:task-deleted
+
+    expect(jest.fn()).not.toHaveBeenCalled()
+
+    Expected number of calls: 0
+    Received number of calls: 1
+
+    1: "kanban:task-deleted", {"taskId": "task-b", "userId": "owner"}
+
+      80 | it.each(events.filter(event => event.startsWith('kanban:')))('D04 editor cannot relay foreign resource via %s', async event => {
+      81 |   role = 'EDITOR'; const socket = socketFixture();
+    > 82 |   await socket.handlers.get(event)?.({ workspaceId: 'a', taskId: 'task-b', task: { id: 'task-b' }, fromColumnId: 'column-b', toColumnId: 'column-b', position: 0 }); expect(socket.broadcast).not.toHaveBeenCalled();
+         |                                                                                                                                                                                                   ^
+      83 | });
+      84 | it('D03 permits a workspace member to join the correct room', async () => {
+      85 |   role = 'VIEWER'; const socket = socketFixture(); await socket.handlers.get('workspace:join')?.({ workspaceId: 'a', userName: 'Owner' }); expect(socket.join).toHaveBeenCalledWith('workspace:a');
+
+      at src/__tests__/authorization-boundaries.test.ts:82:195
+
+  ● D04 editor cannot relay foreign resource via kanban:task-moved
+
+    expect(jest.fn()).not.toHaveBeenCalled()
+
+    Expected number of calls: 0
+    Received number of calls: 1
+
+    1: "kanban:task-moved", {"fromColumnId": "column-b", "position": 0, "task": {"id": "task-b"}, "taskId": "task-b", "toColumnId": "column-b", "userId": "owner"}
+
+      80 | it.each(events.filter(event => event.startsWith('kanban:')))('D04 editor cannot relay foreign resource via %s', async event => {
+      81 |   role = 'EDITOR'; const socket = socketFixture();
+    > 82 |   await socket.handlers.get(event)?.({ workspaceId: 'a', taskId: 'task-b', task: { id: 'task-b' }, fromColumnId: 'column-b', toColumnId: 'column-b', position: 0 }); expect(socket.broadcast).not.toHaveBeenCalled();
+         |                                                                                                                                                                                                   ^
+      83 | });
+      84 | it('D03 permits a workspace member to join the correct room', async () => {
+      85 |   role = 'VIEWER'; const socket = socketFixture(); await socket.handlers.get('workspace:join')?.({ workspaceId: 'a', userName: 'Owner' }); expect(socket.join).toHaveBeenCalledWith('workspace:a');
+
+      at src/__tests__/authorization-boundaries.test.ts:82:195
+
+Test Suites: 1 failed, 1 total
+Tests:       22 failed, 4 passed, 26 total
+Snapshots:   0 total
+Time:        8.421 s
+Ran all test suites within paths "src/__tests__/authorization-boundaries.test.ts".

@@ -1,0 +1,10 @@
+
+> devsync-backend@1.0.0 test
+> jest --runInBand --runTestsByPath src/__tests__/resource-mutations.integration.test.ts src/__tests__/authorization-boundaries.test.ts --coverage=false
+
+
+Test Suites: 2 passed, 2 total
+Tests:       88 passed, 88 total
+Snapshots:   0 total
+Time:        20.258 s
+Ran all test suites within paths "src/__tests__/resource-mutations.integration.test.ts", "src/__tests__/authorization-boundaries.test.ts".

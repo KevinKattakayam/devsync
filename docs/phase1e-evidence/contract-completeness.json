@@ -1,0 +1,312 @@
+{
+  "operations": [
+    {
+      "method": "POST",
+      "path": "/api/v1/ai/complete",
+      "hasRequestBody": true,
+      "validationComplete": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/me",
+      "hasRequestBody": false,
+      "validationComplete": false
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/auth/me",
+      "hasRequestBody": true,
+      "validationComplete": false
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/sync",
+      "hasRequestBody": false,
+      "validationComplete": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/documents/{id}",
+      "hasRequestBody": false,
+      "validationComplete": false
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/documents/{id}",
+      "hasRequestBody": true,
+      "validationComplete": false
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/documents/{id}",
+      "hasRequestBody": false,
+      "validationComplete": false
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/documents/{id}/content",
+      "hasRequestBody": true,
+      "validationComplete": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/health",
+      "hasRequestBody": false,
+      "validationComplete": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/ready",
+      "hasRequestBody": false,
+      "validationComplete": false
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/snippets/{snippetId}",
+      "hasRequestBody": true,
+      "validationComplete": false
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/snippets/{snippetId}",
+      "hasRequestBody": false,
+      "validationComplete": false
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/snippets/execute",
+      "hasRequestBody": false,
+      "validationComplete": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/superadmin/metrics",
+      "hasRequestBody": false,
+      "validationComplete": false
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/superadmin/workspaces/{workspaceId}/kill-switch",
+      "hasRequestBody": true,
+      "validationComplete": false
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/tasks/boards/{boardId}/columns",
+      "hasRequestBody": true,
+      "validationComplete": false
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/tasks/columns/{columnId}",
+      "hasRequestBody": true,
+      "validationComplete": false
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/tasks/columns/{columnId}",
+      "hasRequestBody": false,
+      "validationComplete": false
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/tasks/columns/{columnId}/tasks",
+      "hasRequestBody": true,
+      "validationComplete": false
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/tasks/tasks/{taskId}",
+      "hasRequestBody": true,
+      "validationComplete": false
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/tasks/tasks/{taskId}",
+      "hasRequestBody": false,
+      "validationComplete": false
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/tasks/tasks/{taskId}/move",
+      "hasRequestBody": true,
+      "validationComplete": false
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/webhooks/github",
+      "hasRequestBody": true,
+      "validationComplete": false
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/webhooks/stripe",
+      "hasRequestBody": false,
+      "validationComplete": false
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/workspaces",
+      "hasRequestBody": true,
+      "validationComplete": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/workspaces",
+      "hasRequestBody": false,
+      "validationComplete": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/workspaces/{id}",
+      "hasRequestBody": false,
+      "validationComplete": false
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/workspaces/{id}",
+      "hasRequestBody": true,
+      "validationComplete": false
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/workspaces/{id}",
+      "hasRequestBody": false,
+      "validationComplete": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/workspaces/{id}/activities",
+      "hasRequestBody": false,
+      "validationComplete": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/workspaces/{id}/boards",
+      "hasRequestBody": false,
+      "validationComplete": false
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/workspaces/{id}/boards",
+      "hasRequestBody": true,
+      "validationComplete": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/workspaces/{id}/documents",
+      "hasRequestBody": false,
+      "validationComplete": false
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/workspaces/{id}/documents",
+      "hasRequestBody": true,
+      "validationComplete": false
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/workspaces/{id}/documents/ingest",
+      "hasRequestBody": false,
+      "validationComplete": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/workspaces/{id}/github-repositories",
+      "hasRequestBody": false,
+      "validationComplete": false
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/workspaces/{id}/github-repositories",
+      "hasRequestBody": true,
+      "validationComplete": false
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/workspaces/{id}/github-repositories/{repositoryId}",
+      "hasRequestBody": true,
+      "validationComplete": false
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/workspaces/{id}/github-repositories/{repositoryId}",
+      "hasRequestBody": false,
+      "validationComplete": false
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/workspaces/{id}/invitations",
+      "hasRequestBody": true,
+      "validationComplete": false
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/workspaces/{id}/invitations/{invitationId}",
+      "hasRequestBody": false,
+      "validationComplete": false
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/workspaces/{id}/invite",
+      "hasRequestBody": true,
+      "validationComplete": false
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/workspaces/{id}/members/{memberId}",
+      "hasRequestBody": true,
+      "validationComplete": false
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/workspaces/{id}/members/{memberId}",
+      "hasRequestBody": false,
+      "validationComplete": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/workspaces/{id}/search",
+      "hasRequestBody": false,
+      "validationComplete": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/workspaces/{id}/snippets",
+      "hasRequestBody": false,
+      "validationComplete": false
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/workspaces/{id}/snippets",
+      "hasRequestBody": true,
+      "validationComplete": false
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/workspaces/invitations/{invitationId}/accept",
+      "hasRequestBody": true,
+      "validationComplete": false
+    },
+    {
+      "method": "POST",
+      "path": "/scim/v2/Users",
+      "hasRequestBody": true,
+      "validationComplete": false
+    },
+    {
+      "method": "PATCH",
+      "path": "/scim/v2/Users/{externalId}",
+      "hasRequestBody": true,
+      "validationComplete": false
+    },
+    {
+      "method": "DELETE",
+      "path": "/scim/v2/Users/{externalId}",
+      "hasRequestBody": false,
+      "validationComplete": false
+    }
+  ],
+  "operationCount": 51,
+  "completeCount": 0
+}

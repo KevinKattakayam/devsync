@@ -1,0 +1,343 @@
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": PostgreSQL database "devsync_e2e_browser", schema "public" at "localhost:32802"
+
+11 migrations found in prisma/migrations
+
+Applying migration `20260729000000_baseline`
+Applying migration `20260729180000_enterprise_platform`
+Applying migration `20260815000000_phase_3_tenant_rls`
+Applying migration `20260815001000_scim_provisioning`
+Applying migration `20260815002000_commercial_billing`
+Applying migration `20261031000000_tenant_indexes`
+Applying migration `20261031010000_crdt_journal`
+Applying migration `202611010001_canonical_revision`
+Applying migration `202611010002_embedding_authority`
+Applying migration `202611010003_atomic_create_idempotency`
+Applying migration `202611010004_workspace_invitations`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20260729000000_baseline/
+    └─ migration.sql
+  └─ 20260729180000_enterprise_platform/
+    └─ migration.sql
+  └─ 20260815000000_phase_3_tenant_rls/
+    └─ migration.sql
+  └─ 20260815001000_scim_provisioning/
+    └─ migration.sql
+  └─ 20260815002000_commercial_billing/
+    └─ migration.sql
+  └─ 20261031000000_tenant_indexes/
+    └─ migration.sql
+  └─ 20261031010000_crdt_journal/
+    └─ migration.sql
+  └─ 202611010001_canonical_revision/
+    └─ migration.sql
+  └─ 202611010002_embedding_authority/
+    └─ migration.sql
+  └─ 202611010003_atomic_create_idempotency/
+    └─ migration.sql
+  └─ 202611010004_workspace_invitations/
+    └─ migration.sql
+      
+All migrations have been successfully applied.
+Sample workspace seeded. Sign in with the supplied Clerk test identities.
+/home/kevin/devsync/.worktrees/frontend-fixture
+Isolated fixture server ready
+{"level":30,"time":1793561255205,"service":"devsync-api","req":{"id":"6d638367-241a-4ab4-9b6d-1206c9fc3d17","method":"GET"},"requestId":"6d638367-241a-4ab4-9b6d-1206c9fc3d17","res":{"statusCode":200},"responseTime":9,"msg":"request completed"}
+▲ Next.js 16.4.3 (webpack)
+- Local:         http://127.0.0.1:3001
+- Network:       http://127.0.0.1:3001
+✓ Ready in 495ms
+✓ Running next.config.ts took 38ms
+
+✓ Generated AGENTS.md for AI agents. Set `agentRules: false` in next.config to disable.
+○ Compiling /(auth)/login/[[...rest]]/page ...
+ GET /login 200 in 1640ms (next.js: 1236ms, proxy.ts: 6ms, application-code: 398ms)
+
+Running 6 tests using 1 worker
+
+(node:78600) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1793561285866,"service":"devsync-api","req":{"id":"69579011-a799-491f-adf7-8308f0092dc1","method":"GET"},"requestId":"69579011-a799-491f-adf7-8308f0092dc1","res":{"statusCode":200},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793561285975,"service":"devsync-api","req":{"id":"6c21239e-4eb2-4744-bde8-a47231f3ab86","method":"POST"},"requestId":"6c21239e-4eb2-4744-bde8-a47231f3ab86","res":{"statusCode":201},"responseTime":93,"msg":"request completed"}
+{"level":30,"time":1793561286017,"service":"devsync-api","req":{"id":"28a3eaa6-d00d-41a9-a4f7-7f3ed2c04c74","method":"GET"},"requestId":"28a3eaa6-d00d-41a9-a4f7-7f3ed2c04c74","res":{"statusCode":200},"responseTime":30,"msg":"request completed"}
+{"level":30,"time":1793561286108,"service":"devsync-api","req":{"id":"bf52f75d-180f-43b9-afa2-b9ab8fd2a50b","method":"PATCH"},"requestId":"bf52f75d-180f-43b9-afa2-b9ab8fd2a50b","res":{"statusCode":200},"responseTime":80,"msg":"request completed"}
+○ Compiling /(dashboard)/workspace/[id]/docs/[docId]/page ...
+ GET /workspace/devsync-sample/docs/cmvy82xc10003l4gjnjm1mvot 200 in 6.1s (next.js: 5.6s, proxy.ts: 11ms, application-code: 504ms)
+{"level":30,"time":1793561294202,"service":"devsync-api","req":{"id":"00ce7def-ecc4-473e-b7ab-9b60373cb81d","method":"GET"},"requestId":"00ce7def-ecc4-473e-b7ab-9b60373cb81d","res":{"statusCode":200},"responseTime":63,"msg":"request completed"}
+{"level":30,"time":1793561294203,"service":"devsync-api","req":{"id":"c5fa7a8c-39a2-44dd-a29b-040ee645b42b","method":"GET"},"requestId":"c5fa7a8c-39a2-44dd-a29b-040ee645b42b","res":{"statusCode":200},"responseTime":55,"msg":"request completed"}
+{"level":30,"time":1793561294207,"service":"devsync-api","req":{"id":"c2fed4c7-0b9d-483c-9148-573d89cfe3bf","method":"GET"},"requestId":"c2fed4c7-0b9d-483c-9148-573d89cfe3bf","res":{"statusCode":200},"responseTime":63,"msg":"request completed"}
+{"level":30,"time":1793561294217,"service":"devsync-api","req":{"id":"43c617eb-d772-4163-9c77-a24867fc7949","method":"GET"},"requestId":"43c617eb-d772-4163-9c77-a24867fc7949","res":{"statusCode":200},"responseTime":71,"msg":"request completed"}
+dark 1440 loading: 0 axe violations; 1 incomplete
+{"level":30,"time":1793561294833,"service":"devsync-api","req":{"id":"d72437dd-2d7f-4e4e-9f6a-a05eb5d51450","method":"GET"},"requestId":"d72437dd-2d7f-4e4e-9f6a-a05eb5d51450","res":{"statusCode":200},"responseTime":28,"msg":"request completed"}
+{"level":30,"time":1793561294837,"service":"devsync-api","req":{"id":"5a98430a-e936-4071-8256-30198eeb1d4b","method":"GET"},"requestId":"5a98430a-e936-4071-8256-30198eeb1d4b","res":{"statusCode":200},"responseTime":30,"msg":"request completed"}
+dark 1440 ready: 0 axe violations; 2 incomplete
+dark 1440 slash: 0 axe violations; 2 incomplete
+dark 1440 code: 0 axe violations; 3 incomplete
+dark 1440 tasks: 1 axe violations; 3 incomplete
+  ✘  1 testing/browser/editor.spec.ts:116:9 › dark 1440 editor block flow and review states (11.6s)
+(node:79604) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1793561298327,"service":"devsync-api","req":{"id":"95a5bd68-34c8-4ce4-8eba-7b4ab4cdd4e1","method":"GET"},"requestId":"95a5bd68-34c8-4ce4-8eba-7b4ab4cdd4e1","res":{"statusCode":200},"responseTime":7,"msg":"request completed"}
+{"level":30,"time":1793561298364,"service":"devsync-api","req":{"id":"bbfbcbc4-9c4a-4ebd-9237-6ee378d97204","method":"POST"},"requestId":"bbfbcbc4-9c4a-4ebd-9237-6ee378d97204","res":{"statusCode":201},"responseTime":26,"msg":"request completed"}
+{"level":30,"time":1793561298381,"service":"devsync-api","req":{"id":"f516cd67-c82e-47a0-a293-350999bf762e","method":"GET"},"requestId":"f516cd67-c82e-47a0-a293-350999bf762e","res":{"statusCode":200},"responseTime":10,"msg":"request completed"}
+{"level":30,"time":1793561298420,"service":"devsync-api","req":{"id":"12bcda62-f00c-4e07-86a7-f894d1c641a8","method":"PATCH"},"requestId":"12bcda62-f00c-4e07-86a7-f894d1c641a8","res":{"statusCode":200},"responseTime":32,"msg":"request completed"}
+ GET /workspace/devsync-sample/docs/cmvy836we005bl4gj37au0l38 200 in 126ms (next.js: 60ms, proxy.ts: 5ms, application-code: 60ms)
+{"level":30,"time":1793561300136,"service":"devsync-api","req":{"id":"b72193fc-27b8-48ce-b742-68a33e0b340e","method":"GET"},"requestId":"b72193fc-27b8-48ce-b742-68a33e0b340e","res":{"statusCode":200},"responseTime":30,"msg":"request completed"}
+{"level":30,"time":1793561300137,"service":"devsync-api","req":{"id":"8a1534ae-fa47-4c90-b0ce-2ed40fc81069","method":"GET"},"requestId":"8a1534ae-fa47-4c90-b0ce-2ed40fc81069","res":{"statusCode":200},"responseTime":28,"msg":"request completed"}
+{"level":30,"time":1793561300140,"service":"devsync-api","req":{"id":"ec3150d0-2910-4a10-bac3-a28a7077e5df","method":"GET"},"requestId":"ec3150d0-2910-4a10-bac3-a28a7077e5df","res":{"statusCode":200},"responseTime":35,"msg":"request completed"}
+{"level":30,"time":1793561300143,"service":"devsync-api","req":{"id":"fcf6a066-9381-4d14-be51-449ec8e23f09","method":"GET"},"requestId":"fcf6a066-9381-4d14-be51-449ec8e23f09","res":{"statusCode":200},"responseTime":35,"msg":"request completed"}
+dark 390 loading: 0 axe violations; 0 incomplete
+{"level":30,"time":1793561300654,"service":"devsync-api","req":{"id":"2444877f-6ffb-46d3-b550-26421b97d0ea","method":"GET"},"requestId":"2444877f-6ffb-46d3-b550-26421b97d0ea","res":{"statusCode":200},"responseTime":17,"msg":"request completed"}
+{"level":30,"time":1793561300655,"service":"devsync-api","req":{"id":"4f0b0378-c7c3-4085-afd6-caa3c5763829","method":"GET"},"requestId":"4f0b0378-c7c3-4085-afd6-caa3c5763829","res":{"statusCode":200},"responseTime":17,"msg":"request completed"}
+dark 390 ready: 0 axe violations; 1 incomplete
+dark 390 slash: 0 axe violations; 2 incomplete
+dark 390 code: 0 axe violations; 2 incomplete
+dark 390 tasks: 1 axe violations; 2 incomplete
+  ✘  2 testing/browser/editor.spec.ts:116:9 › dark 390 editor block flow and review states (4.6s)
+(node:80115) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1793561304000,"service":"devsync-api","req":{"id":"b390ea96-2796-4ff1-a531-a2fa05525e71","method":"GET"},"requestId":"b390ea96-2796-4ff1-a531-a2fa05525e71","res":{"statusCode":200},"responseTime":6,"msg":"request completed"}
+{"level":30,"time":1793561304063,"service":"devsync-api","req":{"id":"afbe05aa-e321-42e0-af77-82c634fa9eba","method":"POST"},"requestId":"afbe05aa-e321-42e0-af77-82c634fa9eba","res":{"statusCode":201},"responseTime":45,"msg":"request completed"}
+{"level":30,"time":1793561304102,"service":"devsync-api","req":{"id":"8824b607-e3d4-4abe-8847-b1c56d55b006","method":"GET"},"requestId":"8824b607-e3d4-4abe-8847-b1c56d55b006","res":{"statusCode":200},"responseTime":20,"msg":"request completed"}
+{"level":30,"time":1793561304154,"service":"devsync-api","req":{"id":"60dfa642-6125-48d7-be8f-ca6d69339b12","method":"PATCH"},"requestId":"60dfa642-6125-48d7-be8f-ca6d69339b12","res":{"statusCode":200},"responseTime":46,"msg":"request completed"}
+ GET /workspace/devsync-sample/docs/cmvy83bal00ael4gjjc6cxv9f 200 in 117ms (next.js: 47ms, proxy.ts: 6ms, application-code: 65ms)
+{"level":30,"time":1793561306052,"service":"devsync-api","req":{"id":"88559809-b4f9-4e47-a07a-8ebbaa84208a","method":"GET"},"requestId":"88559809-b4f9-4e47-a07a-8ebbaa84208a","res":{"statusCode":200},"responseTime":33,"msg":"request completed"}
+{"level":30,"time":1793561306053,"service":"devsync-api","req":{"id":"ce461d93-0d18-408c-a9a3-190ee210a2a6","method":"GET"},"requestId":"ce461d93-0d18-408c-a9a3-190ee210a2a6","res":{"statusCode":200},"responseTime":32,"msg":"request completed"}
+{"level":30,"time":1793561306060,"service":"devsync-api","req":{"id":"7366188c-779b-44e5-acbc-cc32e7e3c828","method":"GET"},"requestId":"7366188c-779b-44e5-acbc-cc32e7e3c828","res":{"statusCode":200},"responseTime":42,"msg":"request completed"}
+{"level":30,"time":1793561306072,"service":"devsync-api","req":{"id":"59a44a5b-16a8-409d-9430-b83eede7d4fa","method":"GET"},"requestId":"59a44a5b-16a8-409d-9430-b83eede7d4fa","res":{"statusCode":200},"responseTime":50,"msg":"request completed"}
+light 1440 loading: 0 axe violations; 1 incomplete
+{"level":30,"time":1793561306691,"service":"devsync-api","req":{"id":"521b6ce1-a9e1-4c2b-b715-653637ae8786","method":"GET"},"requestId":"521b6ce1-a9e1-4c2b-b715-653637ae8786","res":{"statusCode":200},"responseTime":21,"msg":"request completed"}
+{"level":30,"time":1793561306694,"service":"devsync-api","req":{"id":"72d74d92-afbd-492f-89f3-58036e472a1b","method":"GET"},"requestId":"72d74d92-afbd-492f-89f3-58036e472a1b","res":{"statusCode":200},"responseTime":26,"msg":"request completed"}
+light 1440 ready: 0 axe violations; 2 incomplete
+light 1440 slash: 0 axe violations; 2 incomplete
+light 1440 code: 0 axe violations; 3 incomplete
+light 1440 tasks: 1 axe violations; 3 incomplete
+  ✘  3 testing/browser/editor.spec.ts:116:9 › light 1440 editor block flow and review states (5.5s)
+(node:80696) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1793561310389,"service":"devsync-api","req":{"id":"471abfd7-e6b1-4a34-9229-4c0699e8eb1b","method":"GET"},"requestId":"471abfd7-e6b1-4a34-9229-4c0699e8eb1b","res":{"statusCode":200},"responseTime":7,"msg":"request completed"}
+{"level":30,"time":1793561310435,"service":"devsync-api","req":{"id":"05461f96-563b-451e-8221-e2bc4cec5f9d","method":"POST"},"requestId":"05461f96-563b-451e-8221-e2bc4cec5f9d","res":{"statusCode":201},"responseTime":35,"msg":"request completed"}
+{"level":30,"time":1793561310474,"service":"devsync-api","req":{"id":"fbafcbaf-64f6-4c6c-b08e-a9c9ee731905","method":"GET"},"requestId":"fbafcbaf-64f6-4c6c-b08e-a9c9ee731905","res":{"statusCode":200},"responseTime":26,"msg":"request completed"}
+{"level":30,"time":1793561310546,"service":"devsync-api","req":{"id":"b2434423-9cd0-4c01-98cc-0e92ec38e1eb","method":"PATCH"},"requestId":"b2434423-9cd0-4c01-98cc-0e92ec38e1eb","res":{"statusCode":200},"responseTime":62,"msg":"request completed"}
+ GET /workspace/devsync-sample/docs/cmvy83g7j00fml4gjrz0n49gh 200 in 136ms (next.js: 51ms, proxy.ts: 6ms, application-code: 78ms)
+{"level":30,"time":1793561312284,"service":"devsync-api","req":{"id":"13b20cd7-57e0-4b60-8930-c25c50c55d47","method":"GET"},"requestId":"13b20cd7-57e0-4b60-8930-c25c50c55d47","res":{"statusCode":200},"responseTime":20,"msg":"request completed"}
+{"level":30,"time":1793561312286,"service":"devsync-api","req":{"id":"6837e1d7-ccac-4d63-a402-b1cca22d77ae","method":"GET"},"requestId":"6837e1d7-ccac-4d63-a402-b1cca22d77ae","res":{"statusCode":200},"responseTime":20,"msg":"request completed"}
+{"level":30,"time":1793561312296,"service":"devsync-api","req":{"id":"b56a0b3a-6bbb-4586-9924-2a98c83532d1","method":"GET"},"requestId":"b56a0b3a-6bbb-4586-9924-2a98c83532d1","res":{"statusCode":200},"responseTime":34,"msg":"request completed"}
+{"level":30,"time":1793561312300,"service":"devsync-api","req":{"id":"32291261-d69f-49d9-b1f5-a1ec1c3e14b4","method":"GET"},"requestId":"32291261-d69f-49d9-b1f5-a1ec1c3e14b4","res":{"statusCode":200},"responseTime":35,"msg":"request completed"}
+light 390 loading: 0 axe violations; 0 incomplete
+{"level":30,"time":1793561312760,"service":"devsync-api","req":{"id":"80c72655-39fa-48c8-b1df-ce1796a7ed5f","method":"GET"},"requestId":"80c72655-39fa-48c8-b1df-ce1796a7ed5f","res":{"statusCode":200},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793561312762,"service":"devsync-api","req":{"id":"a2acc239-2635-458b-9c0f-aef1563f7660","method":"GET"},"requestId":"a2acc239-2635-458b-9c0f-aef1563f7660","res":{"statusCode":200},"responseTime":15,"msg":"request completed"}
+light 390 ready: 0 axe violations; 1 incomplete
+light 390 slash: 0 axe violations; 2 incomplete
+light 390 code: 0 axe violations; 2 incomplete
+light 390 tasks: 1 axe violations; 2 incomplete
+  ✘  4 testing/browser/editor.spec.ts:116:9 › light 390 editor block flow and review states (4.4s)
+(node:81188) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1793561315743,"service":"devsync-api","req":{"id":"9ecbc1e7-a39d-4ada-81f6-bf5e91cc5177","method":"GET"},"requestId":"9ecbc1e7-a39d-4ada-81f6-bf5e91cc5177","res":{"statusCode":200},"responseTime":6,"msg":"request completed"}
+{"level":30,"time":1793561315743,"service":"devsync-api","req":{"id":"70b8c873-2b23-470e-800b-3d47dd9b930f","method":"GET"},"requestId":"70b8c873-2b23-470e-800b-3d47dd9b930f","res":{"statusCode":200},"responseTime":8,"msg":"request completed"}
+{"level":30,"time":1793561315744,"service":"devsync-api","req":{"id":"4e207e7f-9d9b-478c-8c85-7c5379daf4ae","method":"GET"},"requestId":"4e207e7f-9d9b-478c-8c85-7c5379daf4ae","res":{"statusCode":200},"responseTime":6,"msg":"request completed"}
+{"level":30,"time":1793561315790,"service":"devsync-api","req":{"id":"0d85adfa-d7bf-4312-b856-459b74b22ebb","method":"POST"},"requestId":"0d85adfa-d7bf-4312-b856-459b74b22ebb","res":{"statusCode":201},"responseTime":30,"msg":"request completed"}
+{"level":30,"time":1793561315819,"service":"devsync-api","req":{"id":"b457017b-6c4b-4b9e-aef0-12353cfd9c97","method":"GET"},"requestId":"b457017b-6c4b-4b9e-aef0-12353cfd9c97","res":{"statusCode":200},"responseTime":20,"msg":"request completed"}
+{"level":30,"time":1793561315868,"service":"devsync-api","req":{"id":"00cac112-af58-4b51-aa6e-ea03baeecde1","method":"PATCH"},"requestId":"00cac112-af58-4b51-aa6e-ea03baeecde1","res":{"statusCode":200},"responseTime":43,"msg":"request completed"}
+ GET /workspace/devsync-sample/docs/cmvy83kcf00kvl4gj8gzcninv 200 in 311ms (next.js: 79ms, proxy.ts: 13ms, application-code: 218ms)
+ GET /workspace/devsync-sample/docs/cmvy83kcf00kvl4gj8gzcninv 200 in 328ms (next.js: 148ms, proxy.ts: 12ms, application-code: 167ms)
+ GET /workspace/devsync-sample/docs/cmvy83kcf00kvl4gj8gzcninv 200 in 331ms (next.js: 190ms, proxy.ts: 11ms, application-code: 130ms)
+{"level":30,"time":1793561318946,"service":"devsync-api","req":{"id":"7a7e2af6-82c5-4fcb-9931-38f9287eba25","method":"GET"},"requestId":"7a7e2af6-82c5-4fcb-9931-38f9287eba25","res":{"statusCode":200},"responseTime":76,"msg":"request completed"}
+{"level":30,"time":1793561318970,"service":"devsync-api","req":{"id":"6d547f2c-3aee-4d8c-9b57-7e23f8f8ee9d","method":"GET"},"requestId":"6d547f2c-3aee-4d8c-9b57-7e23f8f8ee9d","res":{"statusCode":200},"responseTime":108,"msg":"request completed"}
+{"level":30,"time":1793561318971,"service":"devsync-api","req":{"id":"98df03ea-14a5-4a1b-b0ea-ccaf377c69b2","method":"GET"},"requestId":"98df03ea-14a5-4a1b-b0ea-ccaf377c69b2","res":{"statusCode":200},"responseTime":100,"msg":"request completed"}
+{"level":30,"time":1793561318972,"service":"devsync-api","req":{"id":"2d8e329e-ac68-4ed1-8231-243ac8a3312c","method":"GET"},"requestId":"2d8e329e-ac68-4ed1-8231-243ac8a3312c","res":{"statusCode":200},"responseTime":90,"msg":"request completed"}
+{"level":30,"time":1793561318974,"service":"devsync-api","req":{"id":"569d35b5-7c15-4428-b603-7765c3cc24d3","method":"GET"},"requestId":"569d35b5-7c15-4428-b603-7765c3cc24d3","res":{"statusCode":200},"responseTime":76,"msg":"request completed"}
+{"level":30,"time":1793561318980,"service":"devsync-api","req":{"id":"224d620c-57a1-430c-b714-481c6b24c216","method":"GET"},"requestId":"224d620c-57a1-430c-b714-481c6b24c216","res":{"statusCode":200},"responseTime":92,"msg":"request completed"}
+{"level":30,"time":1793561319016,"service":"devsync-api","req":{"id":"2d4b5293-8a3a-4bda-94af-60641e29d219","method":"GET"},"requestId":"2d4b5293-8a3a-4bda-94af-60641e29d219","res":{"statusCode":304},"responseTime":62,"msg":"request completed"}
+{"level":30,"time":1793561319041,"service":"devsync-api","req":{"id":"ae93a7cc-4bd5-4707-8bf9-f7cba8477e82","method":"GET"},"requestId":"ae93a7cc-4bd5-4707-8bf9-f7cba8477e82","res":{"statusCode":200},"responseTime":63,"msg":"request completed"}
+{"level":30,"time":1793561319043,"service":"devsync-api","req":{"id":"29172e1b-8ae2-46d2-bc1e-e022a251f0d4","method":"GET"},"requestId":"29172e1b-8ae2-46d2-bc1e-e022a251f0d4","res":{"statusCode":304},"responseTime":56,"msg":"request completed"}
+{"level":30,"time":1793561319045,"service":"devsync-api","req":{"id":"069ef2d3-344d-4a55-a714-19bbfaa9c6f6","method":"GET"},"requestId":"069ef2d3-344d-4a55-a714-19bbfaa9c6f6","res":{"statusCode":304},"responseTime":56,"msg":"request completed"}
+{"level":30,"time":1793561319055,"service":"devsync-api","req":{"id":"58e455b5-e027-45b2-930d-9e9d9a60fbc6","method":"GET"},"requestId":"58e455b5-e027-45b2-930d-9e9d9a60fbc6","res":{"statusCode":200},"responseTime":56,"msg":"request completed"}
+{"level":30,"time":1793561319058,"service":"devsync-api","req":{"id":"5fc4e8a1-3a4c-4fa2-9699-f4ced5694ca8","method":"GET"},"requestId":"5fc4e8a1-3a4c-4fa2-9699-f4ced5694ca8","res":{"statusCode":200},"responseTime":82,"msg":"request completed"}
+{"level":30,"time":1793561319059,"service":"devsync-api","req":{"id":"8c060211-a371-4987-93a8-420ec018201c","method":"GET"},"requestId":"8c060211-a371-4987-93a8-420ec018201c","res":{"statusCode":304},"responseTime":77,"msg":"request completed"}
+{"level":30,"time":1793561319060,"service":"devsync-api","req":{"id":"f4f1adac-1b6a-4bce-98d0-cd438a6c7e78","method":"GET"},"requestId":"f4f1adac-1b6a-4bce-98d0-cd438a6c7e78","res":{"statusCode":304},"responseTime":70,"msg":"request completed"}
+{"level":30,"time":1793561319064,"service":"devsync-api","req":{"id":"c0db9545-c423-4197-ad96-b875feca8364","method":"GET"},"requestId":"c0db9545-c423-4197-ad96-b875feca8364","res":{"statusCode":304},"responseTime":77,"msg":"request completed"}
+{"level":30,"time":1793561319151,"service":"devsync-api","req":{"id":"a1e92df5-47d3-4de3-abfa-328803dbeed2","method":"GET"},"requestId":"a1e92df5-47d3-4de3-abfa-328803dbeed2","res":{"statusCode":304},"responseTime":89,"msg":"request completed"}
+{"level":30,"time":1793561319173,"service":"devsync-api","req":{"id":"afd29eb0-600f-49f9-bf70-18e764cc0057","method":"GET"},"requestId":"afd29eb0-600f-49f9-bf70-18e764cc0057","res":{"statusCode":304},"responseTime":116,"msg":"request completed"}
+{"level":30,"time":1793561319179,"service":"devsync-api","req":{"id":"156553a1-a40e-4e9b-aa51-3115f0512390","method":"GET"},"requestId":"156553a1-a40e-4e9b-aa51-3115f0512390","res":{"statusCode":304},"responseTime":111,"msg":"request completed"}
+  ✘  5 testing/browser/editor.spec.ts:206:5 › two browser contexts merge simultaneous and offline edits; viewer cannot edit at server (18.9s)
+(node:82740) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1793561335630,"service":"devsync-api","req":{"id":"22960ef3-2c69-4d37-8d3b-7957a3e918ed","method":"GET"},"requestId":"22960ef3-2c69-4d37-8d3b-7957a3e918ed","res":{"statusCode":200},"responseTime":6,"msg":"request completed"}
+{"level":30,"time":1793561335662,"service":"devsync-api","req":{"id":"cd58350a-f549-457a-ba18-456586577ccb","method":"GET"},"requestId":"cd58350a-f549-457a-ba18-456586577ccb","res":{"statusCode":200},"responseTime":8,"msg":"request completed"}
+{"level":30,"time":1793561335702,"service":"devsync-api","req":{"id":"f53de6e2-c2b2-4d9f-8dae-f98b525def0b","method":"POST"},"requestId":"f53de6e2-c2b2-4d9f-8dae-f98b525def0b","res":{"statusCode":201},"responseTime":25,"msg":"request completed"}
+ GET /workspace/devsync-sample/docs/cmvy83zpl00pml4gjoyr3w3io 200 in 118ms (next.js: 51ms, proxy.ts: 5ms, application-code: 62ms)
+{"level":30,"time":1793561337333,"service":"devsync-api","req":{"id":"710309a5-c1b8-482a-8b57-66a2ca9689e0","method":"GET"},"requestId":"710309a5-c1b8-482a-8b57-66a2ca9689e0","res":{"statusCode":200},"responseTime":22,"msg":"request completed"}
+{"level":30,"time":1793561337337,"service":"devsync-api","req":{"id":"0a06e473-b745-4cce-b073-2261440228c4","method":"GET"},"requestId":"0a06e473-b745-4cce-b073-2261440228c4","res":{"statusCode":200},"responseTime":22,"msg":"request completed"}
+{"level":30,"time":1793561337344,"service":"devsync-api","req":{"id":"f88242dd-1306-4287-879d-6a3ada383106","method":"GET"},"requestId":"f88242dd-1306-4287-879d-6a3ada383106","res":{"statusCode":200},"responseTime":32,"msg":"request completed"}
+{"level":30,"time":1793561337356,"service":"devsync-api","req":{"id":"d68a4b8e-f037-44f6-8eec-bd1361ccf247","method":"GET"},"requestId":"d68a4b8e-f037-44f6-8eec-bd1361ccf247","res":{"statusCode":304},"responseTime":18,"msg":"request completed"}
+{"level":30,"time":1793561337357,"service":"devsync-api","req":{"id":"47bbf818-0147-41f1-b600-5f28b5adec12","method":"GET"},"requestId":"47bbf818-0147-41f1-b600-5f28b5adec12","res":{"statusCode":304},"responseTime":23,"msg":"request completed"}
+{"level":30,"time":1793561337366,"service":"devsync-api","req":{"id":"9772c65f-0270-4bb9-9da4-54518b563458","method":"GET"},"requestId":"9772c65f-0270-4bb9-9da4-54518b563458","res":{"statusCode":304},"responseTime":20,"msg":"request completed"}
+dark 360 empty: 0 axe violations; 1 incomplete
+ GET /workspace/devsync-sample/docs/cmvy83zpl00pml4gjoyr3w3io 200 in 114ms (next.js: 56ms, proxy.ts: 5ms, application-code: 52ms)
+{"level":30,"time":1793561339659,"service":"devsync-api","req":{"id":"1bfbb16c-c5c8-46e4-8c68-d7629e5a5d36","method":"GET"},"requestId":"1bfbb16c-c5c8-46e4-8c68-d7629e5a5d36","res":{"statusCode":200},"responseTime":25,"msg":"request completed"}
+{"level":30,"time":1793561339660,"service":"devsync-api","req":{"id":"dece2e78-335f-45de-a6b0-74fa8ba2603d","method":"GET"},"requestId":"dece2e78-335f-45de-a6b0-74fa8ba2603d","res":{"statusCode":200},"responseTime":19,"msg":"request completed"}
+{"level":30,"time":1793561339664,"service":"devsync-api","req":{"id":"e7df5427-0c43-4e1a-804a-8a76c03deb0a","method":"GET"},"requestId":"e7df5427-0c43-4e1a-804a-8a76c03deb0a","res":{"statusCode":200},"responseTime":27,"msg":"request completed"}
+{"level":30,"time":1793561339678,"service":"devsync-api","req":{"id":"c1f8ad3e-1dfa-41ac-8e13-f2615b16625e","method":"GET"},"requestId":"c1f8ad3e-1dfa-41ac-8e13-f2615b16625e","res":{"statusCode":304},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793561339680,"service":"devsync-api","req":{"id":"db4eb0a2-616e-403c-ba06-5e1a72684e7c","method":"GET"},"requestId":"db4eb0a2-616e-403c-ba06-5e1a72684e7c","res":{"statusCode":304},"responseTime":18,"msg":"request completed"}
+{"level":30,"time":1793561339683,"service":"devsync-api","req":{"id":"bc1cfa78-b5a6-4411-8137-5bca5cc9e9ab","method":"GET"},"requestId":"bc1cfa78-b5a6-4411-8137-5bca5cc9e9ab","res":{"statusCode":304},"responseTime":18,"msg":"request completed"}
+dark 360 viewer: 0 axe violations; 0 incomplete
+{"level":30,"time":1793561340485,"service":"devsync-api","req":{"id":"7769da07-021e-4c41-9b26-a1fe39367f8b","method":"GET"},"requestId":"7769da07-021e-4c41-9b26-a1fe39367f8b","res":{"statusCode":200},"responseTime":11,"msg":"request completed"}
+{"level":30,"time":1793561340519,"service":"devsync-api","req":{"id":"8094ca77-88a3-4879-b575-2588e58b976e","method":"GET"},"requestId":"8094ca77-88a3-4879-b575-2588e58b976e","res":{"statusCode":200},"responseTime":11,"msg":"request completed"}
+{"level":30,"time":1793561340566,"service":"devsync-api","req":{"id":"4a212dd0-9d12-4251-9a41-61aad18cb292","method":"POST"},"requestId":"4a212dd0-9d12-4251-9a41-61aad18cb292","res":{"statusCode":201},"responseTime":35,"msg":"request completed"}
+ GET /workspace/devsync-sample/docs/cmvy843gm00rnl4gjrqde072k 200 in 134ms (next.js: 62ms, proxy.ts: 5ms, application-code: 67ms)
+{"level":30,"time":1793561342374,"service":"devsync-api","req":{"id":"9817b0ec-700d-4555-9119-695f8e79022a","method":"GET"},"requestId":"9817b0ec-700d-4555-9119-695f8e79022a","res":{"statusCode":200},"responseTime":32,"msg":"request completed"}
+{"level":30,"time":1793561342377,"service":"devsync-api","req":{"id":"0f7ad166-24c4-4ead-988c-748774d14e35","method":"GET"},"requestId":"0f7ad166-24c4-4ead-988c-748774d14e35","res":{"statusCode":200},"responseTime":31,"msg":"request completed"}
+{"level":30,"time":1793561342378,"service":"devsync-api","req":{"id":"ac3fc551-4a12-4a0e-ab30-8c50206a14fe","method":"GET"},"requestId":"ac3fc551-4a12-4a0e-ab30-8c50206a14fe","res":{"statusCode":200},"responseTime":24,"msg":"request completed"}
+{"level":30,"time":1793561342403,"service":"devsync-api","req":{"id":"03aa8ce4-d50b-417c-83b2-5398d82021d1","method":"GET"},"requestId":"03aa8ce4-d50b-417c-83b2-5398d82021d1","res":{"statusCode":304},"responseTime":24,"msg":"request completed"}
+{"level":30,"time":1793561342405,"service":"devsync-api","req":{"id":"d3490276-6766-4b51-b29f-e788c9ec15a7","method":"GET"},"requestId":"d3490276-6766-4b51-b29f-e788c9ec15a7","res":{"statusCode":304},"responseTime":23,"msg":"request completed"}
+{"level":30,"time":1793561342406,"service":"devsync-api","req":{"id":"581f8c6c-e697-47df-b128-22949981ecc8","method":"GET"},"requestId":"581f8c6c-e697-47df-b128-22949981ecc8","res":{"statusCode":304},"responseTime":22,"msg":"request completed"}
+light 360 empty: 0 axe violations; 1 incomplete
+ GET /workspace/devsync-sample/docs/cmvy843gm00rnl4gjrqde072k 200 in 115ms (next.js: 59ms, proxy.ts: 3ms, application-code: 52ms)
+{"level":30,"time":1793561344681,"service":"devsync-api","req":{"id":"8da19e13-70eb-46f9-b733-6e9843f9ed0e","method":"GET"},"requestId":"8da19e13-70eb-46f9-b733-6e9843f9ed0e","res":{"statusCode":200},"responseTime":21,"msg":"request completed"}
+{"level":30,"time":1793561344683,"service":"devsync-api","req":{"id":"4231c1f4-526c-45fd-bbf5-9a4c54660f65","method":"GET"},"requestId":"4231c1f4-526c-45fd-bbf5-9a4c54660f65","res":{"statusCode":200},"responseTime":27,"msg":"request completed"}
+{"level":30,"time":1793561344692,"service":"devsync-api","req":{"id":"d77d6dbb-bb8c-4b63-aeba-a0a03bc4d64e","method":"GET"},"requestId":"d77d6dbb-bb8c-4b63-aeba-a0a03bc4d64e","res":{"statusCode":200},"responseTime":29,"msg":"request completed"}
+{"level":30,"time":1793561344705,"service":"devsync-api","req":{"id":"7bcab205-19b8-46e0-8c99-0210798dbb5d","method":"GET"},"requestId":"7bcab205-19b8-46e0-8c99-0210798dbb5d","res":{"statusCode":304},"responseTime":21,"msg":"request completed"}
+{"level":30,"time":1793561344709,"service":"devsync-api","req":{"id":"450c8746-7ef4-4de2-8642-479cc50dfbcf","method":"GET"},"requestId":"450c8746-7ef4-4de2-8642-479cc50dfbcf","res":{"statusCode":304},"responseTime":22,"msg":"request completed"}
+{"level":30,"time":1793561344712,"service":"devsync-api","req":{"id":"cba8f963-5681-47b5-939f-a97e0efb8a91","method":"GET"},"requestId":"cba8f963-5681-47b5-939f-a97e0efb8a91","res":{"statusCode":304},"responseTime":18,"msg":"request completed"}
+light 360 viewer: 0 axe violations; 0 incomplete
+  ✓  6 testing/browser/editor.spec.ts:318:5 › 360px empty canvas and viewer remain accessible in both themes (9.9s)
+
+
+  1) testing/browser/editor.spec.ts:116:9 › dark 1440 editor block flow and review states ──────────
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "target-size: input[aria-label=\"Task: Review the release notes\"]",
+    + ]
+
+      108 |   expect(
+      109 |     report.violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(' ')).join(', ')}`),
+    > 110 |   ).toEqual([]);
+          |     ^
+      111 |   expect(report.bounds.page).toBeLessThanOrEqual(width);
+      112 |   expect(report.bounds.scroll || 0).toBeLessThanOrEqual((report.bounds.main || width) + 1);
+      113 | }
+        at capture (/home/kevin/devsync/backend/testing/browser/editor.spec.ts:110:5)
+        at /home/kevin/devsync/backend/testing/browser/editor.spec.ts:171:9
+
+    Error Context: test-results/editor-dark-1440-editor-block-flow-and-review-states/error-context.md
+
+  2) testing/browser/editor.spec.ts:116:9 › dark 390 editor block flow and review states ───────────
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "target-size: input[aria-label=\"Task: Review the release notes\"]",
+    + ]
+
+      108 |   expect(
+      109 |     report.violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(' ')).join(', ')}`),
+    > 110 |   ).toEqual([]);
+          |     ^
+      111 |   expect(report.bounds.page).toBeLessThanOrEqual(width);
+      112 |   expect(report.bounds.scroll || 0).toBeLessThanOrEqual((report.bounds.main || width) + 1);
+      113 | }
+        at capture (/home/kevin/devsync/backend/testing/browser/editor.spec.ts:110:5)
+        at /home/kevin/devsync/backend/testing/browser/editor.spec.ts:171:9
+
+    Error Context: test-results/editor-dark-390-editor-block-flow-and-review-states/error-context.md
+
+  3) testing/browser/editor.spec.ts:116:9 › light 1440 editor block flow and review states ─────────
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "target-size: input[aria-label=\"Task: Review the release notes\"]",
+    + ]
+
+      108 |   expect(
+      109 |     report.violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(' ')).join(', ')}`),
+    > 110 |   ).toEqual([]);
+          |     ^
+      111 |   expect(report.bounds.page).toBeLessThanOrEqual(width);
+      112 |   expect(report.bounds.scroll || 0).toBeLessThanOrEqual((report.bounds.main || width) + 1);
+      113 | }
+        at capture (/home/kevin/devsync/backend/testing/browser/editor.spec.ts:110:5)
+        at /home/kevin/devsync/backend/testing/browser/editor.spec.ts:171:9
+
+    Error Context: test-results/editor-light-1440-editor-block-flow-and-review-states/error-context.md
+
+  4) testing/browser/editor.spec.ts:116:9 › light 390 editor block flow and review states ──────────
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "target-size: input[aria-label=\"Task: Review the release notes\"]",
+    + ]
+
+      108 |   expect(
+      109 |     report.violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(' ')).join(', ')}`),
+    > 110 |   ).toEqual([]);
+          |     ^
+      111 |   expect(report.bounds.page).toBeLessThanOrEqual(width);
+      112 |   expect(report.bounds.scroll || 0).toBeLessThanOrEqual((report.bounds.main || width) + 1);
+      113 | }
+        at capture (/home/kevin/devsync/backend/testing/browser/editor.spec.ts:110:5)
+        at /home/kevin/devsync/backend/testing/browser/editor.spec.ts:171:9
+
+    Error Context: test-results/editor-light-390-editor-block-flow-and-review-states/error-context.md
+
+  5) testing/browser/editor.spec.ts:206:5 › two browser contexts merge simultaneous and offline edits; viewer cannot edit at server 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByLabel('Document content')
+    Expected: "true"
+    Received: ""
+    Timeout:  15000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 15000ms
+      - waiting for getByLabel('Document content')
+        34 × locator resolved to <div role="textbox" translate="no" aria-multiline="true" contenteditable="false" aria-label="Document content" class="tiptap ProseMirror editor-canvas min-h-[400px]">…</div>
+           - unexpected value "null"
+
+
+      241 |       await expect(page.locator('.ProseMirror')).toHaveAttribute('contenteditable', 'true');
+      242 |     await expect(pages[2].locator('.ProseMirror')).toHaveAttribute('contenteditable', 'false');
+    > 243 |     await expect(pages[2].getByLabel('Document content')).toHaveAttribute('aria-readonly', 'true');
+          |                                                           ^
+      244 |     await expect(pages[2].getByRole('button', { name: 'Insert block', exact: true })).toHaveCount(
+      245 |       0,
+      246 |     );
+        at /home/kevin/devsync/backend/testing/browser/editor.spec.ts:243:59
+
+    Error Context: test-results/editor-two-browser-context-b4608-iewer-cannot-edit-at-server/error-context.md
+
+  5 failed
+    testing/browser/editor.spec.ts:116:9 › dark 1440 editor block flow and review states ───────────
+    testing/browser/editor.spec.ts:116:9 › dark 390 editor block flow and review states ────────────
+    testing/browser/editor.spec.ts:116:9 › light 1440 editor block flow and review states ──────────
+    testing/browser/editor.spec.ts:116:9 › light 390 editor block flow and review states ───────────
+    testing/browser/editor.spec.ts:206:5 › two browser contexts merge simultaneous and offline edits; viewer cannot edit at server 
+  1 passed (1.0m)
+[?25h
+Browser orchestration command exited 1

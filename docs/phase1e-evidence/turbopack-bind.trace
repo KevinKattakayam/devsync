@@ -1,0 +1,30 @@
+65182 +++ exited with 0 +++
+65205 bind(27, {sa_family=AF_NETLINK, nl_pid=0, nl_groups=00000000}, 12) = 0
+65218 +++ exited with 0 +++
+65217 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=65218, si_uid=1000, si_status=0, si_utime=0, si_stime=0} ---
+65217 +++ exited with 0 +++
+65157 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=65217, si_uid=1000, si_status=0, si_utime=0, si_stime=0} ---
+65206 bind(27, {sa_family=AF_NETLINK, nl_pid=0, nl_groups=00000000}, 12) = 0
+65207 bind(31, {sa_family=AF_NETLINK, nl_pid=0, nl_groups=00000000}, 12) = 0
+65206 bind(37, {sa_family=AF_NETLINK, nl_pid=0, nl_groups=00000000}, 12) = 0
+65207 +++ exited with 0 +++
+65208 +++ exited with 0 +++
+65205 +++ exited with 0 +++
+65206 +++ exited with 0 +++
+65162 +++ exited with 0 +++
+65159 +++ exited with 0 +++
+65161 +++ exited with 0 +++
+65160 +++ exited with 0 +++
+65158 +++ exited with 0 +++
+65261 +++ exited with 1 +++
+65260 +++ exited with 1 +++
+65216 +++ exited with 1 +++
+65215 +++ exited with 1 +++
+65214 +++ exited with 1 +++
+65213 +++ exited with 1 +++
+65212 +++ exited with 1 +++
+65210 +++ exited with 1 +++
+65209 +++ exited with 1 +++
+65163 +++ exited with 1 +++
+65211 +++ exited with 1 +++
+65157 +++ exited with 1 +++

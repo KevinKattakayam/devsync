@@ -1,0 +1,5 @@
+{
+  "backend-typecheck-retry": 0,
+  "backend-build-retry": 0,
+  "backend-tests-retry": 1
+}

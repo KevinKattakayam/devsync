@@ -1,0 +1,216 @@
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": PostgreSQL database "devsync_e2e_browser", schema "public" at "localhost:32836"
+
+11 migrations found in prisma/migrations
+
+Applying migration `20260729000000_baseline`
+Applying migration `20260729180000_enterprise_platform`
+Applying migration `20260815000000_phase_3_tenant_rls`
+Applying migration `20260815001000_scim_provisioning`
+Applying migration `20260815002000_commercial_billing`
+Applying migration `20261031000000_tenant_indexes`
+Applying migration `20261031010000_crdt_journal`
+Applying migration `202611010001_canonical_revision`
+Applying migration `202611010002_embedding_authority`
+Applying migration `202611010003_atomic_create_idempotency`
+Applying migration `202611010004_workspace_invitations`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20260729000000_baseline/
+    └─ migration.sql
+  └─ 20260729180000_enterprise_platform/
+    └─ migration.sql
+  └─ 20260815000000_phase_3_tenant_rls/
+    └─ migration.sql
+  └─ 20260815001000_scim_provisioning/
+    └─ migration.sql
+  └─ 20260815002000_commercial_billing/
+    └─ migration.sql
+  └─ 20261031000000_tenant_indexes/
+    └─ migration.sql
+  └─ 20261031010000_crdt_journal/
+    └─ migration.sql
+  └─ 202611010001_canonical_revision/
+    └─ migration.sql
+  └─ 202611010002_embedding_authority/
+    └─ migration.sql
+  └─ 202611010003_atomic_create_idempotency/
+    └─ migration.sql
+  └─ 202611010004_workspace_invitations/
+    └─ migration.sql
+      
+All migrations have been successfully applied.
+Sample workspace seeded. Sign in with the supplied Clerk test identities.
+/home/kevin/devsync/.worktrees/frontend-fixture
+Isolated fixture server ready
+{"level":30,"time":1793562890632,"service":"devsync-api","req":{"id":"887e080e-afe4-4e94-803c-0c88555f50ce","method":"GET"},"requestId":"887e080e-afe4-4e94-803c-0c88555f50ce","res":{"statusCode":200},"responseTime":5,"msg":"request completed"}
+▲ Next.js 16.4.3 (webpack)
+- Local:         http://127.0.0.1:3001
+- Network:       http://127.0.0.1:3001
+✓ Ready in 544ms
+✓ Running next.config.ts took 41ms
+○ Compiling /instrumentation ...
+
+✓ Generated AGENTS.md for AI agents. Set `agentRules: false` in next.config to disable.
+○ Compiling /(auth)/login/[[...rest]]/page ...
+ GET /login 200 in 1755ms (next.js: 1247ms, proxy.ts: 111ms, application-code: 396ms)
+
+Running 4 tests using 1 worker
+
+(node:132784) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1793562922504,"service":"devsync-api","req":{"id":"f89706c4-8806-432e-b24a-0cdd0aa104f5","method":"GET"},"requestId":"f89706c4-8806-432e-b24a-0cdd0aa104f5","res":{"statusCode":200},"responseTime":16,"msg":"request completed"}
+{"level":30,"time":1793562922598,"service":"devsync-api","req":{"id":"10f5abda-3c15-4af4-8298-f33aad29ee6b","method":"POST"},"requestId":"10f5abda-3c15-4af4-8298-f33aad29ee6b","res":{"statusCode":201},"responseTime":77,"msg":"request completed"}
+○ Compiling /(dashboard)/workspace/[id]/docs/[docId]/page ...
+ GET /workspace/devsync-sample/docs/cmvy9205q0003xld30lqhe98w 200 in 6.1s (next.js: 5.6s, proxy.ts: 15ms, application-code: 480ms)
+{"level":30,"time":1793562930660,"service":"devsync-api","req":{"id":"2eb354c5-b015-4f8d-80b3-658288899679","method":"GET"},"requestId":"2eb354c5-b015-4f8d-80b3-658288899679","res":{"statusCode":200},"responseTime":54,"msg":"request completed"}
+{"level":30,"time":1793562930667,"service":"devsync-api","req":{"id":"256706f6-7969-48ff-9788-096e0b93cf6b","method":"GET"},"requestId":"256706f6-7969-48ff-9788-096e0b93cf6b","res":{"statusCode":200},"responseTime":68,"msg":"request completed"}
+{"level":30,"time":1793562930669,"service":"devsync-api","req":{"id":"f263afd6-2685-4149-9495-18da793870fd","method":"GET"},"requestId":"f263afd6-2685-4149-9495-18da793870fd","res":{"statusCode":200},"responseTime":67,"msg":"request completed"}
+{"level":30,"time":1793562930704,"service":"devsync-api","req":{"id":"8e9dee54-4223-4df1-8715-efbc5172ab50","method":"GET"},"requestId":"8e9dee54-4223-4df1-8715-efbc5172ab50","res":{"statusCode":304},"responseTime":40,"msg":"request completed"}
+{"level":30,"time":1793562930723,"service":"devsync-api","req":{"id":"4e9e3b19-8e6e-4d91-bfe1-ecb1f0d5b3e6","method":"GET"},"requestId":"4e9e3b19-8e6e-4d91-bfe1-ecb1f0d5b3e6","res":{"statusCode":304},"responseTime":49,"msg":"request completed"}
+{"level":30,"time":1793562930724,"service":"devsync-api","req":{"id":"574d6700-3087-4ec7-a883-068dabb11319","method":"GET"},"requestId":"574d6700-3087-4ec7-a883-068dabb11319","res":{"statusCode":304},"responseTime":48,"msg":"request completed"}
+  ✘  1 testing/browser/ai.spec.ts:8:9 › dark 1440 AI transport fixture labels, references and partial failure (9.8s)
+(node:133685) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1793562933108,"service":"devsync-api","req":{"id":"7a998376-02f1-457a-b455-9916698c089c","method":"GET"},"requestId":"7a998376-02f1-457a-b455-9916698c089c","res":{"statusCode":200},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793562933173,"service":"devsync-api","req":{"id":"a66fd143-4b76-48c6-ac06-3d0ac51d80fd","method":"POST"},"requestId":"a66fd143-4b76-48c6-ac06-3d0ac51d80fd","res":{"statusCode":201},"responseTime":42,"msg":"request completed"}
+ GET /workspace/devsync-sample/docs/cmvy928bm0019xld30yqeldhn 200 in 154ms (next.js: 62ms, proxy.ts: 7ms, application-code: 86ms)
+{"level":30,"time":1793562934934,"service":"devsync-api","req":{"id":"dd09094c-5ee7-4f5c-ab52-feac77f2a790","method":"GET"},"requestId":"dd09094c-5ee7-4f5c-ab52-feac77f2a790","res":{"statusCode":200},"responseTime":34,"msg":"request completed"}
+{"level":30,"time":1793562934934,"service":"devsync-api","req":{"id":"a30dc193-4345-4a3e-b997-d706047e6a6a","method":"GET"},"requestId":"a30dc193-4345-4a3e-b997-d706047e6a6a","res":{"statusCode":200},"responseTime":27,"msg":"request completed"}
+{"level":30,"time":1793562934938,"service":"devsync-api","req":{"id":"bfc7828c-1193-41f3-90f4-c95557ac05e5","method":"GET"},"requestId":"bfc7828c-1193-41f3-90f4-c95557ac05e5","res":{"statusCode":200},"responseTime":33,"msg":"request completed"}
+{"level":30,"time":1793562934955,"service":"devsync-api","req":{"id":"fb0da181-9802-42c7-ba10-06b42a4497cd","method":"GET"},"requestId":"fb0da181-9802-42c7-ba10-06b42a4497cd","res":{"statusCode":304},"responseTime":18,"msg":"request completed"}
+{"level":30,"time":1793562934959,"service":"devsync-api","req":{"id":"8dfec594-07cf-4a08-b602-641abb682ee9","method":"GET"},"requestId":"8dfec594-07cf-4a08-b602-641abb682ee9","res":{"statusCode":304},"responseTime":24,"msg":"request completed"}
+{"level":30,"time":1793562934967,"service":"devsync-api","req":{"id":"75495a9d-b06c-4f3d-be8b-734ab2cf96b3","method":"GET"},"requestId":"75495a9d-b06c-4f3d-be8b-734ab2cf96b3","res":{"statusCode":304},"responseTime":25,"msg":"request completed"}
+  ✘  2 testing/browser/ai.spec.ts:8:9 › dark 390 AI transport fixture labels, references and partial failure (3.1s)
+(node:134082) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1793562937018,"service":"devsync-api","req":{"id":"e787e9ab-9d79-4879-a31f-fe120ebfc2a3","method":"GET"},"requestId":"e787e9ab-9d79-4879-a31f-fe120ebfc2a3","res":{"statusCode":200},"responseTime":8,"msg":"request completed"}
+{"level":30,"time":1793562937077,"service":"devsync-api","req":{"id":"d33d064a-d96e-47a1-80fe-dc068204b96d","method":"POST"},"requestId":"d33d064a-d96e-47a1-80fe-dc068204b96d","res":{"statusCode":201},"responseTime":37,"msg":"request completed"}
+ GET /workspace/devsync-sample/docs/cmvy92bc7002fxld39try0lx7 200 in 123ms (next.js: 59ms, proxy.ts: 7ms, application-code: 56ms)
+{"level":30,"time":1793562938775,"service":"devsync-api","req":{"id":"3739d6ac-b47f-49ed-810e-704792d4c7d6","method":"GET"},"requestId":"3739d6ac-b47f-49ed-810e-704792d4c7d6","res":{"statusCode":200},"responseTime":23,"msg":"request completed"}
+{"level":30,"time":1793562938776,"service":"devsync-api","req":{"id":"d6293b73-1009-4f50-9c93-4e1fb8ff12f0","method":"GET"},"requestId":"d6293b73-1009-4f50-9c93-4e1fb8ff12f0","res":{"statusCode":200},"responseTime":18,"msg":"request completed"}
+{"level":30,"time":1793562938788,"service":"devsync-api","req":{"id":"522d2ea1-d5d5-43d3-92eb-c3217356af0d","method":"GET"},"requestId":"522d2ea1-d5d5-43d3-92eb-c3217356af0d","res":{"statusCode":200},"responseTime":33,"msg":"request completed"}
+{"level":30,"time":1793562938802,"service":"devsync-api","req":{"id":"8de99711-c238-433f-a63b-9895b81ef3b7","method":"GET"},"requestId":"8de99711-c238-433f-a63b-9895b81ef3b7","res":{"statusCode":304},"responseTime":20,"msg":"request completed"}
+{"level":30,"time":1793562938804,"service":"devsync-api","req":{"id":"6aeccaf9-5cc8-4870-bd03-c2d83d8c3768","method":"GET"},"requestId":"6aeccaf9-5cc8-4870-bd03-c2d83d8c3768","res":{"statusCode":304},"responseTime":26,"msg":"request completed"}
+{"level":30,"time":1793562938816,"service":"devsync-api","req":{"id":"f3104e9e-e135-408b-8af8-b401670037f5","method":"GET"},"requestId":"f3104e9e-e135-408b-8af8-b401670037f5","res":{"statusCode":304},"responseTime":27,"msg":"request completed"}
+  ✘  3 testing/browser/ai.spec.ts:8:9 › light 1440 AI transport fixture labels, references and partial failure (3.0s)
+(node:134517) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1793562940841,"service":"devsync-api","req":{"id":"b2d52a25-93f3-4083-ad7d-1e0a2c2eb42d","method":"GET"},"requestId":"b2d52a25-93f3-4083-ad7d-1e0a2c2eb42d","res":{"statusCode":200},"responseTime":8,"msg":"request completed"}
+{"level":30,"time":1793562940882,"service":"devsync-api","req":{"id":"c0c2d152-4e17-422a-b7e8-5a0088145bc9","method":"POST"},"requestId":"c0c2d152-4e17-422a-b7e8-5a0088145bc9","res":{"statusCode":201},"responseTime":27,"msg":"request completed"}
+ GET /workspace/devsync-sample/docs/cmvy92e9x003kxld3nfted7wy 200 in 114ms (next.js: 56ms, proxy.ts: 6ms, application-code: 52ms)
+{"level":30,"time":1793562942540,"service":"devsync-api","req":{"id":"65943306-5cd6-4cb7-8fbc-06af5385c222","method":"GET"},"requestId":"65943306-5cd6-4cb7-8fbc-06af5385c222","res":{"statusCode":200},"responseTime":22,"msg":"request completed"}
+{"level":30,"time":1793562942541,"service":"devsync-api","req":{"id":"2855660b-1730-454f-8cbd-5b3b8b52e2fa","method":"GET"},"requestId":"2855660b-1730-454f-8cbd-5b3b8b52e2fa","res":{"statusCode":200},"responseTime":26,"msg":"request completed"}
+{"level":30,"time":1793562942545,"service":"devsync-api","req":{"id":"5314b476-3deb-4173-bcaf-9d022c622c43","method":"GET"},"requestId":"5314b476-3deb-4173-bcaf-9d022c622c43","res":{"statusCode":200},"responseTime":29,"msg":"request completed"}
+{"level":30,"time":1793562942566,"service":"devsync-api","req":{"id":"f98cff46-dc26-4c0d-ac3a-779487bfbc12","method":"GET"},"requestId":"f98cff46-dc26-4c0d-ac3a-779487bfbc12","res":{"statusCode":304},"responseTime":23,"msg":"request completed"}
+{"level":30,"time":1793562942573,"service":"devsync-api","req":{"id":"f022684b-f211-4795-b55f-873af2547418","method":"GET"},"requestId":"f022684b-f211-4795-b55f-873af2547418","res":{"statusCode":304},"responseTime":29,"msg":"request completed"}
+{"level":30,"time":1793562942578,"service":"devsync-api","req":{"id":"a0f5c202-d3fb-4495-8667-deb55ab2d10f","method":"GET"},"requestId":"a0f5c202-d3fb-4495-8667-deb55ab2d10f","res":{"statusCode":304},"responseTime":30,"msg":"request completed"}
+  ✘  4 testing/browser/ai.spec.ts:8:9 › light 390 AI transport fixture labels, references and partial failure (3.0s)
+
+
+  1) testing/browser/ai.spec.ts:8:9 › dark 1440 AI transport fixture labels, references and partial failure 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "color-contrast",
+    + ]
+
+      70 |             animations: 'disabled',
+      71 |           });
+    > 72 |           expect(result.violations.map((v) => v.id)).toEqual([]);
+         |                                                      ^
+      73 |           expect(
+      74 |             await page.evaluate(() => document.documentElement.scrollWidth),
+      75 |           ).toBeLessThanOrEqual(width);
+        at capture (/home/kevin/devsync/backend/testing/browser/ai.spec.ts:72:54)
+        at /home/kevin/devsync/backend/testing/browser/ai.spec.ts:85:9
+
+    Error Context: test-results/ai-dark-1440-AI-transport--124ae-erences-and-partial-failure/error-context.md
+
+  2) testing/browser/ai.spec.ts:8:9 › dark 390 AI transport fixture labels, references and partial failure 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "color-contrast",
+    + ]
+
+      70 |             animations: 'disabled',
+      71 |           });
+    > 72 |           expect(result.violations.map((v) => v.id)).toEqual([]);
+         |                                                      ^
+      73 |           expect(
+      74 |             await page.evaluate(() => document.documentElement.scrollWidth),
+      75 |           ).toBeLessThanOrEqual(width);
+        at capture (/home/kevin/devsync/backend/testing/browser/ai.spec.ts:72:54)
+        at /home/kevin/devsync/backend/testing/browser/ai.spec.ts:85:9
+
+    Error Context: test-results/ai-dark-390-AI-transport-f-32ca6-erences-and-partial-failure/error-context.md
+
+  3) testing/browser/ai.spec.ts:8:9 › light 1440 AI transport fixture labels, references and partial failure 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "color-contrast",
+    + ]
+
+      70 |             animations: 'disabled',
+      71 |           });
+    > 72 |           expect(result.violations.map((v) => v.id)).toEqual([]);
+         |                                                      ^
+      73 |           expect(
+      74 |             await page.evaluate(() => document.documentElement.scrollWidth),
+      75 |           ).toBeLessThanOrEqual(width);
+        at capture (/home/kevin/devsync/backend/testing/browser/ai.spec.ts:72:54)
+        at /home/kevin/devsync/backend/testing/browser/ai.spec.ts:85:9
+
+    Error Context: test-results/ai-light-1440-AI-transport-b59a4-erences-and-partial-failure/error-context.md
+
+  4) testing/browser/ai.spec.ts:8:9 › light 390 AI transport fixture labels, references and partial failure 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "color-contrast",
+    + ]
+
+      70 |             animations: 'disabled',
+      71 |           });
+    > 72 |           expect(result.violations.map((v) => v.id)).toEqual([]);
+         |                                                      ^
+      73 |           expect(
+      74 |             await page.evaluate(() => document.documentElement.scrollWidth),
+      75 |           ).toBeLessThanOrEqual(width);
+        at capture (/home/kevin/devsync/backend/testing/browser/ai.spec.ts:72:54)
+        at /home/kevin/devsync/backend/testing/browser/ai.spec.ts:85:9
+
+    Error Context: test-results/ai-light-390-AI-transport--1e4a7-erences-and-partial-failure/error-context.md
+
+  4 failed
+    testing/browser/ai.spec.ts:8:9 › dark 1440 AI transport fixture labels, references and partial failure 
+    testing/browser/ai.spec.ts:8:9 › dark 390 AI transport fixture labels, references and partial failure 
+    testing/browser/ai.spec.ts:8:9 › light 1440 AI transport fixture labels, references and partial failure 
+    testing/browser/ai.spec.ts:8:9 › light 390 AI transport fixture labels, references and partial failure 
+[?25h
+Browser orchestration command exited 1

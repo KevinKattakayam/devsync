@@ -1,0 +1,47 @@
+{
+  "process_identity_settings": {
+    "SEED_OWNER_CLERK_ID": false,
+    "SEED_EDITOR_CLERK_ID": false,
+    "SEED_VIEWER_CLERK_ID": false,
+    "E2E_OWNER_EMAIL": false,
+    "E2E_EDITOR_EMAIL": false,
+    "E2E_VIEWER_EMAIL": false,
+    "E2E_SIGN_IN_METHOD": false
+  },
+  "files": [
+    {
+      "path": "backend/.env",
+      "exists": true,
+      "identity_settings": {
+        "SEED_OWNER_CLERK_ID": false,
+        "SEED_EDITOR_CLERK_ID": false,
+        "SEED_VIEWER_CLERK_ID": false,
+        "E2E_OWNER_EMAIL": false,
+        "E2E_EDITOR_EMAIL": false,
+        "E2E_VIEWER_EMAIL": false,
+        "E2E_SIGN_IN_METHOD": false
+      },
+      "clerk_keys_present": {
+        "CLERK_SECRET_KEY": true,
+        "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY": false
+      }
+    },
+    {
+      "path": "frontend/.env.local",
+      "exists": true,
+      "identity_settings": {
+        "SEED_OWNER_CLERK_ID": false,
+        "SEED_EDITOR_CLERK_ID": false,
+        "SEED_VIEWER_CLERK_ID": false,
+        "E2E_OWNER_EMAIL": false,
+        "E2E_EDITOR_EMAIL": false,
+        "E2E_VIEWER_EMAIL": false,
+        "E2E_SIGN_IN_METHOD": false
+      },
+      "clerk_keys_present": {
+        "CLERK_SECRET_KEY": true,
+        "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY": true
+      }
+    }
+  ]
+}

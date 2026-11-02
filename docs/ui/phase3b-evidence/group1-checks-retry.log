@@ -1,0 +1,795 @@
+
+> frontend@0.1.0 lint
+> eslint --max-warnings=0
+
+
+> frontend@0.1.0 format:check
+> prettier --check . --ignore-unknown
+
+Checking formatting...
+All matched files use Prettier code style!
+
+> frontend@0.1.0 typecheck
+> tsc --noEmit
+
+
+> frontend@0.1.0 test
+> node --test tests/*.test.mjs && vitest run
+
+TAP version 13
+# Subtest: tests/dependency-policy.test.mjs
+ok 1 - tests/dependency-policy.test.mjs
+  ---
+  duration_ms: 56.983386
+  type: 'test'
+  ...
+# Subtest: tests/fixture-isolation.test.mjs
+ok 2 - tests/fixture-isolation.test.mjs
+  ---
+  duration_ms: 78.148266
+  type: 'test'
+  ...
+# Subtest: tests/markdown.test.mjs
+ok 3 - tests/markdown.test.mjs
+  ---
+  duration_ms: 453.993607
+  type: 'test'
+  ...
+# Subtest: tests/theme-contrast.test.mjs
+ok 4 - tests/theme-contrast.test.mjs
+  ---
+  duration_ms: 65.728313
+  type: 'test'
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 466.474697
+
+ RUN  v5.0.5 /home/kevin/devsync/frontend
+
+ ❯ tests/settings.test.tsx (10 tests | 2 failed) 5359ms
+   × confirms a keyboard role change, restores focus, and undoes through the same authorized endpoint 1287ms
+   × rolls a denied optimistic role update back and exposes refresh/retry 1163ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/settings.test.tsx > confirms a keyboard role change, restores focus, and undoes through the same authorized endpoint
+TestingLibraryElementError: Unable to find role="dialog" and name "Change member role?"
+
+Ignored nodes: comments, script, style
+[36m<body[39m
+  [33mstyle[39m=[32m""[39m
+[36m>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"mx-auto max-w-5xl px-4 pt-8 pb-24 md:px-8"[39m
+      [33mdata-settings[39m=[32m"true"[39m
+    [36m>[39m
+      [36m<header[39m
+        [33mclass[39m=[32m"mb-8 grid grid-cols-[minmax(0,1fr)_auto] items-start gap-4"[39m
+      [36m>[39m
+        [36m<div>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"mb-2 break-words text-xs text-muted-foreground"[39m
+          [36m>[39m
+            [0mEngineering[0m
+          [36m</p>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"text-[28px] font-semibold leading-9"[39m
+          [36m>[39m
+            [0mWorkspace settings[0m
+          [36m</h1>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"mt-3 text-sm leading-6 text-muted-foreground"[39m
+          [36m>[39m
+            [0mManage who can access this workspace and how they join.[0m
+          [36m</p>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"mt-3"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"ui-badge"[39m
+              [33mdata-tone[39m=[32m"neutral"[39m
+            [36m>[39m
+              [0mowner[0m
+            [36m</span>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<button[39m
+          [33maria-label[39m=[32m"Refresh workspace access"[39m
+          [33mclass[39m=[32m"ui-button"[39m
+          [33mdata-size[39m=[32m"default"[39m
+          [33mdata-variant[39m=[32m"ghost"[39m
+          [33mtype[39m=[32m"button"[39m
+        [36m>[39m
+          [36m<svg[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"lucide lucide-refresh-cw size-4"[39m
+            [33mfill[39m=[32m"none"[39m
+            [33mheight[39m=[32m"24"[39m
+            [33mstroke[39m=[32m"currentColor"[39m
+            [33mstroke-linecap[39m=[32m"round"[39m
+            [33mstroke-linejoin[39m=[32m"round"[39m
+            [33mstroke-width[39m=[32m"2"[39m
+            [33mviewBox[39m=[32m"0 0 24 24"[39m
+            [33mwidth[39m=[32m"24"[39m
+            [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+          [36m>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"[39m
+            [36m/>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M21 3v5h-5"[39m
+            [36m/>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"[39m
+            [36m/>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M8 16H3v5"[39m
+            [36m/>[39m
+          [36m</svg>[39m
+        [36m</button>[39m
+      [36m</header>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"mb-8"[39m
+      [36m>[39m
+        [36m<label[39m
+          [33mclass[39m=[32m"block space-y-2 text-sm"[39m
+        [36m>[39m
+          [36m<span>[39m
+            [0mSearch settings[0m
+          [36m</span>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"relative"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-search absolute left-3 top-3 size-4 text-muted-foreground"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"24"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"24"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"m21 21-4.34-4.34"[39m
+              [36m/>[39m
+              [36m<circle[39m
+                [33mcx[39m=[32m"11"[39m
+                [33mcy[39m=[32m"11"[39m
+                [33mr[39m=[32m"8"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+            [36m<input[39m
+              [33mclass[39m=[32m"ui-input pl-10"[39m
+              [33mplaceholder[39m=[32m"Sections, names, email addresses or roles"[39m
+              [33mvalue[39m=[32m""[39m
+            [36m/>[39m
+          [36m</div>[39m
+        [36m</label>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"grid min-w-0 gap-8 md:grid-cols-[10rem_minmax(0,1fr)]"[39m
+      [36m>[39m
+        [36m<nav[39m
+          [33maria-label[39m=[32m"Settings sections"[39m
+          [33mclass[39m=[32m"flex flex-wrap content-start gap-2 md:flex-col"[39m
+        [36m>[39m
+          [36m<a[39m
+            [33mclass[39m=[32m"rounded-md px-3 py-2 text-sm hover:bg-secondary"[39m
+            [33mhref[39m=[32m"#members"[39m
+          [36m>[39m
+            [0mMembers & roles[0m
+          [36m</a>[39m
+          [36m<a[39m
+            [33mclass[39m=[32m"rounded-md px-3 py-2 text-sm hover:bg-secondary"[39m
+            [33mhref[39m=[32m"#invitations"[39m
+          [36m>[39m
+            [0mInvitations[0m
+          [36m</a>[39m
+        [36m</nav>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"min-w-0 space-y-10"[39m
+        [36m>[39m
+          [36m<section[39m
+            [33maria-labelledby[39m=[32m"members-heading"[39m
+            [33mclass[39m=[32m"min-w-0 scroll-mt-4"[39m
+            [33mid[39m=[32m"members"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"mb-4 flex flex-wrap items-baseline justify-between gap-3"[39m
+            [36m>[39m
+              [36m<h2[39m
+                [33mclass[39m=[32m"text-lg font-semibold"[39m
+                [33mid[39m=[32m"members-heading"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+              [36m>[39m
+                [0mMembers & roles[0m
+              [36m</h2>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"text-xs text-muted-foreground"[39m
+              [36m>[39m
+                [0m3[0m
+                [0m members at last refresh[0m
+              [36m</p>[39m
+            [36m</div>[39m
+            [36m<ul[39m
+              [33maria-label[39m=[32m"Workspace members"[39m
+              [33mclass[39m=[32m"space-y-2"[39m
+            [36m>[39m
+              [36m<li[39m
+                [33mclass[39m=[32m"flex min-w-0 flex-wrap items-center justify-between gap-4 rounded-lg bg-card px-4 py-4"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"flex min-w-0 flex-1 items-center gap-3"[39m
+                [36m>[39m
+                  [36m<span[39m
+               ...
+
+Ignored nodes: comments, script, style
+[36m<body[39m
+  [33mstyle[39m=[32m""[39m
+[36m>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"mx-auto max-w-5xl px-4 pt-8 pb-24 md:px-8"[39m
+      [33mdata-settings[39m=[32m"true"[39m
+    [36m>[39m
+      [36m<header[39m
+        [33mclass[39m=[32m"mb-8 grid grid-cols-[minmax(0,1fr)_auto] items-start gap-4"[39m
+      [36m>[39m
+        [36m<div>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"mb-2 break-words text-xs text-muted-foreground"[39m
+          [36m>[39m
+            [0mEngineering[0m
+          [36m</p>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"text-[28px] font-semibold leading-9"[39m
+          [36m>[39m
+            [0mWorkspace settings[0m
+          [36m</h1>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"mt-3 text-sm leading-6 text-muted-foreground"[39m
+          [36m>[39m
+            [0mManage who can access this workspace and how they join.[0m
+          [36m</p>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"mt-3"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"ui-badge"[39m
+              [33mdata-tone[39m=[32m"neutral"[39m
+            [36m>[39m
+              [0mowner[0m
+            [36m</span>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<button[39m
+          [33maria-label[39m=[32m"Refresh workspace access"[39m
+          [33mclass[39m=[32m"ui-button"[39m
+          [33mdata-size[39m=[32m"default"[39m
+          [33mdata-variant[39m=[32m"ghost"[39m
+          [33mtype[39m=[32m"button"[39m
+        [36m>[39m
+          [36m<svg[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"lucide lucide-refresh-cw size-4"[39m
+            [33mfill[39m=[32m"none"[39m
+            [33mheight[39m=[32m"24"[39m
+            [33mstroke[39m=[32m"currentColor"[39m
+            [33mstroke-linecap[39m=[32m"round"[39m
+            [33mstroke-linejoin[39m=[32m"round"[39m
+            [33mstroke-width[39m=[32m"2"[39m
+            [33mviewBox[39m=[32m"0 0 24 24"[39m
+            [33mwidth[39m=[32m"24"[39m
+            [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+          [36m>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"[39m
+            [36m/>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M21 3v5h-5"[39m
+            [36m/>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"[39m
+            [36m/>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M8 16H3v5"[39m
+            [36m/>[39m
+          [36m</svg>[39m
+        [36m</button>[39m
+      [36m</header>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"mb-8"[39m
+      [36m>[39m
+        [36m<label[39m
+          [33mclass[39m=[32m"block space-y-2 text-sm"[39m
+        [36m>[39m
+          [36m<span>[39m
+            [0mSearch settings[0m
+          [36m</span>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"relative"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-search absolute left-3 top-3 size-4 text-muted-foreground"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"24"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"24"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"m21 21-4.34-4.34"[39m
+              [36m/>[39m
+              [36m<circle[39m
+                [33mcx[39m=[32m"11"[39m
+                [33mcy[39m=[32m"11"[39m
+                [33mr[39m=[32m"8"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+            [36m<input[39m
+              [33mclass[39m=[32m"ui-input pl-10"[39m
+              [33mplaceholder[39m=[32m"Sections, names, email addresses or roles"[39m
+              [33mvalue[39m=[32m""[39m
+            [36m/>[39m
+          [36m</div>[39m
+        [36m</label>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"grid min-w-0 gap-8 md:grid-cols-[10rem_minmax(0,1fr)]"[39m
+      [36m>[39m
+        [36m<nav[39m
+          [33maria-label[39m=[32m"Settings sections"[39m
+          [33mclass[39m=[32m"flex flex-wrap content-start gap-2 md:flex-col"[39m
+        [36m>[39m
+          [36m<a[39m
+            [33mclass[39m=[32m"rounded-md px-3 py-2 text-sm hover:bg-secondary"[39m
+            [33mhref[39m=[32m"#members"[39m
+          [36m>[39m
+            [0mMembers & roles[0m
+          [36m</a>[39m
+          [36m<a[39m
+            [33mclass[39m=[32m"rounded-md px-3 py-2 text-sm hover:bg-secondary"[39m
+            [33mhref[39m=[32m"#invitations"[39m
+          [36m>[39m
+            [0mInvitations[0m
+          [36m</a>[39m
+        [36m</nav>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"min-w-0 space-y-10"[39m
+        [36m>[39m
+          [36m<section[39m
+            [33maria-labelledby[39m=[32m"members-heading"[39m
+            [33mclass[39m=[32m"min-w-0 scroll-mt-4"[39m
+            [33mid[39m=[32m"members"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"mb-4 flex flex-wrap items-baseline justify-between gap-3"[39m
+            [36m>[39m
+              [36m<h2[39m
+                [33mclass[39m=[32m"text-lg font-semibold"[39m
+                [33mid[39m=[32m"members-heading"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+              [36m>[39m
+                [0mMembers & roles[0m
+              [36m</h2>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"text-xs text-muted-foreground"[39m
+              [36m>[39m
+                [0m3[0m
+                [0m members at last refresh[0m
+              [36m</p>[39m
+            [36m</div>[39m
+            [36m<ul[39m
+              [33maria-label[39m=[32m"Workspace members"[39m
+              [33mclass[39m=[32m"space-y-2"[39m
+            [36m>[39m
+              [36m<li[39m
+                [33mclass[39m=[32m"flex min-w-0 flex-wrap items-center justify-between gap-4 rounded-lg bg-card px-4 py-4"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"flex min-w-0 flex-1 items-center gap-3"[39m
+                [36m>[39m
+                  [36m<span[39m
+               ...
+ ❯ waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ tests/settings.test.tsx:121:16
+    119|   trigger.focus();
+    120|   await user.keyboard('{Enter}{ArrowUp}{Enter}');
+    121|   await screen.findByRole('dialog', { name: 'Change member role?' });
+       |                ^
+    122|   expect(mocks.patch).not.toHaveBeenCalled();
+    123|   await user.click(screen.getByRole('button', { name: 'Confirm role ch…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/settings.test.tsx > rolls a denied optimistic role update back and exposes refresh/retry
+TestingLibraryElementError: Unable to find role="button" and name "Confirm role change"
+
+Ignored nodes: comments, script, style
+[36m<body[39m
+  [33mstyle[39m=[32m""[39m
+[36m>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"mx-auto max-w-5xl px-4 pt-8 pb-24 md:px-8"[39m
+      [33mdata-settings[39m=[32m"true"[39m
+    [36m>[39m
+      [36m<header[39m
+        [33mclass[39m=[32m"mb-8 grid grid-cols-[minmax(0,1fr)_auto] items-start gap-4"[39m
+      [36m>[39m
+        [36m<div>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"mb-2 break-words text-xs text-muted-foreground"[39m
+          [36m>[39m
+            [0mEngineering[0m
+          [36m</p>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"text-[28px] font-semibold leading-9"[39m
+          [36m>[39m
+            [0mWorkspace settings[0m
+          [36m</h1>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"mt-3 text-sm leading-6 text-muted-foreground"[39m
+          [36m>[39m
+            [0mManage who can access this workspace and how they join.[0m
+          [36m</p>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"mt-3"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"ui-badge"[39m
+              [33mdata-tone[39m=[32m"neutral"[39m
+            [36m>[39m
+              [0mowner[0m
+            [36m</span>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<button[39m
+          [33maria-label[39m=[32m"Refresh workspace access"[39m
+          [33mclass[39m=[32m"ui-button"[39m
+          [33mdata-size[39m=[32m"default"[39m
+          [33mdata-variant[39m=[32m"ghost"[39m
+          [33mtype[39m=[32m"button"[39m
+        [36m>[39m
+          [36m<svg[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"lucide lucide-refresh-cw size-4"[39m
+            [33mfill[39m=[32m"none"[39m
+            [33mheight[39m=[32m"24"[39m
+            [33mstroke[39m=[32m"currentColor"[39m
+            [33mstroke-linecap[39m=[32m"round"[39m
+            [33mstroke-linejoin[39m=[32m"round"[39m
+            [33mstroke-width[39m=[32m"2"[39m
+            [33mviewBox[39m=[32m"0 0 24 24"[39m
+            [33mwidth[39m=[32m"24"[39m
+            [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+          [36m>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"[39m
+            [36m/>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M21 3v5h-5"[39m
+            [36m/>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"[39m
+            [36m/>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M8 16H3v5"[39m
+            [36m/>[39m
+          [36m</svg>[39m
+        [36m</button>[39m
+      [36m</header>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"mb-8"[39m
+      [36m>[39m
+        [36m<label[39m
+          [33mclass[39m=[32m"block space-y-2 text-sm"[39m
+        [36m>[39m
+          [36m<span>[39m
+            [0mSearch settings[0m
+          [36m</span>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"relative"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-search absolute left-3 top-3 size-4 text-muted-foreground"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"24"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"24"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"m21 21-4.34-4.34"[39m
+              [36m/>[39m
+              [36m<circle[39m
+                [33mcx[39m=[32m"11"[39m
+                [33mcy[39m=[32m"11"[39m
+                [33mr[39m=[32m"8"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+            [36m<input[39m
+              [33mclass[39m=[32m"ui-input pl-10"[39m
+              [33mplaceholder[39m=[32m"Sections, names, email addresses or roles"[39m
+              [33mvalue[39m=[32m""[39m
+            [36m/>[39m
+          [36m</div>[39m
+        [36m</label>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"grid min-w-0 gap-8 md:grid-cols-[10rem_minmax(0,1fr)]"[39m
+      [36m>[39m
+        [36m<nav[39m
+          [33maria-label[39m=[32m"Settings sections"[39m
+          [33mclass[39m=[32m"flex flex-wrap content-start gap-2 md:flex-col"[39m
+        [36m>[39m
+          [36m<a[39m
+            [33mclass[39m=[32m"rounded-md px-3 py-2 text-sm hover:bg-secondary"[39m
+            [33mhref[39m=[32m"#members"[39m
+          [36m>[39m
+            [0mMembers & roles[0m
+          [36m</a>[39m
+          [36m<a[39m
+            [33mclass[39m=[32m"rounded-md px-3 py-2 text-sm hover:bg-secondary"[39m
+            [33mhref[39m=[32m"#invitations"[39m
+          [36m>[39m
+            [0mInvitations[0m
+          [36m</a>[39m
+        [36m</nav>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"min-w-0 space-y-10"[39m
+        [36m>[39m
+          [36m<section[39m
+            [33maria-labelledby[39m=[32m"members-heading"[39m
+            [33mclass[39m=[32m"min-w-0 scroll-mt-4"[39m
+            [33mid[39m=[32m"members"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"mb-4 flex flex-wrap items-baseline justify-between gap-3"[39m
+            [36m>[39m
+              [36m<h2[39m
+                [33mclass[39m=[32m"text-lg font-semibold"[39m
+                [33mid[39m=[32m"members-heading"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+              [36m>[39m
+                [0mMembers & roles[0m
+              [36m</h2>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"text-xs text-muted-foreground"[39m
+              [36m>[39m
+                [0m3[0m
+                [0m members at last refresh[0m
+              [36m</p>[39m
+            [36m</div>[39m
+            [36m<ul[39m
+              [33maria-label[39m=[32m"Workspace members"[39m
+              [33mclass[39m=[32m"space-y-2"[39m
+            [36m>[39m
+              [36m<li[39m
+                [33mclass[39m=[32m"flex min-w-0 flex-wrap items-center justify-between gap-4 rounded-lg bg-card px-4 py-4"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"flex min-w-0 flex-1 items-center gap-3"[39m
+                [36m>[39m
+                  [36m<span[39m
+               ...
+
+Ignored nodes: comments, script, style
+[36m<body[39m
+  [33mstyle[39m=[32m""[39m
+[36m>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"mx-auto max-w-5xl px-4 pt-8 pb-24 md:px-8"[39m
+      [33mdata-settings[39m=[32m"true"[39m
+    [36m>[39m
+      [36m<header[39m
+        [33mclass[39m=[32m"mb-8 grid grid-cols-[minmax(0,1fr)_auto] items-start gap-4"[39m
+      [36m>[39m
+        [36m<div>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"mb-2 break-words text-xs text-muted-foreground"[39m
+          [36m>[39m
+            [0mEngineering[0m
+          [36m</p>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"text-[28px] font-semibold leading-9"[39m
+          [36m>[39m
+            [0mWorkspace settings[0m
+          [36m</h1>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"mt-3 text-sm leading-6 text-muted-foreground"[39m
+          [36m>[39m
+            [0mManage who can access this workspace and how they join.[0m
+          [36m</p>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"mt-3"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"ui-badge"[39m
+              [33mdata-tone[39m=[32m"neutral"[39m
+            [36m>[39m
+              [0mowner[0m
+            [36m</span>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<button[39m
+          [33maria-label[39m=[32m"Refresh workspace access"[39m
+          [33mclass[39m=[32m"ui-button"[39m
+          [33mdata-size[39m=[32m"default"[39m
+          [33mdata-variant[39m=[32m"ghost"[39m
+          [33mtype[39m=[32m"button"[39m
+        [36m>[39m
+          [36m<svg[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"lucide lucide-refresh-cw size-4"[39m
+            [33mfill[39m=[32m"none"[39m
+            [33mheight[39m=[32m"24"[39m
+            [33mstroke[39m=[32m"currentColor"[39m
+            [33mstroke-linecap[39m=[32m"round"[39m
+            [33mstroke-linejoin[39m=[32m"round"[39m
+            [33mstroke-width[39m=[32m"2"[39m
+            [33mviewBox[39m=[32m"0 0 24 24"[39m
+            [33mwidth[39m=[32m"24"[39m
+            [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+          [36m>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"[39m
+            [36m/>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M21 3v5h-5"[39m
+            [36m/>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"[39m
+            [36m/>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M8 16H3v5"[39m
+            [36m/>[39m
+          [36m</svg>[39m
+        [36m</button>[39m
+      [36m</header>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"mb-8"[39m
+      [36m>[39m
+        [36m<label[39m
+          [33mclass[39m=[32m"block space-y-2 text-sm"[39m
+        [36m>[39m
+          [36m<span>[39m
+            [0mSearch settings[0m
+          [36m</span>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"relative"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-search absolute left-3 top-3 size-4 text-muted-foreground"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"24"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"24"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"m21 21-4.34-4.34"[39m
+              [36m/>[39m
+              [36m<circle[39m
+                [33mcx[39m=[32m"11"[39m
+                [33mcy[39m=[32m"11"[39m
+                [33mr[39m=[32m"8"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+            [36m<input[39m
+              [33mclass[39m=[32m"ui-input pl-10"[39m
+              [33mplaceholder[39m=[32m"Sections, names, email addresses or roles"[39m
+              [33mvalue[39m=[32m""[39m
+            [36m/>[39m
+          [36m</div>[39m
+        [36m</label>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"grid min-w-0 gap-8 md:grid-cols-[10rem_minmax(0,1fr)]"[39m
+      [36m>[39m
+        [36m<nav[39m
+          [33maria-label[39m=[32m"Settings sections"[39m
+          [33mclass[39m=[32m"flex flex-wrap content-start gap-2 md:flex-col"[39m
+        [36m>[39m
+          [36m<a[39m
+            [33mclass[39m=[32m"rounded-md px-3 py-2 text-sm hover:bg-secondary"[39m
+            [33mhref[39m=[32m"#members"[39m
+          [36m>[39m
+            [0mMembers & roles[0m
+          [36m</a>[39m
+          [36m<a[39m
+            [33mclass[39m=[32m"rounded-md px-3 py-2 text-sm hover:bg-secondary"[39m
+            [33mhref[39m=[32m"#invitations"[39m
+          [36m>[39m
+            [0mInvitations[0m
+          [36m</a>[39m
+        [36m</nav>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"min-w-0 space-y-10"[39m
+        [36m>[39m
+          [36m<section[39m
+            [33maria-labelledby[39m=[32m"members-heading"[39m
+            [33mclass[39m=[32m"min-w-0 scroll-mt-4"[39m
+            [33mid[39m=[32m"members"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"mb-4 flex flex-wrap items-baseline justify-between gap-3"[39m
+            [36m>[39m
+              [36m<h2[39m
+                [33mclass[39m=[32m"text-lg font-semibold"[39m
+                [33mid[39m=[32m"members-heading"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+              [36m>[39m
+                [0mMembers & roles[0m
+              [36m</h2>[39m
+              [36m<p[39m
+                [33mclass[39m=[32m"text-xs text-muted-foreground"[39m
+              [36m>[39m
+                [0m3[0m
+                [0m members at last refresh[0m
+              [36m</p>[39m
+            [36m</div>[39m
+            [36m<ul[39m
+              [33maria-label[39m=[32m"Workspace members"[39m
+              [33mclass[39m=[32m"space-y-2"[39m
+            [36m>[39m
+              [36m<li[39m
+                [33mclass[39m=[32m"flex min-w-0 flex-wrap items-center justify-between gap-4 rounded-lg bg-card px-4 py-4"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"flex min-w-0 flex-1 items-center gap-3"[39m
+                [36m>[39m
+                  [36m<span[39m
+               ...
+ ❯ waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ tests/settings.test.tsx:147:33
+    145|   trigger.focus();
+    146|   await user.keyboard('{Enter}{ArrowUp}{Enter}');
+    147|   await user.click(await screen.findByRole('button', { name: 'Confirm …
+       |                                 ^
+    148|   await screen.findByRole('alert');
+    149|   expect(trigger.textContent).toBe('Editor');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed | 8 passed (9)
+      Tests  2 failed | 43 passed (45)
+   Start at  22:14:56
+   Duration  8.35s (environment 39%, tests 38%, import 20%, transform 3%)
+
+Environment  jsdom was created 9 times · 13.24s total, 39% of tracked time
+             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+             learn more: https://vitest.dev/guide/improving-performance#test-environments
+

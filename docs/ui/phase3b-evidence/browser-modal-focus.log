@@ -1,0 +1,91 @@
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": PostgreSQL database "devsync_e2e_browser", schema "public" at "localhost:32786"
+
+11 migrations found in prisma/migrations
+
+Applying migration `20260729000000_baseline`
+Applying migration `20260729180000_enterprise_platform`
+Applying migration `20260815000000_phase_3_tenant_rls`
+Applying migration `20260815001000_scim_provisioning`
+Applying migration `20260815002000_commercial_billing`
+Applying migration `20261031000000_tenant_indexes`
+Applying migration `20261031010000_crdt_journal`
+Applying migration `202611010001_canonical_revision`
+Applying migration `202611010002_embedding_authority`
+Applying migration `202611010003_atomic_create_idempotency`
+Applying migration `202611010004_workspace_invitations`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20260729000000_baseline/
+    └─ migration.sql
+  └─ 20260729180000_enterprise_platform/
+    └─ migration.sql
+  └─ 20260815000000_phase_3_tenant_rls/
+    └─ migration.sql
+  └─ 20260815001000_scim_provisioning/
+    └─ migration.sql
+  └─ 20260815002000_commercial_billing/
+    └─ migration.sql
+  └─ 20261031000000_tenant_indexes/
+    └─ migration.sql
+  └─ 20261031010000_crdt_journal/
+    └─ migration.sql
+  └─ 202611010001_canonical_revision/
+    └─ migration.sql
+  └─ 202611010002_embedding_authority/
+    └─ migration.sql
+  └─ 202611010003_atomic_create_idempotency/
+    └─ migration.sql
+  └─ 202611010004_workspace_invitations/
+    └─ migration.sql
+      
+All migrations have been successfully applied.
+Sample workspace seeded. Sign in with the supplied Clerk test identities.
+/home/kevin/devsync/.worktrees/frontend-fixture
+Isolated fixture server ready
+{"level":30,"time":1793556138818,"service":"devsync-api","req":{"id":"a45b78c8-dd5e-4445-9975-19ca4891568c","method":"GET"},"requestId":"a45b78c8-dd5e-4445-9975-19ca4891568c","res":{"statusCode":200},"responseTime":6,"msg":"request completed"}
+▲ Next.js 16.4.3 (webpack)
+- Local:         http://127.0.0.1:3001
+- Network:       http://127.0.0.1:3001
+✓ Ready in 465ms
+✓ Running next.config.ts took 39ms
+
+✓ Generated AGENTS.md for AI agents. Set `agentRules: false` in next.config to disable.
+○ Compiling /(auth)/login/[[...rest]]/page ...
+ GET /login 200 in 1574ms (next.js: 1108ms, proxy.ts: 76ms, application-code: 391ms)
+
+Running 1 test using 1 worker
+
+(node:36785) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1793556165835,"service":"devsync-api","req":{"id":"40ded04d-c4e3-47ee-a3fa-6e47853f1ae5","method":"GET"},"requestId":"40ded04d-c4e3-47ee-a3fa-6e47853f1ae5","res":{"statusCode":200},"responseTime":24,"msg":"request completed"}
+ GET /workspace/devsync-sample/settings 200 in 3.5s (next.js: 3.2s, proxy.ts: 11ms, application-code: 306ms)
+{"level":30,"time":1793556170988,"service":"devsync-api","req":{"id":"15a57b71-8a49-4bd6-aded-d2a7976c6f2c","method":"GET"},"requestId":"15a57b71-8a49-4bd6-aded-d2a7976c6f2c","res":{"statusCode":200},"responseTime":35,"msg":"request completed"}
+{"level":30,"time":1793556171021,"service":"devsync-api","req":{"id":"f229e4bd-0c74-40a0-8f66-b524f0e030ba","method":"GET"},"requestId":"f229e4bd-0c74-40a0-8f66-b524f0e030ba","res":{"statusCode":200},"responseTime":52,"msg":"request completed"}
+{"level":30,"time":1793556171022,"service":"devsync-api","req":{"id":"25db3583-23f4-4f43-bd81-b1068014a96b","method":"GET"},"requestId":"25db3583-23f4-4f43-bd81-b1068014a96b","res":{"statusCode":200},"responseTime":58,"msg":"request completed"}
+{"level":30,"time":1793556171028,"service":"devsync-api","req":{"id":"fe20da53-8594-45cf-bf28-a25b78092001","method":"GET"},"requestId":"fe20da53-8594-45cf-bf28-a25b78092001","res":{"statusCode":200},"responseTime":61,"msg":"request completed"}
+{"level":30,"time":1793556171031,"service":"devsync-api","req":{"id":"75c0f9d1-6082-473d-a148-63cb9afa3431","method":"GET"},"requestId":"75c0f9d1-6082-473d-a148-63cb9afa3431","res":{"statusCode":200},"responseTime":69,"msg":"request completed"}
+{"level":30,"time":1793556171037,"service":"devsync-api","req":{"id":"7dc84d97-7460-472f-b115-503ffe9ff681","method":"GET"},"requestId":"7dc84d97-7460-472f-b115-503ffe9ff681","res":{"statusCode":200},"responseTime":71,"msg":"request completed"}
+dark 1440 loading: 0 axe violations; 0 incomplete
+{"level":30,"time":1793556171466,"service":"devsync-api","req":{"id":"65bf227d-8260-4533-bec8-8b0b744ca0be","method":"GET"},"requestId":"65bf227d-8260-4533-bec8-8b0b744ca0be","res":{"statusCode":200},"responseTime":19,"msg":"request completed"}
+{"level":30,"time":1793556171468,"service":"devsync-api","req":{"id":"7822dae5-bba6-4768-9e45-cb58448b9cd0","method":"GET"},"requestId":"7822dae5-bba6-4768-9e45-cb58448b9cd0","res":{"statusCode":200},"responseTime":23,"msg":"request completed"}
+dark 1440 ready: 0 axe violations; 1 incomplete
+dark 1440 invitations-empty: 0 axe violations; 1 incomplete
+dark 1440 role-dialog: 0 axe violations; 1 incomplete
+dark 1440 remove-dialog: 0 axe violations; 1 incomplete
+dark 1440 search-empty: 0 axe violations; 0 incomplete
+{"level":30,"time":1793556173558,"service":"devsync-api","req":{"id":"7123db99-c8eb-410f-b1b1-9249f9edfae8","method":"POST"},"requestId":"7123db99-c8eb-410f-b1b1-9249f9edfae8","res":{"statusCode":201},"responseTime":29,"msg":"request completed"}
+dark 1440 invite-created: 0 axe violations; 1 incomplete
+dark 1440 revoke-dialog: 0 axe violations; 1 incomplete
+{"level":30,"time":1793556174274,"service":"devsync-api","req":{"id":"b4ec75b5-ffa0-45de-9a00-cfd0dbe5b67f","method":"DELETE"},"requestId":"b4ec75b5-ffa0-45de-9a00-cfd0dbe5b67f","res":{"statusCode":204},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793556174419,"service":"devsync-api","req":{"id":"cb890de0-0665-402c-8476-e0a594a6e529","method":"GET"},"requestId":"cb890de0-0665-402c-8476-e0a594a6e529","res":{"statusCode":200},"responseTime":14,"msg":"request completed"}
+dark 1440 error-injected: 0 axe violations; 0 incomplete
+{"level":30,"time":1793556174652,"service":"devsync-api","req":{"id":"06f1766c-08dc-49b6-a0c3-26602d5dd4b9","method":"GET"},"requestId":"06f1766c-08dc-49b6-a0c3-26602d5dd4b9","res":{"statusCode":304},"responseTime":10,"msg":"request completed"}
+{"level":30,"time":1793556174660,"service":"devsync-api","req":{"id":"4154b5d3-15c4-4627-9e0c-ff2ac26f8ae9","method":"GET"},"requestId":"4154b5d3-15c4-4627-9e0c-ff2ac26f8ae9","res":{"statusCode":200},"responseTime":20,"msg":"request completed"}
+  ✓  1 testing/browser/settings.spec.ts:61:9 › dark 1440 settings states, keyboard and invitation revocation (9.1s)
+
+  1 passed (10.1s)
+[?25h

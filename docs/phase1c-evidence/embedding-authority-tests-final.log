@@ -1,0 +1,10 @@
+
+> devsync-backend@1.0.0 test
+> jest --runInBand --runTestsByPath src/__tests__/resource-mutations.integration.test.ts src/__tests__/critical-security.test.ts --coverage=false --detectOpenHandles
+
+
+Test Suites: 2 passed, 2 total
+Tests:       92 passed, 92 total
+Snapshots:   0 total
+Time:        26.955 s, estimated 32 s
+Ran all test suites within paths "src/__tests__/resource-mutations.integration.test.ts", "src/__tests__/critical-security.test.ts".

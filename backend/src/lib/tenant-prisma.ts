@@ -1,4 +1,5 @@
 import { Prisma, PrismaClient } from '@prisma/client';
+import { trace, SpanStatusCode } from '@opentelemetry/api';
 
 /**
  * RLS-safe Prisma facade.  PostgreSQL LOCAL settings are reset at COMMIT or
@@ -7,7 +8,10 @@ import { Prisma, PrismaClient } from '@prisma/client';
 export type TenantTransaction = Prisma.TransactionClient;
 
 export interface TenantPrismaClient extends PrismaClient {
-  withTenantTransaction<T>(tenantId: string, operation: (tx: TenantTransaction) => Promise<T>): Promise<T>;
+  withTenantTransaction<T>(
+    tenantId: string,
+    operation: (tx: TenantTransaction) => Promise<T>,
+  ): Promise<T>;
 }
 
 function assertTenantId(tenantId: string): void {
@@ -20,13 +24,34 @@ export function createTenantPrismaClient(client: PrismaClient): TenantPrismaClie
   return client.$extends({
     name: 'tenantTransactionContext',
     client: {
-      async withTenantTransaction<T>(tenantId: string, operation: (tx: TenantTransaction) => Promise<T>): Promise<T> {
+      async withTenantTransaction<T>(
+        tenantId: string,
+        operation: (tx: TenantTransaction) => Promise<T>,
+      ): Promise<T> {
         assertTenantId(tenantId);
-        return client.$transaction(async (tx) => {
-          // `true` is mandatory: this setting exists only for this transaction.
-          await tx.$executeRaw(Prisma.sql`SELECT set_config('app.current_tenant_id', ${tenantId}, true)`);
-          return operation(tx);
-        }, { isolationLevel: Prisma.TransactionIsolationLevel.ReadCommitted, maxWait: 5_000, timeout: 15_000 });
+        return trace.getTracer('devsync').startActiveSpan('db.tenant_transaction', async (span) => {
+          try {
+            return await client.$transaction(
+              async (tx) => {
+                // `true` is mandatory: this setting exists only for this transaction.
+                await tx.$executeRaw(
+                  Prisma.sql`SELECT set_config('app.current_tenant_id', ${tenantId}, true)`,
+                );
+                return operation(tx);
+              },
+              {
+                isolationLevel: Prisma.TransactionIsolationLevel.ReadCommitted,
+                maxWait: 5_000,
+                timeout: 15_000,
+              },
+            );
+          } catch (error) {
+            span.setStatus({ code: SpanStatusCode.ERROR });
+            throw error;
+          } finally {
+            span.end();
+          }
+        });
       },
     },
   }) as unknown as TenantPrismaClient;

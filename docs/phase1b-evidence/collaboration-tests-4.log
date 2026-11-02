@@ -1,0 +1,384 @@
+
+> devsync-backend@1.0.0 test
+> jest --runInBand --runTestsByPath src/__tests__/collaboration.integration.test.ts
+
+  console.info
+    Collaboration scenario: merges two real clients editing the same paragraph concurrently
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:17:28)
+
+  console.info
+    Closing collaboration clients and servers
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:46:11)
+
+  console.error
+    [beforeHandleMessage] Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:95:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+  console.error
+    closing connection eedfa3aa-be90-4e40-acbc-a09977cae877 (while handling document:workspace:document-1) because of exception Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:95:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+
+  console.error
+    [beforeHandleMessage] Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:95:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+  console.error
+    closing connection 0898aebb-d2bf-4070-893a-6bf97b6ecbb2 (while handling document:workspace:document-1) because of exception Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:95:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+
+  console.info
+    Collaboration cleanup complete
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:52:11)
+
+  console.info
+    Collaboration scenario: merges offline edits on reconnect rather than replacing server text
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:17:28)
+
+  console.info
+    Closing collaboration clients and servers
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:46:11)
+
+  console.error
+    [beforeHandleMessage] Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:95:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+  console.error
+    closing connection bd65cade-d158-4a58-890b-ffeb1150fd6c (while handling document:workspace:document-2) because of exception Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:95:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+
+  console.error
+    [beforeHandleMessage] Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:95:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+  console.error
+    closing connection db77a826-bab0-4a93-9192-176487099529 (while handling document:workspace:document-2) because of exception Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:95:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+
+  console.info
+    Collaboration cleanup complete
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:52:11)
+
+  console.info
+    Collaboration scenario: rejects viewer mutations at the actual server protocol and journal
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:17:28)
+
+  console.info
+    Closing collaboration clients and servers
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:46:11)
+
+  console.error
+    [beforeHandleMessage] Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:95:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+  console.error
+    closing connection dd96dc9f-d9cf-4f1e-a43f-c23b932740a5 (while handling document:workspace:document-3) because of exception Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:95:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+
+  console.error
+    [beforeHandleMessage] Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:95:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+  console.error
+    closing connection 49fff86a-6af8-45a3-ac94-69d68aca9367 (while handling document:workspace:document-3) because of exception Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:95:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+
+  console.info
+    Collaboration cleanup complete
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:52:11)
+
+  console.info
+    Collaboration scenario: cuts off a removed member without waiting for another edit
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:17:28)
+
+  console.info
+    Closing collaboration clients and servers
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:46:11)
+
+  console.info
+    Collaboration cleanup complete
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:52:11)
+
+  console.info
+    Collaboration scenario: cuts off a downgraded editor and requires a new read-only session
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:17:28)
+
+  console.info
+    Closing collaboration clients and servers
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:46:11)
+
+  console.error
+    [beforeHandleMessage] Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:95:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+  console.error
+    closing connection e2a29594-fd0f-4580-91c5-6c0f047d983c (while handling document:workspace:document-5) because of exception Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:95:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+
+  console.info
+    Collaboration cleanup complete
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:52:11)
+
+  console.info
+    Collaboration scenario: rejects forged document workspace prefixes and non-member rooms
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:17:28)
+
+  console.error
+    [onAuthenticate] ForbiddenError: Access denied
+        at authorizeWorkspace (/home/kevin/devsync/backend/src/security/workspace-policy.ts:18:11)
+        at Object.onAuthenticate (/home/kevin/devsync/backend/src/services/collaboration-server.ts:73:22)
+        at ClientConnection.handleQueueingMessage (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/ClientConnection.ts:531:5) {
+      statusCode: 403,
+      isOperational: true
+    }
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at ClientConnection.handleQueueingMessage (node_modules/@hocuspocus/server/src/ClientConnection.ts:531:5)
+
+  console.error
+    [onAuthenticate] Error: Access denied
+        at authorize (/home/kevin/devsync/backend/src/services/collaboration-server.ts:46:93)
+        at Object.onAuthenticate (/home/kevin/devsync/backend/src/services/collaboration-server.ts:75:7)
+        at ClientConnection.handleQueueingMessage (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/ClientConnection.ts:531:5)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at ClientConnection.handleQueueingMessage (node_modules/@hocuspocus/server/src/ClientConnection.ts:531:5)
+
+  console.error
+    [onAuthenticate] ForbiddenError: Access denied
+        at authorizeWorkspace (/home/kevin/devsync/backend/src/security/workspace-policy.ts:18:11)
+        at Object.onAuthenticate (/home/kevin/devsync/backend/src/services/collaboration-server.ts:73:22)
+        at ClientConnection.handleQueueingMessage (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/ClientConnection.ts:531:5) {
+      statusCode: 403,
+      isOperational: true
+    }
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at ClientConnection.handleQueueingMessage (node_modules/@hocuspocus/server/src/ClientConnection.ts:531:5)
+
+  console.info
+    Closing collaboration clients and servers
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:46:11)
+
+  console.info
+    Collaboration cleanup complete
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:52:11)
+
+  console.info
+    Collaboration scenario: authenticates awareness names and cleans remote presence on disconnect
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:17:28)
+
+  console.info
+    Closing collaboration clients and servers
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:46:11)
+
+  console.error
+    [beforeHandleMessage] Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:95:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+  console.error
+    closing connection 27a4e44b-8b78-456c-84a7-697a6f17418f (while handling document:workspace:document-7) because of exception Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:95:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+
+  console.info
+    Collaboration cleanup complete
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:52:11)
+
+  console.info
+    Collaboration scenario: recovers acknowledged updates from the journal before snapshot compaction
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:17:28)
+
+  console.info
+    Closing collaboration clients and servers
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:46:11)
+
+  console.error
+    [beforeHandleMessage] Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:95:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/ClientConnection.ts:290:4
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+      at node_modules/@hocuspocus/server/src/ClientConnection.ts:290:4
+
+  console.error
+    closing connection 30df07f4-3765-446a-8e9d-cbc76139fcd9 (while handling document:workspace:document-8) because of exception Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:95:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/ClientConnection.ts:290:4
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+      at node_modules/@hocuspocus/server/src/ClientConnection.ts:290:4
+
+  console.info
+    Collaboration cleanup complete
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:52:11)
+
+  console.info
+    Collaboration scenario: synchronizes two backend instances through real Redis fanout
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:17:28)
+
+  console.info
+    Closing collaboration clients and servers
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:46:11)
+
+  console.error
+    [beforeHandleMessage] Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:95:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+  console.error
+    closing connection e877de39-9f26-4184-8631-a2dfc34172f4 (while handling document:workspace:document-9) because of exception Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:95:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+
+  console.info
+    Collaboration cleanup complete
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:52:11)
+
+  console.info
+    Collaboration scenario: converts seeded legacy JSON with dry-run, retained backup, repeatable apply and guarded rollback
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:17:28)
+
+  console.info
+    Closing collaboration clients and servers
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:46:11)
+
+  console.info
+    Collaboration cleanup complete
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:52:11)
+
+Test Suites: 1 passed, 1 total
+Tests:       10 passed, 10 total
+Snapshots:   0 total
+Time:        17.436 s, estimated 18 s
+Ran all test suites within paths "src/__tests__/collaboration.integration.test.ts".

@@ -1,0 +1,10 @@
+{
+  "violations": [],
+  "incomplete": [],
+  "bounds": {
+    "viewport": 360,
+    "page": 360,
+    "main": 360,
+    "scroll": 360
+  }
+}

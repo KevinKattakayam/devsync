@@ -1,0 +1,19 @@
+
+> devsync-backend@1.0.0 test
+> jest --runInBand --runTestsByPath src/__tests__/api-reliability.test.ts
+
+{"level":30,"time":1793478170219,"service":"devsync-api","requestId":"system","req":{"id":"296cdca2-7eeb-4af1-8986-5eadbdc3b2f3","method":"GET"},"requestId":"296cdca2-7eeb-4af1-8986-5eadbdc3b2f3","res":{"statusCode":200},"responseTime":5,"msg":"request completed"}
+{"level":30,"time":1793478170232,"service":"devsync-api","requestId":"system","req":{"id":"a12e6875-35a1-4352-9a5e-0ec03bf17afa","method":"GET"},"requestId":"a12e6875-35a1-4352-9a5e-0ec03bf17afa","res":{"statusCode":401},"responseTime":3,"msg":"request completed"}
+{"level":30,"time":1793478170244,"service":"devsync-api","requestId":"system","req":{"id":"81549ff7-026e-4f61-b321-a0809a3f6358","method":"GET"},"requestId":"81549ff7-026e-4f61-b321-a0809a3f6358","res":{"statusCode":200},"responseTime":0,"msg":"request completed"}
+{"level":30,"time":1793478170248,"service":"devsync-api","requestId":"system","req":{"id":"ebe4798b-5ef4-4955-bb75-0f85ec8cc9ad","method":"GET"},"requestId":"ebe4798b-5ef4-4955-bb75-0f85ec8cc9ad","res":{"statusCode":401},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1793478170253,"service":"devsync-api","requestId":"system","req":{"id":"ca919ba6-ae75-40dd-b812-a112bf603ace","method":"GET"},"requestId":"ca919ba6-ae75-40dd-b812-a112bf603ace","res":{"statusCode":404},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1793478170267,"service":"devsync-api","requestId":"system","req":{"id":"4bda19d6-4ec5-491a-b7f2-b5028540b7b8","method":"POST"},"requestId":"4bda19d6-4ec5-491a-b7f2-b5028540b7b8","res":{"statusCode":400},"responseTime":10,"msg":"request completed"}
+{"level":30,"time":1793478170280,"service":"devsync-api","requestId":"system","req":{"id":"1b5724b3-8a79-4746-a49c-53c0400a3b87","method":"GET"},"requestId":"1b5724b3-8a79-4746-a49c-53c0400a3b87","res":{"statusCode":404},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1793478170284,"service":"devsync-api","requestId":"system","req":{"id":"e545bd1a-6f32-4b17-b6d7-ae50fcdf7198","method":"GET"},"requestId":"e545bd1a-6f32-4b17-b6d7-ae50fcdf7198","res":{"statusCode":403},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1793478170288,"service":"devsync-api","requestId":"system","req":{"id":"b52880bf-c622-46b2-ac46-7b7b1c0caace","method":"GET"},"requestId":"b52880bf-c622-46b2-ac46-7b7b1c0caace","res":{"statusCode":403},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1793478170292,"service":"devsync-api","requestId":"system","req":{"id":"08c98dce-78c0-4f10-b3ea-baa93d79cff2","method":"GET"},"requestId":"08c98dce-78c0-4f10-b3ea-baa93d79cff2","res":{"statusCode":200},"responseTime":2,"msg":"request completed"}
+Test Suites: 1 passed, 1 total
+Tests:       7 passed, 7 total
+Snapshots:   0 total
+Time:        8.284 s
+Ran all test suites within paths "src/__tests__/api-reliability.test.ts".

@@ -1,0 +1,143 @@
+
+> frontend@0.1.0 lint
+> eslint --max-warnings=0
+
+
+> frontend@0.1.0 format:check
+> prettier --check . --ignore-unknown
+
+Checking formatting...
+All matched files use Prettier code style!
+
+> frontend@0.1.0 typecheck
+> tsc --noEmit
+
+
+> frontend@0.1.0 test
+> node --test tests/*.test.mjs && vitest run
+
+TAP version 13
+# Subtest: I01 Next meets the current critical advisory remediation floor
+ok 1 - I01 Next meets the current critical advisory remediation floor
+  ---
+  duration_ms: 2.229081
+  type: 'test'
+  ...
+# Subtest: I01 unused NextAuth is absent from the installed frontend
+ok 2 - I01 unused NextAuth is absent from the installed frontend
+  ---
+  duration_ms: 1.709047
+  type: 'test'
+  ...
+# Subtest: fixture generator refuses production, development and unset modes
+ok 3 - fixture generator refuses production, development and unset modes
+  ---
+  duration_ms: 2.441575
+  type: 'test'
+  ...
+# Subtest: production source cannot select or import the test authentication adapter
+ok 4 - production source cannot select or import the test authentication adapter
+  ---
+  duration_ms: 37.484675
+  type: 'test'
+  ...
+# Subtest: code blocks and inline code escape HTML
+ok 5 - code blocks and inline code escape HTML
+  ---
+  duration_ms: 2.129033
+  type: 'test'
+  ...
+# Subtest: E02 treats ordinary HTML, handlers and malformed tags as inert text
+ok 6 - E02 treats ordinary HTML, handlers and malformed tags as inert text
+  ---
+  duration_ms: 0.847145
+  type: 'test'
+  ...
+# Subtest: E02 escapes HTML inside headings, lists and table cells
+ok 7 - E02 escapes HTML inside headings, lists and table cells
+  ---
+  duration_ms: 0.395152
+  type: 'test'
+  ...
+# Subtest: :root text, status and control tokens meet their WCAG AA contrast thresholds
+ok 8 - :root text, status and control tokens meet their WCAG AA contrast thresholds
+  ---
+  duration_ms: 2.420739
+  type: 'test'
+  ...
+# Subtest: .dark text, status and control tokens meet their WCAG AA contrast thresholds
+ok 9 - .dark text, status and control tokens meet their WCAG AA contrast thresholds
+  ---
+  duration_ms: 2.164808
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 794.457766
+
+ RUN  v5.0.5 /home/kevin/devsync/frontend
+
+
+ Test Files  11 passed (11)
+      Tests  54 passed (54)
+   Start at  01:28:24
+   Duration  7.27s (environment 47%, tests 31%, import 20%, transform 2%)
+
+Environment  jsdom was created 11 times · 18.83s total, 47% of tracked time
+             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+             learn more: https://vitest.dev/guide/improving-performance#test-environments
+
+
+> frontend@0.1.0 build
+> next build --webpack
+
+▲ Next.js 16.4.3 (webpack)
+- Environments: .env.local
+✓ Running next.config.ts took 51ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 9.9s
+  Running TypeScript ...
+  Finished TypeScript in 4.3s ...
+  Collecting page data using 7 workers ...
+  Generating static pages using 7 workers (0/9) ...
+  Generating static pages using 7 workers (2/9) 
+  Generating static pages using 7 workers (4/9) 
+  Generating static pages using 7 workers (6/9) 
+✓ Generating static pages using 7 workers (9/9) in 638ms
+  Finalizing page optimization ...
+  Collecting build traces ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /api/auth/reset
+├ ƒ /api/superadmin/workspaces/[workspaceId]/kill-switch
+├ ○ /dashboard
+├ ○ /design-system
+├ ƒ /invitations/[id]
+├ ƒ /login/[[...rest]]
+├ ○ /settings/billing
+├ ƒ /sign-in/[[...rest]]
+├ ƒ /sign-up/[[...rest]]
+├ ƒ /signup/[[...rest]]
+├ ƒ /superadmin
+├ ƒ /workspace/[id]
+├ ƒ /workspace/[id]/docs
+├ ƒ /workspace/[id]/docs/[docId]
+├ ƒ /workspace/[id]/kanban
+├ ƒ /workspace/[id]/settings
+└ ƒ /workspace/[id]/snippets
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

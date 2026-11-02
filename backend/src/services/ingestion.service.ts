@@ -1,7 +1,14 @@
+import { createHash } from 'crypto';
+import { z } from 'zod';
+import { idempotentCreate } from '../lib/create-idempotency';
 import { PDFParse } from 'pdf-parse';
 import Tesseract from 'tesseract.js';
-import { prisma } from '../lib/prisma';
+import * as Y from 'yjs';
 import { queueEmbedding } from './embedding.service';
+import { authorizeWorkspace, WRITE_ROLES, withWorkspaceAccess } from '../security/workspace-policy';
+import { BadRequestError } from '../utils/errors';
+import { richTextSchema } from '../security/rich-text';
+import { legacyDocument, projectDocument } from './crdt-schema';
 
 // ── Tiptap/ProseMirror JSON builders ─────────────────────────
 
@@ -67,7 +74,10 @@ function textToTiptapJson(text: string): PMNode {
     if (line.includes('|') && line.split('|').length >= 3) {
       const tableRows: string[][] = [];
       while (i < lines.length && lines[i].includes('|')) {
-        const row = lines[i].split('|').map((cell) => cell.trim()).filter(Boolean);
+        const row = lines[i]
+          .split('|')
+          .map((cell) => cell.trim())
+          .filter(Boolean);
         // Skip separator rows (---+--- or ---|---)
         if (!row.every((cell) => /^[-:]+$/.test(cell))) {
           tableRows.push(row);
@@ -124,7 +134,12 @@ function textToTiptapJson(text: string): PMNode {
     // Regular paragraph — accumulate consecutive non-empty lines
     let paragraph = line;
     i++;
-    while (i < lines.length && lines[i].trim() && !lines[i].includes('|') && !/^[\-\•\*\d]/.test(lines[i].trim())) {
+    while (
+      i < lines.length &&
+      lines[i].trim() &&
+      !lines[i].includes('|') &&
+      !/^[\-\•\*\d]/.test(lines[i].trim())
+    ) {
       paragraph += ' ' + lines[i].trim();
       i++;
     }
@@ -140,9 +155,13 @@ function textToTiptapJson(text: string): PMNode {
 // ── PDF extraction ───────────────────────────────────────────
 
 async function extractFromPDF(buffer: Buffer): Promise<string> {
-  const parser = new (PDFParse as any)({ data: buffer });
-  const data = await parser.getText();
-  return data?.text || '';
+  const parser = new PDFParse({ data: buffer });
+  try {
+    const data = await parser.getText();
+    return data.text || '';
+  } finally {
+    await parser.destroy();
+  }
 }
 
 // ── Image OCR extraction ─────────────────────────────────────
@@ -173,14 +192,24 @@ export async function ingestDocument(
   originalFilename: string,
   workspaceId: string,
   authorId: string,
+  idempotencyKey?: string,
 ): Promise<IngestResult> {
+  await authorizeWorkspace(authorId, workspaceId, WRITE_ROLES);
+  if (!buffer.length || buffer.length > 25 * 1024 * 1024 || originalFilename.length > 255)
+    throw new BadRequestError('Invalid or oversized upload');
   // Determine source type
   const isPDF = mimeType === 'application/pdf';
   const isImage = mimeType.startsWith('image/');
-  const isText = mimeType.startsWith('text/') || mimeType === 'application/json' || originalFilename.endsWith('.md') || originalFilename.endsWith('.txt');
+  const isText =
+    mimeType.startsWith('text/') ||
+    mimeType === 'application/json' ||
+    originalFilename.endsWith('.md') ||
+    originalFilename.endsWith('.txt');
 
   if (!isPDF && !isImage && !isText) {
-    throw new Error(`Unsupported file type: ${mimeType}. Supported: PDF, PNG, JPG, TIFF, Markdown, Text.`);
+    throw new BadRequestError(
+      `Unsupported file type: ${mimeType}. Supported: PDF, PNG, JPG, TIFF, Markdown, Text.`,
+    );
   }
 
   // Extract text
@@ -194,8 +223,10 @@ export async function ingestDocument(
   }
 
   if (!extractedText.trim()) {
-    throw new Error('No text could be extracted from the uploaded file.');
+    throw new BadRequestError('No text could be extracted from the uploaded file.');
   }
+  if (extractedText.length > 256 * 1024)
+    throw new BadRequestError('Extracted text exceeds document limit');
 
   // Convert to Tiptap JSON
   const tiptapContent = textToTiptapJson(extractedText);
@@ -203,42 +234,70 @@ export async function ingestDocument(
   // Generate title from filename
   const title = originalFilename
     .replace(/\.[^.]+$/, '') // Remove extension
-    .replace(/[_-]+/g, ' ')  // Replace separators with spaces
-    .replace(/\b\w/g, (c) => c.toUpperCase()); // Title case
+    .replace(/[_-]+/g, ' ') // Replace separators with spaces
+    .replace(/\b\w/g, (c) => c.toUpperCase())
+    .slice(0, 200); // Title case
 
   // Create document
-  const document = await prisma.document.create({
-    data: {
-      title,
-      content: tiptapContent as any,
-      icon: isPDF ? '📑' : '🖼️',
+  const document = await withWorkspaceAccess(authorId, workspaceId, WRITE_ROLES, async (tx) =>
+    idempotentCreate(
+      tx,
       authorId,
-      workspaceId,
-    },
-  });
+      ['document.ingest', workspaceId],
+      idempotencyKey,
+      { fileHash: createHash('sha256').update(buffer).digest('hex'), mimeType, originalFilename },
+      async () => {
+        const state = legacyDocument(
+          richTextSchema.parse(JSON.parse(JSON.stringify(tiptapContent))),
+        );
+        try {
+          const document = await tx.document.create({
+            data: {
+              title,
+              content: projectDocument(state),
+              yjsState: Buffer.from(Y.encodeStateAsUpdate(state)),
+              icon: isPDF ? '📑' : '🖼️',
+              authorId,
+              workspaceId,
+            },
+          });
 
-  // Log activity
-  await prisma.activity.create({
-    data: {
-      type: 'doc_ingested',
-      message: `ingested ${isPDF ? 'PDF' : 'image'} "${originalFilename}" as document "${title}"`,
-      metadata: {
-        sourceType: isPDF ? 'pdf' : 'image',
-        originalFilename,
-        extractedTextLength: extractedText.length,
+          // Log activity
+          await tx.activity.create({
+            data: {
+              type: 'doc_ingested',
+              message: `ingested ${isPDF ? 'PDF' : 'image'} "${originalFilename}" as document "${title}"`,
+              metadata: {
+                sourceType: isPDF ? 'pdf' : 'image',
+                originalFilename,
+                extractedTextLength: extractedText.length,
+              },
+              userId: authorId,
+              workspaceId,
+            },
+          });
+
+          // Queue embedding
+          await queueEmbedding('document', document.id, tx, workspaceId, authorId);
+          return {
+            documentId: document.id,
+            title,
+            extractedTextLength: extractedText.length,
+            sourceType: isPDF ? 'pdf' : 'image',
+          };
+        } finally {
+          state.destroy();
+        }
       },
-      userId: authorId,
-      workspaceId,
-    },
-  });
+    ),
+  );
 
-  // Queue embedding
-  queueEmbedding('document', document.id);
-
-  return {
-    documentId: document.id,
-    title,
-    extractedTextLength: extractedText.length,
-    sourceType: isPDF ? 'pdf' : 'image',
-  };
+  return z
+    .object({
+      documentId: z.string(),
+      title: z.string(),
+      extractedTextLength: z.number().int().nonnegative(),
+      sourceType: z.enum(['pdf', 'image']),
+    })
+    .parse(document);
 }

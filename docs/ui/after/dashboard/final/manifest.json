@@ -1,0 +1,278 @@
+[
+  {
+    "report": "dark-1440-create-dialog.json",
+    "image": "dark-1440-create-dialog.png",
+    "bounds": {
+      "viewport": 1440,
+      "page": 1440,
+      "main": 1200,
+      "scroll": 1200
+    },
+    "violations": 0,
+    "incomplete": [
+      "aria-hidden-focus"
+    ]
+  },
+  {
+    "report": "dark-1440-error-injected.json",
+    "image": "dark-1440-error-injected.png",
+    "bounds": {
+      "viewport": 1440,
+      "page": 1440,
+      "main": 1200,
+      "scroll": 1200
+    },
+    "violations": 0,
+    "incomplete": []
+  },
+  {
+    "report": "dark-1440-loading.json",
+    "image": "dark-1440-loading.png",
+    "bounds": {
+      "viewport": 1440,
+      "page": 1440,
+      "main": 1200,
+      "scroll": 1200
+    },
+    "violations": 0,
+    "incomplete": []
+  },
+  {
+    "report": "dark-1440-partial-error-injected.json",
+    "image": "dark-1440-partial-error-injected.png",
+    "bounds": {
+      "viewport": 1440,
+      "page": 1440,
+      "main": 1200,
+      "scroll": 1200
+    },
+    "violations": 0,
+    "incomplete": []
+  },
+  {
+    "report": "dark-1440-ready.json",
+    "image": "dark-1440-ready.png",
+    "bounds": {
+      "viewport": 1440,
+      "page": 1440,
+      "main": 1200,
+      "scroll": 1200
+    },
+    "violations": 0,
+    "incomplete": []
+  },
+  {
+    "report": "dark-360-empty-account.json",
+    "image": "dark-360-empty-account.png",
+    "bounds": {
+      "viewport": 360,
+      "page": 360,
+      "main": 360,
+      "scroll": 360
+    },
+    "violations": 0,
+    "incomplete": []
+  },
+  {
+    "report": "dark-390-create-dialog.json",
+    "image": "dark-390-create-dialog.png",
+    "bounds": {
+      "viewport": 390,
+      "page": 390,
+      "main": 390,
+      "scroll": 390
+    },
+    "violations": 0,
+    "incomplete": [
+      "aria-hidden-focus"
+    ]
+  },
+  {
+    "report": "dark-390-error-injected.json",
+    "image": "dark-390-error-injected.png",
+    "bounds": {
+      "viewport": 390,
+      "page": 390,
+      "main": 390,
+      "scroll": 390
+    },
+    "violations": 0,
+    "incomplete": []
+  },
+  {
+    "report": "dark-390-loading.json",
+    "image": "dark-390-loading.png",
+    "bounds": {
+      "viewport": 390,
+      "page": 390,
+      "main": 390,
+      "scroll": 390
+    },
+    "violations": 0,
+    "incomplete": []
+  },
+  {
+    "report": "dark-390-partial-error-injected.json",
+    "image": "dark-390-partial-error-injected.png",
+    "bounds": {
+      "viewport": 390,
+      "page": 390,
+      "main": 390,
+      "scroll": 390
+    },
+    "violations": 0,
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "report": "dark-390-ready.json",
+    "image": "dark-390-ready.png",
+    "bounds": {
+      "viewport": 390,
+      "page": 390,
+      "main": 390,
+      "scroll": 390
+    },
+    "violations": 0,
+    "incomplete": []
+  },
+  {
+    "report": "light-1440-create-dialog.json",
+    "image": "light-1440-create-dialog.png",
+    "bounds": {
+      "viewport": 1440,
+      "page": 1440,
+      "main": 1200,
+      "scroll": 1200
+    },
+    "violations": 0,
+    "incomplete": [
+      "aria-hidden-focus"
+    ]
+  },
+  {
+    "report": "light-1440-error-injected.json",
+    "image": "light-1440-error-injected.png",
+    "bounds": {
+      "viewport": 1440,
+      "page": 1440,
+      "main": 1200,
+      "scroll": 1200
+    },
+    "violations": 0,
+    "incomplete": []
+  },
+  {
+    "report": "light-1440-loading.json",
+    "image": "light-1440-loading.png",
+    "bounds": {
+      "viewport": 1440,
+      "page": 1440,
+      "main": 1200,
+      "scroll": 1200
+    },
+    "violations": 0,
+    "incomplete": []
+  },
+  {
+    "report": "light-1440-partial-error-injected.json",
+    "image": "light-1440-partial-error-injected.png",
+    "bounds": {
+      "viewport": 1440,
+      "page": 1440,
+      "main": 1200,
+      "scroll": 1200
+    },
+    "violations": 0,
+    "incomplete": []
+  },
+  {
+    "report": "light-1440-ready.json",
+    "image": "light-1440-ready.png",
+    "bounds": {
+      "viewport": 1440,
+      "page": 1440,
+      "main": 1200,
+      "scroll": 1200
+    },
+    "violations": 0,
+    "incomplete": []
+  },
+  {
+    "report": "light-360-empty-account.json",
+    "image": "light-360-empty-account.png",
+    "bounds": {
+      "viewport": 360,
+      "page": 360,
+      "main": 360,
+      "scroll": 360
+    },
+    "violations": 0,
+    "incomplete": []
+  },
+  {
+    "report": "light-390-create-dialog.json",
+    "image": "light-390-create-dialog.png",
+    "bounds": {
+      "viewport": 390,
+      "page": 390,
+      "main": 390,
+      "scroll": 390
+    },
+    "violations": 0,
+    "incomplete": [
+      "aria-hidden-focus"
+    ]
+  },
+  {
+    "report": "light-390-error-injected.json",
+    "image": "light-390-error-injected.png",
+    "bounds": {
+      "viewport": 390,
+      "page": 390,
+      "main": 390,
+      "scroll": 390
+    },
+    "violations": 0,
+    "incomplete": []
+  },
+  {
+    "report": "light-390-loading.json",
+    "image": "light-390-loading.png",
+    "bounds": {
+      "viewport": 390,
+      "page": 390,
+      "main": 390,
+      "scroll": 390
+    },
+    "violations": 0,
+    "incomplete": []
+  },
+  {
+    "report": "light-390-partial-error-injected.json",
+    "image": "light-390-partial-error-injected.png",
+    "bounds": {
+      "viewport": 390,
+      "page": 390,
+      "main": 390,
+      "scroll": 390
+    },
+    "violations": 0,
+    "incomplete": [
+      "color-contrast"
+    ]
+  },
+  {
+    "report": "light-390-ready.json",
+    "image": "light-390-ready.png",
+    "bounds": {
+      "viewport": 390,
+      "page": 390,
+      "main": 390,
+      "scroll": 390
+    },
+    "violations": 0,
+    "incomplete": []
+  }
+]

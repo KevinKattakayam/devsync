@@ -1,0 +1,26 @@
+
+> devsync-backend@1.0.0 test
+> jest --runInBand --runTestsByPath src/__tests__/resource-mutations.integration.test.ts --coverage=false
+
+FAIL src/__tests__/resource-mutations.integration.test.ts
+  ● Test suite failed to run
+
+    TypeError: Cannot read properties of undefined (reading 'options')
+
+       5 | /** Shared BullMQ connection config — reuses the primary Redis client's connection options. */
+       6 | const connection = {
+    >  7 |   host: redis.options.host,
+         |               ^
+       8 |   port: redis.options.port,
+       9 |   password: redis.options.password,
+      10 |   db: redis.options.db,
+
+      at Object.<anonymous> (src/lib/queue.ts:7:15)
+      at Object.<anonymous> (src/controllers/task.controller.ts:14:1)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:16:1)
+
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        6.542 s
+Ran all test suites within paths "src/__tests__/resource-mutations.integration.test.ts".

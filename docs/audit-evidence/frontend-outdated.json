@@ -1,0 +1,310 @@
+{
+  "@clerk/nextjs": {
+    "current": "7.6.2",
+    "wanted": "7.9.23",
+    "latest": "7.9.23",
+    "dependent": "frontend",
+    "location": "/home/kevin/devsync/docs/audit-evidence/runtime/frontend/node_modules/@clerk/nextjs"
+  },
+  "@hocuspocus/provider": {
+    "current": "4.6.0",
+    "wanted": "4.8.0",
+    "latest": "4.8.0",
+    "dependent": "frontend",
+    "location": "/home/kevin/devsync/docs/audit-evidence/runtime/frontend/node_modules/@hocuspocus/provider"
+  },
+  "@hookform/resolvers": {
+    "current": "5.2.2",
+    "wanted": "5.9.2",
+    "latest": "6.0.2",
+    "dependent": "frontend",
+    "location": "/home/kevin/devsync/docs/audit-evidence/runtime/frontend/node_modules/@hookform/resolvers"
+  },
+  "@opentelemetry/exporter-trace-otlp-http": {
+    "current": "0.221.0",
+    "wanted": "0.221.0",
+    "latest": "0.300.0",
+    "dependent": "frontend",
+    "location": "/home/kevin/devsync/docs/audit-evidence/runtime/frontend/node_modules/@opentelemetry/exporter-trace-otlp-http"
+  },
+  "@opentelemetry/sdk-node": {
+    "current": "0.221.0",
+    "wanted": "0.221.0",
+    "latest": "0.300.0",
+    "dependent": "frontend",
+    "location": "/home/kevin/devsync/docs/audit-evidence/runtime/frontend/node_modules/@opentelemetry/sdk-node"
+  },
+  "@tailwindcss/postcss": {
+    "current": "4.2.4",
+    "wanted": "4.3.3",
+    "latest": "4.3.3",
+    "dependent": "frontend",
+    "location": "/home/kevin/devsync/docs/audit-evidence/runtime/frontend/node_modules/@tailwindcss/postcss"
+  },
+  "@tiptap/extension-code-block-lowlight": {
+    "current": "3.22.4",
+    "wanted": "3.32.2",
+    "latest": "3.32.2",
+    "dependent": "frontend",
+    "location": "/home/kevin/devsync/docs/audit-evidence/runtime/frontend/node_modules/@tiptap/extension-code-block-lowlight"
+  },
+  "@tiptap/extension-collaboration": {
+    "current": "3.22.4",
+    "wanted": "3.32.2",
+    "latest": "3.32.2",
+    "dependent": "frontend",
+    "location": "/home/kevin/devsync/docs/audit-evidence/runtime/frontend/node_modules/@tiptap/extension-collaboration"
+  },
+  "@tiptap/extension-collaboration-cursor": {
+    "current": "3.0.0",
+    "wanted": "3.0.0",
+    "latest": "2.26.2",
+    "dependent": "frontend",
+    "location": "/home/kevin/devsync/docs/audit-evidence/runtime/frontend/node_modules/@tiptap/extension-collaboration-cursor"
+  },
+  "@tiptap/extension-highlight": {
+    "current": "3.22.4",
+    "wanted": "3.32.2",
+    "latest": "3.32.2",
+    "dependent": "frontend",
+    "location": "/home/kevin/devsync/docs/audit-evidence/runtime/frontend/node_modules/@tiptap/extension-highlight"
+  },
+  "@tiptap/extension-image": {
+    "current": "3.22.4",
+    "wanted": "3.32.2",
+    "latest": "3.32.2",
+    "dependent": "frontend",
+    "location": "/home/kevin/devsync/docs/audit-evidence/runtime/frontend/node_modules/@tiptap/extension-image"
+  },
+  "@tiptap/extension-link": {
+    "current": "3.22.4",
+    "wanted": "3.32.2",
+    "latest": "3.32.2",
+    "dependent": "frontend",
+    "location": "/home/kevin/devsync/docs/audit-evidence/runtime/frontend/node_modules/@tiptap/extension-link"
+  },
+  "@tiptap/extension-placeholder": {
+    "current": "3.22.4",
+    "wanted": "3.32.2",
+    "latest": "3.32.2",
+    "dependent": "frontend",
+    "location": "/home/kevin/devsync/docs/audit-evidence/runtime/frontend/node_modules/@tiptap/extension-placeholder"
+  },
+  "@tiptap/extension-table": {
+    "current": "3.22.4",
+    "wanted": "3.32.2",
+    "latest": "3.32.2",
+    "dependent": "frontend",
+    "location": "/home/kevin/devsync/docs/audit-evidence/runtime/frontend/node_modules/@tiptap/extension-table"
+  },
+  "@tiptap/extension-table-cell": {
+    "current": "3.22.4",
+    "wanted": "3.32.2",
+    "latest": "3.32.2",
+    "dependent": "frontend",
+    "location": "/home/kevin/devsync/docs/audit-evidence/runtime/frontend/node_modules/@tiptap/extension-table-cell"
+  },
+  "@tiptap/extension-table-header": {
+    "current": "3.22.4",
+    "wanted": "3.32.2",
+    "latest": "3.32.2",
+    "dependent": "frontend",
+    "location": "/home/kevin/devsync/docs/audit-evidence/runtime/frontend/node_modules/@tiptap/extension-table-header"
+  },
+  "@tiptap/extension-table-row": {
+    "current": "3.22.4",
+    "wanted": "3.32.2",
+    "latest": "3.32.2",
+    "dependent": "frontend",
+    "location": "/home/kevin/devsync/docs/audit-evidence/runtime/frontend/node_modules/@tiptap/extension-table-row"
+  },
+  "@tiptap/extension-task-item": {
+    "current": "3.22.4",
+    "wanted": "3.32.2",
+    "latest": "3.32.2",
+    "dependent": "frontend",
+    "location": "/home/kevin/devsync/docs/audit-evidence/runtime/frontend/node_modules/@tiptap/extension-task-item"
+  },
+  "@tiptap/extension-task-list": {
+    "current": "3.22.4",
+    "wanted": "3.32.2",
+    "latest": "3.32.2",
+    "dependent": "frontend",
+    "location": "/home/kevin/devsync/docs/audit-evidence/runtime/frontend/node_modules/@tiptap/extension-task-list"
+  },
+  "@tiptap/pm": {
+    "current": "3.22.4",
+    "wanted": "3.32.2",
+    "latest": "3.32.2",
+    "dependent": "frontend",
+    "location": "/home/kevin/devsync/docs/audit-evidence/runtime/frontend/node_modules/@tiptap/pm"
+  },
+  "@tiptap/react": {
+    "current": "3.22.4",
+    "wanted": "3.32.2",
+    "latest": "3.32.2",
+    "dependent": "frontend",
+    "location": "/home/kevin/devsync/docs/audit-evidence/runtime/frontend/node_modules/@tiptap/react"
+  },
+  "@tiptap/starter-kit": {
+    "current": "3.22.4",
+    "wanted": "3.32.2",
+    "latest": "3.32.2",
+    "dependent": "frontend",
+    "location": "/home/kevin/devsync/docs/audit-evidence/runtime/frontend/node_modules/@tiptap/starter-kit"
+  },
+  "@types/node": {
+    "current": "20.19.39",
+    "wanted": "20.19.43",
+    "latest": "26.6.6",
+    "dependent": "frontend",
+    "location": "/home/kevin/devsync/docs/audit-evidence/runtime/frontend/node_modules/@types/node"
+  },
+  "@types/react": {
+    "current": "19.2.14",
+    "wanted": "19.3.0",
+    "latest": "19.3.0",
+    "dependent": "frontend",
+    "location": "/home/kevin/devsync/docs/audit-evidence/runtime/frontend/node_modules/@types/react"
+  },
+  "@types/react-dom": {
+    "current": "19.2.3",
+    "wanted": "19.3.0",
+    "latest": "19.3.0",
+    "dependent": "frontend",
+    "location": "/home/kevin/devsync/docs/audit-evidence/runtime/frontend/node_modules/@types/react-dom"
+  },
+  "axios": {
+    "current": "1.15.2",
+    "wanted": "1.21.0",
+    "latest": "1.21.0",
+    "dependent": "frontend",
+    "location": "/home/kevin/devsync/docs/audit-evidence/runtime/frontend/node_modules/axios"
+  },
+  "date-fns": {
+    "current": "4.1.0",
+    "wanted": "4.4.0",
+    "latest": "4.4.0",
+    "dependent": "frontend",
+    "location": "/home/kevin/devsync/docs/audit-evidence/runtime/frontend/node_modules/date-fns"
+  },
+  "eslint": {
+    "current": "9.39.4",
+    "wanted": "9.39.5",
+    "latest": "10.14.0",
+    "dependent": "frontend",
+    "location": "/home/kevin/devsync/docs/audit-evidence/runtime/frontend/node_modules/eslint"
+  },
+  "eslint-config-next": {
+    "current": "16.2.4",
+    "wanted": "16.2.4",
+    "latest": "16.4.3",
+    "dependent": "frontend",
+    "location": "/home/kevin/devsync/docs/audit-evidence/runtime/frontend/node_modules/eslint-config-next"
+  },
+  "lucide-react": {
+    "current": "1.9.0",
+    "wanted": "1.66.0",
+    "latest": "1.66.0",
+    "dependent": "frontend",
+    "location": "/home/kevin/devsync/docs/audit-evidence/runtime/frontend/node_modules/lucide-react"
+  },
+  "next": {
+    "current": "16.2.4",
+    "wanted": "16.2.4",
+    "latest": "16.4.3",
+    "dependent": "frontend",
+    "location": "/home/kevin/devsync/docs/audit-evidence/runtime/frontend/node_modules/next"
+  },
+  "next-auth": {
+    "current": "4.24.14",
+    "wanted": "4.24.15",
+    "latest": "4.24.15",
+    "dependent": "frontend",
+    "location": "/home/kevin/devsync/docs/audit-evidence/runtime/frontend/node_modules/next-auth"
+  },
+  "react": {
+    "current": "19.2.4",
+    "wanted": "19.2.4",
+    "latest": "19.3.1",
+    "dependent": "frontend",
+    "location": "/home/kevin/devsync/docs/audit-evidence/runtime/frontend/node_modules/react"
+  },
+  "react-dom": {
+    "current": "19.2.4",
+    "wanted": "19.2.4",
+    "latest": "19.3.1",
+    "dependent": "frontend",
+    "location": "/home/kevin/devsync/docs/audit-evidence/runtime/frontend/node_modules/react-dom"
+  },
+  "react-hook-form": {
+    "current": "7.73.1",
+    "wanted": "7.91.0",
+    "latest": "7.91.0",
+    "dependent": "frontend",
+    "location": "/home/kevin/devsync/docs/audit-evidence/runtime/frontend/node_modules/react-hook-form"
+  },
+  "socket.io-client": {
+    "current": "4.8.3",
+    "wanted": "4.8.4",
+    "latest": "4.8.4",
+    "dependent": "frontend",
+    "location": "/home/kevin/devsync/docs/audit-evidence/runtime/frontend/node_modules/socket.io-client"
+  },
+  "sonner": {
+    "current": "2.0.7",
+    "wanted": "2.0.8",
+    "latest": "2.0.8",
+    "dependent": "frontend",
+    "location": "/home/kevin/devsync/docs/audit-evidence/runtime/frontend/node_modules/sonner"
+  },
+  "tailwind-merge": {
+    "current": "3.5.0",
+    "wanted": "3.7.0",
+    "latest": "3.7.0",
+    "dependent": "frontend",
+    "location": "/home/kevin/devsync/docs/audit-evidence/runtime/frontend/node_modules/tailwind-merge"
+  },
+  "tailwindcss": {
+    "current": "4.2.4",
+    "wanted": "4.3.3",
+    "latest": "4.3.3",
+    "dependent": "frontend",
+    "location": "/home/kevin/devsync/docs/audit-evidence/runtime/frontend/node_modules/tailwindcss"
+  },
+  "typescript": {
+    "current": "5.9.3",
+    "wanted": "5.9.3",
+    "latest": "7.0.2",
+    "dependent": "frontend",
+    "location": "/home/kevin/devsync/docs/audit-evidence/runtime/frontend/node_modules/typescript"
+  },
+  "y-websocket": {
+    "current": "3.0.0",
+    "wanted": "3.1.0",
+    "latest": "3.1.0",
+    "dependent": "frontend",
+    "location": "/home/kevin/devsync/docs/audit-evidence/runtime/frontend/node_modules/y-websocket"
+  },
+  "yjs": {
+    "current": "13.6.31",
+    "wanted": "13.6.33",
+    "latest": "13.6.33",
+    "dependent": "frontend",
+    "location": "/home/kevin/devsync/docs/audit-evidence/runtime/frontend/node_modules/yjs"
+  },
+  "zod": {
+    "current": "4.3.6",
+    "wanted": "4.6.7",
+    "latest": "4.6.7",
+    "dependent": "frontend",
+    "location": "/home/kevin/devsync/docs/audit-evidence/runtime/frontend/node_modules/zod"
+  },
+  "zustand": {
+    "current": "5.0.15",
+    "wanted": "5.0.16",
+    "latest": "5.0.16",
+    "dependent": "frontend",
+    "location": "/home/kevin/devsync/docs/audit-evidence/runtime/frontend/node_modules/zustand"
+  }
+}

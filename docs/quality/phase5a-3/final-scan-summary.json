@@ -1,0 +1,20 @@
+{
+  "backend": {
+    "imageId": "sha256:7d4655603f11332e5c5f5e3f87b8d3a504eb99b6771d75d85ba843fc5feed93e",
+    "counts": {
+      "LOW": 60,
+      "HIGH": 44,
+      "MEDIUM": 75,
+      "UNKNOWN": 8
+    }
+  },
+  "frontend": {
+    "imageId": "sha256:b0decc111c1dbbfdd2a311434ccc690ad1fdaf4be7ba6e2b518a4e2dcee10c22",
+    "counts": {
+      "LOW": 60,
+      "HIGH": 44,
+      "MEDIUM": 71,
+      "UNKNOWN": 8
+    }
+  }
+}

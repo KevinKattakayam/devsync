@@ -1,49 +1,139 @@
+import { idempotentCreate } from '../lib/create-idempotency';
 import { Request, Response, NextFunction } from 'express';
 import { z } from 'zod';
-import { prisma } from '../lib/prisma';
+import type { TenantTransaction } from '../lib/tenant-prisma';
+import { OWNER_ROLES, withWorkspaceAccess } from '../security/workspace-policy';
+import { ForbiddenError, NotFoundError } from '../utils/errors';
 import { encryptSecret } from '../services/secret.service';
 
 export const connectRepositorySchema = z.object({
-  repositoryId: z.string().min(1), owner: z.string().min(1), name: z.string().min(1),
-  installationId: z.string().optional(), webhookSecret: z.string().min(16),
-  prOpenedColumnId: z.string().optional().nullable(), prMergedColumnId: z.string().optional().nullable(),
+  repositoryId: z.string().min(1).max(191),
+  owner: z.string().min(1).max(191),
+  name: z.string().min(1).max(191),
+  installationId: z.string().max(191).optional(),
+  webhookSecret: z.string().min(16).max(4096),
+  prOpenedColumnId: z.string().min(1).max(191).optional().nullable(),
+  prMergedColumnId: z.string().min(1).max(191).optional().nullable(),
 });
-export const updateRepositorySchema = connectRepositorySchema.partial().omit({ repositoryId: true });
+export const updateRepositorySchema = connectRepositorySchema
+  .partial()
+  .omit({ repositoryId: true });
 
-async function validateColumn(workspaceId: string, columnId?: string | null) {
+async function validateColumn(
+  tx: TenantTransaction,
+  workspaceId: string,
+  columnId?: string | null,
+) {
   if (!columnId) return;
-  const column = await prisma.column.findUnique({ where: { id: columnId }, include: { board: true } });
-  if (!column || column.board.workspaceId !== workspaceId) throw new Error('Workflow column must belong to this workspace');
+  const column = await tx.column.findUnique({
+    where: { id: columnId },
+    include: { board: true },
+  });
+  if (!column || column.board.workspaceId !== workspaceId)
+    throw new ForbiddenError('Access denied');
 }
 
-async function requireRepositoryWorkspace(workspaceId: string, repositoryId: string) {
-  const repository = await prisma.gitHubRepository.findFirst({ where: { id: repositoryId, workspaceId } });
-  if (!repository) throw new Error('Repository connection not found');
+async function requireRepositoryWorkspace(
+  tx: TenantTransaction,
+  workspaceId: string,
+  repositoryId: string,
+) {
+  const repository = await tx.gitHubRepository.findFirst({
+    where: { id: repositoryId, workspaceId },
+  });
+  if (!repository) throw new NotFoundError('Repository connection not found');
   return repository;
 }
 
+const repositorySelect = {
+  id: true,
+  repositoryId: true,
+  owner: true,
+  name: true,
+  installationId: true,
+  prOpenedColumnId: true,
+  prMergedColumnId: true,
+  createdAt: true,
+};
 export async function listRepositories(req: Request, res: Response, next: NextFunction) {
-  try { res.json(await prisma.gitHubRepository.findMany({ where: { workspaceId: String(req.params.id) }, select: { id: true, repositoryId: true, owner: true, name: true, installationId: true, prOpenedColumnId: true, prMergedColumnId: true, createdAt: true } })); }
-  catch (error) { next(error); }
+  try {
+    const workspaceId = String(req.params.id);
+    res.json(
+      await withWorkspaceAccess(req.user!.userId, workspaceId, OWNER_ROLES, (tx) =>
+        tx.gitHubRepository.findMany({ where: { workspaceId }, select: repositorySelect }),
+      ),
+    );
+  } catch (error) {
+    next(error);
+  }
 }
-
 export async function connectRepository(req: Request, res: Response, next: NextFunction) {
   try {
-    const workspaceId = String(req.params.id); await validateColumn(workspaceId, req.body.prOpenedColumnId); await validateColumn(workspaceId, req.body.prMergedColumnId);
-    const repository = await prisma.gitHubRepository.create({ data: { ...req.body, webhookSecret: encryptSecret(req.body.webhookSecret), workspaceId } });
-    res.status(201).json({ ...repository, webhookSecret: undefined });
-  } catch (error) { next(error); }
+    const workspaceId = String(req.params.id),
+      data = connectRepositorySchema.parse(req.body);
+    const repository = await withWorkspaceAccess(
+      req.user!.userId,
+      workspaceId,
+      OWNER_ROLES,
+      async (tx) =>
+        idempotentCreate(
+          tx,
+          req.user!.userId,
+          ['repository.create', workspaceId],
+          req.header('idempotency-key'),
+          data,
+          async () => {
+            await validateColumn(tx, workspaceId, data.prOpenedColumnId);
+            await validateColumn(tx, workspaceId, data.prMergedColumnId);
+            return tx.gitHubRepository.create({
+              data: { ...data, webhookSecret: encryptSecret(data.webhookSecret), workspaceId },
+              select: { ...repositorySelect, workspaceId: true, updatedAt: true },
+            });
+          },
+        ),
+    );
+    res.status(201).json(repository);
+  } catch (error) {
+    next(error);
+  }
 }
-
 export async function updateRepository(req: Request, res: Response, next: NextFunction) {
   try {
-    const workspaceId = String(req.params.id); const repositoryId = String(req.params.repositoryId); await requireRepositoryWorkspace(workspaceId, repositoryId); await validateColumn(workspaceId, req.body.prOpenedColumnId); await validateColumn(workspaceId, req.body.prMergedColumnId);
-    const repository = await prisma.gitHubRepository.update({ where: { id: repositoryId }, data: { ...req.body, ...(req.body.webhookSecret ? { webhookSecret: encryptSecret(req.body.webhookSecret) } : {}) } });
+    const workspaceId = String(req.params.id),
+      repositoryId = String(req.params.repositoryId),
+      data = updateRepositorySchema.parse(req.body);
+    const repository = await withWorkspaceAccess(
+      req.user!.userId,
+      workspaceId,
+      OWNER_ROLES,
+      async (tx) => {
+        await requireRepositoryWorkspace(tx, workspaceId, repositoryId);
+        await validateColumn(tx, workspaceId, data.prOpenedColumnId);
+        await validateColumn(tx, workspaceId, data.prMergedColumnId);
+        return tx.gitHubRepository.update({
+          where: { id: repositoryId, workspaceId },
+          data: {
+            ...data,
+            ...(data.webhookSecret ? { webhookSecret: encryptSecret(data.webhookSecret) } : {}),
+          },
+        });
+      },
+    );
     res.json({ ...repository, webhookSecret: undefined });
-  } catch (error) { next(error); }
+  } catch (error) {
+    next(error);
+  }
 }
-
 export async function disconnectRepository(req: Request, res: Response, next: NextFunction) {
-  try { const workspaceId = String(req.params.id); const repositoryId = String(req.params.repositoryId); await requireRepositoryWorkspace(workspaceId, repositoryId); await prisma.gitHubRepository.delete({ where: { id: repositoryId } }); res.status(204).end(); }
-  catch (error) { next(error); }
+  try {
+    const workspaceId = String(req.params.id),
+      repositoryId = String(req.params.repositoryId);
+    await withWorkspaceAccess(req.user!.userId, workspaceId, OWNER_ROLES, async (tx) => {
+      await requireRepositoryWorkspace(tx, workspaceId, repositoryId);
+      await tx.gitHubRepository.delete({ where: { id: repositoryId, workspaceId } });
+    });
+    res.status(204).end();
+  } catch (error) {
+    next(error);
+  }
 }

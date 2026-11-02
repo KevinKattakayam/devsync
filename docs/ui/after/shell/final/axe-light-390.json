@@ -1,0 +1,960 @@
+[
+  {
+    "theme": "light",
+    "width": 390,
+    "state": "default",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "impact": "serious",
+        "tags": [
+          "cat.aria",
+          "wcag2a",
+          "wcag412",
+          "EN-301-549",
+          "EN-9.4.1.2",
+          "RGAAv4",
+          "RGAA-7.1.1"
+        ],
+        "description": "Ensure ARIA attributes are not prohibited for an element's role",
+        "help": "Elements must only use permitted ARIA attributes",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/aria-prohibited-attr?application=axeAPI",
+        "nodes": [
+          {
+            "any": [],
+            "all": [],
+            "none": [
+              {
+                "id": "aria-prohibited-attr",
+                "data": {
+                  "role": null,
+                  "nodeName": "div",
+                  "messageKey": "noRoleSingular",
+                  "prohibited": [
+                    "aria-label"
+                  ]
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "aria-label attribute is not well supported on \"div\" elements with no valid role attribute."
+              }
+            ],
+            "impact": "serious",
+            "html": "<div class=\"lg:hidden\" aria-label=\"1 workspace members online\"><ul aria-label=\"Collaborators\" class=\"flex items-center -space-x-2\"><li class=\"rounded-full ring-2 ring-background\"><span role=\"img\" aria-label=\"Sample owner\" class=\"ui-avatar\"><span aria-hidden=\"true\">SO</span></span></li></ul></div>",
+            "target": [
+              ".lg\\:hidden"
+            ],
+            "failureSummary": "Fix all of the following:\n  aria-label attribute is not well supported on \"div\" elements with no valid role attribute."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "light",
+    "width": 390,
+    "state": "commands",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-hidden-focus",
+        "impact": "serious",
+        "tags": [
+          "cat.name-role-value",
+          "wcag2a",
+          "wcag412",
+          "TTv5",
+          "TT6.a",
+          "EN-301-549",
+          "EN-9.4.1.2",
+          "RGAAv4",
+          "RGAA-10.8.1"
+        ],
+        "description": "Ensure aria-hidden elements are not focusable nor contain focusable elements",
+        "help": "ARIA hidden element must not be focusable or contain focusable elements",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/aria-hidden-focus?application=axeAPI",
+        "nodes": [
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "focusable-modal-open",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<a href=\"#main-content\" class=\"ui-skip-link\" data-shell-region=\"skip\" data-aria-hidden=\"true\" aria-hidden=\"true\">Skip to content</a>",
+                    "target": [
+                      ".ui-skip-link"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Check that focusable elements are not tabbable in the current state"
+              }
+            ],
+            "none": [],
+            "impact": "serious",
+            "html": "<a href=\"#main-content\" class=\"ui-skip-link\" data-shell-region=\"skip\" data-aria-hidden=\"true\" aria-hidden=\"true\">Skip to content</a>",
+            "target": [
+              ".ui-skip-link"
+            ],
+            "failureSummary": "Fix all of the following:\n  Check that focusable elements are not tabbable in the current state"
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "focusable-modal-open",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" aria-label=\"Open navigation\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button md:hidden\">",
+                    "target": [
+                      ".md\\:hidden"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-label=\"Search and commands\" aria-haspopup=\"dialog\" aria-expanded=\"true\" data-state=\"open\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button shell-search\" aria-controls=\"radix-_r_5_\">",
+                    "target": [
+                      ".shell-search"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-pressed=\"false\" aria-label=\"Enter focus mode\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button\">",
+                    "target": [
+                      "button[aria-label=\"Enter focus mode\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-label=\"Sample owner\" id=\"radix-_r_b_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button shell-user\">",
+                    "target": [
+                      "#radix-_r_b_"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Check that focusable elements are not tabbable in the current state"
+              }
+            ],
+            "none": [],
+            "impact": "serious",
+            "html": "<header data-shell-region=\"topbar\" class=\"shell-topbar\" data-aria-hidden=\"true\" aria-hidden=\"true\">",
+            "target": [
+              "header"
+            ],
+            "failureSummary": "Fix all of the following:\n  Check that focusable elements are not tabbable in the current state"
+          }
+        ]
+      },
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ],
+        "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/color-contrast?application=axeAPI",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": "elmPartiallyObscuring",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element's background color could not be determined because it partially overlaps other elements"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<p id=\"radix-_r_7_\" class=\"mt-1 text-sm text-muted-foreground\">Search actions. Use arrow keys to navigate, Enter to run, Escape to close.</p>",
+            "target": [
+              "#radix-_r_7_"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it partially overlaps other elements"
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": "elmPartiallyObscured",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<div role=\"dialog\" id=\"radix-_r_5_\" data-state=\"open\" class=\"ui-dialog\" tabindex=\"-1\" aria-labelledby=\"radix-_r_6_\" aria-describedby=\"radix-_r_7_\" style=\"pointer-events: auto;\">",
+                    "target": [
+                      "#radix-_r_5_"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element's background color could not be determined because it's partially obscured by another element"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<div id=\"_r_j_-nav-/settings\" role=\"option\" aria-selected=\"false\" class=\"ui-command-option\">Go to Workspace settings</div>",
+            "target": [
+              "#_r_j_-nav-\\/settings"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": "elmPartiallyObscured",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<div role=\"dialog\" id=\"radix-_r_5_\" data-state=\"open\" class=\"ui-dialog\" tabindex=\"-1\" aria-labelledby=\"radix-_r_6_\" aria-describedby=\"radix-_r_7_\" style=\"pointer-events: auto;\">",
+                    "target": [
+                      "#radix-_r_5_"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element's background color could not be determined because it's partially obscured by another element"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<div id=\"_r_j_-doc-devsync-sample-doc\" role=\"option\" aria-selected=\"false\" class=\"ui-command-option\">Document: Welcome</div>",
+            "target": [
+              "#_r_j_-doc-devsync-sample-doc"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": "elmPartiallyObscured",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<div role=\"dialog\" id=\"radix-_r_5_\" data-state=\"open\" class=\"ui-dialog\" tabindex=\"-1\" aria-labelledby=\"radix-_r_6_\" aria-describedby=\"radix-_r_7_\" style=\"pointer-events: auto;\">",
+                    "target": [
+                      "#radix-_r_5_"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element's background color could not be determined because it's partially obscured by another element"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<div id=\"_r_j_-doc-cmvxzagcn00044rr8qgcb69mo\" role=\"option\" aria-selected=\"false\" class=\"ui-command-option\">Document: Interface guidelines</div>",
+            "target": [
+              "#_r_j_-doc-cmvxzagcn00044rr8qgcb69mo"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": "elmPartiallyObscured",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<div role=\"dialog\" id=\"radix-_r_5_\" data-state=\"open\" class=\"ui-dialog\" tabindex=\"-1\" aria-labelledby=\"radix-_r_6_\" aria-describedby=\"radix-_r_7_\" style=\"pointer-events: auto;\">",
+                    "target": [
+                      "#radix-_r_5_"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element's background color could not be determined because it's partially obscured by another element"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<div id=\"_r_j_-doc-cmvxzagg200094rr8s30ofn8b\" role=\"option\" aria-selected=\"false\" class=\"ui-command-option\">Document: Keyboard interactions</div>",
+            "target": [
+              "#_r_j_-doc-cmvxzagg200094rr8s30ofn8b"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": "elmPartiallyObscured",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<div role=\"dialog\" id=\"radix-_r_5_\" data-state=\"open\" class=\"ui-dialog\" tabindex=\"-1\" aria-labelledby=\"radix-_r_6_\" aria-describedby=\"radix-_r_7_\" style=\"pointer-events: auto;\">",
+                    "target": [
+                      "#radix-_r_5_"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element's background color could not be determined because it's partially obscured by another element"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<div id=\"_r_j_-create-document\" role=\"option\" aria-selected=\"false\" class=\"ui-command-option\">Create new document</div>",
+            "target": [
+              "#_r_j_-create-document"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "light",
+    "width": 390,
+    "state": "commands-empty",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-hidden-focus",
+        "impact": "serious",
+        "tags": [
+          "cat.name-role-value",
+          "wcag2a",
+          "wcag412",
+          "TTv5",
+          "TT6.a",
+          "EN-301-549",
+          "EN-9.4.1.2",
+          "RGAAv4",
+          "RGAA-10.8.1"
+        ],
+        "description": "Ensure aria-hidden elements are not focusable nor contain focusable elements",
+        "help": "ARIA hidden element must not be focusable or contain focusable elements",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/aria-hidden-focus?application=axeAPI",
+        "nodes": [
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "focusable-modal-open",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<a href=\"#main-content\" class=\"ui-skip-link\" data-shell-region=\"skip\" data-aria-hidden=\"true\" aria-hidden=\"true\">Skip to content</a>",
+                    "target": [
+                      ".ui-skip-link"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Check that focusable elements are not tabbable in the current state"
+              }
+            ],
+            "none": [],
+            "impact": "serious",
+            "html": "<a href=\"#main-content\" class=\"ui-skip-link\" data-shell-region=\"skip\" data-aria-hidden=\"true\" aria-hidden=\"true\">Skip to content</a>",
+            "target": [
+              ".ui-skip-link"
+            ],
+            "failureSummary": "Fix all of the following:\n  Check that focusable elements are not tabbable in the current state"
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "focusable-modal-open",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" aria-label=\"Open navigation\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button md:hidden\">",
+                    "target": [
+                      ".md\\:hidden"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-label=\"Search and commands\" aria-haspopup=\"dialog\" aria-expanded=\"true\" data-state=\"open\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button shell-search\" aria-controls=\"radix-_r_5_\">",
+                    "target": [
+                      ".shell-search"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-pressed=\"false\" aria-label=\"Enter focus mode\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button\">",
+                    "target": [
+                      "button[aria-label=\"Enter focus mode\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-label=\"Sample owner\" id=\"radix-_r_b_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button shell-user\">",
+                    "target": [
+                      "#radix-_r_b_"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Check that focusable elements are not tabbable in the current state"
+              }
+            ],
+            "none": [],
+            "impact": "serious",
+            "html": "<header data-shell-region=\"topbar\" class=\"shell-topbar\" data-aria-hidden=\"true\" aria-hidden=\"true\">",
+            "target": [
+              "header"
+            ],
+            "failureSummary": "Fix all of the following:\n  Check that focusable elements are not tabbable in the current state"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "light",
+    "width": 390,
+    "state": "help",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-hidden-focus",
+        "impact": "serious",
+        "tags": [
+          "cat.name-role-value",
+          "wcag2a",
+          "wcag412",
+          "TTv5",
+          "TT6.a",
+          "EN-301-549",
+          "EN-9.4.1.2",
+          "RGAAv4",
+          "RGAA-10.8.1"
+        ],
+        "description": "Ensure aria-hidden elements are not focusable nor contain focusable elements",
+        "help": "ARIA hidden element must not be focusable or contain focusable elements",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/aria-hidden-focus?application=axeAPI",
+        "nodes": [
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "focusable-modal-open",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<a href=\"#main-content\" class=\"ui-skip-link\" data-shell-region=\"skip\" data-aria-hidden=\"true\" aria-hidden=\"true\">Skip to content</a>",
+                    "target": [
+                      ".ui-skip-link"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Check that focusable elements are not tabbable in the current state"
+              }
+            ],
+            "none": [],
+            "impact": "serious",
+            "html": "<a href=\"#main-content\" class=\"ui-skip-link\" data-shell-region=\"skip\" data-aria-hidden=\"true\" aria-hidden=\"true\">Skip to content</a>",
+            "target": [
+              ".ui-skip-link"
+            ],
+            "failureSummary": "Fix all of the following:\n  Check that focusable elements are not tabbable in the current state"
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "focusable-modal-open",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" aria-label=\"Open navigation\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button md:hidden\">",
+                    "target": [
+                      ".md\\:hidden"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-label=\"Search and commands\" aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button shell-search\">",
+                    "target": [
+                      ".shell-search"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-pressed=\"false\" aria-label=\"Enter focus mode\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button\">",
+                    "target": [
+                      "button[aria-label=\"Enter focus mode\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-label=\"Sample owner\" id=\"radix-_r_b_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button shell-user\">",
+                    "target": [
+                      "#radix-_r_b_"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Check that focusable elements are not tabbable in the current state"
+              }
+            ],
+            "none": [],
+            "impact": "serious",
+            "html": "<header data-shell-region=\"topbar\" class=\"shell-topbar\" data-aria-hidden=\"true\" aria-hidden=\"true\">",
+            "target": [
+              "header"
+            ],
+            "failureSummary": "Fix all of the following:\n  Check that focusable elements are not tabbable in the current state"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "light",
+    "width": 390,
+    "state": "focus",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-prohibited-attr",
+        "impact": "serious",
+        "tags": [
+          "cat.aria",
+          "wcag2a",
+          "wcag412",
+          "EN-301-549",
+          "EN-9.4.1.2",
+          "RGAAv4",
+          "RGAA-7.1.1"
+        ],
+        "description": "Ensure ARIA attributes are not prohibited for an element's role",
+        "help": "Elements must only use permitted ARIA attributes",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/aria-prohibited-attr?application=axeAPI",
+        "nodes": [
+          {
+            "any": [],
+            "all": [],
+            "none": [
+              {
+                "id": "aria-prohibited-attr",
+                "data": {
+                  "role": null,
+                  "nodeName": "div",
+                  "messageKey": "noRoleSingular",
+                  "prohibited": [
+                    "aria-label"
+                  ]
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "aria-label attribute is not well supported on \"div\" elements with no valid role attribute."
+              }
+            ],
+            "impact": "serious",
+            "html": "<div class=\"lg:hidden\" aria-label=\"1 workspace members online\"><ul aria-label=\"Collaborators\" class=\"flex items-center -space-x-2\"><li class=\"rounded-full ring-2 ring-background\"><span role=\"img\" aria-label=\"Sample owner\" class=\"ui-avatar\"><span aria-hidden=\"true\">SO</span></span></li></ul></div>",
+            "target": [
+              ".lg\\:hidden"
+            ],
+            "failureSummary": "Fix all of the following:\n  aria-label attribute is not well supported on \"div\" elements with no valid role attribute."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "light",
+    "width": 390,
+    "state": "user-menu",
+    "violations": [],
+    "incomplete": []
+  },
+  {
+    "theme": "light",
+    "width": 390,
+    "state": "mobile-navigation",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-hidden-focus",
+        "impact": "serious",
+        "tags": [
+          "cat.name-role-value",
+          "wcag2a",
+          "wcag412",
+          "TTv5",
+          "TT6.a",
+          "EN-301-549",
+          "EN-9.4.1.2",
+          "RGAAv4",
+          "RGAA-10.8.1"
+        ],
+        "description": "Ensure aria-hidden elements are not focusable nor contain focusable elements",
+        "help": "ARIA hidden element must not be focusable or contain focusable elements",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/aria-hidden-focus?application=axeAPI",
+        "nodes": [
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "focusable-modal-open",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<a href=\"#main-content\" class=\"ui-skip-link\" data-shell-region=\"skip\" data-aria-hidden=\"true\" aria-hidden=\"true\">Skip to content</a>",
+                    "target": [
+                      ".ui-skip-link"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Check that focusable elements are not tabbable in the current state"
+              }
+            ],
+            "none": [],
+            "impact": "serious",
+            "html": "<a href=\"#main-content\" class=\"ui-skip-link\" data-shell-region=\"skip\" data-aria-hidden=\"true\" aria-hidden=\"true\">Skip to content</a>",
+            "target": [
+              ".ui-skip-link"
+            ],
+            "failureSummary": "Fix all of the following:\n  Check that focusable elements are not tabbable in the current state"
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "focusable-modal-open",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"true\" data-state=\"open\" aria-label=\"Open navigation\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button md:hidden\" aria-controls=\"radix-_r_p_\">",
+                    "target": [
+                      ".md\\:hidden"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-label=\"Search and commands\" aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button shell-search\">",
+                    "target": [
+                      ".shell-search"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-pressed=\"false\" aria-label=\"Enter focus mode\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button\">",
+                    "target": [
+                      "button[aria-label=\"Enter focus mode\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-label=\"Sample owner\" id=\"radix-_r_b_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button shell-user\">",
+                    "target": [
+                      "#radix-_r_b_"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Check that focusable elements are not tabbable in the current state"
+              }
+            ],
+            "none": [],
+            "impact": "serious",
+            "html": "<header data-shell-region=\"topbar\" class=\"shell-topbar\" data-aria-hidden=\"true\" aria-hidden=\"true\">",
+            "target": [
+              "header"
+            ],
+            "failureSummary": "Fix all of the following:\n  Check that focusable elements are not tabbable in the current state"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "light",
+    "width": 390,
+    "state": "document-tree",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-hidden-focus",
+        "impact": "serious",
+        "tags": [
+          "cat.name-role-value",
+          "wcag2a",
+          "wcag412",
+          "TTv5",
+          "TT6.a",
+          "EN-301-549",
+          "EN-9.4.1.2",
+          "RGAAv4",
+          "RGAA-10.8.1"
+        ],
+        "description": "Ensure aria-hidden elements are not focusable nor contain focusable elements",
+        "help": "ARIA hidden element must not be focusable or contain focusable elements",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/aria-hidden-focus?application=axeAPI",
+        "nodes": [
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "focusable-modal-open",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<a href=\"#main-content\" class=\"ui-skip-link\" data-shell-region=\"skip\" data-aria-hidden=\"true\" aria-hidden=\"true\">Skip to content</a>",
+                    "target": [
+                      ".ui-skip-link"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Check that focusable elements are not tabbable in the current state"
+              }
+            ],
+            "none": [],
+            "impact": "serious",
+            "html": "<a href=\"#main-content\" class=\"ui-skip-link\" data-shell-region=\"skip\" data-aria-hidden=\"true\" aria-hidden=\"true\">Skip to content</a>",
+            "target": [
+              ".ui-skip-link"
+            ],
+            "failureSummary": "Fix all of the following:\n  Check that focusable elements are not tabbable in the current state"
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "focusable-modal-open",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"true\" data-state=\"open\" aria-label=\"Open navigation\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button md:hidden\" aria-controls=\"radix-_r_p_\">",
+                    "target": [
+                      ".md\\:hidden"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-label=\"Search and commands\" aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button shell-search\">",
+                    "target": [
+                      ".shell-search"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-pressed=\"false\" aria-label=\"Enter focus mode\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button\">",
+                    "target": [
+                      "button[aria-label=\"Enter focus mode\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-label=\"Sample owner\" id=\"radix-_r_b_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button shell-user\">",
+                    "target": [
+                      "#radix-_r_b_"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Check that focusable elements are not tabbable in the current state"
+              }
+            ],
+            "none": [],
+            "impact": "serious",
+            "html": "<header data-shell-region=\"topbar\" class=\"shell-topbar\" data-aria-hidden=\"true\" aria-hidden=\"true\">",
+            "target": [
+              "header"
+            ],
+            "failureSummary": "Fix all of the following:\n  Check that focusable elements are not tabbable in the current state"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "light",
+    "width": 390,
+    "state": "workspace-menu",
+    "violations": [],
+    "incomplete": []
+  },
+  {
+    "theme": "light",
+    "width": 390,
+    "state": "copilot",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-hidden-focus",
+        "impact": "serious",
+        "tags": [
+          "cat.name-role-value",
+          "wcag2a",
+          "wcag412",
+          "TTv5",
+          "TT6.a",
+          "EN-301-549",
+          "EN-9.4.1.2",
+          "RGAAv4",
+          "RGAA-10.8.1"
+        ],
+        "description": "Ensure aria-hidden elements are not focusable nor contain focusable elements",
+        "help": "ARIA hidden element must not be focusable or contain focusable elements",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/aria-hidden-focus?application=axeAPI",
+        "nodes": [
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "focusable-modal-open",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<a href=\"#main-content\" class=\"ui-skip-link\" data-shell-region=\"skip\" data-aria-hidden=\"true\" aria-hidden=\"true\">Skip to content</a>",
+                    "target": [
+                      ".ui-skip-link"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Check that focusable elements are not tabbable in the current state"
+              }
+            ],
+            "none": [],
+            "impact": "serious",
+            "html": "<a href=\"#main-content\" class=\"ui-skip-link\" data-shell-region=\"skip\" data-aria-hidden=\"true\" aria-hidden=\"true\">Skip to content</a>",
+            "target": [
+              ".ui-skip-link"
+            ],
+            "failureSummary": "Fix all of the following:\n  Check that focusable elements are not tabbable in the current state"
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "focusable-modal-open",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" aria-label=\"Open navigation\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button md:hidden\">",
+                    "target": [
+                      ".md\\:hidden"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-label=\"Search and commands\" aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button shell-search\">",
+                    "target": [
+                      ".shell-search"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-pressed=\"false\" aria-label=\"Enter focus mode\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button\">",
+                    "target": [
+                      "button[aria-label=\"Enter focus mode\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-label=\"Sample owner\" id=\"radix-_r_b_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button shell-user\">",
+                    "target": [
+                      "#radix-_r_b_"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Check that focusable elements are not tabbable in the current state"
+              }
+            ],
+            "none": [],
+            "impact": "serious",
+            "html": "<header data-shell-region=\"topbar\" class=\"shell-topbar\" data-aria-hidden=\"true\" aria-hidden=\"true\">",
+            "target": [
+              "header"
+            ],
+            "failureSummary": "Fix all of the following:\n  Check that focusable elements are not tabbable in the current state"
+          }
+        ]
+      },
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ],
+        "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/color-contrast?application=axeAPI",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": "elmPartiallyObscuring",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [],
+                "impact": "serious",
+                "message": "Element's background color could not be determined because it partially overlaps other elements"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<p>Ask a question about this workspace. Relevant context may be retrieved when available.</p>",
+            "target": [
+              ".break-words > p"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it partially overlaps other elements"
+          }
+        ]
+      }
+    ]
+  }
+]

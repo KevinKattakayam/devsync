@@ -1,0 +1,25 @@
+
+> devsync-backend@1.0.0 test
+> jest --runInBand --runTestsByPath src/__tests__/collaboration.integration.test.ts -t merges two real
+
+FAIL src/__tests__/collaboration.integration.test.ts (16.466 s)
+  ● merges two real clients editing the same paragraph concurrently
+
+    Error: Timed out: initial synchronization;
+
+      71 |   const entry = { document, socket, provider, rejected: () => denied }; clients.push(entry);
+      72 |   try { await until(() => provider.synced, 'initial synchronization'); }
+    > 73 |   catch (error) { throw new Error(`${String(error)}; ${events.join('; ')}`); }
+         |                         ^
+      74 |   return entry;
+      75 | }
+      76 | function text(document: Y.Doc): Y.XmlText {
+
+      at client (src/__tests__/collaboration.integration.test.ts:73:25)
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:82:69)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 5 skipped, 6 total
+Snapshots:   0 total
+Time:        16.669 s, estimated 60 s
+Ran all test suites within paths "src/__tests__/collaboration.integration.test.ts".

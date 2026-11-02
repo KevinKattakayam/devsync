@@ -1,0 +1,9 @@
+
+> devsync-backend@1.0.0 test
+> jest --runInBand --runTestsByPath src/__tests__/migration-chain.test.ts
+
+Test Suites: 1 passed, 1 total
+Tests:       4 passed, 4 total
+Snapshots:   0 total
+Time:        8.984 s, estimated 12 s
+Ran all test suites within paths "src/__tests__/migration-chain.test.ts".

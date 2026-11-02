@@ -1,0 +1,24 @@
+
+> devsync-backend@1.0.0 test
+> jest --runInBand --runTestsByPath src/__tests__/resource-mutations.integration.test.ts src/__tests__/api-reliability.test.ts src/__tests__/critical-security.test.ts --coverage=false
+
+{"level":50,"time":1793522870238,"service":"devsync-api","msg":"Unexpected server error"}
+{"level":30,"time":1793522872563,"service":"devsync-api","req":{"id":"6154b284-a3c4-4fe6-8c79-a15bf03d116d","method":"GET"},"requestId":"6154b284-a3c4-4fe6-8c79-a15bf03d116d","res":{"statusCode":200},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1793522872567,"service":"devsync-api","req":{"id":"5cfe91c7-5fd0-4aec-b21f-fbb03478be6b","method":"GET"},"requestId":"5cfe91c7-5fd0-4aec-b21f-fbb03478be6b","res":{"statusCode":401},"responseTime":2,"msg":"request completed"}
+{"level":30,"time":1793522872571,"service":"devsync-api","req":{"id":"e554cbe1-337b-4082-8893-4fae55747c6d","method":"GET"},"requestId":"e554cbe1-337b-4082-8893-4fae55747c6d","res":{"statusCode":200},"responseTime":0,"msg":"request completed"}
+{"level":30,"time":1793522872574,"service":"devsync-api","req":{"id":"dc5ee8a7-c040-495b-82cc-58c8f8294180","method":"GET"},"requestId":"dc5ee8a7-c040-495b-82cc-58c8f8294180","res":{"statusCode":401},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1793522872576,"service":"devsync-api","req":{"id":"c8099023-39ca-458c-94aa-600a7367b83e","method":"GET"},"requestId":"c8099023-39ca-458c-94aa-600a7367b83e","res":{"statusCode":404},"responseTime":0,"msg":"request completed"}
+{"level":30,"time":1793522872585,"service":"devsync-api","req":{"id":"2a5dbdee-2ecf-4ab3-a8d4-1ff201d4c798","method":"POST"},"requestId":"2a5dbdee-2ecf-4ab3-a8d4-1ff201d4c798","res":{"statusCode":400},"responseTime":8,"msg":"request completed"}
+{"level":30,"time":1793522872591,"service":"devsync-api","req":{"id":"7786a31a-9896-4f50-9c6e-7854326f7162","method":"GET"},"requestId":"7786a31a-9896-4f50-9c6e-7854326f7162","res":{"statusCode":404},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1793522872596,"service":"devsync-api","req":{"id":"aa886510-4653-4d07-bc40-1565d8370305","method":"GET"},"requestId":"aa886510-4653-4d07-bc40-1565d8370305","res":{"statusCode":403},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1793522872597,"service":"devsync-api","req":{"id":"2ccf869a-81a1-44fb-823d-29b7a292a50b","method":"GET"},"requestId":"2ccf869a-81a1-44fb-823d-29b7a292a50b","res":{"statusCode":403},"responseTime":0,"msg":"request completed"}
+{"level":30,"time":1793522872600,"service":"devsync-api","req":{"id":"2886a278-4bba-48ca-b9aa-f02fb8bc876a","method":"GET"},"requestId":"2886a278-4bba-48ca-b9aa-f02fb8bc876a","res":{"statusCode":200},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1793522872612,"service":"devsync-api","req":{"id":"ec4cd9d8-043b-4a2c-a9af-0b44c5a1b5df","method":"GET"},"requestId":"ec4cd9d8-043b-4a2c-a9af-0b44c5a1b5df","res":{"statusCode":200},"responseTime":0,"msg":"request completed"}
+{"level":30,"time":1793522872655,"service":"devsync-api","req":{"id":"52a76861-0cb2-41a6-a3e8-5163b9e267e6","method":"POST"},"requestId":"52a76861-0cb2-41a6-a3e8-5163b9e267e6","res":{"statusCode":404},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1793522872658,"service":"devsync-api","req":{"id":"bb202866-738a-4bec-a9f6-4c391a5d3b73","method":"GET"},"requestId":"bb202866-738a-4bec-a9f6-4c391a5d3b73","res":{"statusCode":401},"responseTime":0,"msg":"request completed"}
+
+Test Suites: 3 passed, 3 total
+Tests:       119 passed, 119 total
+Snapshots:   0 total
+Time:        23.337 s
+Ran all test suites within paths "src/__tests__/resource-mutations.integration.test.ts", "src/__tests__/api-reliability.test.ts", "src/__tests__/critical-security.test.ts".

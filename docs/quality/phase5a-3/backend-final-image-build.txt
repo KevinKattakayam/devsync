@@ -1,0 +1,101 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.84kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/node:22-trixie-slim@sha256:2117f713a417f3aff682ac8f5bc2ebbdf1beed51f36e67ab1e0fd3866b6d2d8f
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 177B done
+#3 DONE 0.0s
+
+#4 [base 1/3] FROM docker.io/library/node:22-trixie-slim@sha256:2117f713a417f3aff682ac8f5bc2ebbdf1beed51f36e67ab1e0fd3866b6d2d8f
+#4 DONE 0.0s
+
+#5 [base 2/3] WORKDIR /app
+#5 CACHED
+
+#6 [base 3/3] RUN apt-get update && apt-get install -y --no-install-recommends openssl ca-certificates && rm -rf /var/lib/apt/lists/*
+#6 CACHED
+
+#7 [internal] load build context
+#7 transferring context: 52.22kB 0.0s done
+#7 DONE 0.0s
+
+#8 [runner 1/7] RUN rm -rf /usr/local/lib/node_modules/npm /opt/yarn-* /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/yarn /usr/local/bin/yarnpkg /usr/bin/mount /usr/bin/umount /usr/bin/nsenter /usr/bin/infocmp
+#8 ...
+
+#9 [dependencies 2/3] COPY prisma/schema.prisma ./prisma/schema.prisma
+#9 CACHED
+
+#10 [dependencies 1/3] COPY package.json package-lock.json ./
+#10 CACHED
+
+#11 [dependencies 3/3] RUN npm ci
+#11 CACHED
+
+#12 [production-dependencies 1/1] RUN npm prune --omit=dev --ignore-scripts
+#12 CACHED
+
+#13 [build 1/3] COPY . .
+#13 DONE 0.1s
+
+#14 [build 2/3] RUN npm run build && npx tsc -p tsconfig.seed-build.json
+#14 0.839 
+#14 0.839 > devsync-backend@1.0.0 build
+#14 0.839 > prisma generate && tsc
+#14 0.839 
+#14 ...
+
+#8 [runner 1/7] RUN rm -rf /usr/local/lib/node_modules/npm /opt/yarn-* /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/yarn /usr/local/bin/yarnpkg /usr/bin/mount /usr/bin/umount /usr/bin/nsenter /usr/bin/infocmp
+#8 DONE 1.6s
+
+#14 [build 2/3] RUN npm run build && npx tsc -p tsconfig.seed-build.json
+#14 1.522 Prisma schema loaded from prisma/schema.prisma
+#14 2.427 
+#14 2.427 ✔ Generated Prisma Client (v5.22.0) to ./node_modules/@prisma/client in 360ms
+#14 2.427 
+#14 2.427 Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
+#14 2.427 
+#14 2.427 Help us improve the Prisma ORM for everyone. Share your feedback in a short 2-min survey: https://pris.ly/orm/survey/release-5-22
+#14 2.427 
+#14 ...
+
+#5 [base 2/3] WORKDIR /app
+#5 CACHED
+
+#15 [runner 2/7] COPY --from=production-dependencies --chown=node:node /app/node_modules ./node_modules
+#15 ...
+
+#14 [build 2/3] RUN npm run build && npx tsc -p tsconfig.seed-build.json
+#14 DONE 37.5s
+
+#16 [build 3/3] RUN mkdir -p /state/admin /state/runtime && chown -R node:node /state
+#16 DONE 0.4s
+
+#15 [runner 2/7] COPY --from=production-dependencies --chown=node:node /app/node_modules ./node_modules
+#15 DONE 41.4s
+
+#17 [runner 3/7] COPY --from=build --chown=node:node /app/dist ./dist
+#17 DONE 0.1s
+
+#18 [runner 4/7] COPY --from=build --chown=node:node /app/prisma/schema.prisma ./prisma/schema.prisma
+#18 DONE 0.1s
+
+#19 [runner 5/7] COPY --from=build --chown=node:node /app/prisma/migrations ./prisma/migrations
+#19 DONE 0.1s
+
+#20 [runner 6/7] COPY --from=build --chown=node:node /app/docker ./docker
+#20 DONE 0.1s
+
+#21 [runner 7/7] COPY --from=build --chown=node:node /app/package.json ./package.json
+#21 DONE 0.1s
+
+#22 exporting to image
+#22 exporting layers
+#22 exporting layers 20.5s done
+#22 writing image sha256:7d4655603f11332e5c5f5e3f87b8d3a504eb99b6771d75d85ba843fc5feed93e done
+#22 naming to docker.io/library/devsync-backend:phase5a-3 done
+#22 DONE 20.5s

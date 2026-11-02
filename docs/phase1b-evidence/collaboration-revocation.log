@@ -1,0 +1,93 @@
+
+> devsync-backend@1.0.0 test
+> jest --runInBand --runTestsByPath src/__tests__/collaboration.integration.test.ts -t viewer|removed
+
+  console.info
+    Collaboration scenario: rejects viewer mutations at the actual server protocol and journal
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:16:28)
+
+  console.info
+    Closing collaboration clients and servers
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:43:11)
+
+  console.error
+    [beforeHandleMessage] Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:94:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+  console.error
+    closing connection 1c4e6a90-bec5-43eb-b516-bacca161b484 (while handling document:workspace:document-1) because of exception Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:94:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+
+  console.error
+    [beforeHandleMessage] Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:94:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+  console.error
+    closing connection c25c73d0-d41e-45e3-bdbd-e99a81d1bb8f (while handling document:workspace:document-1) because of exception Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:94:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+
+  console.info
+    Collaboration cleanup complete
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:46:11)
+
+  console.info
+    Collaboration scenario: cuts off a removed member without waiting for another edit
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:16:28)
+
+  console.info
+    Closing collaboration clients and servers
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:43:11)
+
+  console.info
+    Collaboration cleanup complete
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:46:11)
+
+FAIL src/__tests__/collaboration.integration.test.ts (18.508 s)
+  ● cuts off a removed member without waiting for another edit
+
+    Timed out: passive revocation
+
+      24 | async function until(check: () => boolean | Promise<boolean>, label: string, timeout = 8000) {
+      25 |   const end = Date.now() + timeout;
+    > 26 |   while (!(await check())) { if (Date.now() > end) throw new Error(`Timed out: ${label}`); await new Promise(resolve => setTimeout(resolve, 20)); }
+         |                                                          ^
+      27 | }
+      28 | beforeAll(async () => {
+      29 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+
+      at until (src/__tests__/collaboration.integration.test.ts:26:58)
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:112:3)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 4 skipped, 1 passed, 6 total
+Snapshots:   0 total
+Time:        18.746 s
+Ran all test suites within paths "src/__tests__/collaboration.integration.test.ts".

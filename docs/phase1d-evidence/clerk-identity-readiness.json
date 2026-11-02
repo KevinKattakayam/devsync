@@ -1,0 +1,9 @@
+{
+  "status": 200,
+  "userCount": 2,
+  "roleCandidates": {
+    "owner": 0,
+    "editor": 0,
+    "viewer": 0
+  }
+}

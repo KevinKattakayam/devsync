@@ -1,0 +1,21 @@
+title = "DevSync: default rules with two reviewed non-credential exceptions"
+[extend]
+useDefault = true
+
+# See docs/quality/phase5a-2/gitleaks-triage.json. Match BOTH the exact
+# captured non-credential and its source path; never exclude a whole file/rule.
+[[allowlists]]
+description = "Empty Clerk assignment captures the next variable name/operator"
+targetRules = ["generic-api-key"]
+condition = "AND"
+regexTarget = "secret"
+paths = ['''(^|/)backend/\.env\.example$''']
+regexes = ['''^CLERK_PUBLISHABLE_KEY=$''']
+
+[[allowlists]]
+description = "Synthetic webhook fixture in foreign-resource denial regression"
+targetRules = ["generic-api-key"]
+condition = "AND"
+regexTarget = "secret"
+paths = ['''(^|/)backend/src/__tests__/resource-mutations\.integration\.test\.ts$''']
+regexes = ['''^fixture-secret-123$''']

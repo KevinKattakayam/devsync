@@ -1,0 +1,26 @@
+22-trixie-slim: Pulling from library/node
+6fc242d221a6: Pulling fs layer
+fdde7f90f7fc: Pulling fs layer
+f151c8f77653: Pulling fs layer
+811cc02bd5db: Pulling fs layer
+4dfd5d7b5fe6: Pulling fs layer
+811cc02bd5db: Waiting
+4dfd5d7b5fe6: Waiting
+fdde7f90f7fc: Verifying Checksum
+fdde7f90f7fc: Download complete
+811cc02bd5db: Verifying Checksum
+811cc02bd5db: Download complete
+4dfd5d7b5fe6: Verifying Checksum
+4dfd5d7b5fe6: Download complete
+6fc242d221a6: Verifying Checksum
+6fc242d221a6: Download complete
+6fc242d221a6: Pull complete
+fdde7f90f7fc: Pull complete
+f151c8f77653: Verifying Checksum
+f151c8f77653: Download complete
+f151c8f77653: Pull complete
+811cc02bd5db: Pull complete
+4dfd5d7b5fe6: Pull complete
+Digest: sha256:2117f713a417f3aff682ac8f5bc2ebbdf1beed51f36e67ab1e0fd3866b6d2d8f
+Status: Downloaded newer image for node:22-trixie-slim
+docker.io/library/node:22-trixie-slim

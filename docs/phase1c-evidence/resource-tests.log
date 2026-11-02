@@ -1,0 +1,45 @@
+
+> devsync-backend@1.0.0 test
+> jest --runInBand --runTestsByPath src/__tests__/resource-mutations.integration.test.ts --coverage=false
+
+FAIL src/__tests__/resource-mutations.integration.test.ts
+  ● Test suite failed to run
+
+    [96msrc/__tests__/resource-mutations.integration.test.ts[0m:[93m193[0m:[93m42[0m - [91merror[0m[90m TS2550: [0mProperty 'replaceAll' does not exist on type 'string'. Do you need to change your target library? Try changing the 'lib' compiler option to 'es2021' or later.
+
+    [7m193[0m   return JSON.parse(JSON.stringify(body).replaceAll('TEAM', team)) as object;
+    [7m   [0m [91m                                         ~~~~~~~~~~[0m
+    [96msrc/__tests__/resource-mutations.integration.test.ts[0m:[93m206[0m:[93m23[0m - [91merror[0m[90m TS2551: [0mProperty 'replaceAll' does not exist on type '"/workspaces/TEAM/documents" | "/documents/doc-TEAM" | "/workspaces/TEAM/snippets" | "/snippets/snippet-TEAM" | "/workspaces/TEAM/boards" | "/boards/board-TEAM/columns" | "/columns/column-TEAM" | "/columns/column-TEAM/tasks" | "/tasks/task-TEAM" | "/tasks/task-TEAM/move"'. Did you mean 'replace'?
+      Property 'replaceAll' does not exist on type '"/workspaces/TEAM/documents"'.
+
+    [7m206[0m         [method](path.replaceAll('TEAM', team))
+    [7m   [0m [91m                      ~~~~~~~~~~[0m
+
+      [96mnode_modules/typescript/lib/lib.es5.d.ts[0m:[93m463[0m:[93m5[0m
+        [7m463[0m     replace(searchValue: string | RegExp, replaceValue: string): string;
+        [7m   [0m [96m    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+        'replace' is declared here.
+    [96msrc/__tests__/resource-mutations.integration.test.ts[0m:[93m217[0m:[93m19[0m - [91merror[0m[90m TS2551: [0mProperty 'replaceAll' does not exist on type '"/workspaces/TEAM/documents" | "/documents/doc-TEAM" | "/workspaces/TEAM/snippets" | "/snippets/snippet-TEAM" | "/workspaces/TEAM/boards" | "/boards/board-TEAM/columns" | "/columns/column-TEAM" | "/columns/column-TEAM/tasks" | "/tasks/task-TEAM" | "/tasks/task-TEAM/move"'. Did you mean 'replace'?
+      Property 'replaceAll' does not exist on type '"/workspaces/TEAM/documents"'.
+
+    [7m217[0m     [method](path.replaceAll('TEAM', a))
+    [7m   [0m [91m                  ~~~~~~~~~~[0m
+
+      [96mnode_modules/typescript/lib/lib.es5.d.ts[0m:[93m463[0m:[93m5[0m
+        [7m463[0m     replace(searchValue: string | RegExp, replaceValue: string): string;
+        [7m   [0m [96m    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+        'replace' is declared here.
+    [96msrc/__tests__/resource-mutations.integration.test.ts[0m:[93m229[0m:[93m39[0m - [91merror[0m[90m TS2550: [0mProperty 'replaceAll' does not exist on type 'string'. Do you need to change your target library? Try changing the 'lib' compiler option to 'es2021' or later.
+
+    [7m229[0m   expect((await request(app).get(path.replaceAll('TEAM', b))).status).toBe(403);
+    [7m   [0m [91m                                      ~~~~~~~~~~[0m
+    [96msrc/__tests__/resource-mutations.integration.test.ts[0m:[93m231[0m:[93m34[0m - [91merror[0m[90m TS2550: [0mProperty 'replaceAll' does not exist on type 'string'. Do you need to change your target library? Try changing the 'lib' compiler option to 'es2021' or later.
+
+    [7m231[0m     (await request(app).get(path.replaceAll('TEAM', a)).set('x-fixture-actor', 'viewer')).status,
+    [7m   [0m [91m                                 ~~~~~~~~~~[0m
+
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        4.774 s
+Ran all test suites within paths "src/__tests__/resource-mutations.integration.test.ts".

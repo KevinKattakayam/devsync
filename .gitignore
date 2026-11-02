@@ -6,3 +6,13 @@ dist/
 !.env.example
 *.log
 .DS_Store
+
+# Generated quality/build artifacts
+coverage/
+*.tsbuildinfo
+playwright-report/
+test-results/
+.worktrees/
+
+# Vercel CLI downloads private project environment settings/build output.
+.vercel/

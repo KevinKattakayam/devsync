@@ -1,0 +1,35 @@
+
+> devsync-backend@1.0.0 test
+> jest --runInBand --runTestsByPath src/__tests__/api-reliability.test.ts
+
+FAIL src/__tests__/api-reliability.test.ts
+  ● Test suite failed to run
+
+    [96msrc/middleware/request-context.middleware.ts[0m:[93m15[0m:[93m3[0m - [91merror[0m[90m TS2769: [0mNo overload matches this call.
+      Overload 1 of 2, '(opts?: Options<IncomingMessage, ServerResponse<IncomingMessage>, string> | undefined, stream?: DestinationStream | undefined): HttpLogger<...>', gave the following error.
+        Type 'Logger<never, boolean> | Logger<string, boolean>' is not assignable to type 'Logger<string, boolean> | undefined'.
+          Type 'Logger<never, boolean>' is not assignable to type 'Logger<string, boolean> | undefined'.
+            Type 'Logger<never, boolean>' is not assignable to type 'Logger<string, boolean>'.
+              Type 'Logger<never, boolean>' is not assignable to type 'LoggerExtras<string, boolean>'.
+                Types of property 'onChild' are incompatible.
+                  Type 'OnChildCallback<never>' is not assignable to type 'OnChildCallback<string>'.
+                    Types of parameters 'child' and 'child' are incompatible.
+                      Type 'Logger<string, boolean>' is not assignable to type 'Logger<never, boolean>'.
+                        Type 'Logger<string, boolean>' is not assignable to type 'LoggerExtras<never, boolean>'.
+                          Types of property 'onChild' are incompatible.
+                            Type 'OnChildCallback<string>' is not assignable to type 'OnChildCallback<never>'.
+                              Types of parameters 'child' and 'child' are incompatible.
+                                Type 'Logger<never, boolean>' is not assignable to type 'Logger<string, boolean>'.
+                                  Type 'Logger<never, boolean>' is not assignable to type '{ [x: string]: LogFn; }'.
+                                    Index signature for type 'string' is missing in type 'BaseLogger & LoggerExtras<never, boolean> & { customLevels: {}; useOnlyCustomLevels: boolean; } & { fatal: LogFn; error: LogFn; warn: LogFn; info: LogFn; debug: LogFn; trace: LogFn; } & {}'.
+      Overload 2 of 2, '(stream?: DestinationStream | undefined): HttpLogger<IncomingMessage, ServerResponse<IncomingMessage>, never>', gave the following error.
+        Object literal may only specify known properties, and 'logger' does not exist in type 'DestinationStream'.
+
+    [7m15[0m   logger: destination ? pino({ base: { service: 'devsync-api', requestId: 'system' } }, destination) : logger,
+    [7m  [0m [91m  ~~~~~~[0m
+
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        11.951 s
+Ran all test suites within paths "src/__tests__/api-reliability.test.ts".

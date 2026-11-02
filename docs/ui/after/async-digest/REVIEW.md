@@ -1,0 +1,15 @@
+# P06 async digest review
+
+Evidence uses disposable migrated PostgreSQL/Redis, the existing sample seed and test-only fixture login. Documents/snippets are created through the real API to produce actual recorded activity. Each visible message is compared to its recorded Activity row, and a source permalink is opened. Viewer checkpoints remain independent; an archived source becomes unavailable. Only the network-error state intercepts a request. No model, generated achievements or invented usage data are used.
+
+The initial four browser journeys passed with zero axe violations. Review found that long coverage copy and raw window timestamps pushed the first entry down the mobile screen. The correction shortens the coverage statement, puts exact UTC bounds in a native disclosure, and relies on the visible on/off state instead of a redundant opt-in toast. Final tests explicitly open/close the disclosure using Enter; no assertion or axe rule was removed.
+
+- Hierarchy: one heading, a clear personal on/off state, chronological entries and source links. Exact source record identity and revision live on the proof page; no current-status conclusion is generated.
+- Spacing/alignment: shared16/32px page padding, consistent row spacing, wrapping actions and IDs, quiet metadata. The dense window text is available on demand.
+- Contrast/focus: semantic foreground/muted/action tokens, full enabled-hover opacity on digest buttons, visible result/page heading focus and native disclosure focus. The renderer treats event messages as text.
+- Density/design: neutral list layout avoids stock cards and a busy toolbar. Proof pages deliberately expose technical IDs/revisions for evidence inspection. The digest covers creation events only, and its partial-history/empty-state wording stays explicit.
+- Mobile: rows and proof IDs wrap without page-level horizontal overflow in the tested390px captures. Long lists still require scrolling. A transient acknowledgment toast can overlap the lower checkpoint explanation or the existing AI Copilot trigger; expiry/dismissal reveals the content. That shared transient-overlay limit remains, rather than claiming a perfect mobile review.
+
+Initial axe incomplete items concerned the existing Copilot trigger and the partly obscured checkpoint explanation under transient UI. Final reports retain only the overlapped existing Copilot-trigger contrast incomplete. The explanation uses the documented semantic token pair and is reachable by scrolling/dismissing the toast. This is a manual screenshot/token review, not an extra computed contrast result or screen-reader certification. Further360px, zoom, browser-engine and assistive-technology coverage remains a follow-up.
+
+Initial captures are in initial/. Final captures/results are in final/ and docs/PROGRESS.md: four tests passed (52.2s), with32 screenshots/32 reports and zero reported axe violations. A review edit script stopped before writing; its in-progress checks were cancelled and the patch applied directly. Interrupted runs are not claimed as completed validation. Backend functionality was unchanged by the mobile presentation correction.

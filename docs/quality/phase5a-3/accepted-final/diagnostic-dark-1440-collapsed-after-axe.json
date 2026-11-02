@@ -1,0 +1,79 @@
+{
+  "elapsed": 8589,
+  "saved": true,
+  "offline": false,
+  "editorCount": 1,
+  "editable": "true",
+  "routeHeight": 532,
+  "animations": [],
+  "transport": [
+    {
+      "event": "created",
+      "elapsed": 5412
+    },
+    {
+      "event": "sent",
+      "elapsed": 5426
+    },
+    {
+      "event": "sent",
+      "elapsed": 5426
+    },
+    {
+      "event": "sent",
+      "elapsed": 5426
+    },
+    {
+      "event": "received",
+      "elapsed": 5480
+    },
+    {
+      "event": "received",
+      "elapsed": 5522
+    },
+    {
+      "event": "sent",
+      "elapsed": 5522
+    },
+    {
+      "event": "received",
+      "elapsed": 5609
+    },
+    {
+      "event": "sent",
+      "elapsed": 5609
+    },
+    {
+      "event": "sent",
+      "elapsed": 5609
+    },
+    {
+      "event": "sent",
+      "elapsed": 5609
+    },
+    {
+      "event": "sent",
+      "elapsed": 5609
+    },
+    {
+      "event": "received",
+      "elapsed": 5617
+    },
+    {
+      "event": "received",
+      "elapsed": 5617
+    },
+    {
+      "event": "received",
+      "elapsed": 5617
+    },
+    {
+      "event": "received",
+      "elapsed": 5624
+    },
+    {
+      "event": "received",
+      "elapsed": 5628
+    }
+  ]
+}

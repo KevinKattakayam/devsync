@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import React, { Component, ErrorInfo, ReactNode } from "react";
-import { RefreshCw, AlertCircle } from "lucide-react";
+import React, { Component, ErrorInfo, ReactNode } from 'react';
+import { RefreshCw, AlertCircle } from 'lucide-react';
 
 interface Props {
   children: ReactNode;
@@ -23,13 +23,12 @@ export class AuthErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error("Auth Component Error:", error, errorInfo);
+    console.error('Auth Component Error:', error, errorInfo);
   }
 
   handleReset = () => {
     localStorage.clear();
     sessionStorage.clear();
-    window.location.href = `/api/auth/reset?redirect=${encodeURIComponent(window.location.pathname)}`;
   };
 
   render() {
@@ -42,15 +41,17 @@ export class AuthErrorBoundary extends Component<Props, State> {
           <div>
             <h3 className="text-base font-bold text-white">Session Refresh Needed</h3>
             <p className="text-xs text-slate-400 mt-1 max-w-xs">
-              A previous expired session was detected in your browser cookies. Click below to clear it and log in.
+              A previous expired session was detected in your browser cookies. Click below to clear
+              it and log in.
             </p>
           </div>
-          <button
+          <a
+            href="/api/auth/reset?redirect=/login"
             onClick={this.handleReset}
             className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl gradient-primary text-white text-xs font-semibold shadow-lg shadow-primary/25 hover:opacity-90 transition-all"
           >
             <RefreshCw className="w-4 h-4" /> Reset & Open Clean Sign In
-          </button>
+          </a>
         </div>
       );
     }

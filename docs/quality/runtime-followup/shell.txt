@@ -1,0 +1,149 @@
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": PostgreSQL database "devsync_e2e_browser", schema "public" at "localhost:32857"
+
+14 migrations found in prisma/migrations
+
+Applying migration `20260729000000_baseline`
+Applying migration `20260729180000_enterprise_platform`
+Applying migration `20260815000000_phase_3_tenant_rls`
+Applying migration `20260815001000_scim_provisioning`
+Applying migration `20260815002000_commercial_billing`
+Applying migration `20261031000000_tenant_indexes`
+Applying migration `20261031010000_crdt_journal`
+Applying migration `202611010001_canonical_revision`
+Applying migration `202611010002_embedding_authority`
+Applying migration `202611010003_atomic_create_idempotency`
+Applying migration `202611010004_workspace_invitations`
+Applying migration `202611020001_decision_receipts`
+Applying migration `202611020002_snippet_safety`
+Applying migration `202611020003_async_digest`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20260729000000_baseline/
+    └─ migration.sql
+  └─ 20260729180000_enterprise_platform/
+    └─ migration.sql
+  └─ 20260815000000_phase_3_tenant_rls/
+    └─ migration.sql
+  └─ 20260815001000_scim_provisioning/
+    └─ migration.sql
+  └─ 20260815002000_commercial_billing/
+    └─ migration.sql
+  └─ 20261031000000_tenant_indexes/
+    └─ migration.sql
+  └─ 20261031010000_crdt_journal/
+    └─ migration.sql
+  └─ 202611010001_canonical_revision/
+    └─ migration.sql
+  └─ 202611010002_embedding_authority/
+    └─ migration.sql
+  └─ 202611010003_atomic_create_idempotency/
+    └─ migration.sql
+  └─ 202611010004_workspace_invitations/
+    └─ migration.sql
+  └─ 202611020001_decision_receipts/
+    └─ migration.sql
+  └─ 202611020002_snippet_safety/
+    └─ migration.sql
+  └─ 202611020003_async_digest/
+    └─ migration.sql
+      
+All migrations have been successfully applied.
+Sample workspace seeded. Sign in with the supplied Clerk test identities.
+/home/kevin/devsync/.worktrees/frontend-fixture
+Isolated fixture server ready
+▲ Next.js 16.4.3 (webpack)
+- Local:         http://127.0.0.1:3001
+- Network:       http://127.0.0.1:3001
+✓ Ready in 432ms
+✓ Running next.config.ts took 34ms
+
+✓ Generated AGENTS.md for AI agents. Set `agentRules: false` in next.config to disable.
+○ Compiling /(auth)/login/[[...rest]]/page ...
+ GET /login 200 in 959ms (proxy.ts: 81ms)
+ GET /login 200 in 477ms (next.js: 31ms, proxy.ts: 5ms, application-code: 441ms)
+
+Running 7 tests using 1 worker
+
+(node:204699) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+○ Compiling /(dashboard)/workspace/[id]/docs/[docId]/page ...
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 5.8s (next.js: 5.3s, proxy.ts: 13ms, application-code: 462ms)
+dark 1440 default: axe 0 violations, 0 incomplete
+dark 1440 commands: axe 0 violations, 2 incomplete
+dark 1440 commands-empty: axe 0 violations, 1 incomplete
+dark 1440 help: axe 0 violations, 1 incomplete
+dark 1440 focus: axe 0 violations, 0 incomplete
+dark 1440 user-menu: axe 0 violations, 0 incomplete
+dark 1440 workspace-menu: axe 0 violations, 0 incomplete
+dark 1440 document-tree: axe 0 violations, 0 incomplete
+dark 1440 collapsed: axe 0 violations, 0 incomplete
+dark 1440 copilot: axe 0 violations, 1 incomplete
+  ✓  1 testing/browser/shell.spec.ts:106:9 › dark 1440 shell states, keyboard access and visual baseline (13.3s)
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 121ms (next.js: 49ms, proxy.ts: 5ms, application-code: 68ms)
+dark 390 default: axe 0 violations, 0 incomplete
+dark 390 commands: axe 0 violations, 2 incomplete
+dark 390 commands-empty: axe 0 violations, 1 incomplete
+dark 390 help: axe 0 violations, 1 incomplete
+dark 390 focus: axe 0 violations, 0 incomplete
+dark 390 user-menu: axe 0 violations, 0 incomplete
+dark 390 mobile-navigation: axe 0 violations, 1 incomplete
+dark 390 document-tree: axe 0 violations, 1 incomplete
+dark 390 workspace-menu: axe 0 violations, 0 incomplete
+dark 390 copilot: axe 0 violations, 2 incomplete
+  ✓  2 testing/browser/shell.spec.ts:106:9 › dark 390 shell states, keyboard access and visual baseline (5.6s)
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 130ms (next.js: 52ms, proxy.ts: 4ms, application-code: 75ms)
+light 1440 default: axe 0 violations, 0 incomplete
+light 1440 commands: axe 0 violations, 2 incomplete
+light 1440 commands-empty: axe 0 violations, 1 incomplete
+light 1440 help: axe 0 violations, 1 incomplete
+light 1440 focus: axe 0 violations, 0 incomplete
+light 1440 user-menu: axe 0 violations, 0 incomplete
+light 1440 workspace-menu: axe 0 violations, 0 incomplete
+light 1440 document-tree: axe 0 violations, 0 incomplete
+light 1440 collapsed: axe 0 violations, 0 incomplete
+light 1440 copilot: axe 0 violations, 1 incomplete
+  ✓  3 testing/browser/shell.spec.ts:106:9 › light 1440 shell states, keyboard access and visual baseline (6.9s)
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 141ms (next.js: 53ms, proxy.ts: 6ms, application-code: 82ms)
+light 390 default: axe 0 violations, 0 incomplete
+light 390 commands: axe 0 violations, 2 incomplete
+light 390 commands-empty: axe 0 violations, 1 incomplete
+light 390 help: axe 0 violations, 1 incomplete
+light 390 focus: axe 0 violations, 0 incomplete
+light 390 user-menu: axe 0 violations, 0 incomplete
+light 390 mobile-navigation: axe 0 violations, 1 incomplete
+light 390 document-tree: axe 0 violations, 1 incomplete
+light 390 workspace-menu: axe 0 violations, 0 incomplete
+light 390 copilot: axe 0 violations, 2 incomplete
+  ✓  4 testing/browser/shell.spec.ts:106:9 › light 390 shell states, keyboard access and visual baseline (5.8s)
+ GET /dashboard 200 in 2.6s (next.js: 2.3s, proxy.ts: 3ms, application-code: 283ms)
+ GET /dashboard 200 in 75ms (next.js: 11ms, proxy.ts: 7ms, application-code: 58ms)
+ GET /workspace/devsync-sample 200 in 2.8s (next.js: 2.6s, proxy.ts: 3ms, application-code: 193ms)
+ GET /workspace/devsync-sample 200 in 111ms (next.js: 53ms, proxy.ts: 5ms, application-code: 53ms)
+ GET /workspace/devsync-sample/docs 200 in 2.7s (next.js: 2.6s, proxy.ts: 4ms, application-code: 168ms)
+Yjs was already imported. This breaks constructor checks and will lead to issues! - https://github.com/yjs/yjs/issues/438
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 302ms (next.js: 74ms, proxy.ts: 4ms, application-code: 224ms)
+○ Compiling /(dashboard)/workspace/[id]/kanban/page ...
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 142ms (next.js: 68ms, proxy.ts: 5ms, application-code: 68ms)
+Yjs was already imported. This breaks constructor checks and will lead to issues! - https://github.com/yjs/yjs/issues/438
+ GET /workspace/devsync-sample/kanban 200 in 5.7s (next.js: 4.9s, proxy.ts: 4ms, application-code: 780ms)
+○ Compiling /(dashboard)/workspace/[id]/snippets/page ...
+ GET /workspace/devsync-sample/kanban 200 in 189ms (next.js: 81ms, proxy.ts: 7ms, application-code: 101ms)
+ GET /workspace/devsync-sample/snippets 200 in 6.0s (next.js: 5.8s, proxy.ts: 4ms, application-code: 179ms)
+ GET /workspace/devsync-sample/snippets 200 in 144ms (next.js: 84ms, proxy.ts: 5ms, application-code: 55ms)
+ GET /workspace/devsync-sample/settings 200 in 3.5s (next.js: 3.3s, proxy.ts: 4ms, application-code: 192ms)
+⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ GET /settings/billing 200 in 2.6s (next.js: 2.3s, proxy.ts: 4ms, application-code: 274ms)
+Yjs was already imported. This breaks constructor checks and will lead to issues! - https://github.com/yjs/yjs/issues/438
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 315ms (next.js: 90ms, proxy.ts: 4ms, application-code: 221ms)
+  ✓  5 testing/browser/shell.spec.ts:304:5 › 360px route coverage and viewer commands retain read-only authority (40.7s)
+ GET /design-system 200 in 3.1s (next.js: 2.8s, proxy.ts: 11ms, application-code: 295ms)
+ GET /design-system 200 in 89ms (next.js: 3ms, proxy.ts: 11ms, application-code: 76ms)
+  ✓  6 testing/browser/shell.spec.ts:352:5 › review prior gallery incomplete items by focus, relationships and computed color (9.4s)
+  ✓  7 testing/browser/shell.spec.ts:481:5 › visual settling skips the pending animation inside a closed formatting disclosure (282ms)
+
+  7 passed (1.4m)
+[?25h

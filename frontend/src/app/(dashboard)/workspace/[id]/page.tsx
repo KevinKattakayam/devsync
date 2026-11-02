@@ -1,59 +1,69 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
-import Link from "next/link";
-import { workspaceApi } from "@/lib/api";
-import { Workspace } from "@/types";
-import { getInitials, generateColor } from "@/lib/utils";
-import { useSocket } from "@/providers/socket-provider";
-import { useAuth } from "@/providers/auth-provider";
-import { ActivityFeed } from "@/components/workspace/activity-feed";
-import { WorkspaceStats } from "@/components/workspace/workspace-stats";
-import { PresenceBar } from "@/components/workspace/presence-bar";
-import { FileText, Kanban, Code2, Users, ArrowRight, Loader2, UserPlus, Sparkles, Plus, Cpu, GitBranch, Layers } from "lucide-react";
-import { toast } from "sonner";
+import { errorMessage } from '@/lib/errors';
+import { z } from 'zod';
+
+import { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
+import Link from 'next/link';
+import { workspaceApi } from '@/lib/api';
+import { Workspace } from '@/types';
+import { getInitials } from '@/lib/utils';
+import { ActivityFeed } from '@/components/workspace/activity-feed';
+import { WorkspaceStats } from '@/components/workspace/workspace-stats';
+import {
+  FileText,
+  Kanban,
+  Code2,
+  Users,
+  ArrowRight,
+  Loader2,
+  UserPlus,
+  Sparkles,
+  Plus,
+} from 'lucide-react';
+import { toast } from 'sonner';
 
 export default function WorkspacePage() {
   const { id } = useParams<{ id: string }>();
-  const { user } = useAuth();
-  const { socket } = useSocket();
   const [workspace, setWorkspace] = useState<Workspace | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [showInvite, setShowInvite] = useState(false);
+  const [invitationLink, setInvitationLink] = useState('');
   const [inviteEmail, setInviteEmail] = useState('');
   const [inviteRole, setInviteRole] = useState('EDITOR');
 
-  useEffect(() => { if (id) loadWorkspace(); }, [id]);
-
   useEffect(() => {
-    if (socket && workspace && user) {
-      socket.emit('workspace:join', { workspaceId: workspace.id, userName: user.name });
-      return () => { socket.emit('workspace:leave', { workspaceId: workspace.id }); };
-    }
-  }, [socket, workspace, user]);
-
-  const loadWorkspace = async () => {
-    try {
-      const { data } = await workspaceApi.get(id);
-      setWorkspace(data);
-    } catch {
-      toast.error("Failed to load workspace");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    let disposed = false;
+    workspaceApi
+      .get(id)
+      .then(({ data }) => {
+        if (!disposed) setWorkspace(data);
+      })
+      .catch(() => {
+        if (!disposed) toast.error('Failed to load workspace data');
+      })
+      .finally(() => {
+        if (!disposed) setIsLoading(false);
+      });
+    return () => {
+      disposed = true;
+    };
+  }, [id]);
 
   const handleInvite = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await workspaceApi.invite(id, { email: inviteEmail, role: inviteRole });
-      toast.success("Invitation sent successfully");
-      setShowInvite(false);
+      const response = await workspaceApi.createInvitation(id, {
+        email: inviteEmail,
+        role: inviteRole,
+      });
+      const invitation = z.object({ id: z.string() }).parse(response.data);
+      setInvitationLink(`${window.location.origin}/invitations/${invitation.id}`);
+      toast.success('Invitation created. Share the link with your teammate.');
       setInviteEmail('');
-      loadWorkspace();
-    } catch (err: any) {
-      toast.error(err.response?.data?.error || "Failed to invite member");
+    } catch (err: unknown) {
+      toast.error(errorMessage(err, 'Failed to invite member'));
     }
   };
 
@@ -61,7 +71,9 @@ export default function WorkspacePage() {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh]">
         <Loader2 className="w-8 h-8 animate-spin text-primary mb-3" />
-        <p className="text-xs text-muted-foreground animate-pulse">Loading developer workspace...</p>
+        <p className="text-xs text-muted-foreground animate-pulse">
+          Loading developer workspace...
+        </p>
       </div>
     );
   }
@@ -70,7 +82,10 @@ export default function WorkspacePage() {
     return (
       <div className="p-12 text-center max-w-md mx-auto glass-card">
         <p className="text-sm text-muted-foreground mb-4">Workspace not found or access denied</p>
-        <Link href="/dashboard" className="px-4 py-2 rounded-lg gradient-primary text-white text-xs font-semibold">
+        <Link
+          href="/dashboard"
+          className="px-4 py-2 rounded-lg gradient-primary text-primary-foreground text-xs font-semibold"
+        >
           Return to Dashboard
         </Link>
       </div>
@@ -78,39 +93,40 @@ export default function WorkspacePage() {
   }
 
   const roleColors: Record<string, string> = {
-    OWNER: 'text-amber-400 bg-amber-500/10 border-amber-500/20',
-    EDITOR: 'text-indigo-400 bg-indigo-500/10 border-indigo-500/20',
-    VIEWER: 'text-slate-400 bg-slate-500/10 border-slate-500/20',
+    OWNER: 'text-foreground bg-secondary border-border',
+    EDITOR: 'text-foreground bg-secondary border-border',
+    VIEWER: 'text-foreground bg-secondary border-border',
   };
 
   return (
-    <div className="p-6 max-w-6xl mx-auto space-y-6 animate-fade-in">
+    <div className="workspace-overview p-4 md:p-8 max-w-6xl mx-auto space-y-6 animate-fade-in">
       {/* Workspace Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 glass-card p-6 border-white/10 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl -z-10" />
 
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center gap-4">
           <div className="w-14 h-14 rounded-2xl gradient-primary flex items-center justify-center text-3xl shadow-lg glow-sm">
-            {workspace.icon || "💻"}
+            {workspace.icon || '💻'}
           </div>
           <div>
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-3">
               <h1 className="text-xl font-bold text-foreground tracking-tight">{workspace.name}</h1>
               <span className="px-2 py-0.5 text-[10px] font-semibold rounded-full bg-primary/15 text-primary border border-primary/30 flex items-center gap-1">
-                <Sparkles className="w-3 h-3" /> Pro Workspace
+                <Sparkles className="w-3 h-3" /> Workspace
               </span>
             </div>
             {workspace.description && (
-              <p className="text-xs text-muted-foreground mt-1 max-w-xl line-clamp-1">{workspace.description}</p>
+              <p className="text-xs text-muted-foreground mt-1 max-w-xl line-clamp-1">
+                {workspace.description}
+              </p>
             )}
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
-          <PresenceBar />
+        <div className="flex flex-wrap items-center gap-3">
           <button
             onClick={() => setShowInvite(true)}
-            className="flex items-center gap-1.5 px-4 py-2 rounded-xl gradient-primary text-white text-xs font-semibold hover:opacity-90 transition-all shadow-md glow-sm"
+            className="flex items-center gap-1.5 px-4 py-2 rounded-xl gradient-primary text-primary-foreground text-xs font-semibold hover:opacity-90 transition-all shadow-md glow-sm"
           >
             <UserPlus className="w-4 h-4" /> Invite Member
           </button>
@@ -120,82 +136,22 @@ export default function WorkspacePage() {
       {/* Analytics & Key Stats */}
       <WorkspaceStats workspace={workspace} />
 
-      {/* Multi-Agent System Status & GitHub Integration Row */}
-      <div className="grid md:grid-cols-2 gap-4">
-        {/* Multi-Agent Background Workers */}
-        <div className="glass-card p-5 border-white/10 relative overflow-hidden flex flex-col justify-between">
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
-                <Cpu className="w-4 h-4" />
-              </div>
-              <div>
-                <h3 className="text-xs font-bold text-foreground">Multi-Agent Engine (BullMQ)</h3>
-                <p className="text-[10px] text-muted-foreground">Autonomous workspace workers</p>
-              </div>
-            </div>
-            <span className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px] font-bold">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" /> 3 Daemon Workers Active
-            </span>
-          </div>
-
-          <div className="space-y-2 mt-2">
-            {[
-              { name: "Task Completion Agent", desc: "Auto-summarizes completed tasks & creates audit docs", icon: "🤖", status: "Listening" },
-              { name: "PR Summary Agent", desc: "Synthesizes incoming GitHub pull request diffs", icon: "🔀", status: "Active" },
-              { name: "Vector Embedding Service", desc: "Semantic pgvector indexing for sub-ms retrieval", icon: "🧠", status: "Synced" },
-            ].map((agent, i) => (
-              <div key={i} className="flex items-center justify-between p-2 rounded-xl bg-white/[0.02] border border-white/5 text-xs">
-                <div className="flex items-center gap-2">
-                  <span className="text-base">{agent.icon}</span>
-                  <div>
-                    <p className="text-[11px] font-semibold text-foreground">{agent.name}</p>
-                    <p className="text-[9px] text-muted-foreground">{agent.desc}</p>
-                  </div>
-                </div>
-                <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-md">
-                  {agent.status}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* GitHub Live Repository Pipeline */}
-        <div className="glass-card p-5 border-white/10 relative overflow-hidden flex flex-col justify-between">
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center text-sky-400">
-                <GitBranch className="w-4 h-4" />
-              </div>
-              <div>
-                <h3 className="text-xs font-bold text-foreground">GitHub Webhook Pipeline</h3>
-                <p className="text-[10px] text-muted-foreground">Automated PR & issue sync</p>
-              </div>
-            </div>
-            <span className="px-2 py-0.5 rounded-full bg-sky-500/10 text-sky-400 border border-sky-500/20 text-[10px] font-bold">
-              Connected
-            </span>
-          </div>
-
-          <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5 mb-2">
-            <div className="flex items-center justify-between text-xs mb-1">
-              <span className="font-semibold text-foreground flex items-center gap-1.5">
-                <Layers className="w-3.5 h-3.5 text-primary" /> devsync/enterprise-app
-              </span>
-              <span className="text-[10px] font-mono text-muted-foreground">branch: main</span>
-            </div>
-            <p className="text-[10px] text-muted-foreground">
-              Webhook URL: <code className="text-sky-300 font-mono text-[9px]">/api/webhooks/github</code>
-            </p>
-          </div>
-
-          <div className="flex items-center justify-between text-[11px] text-muted-foreground pt-2 border-t border-white/5">
-            <span className="flex items-center gap-1"><Sparkles className="w-3 h-3 text-primary" /> AI PR Summaries enabled</span>
-            <span className="text-emerald-400 font-mono text-[10px]">Real-Time Sync Active</span>
-          </div>
-        </div>
-      </div>
+      <section
+        aria-label="Integration status"
+        className="mb-6 space-y-2 rounded-lg bg-secondary p-4 text-sm"
+      >
+        <h2 className="font-medium">Integration status</h2>
+        <p className="text-muted-foreground">
+          Live worker health and repository connection status are unavailable on this overview. No
+          active-worker count or connection status is inferred.
+        </p>
+        <Link
+          href={`/workspace/${id}/settings`}
+          className="text-primary underline underline-offset-4"
+        >
+          Workspace settings
+        </Link>
+      </section>
 
       {/* Quick Action Cards */}
       <div className="grid md:grid-cols-3 gap-4">
@@ -236,8 +192,10 @@ export default function WorkspacePage() {
             href={item.href}
             className={`glass-card-hover p-5 relative overflow-hidden bg-gradient-to-br ${item.gradient} border-white/10 group`}
           >
-            <div className="flex items-center justify-between mb-3">
-              <div className={`p-2.5 rounded-xl bg-background/50 backdrop-blur-md ${item.iconColor} border border-white/10`}>
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
+              <div
+                className={`p-2.5 rounded-xl bg-background/50 backdrop-blur-md ${item.iconColor} border border-white/10`}
+              >
                 <item.icon className="w-5 h-5" />
               </div>
               <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-white/10 text-slate-300 border border-white/10">
@@ -262,7 +220,8 @@ export default function WorkspacePage() {
         <div className="glass-card p-5 h-fit">
           <div className="flex items-center justify-between mb-4 pb-3 border-b border-border/60">
             <h3 className="text-xs font-bold text-foreground flex items-center gap-2">
-              <Users className="w-4 h-4 text-indigo-400" /> Active Members ({workspace.members?.length || 0})
+              <Users className="w-4 h-4 text-indigo-400" /> Active Members (
+              {workspace.members?.length || 0})
             </h3>
             <button
               onClick={() => setShowInvite(true)}
@@ -275,18 +234,20 @@ export default function WorkspacePage() {
 
           <div className="space-y-3">
             {workspace.members?.map((m) => (
-              <div key={m.id} className="flex items-center gap-3 p-2 rounded-xl bg-secondary/20 hover:bg-secondary/50 transition-all border border-white/[0.03]">
-                <div
-                  className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white shadow-md flex-shrink-0"
-                  style={{ backgroundColor: generateColor(m.user.email || "") }}
-                >
-                  {getInitials(m.user.name || "?")}
+              <div
+                key={m.id}
+                className="flex items-center gap-3 p-2 rounded-xl bg-secondary/20 hover:bg-secondary/50 transition-all border border-white/[0.03]"
+              >
+                <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-foreground bg-secondary shadow-md flex-shrink-0">
+                  {getInitials(m.user.name || '?')}
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-xs font-semibold text-foreground truncate">{m.user.name}</p>
                   <p className="text-[10px] text-muted-foreground truncate">{m.user.email}</p>
                 </div>
-                <span className={`text-[10px] px-2 py-0.5 rounded-full font-semibold border ${roleColors[m.role]}`}>
+                <span
+                  className={`text-[10px] px-2 py-0.5 rounded-full font-semibold border ${roleColors[m.role]}`}
+                >
                   {m.role}
                 </span>
               </div>
@@ -302,17 +263,30 @@ export default function WorkspacePage() {
 
       {/* Invite Modal */}
       {showInvite && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md p-4" onClick={() => setShowInvite(false)}>
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md p-4"
+          onClick={() => setShowInvite(false)}
+        >
           <div
             className="glass-card w-full max-w-sm p-6 shadow-2xl animate-scale-in border-white/10"
             onClick={(e) => e.stopPropagation()}
           >
             <h2 className="text-sm font-bold text-foreground mb-1">Invite Workspace Teammate</h2>
-            <p className="text-xs text-muted-foreground mb-4">Grant access to documents, boards & code snippets.</p>
+            {invitationLink && (
+              <p className="text-xs break-all my-3">
+                Share this invitation link: <a href={invitationLink}>{invitationLink}</a>. Your
+                teammate must sign in with their verified email. No email has been sent.
+              </p>
+            )}
+            <p className="text-xs text-muted-foreground mb-4">
+              Grant access to documents, boards & code snippets.
+            </p>
 
             <form onSubmit={handleInvite} className="space-y-4">
               <div>
-                <label className="text-xs font-semibold text-foreground mb-1 block">Member Email</label>
+                <label className="text-xs font-semibold text-foreground mb-1 block">
+                  Member Email
+                </label>
                 <input
                   type="email"
                   value={inviteEmail}
@@ -325,7 +299,9 @@ export default function WorkspacePage() {
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-foreground mb-1 block">Assign Permission Role</label>
+                <label className="text-xs font-semibold text-foreground mb-1 block">
+                  Assign Permission Role
+                </label>
                 <select
                   value={inviteRole}
                   onChange={(e) => setInviteRole(e.target.value)}
@@ -346,9 +322,9 @@ export default function WorkspacePage() {
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 py-2.5 rounded-xl gradient-primary text-white text-xs font-semibold hover:opacity-90 transition-opacity shadow-md glow-sm"
+                  className="flex-1 py-2.5 rounded-xl gradient-primary text-primary-foreground text-xs font-semibold hover:opacity-90 transition-opacity shadow-md glow-sm"
                 >
-                  Send Invitation
+                  Create Invitation
                 </button>
               </div>
             </form>

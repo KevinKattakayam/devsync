@@ -1,0 +1,47 @@
+
+> devsync-backend@1.0.0 test
+> jest --runInBand --runTestsByPath src/__tests__/resource-mutations.integration.test.ts --coverage=false
+
+  console.error
+    [beforeHandleMessage] Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:195:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+  console.error
+    closing connection a7cf9db5-1712-4542-882b-0680f115ceed (while handling document:resource-a-36:doc-resource-a-36) because of exception Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:195:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+
+  console.error
+    [beforeHandleMessage] Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:195:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+  console.error
+    closing connection 06d36de4-8610-4133-a2e6-97c58598d310 (while handling document:resource-a-36:doc-resource-a-36) because of exception Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:195:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+
+Test Suites: 1 passed, 1 total
+Tests:       36 passed, 36 total
+Snapshots:   0 total
+Time:        11.156 s, estimated 19 s
+Ran all test suites within paths "src/__tests__/resource-mutations.integration.test.ts".

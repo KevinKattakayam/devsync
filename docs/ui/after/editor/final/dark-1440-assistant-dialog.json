@@ -1,0 +1,517 @@
+{
+  "violations": [],
+  "incomplete": [
+    {
+      "id": "aria-hidden-focus",
+      "impact": "serious",
+      "tags": [
+        "cat.name-role-value",
+        "wcag2a",
+        "wcag412",
+        "TTv5",
+        "TT6.a",
+        "EN-301-549",
+        "EN-9.4.1.2",
+        "RGAAv4",
+        "RGAA-10.8.1"
+      ],
+      "description": "Ensure aria-hidden elements are not focusable nor contain focusable elements",
+      "help": "ARIA hidden element must not be focusable or contain focusable elements",
+      "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/aria-hidden-focus?application=axeAPI",
+      "nodes": [
+        {
+          "any": [],
+          "all": [
+            {
+              "id": "focusable-modal-open",
+              "data": null,
+              "relatedNodes": [
+                {
+                  "html": "<span data-radix-focus-guard=\"\" tabindex=\"0\" data-aria-hidden=\"true\" aria-hidden=\"true\" style=\"outline: none; opacity: 0; position: fixed; pointer-events: none;\"></span>",
+                  "target": [
+                    "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"]:nth-child(1)"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Check that focusable elements are not tabbable in the current state"
+            }
+          ],
+          "none": [],
+          "impact": "serious",
+          "html": "<span data-radix-focus-guard=\"\" tabindex=\"0\" data-aria-hidden=\"true\" aria-hidden=\"true\" style=\"outline: none; opacity: 0; position: fixed; pointer-events: none;\"></span>",
+          "target": [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"]:nth-child(1)"
+          ],
+          "failureSummary": "Fix all of the following:\n  Check that focusable elements are not tabbable in the current state"
+        },
+        {
+          "any": [],
+          "all": [
+            {
+              "id": "focusable-modal-open",
+              "data": null,
+              "relatedNodes": [
+                {
+                  "html": "<a href=\"#main-content\" class=\"ui-skip-link\" data-shell-region=\"skip\" data-aria-hidden=\"true\" aria-hidden=\"true\">Skip to content</a>",
+                  "target": [
+                    ".ui-skip-link"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Check that focusable elements are not tabbable in the current state"
+            }
+          ],
+          "none": [],
+          "impact": "serious",
+          "html": "<a href=\"#main-content\" class=\"ui-skip-link\" data-shell-region=\"skip\" data-aria-hidden=\"true\" aria-hidden=\"true\">Skip to content</a>",
+          "target": [
+            ".ui-skip-link"
+          ],
+          "failureSummary": "Fix all of the following:\n  Check that focusable elements are not tabbable in the current state"
+        },
+        {
+          "any": [],
+          "all": [
+            {
+              "id": "focusable-modal-open",
+              "data": null,
+              "relatedNodes": [
+                {
+                  "html": "<button aria-label=\"Switch workspace: Sample workspace\" id=\"radix-_r_0_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button shell-workspace-trigger\">",
+                  "target": [
+                    "#radix-_r_0_"
+                  ]
+                },
+                {
+                  "html": "<a aria-label=\"All workspaces\" class=\"shell-nav-link\" href=\"/dashboard\">",
+                  "target": [
+                    "a[aria-label=\"All workspaces\"]"
+                  ]
+                },
+                {
+                  "html": "<a aria-label=\"Overview\" class=\"shell-nav-link\" href=\"/workspace/devsync-sample\">",
+                  "target": [
+                    "a[aria-label=\"Overview\"]"
+                  ]
+                },
+                {
+                  "html": "<a aria-label=\"Documents\" aria-current=\"page\" class=\"shell-nav-link\" href=\"/workspace/devsync-sample/docs\">",
+                  "target": [
+                    "a[aria-label=\"Documents\"]"
+                  ]
+                },
+                {
+                  "html": "<a aria-label=\"Sprint board\" class=\"shell-nav-link\" href=\"/workspace/devsync-sample/kanban\">",
+                  "target": [
+                    "a[aria-label=\"Sprint board\"]"
+                  ]
+                },
+                {
+                  "html": "<a aria-label=\"Code snippets\" class=\"shell-nav-link\" href=\"/workspace/devsync-sample/snippets\">",
+                  "target": [
+                    "a[aria-label=\"Code snippets\"]"
+                  ]
+                },
+                {
+                  "html": "<a aria-label=\"Settings\" class=\"shell-nav-link\" href=\"/workspace/devsync-sample/settings\">",
+                  "target": [
+                    "a[aria-label=\"Settings\"]"
+                  ]
+                },
+                {
+                  "html": "<a aria-current=\"page\" class=\"shell-document-link\" href=\"/workspace/devsync-sample/docs/cmvy88mt30003sps2jdrij2ye\">",
+                  "target": [
+                    ".shell-document-link[aria-current=\"page\"]"
+                  ]
+                },
+                {
+                  "html": "<a class=\"shell-document-link\" href=\"/workspace/devsync-sample/docs/devsync-sample-doc\">",
+                  "target": [
+                    "li:nth-child(2) > .shell-document-row > .shell-document-link"
+                  ]
+                },
+                {
+                  "html": "<button aria-expanded=\"true\" aria-label=\"Collapse sidebar\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button\">",
+                  "target": [
+                    "button[aria-label=\"Collapse sidebar\"]"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Check that focusable elements are not tabbable in the current state"
+            }
+          ],
+          "none": [],
+          "impact": "serious",
+          "html": "<aside data-shell-region=\"sidebar\" aria-label=\"Sidebar\" class=\"shell-sidebar\" data-aria-hidden=\"true\" aria-hidden=\"true\">",
+          "target": [
+            "aside"
+          ],
+          "failureSummary": "Fix all of the following:\n  Check that focusable elements are not tabbable in the current state"
+        },
+        {
+          "any": [],
+          "all": [
+            {
+              "id": "focusable-modal-open",
+              "data": null,
+              "relatedNodes": [
+                {
+                  "html": "<a class=\"text-muted-foreground hover:text-foreground\" href=\"/dashboard\">Workspaces</a>",
+                  "target": [
+                    ".hover\\:text-foreground"
+                  ]
+                },
+                {
+                  "html": "<a class=\"inline-block max-w-40 truncate align-bottom\" href=\"/workspace/devsync-sample\">Sample workspace</a>",
+                  "target": [
+                    ".inline-block"
+                  ]
+                },
+                {
+                  "html": "<a class=\"hidden sm:inline\" href=\"/workspace/devsync-sample/docs\">Documents</a>",
+                  "target": [
+                    ".sm\\:inline.hidden[href$=\"docs\"]"
+                  ]
+                },
+                {
+                  "html": "<button aria-label=\"Search and commands\" aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button shell-search\">",
+                  "target": [
+                    ".shell-search"
+                  ]
+                },
+                {
+                  "html": "<button aria-pressed=\"false\" aria-label=\"Enter focus mode\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button\">",
+                  "target": [
+                    "button[aria-label=\"Enter focus mode\"]"
+                  ]
+                },
+                {
+                  "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" aria-label=\"Keyboard shortcuts\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button hidden sm:inline-flex\">",
+                  "target": [
+                    ".sm\\:inline-flex"
+                  ]
+                },
+                {
+                  "html": "<button aria-label=\"Sample owner\" id=\"radix-_r_b_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button shell-user\">",
+                  "target": [
+                    "#radix-_r_b_"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Check that focusable elements are not tabbable in the current state"
+            }
+          ],
+          "none": [],
+          "impact": "serious",
+          "html": "<header data-shell-region=\"topbar\" class=\"shell-topbar\" data-aria-hidden=\"true\" aria-hidden=\"true\">",
+          "target": [
+            "header"
+          ],
+          "failureSummary": "Fix all of the following:\n  Check that focusable elements are not tabbable in the current state"
+        },
+        {
+          "any": [],
+          "all": [
+            {
+              "id": "focusable-modal-open",
+              "data": null,
+              "relatedNodes": [
+                {
+                  "html": "<input aria-label=\"Document title\" class=\"block w-full min-w-0...\" placeholder=\"Untitled\" maxlength=\"200\" type=\"text\" value=\"Editor review fixtur...\" style=\"\" data-aria-hidden=\"true\" aria-hidden=\"true\">",
+                  "target": [
+                    ".text-\\[28px\\]"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Check that focusable elements are not tabbable in the current state"
+            }
+          ],
+          "none": [],
+          "impact": "serious",
+          "html": "<input aria-label=\"Document title\" class=\"block w-full min-w-0...\" placeholder=\"Untitled\" maxlength=\"200\" type=\"text\" value=\"Editor review fixtur...\" style=\"\" data-aria-hidden=\"true\" aria-hidden=\"true\">",
+          "target": [
+            ".text-\\[28px\\]"
+          ],
+          "failureSummary": "Fix all of the following:\n  Check that focusable elements are not tabbable in the current state"
+        },
+        {
+          "any": [],
+          "all": [
+            {
+              "id": "focusable-modal-open",
+              "data": null,
+              "relatedNodes": [
+                {
+                  "html": "<button aria-label=\"Insert block\" id=\"radix-_r_m_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button\">",
+                  "target": [
+                    "#radix-_r_m_"
+                  ]
+                },
+                {
+                  "html": "<summary class=\"cursor-pointer rounded-md px-3 py-2 text-sm\">Formatting</summary>",
+                  "target": [
+                    "summary"
+                  ]
+                },
+                {
+                  "html": "<button title=\"Undo\" aria-label=\"Undo document change\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button\">",
+                  "target": [
+                    "button[title=\"Undo\"]"
+                  ]
+                },
+                {
+                  "html": "<button title=\"Bold\" aria-pressed=\"true\" aria-label=\"Bold\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button\">",
+                  "target": [
+                    ".max-w-full > .gap-1[aria-label=\"Text formatting\"][role=\"group\"] > .ui-icon-button[title=\"Bold\"][aria-label=\"Bold\"]"
+                  ]
+                },
+                {
+                  "html": "<button title=\"Italic\" aria-pressed=\"false\" aria-label=\"Italic\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button\">",
+                  "target": [
+                    ".max-w-full > .gap-1[aria-label=\"Text formatting\"][role=\"group\"] > .ui-icon-button[title=\"Italic\"][aria-label=\"Italic\"]"
+                  ]
+                },
+                {
+                  "html": "<button title=\"Strikethrough\" aria-pressed=\"false\" aria-label=\"Strikethrough\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button\">",
+                  "target": [
+                    ".max-w-full > .gap-1[aria-label=\"Text formatting\"][role=\"group\"] > .ui-icon-button[title=\"Strikethrough\"][aria-label=\"Strikethrough\"]"
+                  ]
+                },
+                {
+                  "html": "<button title=\"Inline code\" aria-pressed=\"false\" aria-label=\"Inline code\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button\">",
+                  "target": [
+                    ".max-w-full > .gap-1[aria-label=\"Text formatting\"][role=\"group\"] > .ui-icon-button[title=\"Inline code\"][aria-label=\"Inline code\"]"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Check that focusable elements are not tabbable in the current state"
+            }
+          ],
+          "none": [],
+          "impact": "serious",
+          "html": "<div class=\"relative min-w-0\" data-editor-tools=\"true\" data-aria-hidden=\"true\" aria-hidden=\"true\">",
+          "target": [
+            "div[data-editor-tools=\"true\"]"
+          ],
+          "failureSummary": "Fix all of the following:\n  Check that focusable elements are not tabbable in the current state"
+        },
+        {
+          "any": [],
+          "all": [
+            {
+              "id": "focusable-modal-open",
+              "data": null,
+              "relatedNodes": [
+                {
+                  "html": "<button type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button\">",
+                  "target": [
+                    ".mb-4 > .ui-button[data-variant=\"ghost\"][type=\"button\"]"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Check that focusable elements are not tabbable in the current state"
+            }
+          ],
+          "none": [],
+          "impact": "serious",
+          "html": "<div class=\"mb-4 flex justify-end\" data-aria-hidden=\"true\" aria-hidden=\"true\">",
+          "target": [
+            ".mb-4"
+          ],
+          "failureSummary": "Fix all of the following:\n  Check that focusable elements are not tabbable in the current state"
+        },
+        {
+          "any": [],
+          "all": [
+            {
+              "id": "focusable-modal-open",
+              "data": null,
+              "relatedNodes": [
+                {
+                  "html": "<div contenteditable=\"true\" role=\"textbox\" aria-label=\"Document content\" aria-readonly=\"false\" aria-multiline=\"true\" translate=\"no\" class=\"tiptap ProseMirror editor-canvas min-h-[400px]\" tabindex=\"0\" style=\"\">",
+                  "target": [
+                    ".tiptap"
+                  ]
+                },
+                {
+                  "html": "<input aria-label=\"Task: Review the release notes\" type=\"checkbox\">",
+                  "target": [
+                    "input[aria-label=\"Task: Review the release notes\"]"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Check that focusable elements are not tabbable in the current state"
+            }
+          ],
+          "none": [],
+          "impact": "serious",
+          "html": "<div data-aria-hidden=\"true\" aria-hidden=\"true\">",
+          "target": [
+            "div[data-aria-hidden=\"true\"]:nth-child(5)"
+          ],
+          "failureSummary": "Fix all of the following:\n  Check that focusable elements are not tabbable in the current state"
+        },
+        {
+          "any": [],
+          "all": [
+            {
+              "id": "focusable-modal-open",
+              "data": null,
+              "relatedNodes": [
+                {
+                  "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button shell-copilot-trigger\" data-aria-hidden=\"true\" aria-hidden=\"true\">",
+                  "target": [
+                    ".shell-copilot-trigger"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Check that focusable elements are not tabbable in the current state"
+            }
+          ],
+          "none": [],
+          "impact": "serious",
+          "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button shell-copilot-trigger\" data-aria-hidden=\"true\" aria-hidden=\"true\">",
+          "target": [
+            ".shell-copilot-trigger"
+          ],
+          "failureSummary": "Fix all of the following:\n  Check that focusable elements are not tabbable in the current state"
+        },
+        {
+          "any": [],
+          "all": [
+            {
+              "id": "focusable-modal-open",
+              "data": null,
+              "relatedNodes": [
+                {
+                  "html": "<span data-radix-focus-guard=\"\" tabindex=\"0\" data-aria-hidden=\"true\" aria-hidden=\"true\" style=\"outline: none; opacity: 0; position: fixed; pointer-events: none;\"></span>",
+                  "target": [
+                    "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"]:nth-child(14)"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Check that focusable elements are not tabbable in the current state"
+            }
+          ],
+          "none": [],
+          "impact": "serious",
+          "html": "<span data-radix-focus-guard=\"\" tabindex=\"0\" data-aria-hidden=\"true\" aria-hidden=\"true\" style=\"outline: none; opacity: 0; position: fixed; pointer-events: none;\"></span>",
+          "target": [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"]:nth-child(14)"
+          ],
+          "failureSummary": "Fix all of the following:\n  Check that focusable elements are not tabbable in the current state"
+        }
+      ]
+    },
+    {
+      "id": "color-contrast",
+      "impact": "serious",
+      "tags": [
+        "cat.color",
+        "wcag2aa",
+        "wcag143",
+        "TTv5",
+        "TT13.c",
+        "EN-301-549",
+        "EN-9.1.4.3",
+        "ACT",
+        "RGAAv4",
+        "RGAA-3.2.1"
+      ],
+      "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+      "help": "Elements must meet minimum color contrast ratio thresholds",
+      "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/color-contrast?application=axeAPI",
+      "nodes": [
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "contrastRatio": 0,
+                "fontSize": "10.5pt (14px)",
+                "fontWeight": "normal",
+                "messageKey": "elmPartiallyObscuring",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element's background color could not be determined because it partially overlaps other elements"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<p id=\"radix-_r_k_\" class=\"mt-1 text-sm text-muted-foreground\">Review generated text before applying it. Selected text is used when available.</p>",
+          "target": [
+            "#radix-_r_k_"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it partially overlaps other elements"
+        }
+      ]
+    },
+    {
+      "id": "link-in-text-block",
+      "impact": "serious",
+      "tags": [
+        "cat.color",
+        "wcag2a",
+        "wcag141",
+        "TTv5",
+        "TT13.a",
+        "EN-301-549",
+        "EN-9.1.4.1",
+        "RGAAv4",
+        "RGAA-10.6.1"
+      ],
+      "description": "Ensure links are distinguished from surrounding text in a way that does not rely on color",
+      "help": "Links must be distinguishable without relying on color",
+      "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/link-in-text-block?application=axeAPI",
+      "nodes": [
+        {
+          "any": [
+            {
+              "id": "link-in-text-block",
+              "data": {
+                "messageKey": "bgOverlap"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<li class=\"min-w-0 truncate\">",
+                  "target": [
+                    ".truncate.min-w-0"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element's contrast ratio could not be determined because of element overlap"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<a class=\"hidden sm:inline\" href=\"/workspace/devsync-sample/docs\">Documents</a>",
+          "target": [
+            ".sm\\:inline.hidden[href$=\"docs\"]"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element's contrast ratio could not be determined because of element overlap"
+        }
+      ]
+    }
+  ],
+  "bounds": {
+    "viewport": 1440,
+    "page": 1440,
+    "main": 1200,
+    "scroll": 1200
+  }
+}

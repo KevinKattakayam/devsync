@@ -1,118 +1,301 @@
-name: Build, Test, Scan, and Publish
-
+name: Quality
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
-
+  workflow_dispatch:
 permissions:
   contents: read
-  packages: write
-  security-events: write
-  attestations: write
-  id-token: write
-
-env:
-  REGISTRY: ghcr.io
-  API_IMAGE: ghcr.io/${{ github.repository_owner }}/devsync-api
-  WEB_IMAGE: ghcr.io/${{ github.repository_owner }}/devsync-web
-
+concurrency:
+  group: quality-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   quality:
-    name: Lint and unit test
     runs-on: ubuntu-24.04
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: devsync_ci
+          POSTGRES_PASSWORD: ci-only-not-a-production-credential
+          POSTGRES_DB: devsync_ci
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U devsync_ci -d devsync_ci"
+          --health-interval 5s --health-timeout 3s --health-retries 20
+      redis:
+        image: redis:7-alpine
+        ports: ['6379:6379']
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s --health-timeout 3s --health-retries 20
+    env:
+      DATABASE_URL: postgresql://devsync_ci:ci-only-not-a-production-credential@localhost:5432/devsync_ci
+      REDIS_URL: redis://localhost:6379
     strategy:
       fail-fast: false
       matrix:
         service: [backend, frontend]
-    defaults:
-      run:
-        working-directory: ${{ matrix.service }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: 22
           cache: npm
           cache-dependency-path: ${{ matrix.service }}/package-lock.json
       - run: npm ci
-      - run: npm run lint --if-present
-      - run: npm test --if-present
+        working-directory: ${{ matrix.service }}
+      - run: npm run lint && npm run format:check && npm run typecheck
+        working-directory: ${{ matrix.service }}
+      - name: Backend tests and coverage
+        if: matrix.service == 'backend'
+        run: npm test -- --coverageDirectory="$GITHUB_WORKSPACE/coverage/backend"
+        working-directory: backend
+        env:
+          OTEL_SDK_DISABLED: 'true'
+      - name: Frontend tests and coverage
+        if: matrix.service == 'frontend'
+        run: npm test
+        working-directory: frontend
+        env:
+          QUALITY_COVERAGE: '1'
+          QUALITY_COVERAGE_DIRECTORY: ${{ github.workspace }}/coverage/frontend
+      - run: npm run openapi:check
+        if: matrix.service == 'backend'
+        working-directory: backend
       - run: npm run build
-
-  image-security:
-    name: Build, scan, SBOM, and publish
+        if: matrix.service == 'backend'
+        working-directory: backend
+      - run: npm run build -- --webpack
+        if: matrix.service == 'frontend'
+        working-directory: frontend
+        env:
+          DEPLOYMENT_MODE: local
+      - name: Dependency audit (block High and Critical)
+        run: npm audit --json --audit-level=high > npm-audit.json
+        working-directory: ${{ matrix.service }}
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: coverage-${{ matrix.service }}
+          path: coverage/${{ matrix.service }}/coverage-summary.json
+          if-no-files-found: error
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: npm-audit-${{ matrix.service }}
+          path: ${{ matrix.service }}/npm-audit.json
+          if-no-files-found: warn
+  coverage:
     needs: quality
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      actions: read
+    strategy:
+      matrix:
+        service: [backend, frontend]
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22
+      - name: Download current summary
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run download "$GITHUB_RUN_ID" --repo "$GITHUB_REPOSITORY" --name "coverage-${{ matrix.service }}" --dir "coverage/${{ matrix.service }}"
+      - run: node --test tools/ci/coverage.test.mjs
+      - name: Reject any coverage decrease
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before || github.sha }}
+        run: bash tools/ci/baseline.sh "${{ matrix.service }}"
+  source-security:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22
+      - run: mkdir -p security
+      - name: Verify narrowly scoped scanner exceptions
+        run: python3 tools/quality/gitleaks-regression.py
+      - name: Gitleaks history (redact before upload)
+        run: |
+          status=0
+          docker run --rm --user "$(id -u):$(id -g)" -v "$PWD:/repo:ro" -v "$PWD/security:/reports" zricethezav/gitleaks@sha256:691af3c7c5a48b16f187ce3446d5f194838f91238f27270ed36eef6359a574d9 git /repo --config=/repo/.gitleaks.toml --log-opts=--all --redact=100 --report-format=json --report-path=/reports/gitleaks.json || status=$?
+          node tools/ci/redact-report.mjs gitleaks security/gitleaks.json security/gitleaks-redacted.json
+          exit "$status"
+      - name: Semgrep
+        if: always()
+        run: |
+          status=0
+          docker run --rm --user "$(id -u):$(id -g)" -v "$PWD:/repo:ro" -v "$PWD/security:/reports" -w /repo semgrep/semgrep@sha256:b68f9b68483955b85042dac7b4533757779625a02dcf91e470da4c2df1b430be semgrep scan --config p/typescript --no-git-ignore --metrics=off --disable-version-check --error --json --output /reports/semgrep.json backend/src frontend/src || status=$?
+          node tools/ci/redact-report.mjs semgrep security/semgrep.json security/semgrep-redacted.json
+          exit "$status"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: source-security
+          path: security/*-redacted.json
+          if-no-files-found: warn
+  containers:
+    needs: [quality, coverage, source-security, e2e, compose, hosting-config]
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+      attestations: write
     runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
         include:
           - service: backend
-            image: ghcr.io/${{ github.repository_owner }}/devsync-api
+            image: devsync-api
           - service: frontend
-            image: ghcr.io/${{ github.repository_owner }}/devsync-web
+            image: devsync-web
     steps:
-      - uses: actions/checkout@v4
-      - uses: docker/setup-buildx-action@v3
-      - uses: docker/login-action@v3
-        if: github.event_name == 'push'
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build image to local Docker cache
-        uses: docker/build-push-action@v6
+          persist-credentials: false
+      - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f
+      - name: Build current production image
+        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8
         with:
           context: ${{ matrix.service }}
+          target: runner
           load: true
           push: false
-          tags: ${{ matrix.image }}:${{ github.sha }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-      - name: Block HIGH and CRITICAL CVEs
-        uses: aquasecurity/trivy-action@0.33.1
-        with:
-          image-ref: ${{ matrix.image }}:${{ github.sha }}
-          format: template
-          template: '@contrib/sarif.tpl'
-          output: trivy-${{ matrix.service }}.sarif
-          severity: HIGH,CRITICAL
-          exit-code: '1'
-      - name: Upload vulnerability results
+          tags: devsync-${{ matrix.service }}:ci
+          cache-from: type=gha,scope=${{ matrix.service }}
+          cache-to: type=gha,scope=${{ matrix.service }},mode=max
+          build-args: |
+            DEPLOYMENT_MODE=production
+            NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=${{ vars.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
+            NEXT_PUBLIC_API_URL=${{ vars.NEXT_PUBLIC_API_URL }}
+            NEXT_PUBLIC_SOCKET_URL=${{ vars.NEXT_PUBLIC_SOCKET_URL }}
+            NEXT_PUBLIC_YJS_URL=${{ vars.NEXT_PUBLIC_YJS_URL }}
+            BACKEND_URL=${{ vars.BACKEND_URL }}
+      - name: Trivy blocks High and Critical vulnerabilities
+        run: |
+          mkdir -p security
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD/security:/reports" aquasec/trivy@sha256:05d0126976bdedcd0782a0336f77832dbea1c81b9cc5e4b3a5ea5d2ec863aca7 image --scanners vuln --exit-code 1 --severity HIGH,CRITICAL --format json --output /reports/trivy.json "devsync-${{ matrix.service }}:ci"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
-        uses: github/codeql-action/upload-sarif@v3
         with:
-          sarif_file: trivy-${{ matrix.service }}.sarif
-          category: trivy-${{ matrix.service }}
-      - name: Generate CycloneDX SBOM
-        uses: aquasecurity/trivy-action@0.33.1
-        with:
-          image-ref: ${{ matrix.image }}:${{ github.sha }}
-          format: cyclonedx
-          output: sbom-${{ matrix.service }}.cdx.json
-          exit-code: '0'
-      - uses: actions/upload-artifact@v4
+          name: container-security-${{ matrix.service }}
+          path: security/trivy.json
+          if-no-files-found: warn
+      - name: Preserve CycloneDX SBOM
+        run: |
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD/security:/reports" aquasec/trivy@sha256:05d0126976bdedcd0782a0336f77832dbea1c81b9cc5e4b3a5ea5d2ec863aca7 image --format cyclonedx --output /reports/sbom.cdx.json "devsync-${{ matrix.service }}:ci"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: sbom-${{ matrix.service }}-${{ github.sha }}
-          path: sbom-${{ matrix.service }}.cdx.json
+          path: security/sbom.cdx.json
           if-no-files-found: error
           retention-days: 365
-      - name: Publish immutable image
+      - name: Publish exactly the scanned image after all gates
         if: github.event_name == 'push'
-        id: push
-        uses: docker/build-push-action@v6
-        with:
-          context: ${{ matrix.service }}
-          push: true
-          tags: |
-            ${{ matrix.image }}:${{ github.sha }}
-            ${{ matrix.image }}:main
-          cache-from: type=gha
-      - name: Create SLSA build attestation
+        id: publish
+        env:
+          GHCR_TOKEN: ${{ github.token }}
+        run: |
+          image="ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/${{ matrix.image }}:${GITHUB_SHA}"
+          printf '%s' "$GHCR_TOKEN" | docker login ghcr.io --username "$GITHUB_ACTOR" --password-stdin
+          docker tag "devsync-${{ matrix.service }}:ci" "$image"
+          docker push "$image"
+          reference=$(docker inspect "$image" --format '{{index .RepoDigests 0}}')
+          echo "image=${image%:*}" >> "$GITHUB_OUTPUT"
+          echo "digest=${reference##*@}" >> "$GITHUB_OUTPUT"
+      - name: Preserve build provenance
         if: github.event_name == 'push'
-        uses: actions/attest-build-provenance@v2
+        uses: actions/attest-build-provenance@96b4a1ef7235a096b17240c259729fdd70c83d45
         with:
-          subject-name: ${{ matrix.image }}
-          subject-digest: ${{ steps.push.outputs.digest }}
+          subject-name: ${{ steps.publish.outputs.image }}
+          subject-digest: ${{ steps.publish.outputs.digest }}
+          push-to-registry: true
+  e2e:
+    needs: quality
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        target:
+          [
+            core,
+            ai-cost,
+            editor,
+            kanban,
+            settings,
+            dashboard,
+            decisions,
+            snippet-safety,
+            async-digest,
+            shell,
+          ]
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            backend/package-lock.json
+            frontend/package-lock.json
+      - run: npm ci --prefix backend && npm ci --prefix frontend
+      - run: npx --prefix backend playwright install --with-deps chromium
+      - run: node tools/ci/browser.mjs "${{ matrix.target }}"
+        env:
+          OTEL_SDK_DISABLED: 'true'
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: e2e-${{ matrix.target }}
+          path: |
+            backend/test-results/
+            backend/playwright-report/
+          if-no-files-found: warn
+  compose:
+    needs: quality
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - run: python3 tools/deployment/verify-compose.py
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: clean-clone-compose
+          path: docs/deployment/evidence/clean-clone/
+          if-no-files-found: error
+
+  hosting-config:
+    needs: quality
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: .railway/package-lock.json
+      - run: npm ci --prefix .railway
+      - run: npm run typecheck --prefix .railway
+      - run: npm audit --prefix .railway --audit-level=high

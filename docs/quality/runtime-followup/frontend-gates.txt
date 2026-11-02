@@ -1,0 +1,5 @@
+frontend lint: exit 0; raw output docs/quality/runtime-followup/gates/frontend-lint.txt
+frontend format: exit 0; raw output docs/quality/runtime-followup/gates/frontend-format.txt
+frontend types: exit 0; raw output docs/quality/runtime-followup/gates/frontend-types.txt
+frontend tests: exit 0; raw output docs/quality/runtime-followup/gates/frontend-tests.txt
+frontend build: exit 0; raw output docs/quality/runtime-followup/gates/frontend-build.txt

@@ -1,0 +1,49 @@
+backend install: 0
+backend lint: 0
+
+> devsync-backend@1.0.0 lint
+> eslint src prisma
+
+
+backend format: 0
+
+> devsync-backend@1.0.0 format:check
+> prettier --check . --ignore-unknown
+
+Checking formatting...
+All matched files use Prettier code style!
+
+backend typecheck: 0
+
+> devsync-backend@1.0.0 typecheck
+> tsc --noEmit && tsc -p tsconfig.seed.json
+
+
+backend tests: 0
+ence.handler.ts             |   56.43 |       28 |   54.54 |   58.94 | 49-56,80-81,106-109,135-145,157-164,169,177-194                              
+  rate-limiter.ts                 |       0 |        0 |       0 |       0 | 15-79                                                                        
+ src/utils                        |   93.33 |        0 |   83.33 |   93.33 |                                                                              
+  errors.ts                       |   93.33 |        0 |   83.33 |   93.33 | 39                                                                           
+----------------------------------|---------|----------|---------|---------|------------------------------------------------------------------------------
+
+Test Suites: 13 passed, 13 total
+Tests:       83 passed, 83 total
+Snapshots:   0 total
+Time:        48.909 s
+Ran all test suites.
+
+backend build: 0
+
+> devsync-backend@1.0.0 build
+> prisma generate && tsc
+
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+
+✔ Generated Prisma Client (v5.22.0) to ./node_modules/@prisma/client in 199ms
+
+Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
+
+Tip: Want real-time updates to your database without manual polling? Discover how with Pulse: https://pris.ly/tip-0-pulse
+
+

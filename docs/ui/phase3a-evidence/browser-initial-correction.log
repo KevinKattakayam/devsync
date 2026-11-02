@@ -1,0 +1,309 @@
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": PostgreSQL database "devsync_e2e_browser", schema "public" at "localhost:32853"
+
+11 migrations found in prisma/migrations
+
+Applying migration `20260729000000_baseline`
+Applying migration `20260729180000_enterprise_platform`
+Applying migration `20260815000000_phase_3_tenant_rls`
+Applying migration `20260815001000_scim_provisioning`
+Applying migration `20260815002000_commercial_billing`
+Applying migration `20261031000000_tenant_indexes`
+Applying migration `20261031010000_crdt_journal`
+Applying migration `202611010001_canonical_revision`
+Applying migration `202611010002_embedding_authority`
+Applying migration `202611010003_atomic_create_idempotency`
+Applying migration `202611010004_workspace_invitations`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20260729000000_baseline/
+    └─ migration.sql
+  └─ 20260729180000_enterprise_platform/
+    └─ migration.sql
+  └─ 20260815000000_phase_3_tenant_rls/
+    └─ migration.sql
+  └─ 20260815001000_scim_provisioning/
+    └─ migration.sql
+  └─ 20260815002000_commercial_billing/
+    └─ migration.sql
+  └─ 20261031000000_tenant_indexes/
+    └─ migration.sql
+  └─ 20261031010000_crdt_journal/
+    └─ migration.sql
+  └─ 202611010001_canonical_revision/
+    └─ migration.sql
+  └─ 202611010002_embedding_authority/
+    └─ migration.sql
+  └─ 202611010003_atomic_create_idempotency/
+    └─ migration.sql
+  └─ 202611010004_workspace_invitations/
+    └─ migration.sql
+      
+All migrations have been successfully applied.
+Sample workspace seeded. Sign in with the supplied Clerk test identities.
+/home/kevin/devsync/.worktrees/frontend-fixture
+Isolated fixture server ready
+{"level":30,"time":1793549962023,"service":"devsync-api","req":{"id":"842d2f31-737f-4313-a40d-90cea50e1c13","method":"GET"},"requestId":"842d2f31-737f-4313-a40d-90cea50e1c13","res":{"statusCode":200},"responseTime":9,"msg":"request completed"}
+▲ Next.js 16.4.3 (webpack)
+- Local:         http://127.0.0.1:3001
+- Network:       http://127.0.0.1:3001
+✓ Ready in 458ms
+✓ Running next.config.ts took 47ms
+
+✓ Generated AGENTS.md for AI agents. Set `agentRules: false` in next.config to disable.
+○ Compiling /(auth)/login/[[...rest]]/page ...
+ GET /login 200 in 620ms (proxy.ts: 81ms)
+ GET /login 200 in 867ms (next.js: 375ms, proxy.ts: 5ms, application-code: 487ms)
+
+Running 6 tests using 1 worker
+
+(node:306683) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1793549991269,"service":"devsync-api","req":{"id":"0b7921d5-8cb2-416e-bcc8-d9bdbaf7c6a3","method":"GET"},"requestId":"0b7921d5-8cb2-416e-bcc8-d9bdbaf7c6a3","res":{"statusCode":200},"responseTime":25,"msg":"request completed"}
+{"level":30,"time":1793549991307,"service":"devsync-api","req":{"id":"d3db1182-4a7b-4858-a1ee-103f6f2350a5","method":"GET"},"requestId":"d3db1182-4a7b-4858-a1ee-103f6f2350a5","res":{"statusCode":200},"responseTime":17,"msg":"request completed"}
+{"level":30,"time":1793549991384,"service":"devsync-api","req":{"id":"6e60587c-1bee-4b46-bffd-d9f2d7baccbc","method":"GET"},"requestId":"6e60587c-1bee-4b46-bffd-d9f2d7baccbc","res":{"statusCode":200},"responseTime":64,"msg":"request completed"}
+{"level":30,"time":1793549991421,"service":"devsync-api","req":{"id":"bcadcee9-e372-40dc-9c5e-344093f5b9f3","method":"PATCH"},"requestId":"bcadcee9-e372-40dc-9c5e-344093f5b9f3","res":{"statusCode":200},"responseTime":30,"msg":"request completed"}
+{"level":30,"time":1793549991445,"service":"devsync-api","req":{"id":"7c6fda6f-bbcb-4209-856a-9e0d1003bc69","method":"GET"},"requestId":"7c6fda6f-bbcb-4209-856a-9e0d1003bc69","res":{"statusCode":200},"responseTime":17,"msg":"request completed"}
+{"level":30,"time":1793549991490,"service":"devsync-api","req":{"id":"9b3fcbf1-c860-4827-8dda-2f13ce63981b","method":"POST"},"requestId":"9b3fcbf1-c860-4827-8dda-2f13ce63981b","res":{"statusCode":201},"responseTime":40,"msg":"request completed"}
+{"level":30,"time":1793549991582,"service":"devsync-api","req":{"id":"f62bb4fd-9989-44eb-8326-b0071ffb7045","method":"GET"},"requestId":"f62bb4fd-9989-44eb-8326-b0071ffb7045","res":{"statusCode":200},"responseTime":10,"msg":"request completed"}
+ GET /dashboard 200 in 2.9s (next.js: 2.6s, proxy.ts: 10ms, application-code: 354ms)
+{"level":30,"time":1793549996391,"service":"devsync-api","req":{"id":"309d8d7a-17a0-49cc-9081-f3cd62474ed1","method":"GET"},"requestId":"309d8d7a-17a0-49cc-9081-f3cd62474ed1","res":{"statusCode":200},"responseTime":21,"msg":"request completed"}
+{"level":30,"time":1793549996397,"service":"devsync-api","req":{"id":"390179a0-baaf-4006-b20a-c714a43ac0d2","method":"GET"},"requestId":"390179a0-baaf-4006-b20a-c714a43ac0d2","res":{"statusCode":200},"responseTime":20,"msg":"request completed"}
+dark 1440 loading: 1 axe violations; 0 incomplete
+{"level":30,"time":1793549996851,"service":"devsync-api","req":{"id":"ae162e8a-10ea-42e1-895c-d1de6358ef21","method":"GET"},"requestId":"ae162e8a-10ea-42e1-895c-d1de6358ef21","res":{"statusCode":200},"responseTime":40,"msg":"request completed"}
+{"level":30,"time":1793549996852,"service":"devsync-api","req":{"id":"5f78e37a-80fa-454e-8f7d-6a9eeab3a759","method":"GET"},"requestId":"5f78e37a-80fa-454e-8f7d-6a9eeab3a759","res":{"statusCode":200},"responseTime":39,"msg":"request completed"}
+{"level":30,"time":1793549996856,"service":"devsync-api","req":{"id":"3c90256d-cda6-48bb-a112-fd60c6fdb1bd","method":"GET"},"requestId":"system","res":{"statusCode":null},"responseTime":42,"msg":"request aborted"}
+{"level":30,"time":1793549996856,"service":"devsync-api","req":{"id":"c0f5139d-21ae-4e34-b44d-9027a18c3899","method":"GET"},"requestId":"system","res":{"statusCode":null},"responseTime":41,"msg":"request aborted"}
+  ✘  1 testing/browser/dashboard.spec.ts:93:9 › dark 1440 dashboard loading, content, filter, errors and dialog (5.3s)
+(node:307321) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1793549997812,"service":"devsync-api","req":{"id":"bc9a92fe-bfbe-440d-9c51-f7aa1d96843d","method":"GET"},"requestId":"bc9a92fe-bfbe-440d-9c51-f7aa1d96843d","res":{"statusCode":200},"responseTime":10,"msg":"request completed"}
+{"level":30,"time":1793549997832,"service":"devsync-api","req":{"id":"b0499886-4955-4ce5-9a82-6b173f8bc208","method":"GET"},"requestId":"b0499886-4955-4ce5-9a82-6b173f8bc208","res":{"statusCode":200},"responseTime":9,"msg":"request completed"}
+{"level":30,"time":1793549997866,"service":"devsync-api","req":{"id":"5c43382d-58b7-4d2e-89ac-0e164910cfb2","method":"GET"},"requestId":"5c43382d-58b7-4d2e-89ac-0e164910cfb2","res":{"statusCode":200},"responseTime":25,"msg":"request completed"}
+{"level":30,"time":1793549997901,"service":"devsync-api","req":{"id":"8301541d-f97a-4ccf-ac4f-cab17da8b5f3","method":"GET"},"requestId":"8301541d-f97a-4ccf-ac4f-cab17da8b5f3","res":{"statusCode":200},"responseTime":25,"msg":"request completed"}
+{"level":30,"time":1793549998005,"service":"devsync-api","req":{"id":"b54aab4d-7900-417e-9712-e8dd75b4d622","method":"GET"},"requestId":"b54aab4d-7900-417e-9712-e8dd75b4d622","res":{"statusCode":200},"responseTime":11,"msg":"request completed"}
+ GET /dashboard 200 in 50ms (next.js: 2ms, proxy.ts: 4ms, application-code: 44ms)
+{"level":30,"time":1793549999703,"service":"devsync-api","req":{"id":"1789d333-8e45-4441-bfb1-327cc10226a5","method":"GET"},"requestId":"1789d333-8e45-4441-bfb1-327cc10226a5","res":{"statusCode":200},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793549999704,"service":"devsync-api","req":{"id":"af8a24aa-3fed-41e0-81b8-53be1ce19ddd","method":"GET"},"requestId":"af8a24aa-3fed-41e0-81b8-53be1ce19ddd","res":{"statusCode":200},"responseTime":8,"msg":"request completed"}
+dark 390 loading: 0 axe violations; 0 incomplete
+{"level":30,"time":1793550000065,"service":"devsync-api","req":{"id":"27ecbc17-b6a4-42f1-980c-f4c80adffdf8","method":"GET"},"requestId":"27ecbc17-b6a4-42f1-980c-f4c80adffdf8","res":{"statusCode":200},"responseTime":23,"msg":"request completed"}
+{"level":30,"time":1793550000067,"service":"devsync-api","req":{"id":"ec75ae0f-1991-45db-9429-d417ab21ee99","method":"GET"},"requestId":"ec75ae0f-1991-45db-9429-d417ab21ee99","res":{"statusCode":200},"responseTime":28,"msg":"request completed"}
+{"level":30,"time":1793550000067,"service":"devsync-api","req":{"id":"10587aed-76df-44b0-a7a0-69221aff1d2e","method":"GET"},"requestId":"10587aed-76df-44b0-a7a0-69221aff1d2e","res":{"statusCode":200},"responseTime":26,"msg":"request completed"}
+{"level":30,"time":1793550000068,"service":"devsync-api","req":{"id":"44111b1b-acee-4bb8-bb55-f9728008edc7","method":"GET"},"requestId":"44111b1b-acee-4bb8-bb55-f9728008edc7","res":{"statusCode":200},"responseTime":25,"msg":"request completed"}
+{"level":30,"time":1793550000136,"service":"devsync-api","req":{"id":"f79070f1-97fa-46ad-82ba-5d4e09f83b05","method":"GET"},"requestId":"f79070f1-97fa-46ad-82ba-5d4e09f83b05","res":{"statusCode":200},"responseTime":28,"msg":"request completed"}
+{"level":30,"time":1793550000143,"service":"devsync-api","req":{"id":"928e01a4-5f7d-46b7-8b5d-7ccbc658e24b","method":"GET"},"requestId":"928e01a4-5f7d-46b7-8b5d-7ccbc658e24b","res":{"statusCode":200},"responseTime":29,"msg":"request completed"}
+{"level":30,"time":1793550000165,"service":"devsync-api","req":{"id":"ca84f947-4ca8-4580-8748-d0516bd6fada","method":"GET"},"requestId":"ca84f947-4ca8-4580-8748-d0516bd6fada","res":{"statusCode":200},"responseTime":46,"msg":"request completed"}
+{"level":30,"time":1793550000170,"service":"devsync-api","req":{"id":"8eec10dc-190d-488b-819b-89cfe27e1454","method":"GET"},"requestId":"8eec10dc-190d-488b-819b-89cfe27e1454","res":{"statusCode":304},"responseTime":32,"msg":"request completed"}
+{"level":30,"time":1793550000183,"service":"devsync-api","req":{"id":"236acf80-69d5-4c64-9ca4-9ae572fa706a","method":"GET"},"requestId":"236acf80-69d5-4c64-9ca4-9ae572fa706a","res":{"statusCode":304},"responseTime":35,"msg":"request completed"}
+{"level":30,"time":1793550000185,"service":"devsync-api","req":{"id":"afa9dacd-722c-4d82-8eaa-d002a9f22aa2","method":"GET"},"requestId":"afa9dacd-722c-4d82-8eaa-d002a9f22aa2","res":{"statusCode":304},"responseTime":17,"msg":"request completed"}
+dark 390 ready: 0 axe violations; 1 incomplete
+dark 390 create-dialog: 0 axe violations; 1 incomplete
+{"level":30,"time":1793550001061,"service":"devsync-api","req":{"id":"9c0a9a87-20ce-4a55-be99-7ca9eb334e33","method":"GET"},"requestId":"9c0a9a87-20ce-4a55-be99-7ca9eb334e33","res":{"statusCode":200},"responseTime":32,"msg":"request completed"}
+dark 390 error-injected: 0 axe violations; 0 incomplete
+{"level":30,"time":1793550001231,"service":"devsync-api","req":{"id":"8d51ecbd-6b87-41f6-af64-268a0d55895d","method":"GET"},"requestId":"8d51ecbd-6b87-41f6-af64-268a0d55895d","res":{"statusCode":304},"responseTime":11,"msg":"request completed"}
+{"level":30,"time":1793550001242,"service":"devsync-api","req":{"id":"24d2525f-94af-4ebb-988d-3108cc2e3963","method":"GET"},"requestId":"24d2525f-94af-4ebb-988d-3108cc2e3963","res":{"statusCode":304},"responseTime":21,"msg":"request completed"}
+{"level":30,"time":1793550001277,"service":"devsync-api","req":{"id":"cfa229db-5d2c-49cf-8885-4189f6d9b22b","method":"GET"},"requestId":"cfa229db-5d2c-49cf-8885-4189f6d9b22b","res":{"statusCode":304},"responseTime":23,"msg":"request completed"}
+{"level":30,"time":1793550001289,"service":"devsync-api","req":{"id":"fab19f23-aaba-471f-905e-ba22dc94716a","method":"GET"},"requestId":"fab19f23-aaba-471f-905e-ba22dc94716a","res":{"statusCode":304},"responseTime":32,"msg":"request completed"}
+{"level":30,"time":1793550001309,"service":"devsync-api","req":{"id":"a87e57e0-7005-47d4-bc0b-f30c8fc3bee0","method":"GET"},"requestId":"a87e57e0-7005-47d4-bc0b-f30c8fc3bee0","res":{"statusCode":304},"responseTime":49,"msg":"request completed"}
+{"level":30,"time":1793550001501,"service":"devsync-api","req":{"id":"8cd43f57-ebcf-4d9a-ab5f-a27bc14a4a84","method":"GET"},"requestId":"8cd43f57-ebcf-4d9a-ab5f-a27bc14a4a84","res":{"statusCode":200},"responseTime":18,"msg":"request completed"}
+{"level":30,"time":1793550001524,"service":"devsync-api","req":{"id":"413ce26d-974e-4b97-a601-06e716edf29b","method":"GET"},"requestId":"413ce26d-974e-4b97-a601-06e716edf29b","res":{"statusCode":200},"responseTime":39,"msg":"request completed"}
+{"level":30,"time":1793550001571,"service":"devsync-api","req":{"id":"74a8c80a-e38c-457b-8150-68aa69451409","method":"GET"},"requestId":"74a8c80a-e38c-457b-8150-68aa69451409","res":{"statusCode":200},"responseTime":26,"msg":"request completed"}
+{"level":30,"time":1793550001576,"service":"devsync-api","req":{"id":"44322a9b-5131-4907-989f-26d55f59ea86","method":"GET"},"requestId":"44322a9b-5131-4907-989f-26d55f59ea86","res":{"statusCode":200},"responseTime":28,"msg":"request completed"}
+dark 390 partial-error-injected: 0 axe violations; 2 incomplete
+{"level":30,"time":1793550001921,"service":"devsync-api","req":{"id":"704bf77d-f054-42f4-ad51-eaaf34d6085b","method":"GET"},"requestId":"704bf77d-f054-42f4-ad51-eaaf34d6085b","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793550001943,"service":"devsync-api","req":{"id":"9a507b3c-2f55-462b-b46c-8fcac8e2ef75","method":"GET"},"requestId":"9a507b3c-2f55-462b-b46c-8fcac8e2ef75","res":{"statusCode":304},"responseTime":35,"msg":"request completed"}
+{"level":30,"time":1793550001985,"service":"devsync-api","req":{"id":"757c7113-53a7-43be-8d29-5ebda17d2930","method":"GET"},"requestId":"757c7113-53a7-43be-8d29-5ebda17d2930","res":{"statusCode":304},"responseTime":28,"msg":"request completed"}
+{"level":30,"time":1793550001986,"service":"devsync-api","req":{"id":"9b2b6d63-99b2-4495-88e0-31b49954bd4e","method":"GET"},"requestId":"9b2b6d63-99b2-4495-88e0-31b49954bd4e","res":{"statusCode":304},"responseTime":21,"msg":"request completed"}
+{"level":30,"time":1793550001989,"service":"devsync-api","req":{"id":"77f4e9dc-ee2e-4f10-a38b-7551218a1ba8","method":"GET"},"requestId":"77f4e9dc-ee2e-4f10-a38b-7551218a1ba8","res":{"statusCode":304},"responseTime":26,"msg":"request completed"}
+  ✓  2 testing/browser/dashboard.spec.ts:93:9 › dark 390 dashboard loading, content, filter, errors and dialog (4.1s)
+{"level":30,"time":1793550002147,"service":"devsync-api","req":{"id":"ec28fad1-cffc-4b0b-bf6b-2a23b3391f7a","method":"GET"},"requestId":"ec28fad1-cffc-4b0b-bf6b-2a23b3391f7a","res":{"statusCode":200},"responseTime":12,"msg":"request completed"}
+ GET /dashboard 200 in 75ms (next.js: 5ms, proxy.ts: 7ms, application-code: 64ms)
+{"level":30,"time":1793550003803,"service":"devsync-api","req":{"id":"d9a5f7b1-b07d-4f5b-b76b-a1ff67eb4449","method":"GET"},"requestId":"d9a5f7b1-b07d-4f5b-b76b-a1ff67eb4449","res":{"statusCode":200},"responseTime":17,"msg":"request completed"}
+{"level":30,"time":1793550003804,"service":"devsync-api","req":{"id":"390b9c70-6556-4801-b4ea-0334a05131e2","method":"GET"},"requestId":"390b9c70-6556-4801-b4ea-0334a05131e2","res":{"statusCode":200},"responseTime":14,"msg":"request completed"}
+light 1440 loading: 1 axe violations; 0 incomplete
+{"level":30,"time":1793550004229,"service":"devsync-api","req":{"id":"90c6a9ad-2d70-4157-888b-1cf14b87fae8","method":"GET"},"requestId":"90c6a9ad-2d70-4157-888b-1cf14b87fae8","res":{"statusCode":200},"responseTime":38,"msg":"request completed"}
+{"level":30,"time":1793550004230,"service":"devsync-api","req":{"id":"6a55546a-fe80-4e85-b06a-a3cc1943dad6","method":"GET"},"requestId":"6a55546a-fe80-4e85-b06a-a3cc1943dad6","res":{"statusCode":200},"responseTime":37,"msg":"request completed"}
+{"level":30,"time":1793550004231,"service":"devsync-api","req":{"id":"ab3b0815-a7cf-4d5a-a5c0-292645f43776","method":"GET"},"requestId":"ab3b0815-a7cf-4d5a-a5c0-292645f43776","res":{"statusCode":200},"responseTime":35,"msg":"request completed"}
+{"level":30,"time":1793550004234,"service":"devsync-api","req":{"id":"70b8694f-fdd1-4a3c-9fa4-f65e26d751a1","method":"GET"},"requestId":"70b8694f-fdd1-4a3c-9fa4-f65e26d751a1","res":{"statusCode":200},"responseTime":37,"msg":"request completed"}
+  ✘  3 testing/browser/dashboard.spec.ts:93:9 › light 1440 dashboard loading, content, filter, errors and dialog (2.1s)
+(node:308091) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1793550005220,"service":"devsync-api","req":{"id":"50ab263d-dbff-4ccb-8220-12f8abe4fc19","method":"GET"},"requestId":"50ab263d-dbff-4ccb-8220-12f8abe4fc19","res":{"statusCode":200},"responseTime":11,"msg":"request completed"}
+{"level":30,"time":1793550005250,"service":"devsync-api","req":{"id":"88c5425f-a11a-476a-a420-444f9a5ca9f6","method":"GET"},"requestId":"88c5425f-a11a-476a-a420-444f9a5ca9f6","res":{"statusCode":200},"responseTime":12,"msg":"request completed"}
+{"level":30,"time":1793550005286,"service":"devsync-api","req":{"id":"8e2ba597-8eb5-47b0-9801-9c047a232f87","method":"GET"},"requestId":"8e2ba597-8eb5-47b0-9801-9c047a232f87","res":{"statusCode":200},"responseTime":24,"msg":"request completed"}
+{"level":30,"time":1793550005319,"service":"devsync-api","req":{"id":"2945139f-dc19-4203-9a91-1e2aefce8d0c","method":"GET"},"requestId":"2945139f-dc19-4203-9a91-1e2aefce8d0c","res":{"statusCode":200},"responseTime":21,"msg":"request completed"}
+{"level":30,"time":1793550005441,"service":"devsync-api","req":{"id":"27e68bf8-198a-4d0a-8098-fba4b41cb7b4","method":"GET"},"requestId":"27e68bf8-198a-4d0a-8098-fba4b41cb7b4","res":{"statusCode":200},"responseTime":18,"msg":"request completed"}
+ GET /dashboard 200 in 79ms (next.js: 7ms, proxy.ts: 8ms, application-code: 63ms)
+{"level":30,"time":1793550007182,"service":"devsync-api","req":{"id":"42bc6f4b-f3c1-48b6-a829-d3c412892344","method":"GET"},"requestId":"42bc6f4b-f3c1-48b6-a829-d3c412892344","res":{"statusCode":200},"responseTime":18,"msg":"request completed"}
+{"level":30,"time":1793550007190,"service":"devsync-api","req":{"id":"474ce174-53b2-4680-92f4-e94159d62638","method":"GET"},"requestId":"474ce174-53b2-4680-92f4-e94159d62638","res":{"statusCode":200},"responseTime":7,"msg":"request completed"}
+light 390 loading: 0 axe violations; 0 incomplete
+{"level":30,"time":1793550007617,"service":"devsync-api","req":{"id":"04dc3c39-fc79-4d65-9c67-05f3bd693c1e","method":"GET"},"requestId":"04dc3c39-fc79-4d65-9c67-05f3bd693c1e","res":{"statusCode":200},"responseTime":23,"msg":"request completed"}
+{"level":30,"time":1793550007617,"service":"devsync-api","req":{"id":"b5aff3cc-8c3b-4199-9334-d72f264757f0","method":"GET"},"requestId":"b5aff3cc-8c3b-4199-9334-d72f264757f0","res":{"statusCode":200},"responseTime":27,"msg":"request completed"}
+{"level":30,"time":1793550007618,"service":"devsync-api","req":{"id":"03263ec1-cfe6-4ac7-b4da-32bf85f45426","method":"GET"},"requestId":"03263ec1-cfe6-4ac7-b4da-32bf85f45426","res":{"statusCode":200},"responseTime":27,"msg":"request completed"}
+{"level":30,"time":1793550007619,"service":"devsync-api","req":{"id":"669008d9-0814-4fd4-a7d0-191876267638","method":"GET"},"requestId":"669008d9-0814-4fd4-a7d0-191876267638","res":{"statusCode":200},"responseTime":27,"msg":"request completed"}
+{"level":30,"time":1793550007683,"service":"devsync-api","req":{"id":"047aaa2b-7f1d-4f05-b1eb-195b7d16b788","method":"GET"},"requestId":"047aaa2b-7f1d-4f05-b1eb-195b7d16b788","res":{"statusCode":200},"responseTime":18,"msg":"request completed"}
+{"level":30,"time":1793550007685,"service":"devsync-api","req":{"id":"6be2fed2-e497-4ef2-accf-7f9f3b74cd8d","method":"GET"},"requestId":"6be2fed2-e497-4ef2-accf-7f9f3b74cd8d","res":{"statusCode":200},"responseTime":18,"msg":"request completed"}
+{"level":30,"time":1793550007704,"service":"devsync-api","req":{"id":"3f6c6c78-9a75-4fdf-8bd4-91bf260f024a","method":"GET"},"requestId":"3f6c6c78-9a75-4fdf-8bd4-91bf260f024a","res":{"statusCode":200},"responseTime":35,"msg":"request completed"}
+{"level":30,"time":1793550007715,"service":"devsync-api","req":{"id":"c1688b33-e4fb-410c-8146-ddf27e41f2d5","method":"GET"},"requestId":"c1688b33-e4fb-410c-8146-ddf27e41f2d5","res":{"statusCode":304},"responseTime":26,"msg":"request completed"}
+{"level":30,"time":1793550007722,"service":"devsync-api","req":{"id":"d8cb8e02-9cae-4463-bcdc-7fe5d1dd7ae4","method":"GET"},"requestId":"d8cb8e02-9cae-4463-bcdc-7fe5d1dd7ae4","res":{"statusCode":304},"responseTime":35,"msg":"request completed"}
+{"level":30,"time":1793550007729,"service":"devsync-api","req":{"id":"ad3ae665-ce78-4c68-b770-b13a4ca034da","method":"GET"},"requestId":"ad3ae665-ce78-4c68-b770-b13a4ca034da","res":{"statusCode":304},"responseTime":23,"msg":"request completed"}
+light 390 ready: 0 axe violations; 1 incomplete
+light 390 create-dialog: 0 axe violations; 1 incomplete
+{"level":30,"time":1793550008636,"service":"devsync-api","req":{"id":"3dc34616-7dbd-49de-bd84-6fc77f9e8635","method":"GET"},"requestId":"3dc34616-7dbd-49de-bd84-6fc77f9e8635","res":{"statusCode":200},"responseTime":27,"msg":"request completed"}
+light 390 error-injected: 0 axe violations; 0 incomplete
+{"level":30,"time":1793550008868,"service":"devsync-api","req":{"id":"2b03830f-4f61-4c1f-83bf-7d5652374811","method":"GET"},"requestId":"2b03830f-4f61-4c1f-83bf-7d5652374811","res":{"statusCode":304},"responseTime":31,"msg":"request completed"}
+{"level":30,"time":1793550008901,"service":"devsync-api","req":{"id":"cee89cbb-0973-4686-bea6-03feac0e8305","method":"GET"},"requestId":"cee89cbb-0973-4686-bea6-03feac0e8305","res":{"statusCode":304},"responseTime":63,"msg":"request completed"}
+{"level":30,"time":1793550008936,"service":"devsync-api","req":{"id":"bbe06611-0210-455c-9dda-554866e65514","method":"GET"},"requestId":"bbe06611-0210-455c-9dda-554866e65514","res":{"statusCode":304},"responseTime":9,"msg":"request completed"}
+{"level":30,"time":1793550008936,"service":"devsync-api","req":{"id":"d84fb4ed-75e7-4c7a-8c75-c000cf2bcb09","method":"GET"},"requestId":"d84fb4ed-75e7-4c7a-8c75-c000cf2bcb09","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793550008938,"service":"devsync-api","req":{"id":"e8e39cf2-a055-4616-8796-26dcfc77ca06","method":"GET"},"requestId":"e8e39cf2-a055-4616-8796-26dcfc77ca06","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793550009067,"service":"devsync-api","req":{"id":"c3295595-f1bd-47ff-b4a3-51fb1fec2ec4","method":"GET"},"requestId":"c3295595-f1bd-47ff-b4a3-51fb1fec2ec4","res":{"statusCode":200},"responseTime":18,"msg":"request completed"}
+{"level":30,"time":1793550009088,"service":"devsync-api","req":{"id":"bc8d57d1-44eb-43b8-aeb2-47f9ced03448","method":"GET"},"requestId":"bc8d57d1-44eb-43b8-aeb2-47f9ced03448","res":{"statusCode":200},"responseTime":37,"msg":"request completed"}
+{"level":30,"time":1793550009131,"service":"devsync-api","req":{"id":"73e27627-6d5a-4075-bf46-a110aa9335da","method":"GET"},"requestId":"73e27627-6d5a-4075-bf46-a110aa9335da","res":{"statusCode":200},"responseTime":25,"msg":"request completed"}
+{"level":30,"time":1793550009132,"service":"devsync-api","req":{"id":"96ef7317-f9d9-4652-a5bc-9923c17f6935","method":"GET"},"requestId":"96ef7317-f9d9-4652-a5bc-9923c17f6935","res":{"statusCode":200},"responseTime":24,"msg":"request completed"}
+light 390 partial-error-injected: 0 axe violations; 2 incomplete
+{"level":30,"time":1793550009380,"service":"devsync-api","req":{"id":"715a1969-86b4-43ed-a346-84467b1c8b86","method":"GET"},"requestId":"715a1969-86b4-43ed-a346-84467b1c8b86","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793550009392,"service":"devsync-api","req":{"id":"f2232f28-5e61-4302-ba8f-d8f22f1cb597","method":"GET"},"requestId":"f2232f28-5e61-4302-ba8f-d8f22f1cb597","res":{"statusCode":304},"responseTime":24,"msg":"request completed"}
+{"level":30,"time":1793550009425,"service":"devsync-api","req":{"id":"78625448-d154-4d49-ae41-9514b15a8ae8","method":"GET"},"requestId":"78625448-d154-4d49-ae41-9514b15a8ae8","res":{"statusCode":304},"responseTime":25,"msg":"request completed"}
+{"level":30,"time":1793550009426,"service":"devsync-api","req":{"id":"5355cee3-fee1-48fb-a4d8-5e3a4e2740a2","method":"GET"},"requestId":"5355cee3-fee1-48fb-a4d8-5e3a4e2740a2","res":{"statusCode":304},"responseTime":19,"msg":"request completed"}
+{"level":30,"time":1793550009431,"service":"devsync-api","req":{"id":"96d962cf-9ae7-4f3e-9b05-21092a4f8cb1","method":"GET"},"requestId":"96d962cf-9ae7-4f3e-9b05-21092a4f8cb1","res":{"statusCode":304},"responseTime":27,"msg":"request completed"}
+  ✓  4 testing/browser/dashboard.spec.ts:93:9 › light 390 dashboard loading, content, filter, errors and dialog (4.1s)
+{"level":30,"time":1793550009681,"service":"devsync-api","req":{"id":"46f6cde5-abd1-4275-98e4-5c3468965d9d","method":"GET"},"requestId":"46f6cde5-abd1-4275-98e4-5c3468965d9d","res":{"statusCode":200},"responseTime":11,"msg":"request completed"}
+ GET /dashboard 200 in 54ms (next.js: 3ms, proxy.ts: 4ms, application-code: 47ms)
+{"level":30,"time":1793550011159,"service":"devsync-api","req":{"id":"8454b0d4-d59d-425b-b69b-d63dcc03a848","method":"GET"},"requestId":"8454b0d4-d59d-425b-b69b-d63dcc03a848","res":{"statusCode":200},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793550011174,"service":"devsync-api","req":{"id":"d4b8a8b5-57f8-4664-9096-d4987b42a8c9","method":"GET"},"requestId":"d4b8a8b5-57f8-4664-9096-d4987b42a8c9","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793550011181,"service":"devsync-api","req":{"id":"b935891f-e407-4b11-9e1c-ed44f1c1aa70","method":"GET"},"requestId":"b935891f-e407-4b11-9e1c-ed44f1c1aa70","res":{"statusCode":200},"responseTime":34,"msg":"request completed"}
+{"level":30,"time":1793550011211,"service":"devsync-api","req":{"id":"6af9bf5a-dcdb-4a73-a37e-51cde15e5887","method":"GET"},"requestId":"6af9bf5a-dcdb-4a73-a37e-51cde15e5887","res":{"statusCode":304},"responseTime":28,"msg":"request completed"}
+{"level":30,"time":1793550011257,"service":"devsync-api","req":{"id":"77a159cf-00f0-488c-adc6-b4beae9773b0","method":"GET"},"requestId":"77a159cf-00f0-488c-adc6-b4beae9773b0","res":{"statusCode":304},"responseTime":43,"msg":"request completed"}
+{"level":30,"time":1793550011258,"service":"devsync-api","req":{"id":"be2b3fa3-df82-461a-9919-0dce5fab4512","method":"GET"},"requestId":"be2b3fa3-df82-461a-9919-0dce5fab4512","res":{"statusCode":200},"responseTime":32,"msg":"request completed"}
+{"level":30,"time":1793550011259,"service":"devsync-api","req":{"id":"fce68873-fbaf-4d09-bb96-7d4a1bacda5e","method":"GET"},"requestId":"fce68873-fbaf-4d09-bb96-7d4a1bacda5e","res":{"statusCode":200},"responseTime":30,"msg":"request completed"}
+{"level":30,"time":1793550011263,"service":"devsync-api","req":{"id":"923cdf1f-f7d8-44e1-978e-00b282f1ef52","method":"GET"},"requestId":"923cdf1f-f7d8-44e1-978e-00b282f1ef52","res":{"statusCode":200},"responseTime":31,"msg":"request completed"}
+{"level":30,"time":1793550011290,"service":"devsync-api","req":{"id":"23179bee-4093-4f8e-923d-609028d9c604","method":"GET"},"requestId":"23179bee-4093-4f8e-923d-609028d9c604","res":{"statusCode":304},"responseTime":26,"msg":"request completed"}
+{"level":30,"time":1793550011290,"service":"devsync-api","req":{"id":"6d5f49a3-ca93-4935-be85-f85a60facf62","method":"GET"},"requestId":"6d5f49a3-ca93-4935-be85-f85a60facf62","res":{"statusCode":304},"responseTime":23,"msg":"request completed"}
+{"level":30,"time":1793550011294,"service":"devsync-api","req":{"id":"ca1e89a9-926b-4454-9892-d5316a616ae1","method":"GET"},"requestId":"ca1e89a9-926b-4454-9892-d5316a616ae1","res":{"statusCode":304},"responseTime":34,"msg":"request completed"}
+{"level":30,"time":1793550011305,"service":"devsync-api","req":{"id":"cd98151e-f7c5-4d07-9455-df02b1c09f63","method":"GET"},"requestId":"cd98151e-f7c5-4d07-9455-df02b1c09f63","res":{"statusCode":304},"responseTime":37,"msg":"request completed"}
+{"level":30,"time":1793550011509,"service":"devsync-api","req":{"id":"3654c0b0-8ace-47d9-9bdb-7e532b1bf1ff","method":"POST"},"requestId":"3654c0b0-8ace-47d9-9bdb-7e532b1bf1ff","res":{"statusCode":201},"responseTime":36,"msg":"request completed"}
+{"level":30,"time":1793550012002,"service":"devsync-api","req":{"id":"6b9fecd9-4902-44b8-ab70-cb3194622357","method":"PATCH"},"requestId":"6b9fecd9-4902-44b8-ab70-cb3194622357","res":{"statusCode":200},"responseTime":16,"msg":"request completed"}
+{"level":30,"time":1793550012031,"service":"devsync-api","req":{"id":"8f49bd50-a9ad-4fcf-80b4-263825d2c3a8","method":"GET"},"requestId":"8f49bd50-a9ad-4fcf-80b4-263825d2c3a8","res":{"statusCode":200},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793550012243,"service":"devsync-api","req":{"id":"cf7bafe4-5e21-4436-b7c6-522d06833b5d","method":"POST"},"requestId":"cf7bafe4-5e21-4436-b7c6-522d06833b5d","res":{"statusCode":201},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793550012275,"service":"devsync-api","req":{"id":"5e8fc647-5a1d-46c5-b181-413be5fa6a8b","method":"GET"},"requestId":"5e8fc647-5a1d-46c5-b181-413be5fa6a8b","res":{"statusCode":200},"responseTime":10,"msg":"request completed"}
+{"level":30,"time":1793550012295,"service":"devsync-api","req":{"id":"8cffa45e-27d2-41f3-9e72-ff1da32c2719","method":"GET"},"requestId":"8cffa45e-27d2-41f3-9e72-ff1da32c2719","res":{"statusCode":200},"responseTime":25,"msg":"request completed"}
+{"level":30,"time":1793550012336,"service":"devsync-api","req":{"id":"19abfeb9-1e90-4fc9-b0b5-fc6af9654bf5","method":"GET"},"requestId":"19abfeb9-1e90-4fc9-b0b5-fc6af9654bf5","res":{"statusCode":200},"responseTime":30,"msg":"request completed"}
+{"level":30,"time":1793550012338,"service":"devsync-api","req":{"id":"e0b67941-156e-4e43-8610-3e07f49147d2","method":"GET"},"requestId":"e0b67941-156e-4e43-8610-3e07f49147d2","res":{"statusCode":200},"responseTime":25,"msg":"request completed"}
+{"level":30,"time":1793550012339,"service":"devsync-api","req":{"id":"692edbbe-fc67-45a6-98c5-11b068ed0bba","method":"GET"},"requestId":"692edbbe-fc67-45a6-98c5-11b068ed0bba","res":{"statusCode":200},"responseTime":32,"msg":"request completed"}
+{"level":30,"time":1793550012340,"service":"devsync-api","req":{"id":"183c7230-84f4-4552-9022-e7890b16bd51","method":"GET"},"requestId":"183c7230-84f4-4552-9022-e7890b16bd51","res":{"statusCode":200},"responseTime":29,"msg":"request completed"}
+{"level":30,"time":1793550012342,"service":"devsync-api","req":{"id":"1b37e6af-4f63-424f-a046-d0c6f80dd54e","method":"GET"},"requestId":"1b37e6af-4f63-424f-a046-d0c6f80dd54e","res":{"statusCode":304},"responseTime":26,"msg":"request completed"}
+{"level":30,"time":1793550012342,"service":"devsync-api","req":{"id":"b3ce2c6a-2c12-4753-a397-b0d51661d67b","method":"GET"},"requestId":"b3ce2c6a-2c12-4753-a397-b0d51661d67b","res":{"statusCode":200},"responseTime":18,"msg":"request completed"}
+ GET /dashboard 200 in 76ms (next.js: 3ms, proxy.ts: 5ms, application-code: 68ms)
+{"level":30,"time":1793550013841,"service":"devsync-api","req":{"id":"0e650fb1-8b07-4dc8-a4c9-894b14d2ea30","method":"GET"},"requestId":"0e650fb1-8b07-4dc8-a4c9-894b14d2ea30","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793550013850,"service":"devsync-api","req":{"id":"f241565b-5259-4dec-a4c6-5491feb6a7c5","method":"GET"},"requestId":"f241565b-5259-4dec-a4c6-5491feb6a7c5","res":{"statusCode":304},"responseTime":8,"msg":"request completed"}
+{"level":30,"time":1793550013866,"service":"devsync-api","req":{"id":"baac7ed2-5c4e-40b2-9e51-681866a3fcad","method":"GET"},"requestId":"baac7ed2-5c4e-40b2-9e51-681866a3fcad","res":{"statusCode":304},"responseTime":38,"msg":"request completed"}
+{"level":30,"time":1793550013903,"service":"devsync-api","req":{"id":"35754166-859a-4798-a952-ff42fd0bb24f","method":"GET"},"requestId":"35754166-859a-4798-a952-ff42fd0bb24f","res":{"statusCode":304},"responseTime":26,"msg":"request completed"}
+{"level":30,"time":1793550013905,"service":"devsync-api","req":{"id":"23ca565d-6876-4f67-b78c-72f207e720ae","method":"GET"},"requestId":"23ca565d-6876-4f67-b78c-72f207e720ae","res":{"statusCode":304},"responseTime":23,"msg":"request completed"}
+{"level":30,"time":1793550013908,"service":"devsync-api","req":{"id":"7377b36a-f1e0-40e5-82ee-af59149f7182","method":"GET"},"requestId":"7377b36a-f1e0-40e5-82ee-af59149f7182","res":{"statusCode":304},"responseTime":30,"msg":"request completed"}
+{"level":30,"time":1793550013910,"service":"devsync-api","req":{"id":"eb021935-bf76-48b4-954f-194625437fda","method":"GET"},"requestId":"eb021935-bf76-48b4-954f-194625437fda","res":{"statusCode":304},"responseTime":20,"msg":"request completed"}
+{"level":30,"time":1793550013921,"service":"devsync-api","req":{"id":"36d8f782-cdaa-4610-abbf-1457abd840a1","method":"GET"},"requestId":"36d8f782-cdaa-4610-abbf-1457abd840a1","res":{"statusCode":304},"responseTime":51,"msg":"request completed"}
+{"level":30,"time":1793550013921,"service":"devsync-api","req":{"id":"1e159c19-3739-48f0-941c-0ae53a941d26","method":"GET"},"requestId":"1e159c19-3739-48f0-941c-0ae53a941d26","res":{"statusCode":304},"responseTime":37,"msg":"request completed"}
+{"level":30,"time":1793550013924,"service":"devsync-api","req":{"id":"9e1ab290-face-4551-b56a-c1712e9f686e","method":"GET"},"requestId":"9e1ab290-face-4551-b56a-c1712e9f686e","res":{"statusCode":304},"responseTime":18,"msg":"request completed"}
+{"level":30,"time":1793550013950,"service":"devsync-api","req":{"id":"99aa59a9-125d-4810-a46f-3457a2928b03","method":"GET"},"requestId":"99aa59a9-125d-4810-a46f-3457a2928b03","res":{"statusCode":304},"responseTime":28,"msg":"request completed"}
+{"level":30,"time":1793550014006,"service":"devsync-api","req":{"id":"755e85e2-e279-441f-b2ff-b7192c7ab22f","method":"GET"},"requestId":"755e85e2-e279-441f-b2ff-b7192c7ab22f","res":{"statusCode":304},"responseTime":42,"msg":"request completed"}
+{"level":30,"time":1793550014011,"service":"devsync-api","req":{"id":"257bf3aa-2f14-4226-9fe1-adb0d924e8d8","method":"GET"},"requestId":"257bf3aa-2f14-4226-9fe1-adb0d924e8d8","res":{"statusCode":304},"responseTime":43,"msg":"request completed"}
+{"level":30,"time":1793550014012,"service":"devsync-api","req":{"id":"d4bce743-cb1f-411e-b6b6-d1413886ef4c","method":"GET"},"requestId":"d4bce743-cb1f-411e-b6b6-d1413886ef4c","res":{"statusCode":304},"responseTime":39,"msg":"request completed"}
+{"level":30,"time":1793550014017,"service":"devsync-api","req":{"id":"bb09c6b4-03a8-48a6-81ca-ef6b5c89ab00","method":"GET"},"requestId":"bb09c6b4-03a8-48a6-81ca-ef6b5c89ab00","res":{"statusCode":304},"responseTime":40,"msg":"request completed"}
+{"level":30,"time":1793550014020,"service":"devsync-api","req":{"id":"df8c87da-5908-494f-ad3c-5a0dc6a7f378","method":"GET"},"requestId":"df8c87da-5908-494f-ad3c-5a0dc6a7f378","res":{"statusCode":304},"responseTime":31,"msg":"request completed"}
+{"level":30,"time":1793550014027,"service":"devsync-api","req":{"id":"9ae759c2-d0f1-46cb-9acd-80b9cac9df86","method":"GET"},"requestId":"9ae759c2-d0f1-46cb-9acd-80b9cac9df86","res":{"statusCode":304},"responseTime":18,"msg":"request completed"}
+{"level":30,"time":1793550014029,"service":"devsync-api","req":{"id":"5cea53a3-4eee-49b9-aa8a-9bc7866bcbe7","method":"GET"},"requestId":"5cea53a3-4eee-49b9-aa8a-9bc7866bcbe7","res":{"statusCode":304},"responseTime":78,"msg":"request completed"}
+  ✓  5 testing/browser/dashboard.spec.ts:163:5 › main flow creates a document, undoes via archival, and creates a persisted workspace (4.6s)
+{"level":30,"time":1793550014247,"service":"devsync-api","req":{"id":"d39e2b12-2490-4421-94c1-55607f2e68e4","method":"GET"},"requestId":"d39e2b12-2490-4421-94c1-55607f2e68e4","res":{"statusCode":200},"responseTime":17,"msg":"request completed"}
+{"level":30,"time":1793550014279,"service":"devsync-api","req":{"id":"416dea7a-86f8-4015-a282-32a7ee8ed108","method":"GET"},"requestId":"416dea7a-86f8-4015-a282-32a7ee8ed108","res":{"statusCode":200},"responseTime":12,"msg":"request completed"}
+ GET /dashboard 200 in 72ms (next.js: 5ms, proxy.ts: 6ms, application-code: 61ms)
+{"level":30,"time":1793550016029,"service":"devsync-api","req":{"id":"265cdc0b-2236-4a20-8c16-b5cba0730c9c","method":"GET"},"requestId":"265cdc0b-2236-4a20-8c16-b5cba0730c9c","res":{"statusCode":200},"responseTime":12,"msg":"request completed"}
+{"level":30,"time":1793550016037,"service":"devsync-api","req":{"id":"57ecc4ba-25e8-4c71-a4c1-815d98fbb9ab","method":"GET"},"requestId":"57ecc4ba-25e8-4c71-a4c1-815d98fbb9ab","res":{"statusCode":304},"responseTime":7,"msg":"request completed"}
+{"level":30,"time":1793550016040,"service":"devsync-api","req":{"id":"41b27026-b224-4464-8edb-402285ccc3da","method":"GET"},"requestId":"41b27026-b224-4464-8edb-402285ccc3da","res":{"statusCode":200},"responseTime":21,"msg":"request completed"}
+{"level":30,"time":1793550016060,"service":"devsync-api","req":{"id":"c4c25622-a1f0-43b1-ad52-ea6f75c37850","method":"GET"},"requestId":"c4c25622-a1f0-43b1-ad52-ea6f75c37850","res":{"statusCode":304},"responseTime":19,"msg":"request completed"}
+{"level":30,"time":1793550016086,"service":"devsync-api","req":{"id":"f443fa6d-e1ad-44ac-98e6-ed3746c62a2b","method":"GET"},"requestId":"f443fa6d-e1ad-44ac-98e6-ed3746c62a2b","res":{"statusCode":304},"responseTime":24,"msg":"request completed"}
+{"level":30,"time":1793550016089,"service":"devsync-api","req":{"id":"32d92d89-5492-4675-ac43-251193ab039a","method":"GET"},"requestId":"32d92d89-5492-4675-ac43-251193ab039a","res":{"statusCode":200},"responseTime":17,"msg":"request completed"}
+{"level":30,"time":1793550016090,"service":"devsync-api","req":{"id":"628eda8c-e0db-4057-93fd-326711c29738","method":"GET"},"requestId":"628eda8c-e0db-4057-93fd-326711c29738","res":{"statusCode":200},"responseTime":20,"msg":"request completed"}
+{"level":30,"time":1793550016093,"service":"devsync-api","req":{"id":"7402d69a-6cb7-4a83-bc75-d8f8f1a29668","method":"GET"},"requestId":"7402d69a-6cb7-4a83-bc75-d8f8f1a29668","res":{"statusCode":200},"responseTime":17,"msg":"request completed"}
+{"level":30,"time":1793550016121,"service":"devsync-api","req":{"id":"f2fa7313-2dea-4e84-8db8-e1146f22b307","method":"GET"},"requestId":"f2fa7313-2dea-4e84-8db8-e1146f22b307","res":{"statusCode":304},"responseTime":19,"msg":"request completed"}
+{"level":30,"time":1793550016122,"service":"devsync-api","req":{"id":"f90718c3-2e36-44a0-9192-27b587767c94","method":"GET"},"requestId":"f90718c3-2e36-44a0-9192-27b587767c94","res":{"statusCode":304},"responseTime":35,"msg":"request completed"}
+{"level":30,"time":1793550016123,"service":"devsync-api","req":{"id":"b902d1c6-7c35-48ec-ae1b-e79ff1e15cfc","method":"GET"},"requestId":"b902d1c6-7c35-48ec-ae1b-e79ff1e15cfc","res":{"statusCode":304},"responseTime":20,"msg":"request completed"}
+{"level":30,"time":1793550016125,"service":"devsync-api","req":{"id":"7d452f4e-1dbc-4fb2-b5b2-4194ccf52281","method":"GET"},"requestId":"7d452f4e-1dbc-4fb2-b5b2-4194ccf52281","res":{"statusCode":304},"responseTime":20,"msg":"request completed"}
+{"level":30,"time":1793550016253,"service":"devsync-api","req":{"id":"1561385c-77b0-4819-98c7-cc94e50d1df9","method":"GET"},"requestId":"1561385c-77b0-4819-98c7-cc94e50d1df9","res":{"statusCode":200},"responseTime":21,"msg":"request completed"}
+{"level":30,"time":1793550016282,"service":"devsync-api","req":{"id":"2ae8d926-3df8-4978-b5c3-19a7b01ead0e","method":"DELETE"},"requestId":"2ae8d926-3df8-4978-b5c3-19a7b01ead0e","res":{"statusCode":200},"responseTime":23,"msg":"request completed"}
+ GET /dashboard 200 in 63ms (next.js: 4ms, proxy.ts: 7ms, application-code: 52ms)
+{"level":30,"time":1793550017755,"service":"devsync-api","req":{"id":"ab1b219a-9bb1-4929-a590-ca6865ae7731","method":"GET"},"requestId":"ab1b219a-9bb1-4929-a590-ca6865ae7731","res":{"statusCode":200},"responseTime":11,"msg":"request completed"}
+{"level":30,"time":1793550017755,"service":"devsync-api","req":{"id":"d359fc2d-045f-4c0b-86c0-37207758a346","method":"GET"},"requestId":"d359fc2d-045f-4c0b-86c0-37207758a346","res":{"statusCode":200},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793550017764,"service":"devsync-api","req":{"id":"e81d196f-3357-4dda-8776-07f922514e57","method":"GET"},"requestId":"e81d196f-3357-4dda-8776-07f922514e57","res":{"statusCode":304},"responseTime":7,"msg":"request completed"}
+{"level":30,"time":1793550017765,"service":"devsync-api","req":{"id":"b0dd5378-7f31-4ad2-9a02-ef844ded45bd","method":"GET"},"requestId":"b0dd5378-7f31-4ad2-9a02-ef844ded45bd","res":{"statusCode":304},"responseTime":7,"msg":"request completed"}
+{"level":30,"time":1793550017775,"service":"devsync-api","req":{"id":"71e5c480-4a2d-46b3-a661-9728d8c474f1","method":"GET"},"requestId":"71e5c480-4a2d-46b3-a661-9728d8c474f1","res":{"statusCode":304},"responseTime":9,"msg":"request completed"}
+{"level":30,"time":1793550017785,"service":"devsync-api","req":{"id":"fb871d38-3790-4f51-a6c5-b00eff8da4ed","method":"GET"},"requestId":"fb871d38-3790-4f51-a6c5-b00eff8da4ed","res":{"statusCode":304},"responseTime":9,"msg":"request completed"}
+dark 360 empty-account: 0 axe violations; 1 incomplete
+ GET /dashboard 200 in 56ms (next.js: 3ms, proxy.ts: 6ms, application-code: 47ms)
+{"level":30,"time":1793550019649,"service":"devsync-api","req":{"id":"914adf63-db2b-433b-a168-c5a1566a6fe3","method":"GET"},"requestId":"914adf63-db2b-433b-a168-c5a1566a6fe3","res":{"statusCode":304},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793550019649,"service":"devsync-api","req":{"id":"bdb7d1c4-2880-4924-acc5-139d57cfadce","method":"GET"},"requestId":"bdb7d1c4-2880-4924-acc5-139d57cfadce","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793550019673,"service":"devsync-api","req":{"id":"27a16c00-db08-4821-9bd7-2bbcba880be3","method":"GET"},"requestId":"27a16c00-db08-4821-9bd7-2bbcba880be3","res":{"statusCode":304},"responseTime":23,"msg":"request completed"}
+{"level":30,"time":1793550019674,"service":"devsync-api","req":{"id":"6c43ee4e-7650-4db8-bcf2-2d8da38f8e9a","method":"GET"},"requestId":"6c43ee4e-7650-4db8-bcf2-2d8da38f8e9a","res":{"statusCode":304},"responseTime":23,"msg":"request completed"}
+{"level":30,"time":1793550019690,"service":"devsync-api","req":{"id":"b3a4046b-c650-421b-a7b1-102b3ee16247","method":"GET"},"requestId":"b3a4046b-c650-421b-a7b1-102b3ee16247","res":{"statusCode":304},"responseTime":12,"msg":"request completed"}
+{"level":30,"time":1793550019706,"service":"devsync-api","req":{"id":"1668ad07-993d-463a-91eb-4aa9eebbbf25","method":"GET"},"requestId":"1668ad07-993d-463a-91eb-4aa9eebbbf25","res":{"statusCode":304},"responseTime":14,"msg":"request completed"}
+light 360 empty-account: 0 axe violations; 1 incomplete
+{"level":30,"time":1793550020124,"service":"devsync-api","req":{"id":"cfdd7423-23e1-4298-9259-b8c09b16e8ef","method":"POST"},"requestId":"cfdd7423-23e1-4298-9259-b8c09b16e8ef","res":{"statusCode":201},"responseTime":30,"msg":"request completed"}
+  ✓  6 testing/browser/dashboard.spec.ts:201:5 › viewer has no writer action, and an actual empty account is useful at 360px (6.0s)
+
+
+  1) testing/browser/dashboard.spec.ts:93:9 › dark 1440 dashboard loading, content, filter, errors and dialog 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "aria-prohibited-attr: .lg\\:flex",
+    + ]
+
+      85 |       (item) => `${item.id}: ${item.nodes.map((node) => node.target.join(' ')).join(', ')}`,
+      86 |     ),
+    > 87 |   ).toEqual([]);
+         |     ^
+      88 |   expect(report.bounds.page).toBeLessThanOrEqual(report.bounds.viewport);
+      89 |   expect(report.bounds.scroll || 0).toBeLessThanOrEqual((report.bounds.main || width) + 1);
+      90 | }
+        at capture (/home/kevin/devsync/backend/testing/browser/dashboard.spec.ts:87:5)
+        at /home/kevin/devsync/backend/testing/browser/dashboard.spec.ts:115:9
+
+    Error Context: test-results/dashboard-dark-1440-dashbo-f1be8-nt-filter-errors-and-dialog/error-context.md
+
+  2) testing/browser/dashboard.spec.ts:93:9 › light 1440 dashboard loading, content, filter, errors and dialog 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "aria-prohibited-attr: .lg\\:flex",
+    + ]
+
+      85 |       (item) => `${item.id}: ${item.nodes.map((node) => node.target.join(' ')).join(', ')}`,
+      86 |     ),
+    > 87 |   ).toEqual([]);
+         |     ^
+      88 |   expect(report.bounds.page).toBeLessThanOrEqual(report.bounds.viewport);
+      89 |   expect(report.bounds.scroll || 0).toBeLessThanOrEqual((report.bounds.main || width) + 1);
+      90 | }
+        at capture (/home/kevin/devsync/backend/testing/browser/dashboard.spec.ts:87:5)
+        at /home/kevin/devsync/backend/testing/browser/dashboard.spec.ts:115:9
+
+    Error Context: test-results/dashboard-light-1440-dashb-58916-nt-filter-errors-and-dialog/error-context.md
+
+  2 failed
+    testing/browser/dashboard.spec.ts:93:9 › dark 1440 dashboard loading, content, filter, errors and dialog 
+    testing/browser/dashboard.spec.ts:93:9 › light 1440 dashboard loading, content, filter, errors and dialog 
+  4 passed (30.2s)
+[?25h
+Browser orchestration command exited 1

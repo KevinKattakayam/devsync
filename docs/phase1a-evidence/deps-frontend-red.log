@@ -1,0 +1,78 @@
+
+> frontend@0.1.0 test
+> node --test tests/*.test.mjs
+
+TAP version 13
+# Subtest: I01 Next meets the current critical advisory remediation floor
+not ok 1 - I01 Next meets the current critical advisory remediation floor
+  ---
+  duration_ms: 5.542887
+  type: 'test'
+  location: '/home/kevin/devsync/frontend/tests/dependency-policy.test.mjs:6:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(major * 1000000 + minor * 1000 + patch >= 16004001)
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///home/kevin/devsync/frontend/tests/dependency-policy.test.mjs:8:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: I01 unused NextAuth is absent from the installed frontend
+not ok 2 - I01 unused NextAuth is absent from the installed frontend
+  ---
+  duration_ms: 1.528608
+  type: 'test'
+  location: '/home/kevin/devsync/frontend/tests/dependency-policy.test.mjs:10:1'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    code: 'MODULE_NOT_FOUND'
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (file:///home/kevin/devsync/frontend/tests/dependency-policy.test.mjs:11:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: code blocks and inline code escape HTML
+ok 3 - code blocks and inline code escape HTML
+  ---
+  duration_ms: 1.036535
+  type: 'test'
+  ...
+# Subtest: E02 treats ordinary HTML, handlers and malformed tags as inert text
+ok 4 - E02 treats ordinary HTML, handlers and malformed tags as inert text
+  ---
+  duration_ms: 0.36794
+  type: 'test'
+  ...
+# Subtest: E02 escapes HTML inside headings, lists and table cells
+ok 5 - E02 escapes HTML inside headings, lists and table cells
+  ---
+  duration_ms: 0.242959
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 3
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 401.286673

@@ -1,0 +1,13 @@
+# Phase 1b evidence
+
+Use `delivery-results.json` for the final gate summary. It selects backend `final-retry-results.json` and frontend `final-results.json`; all required install/lint/format/type/test/build steps exit0. Backend has 13 suites/83 tests. Frontend retains original Node tests plus four component tests. `delivery-openapi-check.log` verifies contract drift; `ci-yaml-check.log` is local parsing, not a GitHub run. No authenticated Playwright E2E run is claimed.
+
+`final-coverage-summary.json` is copied from the actual final Jest report, covering all production source. `final-*-npm-audit.json` are real npm audit outputs with nonzero exits for remaining advisories. `legacy-type-escape-inventory.json` is an AST scan, not an assertion that all legacy code meets a no-any policy.
+
+Earlier baseline logs are under `../phase1a-evidence/phase1b-baseline-*`; realtime/reliability/quality attempt logs in this directory retain actual failures and retries. Do not treat a failed or interrupted run as passing. The initial combined final backend install timed out: clock rollback left Node header-cache timestamps in the future, and ssh2's native Makefile repeatedly regenerated. With permission, 3326 future timestamps only under `/home/kevin/.cache/node-gyp/22.23.2` were normalized; file contents were unchanged. The complete backend retry passed, without disabling scripts or tests. Full repeated make warnings remain in `final-backend-install.log`.
+
+`original-main-ui-results.json` records 28 route/viewport attempts. `original-main-home-retry.json` records the two HTTP500 landing retries. Runtime/install/capture/seed logs retain the original-main behavior; see `../ui/before/README.md` for the exact coverage limits. Main's seed source is missing, protected pages redirect to login, and populated interiors were not captured. The first temporary worktree/processes were lost during an execution-environment restart; a detached persistent worktree was used for the completed capture. Its application tree remains unchanged.
+
+Scripts are checked in to make the method reviewable. Run captures only after dependency installation finishes; reinstalling backend dependencies concurrently can remove the Playwright module. Snapshot metadata and logs contain no intentionally stored auth session, cookies or storage-state files. The worktree configuration and dependencies remain ignored.
+
+Raw stdout is retained verbatim, including terminal carriage returns, trailing spaces and blank lines. Git whitespace checks flag those log bytes; application formatting checks pass. These artifacts were not whitespace-normalized to hide or alter output.

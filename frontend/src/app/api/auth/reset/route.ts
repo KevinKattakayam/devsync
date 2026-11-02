@@ -1,10 +1,16 @@
-import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
+import { NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
+import { resetDestination } from '@/lib/safe-redirect';
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
-  const redirectTo = url.searchParams.get("redirect") || "/login";
-  const response = NextResponse.redirect(new URL(redirectTo, request.url));
+  const destination = resetDestination(url.searchParams.get('redirect'), request.url);
+  const response = NextResponse.redirect(destination);
+  // Relative Location preserves the browser origin even when the server URL is normalized by a proxy.
+  response.headers.set(
+    'Location',
+    `${destination.pathname}${destination.search}${destination.hash}`,
+  );
 
   const cookieStore = await cookies();
   const allCookies = cookieStore.getAll();
@@ -13,8 +19,8 @@ export async function GET(request: Request) {
   for (const cookie of allCookies) {
     response.cookies.set({
       name: cookie.name,
-      value: "",
-      path: "/",
+      value: '',
+      path: '/',
       maxAge: 0,
       expires: new Date(0),
     });
@@ -22,19 +28,19 @@ export async function GET(request: Request) {
 
   // Explicitly clear standard Clerk cookies including HttpOnly variants
   const clerkCookieNames = [
-    "__session",
-    "__client_uat",
-    "__clerk_db_jwt",
-    "__clerk_handshake",
-    "__clerk_auth_status",
-    "__clerk_auth_reason",
+    '__session',
+    '__client_uat',
+    '__clerk_db_jwt',
+    '__clerk_handshake',
+    '__clerk_auth_status',
+    '__clerk_auth_reason',
   ];
 
   for (const name of clerkCookieNames) {
     response.cookies.set({
       name,
-      value: "",
-      path: "/",
+      value: '',
+      path: '/',
       maxAge: 0,
       expires: new Date(0),
     });

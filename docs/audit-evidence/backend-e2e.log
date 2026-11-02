@@ -1,0 +1,11 @@
+
+> devsync-backend@1.0.0 test:e2e
+> playwright test -c playwright.config.ts
+
+
+Running 2 tests using 2 workers
+
+  -  1 [chromium] › e2e/offline-sync-billing.spec.ts:8:7 › offline CRDT and billing reconciliation › retains five local tasks and document text while offline, then exposes payment block without data loss
+  -  2 [chromium] › e2e/workspace-flow.spec.ts:8:7 › local-first workspace flow › creates, completes, and persists an AI task summary document
+
+  2 skipped

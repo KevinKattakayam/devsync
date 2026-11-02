@@ -1,0 +1,146 @@
+bootstrap-1  | Local credentials initialized; values are not logged.
+initialize-1  | Prisma schema loaded from prisma/schema.prisma
+initialize-1  | Datasource "db": PostgreSQL database "devsync", schema "public" at "postgres:5432"
+initialize-1  | 
+initialize-1  | 14 migrations found in prisma/migrations
+initialize-1  | 
+initialize-1  | Applying migration `20260729000000_baseline`
+initialize-1  | Applying migration `20260729180000_enterprise_platform`
+initialize-1  | Applying migration `20260815000000_phase_3_tenant_rls`
+initialize-1  | Applying migration `20260815001000_scim_provisioning`
+initialize-1  | Applying migration `20260815002000_commercial_billing`
+initialize-1  | Applying migration `20261031000000_tenant_indexes`
+initialize-1  | Applying migration `20261031010000_crdt_journal`
+initialize-1  | Applying migration `202611010001_canonical_revision`
+initialize-1  | Applying migration `202611010002_embedding_authority`
+initialize-1  | Applying migration `202611010003_atomic_create_idempotency`
+initialize-1  | Applying migration `202611010004_workspace_invitations`
+initialize-1  | Applying migration `202611020001_decision_receipts`
+initialize-1  | Applying migration `202611020002_snippet_safety`
+initialize-1  | Applying migration `202611020003_async_digest`
+initialize-1  | 
+initialize-1  | The following migration(s) have been applied:
+initialize-1  | 
+initialize-1  | migrations/
+initialize-1  |   └─ 20260729000000_baseline/
+initialize-1  |     └─ migration.sql
+initialize-1  |   └─ 20260729180000_enterprise_platform/
+initialize-1  |     └─ migration.sql
+initialize-1  |   └─ 20260815000000_phase_3_tenant_rls/
+initialize-1  |     └─ migration.sql
+initialize-1  |   └─ 20260815001000_scim_provisioning/
+initialize-1  |     └─ migration.sql
+initialize-1  |   └─ 20260815002000_commercial_billing/
+initialize-1  |     └─ migration.sql
+initialize-1  |   └─ 20261031000000_tenant_indexes/
+initialize-1  |     └─ migration.sql
+initialize-1  |   └─ 20261031010000_crdt_journal/
+initialize-1  |     └─ migration.sql
+initialize-1  |   └─ 202611010001_canonical_revision/
+initialize-1  |     └─ migration.sql
+initialize-1  |   └─ 202611010002_embedding_authority/
+initialize-1  |     └─ migration.sql
+initialize-1  |   └─ 202611010003_atomic_create_idempotency/
+initialize-1  |     └─ migration.sql
+initialize-1  |   └─ 202611010004_workspace_invitations/
+initialize-1  |     └─ migration.sql
+initialize-1  |   └─ 202611020001_decision_receipts/
+initialize-1  |     └─ migration.sql
+initialize-1  |   └─ 202611020002_snippet_safety/
+initialize-1  |     └─ migration.sql
+initialize-1  |   └─ 202611020003_async_digest/
+initialize-1  |     └─ migration.sql
+initialize-1  |       
+initialize-1  | All migrations have been successfully applied.
+initialize-1  | Sample workspace seeded. Sign in with the supplied Clerk test identities.
+initialize-1  | Migrations, sample seed and non-bypass runtime grants complete.
+frontend-1    | ▲ Next.js 16.4.3
+frontend-1    | - Local:         http://localhost:3000
+frontend-1    | - Network:       http://0.0.0.0:3000
+frontend-1    | ✓ Ready in 0ms
+frontend-1    | ✓ Running next.config took 1.5ms
+redis-1       | 1:C 02 Nov 2026 17:22:37.362 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+redis-1       | 1:C 02 Nov 2026 17:22:37.362 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis-1       | 1:C 02 Nov 2026 17:22:37.362 * Redis version=7.4.12, bits=64, commit=00000000, modified=0, pid=1, just started
+redis-1       | 1:C 02 Nov 2026 17:22:37.362 * Configuration loaded
+redis-1       | 1:M 02 Nov 2026 17:22:37.363 * Increased maximum number of open files to 10032 (it was originally set to 1024).
+redis-1       | 1:M 02 Nov 2026 17:22:37.363 * monotonic clock: POSIX clock_gettime
+redis-1       | 1:M 02 Nov 2026 17:22:37.364 * Running mode=standalone, port=6379.
+redis-1       | 1:M 02 Nov 2026 17:22:37.364 * Server initialized
+redis-1       | 1:M 02 Nov 2026 17:22:37.366 * Creating AOF base file appendonly.aof.1.base.rdb on server start
+redis-1       | 1:M 02 Nov 2026 17:22:37.370 * Creating AOF incr file appendonly.aof.1.incr.aof on server start
+redis-1       | 1:M 02 Nov 2026 17:22:37.370 * Ready to accept connections tcp
+postgres-1    | The files belonging to this database system will be owned by user "postgres".
+postgres-1    | This user must also own the server process.
+postgres-1    | 
+postgres-1    | The database cluster will be initialized with locale "en_US.utf8".
+postgres-1    | The default database encoding has accordingly been set to "UTF8".
+postgres-1    | The default text search configuration will be set to "english".
+postgres-1    | 
+backend-1     | {"level":30,"time":1793640169063,"service":"devsync-api","requestId":"system","port":"5000","msg":"API listening"}
+postgres-1    | Data page checksums are disabled.
+backend-1     | [Redis:primary] Connected
+postgres-1    | 
+backend-1     | [Redis:subscriber] Connected
+postgres-1    | fixing permissions on existing directory /var/lib/postgresql/data ... ok
+backend-1     | {"level":30,"time":1793640171218,"service":"devsync-api","req":{"id":"654319f2-6b74-4d43-b9d4-fae7d562eeea","method":"GET"},"requestId":"654319f2-6b74-4d43-b9d4-fae7d562eeea","res":{"statusCode":200},"responseTime":8,"msg":"request completed"}
+postgres-1    | creating subdirectories ... ok
+backend-1     | {"level":30,"time":1793640179125,"service":"devsync-api","req":{"id":"e6be6974-019c-4da1-b8e8-07af93844170","method":"GET"},"requestId":"e6be6974-019c-4da1-b8e8-07af93844170","res":{"statusCode":200},"responseTime":1,"msg":"request completed"}
+postgres-1    | selecting dynamic shared memory implementation ... posix
+backend-1     | {"level":30,"time":1793640179133,"service":"devsync-api","req":{"id":"e4f49ed9-8127-4360-9a95-e87c839b55dc","method":"GET"},"requestId":"e4f49ed9-8127-4360-9a95-e87c839b55dc","res":{"statusCode":401},"responseTime":5,"msg":"request completed"}
+postgres-1    | selecting default max_connections ... 100
+postgres-1    | selecting default shared_buffers ... 128MB
+backend-1     | {"level":30,"time":1793640179188,"service":"devsync-api","req":{"id":"6f2884e7-ca89-422a-ae5c-c05342d16772","method":"GET"},"requestId":"6f2884e7-ca89-422a-ae5c-c05342d16772","res":{"statusCode":503},"err":{"type":"HttpError"},"responseTime":53,"msg":"request errored"}
+postgres-1    | selecting default time zone ... Etc/UTC
+postgres-1    | creating configuration files ... ok
+postgres-1    | running bootstrap script ... ok
+postgres-1    | performing post-bootstrap initialization ... ok
+postgres-1    | syncing data to disk ... ok
+postgres-1    | initdb: warning: enabling "trust" authentication for local connections
+postgres-1    | 
+postgres-1    | initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+postgres-1    | 
+postgres-1    | Success. You can now start the database server using:
+postgres-1    | 
+postgres-1    |     pg_ctl -D /var/lib/postgresql/data -l logfile start
+postgres-1    | 
+postgres-1    | waiting for server to start....2026-11-02 17:22:38.894 UTC [47] LOG:  starting PostgreSQL 16.15 (Debian 16.15-1.pgdg12+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit
+postgres-1    | 2026-11-02 17:22:38.895 UTC [47] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+postgres-1    | 2026-11-02 17:22:38.901 UTC [50] LOG:  database system was shut down at 2026-11-02 17:22:38 UTC
+postgres-1    | 2026-11-02 17:22:38.907 UTC [47] LOG:  database system is ready to accept connections
+postgres-1    |  done
+postgres-1    | server started
+postgres-1    | CREATE DATABASE
+postgres-1    | 
+postgres-1    | 
+postgres-1    | /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+postgres-1    | 
+postgres-1    | waiting for server to shut down....2026-11-02 17:22:39.094 UTC [47] LOG:  received fast shutdown request
+postgres-1    | 2026-11-02 17:22:39.095 UTC [47] LOG:  aborting any active transactions
+postgres-1    | 2026-11-02 17:22:39.097 UTC [47] LOG:  background worker "logical replication launcher" (PID 53) exited with exit code 1
+postgres-1    | 2026-11-02 17:22:39.097 UTC [48] LOG:  shutting down
+postgres-1    | 2026-11-02 17:22:39.098 UTC [48] LOG:  checkpoint starting: shutdown immediate
+postgres-1    | 2026-11-02 17:22:39.130 UTC [48] LOG:  checkpoint complete: wrote 922 buffers (5.6%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.016 s, sync=0.011 s, total=0.034 s; sync files=301, longest=0.002 s, average=0.001 s; distance=4255 kB, estimate=4255 kB; lsn=0/1912110, redo lsn=0/1912110
+postgres-1    | 2026-11-02 17:22:39.135 UTC [47] LOG:  database system is shut down
+postgres-1    |  done
+postgres-1    | server stopped
+postgres-1    | 
+postgres-1    | PostgreSQL init process complete; ready for start up.
+postgres-1    | 
+postgres-1    | 2026-11-02 17:22:39.235 UTC [1] LOG:  starting PostgreSQL 16.15 (Debian 16.15-1.pgdg12+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit
+postgres-1    | 2026-11-02 17:22:39.235 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+postgres-1    | 2026-11-02 17:22:39.235 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+postgres-1    | 2026-11-02 17:22:39.243 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+postgres-1    | 2026-11-02 17:22:39.248 UTC [63] LOG:  database system was shut down at 2026-11-02 17:22:39 UTC
+postgres-1    | 2026-11-02 17:22:39.255 UTC [1] LOG:  database system is ready to accept connections
+worker-1      | 
+worker-1      |   ╔══════════════════════════════════════════╗
+worker-1      |   ║     ⚡ DevSync Worker Process           ║
+worker-1      |   ║     Environment: production          ║
+worker-1      |   ╚══════════════════════════════════════════╝
+worker-1      |   
+worker-1      | [Worker] Embedding worker started
+worker-1      | [Worker] Task completion agent started
+worker-1      | [Worker] PR summary agent started
+worker-1      | [Redis:primary] Connected
+worker-1      | [Redis:subscriber] Connected

@@ -1,0 +1,115 @@
+#0 building with "default" instance using docker driver
+
+#1 [base 1/3] FROM docker.io/library/node:22-alpine@sha256:fe4f6d74e20370acb04ad889077d14d0f64a9c8ea6a42bc60cddf1e844699914
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 1.91kB done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/node:22-alpine@sha256:fe4f6d74e20370acb04ad889077d14d0f64a9c8ea6a42bc60cddf1e844699914
+#3 DONE 0.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 157B done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 31.25kB 0.0s done
+#5 DONE 0.0s
+
+#6 [base 2/3] WORKDIR /app
+#6 CACHED
+
+#7 [dependencies 1/2] COPY package.json package-lock.json ./
+#7 CACHED
+
+#8 [dependencies 2/2] RUN npm ci
+#8 CACHED
+
+#9 [build 1/3] COPY . .
+#9 DONE 0.3s
+
+#10 [build 2/3] RUN npm run build -- --webpack
+#10 0.505 
+#10 0.505 > frontend@0.1.0 build
+#10 0.505 > next build --webpack
+#10 0.505 
+#10 1.543 ▲ Next.js 16.4.3 (webpack)
+#10 1.642 ✓ Running next.config.ts took 96ms
+#10 1.681 
+#10 1.770   Creating an optimized production build ...
+#10 53.89 ✓ Compiled successfully in 47s
+#10 53.89   Running TypeScript ...
+#10 66.85   Finished TypeScript in 13.0s ...
+#10 66.86   Collecting page data using 7 workers ...
+#10 71.05   Generating static pages using 7 workers (0/8) ...
+#10 71.97   Generating static pages using 7 workers (2/8) 
+#10 71.98   Generating static pages using 7 workers (4/8) 
+#10 71.98   Generating static pages using 7 workers (6/8) 
+#10 71.98 ✓ Generating static pages using 7 workers (8/8) in 926ms
+#10 73.78   Finalizing page optimization ...
+#10 73.78   Collecting build traces ...
+#10 104.7 
+#10 104.7 Route (app)
+#10 104.7 ┌ ○ /
+#10 104.7 ├ ○ /_not-found
+#10 104.7 ├ ƒ /api/auth/reset
+#10 104.7 ├ ƒ /api/superadmin/workspaces/[workspaceId]/kill-switch
+#10 104.7 ├ ƒ /dashboard
+#10 104.7 ├ ○ /design-system
+#10 104.7 ├ ƒ /healthz
+#10 104.7 ├ ƒ /invitations/[id]
+#10 104.7 ├ ƒ /login/[[...rest]]
+#10 104.7 ├ ƒ /settings/billing
+#10 104.7 ├ ƒ /sign-in/[[...rest]]
+#10 104.7 ├ ƒ /sign-up/[[...rest]]
+#10 104.7 ├ ƒ /signup/[[...rest]]
+#10 104.7 ├ ƒ /superadmin
+#10 104.7 ├ ƒ /workspace/[id]
+#10 104.7 ├ ƒ /workspace/[id]/decisions
+#10 104.7 ├ ƒ /workspace/[id]/digest
+#10 104.7 ├ ƒ /workspace/[id]/digest/activity/[activityId]
+#10 104.7 ├ ƒ /workspace/[id]/docs
+#10 104.7 ├ ƒ /workspace/[id]/docs/[docId]
+#10 104.7 ├ ƒ /workspace/[id]/kanban
+#10 104.7 ├ ƒ /workspace/[id]/settings
+#10 104.7 ├ ƒ /workspace/[id]/snippets
+#10 104.7 └ ƒ /workspace/[id]/snippets/safety
+#10 104.7 
+#10 104.7 
+#10 104.7 ƒ Proxy (Middleware)
+#10 104.7 
+#10 104.7 ○  (Static)   prerendered as static content
+#10 104.7 ƒ  (Dynamic)  server-rendered on demand
+#10 104.7 
+#10 DONE 105.0s
+
+#11 [build 3/3] RUN node -e "require('fs').writeFileSync('build-settings.json', JSON.stringify({mode:process.env.DEPLOYMENT_MODE,clerk:process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || ''}))"
+#11 DONE 0.7s
+
+#12 [runner 1/6] RUN rm -rf /usr/local/lib/node_modules/npm /opt/yarn-* /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/yarn /usr/local/bin/yarnpkg /usr/bin/mount /usr/bin/umount /usr/bin/nsenter /usr/bin/infocmp
+#12 CACHED
+
+#13 [runner 2/6] COPY --from=build --chown=node:node /app/public ./public
+#13 CACHED
+
+#14 [runner 3/6] COPY --from=build --chown=node:node /app/.next/standalone ./
+#14 DONE 2.1s
+
+#15 [runner 4/6] COPY --from=build --chown=node:node /app/.next/static ./.next/static
+#15 DONE 0.2s
+
+#16 [runner 5/6] COPY --from=build --chown=node:node /app/docker ./docker
+#16 DONE 0.1s
+
+#17 [runner 6/6] COPY --from=build --chown=node:node /app/build-settings.json ./build-settings.json
+#17 DONE 0.1s
+
+#18 exporting to image
+#18 exporting layers
+#18 exporting layers 0.6s done
+#18 writing image sha256:fabb0ec68023a4b2637d4041a958bbadcda7aace9fe073463b674db13f3430db
+#18 writing image sha256:fabb0ec68023a4b2637d4041a958bbadcda7aace9fe073463b674db13f3430db 0.0s done
+#18 naming to docker.io/library/devsync-frontend:runtime-followup done
+#18 DONE 0.7s

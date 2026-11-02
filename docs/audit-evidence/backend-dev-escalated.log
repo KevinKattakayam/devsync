@@ -1,0 +1,760 @@
+
+> devsync-backend@1.0.0 dev
+> tsx watch src/server.ts
+
+[Hocuspocus] Collaboration server initialized on /yjs*
+
+  ╔══════════════════════════════════════════╗
+  ║     🚀 DevSync Backend Server           ║
+  ║     Running on port 5000                ║
+  ║     Environment: development          ║
+  ╚══════════════════════════════════════════╝
+  
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 200ms (attempt 1)
+[Redis:subscriber] Connection closed
+[Redis:primary] Reconnecting in 200ms (attempt 1)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 400ms (attempt 2)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 400ms (attempt 2)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 600ms (attempt 3)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 600ms (attempt 3)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 800ms (attempt 4)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 800ms (attempt 4)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 1000ms (attempt 5)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 1000ms (attempt 5)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 1200ms (attempt 6)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 1200ms (attempt 6)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 1400ms (attempt 7)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 1400ms (attempt 7)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 1600ms (attempt 8)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 1600ms (attempt 8)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 1800ms (attempt 9)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 1800ms (attempt 9)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 2000ms (attempt 10)
+[Redis:primary] Connection closed
+[Redis:subscriber] Reconnecting in 2000ms (attempt 10)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 2200ms (attempt 11)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 2200ms (attempt 11)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 2400ms (attempt 12)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 2400ms (attempt 12)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 2600ms (attempt 13)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 2600ms (attempt 13)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 2800ms (attempt 14)
+[Redis:subscriber] Connection closed
+[Redis:primary] Reconnecting in 2800ms (attempt 14)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 3000ms (attempt 15)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 3000ms (attempt 15)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 3200ms (attempt 16)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 3200ms (attempt 16)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 3400ms (attempt 17)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 3400ms (attempt 17)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 3600ms (attempt 18)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 3600ms (attempt 18)
+[Redis:primary] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 3800ms (attempt 19)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 3800ms (attempt 19)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 4000ms (attempt 20)
+[Redis:subscriber] Connection closed
+[Redis:primary] Reconnecting in 4000ms (attempt 20)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 4200ms (attempt 21)
+[Redis:primary] Connection closed
+[Redis:subscriber] Reconnecting in 4200ms (attempt 21)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 4400ms (attempt 22)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 4400ms (attempt 22)
+[Redis:subscriber] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 4600ms (attempt 23)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 4600ms (attempt 23)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 4800ms (attempt 24)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 4800ms (attempt 24)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 25)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 25)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 26)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 26)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 27)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 27)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 28)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 28)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 29)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 29)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 30)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 30)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 31)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 31)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 32)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 32)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 33)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 33)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 34)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 34)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 35)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 35)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 36)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 36)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 37)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 37)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 38)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 38)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 39)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 39)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 40)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 40)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 41)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 41)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 42)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 42)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 43)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 43)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 44)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 44)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 45)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 45)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 46)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 46)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 47)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 47)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 48)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 48)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 49)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 49)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 50)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 50)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 51)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 51)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 52)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 52)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 53)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 53)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 54)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 54)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 55)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 55)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 56)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 56)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 57)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 57)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 58)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 58)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 59)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 59)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 60)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 60)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 61)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 61)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 62)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 62)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 63)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 63)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 64)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 64)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 65)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 65)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 66)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 66)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 67)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 67)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 68)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 68)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 69)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 69)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 70)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 70)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 71)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 71)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 72)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 72)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 73)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 73)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 74)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 74)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 75)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 75)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 76)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 76)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 77)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 77)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 78)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 78)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 79)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 79)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 80)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 80)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 81)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 81)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 82)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 82)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 83)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 83)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 84)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 84)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 85)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 85)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 86)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 86)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 87)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 87)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 88)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 88)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 89)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 89)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 90)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 90)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 91)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 91)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 92)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 92)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 93)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 93)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 94)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 94)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 95)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 95)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 96)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 96)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 97)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 97)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 98)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 98)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 99)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 99)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 100)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 100)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 101)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 101)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 102)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 102)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 103)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 103)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 104)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 104)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 105)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 105)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 106)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 106)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 107)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 107)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 108)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 108)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 109)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 109)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 110)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 110)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 111)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 111)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 112)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 112)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 113)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 113)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 114)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 114)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 115)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 115)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 116)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 116)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 117)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 117)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 118)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 118)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 119)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 119)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 120)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 120)
+[Redis:primary] Connection closed
+[Redis:subscriber] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:subscriber] Reconnecting in 5000ms (attempt 121)
+[Redis:subscriber] Connection closed
+[Redis:primary] Error: connect ECONNREFUSED 127.0.0.1:6379
+[Redis:primary] Reconnecting in 5000ms (attempt 121)
+[Redis:primary] Connection closed
+Attention: Clerk collects telemetry data from its SDKs when connected to development instances.
+The data collected is used to inform Clerk's product roadmap.
+To learn more, including how to opt-out from the telemetry program, visit: https://clerk.com/docs/telemetry.
+
+[0mGET /api/health [32m200[0m 4.009 ms - 54[0m
+prisma:error 
+Invalid `prisma.$queryRaw()` invocation:
+
+
+Can't reach database server at `localhost:5433`
+
+Please make sure your database server is running at `localhost:5433`.
+[0mGET /api/ready [31m503[0m 123.932 ms - 49[0m
+[Redis:subscriber] Connected
+[Redis:primary] Connected
+[Socket.io] Redis adapter attached — horizontal scaling enabled
+
+[Server] Received SIGINT, shutting down gracefully...
+
+[Server] Received SIGINT, shutting down gracefully...
+[Redis:primary] Connection closed
+[Redis:subscriber] Connection closed

@@ -1,0 +1,434 @@
+[
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "default",
+    "route": "/workspace/devsync-sample/docs/devsync-sample-doc",
+    "image": "dark-1440-default.png",
+    "axeViolations": 0,
+    "axeIncomplete": [
+      "aria-prohibited-attr"
+    ]
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "commands",
+    "route": "/workspace/devsync-sample/docs/devsync-sample-doc",
+    "image": "dark-1440-commands.png",
+    "axeViolations": 0,
+    "axeIncomplete": [
+      "aria-hidden-focus",
+      "color-contrast"
+    ]
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "commands-empty",
+    "route": "/workspace/devsync-sample/docs/devsync-sample-doc",
+    "image": "dark-1440-commands-empty.png",
+    "axeViolations": 0,
+    "axeIncomplete": [
+      "aria-hidden-focus"
+    ]
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "help",
+    "route": "/workspace/devsync-sample/docs/devsync-sample-doc",
+    "image": "dark-1440-help.png",
+    "axeViolations": 0,
+    "axeIncomplete": [
+      "aria-hidden-focus"
+    ]
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "focus",
+    "route": "/workspace/devsync-sample/docs/devsync-sample-doc",
+    "image": "dark-1440-focus.png",
+    "axeViolations": 0,
+    "axeIncomplete": [
+      "aria-prohibited-attr"
+    ]
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "user-menu",
+    "route": "/workspace/devsync-sample/docs/devsync-sample-doc",
+    "image": "dark-1440-user-menu.png",
+    "axeViolations": 0,
+    "axeIncomplete": []
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "workspace-menu",
+    "route": "/workspace/devsync-sample/docs/devsync-sample-doc",
+    "image": "dark-1440-workspace-menu.png",
+    "axeViolations": 0,
+    "axeIncomplete": []
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "document-tree",
+    "route": "/workspace/devsync-sample/docs/devsync-sample-doc",
+    "image": "dark-1440-document-tree.png",
+    "axeViolations": 0,
+    "axeIncomplete": [
+      "aria-prohibited-attr"
+    ]
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "collapsed",
+    "route": "/workspace/devsync-sample/docs/devsync-sample-doc",
+    "image": "dark-1440-collapsed.png",
+    "axeViolations": 0,
+    "axeIncomplete": [
+      "aria-prohibited-attr"
+    ]
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "copilot",
+    "route": "/workspace/devsync-sample/docs/devsync-sample-doc",
+    "image": "dark-1440-copilot.png",
+    "axeViolations": 0,
+    "axeIncomplete": [
+      "aria-hidden-focus",
+      "color-contrast"
+    ]
+  },
+  {
+    "theme": "dark",
+    "width": 390,
+    "state": "default",
+    "route": "/workspace/devsync-sample/docs/devsync-sample-doc",
+    "image": "dark-390-default.png",
+    "axeViolations": 0,
+    "axeIncomplete": [
+      "aria-prohibited-attr"
+    ]
+  },
+  {
+    "theme": "dark",
+    "width": 390,
+    "state": "commands",
+    "route": "/workspace/devsync-sample/docs/devsync-sample-doc",
+    "image": "dark-390-commands.png",
+    "axeViolations": 0,
+    "axeIncomplete": [
+      "aria-hidden-focus",
+      "color-contrast"
+    ]
+  },
+  {
+    "theme": "dark",
+    "width": 390,
+    "state": "commands-empty",
+    "route": "/workspace/devsync-sample/docs/devsync-sample-doc",
+    "image": "dark-390-commands-empty.png",
+    "axeViolations": 0,
+    "axeIncomplete": [
+      "aria-hidden-focus"
+    ]
+  },
+  {
+    "theme": "dark",
+    "width": 390,
+    "state": "help",
+    "route": "/workspace/devsync-sample/docs/devsync-sample-doc",
+    "image": "dark-390-help.png",
+    "axeViolations": 0,
+    "axeIncomplete": [
+      "aria-hidden-focus"
+    ]
+  },
+  {
+    "theme": "dark",
+    "width": 390,
+    "state": "focus",
+    "route": "/workspace/devsync-sample/docs/devsync-sample-doc",
+    "image": "dark-390-focus.png",
+    "axeViolations": 0,
+    "axeIncomplete": [
+      "aria-prohibited-attr"
+    ]
+  },
+  {
+    "theme": "dark",
+    "width": 390,
+    "state": "user-menu",
+    "route": "/workspace/devsync-sample/docs/devsync-sample-doc",
+    "image": "dark-390-user-menu.png",
+    "axeViolations": 0,
+    "axeIncomplete": []
+  },
+  {
+    "theme": "dark",
+    "width": 390,
+    "state": "mobile-navigation",
+    "route": "/workspace/devsync-sample/docs/devsync-sample-doc",
+    "image": "dark-390-mobile-navigation.png",
+    "axeViolations": 0,
+    "axeIncomplete": [
+      "aria-hidden-focus"
+    ]
+  },
+  {
+    "theme": "dark",
+    "width": 390,
+    "state": "document-tree",
+    "route": "/workspace/devsync-sample/docs/devsync-sample-doc",
+    "image": "dark-390-document-tree.png",
+    "axeViolations": 0,
+    "axeIncomplete": [
+      "aria-hidden-focus"
+    ]
+  },
+  {
+    "theme": "dark",
+    "width": 390,
+    "state": "workspace-menu",
+    "route": "/workspace/devsync-sample/docs/devsync-sample-doc",
+    "image": "dark-390-workspace-menu.png",
+    "axeViolations": 0,
+    "axeIncomplete": []
+  },
+  {
+    "theme": "dark",
+    "width": 390,
+    "state": "copilot",
+    "route": "/workspace/devsync-sample/docs/devsync-sample-doc",
+    "image": "dark-390-copilot.png",
+    "axeViolations": 0,
+    "axeIncomplete": [
+      "aria-hidden-focus",
+      "color-contrast"
+    ]
+  },
+  {
+    "theme": "light",
+    "width": 1440,
+    "state": "default",
+    "route": "/workspace/devsync-sample/docs/devsync-sample-doc",
+    "image": "light-1440-default.png",
+    "axeViolations": 0,
+    "axeIncomplete": [
+      "aria-prohibited-attr"
+    ]
+  },
+  {
+    "theme": "light",
+    "width": 1440,
+    "state": "commands",
+    "route": "/workspace/devsync-sample/docs/devsync-sample-doc",
+    "image": "light-1440-commands.png",
+    "axeViolations": 0,
+    "axeIncomplete": [
+      "aria-hidden-focus",
+      "color-contrast"
+    ]
+  },
+  {
+    "theme": "light",
+    "width": 1440,
+    "state": "commands-empty",
+    "route": "/workspace/devsync-sample/docs/devsync-sample-doc",
+    "image": "light-1440-commands-empty.png",
+    "axeViolations": 0,
+    "axeIncomplete": [
+      "aria-hidden-focus"
+    ]
+  },
+  {
+    "theme": "light",
+    "width": 1440,
+    "state": "help",
+    "route": "/workspace/devsync-sample/docs/devsync-sample-doc",
+    "image": "light-1440-help.png",
+    "axeViolations": 0,
+    "axeIncomplete": [
+      "aria-hidden-focus"
+    ]
+  },
+  {
+    "theme": "light",
+    "width": 1440,
+    "state": "focus",
+    "route": "/workspace/devsync-sample/docs/devsync-sample-doc",
+    "image": "light-1440-focus.png",
+    "axeViolations": 0,
+    "axeIncomplete": [
+      "aria-prohibited-attr"
+    ]
+  },
+  {
+    "theme": "light",
+    "width": 1440,
+    "state": "user-menu",
+    "route": "/workspace/devsync-sample/docs/devsync-sample-doc",
+    "image": "light-1440-user-menu.png",
+    "axeViolations": 0,
+    "axeIncomplete": []
+  },
+  {
+    "theme": "light",
+    "width": 1440,
+    "state": "workspace-menu",
+    "route": "/workspace/devsync-sample/docs/devsync-sample-doc",
+    "image": "light-1440-workspace-menu.png",
+    "axeViolations": 0,
+    "axeIncomplete": []
+  },
+  {
+    "theme": "light",
+    "width": 1440,
+    "state": "document-tree",
+    "route": "/workspace/devsync-sample/docs/devsync-sample-doc",
+    "image": "light-1440-document-tree.png",
+    "axeViolations": 0,
+    "axeIncomplete": [
+      "aria-prohibited-attr"
+    ]
+  },
+  {
+    "theme": "light",
+    "width": 1440,
+    "state": "collapsed",
+    "route": "/workspace/devsync-sample/docs/devsync-sample-doc",
+    "image": "light-1440-collapsed.png",
+    "axeViolations": 0,
+    "axeIncomplete": [
+      "aria-prohibited-attr"
+    ]
+  },
+  {
+    "theme": "light",
+    "width": 1440,
+    "state": "copilot",
+    "route": "/workspace/devsync-sample/docs/devsync-sample-doc",
+    "image": "light-1440-copilot.png",
+    "axeViolations": 0,
+    "axeIncomplete": [
+      "aria-hidden-focus",
+      "color-contrast"
+    ]
+  },
+  {
+    "theme": "light",
+    "width": 390,
+    "state": "default",
+    "route": "/workspace/devsync-sample/docs/devsync-sample-doc",
+    "image": "light-390-default.png",
+    "axeViolations": 0,
+    "axeIncomplete": [
+      "aria-prohibited-attr"
+    ]
+  },
+  {
+    "theme": "light",
+    "width": 390,
+    "state": "commands",
+    "route": "/workspace/devsync-sample/docs/devsync-sample-doc",
+    "image": "light-390-commands.png",
+    "axeViolations": 0,
+    "axeIncomplete": [
+      "aria-hidden-focus",
+      "color-contrast"
+    ]
+  },
+  {
+    "theme": "light",
+    "width": 390,
+    "state": "commands-empty",
+    "route": "/workspace/devsync-sample/docs/devsync-sample-doc",
+    "image": "light-390-commands-empty.png",
+    "axeViolations": 0,
+    "axeIncomplete": [
+      "aria-hidden-focus"
+    ]
+  },
+  {
+    "theme": "light",
+    "width": 390,
+    "state": "help",
+    "route": "/workspace/devsync-sample/docs/devsync-sample-doc",
+    "image": "light-390-help.png",
+    "axeViolations": 0,
+    "axeIncomplete": [
+      "aria-hidden-focus"
+    ]
+  },
+  {
+    "theme": "light",
+    "width": 390,
+    "state": "focus",
+    "route": "/workspace/devsync-sample/docs/devsync-sample-doc",
+    "image": "light-390-focus.png",
+    "axeViolations": 0,
+    "axeIncomplete": [
+      "aria-prohibited-attr"
+    ]
+  },
+  {
+    "theme": "light",
+    "width": 390,
+    "state": "user-menu",
+    "route": "/workspace/devsync-sample/docs/devsync-sample-doc",
+    "image": "light-390-user-menu.png",
+    "axeViolations": 0,
+    "axeIncomplete": []
+  },
+  {
+    "theme": "light",
+    "width": 390,
+    "state": "mobile-navigation",
+    "route": "/workspace/devsync-sample/docs/devsync-sample-doc",
+    "image": "light-390-mobile-navigation.png",
+    "axeViolations": 0,
+    "axeIncomplete": [
+      "aria-hidden-focus"
+    ]
+  },
+  {
+    "theme": "light",
+    "width": 390,
+    "state": "document-tree",
+    "route": "/workspace/devsync-sample/docs/devsync-sample-doc",
+    "image": "light-390-document-tree.png",
+    "axeViolations": 0,
+    "axeIncomplete": [
+      "aria-hidden-focus"
+    ]
+  },
+  {
+    "theme": "light",
+    "width": 390,
+    "state": "workspace-menu",
+    "route": "/workspace/devsync-sample/docs/devsync-sample-doc",
+    "image": "light-390-workspace-menu.png",
+    "axeViolations": 0,
+    "axeIncomplete": []
+  },
+  {
+    "theme": "light",
+    "width": 390,
+    "state": "copilot",
+    "route": "/workspace/devsync-sample/docs/devsync-sample-doc",
+    "image": "light-390-copilot.png",
+    "axeViolations": 0,
+    "axeIncomplete": [
+      "aria-hidden-focus",
+      "color-contrast"
+    ]
+  }
+]

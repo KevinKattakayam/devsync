@@ -1,10 +1,7 @@
-"use client";
+'use client';
 
-import { Board, Task } from "@/types";
-import {
-  BarChart3, X, TrendingUp, CheckCircle2, Clock,
-  AlertTriangle, ShieldCheck, Zap, Activity
-} from "lucide-react";
+import { Board } from '@/types';
+import { BarChart3, X, TrendingUp, CheckCircle2, ShieldCheck, Zap, Activity } from 'lucide-react';
 
 interface SprintAnalyticsModalProps {
   board: Board;
@@ -15,9 +12,12 @@ export function SprintAnalyticsModal({ board, onClose }: SprintAnalyticsModalPro
   const allTasks = board.columns.flatMap((c) => c.tasks);
   const totalTasks = allTasks.length;
 
-  const doneColumn = board.columns.find((c) => c.name.toLowerCase().includes("done") || c.name.toLowerCase().includes("complete"));
-  const inProgressColumn = board.columns.find((c) => c.name.toLowerCase().includes("progress") || c.name.toLowerCase().includes("active"));
-  const backlogColumn = board.columns.find((c) => c.name.toLowerCase().includes("backlog") || c.name.toLowerCase().includes("to do"));
+  const doneColumn = board.columns.find(
+    (c) => c.name.toLowerCase().includes('done') || c.name.toLowerCase().includes('complete'),
+  );
+  const inProgressColumn = board.columns.find(
+    (c) => c.name.toLowerCase().includes('progress') || c.name.toLowerCase().includes('active'),
+  );
 
   const doneCount = doneColumn ? doneColumn.tasks.length : 0;
   const inProgressCount = inProgressColumn ? inProgressColumn.tasks.length : 0;
@@ -27,10 +27,10 @@ export function SprintAnalyticsModal({ board, onClose }: SprintAnalyticsModalPro
 
   // Priority distribution
   const priorityCounts = {
-    URGENT: allTasks.filter((t) => (t.priority || "").toUpperCase() === "URGENT").length,
-    HIGH: allTasks.filter((t) => (t.priority || "").toUpperCase() === "HIGH").length,
-    MEDIUM: allTasks.filter((t) => (t.priority || "MEDIUM").toUpperCase() === "MEDIUM").length,
-    LOW: allTasks.filter((t) => (t.priority || "").toUpperCase() === "LOW").length,
+    URGENT: allTasks.filter((t) => (t.priority || '').toUpperCase() === 'URGENT').length,
+    HIGH: allTasks.filter((t) => (t.priority || '').toUpperCase() === 'HIGH').length,
+    MEDIUM: allTasks.filter((t) => (t.priority || 'MEDIUM').toUpperCase() === 'MEDIUM').length,
+    LOW: allTasks.filter((t) => (t.priority || '').toUpperCase() === 'LOW').length,
   };
 
   return (
@@ -52,7 +52,9 @@ export function SprintAnalyticsModal({ board, onClose }: SprintAnalyticsModalPro
               <h2 className="text-base font-bold text-foreground tracking-tight">
                 {board.name} · Sprint Analytics
               </h2>
-              <p className="text-xs text-muted-foreground">Velocity burndown and priority distribution</p>
+              <p className="text-xs text-muted-foreground">
+                Velocity burndown and priority distribution
+              </p>
             </div>
           </div>
           <button
@@ -78,7 +80,9 @@ export function SprintAnalyticsModal({ board, onClose }: SprintAnalyticsModalPro
 
           <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/10">
             <span className="text-[11px] text-muted-foreground font-medium">Completed</span>
-            <p className="text-2xl font-black text-emerald-400 mt-1">{doneCount} / {totalTasks}</p>
+            <p className="text-2xl font-black text-emerald-400 mt-1">
+              {doneCount} / {totalTasks}
+            </p>
             <span className="text-[10px] text-emerald-400 font-medium flex items-center gap-1 mt-1">
               <CheckCircle2 className="w-3 h-3" /> Tasks Finished
             </span>
@@ -95,7 +99,7 @@ export function SprintAnalyticsModal({ board, onClose }: SprintAnalyticsModalPro
           <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/10">
             <span className="text-[11px] text-muted-foreground font-medium">Sprint Health</span>
             <p className="text-2xl font-black text-indigo-300 mt-1">
-              {completionRate >= 50 ? "On Track" : totalTasks === 0 ? "Empty" : "In Progress"}
+              {completionRate >= 50 ? 'On Track' : totalTasks === 0 ? 'Empty' : 'In Progress'}
             </p>
             <span className="text-[10px] text-indigo-400 font-medium flex items-center gap-1 mt-1">
               <ShieldCheck className="w-3 h-3" /> Healthy Velocity
@@ -113,20 +117,45 @@ export function SprintAnalyticsModal({ board, onClose }: SprintAnalyticsModalPro
 
             <div className="space-y-2.5">
               {[
-                { label: "Urgent", count: priorityCounts.URGENT, color: "bg-rose-500", text: "text-rose-400" },
-                { label: "High", count: priorityCounts.HIGH, color: "bg-amber-500", text: "text-amber-400" },
-                { label: "Medium", count: priorityCounts.MEDIUM, color: "bg-sky-500", text: "text-sky-400" },
-                { label: "Low", count: priorityCounts.LOW, color: "bg-slate-500", text: "text-slate-400" },
+                {
+                  label: 'Urgent',
+                  count: priorityCounts.URGENT,
+                  color: 'bg-rose-500',
+                  text: 'text-rose-400',
+                },
+                {
+                  label: 'High',
+                  count: priorityCounts.HIGH,
+                  color: 'bg-amber-500',
+                  text: 'text-amber-400',
+                },
+                {
+                  label: 'Medium',
+                  count: priorityCounts.MEDIUM,
+                  color: 'bg-sky-500',
+                  text: 'text-sky-400',
+                },
+                {
+                  label: 'Low',
+                  count: priorityCounts.LOW,
+                  color: 'bg-slate-500',
+                  text: 'text-slate-400',
+                },
               ].map((p) => {
                 const pct = totalTasks > 0 ? Math.round((p.count / totalTasks) * 100) : 0;
                 return (
                   <div key={p.label}>
                     <div className="flex items-center justify-between text-xs mb-1">
                       <span className={`font-semibold ${p.text}`}>{p.label}</span>
-                      <span className="text-muted-foreground font-mono">{p.count} tasks ({pct}%)</span>
+                      <span className="text-muted-foreground font-mono">
+                        {p.count} tasks ({pct}%)
+                      </span>
                     </div>
                     <div className="w-full bg-white/5 h-2 rounded-full overflow-hidden">
-                      <div className={`${p.color} h-full rounded-full transition-all duration-500`} style={{ width: `${pct}%` }} />
+                      <div
+                        className={`${p.color} h-full rounded-full transition-all duration-500`}
+                        style={{ width: `${pct}%` }}
+                      />
                     </div>
                   </div>
                 );
@@ -139,25 +168,42 @@ export function SprintAnalyticsModal({ board, onClose }: SprintAnalyticsModalPro
             <h3 className="text-xs font-bold text-foreground mb-1 flex items-center gap-2">
               <TrendingUp className="w-4 h-4 text-emerald-400" /> Sprint Burndown Progress
             </h3>
-            <p className="text-[10px] text-muted-foreground mb-3">Ideal line vs remaining tasks in sprint</p>
+            <p className="text-[10px] text-muted-foreground mb-3">
+              Ideal line vs remaining tasks in sprint
+            </p>
 
             <div className="h-32 flex items-end justify-between gap-2 pt-4 px-2 border-b border-l border-white/10">
               {[
-                { day: "Day 1", remaining: totalTasks || 5, ideal: totalTasks || 5 },
-                { day: "Day 3", remaining: Math.max(1, totalTasks - Math.floor(doneCount * 0.3)), ideal: Math.round((totalTasks || 5) * 0.75) },
-                { day: "Day 5", remaining: Math.max(0, totalTasks - Math.floor(doneCount * 0.7)), ideal: Math.round((totalTasks || 5) * 0.5) },
-                { day: "Day 7", remaining: pendingCount, ideal: 0 },
+                { day: 'Day 1', remaining: totalTasks || 5, ideal: totalTasks || 5 },
+                {
+                  day: 'Day 3',
+                  remaining: Math.max(1, totalTasks - Math.floor(doneCount * 0.3)),
+                  ideal: Math.round((totalTasks || 5) * 0.75),
+                },
+                {
+                  day: 'Day 5',
+                  remaining: Math.max(0, totalTasks - Math.floor(doneCount * 0.7)),
+                  ideal: Math.round((totalTasks || 5) * 0.5),
+                },
+                { day: 'Day 7', remaining: pendingCount, ideal: 0 },
               ].map((point, i) => (
-                <div key={i} className="flex-1 flex flex-col items-center gap-1.5 h-full justify-end">
+                <div
+                  key={i}
+                  className="flex-1 flex flex-col items-center gap-1.5 h-full justify-end"
+                >
                   <div className="w-full flex items-end justify-center gap-1 h-20">
                     <div
                       className="w-3 bg-white/20 rounded-t-sm"
-                      style={{ height: `${Math.min(100, (point.ideal / Math.max(1, totalTasks || 5)) * 100)}%` }}
+                      style={{
+                        height: `${Math.min(100, (point.ideal / Math.max(1, totalTasks || 5)) * 100)}%`,
+                      }}
                       title={`Ideal: ${point.ideal}`}
                     />
                     <div
                       className="w-3 gradient-primary rounded-t-sm"
-                      style={{ height: `${Math.min(100, (point.remaining / Math.max(1, totalTasks || 5)) * 100)}%` }}
+                      style={{
+                        height: `${Math.min(100, (point.remaining / Math.max(1, totalTasks || 5)) * 100)}%`,
+                      }}
                       title={`Actual Remaining: ${point.remaining}`}
                     />
                   </div>
@@ -167,8 +213,12 @@ export function SprintAnalyticsModal({ board, onClose }: SprintAnalyticsModalPro
             </div>
 
             <div className="flex items-center justify-center gap-4 text-[10px] text-muted-foreground pt-2">
-              <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-white/30" /> Ideal Burn</span>
-              <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-primary" /> Actual Remaining</span>
+              <span className="flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-white/30" /> Ideal Burn
+              </span>
+              <span className="flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-primary" /> Actual Remaining
+              </span>
             </div>
           </div>
         </div>

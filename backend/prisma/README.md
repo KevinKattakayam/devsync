@@ -1,0 +1,11 @@
+# Database lifecycle
+
+Fresh development database: use pgvector/pgvector:pg16, set DATABASE_URL, then `npm run db:migrate` (migrate deploy). Never use db push to initialize this system: RLS policies and vector indexes are SQL migrations. Development schema changes use `npm run db:migrate:dev -- --name <name>` and must be reviewed/committed.
+
+The baseline comes from `9deffe2^:backend/prisma/schema.prisma`, retained in docs/phase1a-evidence/pre-enterprise-schema.prisma. Existing migration SQL files were not rewritten.
+
+For an existing database, back up and rehearse on a disposable clone. Compare the actual historical schema with the baseline. Do **not** run its CREATE TABLE statements against existing tables. Only after confirming it represents the database's prior state, mark `20260729000000_baseline` applied using Prisma migrate resolve; reconcile already-applied enterprise migration history/checksums before migrate deploy. Map all legacy users to verified Clerk IDs before identity enforcement; repair cross-workspace document parents explicitly. Do not use reset, db push, fake IDs or row deletion to bypass a failing migration. The original enterprise migration removes password/refresh-token columns: deployment needs an identity cutover/rollback plan first.
+
+Runtime database credentials must be a non-owner NOSUPERUSER NOBYPASSRLS role, distinct from migration credentials, with only required schema/table grants. FORCE RLS remains enabled; API callers still undergoing G01 remediation must not be deployed with it bypassed to conceal errors.
+
+To seed an isolated non-production environment, create three Clerk **test** users and set SEED_OWNER_CLERK_ID, SEED_EDITOR_CLERK_ID and SEED_VIEWER_CLERK_ID to their distinct user_ IDs. Set SEED_ALLOW_WRITE=true and run `npm run db:seed`. The CLI refuses production and missing IDs. It creates/upserts one sample workspace, board, task and document atomically and maps existing identities into local role records. It does not call Clerk, provision working login credentials or verify the supplied identity's existence. Never seed a shared production database. Exact test fixture IDs used in automated tests are not working Clerk accounts.

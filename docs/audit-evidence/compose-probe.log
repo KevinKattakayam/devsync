@@ -1,0 +1,4 @@
+time="2026-10-31T21:02:51+05:30" level=warning msg="The \"CLERK_SECRET_KEY\" variable is not set. Defaulting to a blank string."
+time="2026-10-31T21:02:51+05:30" level=warning msg="The \"ENCRYPTION_KEY\" variable is not set. Defaulting to a blank string."
+time="2026-10-31T21:02:51+05:30" level=warning msg="The \"NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY\" variable is not set. Defaulting to a blank string."
+time="2026-10-31T21:02:51+05:30" level=warning msg="/home/kevin/devsync/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"

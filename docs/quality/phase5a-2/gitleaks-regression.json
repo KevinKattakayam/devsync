@@ -1,0 +1,30 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "case": "empty-example",
+      "expectedDetection": false,
+      "detected": false
+    },
+    {
+      "case": "known-fixture",
+      "expectedDetection": false,
+      "detected": false
+    },
+    {
+      "case": "new-value-in-example",
+      "expectedDetection": true,
+      "detected": true
+    },
+    {
+      "case": "new-value-in-test",
+      "expectedDetection": true,
+      "detected": true
+    },
+    {
+      "case": "known-value-elsewhere",
+      "expectedDetection": true,
+      "detected": true
+    }
+  ]
+}

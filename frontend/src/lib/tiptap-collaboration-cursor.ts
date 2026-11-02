@@ -1,8 +1,9 @@
+import type { HocuspocusProvider } from '@hocuspocus/provider';
 import { Extension } from '@tiptap/core';
 import { yCursorPlugin, defaultSelectionBuilder } from '@tiptap/y-tiptap';
 
 export interface CollaborationCursorOptions {
-  provider: any;
+  provider: Pick<HocuspocusProvider, 'awareness'> | null;
   user: {
     name: string;
     color: string;
@@ -46,7 +47,7 @@ export const CollaborationCursor = Extension.create<CollaborationCursorOptions>(
 
     return [
       yCursorPlugin(awareness, {
-        cursorBuilder: (user: any) => this.options.render!(user),
+        cursorBuilder: (user: { name: string; color: string }) => this.options.render!(user),
         selectionBuilder: defaultSelectionBuilder,
       }),
     ];

@@ -1,0 +1,10 @@
+{
+  "violations": [],
+  "incomplete": [],
+  "bounds": {
+    "viewport": 1440,
+    "page": 1440,
+    "main": 1200,
+    "scroll": 1200
+  }
+}

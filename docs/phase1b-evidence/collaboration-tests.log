@@ -1,0 +1,239 @@
+
+> devsync-backend@1.0.0 test
+> jest --runInBand --runTestsByPath src/__tests__/collaboration.integration.test.ts
+
+  console.error
+    [beforeHandleMessage] Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:85:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+  console.error
+    closing connection 8377cecc-41d8-455c-90f4-e77ef6ddff78 (while handling document:workspace:document-1) because of exception Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:85:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+
+  console.error
+    [beforeHandleMessage] Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:85:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+  console.error
+    closing connection 8c194c22-d628-4240-866e-ecf6a439049e (while handling document:workspace:document-1) because of exception Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:85:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+
+  console.error
+    [beforeHandleMessage] Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:85:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+  console.error
+    closing connection 25eacde8-c8e1-413d-82b5-a165d2101a50 (while handling document:workspace:document-2) because of exception Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:85:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+
+  console.error
+    [beforeHandleMessage] Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:85:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+  console.error
+    closing connection 9370c3cb-7dcc-4e0d-9b0c-6b91c45a1c04 (while handling document:workspace:document-2) because of exception Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:85:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+
+  console.error
+    [beforeHandleMessage] Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:85:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+  console.error
+    closing connection 7d02899a-0e4e-43eb-811e-1a7ea7e74001 (while handling document:workspace:document-3) because of exception Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:85:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+
+  console.error
+    [beforeHandleMessage] Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:85:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+  console.error
+    closing connection f75bc938-568c-48dd-b956-9e4f62cfaa44 (while handling document:workspace:document-3) because of exception Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:85:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+
+  console.error
+    [onAuthenticate] ForbiddenError: Access denied
+        at authorizeWorkspace (/home/kevin/devsync/backend/src/security/workspace-policy.ts:18:11)
+        at Object.onAuthenticate (/home/kevin/devsync/backend/src/services/collaboration-server.ts:71:22)
+        at ClientConnection.handleQueueingMessage (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/ClientConnection.ts:531:5) {
+      statusCode: 403,
+      isOperational: true
+    }
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at ClientConnection.handleQueueingMessage (node_modules/@hocuspocus/server/src/ClientConnection.ts:531:5)
+
+  console.error
+    [onAuthenticate] ForbiddenError: Access denied
+        at authorizeWorkspace (/home/kevin/devsync/backend/src/security/workspace-policy.ts:18:11)
+        at Object.onAuthenticate (/home/kevin/devsync/backend/src/services/collaboration-server.ts:71:22)
+        at ClientConnection.handleQueueingMessage (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/ClientConnection.ts:531:5) {
+      statusCode: 403,
+      isOperational: true
+    }
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at ClientConnection.handleQueueingMessage (node_modules/@hocuspocus/server/src/ClientConnection.ts:531:5)
+
+  console.error
+    [beforeHandleMessage] Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:85:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/ClientConnection.ts:290:4
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+      at node_modules/@hocuspocus/server/src/ClientConnection.ts:290:4
+
+  console.error
+    closing connection 576928e2-a559-4994-a213-4a1d4614c2ab (while handling document:workspace:document-6) because of exception Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:85:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/ClientConnection.ts:290:4
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+      at node_modules/@hocuspocus/server/src/ClientConnection.ts:290:4
+
+FAIL src/__tests__/collaboration.integration.test.ts (149.667 s)
+  ● cuts off a removed member without waiting for another edit
+
+    Timed out: passive revocation
+
+      23 | async function until(check: () => boolean | Promise<boolean>, label: string, timeout = 8000) {
+      24 |   const end = Date.now() + timeout;
+    > 25 |   while (!(await check())) { if (Date.now() > end) throw new Error(`Timed out: ${label}`); await new Promise(resolve => setTimeout(resolve, 20)); }
+         |                                                          ^
+      26 | }
+      27 | beforeAll(async () => {
+      28 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+
+      at until (src/__tests__/collaboration.integration.test.ts:25:58)
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:109:3)
+
+  ● recovers acknowledged updates from the journal before snapshot compaction
+
+    thrown: "Exceeded timeout of 120000 ms for a test.
+    Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
+
+      at _getError (node_modules/jest-circus/build/jestAdapterInit.js:1985:12)
+          at Array.map (<anonymous>)
+
+    Cause:
+        thrown: "Exceeded timeout of 120000 ms for a test.
+        Add a timeout value to this test to increase the timeout, if this is a long-running test. See https://jestjs.io/docs/api#testname-fn-timeout."
+
+          110 |   await admin.workspaceMember.create({ data: { userId: 'b', workspaceId: 'workspace', role: 'EDITOR' } });
+          111 | });
+        > 112 | it('recovers acknowledged updates from the journal before snapshot compaction', async () => {
+              | ^
+          113 |   const name = await room(); const node = await server(); const a = await client(node.url, name);
+          114 |   text(a.document).insert(0, 'DURABLE'); await until(() => !a.provider.hasUnsyncedChanges, 'ack after commit');
+          115 |   const restored = new Y.Doc(); const journal = node.runtime.journal;
+
+          at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:112:1)
+
+  ● recovers acknowledged updates from the journal before snapshot compaction
+
+    Unhandled error. (Error: WebSocket was closed before the connection was established
+
+      40 | });
+      41 | afterEach(async () => {
+    > 42 |   for (const client of clients.splice(0)) { client.provider.destroy(); client.socket.destroy(); client.document.destroy(); }
+         |                                                                                      ^
+      43 |   for (const item of runtimes.splice(0)) { await item.runtime.stop(); await new Promise<void>(resolve => item.http.close(() => resolve())); }
+      44 | });
+      45 | afterAll(async () => { await db?.$disconnect(); await admin?.$disconnect(); if (redis) await redis.stop(); if (postgres) await postgres.stop(); });
+
+      at WebSocket.close (node_modules/ws/lib/websocket.js:306:7)
+      at HocuspocusProviderWebsocket.disconnect (node_modules/@hocuspocus/provider/src/HocuspocusProviderWebsocket.ts:529:19)
+      at HocuspocusProviderWebsocket.destroy (node_modules/@hocuspocus/provider/src/HocuspocusProviderWebsocket.ts:617:8)
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:42:86)
+      at emitErrorAndClose (node_modules/ws/lib/websocket.js:1060:13)
+
+  ● synchronizes two backend instances through real Redis fanout
+
+    Error: Timed out: initial synchronization; status: connected; status: connected; authentication: permission-denied
+
+      73 |   const entry = { document, socket, provider, rejected: () => denied }; clients.push(entry);
+      74 |   try { await until(() => provider.synced, 'initial synchronization'); }
+    > 75 |   catch (error) { throw new Error(`${String(error)}; ${events.join('; ')}`); }
+         |                         ^
+      76 |   return entry;
+      77 | }
+      78 | function text(document: Y.Doc): Y.XmlText {
+
+      at client (src/__tests__/collaboration.integration.test.ts:75:25)
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:122:142)
+
+Test Suites: 1 failed, 1 total
+Tests:       3 failed, 3 passed, 6 total
+Snapshots:   0 total
+Time:        149.925 s
+Ran all test suites within paths "src/__tests__/collaboration.integration.test.ts".

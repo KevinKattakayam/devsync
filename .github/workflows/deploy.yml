@@ -1,23 +1,77 @@
-name: Deploy to Railway
-
+name: Deploy reviewed production
 on:
-  push:
-    branches:
-      - main
-
+  workflow_dispatch:
+    inputs:
+      sha:
+        description: Full reviewed commit SHA with successful Quality workflow
+        required: true
+        type: string
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: production
+  cancel-in-progress: false
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
+  verify:
+    runs-on: ubuntu-24.04
+    outputs:
+      sha: ${{ steps.quality.outputs.sha }}
     steps:
-      - uses: actions/checkout@v4
-      
-      - name: Install Railway CLI
-        run: npm install -g @railway/cli
-        
-      - name: Deploy Backend
-        run: railway up --service backend -t ${{ secrets.RAILWAY_TOKEN }}
-        working-directory: ./backend
-        
-      - name: Deploy Frontend
-        run: railway up --service frontend -t ${{ secrets.RAILWAY_TOKEN }}
-        working-directory: ./frontend
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22
+      - id: quality
+        run: node tools/ci/verify-quality.mjs
+        env:
+          DEPLOY_SHA: ${{ inputs.sha }}
+          GH_TOKEN: ${{ github.token }}
+  deploy:
+    needs: verify
+    runs-on: ubuntu-24.04
+    environment: production
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ needs.verify.outputs.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Deploy API and worker with existing Railway project token
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+          RAILWAY_SERVICE_ID: ${{ vars.RAILWAY_SERVICE_ID }}
+          RAILWAY_WORKER_SERVICE_ID: ${{ vars.RAILWAY_WORKER_SERVICE_ID }}
+          BACKEND_URL: ${{ vars.BACKEND_URL }}
+          RAILWAY_PROJECT_ID: ${{ vars.RAILWAY_PROJECT_ID }}
+          RAILWAY_ENVIRONMENT_ID: ${{ vars.RAILWAY_ENVIRONMENT_ID }}
+          RAILWAY_API_SERVICE_NAME: ${{ vars.RAILWAY_API_SERVICE_NAME }}
+          RAILWAY_WORKER_SERVICE_NAME: ${{ vars.RAILWAY_WORKER_SERVICE_NAME }}
+        run: |
+          test -n "$RAILWAY_TOKEN" && test -n "$RAILWAY_SERVICE_ID" && test -n "$RAILWAY_WORKER_SERVICE_ID" && test -n "$BACKEND_URL"
+          test -n "$RAILWAY_PROJECT_ID" && test -n "$RAILWAY_ENVIRONMENT_ID"
+          npm ci --prefix .railway
+          npx --yes @railway/cli@5.71.0 link --project "$RAILWAY_PROJECT_ID" --environment "$RAILWAY_ENVIRONMENT_ID"
+          npx --yes @railway/cli@5.71.0 config plan --detailed-exit-code
+          npx --yes @railway/cli@5.71.0 up --service "$RAILWAY_SERVICE_ID" --ci
+          npx --yes @railway/cli@5.71.0 up --service "$RAILWAY_WORKER_SERVICE_ID" --ci
+          curl --fail --retry 12 --retry-delay 5 --retry-all-errors "$BACKEND_URL/api/ready"
+      - name: Build and deploy existing Vercel frontend
+        working-directory: frontend
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: |
+          test -n "$VERCEL_TOKEN" && test -n "$VERCEL_ORG_ID" && test -n "$VERCEL_PROJECT_ID"
+          npm ci
+          npx --yes vercel@65.9.0 pull --yes --environment=production --token "$VERCEL_TOKEN"
+          npx --yes vercel@65.9.0 build --prod --token "$VERCEL_TOKEN"
+          npx --yes vercel@65.9.0 deploy --prebuilt --prod --token "$VERCEL_TOKEN"

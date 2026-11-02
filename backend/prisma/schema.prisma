@@ -23,6 +23,7 @@ model User {
   snippets     Snippet[]
   tasks        Task[]
   memberships  WorkspaceMember[]
+  asyncDigestPreferences AsyncDigestPreference[]
   scimExternalIdentities ScimExternalIdentity[]
 }
 
@@ -52,6 +53,24 @@ model Workspace {
   scimTokens  ScimProvisioningToken[]
   scimExternalIdentities ScimExternalIdentity[]
   tokenUsage TokenUsage[]
+  embeddingJobs EmbeddingJob[]
+  invitations WorkspaceInvitation[]
+  decisionReceipts DecisionReceipt[]
+  asyncDigestPreferences AsyncDigestPreference[]
+}
+
+model WorkspaceInvitation {
+  id String @id @default(cuid())
+  workspaceId String
+  email String
+  role Role
+  expiresAt DateTime
+  acceptedAt DateTime?
+  revokedAt DateTime?
+  createdAt DateTime @default(now())
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  @@index([workspaceId])
+  @@index([email])
 }
 
 model TokenUsage {
@@ -77,6 +96,8 @@ model WorkspaceMember {
   workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
 
   @@unique([userId, workspaceId])
+  @@index([workspaceId])
+
 }
 
 model ScimProvisioningToken {
@@ -104,10 +125,13 @@ model ScimExternalIdentity {
 }
 
 model Document {
+  updates DocumentUpdate[]
+  crdtBackup DocumentCrdtBackup?
   id          String     @id @default(cuid())
   title       String     @default("Untitled")
   content     Json?
   yjsState    Bytes?
+  crdtRevision Int @default(0)
   embedding   Unsupported("vector(1536)")?
   embeddingHash String?
   icon        String?    @default("📄")
@@ -119,9 +143,13 @@ model Document {
   workspaceId String
   parentId    String?
   author      User       @relation(fields: [authorId], references: [id])
-  parent      Document?  @relation("DocHierarchy", fields: [parentId], references: [id])
+  parent      Document?  @relation("DocHierarchy", fields: [parentId, workspaceId], references: [id, workspaceId], onDelete: Restrict, onUpdate: Restrict)
   children    Document[] @relation("DocHierarchy")
   workspace   Workspace  @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  @@unique([id, workspaceId])
+  @@index([workspaceId, isArchived, updatedAt])
+  @@index([parentId])
+
 }
 
 model Board {
@@ -132,6 +160,8 @@ model Board {
   workspaceId String
   workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   columns     Column[]
+  @@index([workspaceId])
+
 }
 
 model Column {
@@ -141,6 +171,8 @@ model Column {
   boardId  String
   board    Board  @relation(fields: [boardId], references: [id], onDelete: Cascade)
   tasks    Task[]
+  @@index([boardId, position])
+
 }
 
 model Task {
@@ -160,6 +192,9 @@ model Task {
   assignee    User?       @relation(fields: [assigneeId], references: [id])
   column      Column      @relation(fields: [columnId], references: [id], onDelete: Cascade)
   labels      TaskLabel[]
+  @@index([columnId, position])
+  @@index([assigneeId])
+
 }
 
 model TaskLabel {
@@ -184,6 +219,10 @@ model Snippet {
   workspaceId String
   author      User      @relation(fields: [authorId], references: [id])
   workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  safetyFindings SnippetSafetyFinding[]
+  @@unique([id, workspaceId])
+  @@index([workspaceId, updatedAt])
+
 }
 
 model GitHubRepository {
@@ -214,6 +253,11 @@ model EmbeddingJob {
   id           String   @id @default(cuid())
   resourceType String
   resourceId   String
+  workspaceId  String?
+  workspace    Workspace? @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  revision     Int @default(0)
+  leaseToken   String?
+  leaseUntil   DateTime?
   status       String   @default("pending")
   attempts     Int      @default(0)
   lastError    String?
@@ -235,6 +279,20 @@ model Activity {
   workspaceId String
   user        User      @relation(fields: [userId], references: [id])
   workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  @@index([workspaceId, createdAt])
+
+}
+
+model ApiIdempotencyRecord {
+  id          String @id
+  authorityId String
+  requestHash String
+  response    Json?
+  expiresAt   DateTime
+  createdAt   DateTime @default(now())
+
+  @@index([authorityId, expiresAt])
+  @@index([expiresAt])
 }
 
 enum Role {
@@ -253,4 +311,75 @@ enum Priority {
 enum SystemRole {
   USER
   SUPER_ADMIN
+}
+
+model DocumentUpdate {
+  id BigInt @id @default(autoincrement())
+  documentId String
+  workspaceId String
+  digest String
+  update Bytes
+  createdAt DateTime @default(now())
+  document Document @relation(fields: [documentId, workspaceId], references: [id, workspaceId], onDelete: Cascade, onUpdate: Restrict)
+  @@unique([documentId, digest])
+  @@index([workspaceId, documentId, id])
+}
+
+model DocumentCrdtBackup {
+  documentId String @id
+  workspaceId String
+  originalContent Json?
+  originalState Bytes?
+  convertedState Bytes
+  createdAt DateTime @default(now())
+  restoredAt DateTime?
+  document Document @relation(fields: [documentId, workspaceId], references: [id, workspaceId], onDelete: Restrict, onUpdate: Restrict)
+  @@unique([documentId, workspaceId])
+}
+
+model DecisionReceipt {
+  id String @id @default(cuid())
+  workspaceId String
+  sourceKind String
+  sourceId String
+  sourceRevision String
+  excerpt String
+  title String
+  rationale String
+  status String @default("DRAFT")
+  revision Int @default(0)
+  createdBy String
+  acceptedBy String?
+  acceptedAt DateTime?
+  supersededById String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  supersededBy DecisionReceipt? @relation("DecisionSupersession", fields: [supersededById, workspaceId], references: [id, workspaceId], onDelete: Restrict, onUpdate: Restrict)
+  supersedes DecisionReceipt[] @relation("DecisionSupersession")
+  @@unique([id, workspaceId])
+  @@index([workspaceId, createdAt])
+}
+
+model SnippetSafetyFinding {
+  id String @id @default(cuid())
+  workspaceId String
+  snippetId String
+  type String
+  maskedPreview String
+  snippet Snippet @relation(fields: [snippetId, workspaceId], references: [id, workspaceId], onDelete: Cascade, onUpdate: Restrict)
+  @@index([workspaceId, snippetId])
+}
+
+model AsyncDigestPreference {
+  workspaceId String
+  userId String
+  enabled Boolean @default(false)
+  revision Int @default(0)
+  acknowledgedAt DateTime?
+  acknowledgedId String?
+  updatedAt DateTime @updatedAt
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@id([workspaceId, userId])
 }

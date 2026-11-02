@@ -1,11 +1,10 @@
-import { Router } from 'express';
+import { idempotencyKeyHeader } from '../lib/create-idempotency';
+import { Router, RequestHandler } from 'express';
 import multer from 'multer';
 import { authMiddleware } from '../middleware/auth.middleware';
 import { ingestDocument } from '../services/ingestion.service';
-import { prisma } from '../lib/prisma';
-import { ForbiddenError, BadRequestError } from '../utils/errors';
-
-const router = Router();
+import { authorizeWorkspace, WRITE_ROLES } from '../security/workspace-policy';
+import { BadRequestError } from '../utils/errors';
 
 // ── Multer config — in-memory storage, 25MB limit ───────────
 
@@ -28,7 +27,11 @@ const upload = multer({
     if (ALLOWED_MIMES.includes(file.mimetype)) {
       cb(null, true);
     } else {
-      cb(new BadRequestError(`Unsupported file type: ${file.mimetype}. Accepted: PDF, PNG, JPG, TIFF, WebP.`) as any);
+      cb(
+        new BadRequestError(
+          `Unsupported file type: ${file.mimetype}. Accepted: PDF, PNG, JPG, TIFF, WebP.`,
+        ),
+      );
     }
   },
 });
@@ -39,43 +42,51 @@ const upload = multer({
  * Upload a PDF or image file → extract text/tables via OCR →
  * convert to rich Tiptap document JSON.
  */
-router.post(
-  '/workspaces/:id/documents/ingest',
-  authMiddleware,
-  upload.single('file'),
-  async (req, res, next) => {
-    try {
-      const workspaceId = String(req.params.id);
-      const userId = req.user!.userId;
-
-      // Verify workspace membership with editor role
-      const member = await prisma.workspaceMember.findUnique({
-        where: { userId_workspaceId: { userId, workspaceId } },
-      });
-      if (!member || member.role === 'VIEWER') {
-        throw new ForbiddenError('Requires EDITOR or OWNER role to ingest documents');
+export function createIngestionRouter(authenticate: RequestHandler = authMiddleware) {
+  const router = Router();
+  router.post(
+    '/workspaces/:id/documents/ingest',
+    authenticate,
+    idempotencyKeyHeader,
+    async (req, _res, next) => {
+      try {
+        await authorizeWorkspace(req.user!.userId, String(req.params.id), WRITE_ROLES);
+        next();
+      } catch (error) {
+        next(error);
       }
+    },
+    upload.single('file'),
+    async (req, res, next) => {
+      try {
+        const workspaceId = String(req.params.id);
+        const userId = req.user!.userId;
 
-      if (!req.file) {
-        throw new BadRequestError('No file uploaded. Send a multipart form with a "file" field.');
+        // Verify workspace membership with editor role
+        await authorizeWorkspace(userId, workspaceId, WRITE_ROLES);
+
+        if (!req.file) {
+          throw new BadRequestError('No file uploaded. Send a multipart form with a "file" field.');
+        }
+
+        const result = await ingestDocument(
+          req.file.buffer,
+          req.file.mimetype,
+          req.file.originalname,
+          workspaceId,
+          userId,
+          req.header('idempotency-key'),
+        );
+
+        res.status(201).json({
+          message: 'Document ingested successfully',
+          ...result,
+        });
+      } catch (error) {
+        next(error);
       }
-
-      const result = await ingestDocument(
-        req.file.buffer,
-        req.file.mimetype,
-        req.file.originalname,
-        workspaceId,
-        userId,
-      );
-
-      res.status(201).json({
-        message: 'Document ingested successfully',
-        ...result,
-      });
-    } catch (error) {
-      next(error);
-    }
-  },
-);
-
-export default router;
+    },
+  );
+  return router;
+}
+export default createIngestionRouter();

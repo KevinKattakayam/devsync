@@ -1,0 +1,142 @@
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": PostgreSQL database "devsync_e2e_browser", schema "public" at "localhost:32856"
+
+11 migrations found in prisma/migrations
+
+Applying migration `20260729000000_baseline`
+Applying migration `20260729180000_enterprise_platform`
+Applying migration `20260815000000_phase_3_tenant_rls`
+Applying migration `20260815001000_scim_provisioning`
+Applying migration `20260815002000_commercial_billing`
+Applying migration `20261031000000_tenant_indexes`
+Applying migration `20261031010000_crdt_journal`
+Applying migration `202611010001_canonical_revision`
+Applying migration `202611010002_embedding_authority`
+Applying migration `202611010003_atomic_create_idempotency`
+Applying migration `202611010004_workspace_invitations`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20260729000000_baseline/
+    └─ migration.sql
+  └─ 20260729180000_enterprise_platform/
+    └─ migration.sql
+  └─ 20260815000000_phase_3_tenant_rls/
+    └─ migration.sql
+  └─ 20260815001000_scim_provisioning/
+    └─ migration.sql
+  └─ 20260815002000_commercial_billing/
+    └─ migration.sql
+  └─ 20261031000000_tenant_indexes/
+    └─ migration.sql
+  └─ 20261031010000_crdt_journal/
+    └─ migration.sql
+  └─ 202611010001_canonical_revision/
+    └─ migration.sql
+  └─ 202611010002_embedding_authority/
+    └─ migration.sql
+  └─ 202611010003_atomic_create_idempotency/
+    └─ migration.sql
+  └─ 202611010004_workspace_invitations/
+    └─ migration.sql
+      
+All migrations have been successfully applied.
+Sample workspace seeded. Sign in with the supplied Clerk test identities.
+/home/kevin/devsync/.worktrees/frontend-fixture
+Isolated fixture server ready
+{"level":30,"time":1793550109314,"service":"devsync-api","req":{"id":"a1de3b48-5d28-4020-ae0b-1085c79429df","method":"GET"},"requestId":"a1de3b48-5d28-4020-ae0b-1085c79429df","res":{"statusCode":200},"responseTime":9,"msg":"request completed"}
+▲ Next.js 16.4.3 (webpack)
+- Local:         http://127.0.0.1:3001
+- Network:       http://127.0.0.1:3001
+✓ Ready in 460ms
+✓ Running next.config.ts took 37ms
+
+✓ Generated AGENTS.md for AI agents. Set `agentRules: false` in next.config to disable.
+○ Compiling /(auth)/login/[[...rest]]/page ...
+ GET /login 200 in 1553ms (next.js: 1082ms, proxy.ts: 74ms, application-code: 397ms)
+
+Running 2 tests using 1 worker
+
+(node:314224) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1793550134747,"service":"devsync-api","req":{"id":"fac12534-83e4-4e01-a17f-223cf7532c6b","method":"GET"},"requestId":"fac12534-83e4-4e01-a17f-223cf7532c6b","res":{"statusCode":200},"responseTime":28,"msg":"request completed"}
+{"level":30,"time":1793550134780,"service":"devsync-api","req":{"id":"38b381d2-3de0-4341-93c0-508264505173","method":"GET"},"requestId":"38b381d2-3de0-4341-93c0-508264505173","res":{"statusCode":200},"responseTime":16,"msg":"request completed"}
+{"level":30,"time":1793550134854,"service":"devsync-api","req":{"id":"11fafb6e-4efd-4189-8f63-e49308090f71","method":"GET"},"requestId":"11fafb6e-4efd-4189-8f63-e49308090f71","res":{"statusCode":200},"responseTime":62,"msg":"request completed"}
+{"level":30,"time":1793550134915,"service":"devsync-api","req":{"id":"5088b2c4-a772-45b9-91fc-428a5222666a","method":"PATCH"},"requestId":"5088b2c4-a772-45b9-91fc-428a5222666a","res":{"statusCode":200},"responseTime":50,"msg":"request completed"}
+{"level":30,"time":1793550134950,"service":"devsync-api","req":{"id":"16e0e1e0-da00-4ccd-a8b5-6062fe4f1aad","method":"GET"},"requestId":"16e0e1e0-da00-4ccd-a8b5-6062fe4f1aad","res":{"statusCode":200},"responseTime":30,"msg":"request completed"}
+{"level":30,"time":1793550135031,"service":"devsync-api","req":{"id":"46ff8298-ba0e-48f7-95b4-38c08f3f750f","method":"POST"},"requestId":"46ff8298-ba0e-48f7-95b4-38c08f3f750f","res":{"statusCode":201},"responseTime":71,"msg":"request completed"}
+{"level":30,"time":1793550135140,"service":"devsync-api","req":{"id":"263f860d-b2c5-4683-af52-8923d83c457d","method":"GET"},"requestId":"263f860d-b2c5-4683-af52-8923d83c457d","res":{"statusCode":200},"responseTime":20,"msg":"request completed"}
+ GET /dashboard 200 in 2.8s (next.js: 2.4s, proxy.ts: 12ms, application-code: 334ms)
+{"level":30,"time":1793550139817,"service":"devsync-api","req":{"id":"acb54ad5-22d5-4b0f-b150-9eb17d1e848d","method":"GET"},"requestId":"acb54ad5-22d5-4b0f-b150-9eb17d1e848d","res":{"statusCode":200},"responseTime":18,"msg":"request completed"}
+{"level":30,"time":1793550139819,"service":"devsync-api","req":{"id":"9daddb17-b0a7-44e8-8f34-7f9d17a87d16","method":"GET"},"requestId":"9daddb17-b0a7-44e8-8f34-7f9d17a87d16","res":{"statusCode":200},"responseTime":15,"msg":"request completed"}
+dark 1440 loading: 0 axe violations; 0 incomplete
+{"level":30,"time":1793550140264,"service":"devsync-api","req":{"id":"fded1916-7c74-42bf-8cc3-044aaf5f3ec5","method":"GET"},"requestId":"fded1916-7c74-42bf-8cc3-044aaf5f3ec5","res":{"statusCode":200},"responseTime":26,"msg":"request completed"}
+{"level":30,"time":1793550140265,"service":"devsync-api","req":{"id":"22c7579b-b2db-40c8-aa61-53d73a80590a","method":"GET"},"requestId":"22c7579b-b2db-40c8-aa61-53d73a80590a","res":{"statusCode":200},"responseTime":26,"msg":"request completed"}
+{"level":30,"time":1793550140266,"service":"devsync-api","req":{"id":"85fc2ef5-cf97-4576-b670-18050111886d","method":"GET"},"requestId":"85fc2ef5-cf97-4576-b670-18050111886d","res":{"statusCode":200},"responseTime":26,"msg":"request completed"}
+{"level":30,"time":1793550140295,"service":"devsync-api","req":{"id":"a8241fba-098e-43d9-a5d1-ed40ad5ecd69","method":"GET"},"requestId":"a8241fba-098e-43d9-a5d1-ed40ad5ecd69","res":{"statusCode":200},"responseTime":53,"msg":"request completed"}
+{"level":30,"time":1793550140310,"service":"devsync-api","req":{"id":"4856e120-8bf0-4f6c-809e-97592ee304fa","method":"GET"},"requestId":"4856e120-8bf0-4f6c-809e-97592ee304fa","res":{"statusCode":200},"responseTime":31,"msg":"request completed"}
+{"level":30,"time":1793550140326,"service":"devsync-api","req":{"id":"731c85d2-9db9-4d96-beb6-bed92cac49ed","method":"GET"},"requestId":"731c85d2-9db9-4d96-beb6-bed92cac49ed","res":{"statusCode":200},"responseTime":38,"msg":"request completed"}
+{"level":30,"time":1793550140330,"service":"devsync-api","req":{"id":"e5aab36a-7472-425e-8709-36b0e603f7c3","method":"GET"},"requestId":"e5aab36a-7472-425e-8709-36b0e603f7c3","res":{"statusCode":200},"responseTime":41,"msg":"request completed"}
+{"level":30,"time":1793550140334,"service":"devsync-api","req":{"id":"88f29a6e-5156-48c5-9a6b-8d4fad4288b3","method":"GET"},"requestId":"88f29a6e-5156-48c5-9a6b-8d4fad4288b3","res":{"statusCode":304},"responseTime":22,"msg":"request completed"}
+{"level":30,"time":1793550140348,"service":"devsync-api","req":{"id":"008a67b9-ae84-4446-8a01-5b56d5bf637c","method":"GET"},"requestId":"008a67b9-ae84-4446-8a01-5b56d5bf637c","res":{"statusCode":304},"responseTime":19,"msg":"request completed"}
+{"level":30,"time":1793550140352,"service":"devsync-api","req":{"id":"f30c89de-1f98-44b9-82ca-3a22ffc0ef54","method":"GET"},"requestId":"f30c89de-1f98-44b9-82ca-3a22ffc0ef54","res":{"statusCode":304},"responseTime":17,"msg":"request completed"}
+dark 1440 ready: 0 axe violations; 1 incomplete
+dark 1440 create-dialog: 0 axe violations; 1 incomplete
+{"level":30,"time":1793550141438,"service":"devsync-api","req":{"id":"749e6246-1d1d-48d7-a70a-1d5fbb38a131","method":"GET"},"requestId":"749e6246-1d1d-48d7-a70a-1d5fbb38a131","res":{"statusCode":200},"responseTime":42,"msg":"request completed"}
+dark 1440 error-injected: 0 axe violations; 0 incomplete
+{"level":30,"time":1793550141655,"service":"devsync-api","req":{"id":"c25ff653-2a33-4f0e-867b-7b2376486e68","method":"GET"},"requestId":"c25ff653-2a33-4f0e-867b-7b2376486e68","res":{"statusCode":304},"responseTime":22,"msg":"request completed"}
+{"level":30,"time":1793550141670,"service":"devsync-api","req":{"id":"287ac4c3-5bb7-4ae7-8bcc-832da4d56389","method":"GET"},"requestId":"287ac4c3-5bb7-4ae7-8bcc-832da4d56389","res":{"statusCode":304},"responseTime":34,"msg":"request completed"}
+{"level":30,"time":1793550141704,"service":"devsync-api","req":{"id":"3998344e-5cca-4e99-b131-ded897167934","method":"GET"},"requestId":"3998344e-5cca-4e99-b131-ded897167934","res":{"statusCode":304},"responseTime":17,"msg":"request completed"}
+{"level":30,"time":1793550141707,"service":"devsync-api","req":{"id":"5649084a-8bf1-4a2e-b84d-b8e7d4ba9f33","method":"GET"},"requestId":"5649084a-8bf1-4a2e-b84d-b8e7d4ba9f33","res":{"statusCode":304},"responseTime":24,"msg":"request completed"}
+{"level":30,"time":1793550141708,"service":"devsync-api","req":{"id":"6bb78514-ec3a-415e-8653-47000a5e9332","method":"GET"},"requestId":"6bb78514-ec3a-415e-8653-47000a5e9332","res":{"statusCode":304},"responseTime":23,"msg":"request completed"}
+{"level":30,"time":1793550141821,"service":"devsync-api","req":{"id":"b02df9f4-eaf4-44ac-b4ba-1836b111b377","method":"GET"},"requestId":"b02df9f4-eaf4-44ac-b4ba-1836b111b377","res":{"statusCode":200},"responseTime":21,"msg":"request completed"}
+{"level":30,"time":1793550141833,"service":"devsync-api","req":{"id":"0cf4e9fa-db9a-41de-ab1c-a9f492d9f28f","method":"GET"},"requestId":"0cf4e9fa-db9a-41de-ab1c-a9f492d9f28f","res":{"statusCode":200},"responseTime":27,"msg":"request completed"}
+{"level":30,"time":1793550141863,"service":"devsync-api","req":{"id":"b3cf42d0-8786-4af5-8742-43b98bb74448","method":"GET"},"requestId":"b3cf42d0-8786-4af5-8742-43b98bb74448","res":{"statusCode":200},"responseTime":15,"msg":"request completed"}
+{"level":30,"time":1793550141865,"service":"devsync-api","req":{"id":"c78952ed-ef56-48b4-9d1e-22231372f7fd","method":"GET"},"requestId":"c78952ed-ef56-48b4-9d1e-22231372f7fd","res":{"statusCode":200},"responseTime":19,"msg":"request completed"}
+dark 1440 partial-error-injected: 0 axe violations; 1 incomplete
+{"level":30,"time":1793550142126,"service":"devsync-api","req":{"id":"ed6e40f6-885a-4d0e-8b27-134a982dad6f","method":"GET"},"requestId":"ed6e40f6-885a-4d0e-8b27-134a982dad6f","res":{"statusCode":304},"responseTime":10,"msg":"request completed"}
+{"level":30,"time":1793550142138,"service":"devsync-api","req":{"id":"1c04ac0c-5c72-4204-a54d-ad26c2c71655","method":"GET"},"requestId":"1c04ac0c-5c72-4204-a54d-ad26c2c71655","res":{"statusCode":304},"responseTime":21,"msg":"request completed"}
+{"level":30,"time":1793550142170,"service":"devsync-api","req":{"id":"7035bce4-f0e1-4e9b-9a57-fde020d62610","method":"GET"},"requestId":"7035bce4-f0e1-4e9b-9a57-fde020d62610","res":{"statusCode":304},"responseTime":24,"msg":"request completed"}
+{"level":30,"time":1793550142172,"service":"devsync-api","req":{"id":"73d04780-0e52-4cc4-b3a8-1ad2485e3c6a","method":"GET"},"requestId":"73d04780-0e52-4cc4-b3a8-1ad2485e3c6a","res":{"statusCode":304},"responseTime":23,"msg":"request completed"}
+{"level":30,"time":1793550142174,"service":"devsync-api","req":{"id":"62d298c6-63bc-4284-9909-f05f18b46718","method":"GET"},"requestId":"62d298c6-63bc-4284-9909-f05f18b46718","res":{"statusCode":304},"responseTime":19,"msg":"request completed"}
+  ✓  1 testing/browser/dashboard.spec.ts:93:9 › dark 1440 dashboard loading, content, filter, errors and dialog (7.1s)
+{"level":30,"time":1793550142292,"service":"devsync-api","req":{"id":"ae191ba4-d1d6-4599-9f2a-f5ca2d906b36","method":"GET"},"requestId":"ae191ba4-d1d6-4599-9f2a-f5ca2d906b36","res":{"statusCode":200},"responseTime":11,"msg":"request completed"}
+ GET /dashboard 200 in 88ms (next.js: 3ms, proxy.ts: 4ms, application-code: 81ms)
+{"level":30,"time":1793550143973,"service":"devsync-api","req":{"id":"8b49309d-bf66-4b9e-bc18-99890ecf5ab4","method":"GET"},"requestId":"8b49309d-bf66-4b9e-bc18-99890ecf5ab4","res":{"statusCode":200},"responseTime":16,"msg":"request completed"}
+{"level":30,"time":1793550143974,"service":"devsync-api","req":{"id":"d713e00e-9b8d-4dfe-82a7-82f87caeac29","method":"GET"},"requestId":"d713e00e-9b8d-4dfe-82a7-82f87caeac29","res":{"statusCode":200},"responseTime":13,"msg":"request completed"}
+light 1440 loading: 0 axe violations; 0 incomplete
+{"level":30,"time":1793550144381,"service":"devsync-api","req":{"id":"9427fbf6-efdb-40f1-8b54-2346fabf819b","method":"GET"},"requestId":"9427fbf6-efdb-40f1-8b54-2346fabf819b","res":{"statusCode":200},"responseTime":34,"msg":"request completed"}
+{"level":30,"time":1793550144383,"service":"devsync-api","req":{"id":"874782cd-431a-4627-8e8e-a90b4cfca4ef","method":"GET"},"requestId":"874782cd-431a-4627-8e8e-a90b4cfca4ef","res":{"statusCode":200},"responseTime":38,"msg":"request completed"}
+{"level":30,"time":1793550144386,"service":"devsync-api","req":{"id":"9b1e2332-93ee-4319-a4aa-beb8fdc9b506","method":"GET"},"requestId":"9b1e2332-93ee-4319-a4aa-beb8fdc9b506","res":{"statusCode":200},"responseTime":37,"msg":"request completed"}
+{"level":30,"time":1793550144387,"service":"devsync-api","req":{"id":"d7e688d8-dca7-44c2-856d-11ab0e6532a9","method":"GET"},"requestId":"d7e688d8-dca7-44c2-856d-11ab0e6532a9","res":{"statusCode":200},"responseTime":37,"msg":"request completed"}
+{"level":30,"time":1793550144457,"service":"devsync-api","req":{"id":"b07834ee-a8ee-4e6a-a385-8e088a9ef59e","method":"GET"},"requestId":"b07834ee-a8ee-4e6a-a385-8e088a9ef59e","res":{"statusCode":200},"responseTime":26,"msg":"request completed"}
+{"level":30,"time":1793550144458,"service":"devsync-api","req":{"id":"bcbc76b0-63e6-4894-9e42-9b1d7ef01800","method":"GET"},"requestId":"bcbc76b0-63e6-4894-9e42-9b1d7ef01800","res":{"statusCode":200},"responseTime":23,"msg":"request completed"}
+{"level":30,"time":1793550144459,"service":"devsync-api","req":{"id":"192ab249-3227-4a09-be0e-bcf10de4c85c","method":"GET"},"requestId":"192ab249-3227-4a09-be0e-bcf10de4c85c","res":{"statusCode":200},"responseTime":20,"msg":"request completed"}
+{"level":30,"time":1793550144484,"service":"devsync-api","req":{"id":"fd33cf5e-f2bf-4c37-bd55-0f5569b03369","method":"GET"},"requestId":"fd33cf5e-f2bf-4c37-bd55-0f5569b03369","res":{"statusCode":304},"responseTime":24,"msg":"request completed"}
+{"level":30,"time":1793550144486,"service":"devsync-api","req":{"id":"000e3b36-a1bb-4e08-bdcb-0760788c53d7","method":"GET"},"requestId":"000e3b36-a1bb-4e08-bdcb-0760788c53d7","res":{"statusCode":304},"responseTime":23,"msg":"request completed"}
+{"level":30,"time":1793550144488,"service":"devsync-api","req":{"id":"778aea25-7364-404a-80b7-2f63b96f2771","method":"GET"},"requestId":"778aea25-7364-404a-80b7-2f63b96f2771","res":{"statusCode":304},"responseTime":27,"msg":"request completed"}
+light 1440 ready: 0 axe violations; 1 incomplete
+light 1440 create-dialog: 0 axe violations; 1 incomplete
+{"level":30,"time":1793550145416,"service":"devsync-api","req":{"id":"548711f4-20df-4b25-80d9-e5a87a4b1ea5","method":"GET"},"requestId":"548711f4-20df-4b25-80d9-e5a87a4b1ea5","res":{"statusCode":200},"responseTime":33,"msg":"request completed"}
+light 1440 error-injected: 0 axe violations; 0 incomplete
+{"level":30,"time":1793550145592,"service":"devsync-api","req":{"id":"6fcd4409-78b0-481b-a8e1-290f27f7d4e4","method":"GET"},"requestId":"6fcd4409-78b0-481b-a8e1-290f27f7d4e4","res":{"statusCode":304},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793550145602,"service":"devsync-api","req":{"id":"35097eaa-db16-448e-91e9-673b55691685","method":"GET"},"requestId":"35097eaa-db16-448e-91e9-673b55691685","res":{"statusCode":304},"responseTime":21,"msg":"request completed"}
+{"level":30,"time":1793550145635,"service":"devsync-api","req":{"id":"f8baefe4-7d4a-4b2f-a29d-16a0df400005","method":"GET"},"requestId":"f8baefe4-7d4a-4b2f-a29d-16a0df400005","res":{"statusCode":304},"responseTime":23,"msg":"request completed"}
+{"level":30,"time":1793550145636,"service":"devsync-api","req":{"id":"d3874ab9-1669-44bd-94b2-cab635bde1cb","method":"GET"},"requestId":"d3874ab9-1669-44bd-94b2-cab635bde1cb","res":{"statusCode":304},"responseTime":23,"msg":"request completed"}
+{"level":30,"time":1793550145637,"service":"devsync-api","req":{"id":"f016b2d1-b1de-4694-a559-982c945da9e2","method":"GET"},"requestId":"f016b2d1-b1de-4694-a559-982c945da9e2","res":{"statusCode":304},"responseTime":22,"msg":"request completed"}
+{"level":30,"time":1793550145772,"service":"devsync-api","req":{"id":"ae265f57-86fa-4198-97ec-c8eefc1e9963","method":"GET"},"requestId":"ae265f57-86fa-4198-97ec-c8eefc1e9963","res":{"statusCode":200},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793550145787,"service":"devsync-api","req":{"id":"cf7f0c47-8361-4da8-8daa-dd342fe4f065","method":"GET"},"requestId":"cf7f0c47-8361-4da8-8daa-dd342fe4f065","res":{"statusCode":200},"responseTime":26,"msg":"request completed"}
+{"level":30,"time":1793550145844,"service":"devsync-api","req":{"id":"cabe7cdf-8187-4cd4-bcac-dcc6c2c38a2f","method":"GET"},"requestId":"cabe7cdf-8187-4cd4-bcac-dcc6c2c38a2f","res":{"statusCode":200},"responseTime":35,"msg":"request completed"}
+{"level":30,"time":1793550145845,"service":"devsync-api","req":{"id":"8b3e8dc2-7cb7-4cc3-8c26-e2f294aae263","method":"GET"},"requestId":"8b3e8dc2-7cb7-4cc3-8c26-e2f294aae263","res":{"statusCode":200},"responseTime":35,"msg":"request completed"}
+light 1440 partial-error-injected: 0 axe violations; 1 incomplete
+{"level":30,"time":1793550146158,"service":"devsync-api","req":{"id":"264c3ca8-51f4-4259-9a99-6c687c731393","method":"GET"},"requestId":"264c3ca8-51f4-4259-9a99-6c687c731393","res":{"statusCode":304},"responseTime":22,"msg":"request completed"}
+{"level":30,"time":1793550146173,"service":"devsync-api","req":{"id":"237680e4-8c37-4f4b-8596-25237cb69596","method":"GET"},"requestId":"237680e4-8c37-4f4b-8596-25237cb69596","res":{"statusCode":304},"responseTime":34,"msg":"request completed"}
+{"level":30,"time":1793550146209,"service":"devsync-api","req":{"id":"4fcd397f-d293-4772-babd-9d3e79569e23","method":"GET"},"requestId":"4fcd397f-d293-4772-babd-9d3e79569e23","res":{"statusCode":304},"responseTime":22,"msg":"request completed"}
+{"level":30,"time":1793550146212,"service":"devsync-api","req":{"id":"78b230fd-78e0-4e9b-b47c-d01281a82ea4","method":"GET"},"requestId":"78b230fd-78e0-4e9b-b47c-d01281a82ea4","res":{"statusCode":304},"responseTime":19,"msg":"request completed"}
+{"level":30,"time":1793550146217,"service":"devsync-api","req":{"id":"26a6434e-8d3b-45e6-8df8-41ef907bd08d","method":"GET"},"requestId":"26a6434e-8d3b-45e6-8df8-41ef907bd08d","res":{"statusCode":304},"responseTime":27,"msg":"request completed"}
+  ✓  2 testing/browser/dashboard.spec.ts:93:9 › light 1440 dashboard loading, content, filter, errors and dialog (4.0s)
+
+  2 passed (12.7s)
+[?25h

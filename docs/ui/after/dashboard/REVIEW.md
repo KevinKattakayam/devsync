@@ -1,0 +1,25 @@
+# Dashboard review — Phase 3a
+
+Scope is the dashboard only. Actual isolated fixture sessions, migrated/seeded disposable database and existing APIs supply documents, task assignment and activity. Setup assigns the existing seeded task to the seeded owner through the API and creates Release checklist through the API; these are test records, not invented UI data. A seeded viewer temporarily has its sample membership removed for the empty-account case and is restored afterward. No real Clerk sign-in or production data is represented.
+
+## First pass and critique
+
+Initial captures are in initial/. Loading, ready, create dialog, injected total failure and injected partial failure are captured at1440/390 in dark/light; an actual empty account is captured at360 in both themes. The original run failed on an inherited empty presence-group aria-label without a role, plus test route cleanup. The first correction missed the single-line desktop element; the desktop-only correction passed the two remaining cases. These are failure corrections, not extra post-success evidence checks. Raw logs remain under phase3a-evidence.
+
+| Rubric    | Finding and correction                                                                                                                                                                                                                                      |
+| --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Hierarchy | Lists make documents and assigned work primary; activity and workspace links are secondary. The New action is ambiguous: change it to New workspace.                                                                                                        |
+| Spacing   | Mobile Refresh occupies a separate row. Use a heading/action grid to recover that vertical space while allowing long names to wrap. Add bottom space so the last rows can scroll clear of the shared floating Copilot control.                              |
+| Contrast  | Dark/light text and primary actions use the existing semantic tokens. Full-page axe found the empty presence-group semantics defect; add group roles without changing auth, sockets or layout behavior. No color-palette workaround or rule exclusion.      |
+| Alignment | Keep workspace filtering and quick actions in one control group on wide screens, stack cleanly on narrow screens. Documents align on shared icon/title/date columns.                                                                                        |
+| Density   | Remove the old summary card grid. The sparse seeded dataset leaves open space intentionally. Cap recent documents/activity at6; show an explicit6-of-total label when assigned tasks exceed6.                                                               |
+| DESIGN.md | Geist, Lucide, flat semantic surfaces and Radix controls are reused. Existing shell ghost-button outlines remain a prior-phase refinement; this is not another shell redesign.                                                                              |
+| Mobile    | 390px ready content fits and360px viewer flow works. New document silently chooses a writable workspace in All view; display its actual destination beside the quick actions. Dialog fields, empty/error copy and retry controls remain keyboard reachable. |
+
+## Second pass
+
+Final captures and per-state JSON are in final/; final/manifest.json indexes22 PNGs and22 full-page axe results. The final6 browser tests pass. All22 results have zero reported violations; aria-hidden-focus/color-contrast incomplete entries are preserved and are not WCAG certification. The normal page and error/partial-error/loading/dialog were checked at1440/390 in both themes. The empty account was checked at360 in both themes; the browser's viewer read-only flow also runs at360. No exhaustive360px owner-state screenshot matrix is claimed.
+
+The repeated visual review confirms explicit New workspace naming, a visible quick-create destination, aligned Refresh placement, readable title wrapping and consistent document/task/activity list geometry across themes. No fake totals, testimonials, logos or operational health claims are added. Error screenshots are **fault injection** (503 responses), not evidence of a real provider outage. Screenshots show the actual viewport inside the shell's scrolling main region; lower content can require scrolling even with Playwright fullPage enabled. Floating Copilot can still overlap some right-edge row metadata at a particular scroll position; extra bottom space lets the content scroll clear. Shared ghost-control outlines and a broad screen-reader/browser matrix remain outside this bounded dashboard slice.
+
+No Playwright pixel baseline was requested/created for3a; the main-flow test asserts actual create/undo/persistence and permissions. This review/correction/second-pass loop stops here. Landing and onboarding are untouched.

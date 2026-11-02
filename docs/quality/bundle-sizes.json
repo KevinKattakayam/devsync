@@ -1,0 +1,449 @@
+{
+  "scope": "Unique emitted production JS/CSS assets on disk; not initial-route transfer or module attribution",
+  "assets": [
+    {
+      "path": "frontend/.next/static/chunks/4512-d3d54247421d0673.js",
+      "bytes": 313315,
+      "gzipBytes": 102201,
+      "brotliBytes": 86181
+    },
+    {
+      "path": "frontend/.next/static/chunks/3794-fba3f76785a3c234.js",
+      "bytes": 243176,
+      "gzipBytes": 67133,
+      "brotliBytes": 54495
+    },
+    {
+      "path": "frontend/.next/static/chunks/4bd1b696-8cd12253b448cc13.js",
+      "bytes": 203727,
+      "gzipBytes": 64061,
+      "brotliBytes": 54664
+    },
+    {
+      "path": "frontend/.next/static/chunks/framework-b33a8f5d57cd8d87.js",
+      "bytes": 189686,
+      "gzipBytes": 59893,
+      "brotliBytes": 50983
+    },
+    {
+      "path": "frontend/.next/static/chunks/main-a92661d3dca53288.js",
+      "bytes": 147305,
+      "gzipBytes": 44208,
+      "brotliBytes": 37251
+    },
+    {
+      "path": "frontend/.next/static/chunks/4648-a23e5a4aa2512289.js",
+      "bytes": 135597,
+      "gzipBytes": 43268,
+      "brotliBytes": 36697
+    },
+    {
+      "path": "frontend/.next/static/chunks/7551-84f3b52cd9da0ecc.js",
+      "bytes": 126147,
+      "gzipBytes": 33607,
+      "brotliBytes": 28965
+    },
+    {
+      "path": "frontend/.next/static/chunks/polyfills-42372ed130431b0a.js",
+      "bytes": 112594,
+      "gzipBytes": 39627,
+      "brotliBytes": 35158
+    },
+    {
+      "path": "frontend/.next/static/chunks/54a60aa6-dc69c38ef5ce012d.js",
+      "bytes": 102585,
+      "gzipBytes": 31549,
+      "brotliBytes": 27769
+    },
+    {
+      "path": "frontend/.next/static/chunks/70e0d97a-ee824cb599f9daff.js",
+      "bytes": 97818,
+      "gzipBytes": 31177,
+      "brotliBytes": 27652
+    },
+    {
+      "path": "frontend/.next/static/chunks/6024-ffbe38f23ee68852.js",
+      "bytes": 84993,
+      "gzipBytes": 24305,
+      "brotliBytes": 21569
+    },
+    {
+      "path": "frontend/.next/static/css/55dfe920384f4655.css",
+      "bytes": 84942,
+      "gzipBytes": 15370,
+      "brotliBytes": 12429
+    },
+    {
+      "path": "frontend/.next/static/chunks/1230-a3659dd91911bcfe.js",
+      "bytes": 76221,
+      "gzipBytes": 23165,
+      "brotliBytes": 20634
+    },
+    {
+      "path": "frontend/.next/static/chunks/6be7e44c-050d7d0e7c92ad9b.js",
+      "bytes": 66895,
+      "gzipBytes": 19337,
+      "brotliBytes": 17390
+    },
+    {
+      "path": "frontend/.next/static/chunks/7579-49ab97df2f82e12b.js",
+      "bytes": 65465,
+      "gzipBytes": 19194,
+      "brotliBytes": 16881
+    },
+    {
+      "path": "frontend/.next/static/chunks/9261-6e1f41f724912655.js",
+      "bytes": 56976,
+      "gzipBytes": 20865,
+      "brotliBytes": 18809
+    },
+    {
+      "path": "frontend/.next/static/chunks/6680-dac27dc1fd24dc76.js",
+      "bytes": 44629,
+      "gzipBytes": 14128,
+      "brotliBytes": 12743
+    },
+    {
+      "path": "frontend/.next/static/chunks/app/(dashboard)/workspace/[id]/docs/[docId]/page-bb9500ed0d64231b.js",
+      "bytes": 31543,
+      "gzipBytes": 11365,
+      "brotliBytes": 10013
+    },
+    {
+      "path": "frontend/.next/static/chunks/8232-e0a9b6c9ad98b685.js",
+      "bytes": 26888,
+      "gzipBytes": 9064,
+      "brotliBytes": 7991
+    },
+    {
+      "path": "frontend/.next/static/chunks/app/(dashboard)/workspace/[id]/kanban/page-41bafe6ea727b97a.js",
+      "bytes": 26327,
+      "gzipBytes": 8471,
+      "brotliBytes": 7521
+    },
+    {
+      "path": "frontend/.next/static/chunks/app/(dashboard)/workspace/[id]/settings/page-7e71f8eaa1e25f6e.js",
+      "bytes": 25265,
+      "gzipBytes": 8135,
+      "brotliBytes": 7178
+    },
+    {
+      "path": "frontend/.next/static/chunks/app/(dashboard)/workspace/[id]/page-4c03876752ea1b0d.js",
+      "bytes": 25205,
+      "gzipBytes": 7230,
+      "brotliBytes": 6342
+    },
+    {
+      "path": "frontend/.next/static/chunks/app/(dashboard)/workspace/[id]/snippets/page-b2e429e8727377af.js",
+      "bytes": 24688,
+      "gzipBytes": 7527,
+      "brotliBytes": 6690
+    },
+    {
+      "path": "frontend/.next/static/chunks/1ed1210f-78f8938a68404091.js",
+      "bytes": 23960,
+      "gzipBytes": 7734,
+      "brotliBytes": 6868
+    },
+    {
+      "path": "frontend/.next/static/chunks/app/(dashboard)/dashboard/page-daddb545603e0d4e.js",
+      "bytes": 22129,
+      "gzipBytes": 7236,
+      "brotliBytes": 6431
+    },
+    {
+      "path": "frontend/.next/static/chunks/app/(dashboard)/workspace/[id]/decisions/page-aab851e7c585ee88.js",
+      "bytes": 19843,
+      "gzipBytes": 6714,
+      "brotliBytes": 5935
+    },
+    {
+      "path": "frontend/.next/static/chunks/app/page-e8a9b1681ff7f08f.js",
+      "bytes": 19679,
+      "gzipBytes": 5684,
+      "brotliBytes": 4854
+    },
+    {
+      "path": "frontend/.next/static/chunks/app/(dashboard)/workspace/[id]/docs/page-bfc20e804cb5d5bf.js",
+      "bytes": 17489,
+      "gzipBytes": 6057,
+      "brotliBytes": 5315
+    },
+    {
+      "path": "frontend/.next/static/chunks/app/layout-f70b6c2a67fbf56d.js",
+      "bytes": 15586,
+      "gzipBytes": 5767,
+      "brotliBytes": 5075
+    },
+    {
+      "path": "frontend/.next/static/chunks/app/(dashboard)/workspace/[id]/snippets/safety/page-4c08ef54271bd232.js",
+      "bytes": 15571,
+      "gzipBytes": 5745,
+      "brotliBytes": 5097
+    },
+    {
+      "path": "frontend/.next/static/chunks/app/design-system/page-433a4446c436fa0e.js",
+      "bytes": 14813,
+      "gzipBytes": 4742,
+      "brotliBytes": 4094
+    },
+    {
+      "path": "frontend/.next/static/chunks/6099-8679b8ca12ed63a6.js",
+      "bytes": 13598,
+      "gzipBytes": 4642,
+      "brotliBytes": 4020
+    },
+    {
+      "path": "frontend/.next/static/chunks/9989-2e091117d761739d.js",
+      "bytes": 12763,
+      "gzipBytes": 4902,
+      "brotliBytes": 4301
+    },
+    {
+      "path": "frontend/.next/static/chunks/8476-82ba488f79f5f435.js",
+      "bytes": 10470,
+      "gzipBytes": 3835,
+      "brotliBytes": 3399
+    },
+    {
+      "path": "frontend/.next/static/chunks/8500-63a4afbeacab3b52.js",
+      "bytes": 7674,
+      "gzipBytes": 3259,
+      "brotliBytes": 2866
+    },
+    {
+      "path": "frontend/.next/static/chunks/4932-19e6b5cafe24373a.js",
+      "bytes": 6870,
+      "gzipBytes": 2661,
+      "brotliBytes": 2403
+    },
+    {
+      "path": "frontend/.next/static/chunks/2936-636bd063d0dd7aae.js",
+      "bytes": 6468,
+      "gzipBytes": 1893,
+      "brotliBytes": 1712
+    },
+    {
+      "path": "frontend/.next/static/chunks/app/(auth)/layout-56c15e0c7da24710.js",
+      "bytes": 5475,
+      "gzipBytes": 2508,
+      "brotliBytes": 2248
+    },
+    {
+      "path": "frontend/.next/static/chunks/app/(auth)/login/[[...rest]]/page-a43822e4bdf1aa96.js",
+      "bytes": 4885,
+      "gzipBytes": 2272,
+      "brotliBytes": 1950
+    },
+    {
+      "path": "frontend/.next/static/chunks/app/(auth)/sign-in/[[...rest]]/page-7a8f8ab1680d3685.js",
+      "bytes": 4767,
+      "gzipBytes": 2203,
+      "brotliBytes": 1890
+    },
+    {
+      "path": "frontend/.next/static/chunks/app/(auth)/sign-up/[[...rest]]/page-87c2aced54fa6179.js",
+      "bytes": 4767,
+      "gzipBytes": 2205,
+      "brotliBytes": 1888
+    },
+    {
+      "path": "frontend/.next/static/chunks/app/(auth)/signup/[[...rest]]/page-e9142160616d0d88.js",
+      "bytes": 4656,
+      "gzipBytes": 2150,
+      "brotliBytes": 1852
+    },
+    {
+      "path": "frontend/.next/static/chunks/app/(dashboard)/invitations/[id]/page-24c20a16db4b538b.js",
+      "bytes": 4651,
+      "gzipBytes": 2038,
+      "brotliBytes": 1767
+    },
+    {
+      "path": "frontend/.next/static/chunks/webpack-5f649f560657849b.js",
+      "bytes": 3343,
+      "gzipBytes": 1682,
+      "brotliBytes": 1490
+    },
+    {
+      "path": "frontend/.next/static/chunks/app/_not-found/page-bae7df073c10f3f2.js",
+      "bytes": 2679,
+      "gzipBytes": 994,
+      "brotliBytes": 825
+    },
+    {
+      "path": "frontend/.next/static/chunks/app/(dashboard)/dashboard/error-8422bdd8781e4dc6.js",
+      "bytes": 2565,
+      "gzipBytes": 1221,
+      "brotliBytes": 1062
+    },
+    {
+      "path": "frontend/.next/static/chunks/app/(dashboard)/workspace/[id]/settings/error-6a89ab3a01c82b7d.js",
+      "bytes": 2452,
+      "gzipBytes": 1147,
+      "brotliBytes": 1010
+    },
+    {
+      "path": "frontend/.next/static/chunks/app/(dashboard)/workspace/[id]/docs/[docId]/error-7da012dc4bd16ae6.js",
+      "bytes": 1236,
+      "gzipBytes": 714,
+      "brotliBytes": 621
+    },
+    {
+      "path": "frontend/.next/static/chunks/app/(dashboard)/workspace/[id]/snippets/safety/error-242bda3af9667cd0.js",
+      "bytes": 1203,
+      "gzipBytes": 704,
+      "brotliBytes": 620
+    },
+    {
+      "path": "frontend/.next/static/chunks/app/(dashboard)/workspace/[id]/digest/error-63081dfee341c544.js",
+      "bytes": 1180,
+      "gzipBytes": 694,
+      "brotliBytes": 617
+    },
+    {
+      "path": "frontend/.next/static/chunks/app/(dashboard)/workspace/[id]/decisions/error-bee131bda63401f4.js",
+      "bytes": 1164,
+      "gzipBytes": 684,
+      "brotliBytes": 602
+    },
+    {
+      "path": "frontend/.next/static/chunks/app/error-6edb2acc6775485c.js",
+      "bytes": 1049,
+      "gzipBytes": 635,
+      "brotliBytes": 557
+    },
+    {
+      "path": "frontend/.next/static/oYMxgt7F2prMiUOhnfDuF/_buildManifest.js",
+      "bytes": 1017,
+      "gzipBytes": 365,
+      "brotliBytes": 317
+    },
+    {
+      "path": "frontend/.next/static/chunks/main-app-35d07792a32c5cd0.js",
+      "bytes": 529,
+      "gzipBytes": 233,
+      "brotliBytes": 209
+    },
+    {
+      "path": "frontend/.next/static/chunks/app/(dashboard)/dashboard/loading-50f02a9e0d62ef85.js",
+      "bytes": 321,
+      "gzipBytes": 198,
+      "brotliBytes": 181
+    },
+    {
+      "path": "frontend/.next/static/chunks/app/(dashboard)/workspace/[id]/settings/loading-50f02a9e0d62ef85.js",
+      "bytes": 321,
+      "gzipBytes": 198,
+      "brotliBytes": 181
+    },
+    {
+      "path": "frontend/.next/static/chunks/app/(dashboard)/workspace/[id]/decisions/loading-53dce8c1d8224ba6.js",
+      "bytes": 286,
+      "gzipBytes": 192,
+      "brotliBytes": 180
+    },
+    {
+      "path": "frontend/.next/static/chunks/app/(dashboard)/workspace/[id]/digest/loading-53dce8c1d8224ba6.js",
+      "bytes": 286,
+      "gzipBytes": 192,
+      "brotliBytes": 180
+    },
+    {
+      "path": "frontend/.next/static/chunks/app/(dashboard)/workspace/[id]/snippets/safety/loading-53dce8c1d8224ba6.js",
+      "bytes": 286,
+      "gzipBytes": 192,
+      "brotliBytes": 180
+    },
+    {
+      "path": "frontend/.next/static/chunks/app/(dashboard)/workspace/[id]/digest/activity/[activityId]/page-62ee355b2a7a6602.js",
+      "bytes": 221,
+      "gzipBytes": 188,
+      "brotliBytes": 171
+    },
+    {
+      "path": "frontend/.next/static/chunks/app/(dashboard)/workspace/[id]/digest/page-1518d9685eb40715.js",
+      "bytes": 220,
+      "gzipBytes": 188,
+      "brotliBytes": 169
+    },
+    {
+      "path": "frontend/.next/static/chunks/app/(dashboard)/settings/billing/page-7dca8c80d9d5d278.js",
+      "bytes": 189,
+      "gzipBytes": 166,
+      "brotliBytes": 159
+    },
+    {
+      "path": "frontend/.next/static/chunks/next/dist/client/components/builtin/global-error-d97b192bce722cd4.js",
+      "bytes": 186,
+      "gzipBytes": 165,
+      "brotliBytes": 160
+    },
+    {
+      "path": "frontend/.next/static/chunks/app/(dashboard)/layout-9d9fcb2cf7bb0a4d.js",
+      "bytes": 175,
+      "gzipBytes": 153,
+      "brotliBytes": 143
+    },
+    {
+      "path": "frontend/.next/static/chunks/app/(superadmin)/layout-9f4fd07273d47203.js",
+      "bytes": 175,
+      "gzipBytes": 153,
+      "brotliBytes": 143
+    },
+    {
+      "path": "frontend/.next/static/chunks/app/(superadmin)/superadmin/page-2a96e406a0fc2a98.js",
+      "bytes": 171,
+      "gzipBytes": 150,
+      "brotliBytes": 147
+    },
+    {
+      "path": "frontend/.next/static/chunks/app/_global-error/page-2a96e406a0fc2a98.js",
+      "bytes": 171,
+      "gzipBytes": 150,
+      "brotliBytes": 147
+    },
+    {
+      "path": "frontend/.next/static/chunks/app/api/auth/reset/route-2a96e406a0fc2a98.js",
+      "bytes": 171,
+      "gzipBytes": 150,
+      "brotliBytes": 147
+    },
+    {
+      "path": "frontend/.next/static/chunks/app/api/superadmin/workspaces/[workspaceId]/kill-switch/route-2a96e406a0fc2a98.js",
+      "bytes": 171,
+      "gzipBytes": 150,
+      "brotliBytes": 147
+    },
+    {
+      "path": "frontend/.next/static/chunks/next/dist/client/components/builtin/app-error-2a96e406a0fc2a98.js",
+      "bytes": 171,
+      "gzipBytes": 150,
+      "brotliBytes": 147
+    },
+    {
+      "path": "frontend/.next/static/chunks/next/dist/client/components/builtin/forbidden-2a96e406a0fc2a98.js",
+      "bytes": 171,
+      "gzipBytes": 150,
+      "brotliBytes": 147
+    },
+    {
+      "path": "frontend/.next/static/chunks/next/dist/client/components/builtin/not-found-2a96e406a0fc2a98.js",
+      "bytes": 171,
+      "gzipBytes": 150,
+      "brotliBytes": 147
+    },
+    {
+      "path": "frontend/.next/static/chunks/next/dist/client/components/builtin/unauthorized-2a96e406a0fc2a98.js",
+      "bytes": 171,
+      "gzipBytes": 150,
+      "brotliBytes": 147
+    },
+    {
+      "path": "frontend/.next/static/oYMxgt7F2prMiUOhnfDuF/_ssgManifest.js",
+      "bytes": 80,
+      "gzipBytes": 64,
+      "brotliBytes": 67
+    }
+  ]
+}

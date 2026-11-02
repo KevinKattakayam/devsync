@@ -1,0 +1,42 @@
+[
+  {
+    "RuleID": "generic-api-key",
+    "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+    "StartLine": 4,
+    "EndLine": 5,
+    "StartColumn": 2,
+    "EndColumn": 24,
+    "Match": "[REDACTED]",
+    "Secret": "[REDACTED]",
+    "File": "/repo/backend/.env.example",
+    "SymlinkFile": "",
+    "Commit": "",
+    "Entropy": 3.7544417,
+    "Author": "",
+    "Email": "",
+    "Date": "",
+    "Message": "",
+    "Tags": [],
+    "Fingerprint": "/repo/backend/.env.example:generic-api-key:4"
+  },
+  {
+    "RuleID": "generic-api-key",
+    "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+    "StartLine": 649,
+    "EndLine": 649,
+    "StartColumn": 12,
+    "EndColumn": 46,
+    "Match": "[REDACTED]",
+    "Secret": "[REDACTED]",
+    "File": "/repo/backend/src/__tests__/resource-mutations.integration.test.ts",
+    "SymlinkFile": "",
+    "Commit": "",
+    "Entropy": 3.5724313,
+    "Author": "",
+    "Email": "",
+    "Date": "",
+    "Message": "",
+    "Tags": [],
+    "Fingerprint": "/repo/backend/src/__tests__/resource-mutations.integration.test.ts:generic-api-key:649"
+  }
+]

@@ -1,0 +1,68 @@
+{
+  "backend": [
+    {
+      "step": "install",
+      "command": [
+        "npm",
+        "ci",
+        "--no-audit"
+      ],
+      "exit": 0
+    },
+    {
+      "step": "lint",
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exit": 0
+    },
+    {
+      "step": "typecheck",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exit": 0
+    },
+    {
+      "step": "tests",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "exit": "timeout240"
+    }
+  ],
+  "frontend": [
+    {
+      "step": "install",
+      "command": [
+        "npm",
+        "ci",
+        "--no-audit"
+      ],
+      "exit": 0
+    },
+    {
+      "step": "lint",
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exit": 0
+    },
+    {
+      "step": "typecheck",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exit": 2
+    }
+  ]
+}

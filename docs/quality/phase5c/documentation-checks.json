@@ -1,0 +1,11 @@
+{
+  "scope": "Changed/new Markdown files including retained historical reports with new current-reference notices",
+  "markdownFiles": 18,
+  "localLinksAndImages": 226,
+  "missingLocalTargets": [],
+  "externalUrlsAndFragmentsChecked": false,
+  "mermaidSourceBlocks": 6,
+  "mermaidRendered": false,
+  "onlyDocumentationAndEvidenceChanged": true,
+  "applicationContractsTestsBaselinesChanged": false
+}

@@ -32,7 +32,9 @@ export interface DeadLetterJob {
   failedAt: string;
 }
 
-export interface TracedJobData { traceId?: string; }
+export interface TracedJobData {
+  traceId?: string;
+}
 
 /** Attach this to job payloads at enqueue boundaries to preserve trace linkage. */
 export function withTraceContext<T extends object>(data: T): T & TracedJobData {
@@ -80,20 +82,28 @@ export function createWorker<T = unknown>(
     console.error(`[Worker:${queueName}] Job ${job?.id} failed:`, err.message);
     const attempts = typeof job?.opts.attempts === 'number' ? job.opts.attempts : 1;
     if (job && queueName !== QueueNames.DEAD_LETTER && job.attemptsMade >= attempts) {
-      void getQueue(QueueNames.DEAD_LETTER).add('failed-job', {
-        sourceQueue: queueName,
-        sourceJobId: job.id,
-        name: job.name,
-        data: job.data,
-        attemptsMade: job.attemptsMade,
-        failedReason: err.message,
-        failedAt: new Date().toISOString(),
-      } satisfies DeadLetterJob, {
-        jobId: `dlq-${queueName}-${job.id}`,
-        attempts: 1,
-        removeOnComplete: false,
-        removeOnFail: false,
-      }).catch((dlqError: Error) => console.error('[DLQ] Could not enqueue failed job:', dlqError.message));
+      void getQueue(QueueNames.DEAD_LETTER)
+        .add(
+          'failed-job',
+          {
+            sourceQueue: queueName,
+            sourceJobId: job.id,
+            name: job.name,
+            data: job.data,
+            attemptsMade: job.attemptsMade,
+            failedReason: err.message,
+            failedAt: new Date().toISOString(),
+          } satisfies DeadLetterJob,
+          {
+            jobId: `dlq-${queueName}-${job.id}`,
+            attempts: 1,
+            removeOnComplete: false,
+            removeOnFail: false,
+          },
+        )
+        .catch((dlqError: Error) =>
+          console.error('[DLQ] Could not enqueue failed job:', dlqError.message),
+        );
     }
   });
 

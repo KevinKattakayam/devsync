@@ -1,0 +1,335 @@
+{
+  "violations": [],
+  "incomplete": [
+    {
+      "id": "aria-hidden-focus",
+      "impact": "serious",
+      "tags": [
+        "cat.name-role-value",
+        "wcag2a",
+        "wcag412",
+        "TTv5",
+        "TT6.a",
+        "EN-301-549",
+        "EN-9.4.1.2",
+        "RGAAv4",
+        "RGAA-10.8.1"
+      ],
+      "description": "Ensure aria-hidden elements are not focusable nor contain focusable elements",
+      "help": "ARIA hidden element must not be focusable or contain focusable elements",
+      "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/aria-hidden-focus?application=axeAPI",
+      "nodes": [
+        {
+          "any": [],
+          "all": [
+            {
+              "id": "focusable-modal-open",
+              "data": null,
+              "relatedNodes": [
+                {
+                  "html": "<span data-radix-focus-guard=\"\" tabindex=\"0\" data-aria-hidden=\"true\" aria-hidden=\"true\" style=\"outline: none; opacity: 0; position: fixed; pointer-events: none;\"></span>",
+                  "target": [
+                    "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"]:nth-child(1)"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Check that focusable elements are not tabbable in the current state"
+            }
+          ],
+          "none": [],
+          "impact": "serious",
+          "html": "<span data-radix-focus-guard=\"\" tabindex=\"0\" data-aria-hidden=\"true\" aria-hidden=\"true\" style=\"outline: none; opacity: 0; position: fixed; pointer-events: none;\"></span>",
+          "target": [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"]:nth-child(1)"
+          ],
+          "failureSummary": "Fix all of the following:\n  Check that focusable elements are not tabbable in the current state"
+        },
+        {
+          "any": [],
+          "all": [
+            {
+              "id": "focusable-modal-open",
+              "data": null,
+              "relatedNodes": [
+                {
+                  "html": "<a href=\"#main-content\" class=\"ui-skip-link\" data-shell-region=\"skip\">Skip to content</a>",
+                  "target": [
+                    ".ui-skip-link"
+                  ]
+                },
+                {
+                  "html": "<button aria-label=\"Switch workspace: Sample workspace\" id=\"radix-_r_0_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button shell-workspace-trigger\">",
+                  "target": [
+                    "#radix-_r_0_"
+                  ]
+                },
+                {
+                  "html": "<a aria-label=\"All workspaces\" class=\"shell-nav-link\" href=\"/dashboard\">",
+                  "target": [
+                    "a[aria-label=\"All workspaces\"]"
+                  ]
+                },
+                {
+                  "html": "<a aria-label=\"Overview\" class=\"shell-nav-link\" href=\"/workspace/devsync-sample\">",
+                  "target": [
+                    "a[aria-label=\"Overview\"]"
+                  ]
+                },
+                {
+                  "html": "<a aria-label=\"Documents\" class=\"shell-nav-link\" href=\"/workspace/devsync-sample/docs\">",
+                  "target": [
+                    "a[aria-label=\"Documents\"]"
+                  ]
+                },
+                {
+                  "html": "<a aria-label=\"Sprint board\" class=\"shell-nav-link\" href=\"/workspace/devsync-sample/kanban\">",
+                  "target": [
+                    "a[aria-label=\"Sprint board\"]"
+                  ]
+                },
+                {
+                  "html": "<a aria-label=\"Code snippets\" class=\"shell-nav-link\" href=\"/workspace/devsync-sample/snippets\">",
+                  "target": [
+                    "a[aria-label=\"Code snippets\"]"
+                  ]
+                },
+                {
+                  "html": "<a aria-label=\"Settings\" aria-current=\"page\" class=\"shell-nav-link\" href=\"/workspace/devsync-sample/settings\">",
+                  "target": [
+                    "a[aria-label=\"Settings\"]"
+                  ]
+                },
+                {
+                  "html": "<a class=\"shell-document-link\" href=\"/workspace/devsync-sample/docs/devsync-sample-doc\">",
+                  "target": [
+                    ".shell-document-link"
+                  ]
+                },
+                {
+                  "html": "<button aria-expanded=\"true\" aria-label=\"Collapse sidebar\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button\">",
+                  "target": [
+                    "button[aria-label=\"Collapse sidebar\"]"
+                  ]
+                },
+                {
+                  "html": "<a class=\"text-muted-foreground hover:text-foreground\" href=\"/dashboard\">Workspaces</a>",
+                  "target": [
+                    ".hover\\:text-foreground"
+                  ]
+                },
+                {
+                  "html": "<a class=\"inline-block max-w-40 truncate align-bottom\" href=\"/workspace/devsync-sample\">Sample workspace</a>",
+                  "target": [
+                    ".inline-block"
+                  ]
+                },
+                {
+                  "html": "<button aria-label=\"Search and commands\" aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button shell-search\">",
+                  "target": [
+                    ".shell-search"
+                  ]
+                },
+                {
+                  "html": "<button aria-pressed=\"false\" aria-label=\"Enter focus mode\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button\">",
+                  "target": [
+                    "button[aria-label=\"Enter focus mode\"]"
+                  ]
+                },
+                {
+                  "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" aria-label=\"Keyboard shortcuts\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button hidden sm:inline-flex\">",
+                  "target": [
+                    ".sm\\:inline-flex"
+                  ]
+                },
+                {
+                  "html": "<button aria-label=\"Sample owner\" id=\"radix-_r_b_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button shell-user\">",
+                  "target": [
+                    "#radix-_r_b_"
+                  ]
+                },
+                {
+                  "html": "<button aria-label=\"Refresh workspace access\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button\">",
+                  "target": [
+                    "button[aria-label=\"Refresh workspace access\"]"
+                  ]
+                },
+                {
+                  "html": "<input placeholder=\"Sections, names, email addresses or roles\" class=\"ui-input pl-10\" value=\"\" style=\"\">",
+                  "target": [
+                    ".pl-10"
+                  ]
+                },
+                {
+                  "html": "<a href=\"#members\" class=\"rounded-md px-3 py-2 text-sm hover:bg-secondary\">Members &amp; roles</a>",
+                  "target": [
+                    "a[href$=\"#members\"]"
+                  ]
+                },
+                {
+                  "html": "<a href=\"#invitations\" class=\"rounded-md px-3 py-2 text-sm hover:bg-secondary\">Invitations</a>",
+                  "target": [
+                    "a[href$=\"#invitations\"]"
+                  ]
+                },
+                {
+                  "html": "<button type=\"button\" role=\"combobox\" aria-expanded=\"false\" aria-autocomplete=\"none\" dir=\"ltr\" data-state=\"closed\" id=\"_r_h_-cmvy4kttj0007jnhck5gdrjy1\" aria-label=\"Role for Sample editor\" class=\"ui-input flex items-center justify-between gap-2\">",
+                  "target": [
+                    "#_r_h_-cmvy4kttj0007jnhck5gdrjy1"
+                  ]
+                },
+                {
+                  "html": "<button aria-label=\"Remove Sample editor\" type=\"button\" data-variant=\"ghost\" data-size=\"compact\" class=\"ui-button\">Remove</button>",
+                  "target": [
+                    "button[aria-label=\"Remove Sample editor\"]"
+                  ]
+                },
+                {
+                  "html": "<button type=\"button\" role=\"combobox\" aria-expanded=\"false\" aria-autocomplete=\"none\" dir=\"ltr\" data-state=\"closed\" id=\"_r_h_-cmvy4kttm0009jnhc3md8arhl\" aria-label=\"Role for Sample viewer\" class=\"ui-input flex items-center justify-between gap-2\">",
+                  "target": [
+                    "#_r_h_-cmvy4kttm0009jnhc3md8arhl"
+                  ]
+                },
+                {
+                  "html": "<button aria-label=\"Remove Sample viewer\" type=\"button\" data-variant=\"ghost\" data-size=\"compact\" class=\"ui-button\">Remove</button>",
+                  "target": [
+                    "button[aria-label=\"Remove Sample viewer\"]"
+                  ]
+                },
+                {
+                  "html": "<input required=\"\" maxlength=\"254\" autocomplete=\"email\" placeholder=\"teammate@company.com\" class=\"ui-input\" type=\"email\" value=\"\" style=\"\">",
+                  "target": [
+                    "input[required=\"\"]"
+                  ]
+                },
+                {
+                  "html": "<button type=\"button\" role=\"combobox\" aria-expanded=\"false\" aria-autocomplete=\"none\" dir=\"ltr\" data-state=\"closed\" aria-label=\"Invitation role\" class=\"ui-input flex items-center justify-between gap-2\">",
+                  "target": [
+                    "button[aria-label=\"Invitation role\"]"
+                  ]
+                },
+                {
+                  "html": "<button type=\"submit\" data-variant=\"primary\" data-size=\"default\" class=\"ui-button\">Create invitation</button>",
+                  "target": [
+                    "button[type=\"submit\"]"
+                  ]
+                },
+                {
+                  "html": "<a class=\"min-h-9 break-all rounded-md px-2 py-2 text-sm text-primary underline underline-offset-4\" href=\"/invitations/cmvy4m3q2001dhemoadamyz6k\">Open invitation link</a>",
+                  "target": [
+                    ".min-h-9"
+                  ]
+                },
+                {
+                  "html": "<button type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Copy link</button>",
+                  "target": [
+                    ".mt-4.gap-3.flex-wrap > .ui-button[data-variant=\"secondary\"][data-size=\"default\"]"
+                  ]
+                },
+                {
+                  "html": "<button type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button\">Revoke invitation</button>",
+                  "target": [
+                    ".mt-4.gap-3.flex-wrap > .ui-button[data-variant=\"ghost\"][data-size=\"default\"]"
+                  ]
+                },
+                {
+                  "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button shell-copilot-trigger\">",
+                  "target": [
+                    ".shell-copilot-trigger"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Check that focusable elements are not tabbable in the current state"
+            }
+          ],
+          "none": [],
+          "impact": "serious",
+          "html": "<div class=\"app-shell\" data-aria-hidden=\"true\" aria-hidden=\"true\">",
+          "target": [
+            ".app-shell"
+          ],
+          "failureSummary": "Fix all of the following:\n  Check that focusable elements are not tabbable in the current state"
+        },
+        {
+          "any": [],
+          "all": [
+            {
+              "id": "focusable-modal-open",
+              "data": null,
+              "relatedNodes": [
+                {
+                  "html": "<span data-radix-focus-guard=\"\" tabindex=\"0\" data-aria-hidden=\"true\" aria-hidden=\"true\" style=\"outline: none; opacity: 0; position: fixed; pointer-events: none;\"></span>",
+                  "target": [
+                    "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"]:nth-child(14)"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Check that focusable elements are not tabbable in the current state"
+            }
+          ],
+          "none": [],
+          "impact": "serious",
+          "html": "<span data-radix-focus-guard=\"\" tabindex=\"0\" data-aria-hidden=\"true\" aria-hidden=\"true\" style=\"outline: none; opacity: 0; position: fixed; pointer-events: none;\"></span>",
+          "target": [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"]:nth-child(14)"
+          ],
+          "failureSummary": "Fix all of the following:\n  Check that focusable elements are not tabbable in the current state"
+        }
+      ]
+    },
+    {
+      "id": "color-contrast",
+      "impact": "serious",
+      "tags": [
+        "cat.color",
+        "wcag2aa",
+        "wcag143",
+        "TTv5",
+        "TT13.c",
+        "EN-301-549",
+        "EN-9.1.4.3",
+        "ACT",
+        "RGAAv4",
+        "RGAA-3.2.1"
+      ],
+      "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+      "help": "Elements must meet minimum color contrast ratio thresholds",
+      "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/color-contrast?application=axeAPI",
+      "nodes": [
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "contrastRatio": 0,
+                "fontSize": "10.5pt (14px)",
+                "fontWeight": "normal",
+                "messageKey": "bgOverlap",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element's background color could not be determined because it is overlapped by another element"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button shell-copilot-trigger\">",
+          "target": [
+            ".shell-copilot-trigger"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element"
+        }
+      ]
+    }
+  ],
+  "bounds": {
+    "viewport": 1440,
+    "page": 1440,
+    "main": 1200,
+    "scroll": 1200
+  }
+}

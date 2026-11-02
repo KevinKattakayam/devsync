@@ -1,0 +1,40 @@
+[
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "title",
+    "bounds": {
+      "x": 488,
+      "y": 83,
+      "width": 704,
+      "height": 36
+    }
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "default",
+    "viewport": 1440,
+    "document": 1440,
+    "main": 1200,
+    "scroll": 1200
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "commands",
+    "viewport": 1440,
+    "document": 1440,
+    "main": 1200,
+    "scroll": 1200
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "commands-empty",
+    "viewport": 1440,
+    "document": 1440,
+    "main": 1200,
+    "scroll": 1200
+  }
+]

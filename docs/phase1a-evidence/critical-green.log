@@ -1,0 +1,29 @@
+
+> devsync-backend@1.0.0 test
+> jest --runInBand --runTestsByPath src/__tests__/critical-security.test.ts
+
+  console.log
+    [Hocuspocus] Collaboration server initialized on /yjs*
+
+      at setupHocuspocusServer (src/services/yjs.service.ts:173:11)
+
+  console.log
+    [Hocuspocus] Collaboration server initialized on /yjs*
+
+      at setupHocuspocusServer (src/services/yjs.service.ts:173:11)
+
+  console.log
+    [Hocuspocus] Collaboration server initialized on /yjs*
+
+      at setupHocuspocusServer (src/services/yjs.service.ts:173:11)
+
+  console.log
+    [Hocuspocus] Collaboration server initialized on /yjs*
+
+      at setupHocuspocusServer (src/services/yjs.service.ts:173:11)
+
+Test Suites: 1 passed, 1 total
+Tests:       11 passed, 11 total
+Snapshots:   0 total
+Time:        8.374 s, estimated 9 s
+Ran all test suites within paths "src/__tests__/critical-security.test.ts".

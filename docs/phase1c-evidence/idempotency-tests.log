@@ -1,0 +1,78 @@
+
+> devsync-backend@1.0.0 test
+> jest --runInBand --runTestsByPath src/__tests__/resource-mutations.integration.test.ts --coverage=false
+
+  console.error
+    [beforeHandleMessage] Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:195:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+  console.error
+    closing connection 7020a639-8aa4-44c6-ae00-6165576ef511 (while handling document:resource-a-36:doc-resource-a-36) because of exception Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:195:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+
+  console.error
+    [beforeHandleMessage] Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:195:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+  console.error
+    closing connection 2c572468-fb3c-4c62-8dce-ccaae8a84c22 (while handling document:resource-a-36:doc-resource-a-36) because of exception Error: Message rejected
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:195:55)
+        at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+        at processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+
+  console.warn
+    [Embedding] Provider unavailable Error
+
+      31 |     return vectorSchema.parse(result.data[0]?.embedding);
+      32 |   } catch (error) {
+    > 33 |     console.warn(
+         |             ^
+      34 |       '[Embedding] Provider unavailable',
+      35 |       error instanceof Error ? error.name : 'UnknownError',
+      36 |     );
+
+      at embed (src/services/embedding.service.ts:33:13)
+      at semanticWorkspaceContext (src/services/embedding.service.ts:187:20)
+      at workspaceSearch (src/controllers/search.controller.ts:18:22)
+
+  console.warn
+    [Embedding] Provider unavailable Error
+
+      31 |     return vectorSchema.parse(result.data[0]?.embedding);
+      32 |   } catch (error) {
+    > 33 |     console.warn(
+         |             ^
+      34 |       '[Embedding] Provider unavailable',
+      35 |       error instanceof Error ? error.name : 'UnknownError',
+      36 |     );
+
+      at embed (src/services/embedding.service.ts:33:13)
+      at semanticWorkspaceContext (src/services/embedding.service.ts:187:20)
+      at aiComplete (src/controllers/ai.controller.ts:22:29)
+
+{"level":50,"time":1793496119980,"service":"devsync-api","msg":"Unexpected server error"}
+Test Suites: 1 passed, 1 total
+Tests:       94 passed, 94 total
+Snapshots:   0 total
+Time:        23.405 s
+Ran all test suites within paths "src/__tests__/resource-mutations.integration.test.ts".

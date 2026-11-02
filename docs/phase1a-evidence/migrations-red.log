@@ -1,0 +1,109 @@
+
+> devsync-backend@1.0.0 test
+> jest --runInBand --runTestsByPath src/__tests__/migration-chain.test.ts
+
+FAIL src/__tests__/migration-chain.test.ts (37.31 s)
+  ● G02 applies the actual migration chain to an empty pgvector database, retaining forced RLS
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  2
+    + Received  + 16
+
+      Object {
+    -   "error": "",
+    -   "exit": 0,
+    +   "error": "Error: P3018
+    +
+    + A migration failed to apply. New migrations cannot be applied before the error is recovered from. Read more about how to resolve migration issues in a production database: https://pris.ly/d/migrate-resolve
+    +
+    + Migration name: 20260729180000_enterprise_platform
+    +
+    + Database error code: 42P01
+    +
+    + Database error:
+    + ERROR: relation \"User\" does not exist
+    +
+    + DbError { severity: \"ERROR\", parsed_severity: Some(Error), code: SqlState(E42P01), message: \"relation \\\"User\\\" does not exist\", detail: None, hint: None, position: None, where_: None, schema: None, table: None, column: None, datatype: None, constraint: None, file: Some(\"namespace.c\"), line: Some(434), routine: Some(\"RangeVarGetRelidExtended\") }
+    +
+    +
+    + ",
+    +   "exit": 1,
+      }
+
+      17 | it('G02 applies the actual migration chain to an empty pgvector database, retaining forced RLS', async () => {
+      18 |   const migration = command(['node_modules/prisma/build/index.js', 'migrate', 'deploy']);
+    > 19 |   expect({ exit: migration.status, error: migration.stderr }).toEqual({ exit: 0, error: '' });
+         |                                                               ^
+      20 |   const tables = await admin.query(`SELECT relname, relrowsecurity, relforcerowsecurity FROM pg_class WHERE relname IN ('Document','Snippet','Task') ORDER BY relname`);
+      21 |   expect(tables.rows).toEqual(['Document', 'Snippet', 'Task'].map(relname => ({ relname, relrowsecurity: true, relforcerowsecurity: true })));
+      22 |   const password = randomBytes(24).toString('hex');
+
+      at Object.<anonymous> (src/__tests__/migration-chain.test.ts:19:63)
+
+  ● G12 installs indexes for tenant lists and relationship lookups
+
+    expect(received).toContain(expected) // indexOf
+
+    Expected value: "Document_workspaceId_isArchived_updatedAt_idx"
+    Received array: ["_prisma_migrations_pkey"]
+
+      36 | it('G12 installs indexes for tenant lists and relationship lookups', async () => {
+      37 |   const names = (await admin.query(`SELECT indexname FROM pg_indexes WHERE schemaname='public'`)).rows.map((row: { indexname: string }) => row.indexname);
+    > 38 |   for (const name of ['Document_workspaceId_isArchived_updatedAt_idx','Document_parentId_idx','Task_columnId_position_idx','Snippet_workspaceId_updatedAt_idx','Activity_workspaceId_createdAt_idx','Column_boardId_position_idx','Board_workspaceId_idx']) expect(names).toContain(name);
+         |                                                                                                                                                                                                                                                                           ^
+      39 | });
+      40 | it('I09 seeds an idempotent workspace using explicit test identities without creating login credentials', async () => {
+      41 |   const env = { SEED_ALLOW_WRITE: 'true', SEED_OWNER_CLERK_ID: 'user_fixture_owner', SEED_EDITOR_CLERK_ID: 'user_fixture_editor', SEED_VIEWER_CLERK_ID: 'user_fixture_viewer', NODE_ENV: 'test' };
+
+      at Object.<anonymous> (src/__tests__/migration-chain.test.ts:38:267)
+
+  ● I09 seeds an idempotent workspace using explicit test identities without creating login credentials
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  2
+    + Received  + 22
+
+      Object {
+    -   "error": "",
+    -   "exit": 0,
+    +   "error": "
+    + node:internal/modules/run_main:123
+    +     triggerUncaughtException(
+    +     ^
+    + Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/home/kevin/devsync/backend/prisma/seed.ts' imported from /home/kevin/devsync/backend/
+    +     at finalizeResolution (node:internal/modules/esm/resolve:275:11)
+    +     at moduleResolve (node:internal/modules/esm/resolve:861:10)
+    +     at defaultResolve (node:internal/modules/esm/resolve:985:11)
+    +     at nextResolve (node:internal/modules/esm/hooks:748:28)
+    +     at resolveBase (file:///home/kevin/devsync/backend/node_modules/tsx/dist/esm/index.mjs?1793464277269:2:3744)
+    +     at resolveDirectory (file:///home/kevin/devsync/backend/node_modules/tsx/dist/esm/index.mjs?1793464277269:2:4243)
+    +     at resolveTsPaths (file:///home/kevin/devsync/backend/node_modules/tsx/dist/esm/index.mjs?1793464277269:2:4984)
+    +     at resolve (file:///home/kevin/devsync/backend/node_modules/tsx/dist/esm/index.mjs?1793464277269:2:5361)
+    +     at nextResolve (node:internal/modules/esm/hooks:748:28)
+    +     at Hooks.resolve (node:internal/modules/esm/hooks:240:30) {
+    +   code: 'ERR_MODULE_NOT_FOUND',
+    +   url: 'file:///home/kevin/devsync/backend/prisma/seed.ts'
+    + }
+    +
+    + Node.js v22.23.2
+    + ",
+    +   "exit": 1,
+      }
+
+      42 |   for (let attempt = 0; attempt < 2; attempt++) {
+      43 |     const seed = command(['node_modules/tsx/dist/cli.mjs', 'prisma/seed.ts'], env);
+    > 44 |     expect({ exit: seed.status, error: seed.stderr }).toEqual({ exit: 0, error: '' });
+         |                                                       ^
+      45 |   }
+      46 |   const roles = await admin.query(`SELECT role FROM "WorkspaceMember" WHERE "workspaceId"='devsync-sample' ORDER BY role`);
+      47 |   expect(roles.rows.map((row: { role: string }) => row.role).sort()).toEqual(['EDITOR','OWNER','VIEWER']);
+
+      at Object.<anonymous> (src/__tests__/migration-chain.test.ts:44:55)
+
+Test Suites: 1 failed, 1 total
+Tests:       3 failed, 3 total
+Snapshots:   0 total
+Time:        37.704 s
+Ran all test suites within paths "src/__tests__/migration-chain.test.ts".

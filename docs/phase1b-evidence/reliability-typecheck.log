@@ -1,0 +1,5 @@
+
+> devsync-backend@1.0.0 typecheck
+> tsc --noEmit && tsc -p tsconfig.seed.json
+
+src/observability/reporting.ts(6,62): error TS2353: Object literal may only specify known properties, and 'sendDefaultPii' does not exist in type 'NodeOptions'.

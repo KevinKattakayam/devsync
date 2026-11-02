@@ -1,0 +1,4 @@
+
+> devsync-backend@1.0.0 openapi:generate
+> NODE_ENV=test tsx src/scripts/openapi.ts --write
+

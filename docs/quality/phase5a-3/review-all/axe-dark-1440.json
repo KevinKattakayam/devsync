@@ -1,0 +1,1009 @@
+[
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "default",
+    "violations": [],
+    "incomplete": []
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "commands",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-hidden-focus",
+        "impact": "serious",
+        "tags": [
+          "cat.name-role-value",
+          "wcag2a",
+          "wcag412",
+          "TTv5",
+          "TT6.a",
+          "EN-301-549",
+          "EN-9.4.1.2",
+          "RGAAv4",
+          "RGAA-10.8.1"
+        ],
+        "description": "Ensure aria-hidden elements are not focusable nor contain focusable elements",
+        "help": "ARIA hidden element must not be focusable or contain focusable elements",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/aria-hidden-focus?application=axeAPI",
+        "nodes": [
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "focusable-modal-open",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<a href=\"#main-content\" class=\"ui-skip-link\" data-shell-region=\"skip\" data-aria-hidden=\"true\" aria-hidden=\"true\">Skip to content</a>",
+                    "target": [
+                      ".ui-skip-link"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Check that focusable elements are not tabbable in the current state"
+              }
+            ],
+            "none": [],
+            "impact": "serious",
+            "html": "<a href=\"#main-content\" class=\"ui-skip-link\" data-shell-region=\"skip\" data-aria-hidden=\"true\" aria-hidden=\"true\">Skip to content</a>",
+            "target": [
+              ".ui-skip-link"
+            ],
+            "failureSummary": "Fix all of the following:\n  Check that focusable elements are not tabbable in the current state"
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "focusable-modal-open",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<button aria-label=\"Switch workspace: Sample workspace\" id=\"radix-_r_0_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button shell-workspace-trigger\">",
+                    "target": [
+                      "#radix-_r_0_"
+                    ]
+                  },
+                  {
+                    "html": "<a aria-label=\"All workspaces\" class=\"shell-nav-link\" href=\"/dashboard\">",
+                    "target": [
+                      "a[aria-label=\"All workspaces\"]"
+                    ]
+                  },
+                  {
+                    "html": "<a aria-label=\"Overview\" class=\"shell-nav-link\" href=\"/workspace/devsync-sample\">",
+                    "target": [
+                      "a[aria-label=\"Overview\"]"
+                    ]
+                  },
+                  {
+                    "html": "<a aria-label=\"Documents\" aria-current=\"page\" class=\"shell-nav-link\" href=\"/workspace/devsync-sample/docs\">",
+                    "target": [
+                      "a[aria-label=\"Documents\"]"
+                    ]
+                  },
+                  {
+                    "html": "<a aria-label=\"Sprint board\" class=\"shell-nav-link\" href=\"/workspace/devsync-sample/kanban\">",
+                    "target": [
+                      "a[aria-label=\"Sprint board\"]"
+                    ]
+                  },
+                  {
+                    "html": "<a aria-label=\"Code snippets\" class=\"shell-nav-link\" href=\"/workspace/devsync-sample/snippets\">",
+                    "target": [
+                      "a[aria-label=\"Code snippets\"]"
+                    ]
+                  },
+                  {
+                    "html": "<a aria-label=\"Settings\" class=\"shell-nav-link\" href=\"/workspace/devsync-sample/settings\">",
+                    "target": [
+                      "a[aria-label=\"Settings\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-expanded=\"false\" aria-controls=\"_r_g_\" aria-label=\"Expand Welcome\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button\">",
+                    "target": [
+                      "button[aria-controls=\"_r_g_\"]"
+                    ]
+                  },
+                  {
+                    "html": "<a aria-current=\"page\" class=\"shell-document-link\" href=\"/workspace/devsync-sample/docs/devsync-sample-doc\">",
+                    "target": [
+                      ".shell-document-link[aria-current=\"page\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-expanded=\"true\" aria-label=\"Collapse sidebar\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button\">",
+                    "target": [
+                      "button[aria-label=\"Collapse sidebar\"]"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Check that focusable elements are not tabbable in the current state"
+              }
+            ],
+            "none": [],
+            "impact": "serious",
+            "html": "<aside data-shell-region=\"sidebar\" aria-label=\"Sidebar\" class=\"shell-sidebar\" data-aria-hidden=\"true\" aria-hidden=\"true\">",
+            "target": [
+              "aside"
+            ],
+            "failureSummary": "Fix all of the following:\n  Check that focusable elements are not tabbable in the current state"
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "focusable-modal-open",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<a class=\"text-muted-foreground hover:text-foreground\" href=\"/dashboard\">Workspaces</a>",
+                    "target": [
+                      ".hover\\:text-foreground"
+                    ]
+                  },
+                  {
+                    "html": "<a class=\"inline-block max-w-40 truncate align-bottom\" href=\"/workspace/devsync-sample\">Sample workspace</a>",
+                    "target": [
+                      ".inline-block"
+                    ]
+                  },
+                  {
+                    "html": "<a class=\"hidden sm:inline\" href=\"/workspace/devsync-sample/docs\">Documents</a>",
+                    "target": [
+                      ".sm\\:inline.hidden[href$=\"docs\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-label=\"Search and commands\" aria-haspopup=\"dialog\" aria-expanded=\"true\" data-state=\"open\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button shell-search\" aria-controls=\"radix-_r_5_\">",
+                    "target": [
+                      ".shell-search"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-pressed=\"false\" aria-label=\"Enter focus mode\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button\">",
+                    "target": [
+                      "button[aria-label=\"Enter focus mode\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" aria-label=\"Keyboard shortcuts\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button hidden sm:inline-flex\">",
+                    "target": [
+                      ".sm\\:inline-flex"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-label=\"Sample owner\" id=\"radix-_r_b_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button shell-user\">",
+                    "target": [
+                      "#radix-_r_b_"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Check that focusable elements are not tabbable in the current state"
+              }
+            ],
+            "none": [],
+            "impact": "serious",
+            "html": "<header data-shell-region=\"topbar\" class=\"shell-topbar\" data-aria-hidden=\"true\" aria-hidden=\"true\">",
+            "target": [
+              "header"
+            ],
+            "failureSummary": "Fix all of the following:\n  Check that focusable elements are not tabbable in the current state"
+          }
+        ]
+      },
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143",
+          "TTv5",
+          "TT13.c",
+          "EN-301-549",
+          "EN-9.1.4.3",
+          "ACT",
+          "RGAAv4",
+          "RGAA-3.2.1"
+        ],
+        "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/color-contrast?application=axeAPI",
+        "nodes": [
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": "elmPartiallyObscured",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<div role=\"dialog\" id=\"radix-_r_5_\" data-state=\"open\" class=\"ui-dialog\" tabindex=\"-1\" aria-labelledby=\"radix-_r_6_\" aria-describedby=\"radix-_r_7_\" style=\"pointer-events: auto;\">",
+                    "target": [
+                      "#radix-_r_5_"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element's background color could not be determined because it's partially obscured by another element"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<div id=\"_r_p_-nav-/settings\" role=\"option\" aria-selected=\"false\" class=\"ui-command-option\">Go to Workspace settings</div>",
+            "target": [
+              "#_r_p_-nav-\\/settings"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": "elmPartiallyObscured",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<div role=\"dialog\" id=\"radix-_r_5_\" data-state=\"open\" class=\"ui-dialog\" tabindex=\"-1\" aria-labelledby=\"radix-_r_6_\" aria-describedby=\"radix-_r_7_\" style=\"pointer-events: auto;\">",
+                    "target": [
+                      "#radix-_r_5_"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element's background color could not be determined because it's partially obscured by another element"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<div id=\"_r_p_-doc-devsync-sample-doc\" role=\"option\" aria-selected=\"false\" class=\"ui-command-option\">Document: Welcome</div>",
+            "target": [
+              "#_r_p_-doc-devsync-sample-doc"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": "elmPartiallyObscured",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<div role=\"dialog\" id=\"radix-_r_5_\" data-state=\"open\" class=\"ui-dialog\" tabindex=\"-1\" aria-labelledby=\"radix-_r_6_\" aria-describedby=\"radix-_r_7_\" style=\"pointer-events: auto;\">",
+                    "target": [
+                      "#radix-_r_5_"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element's background color could not be determined because it's partially obscured by another element"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<div id=\"_r_p_-doc-cmvzgvnwl0004uvaeofp07axi\" role=\"option\" aria-selected=\"false\" class=\"ui-command-option\">Document: Interface guidelines</div>",
+            "target": [
+              "#_r_p_-doc-cmvzgvnwl0004uvaeofp07axi"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": "elmPartiallyObscured",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<div role=\"dialog\" id=\"radix-_r_5_\" data-state=\"open\" class=\"ui-dialog\" tabindex=\"-1\" aria-labelledby=\"radix-_r_6_\" aria-describedby=\"radix-_r_7_\" style=\"pointer-events: auto;\">",
+                    "target": [
+                      "#radix-_r_5_"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element's background color could not be determined because it's partially obscured by another element"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<div id=\"_r_p_-doc-cmvzgvnxa0009uvaeln9t2wss\" role=\"option\" aria-selected=\"false\" class=\"ui-command-option\">Document: Keyboard interactions</div>",
+            "target": [
+              "#_r_p_-doc-cmvzgvnxa0009uvaeln9t2wss"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+          },
+          {
+            "any": [
+              {
+                "id": "color-contrast",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": "elmPartiallyObscured",
+                  "expectedContrastRatio": "4.5:1"
+                },
+                "relatedNodes": [
+                  {
+                    "html": "<div role=\"dialog\" id=\"radix-_r_5_\" data-state=\"open\" class=\"ui-dialog\" tabindex=\"-1\" aria-labelledby=\"radix-_r_6_\" aria-describedby=\"radix-_r_7_\" style=\"pointer-events: auto;\">",
+                    "target": [
+                      "#radix-_r_5_"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Element's background color could not be determined because it's partially obscured by another element"
+              }
+            ],
+            "all": [],
+            "none": [],
+            "impact": "serious",
+            "html": "<div id=\"_r_p_-create-document\" role=\"option\" aria-selected=\"false\" class=\"ui-command-option\">Create new document</div>",
+            "target": [
+              "#_r_p_-create-document"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "commands-empty",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-hidden-focus",
+        "impact": "serious",
+        "tags": [
+          "cat.name-role-value",
+          "wcag2a",
+          "wcag412",
+          "TTv5",
+          "TT6.a",
+          "EN-301-549",
+          "EN-9.4.1.2",
+          "RGAAv4",
+          "RGAA-10.8.1"
+        ],
+        "description": "Ensure aria-hidden elements are not focusable nor contain focusable elements",
+        "help": "ARIA hidden element must not be focusable or contain focusable elements",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/aria-hidden-focus?application=axeAPI",
+        "nodes": [
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "focusable-modal-open",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<a href=\"#main-content\" class=\"ui-skip-link\" data-shell-region=\"skip\" data-aria-hidden=\"true\" aria-hidden=\"true\">Skip to content</a>",
+                    "target": [
+                      ".ui-skip-link"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Check that focusable elements are not tabbable in the current state"
+              }
+            ],
+            "none": [],
+            "impact": "serious",
+            "html": "<a href=\"#main-content\" class=\"ui-skip-link\" data-shell-region=\"skip\" data-aria-hidden=\"true\" aria-hidden=\"true\">Skip to content</a>",
+            "target": [
+              ".ui-skip-link"
+            ],
+            "failureSummary": "Fix all of the following:\n  Check that focusable elements are not tabbable in the current state"
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "focusable-modal-open",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<button aria-label=\"Switch workspace: Sample workspace\" id=\"radix-_r_0_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button shell-workspace-trigger\">",
+                    "target": [
+                      "#radix-_r_0_"
+                    ]
+                  },
+                  {
+                    "html": "<a aria-label=\"All workspaces\" class=\"shell-nav-link\" href=\"/dashboard\">",
+                    "target": [
+                      "a[aria-label=\"All workspaces\"]"
+                    ]
+                  },
+                  {
+                    "html": "<a aria-label=\"Overview\" class=\"shell-nav-link\" href=\"/workspace/devsync-sample\">",
+                    "target": [
+                      "a[aria-label=\"Overview\"]"
+                    ]
+                  },
+                  {
+                    "html": "<a aria-label=\"Documents\" aria-current=\"page\" class=\"shell-nav-link\" href=\"/workspace/devsync-sample/docs\">",
+                    "target": [
+                      "a[aria-label=\"Documents\"]"
+                    ]
+                  },
+                  {
+                    "html": "<a aria-label=\"Sprint board\" class=\"shell-nav-link\" href=\"/workspace/devsync-sample/kanban\">",
+                    "target": [
+                      "a[aria-label=\"Sprint board\"]"
+                    ]
+                  },
+                  {
+                    "html": "<a aria-label=\"Code snippets\" class=\"shell-nav-link\" href=\"/workspace/devsync-sample/snippets\">",
+                    "target": [
+                      "a[aria-label=\"Code snippets\"]"
+                    ]
+                  },
+                  {
+                    "html": "<a aria-label=\"Settings\" class=\"shell-nav-link\" href=\"/workspace/devsync-sample/settings\">",
+                    "target": [
+                      "a[aria-label=\"Settings\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-expanded=\"false\" aria-controls=\"_r_g_\" aria-label=\"Expand Welcome\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button\">",
+                    "target": [
+                      "button[aria-controls=\"_r_g_\"]"
+                    ]
+                  },
+                  {
+                    "html": "<a aria-current=\"page\" class=\"shell-document-link\" href=\"/workspace/devsync-sample/docs/devsync-sample-doc\">",
+                    "target": [
+                      ".shell-document-link[aria-current=\"page\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-expanded=\"true\" aria-label=\"Collapse sidebar\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button\">",
+                    "target": [
+                      "button[aria-label=\"Collapse sidebar\"]"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Check that focusable elements are not tabbable in the current state"
+              }
+            ],
+            "none": [],
+            "impact": "serious",
+            "html": "<aside data-shell-region=\"sidebar\" aria-label=\"Sidebar\" class=\"shell-sidebar\" data-aria-hidden=\"true\" aria-hidden=\"true\">",
+            "target": [
+              "aside"
+            ],
+            "failureSummary": "Fix all of the following:\n  Check that focusable elements are not tabbable in the current state"
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "focusable-modal-open",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<a class=\"text-muted-foreground hover:text-foreground\" href=\"/dashboard\">Workspaces</a>",
+                    "target": [
+                      ".hover\\:text-foreground"
+                    ]
+                  },
+                  {
+                    "html": "<a class=\"inline-block max-w-40 truncate align-bottom\" href=\"/workspace/devsync-sample\">Sample workspace</a>",
+                    "target": [
+                      ".inline-block"
+                    ]
+                  },
+                  {
+                    "html": "<a class=\"hidden sm:inline\" href=\"/workspace/devsync-sample/docs\">Documents</a>",
+                    "target": [
+                      ".sm\\:inline.hidden[href$=\"docs\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-label=\"Search and commands\" aria-haspopup=\"dialog\" aria-expanded=\"true\" data-state=\"open\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button shell-search\" aria-controls=\"radix-_r_5_\">",
+                    "target": [
+                      ".shell-search"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-pressed=\"false\" aria-label=\"Enter focus mode\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button\">",
+                    "target": [
+                      "button[aria-label=\"Enter focus mode\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" aria-label=\"Keyboard shortcuts\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button hidden sm:inline-flex\">",
+                    "target": [
+                      ".sm\\:inline-flex"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-label=\"Sample owner\" id=\"radix-_r_b_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button shell-user\">",
+                    "target": [
+                      "#radix-_r_b_"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Check that focusable elements are not tabbable in the current state"
+              }
+            ],
+            "none": [],
+            "impact": "serious",
+            "html": "<header data-shell-region=\"topbar\" class=\"shell-topbar\" data-aria-hidden=\"true\" aria-hidden=\"true\">",
+            "target": [
+              "header"
+            ],
+            "failureSummary": "Fix all of the following:\n  Check that focusable elements are not tabbable in the current state"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "help",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-hidden-focus",
+        "impact": "serious",
+        "tags": [
+          "cat.name-role-value",
+          "wcag2a",
+          "wcag412",
+          "TTv5",
+          "TT6.a",
+          "EN-301-549",
+          "EN-9.4.1.2",
+          "RGAAv4",
+          "RGAA-10.8.1"
+        ],
+        "description": "Ensure aria-hidden elements are not focusable nor contain focusable elements",
+        "help": "ARIA hidden element must not be focusable or contain focusable elements",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/aria-hidden-focus?application=axeAPI",
+        "nodes": [
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "focusable-modal-open",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<a href=\"#main-content\" class=\"ui-skip-link\" data-shell-region=\"skip\" data-aria-hidden=\"true\" aria-hidden=\"true\">Skip to content</a>",
+                    "target": [
+                      ".ui-skip-link"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Check that focusable elements are not tabbable in the current state"
+              }
+            ],
+            "none": [],
+            "impact": "serious",
+            "html": "<a href=\"#main-content\" class=\"ui-skip-link\" data-shell-region=\"skip\" data-aria-hidden=\"true\" aria-hidden=\"true\">Skip to content</a>",
+            "target": [
+              ".ui-skip-link"
+            ],
+            "failureSummary": "Fix all of the following:\n  Check that focusable elements are not tabbable in the current state"
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "focusable-modal-open",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<button aria-label=\"Switch workspace: Sample workspace\" id=\"radix-_r_0_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button shell-workspace-trigger\">",
+                    "target": [
+                      "#radix-_r_0_"
+                    ]
+                  },
+                  {
+                    "html": "<a aria-label=\"All workspaces\" class=\"shell-nav-link\" href=\"/dashboard\">",
+                    "target": [
+                      "a[aria-label=\"All workspaces\"]"
+                    ]
+                  },
+                  {
+                    "html": "<a aria-label=\"Overview\" class=\"shell-nav-link\" href=\"/workspace/devsync-sample\">",
+                    "target": [
+                      "a[aria-label=\"Overview\"]"
+                    ]
+                  },
+                  {
+                    "html": "<a aria-label=\"Documents\" aria-current=\"page\" class=\"shell-nav-link\" href=\"/workspace/devsync-sample/docs\">",
+                    "target": [
+                      "a[aria-label=\"Documents\"]"
+                    ]
+                  },
+                  {
+                    "html": "<a aria-label=\"Sprint board\" class=\"shell-nav-link\" href=\"/workspace/devsync-sample/kanban\">",
+                    "target": [
+                      "a[aria-label=\"Sprint board\"]"
+                    ]
+                  },
+                  {
+                    "html": "<a aria-label=\"Code snippets\" class=\"shell-nav-link\" href=\"/workspace/devsync-sample/snippets\">",
+                    "target": [
+                      "a[aria-label=\"Code snippets\"]"
+                    ]
+                  },
+                  {
+                    "html": "<a aria-label=\"Settings\" class=\"shell-nav-link\" href=\"/workspace/devsync-sample/settings\">",
+                    "target": [
+                      "a[aria-label=\"Settings\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-expanded=\"false\" aria-controls=\"_r_g_\" aria-label=\"Expand Welcome\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button\">",
+                    "target": [
+                      "button[aria-controls=\"_r_g_\"]"
+                    ]
+                  },
+                  {
+                    "html": "<a aria-current=\"page\" class=\"shell-document-link\" href=\"/workspace/devsync-sample/docs/devsync-sample-doc\">",
+                    "target": [
+                      ".shell-document-link[aria-current=\"page\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-expanded=\"true\" aria-label=\"Collapse sidebar\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button\">",
+                    "target": [
+                      "button[aria-label=\"Collapse sidebar\"]"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Check that focusable elements are not tabbable in the current state"
+              }
+            ],
+            "none": [],
+            "impact": "serious",
+            "html": "<aside data-shell-region=\"sidebar\" aria-label=\"Sidebar\" class=\"shell-sidebar\" data-aria-hidden=\"true\" aria-hidden=\"true\">",
+            "target": [
+              "aside"
+            ],
+            "failureSummary": "Fix all of the following:\n  Check that focusable elements are not tabbable in the current state"
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "focusable-modal-open",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<a class=\"text-muted-foreground hover:text-foreground\" href=\"/dashboard\">Workspaces</a>",
+                    "target": [
+                      ".hover\\:text-foreground"
+                    ]
+                  },
+                  {
+                    "html": "<a class=\"inline-block max-w-40 truncate align-bottom\" href=\"/workspace/devsync-sample\">Sample workspace</a>",
+                    "target": [
+                      ".inline-block"
+                    ]
+                  },
+                  {
+                    "html": "<a class=\"hidden sm:inline\" href=\"/workspace/devsync-sample/docs\">Documents</a>",
+                    "target": [
+                      ".sm\\:inline.hidden[href$=\"docs\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-label=\"Search and commands\" aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button shell-search\">",
+                    "target": [
+                      ".shell-search"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-pressed=\"false\" aria-label=\"Enter focus mode\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button\">",
+                    "target": [
+                      "button[aria-label=\"Enter focus mode\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"true\" data-state=\"open\" aria-label=\"Keyboard shortcuts\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button hidden sm:inline-flex\" aria-controls=\"radix-_r_8_\">",
+                    "target": [
+                      ".sm\\:inline-flex"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-label=\"Sample owner\" id=\"radix-_r_b_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button shell-user\">",
+                    "target": [
+                      "#radix-_r_b_"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Check that focusable elements are not tabbable in the current state"
+              }
+            ],
+            "none": [],
+            "impact": "serious",
+            "html": "<header data-shell-region=\"topbar\" class=\"shell-topbar\" data-aria-hidden=\"true\" aria-hidden=\"true\">",
+            "target": [
+              "header"
+            ],
+            "failureSummary": "Fix all of the following:\n  Check that focusable elements are not tabbable in the current state"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "focus",
+    "violations": [],
+    "incomplete": []
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "user-menu",
+    "violations": [],
+    "incomplete": []
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "workspace-menu",
+    "violations": [],
+    "incomplete": []
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "document-tree",
+    "violations": [],
+    "incomplete": []
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "collapsed",
+    "violations": [],
+    "incomplete": []
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "copilot",
+    "violations": [],
+    "incomplete": [
+      {
+        "id": "aria-hidden-focus",
+        "impact": "serious",
+        "tags": [
+          "cat.name-role-value",
+          "wcag2a",
+          "wcag412",
+          "TTv5",
+          "TT6.a",
+          "EN-301-549",
+          "EN-9.4.1.2",
+          "RGAAv4",
+          "RGAA-10.8.1"
+        ],
+        "description": "Ensure aria-hidden elements are not focusable nor contain focusable elements",
+        "help": "ARIA hidden element must not be focusable or contain focusable elements",
+        "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/aria-hidden-focus?application=axeAPI",
+        "nodes": [
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "focusable-modal-open",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<a href=\"#main-content\" class=\"ui-skip-link\" data-shell-region=\"skip\" data-aria-hidden=\"true\" aria-hidden=\"true\">Skip to content</a>",
+                    "target": [
+                      ".ui-skip-link"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Check that focusable elements are not tabbable in the current state"
+              }
+            ],
+            "none": [],
+            "impact": "serious",
+            "html": "<a href=\"#main-content\" class=\"ui-skip-link\" data-shell-region=\"skip\" data-aria-hidden=\"true\" aria-hidden=\"true\">Skip to content</a>",
+            "target": [
+              ".ui-skip-link"
+            ],
+            "failureSummary": "Fix all of the following:\n  Check that focusable elements are not tabbable in the current state"
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "focusable-modal-open",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<button aria-label=\"Switch workspace: Sample workspace\" id=\"radix-_r_q_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button shell-workspace-trigger\">",
+                    "target": [
+                      "#radix-_r_q_"
+                    ]
+                  },
+                  {
+                    "html": "<a aria-label=\"All workspaces\" class=\"shell-nav-link\" href=\"/dashboard\">",
+                    "target": [
+                      "a[aria-label=\"All workspaces\"]"
+                    ]
+                  },
+                  {
+                    "html": "<a aria-label=\"Overview\" class=\"shell-nav-link\" href=\"/workspace/devsync-sample\">",
+                    "target": [
+                      "a[aria-label=\"Overview\"]"
+                    ]
+                  },
+                  {
+                    "html": "<a aria-label=\"Documents\" aria-current=\"page\" class=\"shell-nav-link\" href=\"/workspace/devsync-sample/docs\">",
+                    "target": [
+                      "a[aria-label=\"Documents\"]"
+                    ]
+                  },
+                  {
+                    "html": "<a aria-label=\"Sprint board\" class=\"shell-nav-link\" href=\"/workspace/devsync-sample/kanban\">",
+                    "target": [
+                      "a[aria-label=\"Sprint board\"]"
+                    ]
+                  },
+                  {
+                    "html": "<a aria-label=\"Code snippets\" class=\"shell-nav-link\" href=\"/workspace/devsync-sample/snippets\">",
+                    "target": [
+                      "a[aria-label=\"Code snippets\"]"
+                    ]
+                  },
+                  {
+                    "html": "<a aria-label=\"Settings\" class=\"shell-nav-link\" href=\"/workspace/devsync-sample/settings\">",
+                    "target": [
+                      "a[aria-label=\"Settings\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-expanded=\"false\" aria-controls=\"_r_16_\" aria-label=\"Expand Welcome\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button\">",
+                    "target": [
+                      "button[aria-controls=\"_r_16_\"]"
+                    ]
+                  },
+                  {
+                    "html": "<a aria-current=\"page\" class=\"shell-document-link\" href=\"/workspace/devsync-sample/docs/devsync-sample-doc\">",
+                    "target": [
+                      ".shell-document-link[aria-current=\"page\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-expanded=\"true\" aria-label=\"Collapse sidebar\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button\">",
+                    "target": [
+                      "button[aria-label=\"Collapse sidebar\"]"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Check that focusable elements are not tabbable in the current state"
+              }
+            ],
+            "none": [],
+            "impact": "serious",
+            "html": "<aside data-shell-region=\"sidebar\" aria-label=\"Sidebar\" class=\"shell-sidebar\" data-aria-hidden=\"true\" aria-hidden=\"true\">",
+            "target": [
+              "aside"
+            ],
+            "failureSummary": "Fix all of the following:\n  Check that focusable elements are not tabbable in the current state"
+          },
+          {
+            "any": [],
+            "all": [
+              {
+                "id": "focusable-modal-open",
+                "data": null,
+                "relatedNodes": [
+                  {
+                    "html": "<a class=\"text-muted-foreground hover:text-foreground\" href=\"/dashboard\">Workspaces</a>",
+                    "target": [
+                      ".hover\\:text-foreground"
+                    ]
+                  },
+                  {
+                    "html": "<a class=\"inline-block max-w-40 truncate align-bottom\" href=\"/workspace/devsync-sample\">Sample workspace</a>",
+                    "target": [
+                      ".inline-block"
+                    ]
+                  },
+                  {
+                    "html": "<a class=\"hidden sm:inline\" href=\"/workspace/devsync-sample/docs\">Documents</a>",
+                    "target": [
+                      ".sm\\:inline.hidden[href$=\"docs\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-label=\"Search and commands\" aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button shell-search\">",
+                    "target": [
+                      ".shell-search"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-pressed=\"false\" aria-label=\"Enter focus mode\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button\">",
+                    "target": [
+                      "button[aria-label=\"Enter focus mode\"]"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" aria-label=\"Keyboard shortcuts\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button hidden sm:inline-flex\">",
+                    "target": [
+                      ".sm\\:inline-flex"
+                    ]
+                  },
+                  {
+                    "html": "<button aria-label=\"Sample owner\" id=\"radix-_r_b_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button shell-user\">",
+                    "target": [
+                      "#radix-_r_b_"
+                    ]
+                  }
+                ],
+                "impact": "serious",
+                "message": "Check that focusable elements are not tabbable in the current state"
+              }
+            ],
+            "none": [],
+            "impact": "serious",
+            "html": "<header data-shell-region=\"topbar\" class=\"shell-topbar\" data-aria-hidden=\"true\" aria-hidden=\"true\">",
+            "target": [
+              "header"
+            ],
+            "failureSummary": "Fix all of the following:\n  Check that focusable elements are not tabbable in the current state"
+          }
+        ]
+      }
+    ]
+  }
+]

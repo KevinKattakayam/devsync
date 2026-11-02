@@ -1,0 +1,130 @@
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": PostgreSQL database "devsync_e2e_browser", schema "public" at "localhost:32822"
+
+11 migrations found in prisma/migrations
+
+Applying migration `20260729000000_baseline`
+Applying migration `20260729180000_enterprise_platform`
+Applying migration `20260815000000_phase_3_tenant_rls`
+Applying migration `20260815001000_scim_provisioning`
+Applying migration `20260815002000_commercial_billing`
+Applying migration `20261031000000_tenant_indexes`
+Applying migration `20261031010000_crdt_journal`
+Applying migration `202611010001_canonical_revision`
+Applying migration `202611010002_embedding_authority`
+Applying migration `202611010003_atomic_create_idempotency`
+Applying migration `202611010004_workspace_invitations`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20260729000000_baseline/
+    └─ migration.sql
+  └─ 20260729180000_enterprise_platform/
+    └─ migration.sql
+  └─ 20260815000000_phase_3_tenant_rls/
+    └─ migration.sql
+  └─ 20260815001000_scim_provisioning/
+    └─ migration.sql
+  └─ 20260815002000_commercial_billing/
+    └─ migration.sql
+  └─ 20261031000000_tenant_indexes/
+    └─ migration.sql
+  └─ 20261031010000_crdt_journal/
+    └─ migration.sql
+  └─ 202611010001_canonical_revision/
+    └─ migration.sql
+  └─ 202611010002_embedding_authority/
+    └─ migration.sql
+  └─ 202611010003_atomic_create_idempotency/
+    └─ migration.sql
+  └─ 202611010004_workspace_invitations/
+    └─ migration.sql
+      
+All migrations have been successfully applied.
+Sample workspace seeded. Sign in with the supplied Clerk test identities.
+/home/kevin/devsync/.worktrees/frontend-fixture
+Isolated fixture server ready
+{"level":30,"time":1793562252473,"service":"devsync-api","req":{"id":"b70d81fe-fed0-4e0c-b137-f8cb0ef1a9a1","method":"GET"},"requestId":"b70d81fe-fed0-4e0c-b137-f8cb0ef1a9a1","res":{"statusCode":200},"responseTime":9,"msg":"request completed"}
+▲ Next.js 16.4.3 (webpack)
+- Local:         http://127.0.0.1:3001
+- Network:       http://127.0.0.1:3001
+✓ Ready in 533ms
+✓ Running next.config.ts took 45ms
+
+✓ Generated AGENTS.md for AI agents. Set `agentRules: false` in next.config to disable.
+○ Compiling /(auth)/login/[[...rest]]/page ...
+ GET /login 200 in 1836ms (next.js: 1335ms, proxy.ts: 96ms, application-code: 405ms)
+
+Running 5 tests using 1 worker
+
+(node:115448) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1793562285434,"service":"devsync-api","req":{"id":"a895b3de-a016-4d3c-89b3-8f734ef2aa1b","method":"GET"},"requestId":"a895b3de-a016-4d3c-89b3-8f734ef2aa1b","res":{"statusCode":200},"responseTime":27,"msg":"request completed"}
+{"level":30,"time":1793562285484,"service":"devsync-api","req":{"id":"9cc25e94-b40b-45fc-b48d-1b1c4d1592e2","method":"POST"},"requestId":"9cc25e94-b40b-45fc-b48d-1b1c4d1592e2","res":{"statusCode":201},"responseTime":29,"msg":"request completed"}
+○ Compiling /(dashboard)/workspace/[id]/kanban/page ...
+ GET /workspace/devsync-sample/kanban 200 in 5.3s (next.js: 4.9s, proxy.ts: 12ms, application-code: 411ms)
+{"level":30,"time":1793562292958,"service":"devsync-api","req":{"id":"649da578-95d8-40ad-8b72-93710dd9660b","method":"GET"},"requestId":"649da578-95d8-40ad-8b72-93710dd9660b","res":{"statusCode":200},"responseTime":71,"msg":"request completed"}
+{"level":30,"time":1793562292977,"service":"devsync-api","req":{"id":"fcf23fa6-742f-4539-8e05-ce4aba7107f6","method":"GET"},"requestId":"fcf23fa6-742f-4539-8e05-ce4aba7107f6","res":{"statusCode":200},"responseTime":81,"msg":"request completed"}
+{"level":30,"time":1793562292981,"service":"devsync-api","req":{"id":"62f8ec3d-60b5-4796-88b5-05ce0c746734","method":"GET"},"requestId":"62f8ec3d-60b5-4796-88b5-05ce0c746734","res":{"statusCode":200},"responseTime":91,"msg":"request completed"}
+{"level":30,"time":1793562293006,"service":"devsync-api","req":{"id":"00887df6-dc15-4495-a835-952b7ae9706a","method":"GET"},"requestId":"00887df6-dc15-4495-a835-952b7ae9706a","res":{"statusCode":304},"responseTime":43,"msg":"request completed"}
+{"level":30,"time":1793562293012,"service":"devsync-api","req":{"id":"20304a77-fb45-40ee-8017-57a125625e67","method":"GET"},"requestId":"20304a77-fb45-40ee-8017-57a125625e67","res":{"statusCode":304},"responseTime":28,"msg":"request completed"}
+{"level":30,"time":1793562293017,"service":"devsync-api","req":{"id":"8f1e9384-0280-478e-853a-91ffb8ff0ef2","method":"GET"},"requestId":"8f1e9384-0280-478e-853a-91ffb8ff0ef2","res":{"statusCode":304},"responseTime":27,"msg":"request completed"}
+{"level":30,"time":1793562294247,"service":"devsync-api","req":{"id":"161bfe26-11c7-4b74-9e23-d41de135f272","method":"PATCH"},"requestId":"161bfe26-11c7-4b74-9e23-d41de135f272","res":{"statusCode":200},"responseTime":51,"msg":"request completed"}
+{"level":30,"time":1793562294333,"service":"devsync-api","req":{"id":"40d0e291-8106-46b2-aa95-598227416591","method":"GET"},"requestId":"40d0e291-8106-46b2-aa95-598227416591","res":{"statusCode":200},"responseTime":20,"msg":"request completed"}
+  ✓  1 testing/browser/kanban.spec.ts:9:9 › dark 1440 keyboard move and drawer (9.9s)
+{"level":30,"time":1793562295129,"service":"devsync-api","req":{"id":"2e8cf834-7b23-4baf-8606-95d474a3b58f","method":"GET"},"requestId":"2e8cf834-7b23-4baf-8606-95d474a3b58f","res":{"statusCode":200},"responseTime":10,"msg":"request completed"}
+{"level":30,"time":1793562295152,"service":"devsync-api","req":{"id":"3e8ff9f3-b8d7-4780-947c-fe48bdd2c916","method":"POST"},"requestId":"3e8ff9f3-b8d7-4780-947c-fe48bdd2c916","res":{"statusCode":201},"responseTime":15,"msg":"request completed"}
+ GET /workspace/devsync-sample/kanban 200 in 147ms (next.js: 77ms, proxy.ts: 6ms, application-code: 64ms)
+{"level":30,"time":1793562297171,"service":"devsync-api","req":{"id":"63fee308-a389-4b9e-9484-5d4518b5fa73","method":"GET"},"requestId":"63fee308-a389-4b9e-9484-5d4518b5fa73","res":{"statusCode":200},"responseTime":26,"msg":"request completed"}
+{"level":30,"time":1793562297177,"service":"devsync-api","req":{"id":"de293bbb-7c7c-41f8-a78e-0f40bfc70201","method":"GET"},"requestId":"de293bbb-7c7c-41f8-a78e-0f40bfc70201","res":{"statusCode":200},"responseTime":26,"msg":"request completed"}
+{"level":30,"time":1793562297189,"service":"devsync-api","req":{"id":"47d529ca-3ad0-43b6-8ae0-974772d864ab","method":"GET"},"requestId":"47d529ca-3ad0-43b6-8ae0-974772d864ab","res":{"statusCode":200},"responseTime":41,"msg":"request completed"}
+{"level":30,"time":1793562297203,"service":"devsync-api","req":{"id":"df96ffcd-5543-42ff-aa61-f51065cedf41","method":"GET"},"requestId":"df96ffcd-5543-42ff-aa61-f51065cedf41","res":{"statusCode":304},"responseTime":30,"msg":"request completed"}
+{"level":30,"time":1793562297212,"service":"devsync-api","req":{"id":"843c350e-0d48-4d04-9b1f-8668c21fea34","method":"GET"},"requestId":"843c350e-0d48-4d04-9b1f-8668c21fea34","res":{"statusCode":304},"responseTime":33,"msg":"request completed"}
+{"level":30,"time":1793562297223,"service":"devsync-api","req":{"id":"5a471692-17d6-47bd-ab7c-c00425a33457","method":"GET"},"requestId":"5a471692-17d6-47bd-ab7c-c00425a33457","res":{"statusCode":304},"responseTime":32,"msg":"request completed"}
+{"level":30,"time":1793562298178,"service":"devsync-api","req":{"id":"e8088dd2-c195-4210-95ac-8ca4cb26557c","method":"PATCH"},"requestId":"e8088dd2-c195-4210-95ac-8ca4cb26557c","res":{"statusCode":200},"responseTime":26,"msg":"request completed"}
+{"level":30,"time":1793562298250,"service":"devsync-api","req":{"id":"fbc4f73d-8d84-4f54-934b-1acd39a4056c","method":"GET"},"requestId":"fbc4f73d-8d84-4f54-934b-1acd39a4056c","res":{"statusCode":200},"responseTime":12,"msg":"request completed"}
+  ✓  2 testing/browser/kanban.spec.ts:9:9 › dark 390 keyboard move and drawer (3.7s)
+{"level":30,"time":1793562298912,"service":"devsync-api","req":{"id":"e54ba956-184f-4f34-922d-7d58197eca52","method":"GET"},"requestId":"e54ba956-184f-4f34-922d-7d58197eca52","res":{"statusCode":200},"responseTime":16,"msg":"request completed"}
+{"level":30,"time":1793562298933,"service":"devsync-api","req":{"id":"4ee242de-04fd-4271-9eb6-104096a0ba1d","method":"POST"},"requestId":"4ee242de-04fd-4271-9eb6-104096a0ba1d","res":{"statusCode":201},"responseTime":15,"msg":"request completed"}
+ GET /workspace/devsync-sample/kanban 200 in 180ms (next.js: 95ms, proxy.ts: 6ms, application-code: 80ms)
+{"level":30,"time":1793562302139,"service":"devsync-api","req":{"id":"1728ac1e-04e3-4935-b16e-11dbabe5984b","method":"GET"},"requestId":"1728ac1e-04e3-4935-b16e-11dbabe5984b","res":{"statusCode":200},"responseTime":55,"msg":"request completed"}
+{"level":30,"time":1793562302142,"service":"devsync-api","req":{"id":"f2d96883-d80d-4184-972b-977fd0a75fe8","method":"GET"},"requestId":"f2d96883-d80d-4184-972b-977fd0a75fe8","res":{"statusCode":200},"responseTime":52,"msg":"request completed"}
+{"level":30,"time":1793562302153,"service":"devsync-api","req":{"id":"39f945be-3a33-4c63-9762-621a86f44fa5","method":"GET"},"requestId":"39f945be-3a33-4c63-9762-621a86f44fa5","res":{"statusCode":200},"responseTime":65,"msg":"request completed"}
+{"level":30,"time":1793562302170,"service":"devsync-api","req":{"id":"15df3d13-8f12-4ed0-8637-615a96bd3962","method":"GET"},"requestId":"15df3d13-8f12-4ed0-8637-615a96bd3962","res":{"statusCode":304},"responseTime":24,"msg":"request completed"}
+{"level":30,"time":1793562302184,"service":"devsync-api","req":{"id":"1e5006cf-7919-47c5-a548-b9a3aea1e3cb","method":"GET"},"requestId":"1e5006cf-7919-47c5-a548-b9a3aea1e3cb","res":{"statusCode":304},"responseTime":29,"msg":"request completed"}
+{"level":30,"time":1793562302206,"service":"devsync-api","req":{"id":"1bc1c42c-e334-427f-b094-cd2f11afaab8","method":"GET"},"requestId":"1bc1c42c-e334-427f-b094-cd2f11afaab8","res":{"statusCode":304},"responseTime":58,"msg":"request completed"}
+{"level":30,"time":1793562303428,"service":"devsync-api","req":{"id":"90581b5a-7c2a-46fa-bc7c-35ae8274e28d","method":"PATCH"},"requestId":"90581b5a-7c2a-46fa-bc7c-35ae8274e28d","res":{"statusCode":200},"responseTime":34,"msg":"request completed"}
+{"level":30,"time":1793562303521,"service":"devsync-api","req":{"id":"d8ae0b08-703f-4916-895d-437ae34e66e4","method":"GET"},"requestId":"d8ae0b08-703f-4916-895d-437ae34e66e4","res":{"statusCode":200},"responseTime":24,"msg":"request completed"}
+  ✓  3 testing/browser/kanban.spec.ts:9:9 › light 1440 keyboard move and drawer (5.3s)
+{"level":30,"time":1793562304129,"service":"devsync-api","req":{"id":"9886fa31-62e8-4283-b194-6be95d29ef82","method":"GET"},"requestId":"9886fa31-62e8-4283-b194-6be95d29ef82","res":{"statusCode":200},"responseTime":8,"msg":"request completed"}
+{"level":30,"time":1793562304148,"service":"devsync-api","req":{"id":"b15bc0bd-4a9d-4d58-a5f9-f3b5efccd845","method":"POST"},"requestId":"b15bc0bd-4a9d-4d58-a5f9-f3b5efccd845","res":{"statusCode":201},"responseTime":14,"msg":"request completed"}
+ GET /workspace/devsync-sample/kanban 200 in 162ms (next.js: 87ms, proxy.ts: 7ms, application-code: 67ms)
+{"level":30,"time":1793562306147,"service":"devsync-api","req":{"id":"56f75c60-5f22-46ca-82e3-6506d3f944b8","method":"GET"},"requestId":"56f75c60-5f22-46ca-82e3-6506d3f944b8","res":{"statusCode":200},"responseTime":20,"msg":"request completed"}
+{"level":30,"time":1793562306154,"service":"devsync-api","req":{"id":"172816de-3180-4aef-900d-98d4f4c7e584","method":"GET"},"requestId":"172816de-3180-4aef-900d-98d4f4c7e584","res":{"statusCode":200},"responseTime":24,"msg":"request completed"}
+{"level":30,"time":1793562306161,"service":"devsync-api","req":{"id":"abf41731-ee1a-462f-8a6a-38572f132611","method":"GET"},"requestId":"abf41731-ee1a-462f-8a6a-38572f132611","res":{"statusCode":200},"responseTime":29,"msg":"request completed"}
+{"level":30,"time":1793562306171,"service":"devsync-api","req":{"id":"1861e04b-a748-48c7-86ef-84b5634b8b48","method":"GET"},"requestId":"1861e04b-a748-48c7-86ef-84b5634b8b48","res":{"statusCode":304},"responseTime":19,"msg":"request completed"}
+{"level":30,"time":1793562306181,"service":"devsync-api","req":{"id":"4457188e-e163-452e-bade-facec27ea93a","method":"GET"},"requestId":"4457188e-e163-452e-bade-facec27ea93a","res":{"statusCode":304},"responseTime":25,"msg":"request completed"}
+{"level":30,"time":1793562306196,"service":"devsync-api","req":{"id":"77974449-58b4-4702-8422-1249470f1f9e","method":"GET"},"requestId":"77974449-58b4-4702-8422-1249470f1f9e","res":{"statusCode":304},"responseTime":31,"msg":"request completed"}
+{"level":30,"time":1793562307220,"service":"devsync-api","req":{"id":"d1ef93c2-0fff-4adc-a7b5-f9ee98206ba9","method":"PATCH"},"requestId":"d1ef93c2-0fff-4adc-a7b5-f9ee98206ba9","res":{"statusCode":200},"responseTime":19,"msg":"request completed"}
+{"level":30,"time":1793562307271,"service":"devsync-api","req":{"id":"80e4d49a-be9b-49e4-8645-443b1266bf94","method":"GET"},"requestId":"80e4d49a-be9b-49e4-8645-443b1266bf94","res":{"statusCode":200},"responseTime":13,"msg":"request completed"}
+  ✓  4 testing/browser/kanban.spec.ts:9:9 › light 390 keyboard move and drawer (3.8s)
+{"level":30,"time":1793562307977,"service":"devsync-api","req":{"id":"abfb1c3f-4fdf-406c-865b-0db5ccdad25c","method":"GET"},"requestId":"abfb1c3f-4fdf-406c-865b-0db5ccdad25c","res":{"statusCode":200},"responseTime":8,"msg":"request completed"}
+{"level":30,"time":1793562307997,"service":"devsync-api","req":{"id":"ffbbe8ce-aec8-4564-9ab5-90b025a592ca","method":"GET"},"requestId":"ffbbe8ce-aec8-4564-9ab5-90b025a592ca","res":{"statusCode":200},"responseTime":7,"msg":"request completed"}
+ GET /workspace/devsync-sample/kanban 200 in 195ms (next.js: 88ms, proxy.ts: 8ms, application-code: 98ms)
+{"level":30,"time":1793562309950,"service":"devsync-api","req":{"id":"576b3668-c62e-4667-b11a-ac58b64d2b59","method":"GET"},"requestId":"576b3668-c62e-4667-b11a-ac58b64d2b59","res":{"statusCode":200},"responseTime":36,"msg":"request completed"}
+{"level":30,"time":1793562309955,"service":"devsync-api","req":{"id":"ae4320b3-7c9c-450d-ad3b-b30df2b7edff","method":"GET"},"requestId":"ae4320b3-7c9c-450d-ad3b-b30df2b7edff","res":{"statusCode":200},"responseTime":34,"msg":"request completed"}
+{"level":30,"time":1793562309962,"service":"devsync-api","req":{"id":"062db33e-594e-4b8d-bfda-6e1ab9afe445","method":"GET"},"requestId":"062db33e-594e-4b8d-bfda-6e1ab9afe445","res":{"statusCode":200},"responseTime":45,"msg":"request completed"}
+{"level":30,"time":1793562309975,"service":"devsync-api","req":{"id":"71650f5e-1837-42e6-ba0e-4f1cc6ec12e1","method":"GET"},"requestId":"71650f5e-1837-42e6-ba0e-4f1cc6ec12e1","res":{"statusCode":304},"responseTime":22,"msg":"request completed"}
+{"level":30,"time":1793562309979,"service":"devsync-api","req":{"id":"5a5e199d-b56b-41d4-93d2-19316f042174","method":"GET"},"requestId":"5a5e199d-b56b-41d4-93d2-19316f042174","res":{"statusCode":304},"responseTime":21,"msg":"request completed"}
+{"level":30,"time":1793562309995,"service":"devsync-api","req":{"id":"c47892db-932f-4092-9867-ad52ce07e62c","method":"GET"},"requestId":"c47892db-932f-4092-9867-ad52ce07e62c","res":{"statusCode":304},"responseTime":31,"msg":"request completed"}
+{"level":30,"time":1793562310063,"service":"devsync-api","req":{"id":"d285125f-800a-4e77-8de1-48256bfbc1ca","method":"PATCH"},"requestId":"d285125f-800a-4e77-8de1-48256bfbc1ca","res":{"statusCode":403},"responseTime":13,"msg":"request completed"}
+{"level":30,"time":1793562310092,"service":"devsync-api","req":{"id":"ae53ffad-7cac-4e36-9de4-fec0a329c6dd","method":"PATCH"},"requestId":"ae53ffad-7cac-4e36-9de4-fec0a329c6dd","res":{"statusCode":403},"responseTime":24,"msg":"request completed"}
+{"level":30,"time":1793562310110,"service":"devsync-api","req":{"id":"3c0def76-1a97-4e10-8c95-44cc0dad766b","method":"POST"},"requestId":"3c0def76-1a97-4e10-8c95-44cc0dad766b","res":{"statusCode":201},"responseTime":14,"msg":"request completed"}
+{"level":30,"time":1793562310123,"service":"devsync-api","req":{"id":"d9d57df8-ff21-4e18-836b-8ee5300e1683","method":"GET"},"requestId":"d9d57df8-ff21-4e18-836b-8ee5300e1683","res":{"statusCode":200},"responseTime":10,"msg":"request completed"}
+{"level":30,"time":1793562310138,"service":"devsync-api","req":{"id":"0425cac0-bf3d-4f3b-b8ec-0ea013f35673","method":"PATCH"},"requestId":"0425cac0-bf3d-4f3b-b8ec-0ea013f35673","res":{"statusCode":403},"responseTime":11,"msg":"request completed"}
+  ✓  5 testing/browser/kanban.spec.ts:87:5 › viewer cannot move or edit snippets and foreign destinations reject (2.2s)
+
+  5 passed (26.3s)
+[?25h

@@ -26,7 +26,7 @@ export const cloudinaryService = {
     } catch (error) {
       console.error('Cloudinary delete error:', error);
     }
-  }
+  },
 };
 
 export default cloudinary;

@@ -1,0 +1,7 @@
+{
+  "act": null,
+  "actionlint": null,
+  "docker": "/usr/bin/docker",
+  "node": "/home/kevin/.nvm/versions/node/v22.23.2/bin/node",
+  "npm": "/home/kevin/.nvm/versions/node/v22.23.2/bin/npm"
+}

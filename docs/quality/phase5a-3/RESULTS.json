@@ -1,0 +1,49 @@
+{
+  "backendTests": 260,
+  "backendSuites": 28,
+  "frontendComponentTests": 76,
+  "frontendFiles": 17,
+  "frontendNodeRunner": "passed, separate from component coverage",
+  "browserTests": {
+    "passed": 7,
+    "failed": 0,
+    "reportedDuration": "1.1m"
+  },
+  "shellScreenshotComparisons": 40,
+  "axe": {
+    "reports": 40,
+    "violations": 0,
+    "incompleteRuleOccurrences": 26
+  },
+  "baselinesUpdated": 11,
+  "unchangedMaxDiffPixelRatio": 0.002,
+  "composeStartupSeconds": 19.249,
+  "composeStatus": "passed",
+  "imageFindings": {
+    "backend": {
+      "imageId": "sha256:7d4655603f11332e5c5f5e3f87b8d3a504eb99b6771d75d85ba843fc5feed93e",
+      "counts": {
+        "LOW": 60,
+        "HIGH": 44,
+        "MEDIUM": 75,
+        "UNKNOWN": 8
+      }
+    },
+    "frontend": {
+      "imageId": "sha256:b0decc111c1dbbfdd2a311434ccc690ad1fdaf4be7ba6e2b518a4e2dcee10c22",
+      "counts": {
+        "LOW": 60,
+        "HIGH": 44,
+        "MEDIUM": 71,
+        "UNKNOWN": 8
+      }
+    }
+  },
+  "unperformed": [
+    "Lighthouse",
+    "Load testing",
+    "Hosted CI",
+    "Production deployment or provider sign-in",
+    "Phase5c"
+  ]
+}

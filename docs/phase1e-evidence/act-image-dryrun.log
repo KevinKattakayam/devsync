@@ -1,0 +1,35 @@
+time="2026-11-01T16:28:34+05:30" level=info msg="Using docker host 'unix:///var/run/docker.sock', and daemon socket 'unix:///var/run/docker.sock'"
+*DRYRUN* [Build, Test, Scan, and Publish/Install, lint, format, types, tests, contracts and build-1] ⭐ Run Set up job
+*DRYRUN* [Build, Test, Scan, and Publish/Install, lint, format, types, tests, contracts and build-1] 🚀  Start image=catthehacker/ubuntu:act-24.04
+*DRYRUN* [Build, Test, Scan, and Publish/Install, lint, format, types, tests, contracts and build-2] ⭐ Run Set up job
+*DRYRUN* [Build, Test, Scan, and Publish/Install, lint, format, types, tests, contracts and build-2] 🚀  Start image=catthehacker/ubuntu:act-24.04
+*DRYRUN* [Build, Test, Scan, and Publish/Install, lint, format, types, tests, contracts and build-1]   🐳  docker pull image=pgvector/pgvector:pg16 platform= username= forcePull=true
+*DRYRUN* [Build, Test, Scan, and Publish/Install, lint, format, types, tests, contracts and build-2]   🐳  docker pull image=redis:7-alpine platform= username= forcePull=true
+*DRYRUN* [Build, Test, Scan, and Publish/Install, lint, format, types, tests, contracts and build-1]   🐳  docker pull image=redis:7-alpine platform= username= forcePull=true
+*DRYRUN* [Build, Test, Scan, and Publish/Install, lint, format, types, tests, contracts and build-2]   🐳  docker pull image=pgvector/pgvector:pg16 platform= username= forcePull=true
+*DRYRUN* [Build, Test, Scan, and Publish/Install, lint, format, types, tests, contracts and build-1]   🐳  docker pull image=catthehacker/ubuntu:act-24.04 platform= username= forcePull=true
+*DRYRUN* [Build, Test, Scan, and Publish/Install, lint, format, types, tests, contracts and build-2]   🐳  docker pull image=catthehacker/ubuntu:act-24.04 platform= username= forcePull=true
+*DRYRUN* [Build, Test, Scan, and Publish/Install, lint, format, types, tests, contracts and build-1] Cleaning up services for job Install, lint, format, types, tests, contracts and build
+*DRYRUN* [Build, Test, Scan, and Publish/Install, lint, format, types, tests, contracts and build-1] Cleaning up network for job Install, lint, format, types, tests, contracts and build, and network name is: act-Build-Test-Scan-and-Publish-Install-lint-format-types-tests-73f5e6ccacc7611469476ab65281cb2986a465f96f89aeb38180a16ef6183bdb-quality-network
+*DRYRUN* [Build, Test, Scan, and Publish/Install, lint, format, types, tests, contracts and build-2] Cleaning up services for job Install, lint, format, types, tests, contracts and build
+*DRYRUN* [Build, Test, Scan, and Publish/Install, lint, format, types, tests, contracts and build-2] Cleaning up network for job Install, lint, format, types, tests, contracts and build, and network name is: act-Build-Test-Scan-and-Publish-Install-lint-format-types-tests-c9a9d5486bc6be437fe74bf30d4b45c3bc6b4058ec252144e8cd4edc61bb1624-quality-network
+*DRYRUN* [Build, Test, Scan, and Publish/Install, lint, format, types, tests, contracts and build-1]   🐳  docker pull image=pgvector/pgvector:pg16 platform= username= forcePull=false
+*DRYRUN* [Build, Test, Scan, and Publish/Install, lint, format, types, tests, contracts and build-1]   🐳  docker create image=pgvector/pgvector:pg16 platform= entrypoint=[] cmd=[] network="act-Build-Test-Scan-and-Publish-Install-lint-format-types-tests-73f5e6ccacc7611469476ab65281cb2986a465f96f89aeb38180a16ef6183bdb-quality-network"
+*DRYRUN* [Build, Test, Scan, and Publish/Install, lint, format, types, tests, contracts and build-1]   🐳  docker pull image=redis:7-alpine platform= username= forcePull=false
+*DRYRUN* [Build, Test, Scan, and Publish/Install, lint, format, types, tests, contracts and build-1]   🐳  docker create image=redis:7-alpine platform= entrypoint=[] cmd=[] network="act-Build-Test-Scan-and-Publish-Install-lint-format-types-tests-73f5e6ccacc7611469476ab65281cb2986a465f96f89aeb38180a16ef6183bdb-quality-network"
+*DRYRUN* [Build, Test, Scan, and Publish/Install, lint, format, types, tests, contracts and build-1]   🐳  docker run image=redis:7-alpine platform= entrypoint=[] cmd=[] network="act-Build-Test-Scan-and-Publish-Install-lint-format-types-tests-73f5e6ccacc7611469476ab65281cb2986a465f96f89aeb38180a16ef6183bdb-quality-network"
+*DRYRUN* [Build, Test, Scan, and Publish/Install, lint, format, types, tests, contracts and build-1]   🐳  docker run image=pgvector/pgvector:pg16 platform= entrypoint=[] cmd=[] network="act-Build-Test-Scan-and-Publish-Install-lint-format-types-tests-73f5e6ccacc7611469476ab65281cb2986a465f96f89aeb38180a16ef6183bdb-quality-network"
+*DRYRUN* [Build, Test, Scan, and Publish/Install, lint, format, types, tests, contracts and build-1]   🐳  docker create image=catthehacker/ubuntu:act-24.04 platform= entrypoint=["tail" "-f" "/dev/null"] cmd=[] network="host"
+*DRYRUN* [Build, Test, Scan, and Publish/Install, lint, format, types, tests, contracts and build-1]   🐳  docker run image=catthehacker/ubuntu:act-24.04 platform= entrypoint=["tail" "-f" "/dev/null"] cmd=[] network="host"
+panic: runtime error: invalid memory address or nil pointer dereference
+[signal SIGSEGV: segmentation violation code=0x1 addr=0xa0 pc=0xcb8b6a]
+
+goroutine 99 [running]:
+github.com/nektos/act/pkg/container.(*containerReference).GetHealth(0x21de3afce640, {0x108eb48, 0x21de3b1ca0e0})
+	/home/runner/work/act/act/pkg/container/docker_run.go:176 +0x6a
+github.com/nektos/act/pkg/runner.(*RunContext).waitForServiceContainers.func1.(*RunContext).waitForServiceContainer.1({0x108eb10?, 0x21de3b0e97c0?})
+	/home/runner/work/act/act/pkg/runner/run_context.go:602 +0xc7
+github.com/nektos/act/pkg/runner.(*RunContext).waitForServiceContainers.func1.NewParallelExecutor.2.1(0x21de3b01b2d0, 0x21de3b01b340)
+	/home/runner/work/act/act/pkg/common/executor.go:108 +0x52
+created by github.com/nektos/act/pkg/runner.(*RunContext).waitForServiceContainers.func1.NewParallelExecutor.2 in goroutine 27
+	/home/runner/work/act/act/pkg/common/executor.go:106 +0xef

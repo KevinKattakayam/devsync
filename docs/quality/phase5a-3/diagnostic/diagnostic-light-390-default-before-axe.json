@@ -1,0 +1,142 @@
+{
+  "elapsed": 87752,
+  "saved": false,
+  "offline": true,
+  "editorCount": 1,
+  "editable": "false",
+  "routeHeight": 416,
+  "transport": [
+    {
+      "event": "created",
+      "elapsed": 7221
+    },
+    {
+      "event": "sent",
+      "elapsed": 7238
+    },
+    {
+      "event": "sent",
+      "elapsed": 7238
+    },
+    {
+      "event": "sent",
+      "elapsed": 7238
+    },
+    {
+      "event": "received",
+      "elapsed": 7289
+    },
+    {
+      "event": "received",
+      "elapsed": 7346
+    },
+    {
+      "event": "sent",
+      "elapsed": 7346
+    },
+    {
+      "event": "received",
+      "elapsed": 7475
+    },
+    {
+      "event": "sent",
+      "elapsed": 7475
+    },
+    {
+      "event": "sent",
+      "elapsed": 7475
+    },
+    {
+      "event": "sent",
+      "elapsed": 7475
+    },
+    {
+      "event": "sent",
+      "elapsed": 7475
+    },
+    {
+      "event": "received",
+      "elapsed": 7485
+    },
+    {
+      "event": "received",
+      "elapsed": 7485
+    },
+    {
+      "event": "received",
+      "elapsed": 7486
+    },
+    {
+      "event": "received",
+      "elapsed": 7495
+    },
+    {
+      "event": "received",
+      "elapsed": 7503
+    },
+    {
+      "event": "sent",
+      "elapsed": 25211
+    },
+    {
+      "event": "received",
+      "elapsed": 25221
+    },
+    {
+      "event": "sent",
+      "elapsed": 27215
+    },
+    {
+      "event": "sent",
+      "elapsed": 40212
+    },
+    {
+      "event": "received",
+      "elapsed": 40230
+    },
+    {
+      "event": "sent",
+      "elapsed": 47217
+    },
+    {
+      "event": "sent",
+      "elapsed": 55212
+    },
+    {
+      "event": "received",
+      "elapsed": 55222
+    },
+    {
+      "event": "sent",
+      "elapsed": 67217
+    },
+    {
+      "event": "sent",
+      "elapsed": 70212
+    },
+    {
+      "event": "received",
+      "elapsed": 70230
+    },
+    {
+      "event": "sent",
+      "elapsed": 85212
+    },
+    {
+      "event": "received",
+      "elapsed": 85233
+    },
+    {
+      "event": "sent",
+      "elapsed": 87217
+    },
+    {
+      "event": "received",
+      "elapsed": 87709
+    },
+    {
+      "event": "closed",
+      "elapsed": 87743
+    }
+  ]
+}

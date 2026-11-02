@@ -1,0 +1,32 @@
+{
+  "method": "Literal source references only; excludes build/config/CLI and transitive peer needs. Candidates require manual verification before removal.",
+  "candidates": {
+    "backend": [
+      "@types/opossum",
+      "y-protocols"
+    ],
+    "frontend": [
+      "@clerk/themes",
+      "@dnd-kit/core",
+      "@dnd-kit/sortable",
+      "@dnd-kit/utilities",
+      "@hookform/resolvers",
+      "@tiptap/extension-code-block-lowlight",
+      "@tiptap/extension-collaboration-cursor",
+      "@tiptap/extension-image",
+      "@tiptap/extension-table",
+      "@tiptap/extension-table-cell",
+      "@tiptap/extension-table-header",
+      "@tiptap/extension-table-row",
+      "@tiptap/pm",
+      "class-variance-authority",
+      "date-fns",
+      "lowlight",
+      "next-auth",
+      "react-dom",
+      "react-hook-form",
+      "y-protocols",
+      "y-websocket"
+    ]
+  }
+}

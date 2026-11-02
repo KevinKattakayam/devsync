@@ -1,0 +1,7 @@
+
+> devsync-backend@1.0.0 format:check
+> prettier --check . --ignore-unknown
+
+Checking formatting...
+[warn] testing/browser/journeys.spec.ts
+[warn] Code style issues found in the above file. Run Prettier with --write to fix.

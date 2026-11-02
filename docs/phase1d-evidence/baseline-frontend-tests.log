@@ -1,0 +1,35 @@
+
+> frontend@0.1.0 test
+> node --test tests/*.test.mjs && vitest run
+
+TAP version 13
+# Subtest: tests/dependency-policy.test.mjs
+ok 1 - tests/dependency-policy.test.mjs
+  ---
+  duration_ms: 44.031579
+  type: 'test'
+  ...
+# Subtest: tests/markdown.test.mjs
+ok 2 - tests/markdown.test.mjs
+  ---
+  duration_ms: 394.768305
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 404.474253
+
+ RUN  v5.0.5 /home/kevin/devsync/frontend
+
+
+ Test Files  3 passed (3)
+      Tests  6 passed (6)
+   Start at  14:27:55
+   Duration  1.19s (environment 59%, import 17%, tests 17%, transform 6%, worker 1%)
+

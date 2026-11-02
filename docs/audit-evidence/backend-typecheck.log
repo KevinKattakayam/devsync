@@ -1,0 +1,141 @@
+src/agents/pr-summary.agent.ts(67,36): error TS2339: Property 'workspaceMember' does not exist on type 'TenantPrismaClient'.
+src/agents/pr-summary.agent.ts(78,16): error TS2339: Property 'activity' does not exist on type 'TenantPrismaClient'.
+src/agents/task-completion.agent.ts(2,10): error TS2305: Module '"@prisma/client"' has no exported member 'Prisma'.
+src/agents/task-completion.agent.ts(56,9): error TS18046: 'snippets' is of type 'unknown'.
+src/agents/task-completion.agent.ts(57,52): error TS18046: 'snippets' is of type 'unknown'.
+src/agents/task-completion.agent.ts(58,10): error TS7006: Parameter 's' implicitly has an 'any' type.
+src/agents/task-completion.agent.ts(68,64): error TS2339: Property 'title' does not exist on type '{}'.
+src/agents/task-completion.agent.ts(68,118): error TS2339: Property 'description' does not exist on type '{}'.
+src/agents/task-completion.agent.ts(68,169): error TS2339: Property 'assignee' does not exist on type '{}'.
+src/agents/task-completion.agent.ts(68,217): error TS2339: Property 'labels' does not exist on type '{}'.
+src/agents/task-completion.agent.ts(68,229): error TS7006: Parameter 'l' implicitly has an 'any' type.
+src/agents/task-completion.agent.ts(68,281): error TS2339: Property 'column' does not exist on type '{}'.
+src/agents/task-completion.agent.ts(73,30): error TS2339: Property 'workspaceMember' does not exist on type 'TenantPrismaClient'.
+src/agents/task-completion.agent.ts(90,16): error TS2339: Property 'activity' does not exist on type 'TenantPrismaClient'.
+src/agents/task-completion.agent.ts(101,20): error TS2339: Property 'assignee' does not exist on type '{}'.
+src/agents/task-completion.agent.ts(101,36): error TS2339: Property 'assigneeId' does not exist on type '{}'.
+src/app.ts(63,18): error TS2339: Property '$queryRaw' does not exist on type 'TenantPrismaClient'.
+src/controllers/ai.controller.ts(15,37): error TS2339: Property 'workspaceMember' does not exist on type 'TenantPrismaClient'.
+src/controllers/ai.controller.ts(18,50): error TS7006: Parameter 'item' implicitly has an 'any' type.
+src/controllers/ai.controller.ts(37,73): error TS7031: Binding element 'type' implicitly has an 'any' type.
+src/controllers/ai.controller.ts(37,79): error TS7031: Binding element 'title' implicitly has an 'any' type.
+src/controllers/ai.controller.ts(37,86): error TS7031: Binding element 'score' implicitly has an 'any' type.
+src/controllers/auth.controller.ts(39,31): error TS2339: Property 'user' does not exist on type 'TenantPrismaClient'.
+src/controllers/auth.controller.ts(50,31): error TS2339: Property 'user' does not exist on type 'TenantPrismaClient'.
+src/controllers/document.controller.ts(22,33): error TS2339: Property 'document' does not exist on type 'TenantPrismaClient'.
+src/controllers/document.controller.ts(24,31): error TS2339: Property 'workspaceMember' does not exist on type 'TenantPrismaClient'.
+src/controllers/document.controller.ts(60,35): error TS2339: Property 'document' does not exist on type 'TenantPrismaClient'.
+src/controllers/document.controller.ts(100,18): error TS2339: Property 'activity' does not exist on type 'TenantPrismaClient'.
+src/controllers/document.controller.ts(103,39): error TS18046: 'document' is of type 'unknown'.
+src/controllers/document.controller.ts(110,32): error TS18046: 'document' is of type 'unknown'.
+src/controllers/document.controller.ts(122,35): error TS2339: Property 'document' does not exist on type 'TenantPrismaClient'.
+src/controllers/document.controller.ts(148,18): error TS2339: Property 'document' does not exist on type 'TenantPrismaClient'.
+src/controllers/github-repository.controller.ts(15,31): error TS2339: Property 'column' does not exist on type 'TenantPrismaClient'.
+src/controllers/github-repository.controller.ts(20,35): error TS2339: Property 'gitHubRepository' does not exist on type 'TenantPrismaClient'.
+src/controllers/github-repository.controller.ts(26,31): error TS2339: Property 'gitHubRepository' does not exist on type 'TenantPrismaClient'.
+src/controllers/github-repository.controller.ts(33,37): error TS2339: Property 'gitHubRepository' does not exist on type 'TenantPrismaClient'.
+src/controllers/github-repository.controller.ts(41,37): error TS2339: Property 'gitHubRepository' does not exist on type 'TenantPrismaClient'.
+src/controllers/github-repository.controller.ts(47,180): error TS2339: Property 'gitHubRepository' does not exist on type 'TenantPrismaClient'.
+src/controllers/search.controller.ts(22,14): error TS2339: Property 'document' does not exist on type 'TenantPrismaClient'.
+src/controllers/search.controller.ts(23,14): error TS2339: Property 'snippet' does not exist on type 'TenantPrismaClient'.
+src/controllers/search.controller.ts(24,14): error TS2339: Property 'task' does not exist on type 'TenantPrismaClient'.
+src/controllers/search.controller.ts(27,24): error TS7006: Parameter 'item' implicitly has an 'any' type.
+src/controllers/search.controller.ts(28,23): error TS7006: Parameter 'item' implicitly has an 'any' type.
+src/controllers/search.controller.ts(29,20): error TS7006: Parameter 'item' implicitly has an 'any' type.
+src/controllers/snippet.controller.ts(11,32): error TS2339: Property 'snippet' does not exist on type 'TenantPrismaClient'.
+src/controllers/snippet.controller.ts(13,31): error TS2339: Property 'workspaceMember' does not exist on type 'TenantPrismaClient'.
+src/controllers/snippet.controller.ts(65,18): error TS2339: Property 'activity' does not exist on type 'TenantPrismaClient'.
+src/controllers/snippet.controller.ts(73,31): error TS18046: 'snippet' is of type 'unknown'.
+src/controllers/snippet.controller.ts(82,34): error TS2339: Property 'snippet' does not exist on type 'TenantPrismaClient'.
+src/controllers/snippet.controller.ts(103,18): error TS2339: Property 'snippet' does not exist on type 'TenantPrismaClient'.
+src/controllers/task.controller.ts(12,30): error TS2339: Property 'column' does not exist on type 'TenantPrismaClient'.
+src/controllers/task.controller.ts(19,31): error TS2339: Property 'task' does not exist on type 'TenantPrismaClient'.
+src/controllers/task.controller.ts(28,33): error TS2339: Property 'workspaceMember' does not exist on type 'TenantPrismaClient'.
+src/controllers/task.controller.ts(39,12): error TS2339: Property 'task' does not exist on type 'TenantPrismaClient'.
+src/controllers/task.controller.ts(40,12): error TS2339: Property 'column' does not exist on type 'TenantPrismaClient'.
+src/controllers/task.controller.ts(86,33): error TS2339: Property 'board' does not exist on type 'TenantPrismaClient'.
+src/controllers/task.controller.ts(112,32): error TS2339: Property 'board' does not exist on type 'TenantPrismaClient'.
+src/controllers/task.controller.ts(135,33): error TS2339: Property 'column' does not exist on type 'TenantPrismaClient'.
+src/controllers/task.controller.ts(141,33): error TS2339: Property 'column' does not exist on type 'TenantPrismaClient'.
+src/controllers/task.controller.ts(158,33): error TS2339: Property 'column' does not exist on type 'TenantPrismaClient'.
+src/controllers/task.controller.ts(172,18): error TS2339: Property 'column' does not exist on type 'TenantPrismaClient'.
+src/controllers/task.controller.ts(187,33): error TS2339: Property 'task' does not exist on type 'TenantPrismaClient'.
+src/controllers/task.controller.ts(193,31): error TS2339: Property 'task' does not exist on type 'TenantPrismaClient'.
+src/controllers/task.controller.ts(211,33): error TS2339: Property 'column' does not exist on type 'TenantPrismaClient'.
+src/controllers/task.controller.ts(217,34): error TS2339: Property 'board' does not exist on type 'TenantPrismaClient'.
+src/controllers/task.controller.ts(222,20): error TS2339: Property 'activity' does not exist on type 'TenantPrismaClient'.
+src/controllers/task.controller.ts(248,31): error TS2339: Property 'task' does not exist on type 'TenantPrismaClient'.
+src/controllers/task.controller.ts(279,18): error TS2339: Property 'task' does not exist on type 'TenantPrismaClient'.
+src/controllers/task.controller.ts(296,39): error TS2339: Property 'task' does not exist on type 'TenantPrismaClient'.
+src/controllers/task.controller.ts(303,18): error TS2339: Property 'task' does not exist on type 'TenantPrismaClient'.
+src/controllers/task.controller.ts(313,31): error TS2339: Property 'task' does not exist on type 'TenantPrismaClient'.
+src/controllers/task.controller.ts(324,39): error TS2339: Property 'column' does not exist on type 'TenantPrismaClient'.
+src/controllers/workspace.controller.ts(2,10): error TS2305: Module '"@prisma/client"' has no exported member 'Role'.
+src/controllers/workspace.controller.ts(41,36): error TS2339: Property 'workspace' does not exist on type 'TenantPrismaClient'.
+src/controllers/workspace.controller.ts(78,18): error TS2339: Property 'activity' does not exist on type 'TenantPrismaClient'.
+src/controllers/workspace.controller.ts(97,38): error TS2339: Property 'workspaceMember' does not exist on type 'TenantPrismaClient'.
+src/controllers/workspace.controller.ts(112,41): error TS7006: Parameter 'm' implicitly has an 'any' type.
+src/controllers/workspace.controller.ts(126,36): error TS2339: Property 'workspace' does not exist on type 'TenantPrismaClient'.
+src/controllers/workspace.controller.ts(155,36): error TS2339: Property 'workspace' does not exist on type 'TenantPrismaClient'.
+src/controllers/workspace.controller.ts(172,18): error TS2339: Property 'workspace' does not exist on type 'TenantPrismaClient'.
+src/controllers/workspace.controller.ts(184,31): error TS2339: Property 'user' does not exist on type 'TenantPrismaClient'.
+src/controllers/workspace.controller.ts(189,41): error TS2339: Property 'workspaceMember' does not exist on type 'TenantPrismaClient'.
+src/controllers/workspace.controller.ts(197,33): error TS2339: Property 'workspaceMember' does not exist on type 'TenantPrismaClient'.
+src/controllers/workspace.controller.ts(206,18): error TS2339: Property 'activity' does not exist on type 'TenantPrismaClient'.
+src/controllers/workspace.controller.ts(225,33): error TS2339: Property 'workspaceMember' does not exist on type 'TenantPrismaClient'.
+src/controllers/workspace.controller.ts(239,33): error TS2339: Property 'workspaceMember' does not exist on type 'TenantPrismaClient'.
+src/controllers/workspace.controller.ts(251,18): error TS2339: Property 'workspaceMember' does not exist on type 'TenantPrismaClient'.
+src/controllers/workspace.controller.ts(261,37): error TS2339: Property 'activity' does not exist on type 'TenantPrismaClient'.
+src/lib/prisma.ts(1,10): error TS2305: Module '"@prisma/client"' has no exported member 'PrismaClient'.
+src/lib/prisma.ts(23,16): error TS2339: Property '$disconnect' does not exist on type 'TenantPrismaClient'.
+src/lib/tenant-prisma.ts(1,10): error TS2305: Module '"@prisma/client"' has no exported member 'Prisma'.
+src/lib/tenant-prisma.ts(1,18): error TS2305: Module '"@prisma/client"' has no exported member 'PrismaClient'.
+src/lib/tenant-prisma.ts(25,43): error TS7006: Parameter 'tx' implicitly has an 'any' type.
+src/middleware/auth.middleware.ts(20,29): error TS2339: Property 'user' does not exist on type 'TenantPrismaClient'.
+src/middleware/auth.middleware.ts(37,31): error TS2339: Property 'user' does not exist on type 'TenantPrismaClient'.
+src/middleware/auth.middleware.ts(56,17): error TS2339: Property 'user' does not exist on type 'TenantPrismaClient'.
+src/middleware/rbac.middleware.ts(2,10): error TS2305: Module '"@prisma/client"' has no exported member 'Role'.
+src/middleware/rbac.middleware.ts(16,35): error TS2339: Property 'workspaceMember' does not exist on type 'TenantPrismaClient'.
+src/routes/github-webhook.routes.ts(30,37): error TS2339: Property 'gitHubRepository' does not exist on type 'TenantPrismaClient'.
+src/routes/github-webhook.routes.ts(40,22): error TS2339: Property 'gitHubWebhookDelivery' does not exist on type 'TenantPrismaClient'.
+src/routes/github-webhook.routes.ts(56,40): error TS2339: Property 'workspaceMember' does not exist on type 'TenantPrismaClient'.
+src/routes/github-webhook.routes.ts(62,22): error TS2339: Property 'activity' does not exist on type 'TenantPrismaClient'.
+src/routes/github-webhook.routes.ts(97,40): error TS2339: Property 'workspaceMember' does not exist on type 'TenantPrismaClient'.
+src/routes/github-webhook.routes.ts(103,22): error TS2339: Property 'activity' does not exist on type 'TenantPrismaClient'.
+src/routes/github-webhook.routes.ts(162,33): error TS2339: Property 'column' does not exist on type 'TenantPrismaClient'.
+src/routes/github-webhook.routes.ts(167,32): error TS2339: Property 'task' does not exist on type 'TenantPrismaClient'.
+src/routes/github-webhook.routes.ts(168,32): error TS2339: Property '$transaction' does not exist on type 'TenantPrismaClient'.
+src/routes/github-webhook.routes.ts(168,56): error TS7006: Parameter 'task' implicitly has an 'any' type.
+src/routes/github-webhook.routes.ts(168,62): error TS7006: Parameter 'index' implicitly has an 'any' type.
+src/routes/github-webhook.routes.ts(168,79): error TS2339: Property 'task' does not exist on type 'TenantPrismaClient'.
+src/routes/github-webhook.routes.ts(188,69): error TS7006: Parameter 'task' implicitly has an 'any' type.
+src/routes/ingestion.routes.ts(52,35): error TS2339: Property 'workspaceMember' does not exist on type 'TenantPrismaClient'.
+src/routes/scim.routes.ts(43,33): error TS2339: Property '$transaction' does not exist on type 'TenantPrismaClient'.
+src/routes/scim.routes.ts(58,31): error TS2339: Property 'user' does not exist on type 'TenantPrismaClient'.
+src/routes/scim.routes.ts(60,20): error TS2339: Property 'workspaceMember' does not exist on type 'TenantPrismaClient'.
+src/routes/scim.routes.ts(72,18): error TS2339: Property '$transaction' does not exist on type 'TenantPrismaClient'.
+src/routes/scim.routes.ts(72,39): error TS2339: Property 'workspaceMember' does not exist on type 'TenantPrismaClient'.
+src/routes/superadmin.routes.ts(15,31): error TS2339: Property '$queryRaw' does not exist on type 'TenantPrismaClient'.
+src/server.ts(49,16): error TS2339: Property '$disconnect' does not exist on type 'TenantPrismaClient'.
+src/services/embedding.service.ts(3,10): error TS2305: Module '"@prisma/client"' has no exported member 'Prisma'.
+src/services/embedding.service.ts(30,16): error TS2339: Property '$executeRaw' does not exist on type 'TenantPrismaClient'.
+src/services/embedding.service.ts(38,31): error TS2339: Property '$queryRaw' does not exist on type 'TenantPrismaClient'.
+src/services/embedding.service.ts(40,20): error TS2339: Property '$executeRaw' does not exist on type 'TenantPrismaClient'.
+src/services/embedding.service.ts(43,22): error TS2339: Property '$executeRaw' does not exist on type 'TenantPrismaClient'.
+src/services/embedding.service.ts(46,22): error TS2339: Property '$executeRaw' does not exist on type 'TenantPrismaClient'.
+src/services/embedding.service.ts(55,31): error TS2339: Property 'document' does not exist on type 'TenantPrismaClient'.
+src/services/embedding.service.ts(61,18): error TS2339: Property '$executeRaw' does not exist on type 'TenantPrismaClient'.
+src/services/embedding.service.ts(63,31): error TS2339: Property 'snippet' does not exist on type 'TenantPrismaClient'.
+src/services/embedding.service.ts(69,18): error TS2339: Property '$executeRaw' does not exist on type 'TenantPrismaClient'.
+src/services/embedding.service.ts(71,31): error TS2339: Property 'task' does not exist on type 'TenantPrismaClient'.
+src/services/embedding.service.ts(77,18): error TS2339: Property '$executeRaw' does not exist on type 'TenantPrismaClient'.
+src/services/embedding.service.ts(85,25): error TS2339: Property '$queryRaw' does not exist on type 'TenantPrismaClient'.
+src/services/ingestion.service.ts(210,33): error TS2339: Property 'document' does not exist on type 'TenantPrismaClient'.
+src/services/ingestion.service.ts(221,16): error TS2339: Property 'activity' does not exist on type 'TenantPrismaClient'.
+src/services/yjs.service.ts(72,33): error TS2339: Property 'user' does not exist on type 'TenantPrismaClient'.
+src/services/yjs.service.ts(82,41): error TS2339: Property 'document' does not exist on type 'TenantPrismaClient'.
+src/services/yjs.service.ts(92,39): error TS2339: Property 'workspaceMember' does not exist on type 'TenantPrismaClient'.
+src/services/yjs.service.ts(131,43): error TS2339: Property 'document' does not exist on type 'TenantPrismaClient'.
+src/services/yjs.service.ts(155,28): error TS2339: Property 'document' does not exist on type 'TenantPrismaClient'.
+src/socket/index.ts(49,31): error TS2339: Property 'user' does not exist on type 'TenantPrismaClient'.
+src/worker.ts(67,16): error TS2339: Property '$disconnect' does not exist on type 'TenantPrismaClient'.

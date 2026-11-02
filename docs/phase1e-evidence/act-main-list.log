@@ -1,0 +1,2 @@
+time="2026-11-01T15:37:31+05:30" level=info msg="Using docker host 'unix:///var/run/docker.sock', and daemon socket 'unix:///var/run/docker.sock'"
+time="2026-11-01T15:37:31+05:30" level=fatal msg="mkdir /home/kevin/.cache/act: read-only file system"

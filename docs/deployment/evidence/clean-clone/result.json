@@ -1,0 +1,26 @@
+{
+  "project": "devsync_phase5b_0403f84dbf",
+  "clone": "/tmp/devsync-phase5b-_xc0soz2/checkout",
+  "checks": {
+    "cleanGitStatus": true,
+    "noCopiedDependencies": true,
+    "noPrivateEnvironmentFiles": true,
+    "backendUid": 1000,
+    "workerUid": 1000,
+    "frontendUid": 1000,
+    "frontendHealth": 200,
+    "setupGuidance": true,
+    "backendHealth": 200,
+    "protectedIdentity": 401,
+    "readinessWithoutClerk": 503,
+    "sampleWorkspaces": 1,
+    "runtimeRole": {
+      "rolsuper": false,
+      "rolbypassrls": false,
+      "adminCredentialsMounted": false
+    }
+  },
+  "status": "passed",
+  "commit": "c7fa81a86362a8939cf07f9818607fe0cbe3aac8",
+  "startupSeconds": 85.625
+}

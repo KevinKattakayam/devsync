@@ -1,0 +1,1 @@
+ALTER TABLE "Document" ADD COLUMN "crdtRevision" INTEGER NOT NULL DEFAULT 0;

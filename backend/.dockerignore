@@ -4,3 +4,11 @@ dist
 .env.*
 npm-debug.log*
 .DS_Store
+testing
+
+coverage
+tooling
+*.tsbuildinfo
+test-results
+playwright-report
+**/.env*

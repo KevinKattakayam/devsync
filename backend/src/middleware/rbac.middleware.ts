@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { Role } from '@prisma/client';
-import { ForbiddenError, NotFoundError } from '../utils/errors';
-import { prisma } from '../lib/prisma';
+import { ForbiddenError } from '../utils/errors';
+import { authorizeWorkspace } from '../security/workspace-policy';
 
 export function requireRole(...roles: Role[]) {
   return async (req: Request, _res: Response, next: NextFunction): Promise<void> => {
@@ -13,22 +13,7 @@ export function requireRole(...roles: Role[]) {
         throw new ForbiddenError('Missing user or workspace context');
       }
 
-      const member = await prisma.workspaceMember.findUnique({
-        where: {
-          userId_workspaceId: {
-            userId,
-            workspaceId,
-          },
-        },
-      });
-
-      if (!member) {
-        throw new NotFoundError('Not a member of this workspace');
-      }
-
-      if (!roles.includes(member.role)) {
-        throw new ForbiddenError(`Requires one of: ${roles.join(', ')}`);
-      }
+      await authorizeWorkspace(userId, workspaceId, roles);
 
       next();
     } catch (error) {

@@ -1,0 +1,124 @@
+{
+  "coverage": {
+    "backend": {
+      "statements": {
+        "total": 3979,
+        "covered": 3214,
+        "skipped": 0,
+        "pct": 80.77
+      },
+      "branches": {
+        "total": 1921,
+        "covered": 1363,
+        "skipped": 0,
+        "pct": 70.95
+      },
+      "functions": {
+        "total": 653,
+        "covered": 487,
+        "skipped": 0,
+        "pct": 74.57
+      },
+      "lines": {
+        "total": 3707,
+        "covered": 3078,
+        "skipped": 0,
+        "pct": 83.03
+      }
+    },
+    "frontend": {
+      "statements": {
+        "total": 2737,
+        "covered": 1110,
+        "skipped": 0,
+        "pct": 40.55
+      },
+      "branches": {
+        "total": 1924,
+        "covered": 732,
+        "skipped": 0,
+        "pct": 38.04
+      },
+      "functions": {
+        "total": 907,
+        "covered": 354,
+        "skipped": 0,
+        "pct": 39.02
+      },
+      "lines": {
+        "total": 2442,
+        "covered": 1002,
+        "skipped": 0,
+        "pct": 41.03
+      }
+    }
+  },
+  "lighthouse": {
+    "status": "not run"
+  },
+  "load": {
+    "status": "not run",
+    "endpointP50": null,
+    "endpointP95": null,
+    "sustainedWebSocketEditors": null
+  },
+  "currentBranchContainerScan": {
+    "status": "not run",
+    "cachedImageReportOnly": true
+  },
+  "realClerkSignin": {
+    "status": "not attempted",
+    "reason": "No configured role identities/sign-in method in checked settings"
+  },
+  "browser": {
+    "changedPageCasesPassed": 4,
+    "visualCasesFailed": 4,
+    "finalRun": "4 passed / 4 failed (5.8m)",
+    "affectedEarlierRun": "3 passed / 4 failed (42.5s), prior to contrast fixes",
+    "broaderRun": "interrupted; individual passes/failures retained, no aggregate pass claimed",
+    "productAxe": [
+      {
+        "file": "browser/final/dark-1440-billing.json",
+        "violations": 0,
+        "incomplete": 0
+      },
+      {
+        "file": "browser/final/dark-1440-overview.json",
+        "violations": 0,
+        "incomplete": 1
+      },
+      {
+        "file": "browser/final/light-390-overview.json",
+        "violations": 0,
+        "incomplete": 1
+      },
+      {
+        "file": "browser/final/light-1440-overview.json",
+        "violations": 0,
+        "incomplete": 1
+      },
+      {
+        "file": "browser/final/dark-390-billing.json",
+        "violations": 0,
+        "incomplete": 0
+      },
+      {
+        "file": "browser/final/dark-390-overview.json",
+        "violations": 0,
+        "incomplete": 1
+      },
+      {
+        "file": "browser/final/light-1440-billing.json",
+        "violations": 0,
+        "incomplete": 0
+      },
+      {
+        "file": "browser/final/light-390-billing.json",
+        "violations": 0,
+        "incomplete": 0
+      }
+    ],
+    "shellAxeStates": 7,
+    "shellAxeViolations": 0
+  }
+}

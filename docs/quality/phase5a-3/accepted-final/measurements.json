@@ -1,0 +1,470 @@
+[
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "title",
+    "bounds": {
+      "x": 488,
+      "y": 83,
+      "width": 704,
+      "height": 36
+    }
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "default",
+    "viewport": 1440,
+    "document": 1440,
+    "main": 1200,
+    "scroll": 1200
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "commands",
+    "viewport": 1440,
+    "document": 1440,
+    "main": 1200,
+    "scroll": 1200
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "commands-empty",
+    "viewport": 1440,
+    "document": 1440,
+    "main": 1200,
+    "scroll": 1200
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "help",
+    "viewport": 1440,
+    "document": 1440,
+    "main": 1200,
+    "scroll": 1200
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "focus",
+    "viewport": 1440,
+    "document": 1440,
+    "main": 1440,
+    "scroll": 1440
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "user-menu",
+    "viewport": 1440,
+    "document": 1440,
+    "main": 1200,
+    "scroll": 1200
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "workspace-menu",
+    "viewport": 1440,
+    "document": 1440,
+    "main": 1200,
+    "scroll": 1200
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "document-tree",
+    "viewport": 1440,
+    "document": 1440,
+    "main": 1200,
+    "scroll": 1200
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "collapsed",
+    "viewport": 1440,
+    "document": 1440,
+    "main": 1384,
+    "scroll": 1384
+  },
+  {
+    "theme": "dark",
+    "width": 1440,
+    "state": "copilot",
+    "viewport": 1440,
+    "document": 1440,
+    "main": 1200,
+    "scroll": 1200
+  },
+  {
+    "theme": "dark",
+    "width": 390,
+    "state": "title",
+    "bounds": {
+      "x": 16,
+      "y": 81,
+      "width": 358,
+      "height": 36
+    }
+  },
+  {
+    "theme": "dark",
+    "width": 390,
+    "state": "default",
+    "viewport": 390,
+    "document": 390,
+    "main": 390,
+    "scroll": 390
+  },
+  {
+    "theme": "dark",
+    "width": 390,
+    "state": "commands",
+    "viewport": 390,
+    "document": 390,
+    "main": 390,
+    "scroll": 390
+  },
+  {
+    "theme": "dark",
+    "width": 390,
+    "state": "commands-empty",
+    "viewport": 390,
+    "document": 390,
+    "main": 390,
+    "scroll": 390
+  },
+  {
+    "theme": "dark",
+    "width": 390,
+    "state": "help",
+    "viewport": 390,
+    "document": 390,
+    "main": 390,
+    "scroll": 390
+  },
+  {
+    "theme": "dark",
+    "width": 390,
+    "state": "focus",
+    "viewport": 390,
+    "document": 390,
+    "main": 390,
+    "scroll": 390
+  },
+  {
+    "theme": "dark",
+    "width": 390,
+    "state": "user-menu",
+    "viewport": 390,
+    "document": 390,
+    "main": 390,
+    "scroll": 390
+  },
+  {
+    "theme": "dark",
+    "width": 390,
+    "state": "mobile-navigation",
+    "viewport": 390,
+    "document": 390,
+    "main": 390,
+    "scroll": 390
+  },
+  {
+    "theme": "dark",
+    "width": 390,
+    "state": "document-tree",
+    "viewport": 390,
+    "document": 390,
+    "main": 390,
+    "scroll": 390
+  },
+  {
+    "theme": "dark",
+    "width": 390,
+    "state": "workspace-menu",
+    "viewport": 390,
+    "document": 390,
+    "main": 390,
+    "scroll": 390
+  },
+  {
+    "theme": "dark",
+    "width": 390,
+    "state": "copilot",
+    "viewport": 390,
+    "document": 390,
+    "main": 390,
+    "scroll": 390
+  },
+  {
+    "theme": "light",
+    "width": 1440,
+    "state": "title",
+    "bounds": {
+      "x": 488,
+      "y": 83,
+      "width": 704,
+      "height": 36
+    }
+  },
+  {
+    "theme": "light",
+    "width": 1440,
+    "state": "default",
+    "viewport": 1440,
+    "document": 1440,
+    "main": 1200,
+    "scroll": 1200
+  },
+  {
+    "theme": "light",
+    "width": 1440,
+    "state": "commands",
+    "viewport": 1440,
+    "document": 1440,
+    "main": 1200,
+    "scroll": 1200
+  },
+  {
+    "theme": "light",
+    "width": 1440,
+    "state": "commands-empty",
+    "viewport": 1440,
+    "document": 1440,
+    "main": 1200,
+    "scroll": 1200
+  },
+  {
+    "theme": "light",
+    "width": 1440,
+    "state": "help",
+    "viewport": 1440,
+    "document": 1440,
+    "main": 1200,
+    "scroll": 1200
+  },
+  {
+    "theme": "light",
+    "width": 1440,
+    "state": "focus",
+    "viewport": 1440,
+    "document": 1440,
+    "main": 1440,
+    "scroll": 1440
+  },
+  {
+    "theme": "light",
+    "width": 1440,
+    "state": "user-menu",
+    "viewport": 1440,
+    "document": 1440,
+    "main": 1200,
+    "scroll": 1200
+  },
+  {
+    "theme": "light",
+    "width": 1440,
+    "state": "workspace-menu",
+    "viewport": 1440,
+    "document": 1440,
+    "main": 1200,
+    "scroll": 1200
+  },
+  {
+    "theme": "light",
+    "width": 1440,
+    "state": "document-tree",
+    "viewport": 1440,
+    "document": 1440,
+    "main": 1200,
+    "scroll": 1200
+  },
+  {
+    "theme": "light",
+    "width": 1440,
+    "state": "collapsed",
+    "viewport": 1440,
+    "document": 1440,
+    "main": 1384,
+    "scroll": 1384
+  },
+  {
+    "theme": "light",
+    "width": 1440,
+    "state": "copilot",
+    "viewport": 1440,
+    "document": 1440,
+    "main": 1200,
+    "scroll": 1200
+  },
+  {
+    "theme": "light",
+    "width": 390,
+    "state": "title",
+    "bounds": {
+      "x": 16,
+      "y": 81,
+      "width": 358,
+      "height": 36
+    }
+  },
+  {
+    "theme": "light",
+    "width": 390,
+    "state": "default",
+    "viewport": 390,
+    "document": 390,
+    "main": 390,
+    "scroll": 390
+  },
+  {
+    "theme": "light",
+    "width": 390,
+    "state": "commands",
+    "viewport": 390,
+    "document": 390,
+    "main": 390,
+    "scroll": 390
+  },
+  {
+    "theme": "light",
+    "width": 390,
+    "state": "commands-empty",
+    "viewport": 390,
+    "document": 390,
+    "main": 390,
+    "scroll": 390
+  },
+  {
+    "theme": "light",
+    "width": 390,
+    "state": "help",
+    "viewport": 390,
+    "document": 390,
+    "main": 390,
+    "scroll": 390
+  },
+  {
+    "theme": "light",
+    "width": 390,
+    "state": "focus",
+    "viewport": 390,
+    "document": 390,
+    "main": 390,
+    "scroll": 390
+  },
+  {
+    "theme": "light",
+    "width": 390,
+    "state": "user-menu",
+    "viewport": 390,
+    "document": 390,
+    "main": 390,
+    "scroll": 390
+  },
+  {
+    "theme": "light",
+    "width": 390,
+    "state": "mobile-navigation",
+    "viewport": 390,
+    "document": 390,
+    "main": 390,
+    "scroll": 390
+  },
+  {
+    "theme": "light",
+    "width": 390,
+    "state": "document-tree",
+    "viewport": 390,
+    "document": 390,
+    "main": 390,
+    "scroll": 390
+  },
+  {
+    "theme": "light",
+    "width": 390,
+    "state": "workspace-menu",
+    "viewport": 390,
+    "document": 390,
+    "main": 390,
+    "scroll": 390
+  },
+  {
+    "theme": "light",
+    "width": 390,
+    "state": "copilot",
+    "viewport": 390,
+    "document": 390,
+    "main": 390,
+    "scroll": 390
+  },
+  {
+    "route": "/dashboard",
+    "width": 360,
+    "viewport": 360,
+    "document": 360,
+    "main": 360,
+    "scroll": 360
+  },
+  {
+    "route": "/workspace/devsync-sample",
+    "width": 360,
+    "viewport": 360,
+    "document": 360,
+    "main": 360,
+    "scroll": 360
+  },
+  {
+    "route": "/workspace/devsync-sample/docs",
+    "width": 360,
+    "viewport": 360,
+    "document": 360,
+    "main": 360,
+    "scroll": 360
+  },
+  {
+    "route": "/workspace/devsync-sample/docs/devsync-sample-doc",
+    "width": 360,
+    "viewport": 360,
+    "document": 360,
+    "main": 360,
+    "scroll": 360
+  },
+  {
+    "route": "/workspace/devsync-sample/kanban",
+    "width": 360,
+    "viewport": 360,
+    "document": 360,
+    "main": 360,
+    "scroll": 360
+  },
+  {
+    "route": "/workspace/devsync-sample/snippets",
+    "width": 360,
+    "viewport": 360,
+    "document": 360,
+    "main": 360,
+    "scroll": 360
+  },
+  {
+    "route": "/workspace/devsync-sample/settings",
+    "width": 360,
+    "viewport": 360,
+    "document": 360,
+    "main": 360,
+    "scroll": 360
+  },
+  {
+    "route": "/settings/billing",
+    "width": 360,
+    "viewport": 360,
+    "document": 360,
+    "main": 360,
+    "scroll": 360
+  }
+]

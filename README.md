@@ -1,74 +1,86 @@
-# DevSync — Collaborative Developer Workspace
+# DevSync
 
-DevSync is a high-performance, real-time collaborative workspace designed specifically for development teams. It brings together documents, task management, code snippets, and AI assistance into a single, unified platform.
+A workspace for collaborative documents, tasks and code snippets. DevSync uses Clerk identities, server-side workspace roles and PostgreSQL row-level security. This upgrade has open release gates: **4 Medium findings in the backend runtime** (frontend runtime: zero findings), and missing production/performance verification. See the [final report](docs/FINAL_REPORT.md) for measured results and limits.
 
-![DevSync Dashboard Preview](https://res.cloudinary.com/dzvxsfvxr/image/upload/v1713890000/devsync_preview.png)
+![Actual seeded editor, dark theme at 1440px](docs/quality/phase5a-3/accepted-final/dark-1440-default.png)
 
-## 🚀 Features
+Actual fixture-backed UI from Phase5a-3, not a mockup. [Mobile light editor](docs/quality/phase5a-3/accepted-final/light-390-default.png) · [Dashboard](docs/ui/after/dashboard/final/dark-1440-ready.png) · [Design system](docs/ui/DESIGN.md).
 
-- **Real-time Documents**: A powerful rich-text editor (TipTap) with slash commands, real-time collaboration via WebSockets, and nested document structures.
-- **Kanban Boards**: Integrated task management with drag-and-drop functionality, priority levels, due dates, and member assignments.
-- **Snippet Library**: A centralized place to store and share code snippets with syntax highlighting for over 50 languages.
-- **AI-Powered Writing**: Inline AI assistant powered by Groq (Llama 3) to generate, improve, or summarize content on the fly.
-- **Workspace Management**: Create multiple workspaces, invite team members, and manage roles (Owner, Editor, Viewer).
-- **Live Presence**: See who is online in your workspace with live avatar indicators.
-- **Premium UI**: A clean, professional, and fast interface built with Next.js 14 and Tailwind CSS v4.
+## Quickstart
 
-## 🛠️ Tech Stack
+Prerequisites: Git and Docker with Compose. Clone the upgrade branch:
 
-- **Frontend**: Next.js 14 (App Router), TypeScript, Tailwind CSS v4, TipTap.
-- **Backend**: Node.js, Express, Socket.io.
-- **Database**: PostgreSQL with Prisma ORM.
-- **Authentication**: JWT-based custom auth with access/refresh token rotation.
-- **AI Integration**: Groq Cloud API.
-- **State Management**: React Context API & SWR.
+```sh
+git clone --branch upgrade/enterprise https://github.com/Kevinbastin/devsync.git
+cd devsync
+```
 
-## 📦 Getting Started
+Start the local stack with one command:
 
-### Prerequisites
+```sh
+docker compose up --build --detach --wait
+```
 
-- Node.js 18+
-- Docker (for PostgreSQL)
-- Groq API Key
+Open http://localhost:3000. Compose initializes local credentials, migrates and seeds PostgreSQL, and starts Redis, the backend, frontend and worker. **Without Clerk keys the app shows setup guidance and protected access stays unavailable.** This does not provision provider accounts or enable fixture login. Follow the [runbook](docs/RUNBOOK.md) for Clerk keys, identity IDs, environment variables, least-privilege database roles and production deployment. Do not reuse disposable local credentials in production.
 
-### Installation
+`docker compose down` stops the stack and retains data volumes. Seed identity changes on an existing volume need review; creating real Clerk users does not automatically remap seeded memberships. Never delete volumes containing valuable data as a setup shortcut.
 
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/yourusername/devsync.git
-   cd devsync
-   ```
+## What exists
 
-2. **Setup the Database**:
-   ```bash
-   cd backend
-   docker run -d --name devsync-postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=password -e POSTGRES_DB=devsync -p 5432:5432 postgres:16-alpine
-   ```
+| Area                 | Implemented behavior and boundaries                                                                                                                                                                                                                                       |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Dashboard and shell  | Recent documents, assigned tasks, recorded activity, quick actions, workspace navigation, command palette, theme selection and mobile navigation drawer.                                                                                                                  |
+| Documents            | TipTap blocks, tables, task lists, code blocks, nested documents and Yjs/Hocuspocus collaboration with durable journaling. Viewers remain read-only on the server. Local CRDT persistence does not constitute a complete offline/PWA product.                             |
+| Tasks                | Workspace task boards, assignments, priorities, detail drawer and keyboard move control. The unchanged native pointer-drag journey passes after isolating the Move dropdown from the drag surface.                                                                        |
+| Snippets             | Store, filter and copy source text. Current client filtering covers title/language/description; it is not code full-text search. Host execution is disabled.                                                                                                              |
+| Members and settings | Owner/editor/viewer roles, explicit invitation acceptance, section search and role-restricted AI usage. Session administration, API-token management and account-lifecycle UI are incomplete.                                                                             |
+| AI                   | Optional bounded streaming, configured Groq/OpenAI fallback and atomic per-user/workspace request allowances. Retrieved references are candidates, not verified claim support; request counts are not currency billing. [Cost and safety limits](docs/AI_COST_SAFETY.md). |
+| Decision receipts    | Optional manual source-bound decisions; `FEATURE_DECISION_RECEIPTS=true`, default off. [Design and limits](docs/features/decision-receipts.md).                                                                                                                           |
+| Snippet safety       | Optional heuristic preflight and confirmed redacted save; `FEATURE_SNIPPET_SAFETY=true`, default off. No guarantee of secret-free content. [Design and limits](docs/features/snippet-safety-preflight.md).                                                                |
+| Async digest         | Optional evidence-only in-app digest of eligible recorded creation events; `FEATURE_ASYNC_DIGEST=true`, default off. No AI or scheduled messaging. [Design and limits](docs/features/async-digest.md).                                                                    |
 
-3. **Backend Setup**:
-   ```bash
-   cd backend
-   npm install
-   cp .env.example .env
-   # Update .env with your GROQ_API_KEY
-   npx prisma db push
-   npm run dev
-   ```
+Feature flags must be configured consistently as described in their feature docs. Advanced editor/board features, complete import/export, i18n, billing UI and PWA remain deferred. No end-to-end document encryption, unlimited scale, legal compliance, support SLA or production readiness is claimed. The server can read workspace content; repository-secret encryption is a separate control.
 
-4. **Frontend Setup**:
-   ```bash
-   cd ../frontend
-   npm install
-   npm run dev
-   ```
+## Stack and structure
 
-The application will be available at `http://localhost:3000`.
+Next.js16.4.3, React19.2.4, TypeScript, Tailwind v4, Radix primitives, Lucide and Geist fonts; Express4, Prisma5, PostgreSQL with pgvector, Redis/BullMQ, Socket.IO, Yjs/Hocuspocus and TipTap3. Package manifests and lockfiles are authoritative for versions. Clerk authenticates users; Groq/OpenAI are optional external AI services.
 
-## 📂 Project Structure
+```text
+backend/src/           API, authorization, collaboration, services, workers
+backend/prisma/        schema, forward migrations, seed, database operations
+backend/testing/       isolated test-only browser authentication/harness
+backend/openapi.json   generated OpenAPI contract
+frontend/src/          Next.js routes, app shell, UI components, client state
+frontend/testing/      generated fixture adapter support
+frontend/tests/        Node and component tests
+backend/docker/        local initialization and backend service tooling
+frontend/docker/       frontend entrypoint and health tooling
+.github/workflows/     quality, security and gated deployment workflows
+docs/                  design, authorization, operations and retained evidence
+tools/                 CI and quality orchestration
+```
 
-- `/frontend`: Next.js application, UI components, and state management.
-- `/backend`: Express API server, WebSocket handlers, and Prisma models.
+## Development and scripts
 
-## 📄 License
+Both manifests support Node `^22.12.0 || ^24.0.0 || >=26.0.0`; recorded checks use Node22. Install with `npm --prefix backend ci` and `npm --prefix frontend ci`. Configure private local environment files using the examples and [runbook](docs/RUNBOOK.md). Run `npm run dev` in each application directory in separate terminals; default ports are5000 and3000. Docker is needed for disposable database integration tests.
 
-This project is licensed under the MIT License.
+| Script                              | Backend                                                  | Frontend                                         |
+| ----------------------------------- | -------------------------------------------------------- | ------------------------------------------------ |
+| `dev` / `start`                     | Development API / compiled API                           | Development / built Next.js server               |
+| `lint`, `format:check`, `typecheck` | Static checks, including seed/testing types              | Static checks                                    |
+| `test`                              | Jest, including database/realtime tests                  | Node runner followed by Vitest                   |
+| `build`                             | Prisma client generation and TypeScript                  | Next.js build; recorded gates use `-- --webpack` |
+| `worker`                            | Dedicated embedding/outbox and queue worker              | —                                                |
+| `db:migrate`, `db:seed`             | Privileged migration deploy / explicitly authorized seed | —                                                |
+| `openapi:check`, `openapi:generate` | Validate / regenerate tracked API artifact               | —                                                |
+| `test:e2e`                          | Playwright config; prefer the isolated helper below      | —                                                |
+
+[CONTRIBUTING.md](CONTRIBUTING.md) gives exact gate commands and `node tools/ci/browser.mjs <suite>` usage. The test fixture login is isolated from the normal application and must never become production authentication. Never run seed or destructive test commands against production data.
+
+## Documentation
+
+- [Architecture and diagrams](docs/ARCHITECTURE.md), [API and OpenAPI](docs/API.md), [authorization matrix](docs/AUTHZ_MATRIX.md).
+- [Operations runbook](docs/RUNBOOK.md), [security](SECURITY.md), [privacy and legal-review gaps](docs/PRIVACY.md).
+- [Final report and evidence](docs/FINAL_REPORT.md), [progress and remaining work](docs/PROGRESS.md), [changelog](CHANGELOG.md).
+
+There is no tracked LICENSE grant. Maintainer confirmation is required before publishing licensing or contribution terms.

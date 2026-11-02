@@ -1,0 +1,42 @@
+
+> devsync-backend@1.0.0 test
+> jest --runInBand --runTestsByPath src/__tests__/realtime-revocation.integration.test.ts --coverage=false
+
+  console.error
+    [onAuthenticate] ForbiddenError: Access denied
+        at authorizeWorkspace (/home/kevin/devsync/backend/src/security/workspace-policy.ts:30:11)
+        at Object.onAuthenticate (/home/kevin/devsync/backend/src/services/collaboration-server.ts:146:22)
+        at ClientConnection.handleQueueingMessage (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/ClientConnection.ts:531:5) {
+      statusCode: 403,
+      isOperational: true
+    }
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at ClientConnection.handleQueueingMessage (node_modules/@hocuspocus/server/src/ClientConnection.ts:531:5)
+
+  console.error
+    [beforeHandleMessage] Error: Access changed
+        at authorize (/home/kevin/devsync/backend/src/services/collaboration-server.ts:71:45)
+        at withPolicyDeadline (/home/kevin/devsync/backend/src/security/policy-deadline.ts:4:16)
+        at enforce (/home/kevin/devsync/backend/src/services/collaboration-server.ts:85:7)
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:200:7)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+  console.error
+    closing connection 4eac9737-b253-4684-9ebb-63944a06eb0c (while handling document:team-a-2:doc-team-a-2) because of exception Error: Access changed
+        at authorize (/home/kevin/devsync/backend/src/services/collaboration-server.ts:71:45)
+        at withPolicyDeadline (/home/kevin/devsync/backend/src/security/policy-deadline.ts:4:16)
+        at enforce (/home/kevin/devsync/backend/src/services/collaboration-server.ts:85:7)
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:200:7)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+
+Test Suites: 1 passed, 1 total
+Tests:       4 passed, 4 total
+Snapshots:   0 total
+Time:        15.15 s
+Ran all test suites within paths "src/__tests__/realtime-revocation.integration.test.ts".
