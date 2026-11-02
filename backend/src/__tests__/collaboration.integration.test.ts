@@ -498,6 +498,44 @@ it('renews the same identity but disconnects a token attempting to change princi
   a.socket.disconnect();
   expect(connection.context.user.id).toBe('a');
 });
+it('applies every renewal to the live connection after Hocuspocus copies hook context', async () => {
+  let generation = 0;
+  const name = await room();
+  const node = await server({
+    identify: async (token) => ({
+      id: token,
+      name: token,
+      expiresAt: Date.now() + 60000 + ++generation * 1000,
+    }),
+  });
+  const active = await client(node.url, name);
+  const connection = [...node.runtime.connections][0];
+  // Await the actual library callback, including its context-copy completion.
+  // The separate wire test above still exercises the token-sync protocol.
+  for (let renewal = 0; renewal < 3; renewal++) {
+    const previous = connection.context.user.expiresAt;
+    await connection.callbacks.onTokenSyncCallback({ token: 'a' });
+    expect(connection.context.user.expiresAt).toBeGreaterThan(previous);
+    expect(connection.context.user.id).toBe('a');
+    expect(connection.readOnly).toBe(false);
+    const clock = jest.spyOn(Date, 'now').mockReturnValue(previous + 1);
+    try {
+      // Message policy receives the library's copied hook context, while the
+      // passive sweep uses connection.context. Both must see the renewed user.
+      await expect(
+        connection.callbacks.beforeHandleMessage(connection, new Uint8Array()),
+      ).resolves.toBeUndefined();
+    } finally {
+      clock.mockRestore();
+    }
+  }
+  for (let renewal = 0; renewal < 3; renewal++) {
+    const previous = connection.context.user.expiresAt;
+    await active.provider.sendToken();
+    await until(() => connection.context.user.expiresAt > previous, 'wire renewal advances expiry');
+  }
+});
+
 it('evicts local membership changes immediately and expires passive sessions', async () => {
   const name = await room();
   const node = await server({ sweepMs: 10000 });

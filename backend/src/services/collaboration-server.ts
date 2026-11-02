@@ -180,12 +180,17 @@ export function createCollaborationServer(http: HttpServer, options: Collaborati
         connection.webSocket.close(4403, 'Connection limit');
       }
     },
-    async onTokenSync({ context, token, connection }) {
+    async onTokenSync({ token, connection }) {
+      // Hocuspocus copies hookPayload.context after hooks resolve. Policy sweeps
+      // and message checks retain connection.context, so renew that live object.
+      const context = connection.context;
       try {
         const renewed = await options.identify(token);
         if (renewed.id !== context.user.id) throw new Error('Access denied');
         context.user = renewed;
         await enforce(context, connection);
+        // Keep the library hook payload copy current for beforeHandleMessage/beforeSync.
+        return { user: renewed };
       } catch (error) {
         connection.webSocket.close(4403, 'Access revoked');
         throw error;
