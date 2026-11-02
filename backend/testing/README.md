@@ -1,24 +1,41 @@
 # Isolated browser identity fixture
 
-This executable is a development fixture, excluded from `src`, `dist` and Docker build context. Production authentication remains Clerk. The separate browser harness now runs ten authenticated product journeys. These use fixture identities, not Clerk provider sessions.
+This fixture is separate from the normal API and excluded from production runtime output. Production authentication remains Clerk. Browser journeys use seeded identities, not real Clerk provider sessions. See [current results](../../docs/FINAL_REPORT.md) before interpreting a selectable suite as a passing result.
 
-Run `NODE_ENV=test node node_modules/tsx/dist/cli.mjs testing/server.ts` only after migrating and running the seed on a disposable database with the three fixture IDs `user_fixture_owner`, `user_fixture_editor`, `user_fixture_viewer` and `SEED_ALLOW_WRITE=true`.
+## Recommended runner
 
-| Variable         | Required value                                                                                                                     |
-| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| `NODE_ENV`       | `test`; production mode refuses startup                                                                                            |
-| `DATABASE_URL`   | Disposable runtime connection with database name `devsync_e2e_<suffix>`; use a non-bypass RLS role after privileged migration/seed |
-| `E2E_RUN_SECRET` | Fresh random32-byte hexadecimal capability per run; no default                                                                     |
-| `PORT`           | Optional local port, default5501; server always binds127.0.0.1                                                                     |
-| `FRONTEND_URL`   | Exact isolated frontend origin for CORS and real-time origin checks                                                                |
-| `REDIS_URL`      | Optional private test Redis for multi-instance behavior                                                                            |
+From repository root, with both dependency trees installed, Docker available and a compatible Playwright Chromium installed:
 
-Keep real provider credentials out of this fixture environment. `/__test/login` requires `x-e2e-run-secret` and one seeded email. `/__test/me`, `/__test/token` and `/__test/logout` use its httpOnly, SameSite cookie. Fixture cookies are intentionally HTTP-only-local development transport; production has no such route, cookie parser or signing key. Tokens expire, sessions are bounded and logout invalidates the fixture session. Real request policies, tenant RLS and collaboration factories remain in use.
+```sh
+node tools/ci/browser.mjs shell
+```
 
-Run the complete isolated product suite from backend with `NODE_ENV=test node node_modules/tsx/dist/cli.mjs testing/run-browser.ts`. It creates disposable PostgreSQL/Redis containers, migrates/seeds the sample, creates a non-bypass runtime role, generates the frontend artifact and starts both servers on loopback. It shuts down the processes and containers afterward. Install Playwright Chromium first; an existing compatible executable can be selected with E2E_CHROMIUM_PATH. Locally the recorded runs use Chromium from the existing chromium-1200 installation.
+The helper also accepts `core`, `ai-cost`, `editor`, `kanban`, `settings`, `dashboard`, `decisions`, `snippet-safety` and `async-digest`. Run suites sequentially on a constrained host. It launches `testing/run-browser.ts` with NODE_ENV=test and the selected suite flags. The runner creates disposable PostgreSQL/Redis containers, migrates/seeds, grants a non-bypass runtime role, generates the frontend adapter and starts loopback servers, then cleans up its own processes/services. E2E_CHROMIUM_PATH can select an existing compatible browser executable; paths in historical logs are machine-specific.
 
-Ten journeys cover fixture sign-in/out for all roles, workspace creation, two-context document merging, viewer UI/server denial, open-document revocation within five seconds, Kanban movement, snippet persistence and invitation acceptance/rejection. The invitation negative scenarios use an admin connection only to the disposable database to expire a record; application identity, policy, transactions, RLS and transports remain real. No protocol or provider-success mocks are claimed. The frontend adapter is under frontend/testing.
+The latest Phase5a-3 shell selection passed7 tests; the broader native pointer-drag journey remains open. These fixture journeys do not prove successful hosted CI, real Clerk login, provider billing or production capacity. Raw [quality records](../../docs/quality/phase5a-3/README.md) retain failures/incompletes. Never weaken assertions or refresh a screenshot merely to remove a failure.
 
-Capture mode: set E2E_UI_CAPTURE=current or before. Before requires the detached main worktree at .worktrees/phase1e-main and its cached original dependencies at .worktrees/phase1b-main/frontend/node_modules. This changes only that worktree's auth adapter/proxy/runtime config. Capture mode renders actual public Clerk widgets and uses fixture identities for product pages. E2E_UI_RETRY=missing retains previous successful images and retries gaps; manifests record unavailable pages. It does not grant global SUPER_ADMIN authority.
+## Manual fixture server
 
-Production-refusal, normal-app rejection and real database HTTP fixture tests remain. Real Clerk sign-in is a separate missing configuration item; see docs/PROGRESS.md and ADR017/018.
+Prefer the orchestrated runner above. Manual startup is only for an already migrated/seeded disposable database, with seed IDs user_fixture_owner, user_fixture_editor and user_fixture_viewer and explicit SEED_ALLOW_WRITE=true when seeding:
+
+```sh
+cd backend
+NODE_ENV=test node --import tsx testing/server.ts
+```
+
+Load private test configuration securely first; do not print its values.
+
+| Variable       | Required boundary                                                                                                  |
+| -------------- | ------------------------------------------------------------------------------------------------------------------ |
+| NODE_ENV       | `test`; other modes refuse fixture startup.                                                                        |
+| DATABASE_URL   | Disposable database name matching `devsync_e2e_<suffix>`; non-bypass runtime role after privileged migration/seed. |
+| E2E_RUN_SECRET | Fresh random32-byte hexadecimal capability per run; no default.                                                    |
+| PORT           | Optional, default5501; server binds127.0.0.1.                                                                      |
+| FRONTEND_URL   | Exact isolated frontend origin for CORS and realtime checks.                                                       |
+| REDIS_URL      | Private test Redis; shared-state suites need it.                                                                   |
+
+Keep real provider keys out of this environment. `/__test/login` requires the run capability header and a seeded identity; me/token/logout use a bounded httpOnly SameSite session cookie. Logout invalidates the test session, tokens expire, and only the fixture identity allowlist is accepted. Real resource policy, RLS and transport factories remain in use. These local HTTP test cookies/routes are not a production authentication design. See [fixture-auth.ts](fixture-auth.ts), [server.ts](server.ts) and [run-browser.ts](run-browser.ts).
+
+## Historical before captures
+
+E2E_UI_CAPTURE=before/current and the detached main worktree paths in the old capture scripts reproduce a historical evidence workflow, not the ordinary E2E quickstart. The before workflow depended on cached worktree dependencies and replaced only auth/proxy/runtime configuration for protected UI capture against a disposable current backend. Consult the [before manifest](../../docs/ui/before/README.md) and [ADR017](../../docs/adr/017-isolated-browser-authentication-fixtures.md). It did not grant global SUPER_ADMIN authority or demonstrate real Clerk sign-in. Missing worktrees/dependencies must not be replaced by claims that the original environment was reproduced.
