@@ -42,6 +42,7 @@ async function main() {
     const env = {
       ...process.env,
       NODE_ENV: 'test',
+      AI_QUOTA_USER_DAILY: process.env.E2E_AI_COST ? '1' : process.env.AI_QUOTA_USER_DAILY,
       FEATURE_ASYNC_DIGEST: process.env.E2E_ASYNC_DIGEST
         ? 'true'
         : process.env.FEATURE_ASYNC_DIGEST,

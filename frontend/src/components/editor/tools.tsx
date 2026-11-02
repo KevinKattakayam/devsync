@@ -161,6 +161,7 @@ export function EditorTools({ editor, canWrite }: { editor: Editor; canWrite: bo
       {canWrite && (
         <div
           className="mb-6 flex flex-wrap items-center justify-between gap-2"
+          role="group"
           aria-label="Document tools"
         >
           <DropdownMenu

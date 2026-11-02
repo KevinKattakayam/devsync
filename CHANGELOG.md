@@ -3,6 +3,8 @@
 - Atomically refund confirmed pre-provider failures once; retain conservative charges for ambiguous/partial attempts and preserve legacy cumulative admissions.
 - Add versioned usage/reset error contracts, bounded Redis/provider operations, safe429 backoff and output limits; show resets and concurrency in settings.
 - Add parallel admission/refund, timeout/output and privacy policy regressions; record operational tradeoffs in ADR020.
+- Complete the case-file evaluation scaffold without datasets/results; add seeded usage/quota journeys and correct the editor toolbar grouping role.
+- Validate255 backend tests,71 frontend component tests plus the Node runner, both builds and four final Playwright journeys;12 final axe reports have zero violations. Record remaining manual contrast and remote-billing limits.
 
 # Phase 4b — P06 evidence-only async digest
 
