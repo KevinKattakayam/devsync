@@ -1,0 +1,63 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.76kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/node:22-alpine@sha256:fe4f6d74e20370acb04ad889077d14d0f64a9c8ea6a42bc60cddf1e844699914
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context:
+#3 transferring context: 177B done
+#3 DONE 0.1s
+
+#4 [base 1/3] FROM docker.io/library/node:22-alpine@sha256:fe4f6d74e20370acb04ad889077d14d0f64a9c8ea6a42bc60cddf1e844699914
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 11.76kB 0.0s done
+#5 DONE 0.1s
+
+#6 [base 2/3] WORKDIR /app
+#6 CACHED
+
+#7 [base 3/3] RUN apk add --no-cache openssl ca-certificates
+#7 CACHED
+
+#8 [dependencies 1/3] COPY package.json package-lock.json ./
+#8 CACHED
+
+#9 [dependencies 2/3] COPY prisma/schema.prisma ./prisma/schema.prisma
+#9 CACHED
+
+#10 [dependencies 3/3] RUN npm ci
+#10 CACHED
+
+#11 [build 1/3] COPY . .
+#11 DONE 5.5s
+
+#12 [build 2/3] RUN npm run build && npx tsc -p tsconfig.seed-build.json
+#12 0.638 
+#12 0.638 > devsync-backend@1.0.0 build
+#12 0.638 > prisma generate && tsc
+#12 0.638 
+#12 1.652 Prisma schema loaded from prisma/schema.prisma
+#12 3.663 
+#12 3.663 ✔ Generated Prisma Client (v5.22.0) to ./node_modules/@prisma/client in 612ms
+#12 3.663 
+#12 3.663 Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
+#12 3.663 
+#12 3.663 Tip: Want real-time updates to your database without manual polling? Discover how with Pulse: https://pris.ly/tip-0-pulse
+#12 3.663 
+#12 DONE 40.0s
+
+#13 [build 3/3] RUN mkdir -p /state/admin /state/runtime && chown -R node:node /state
+#13 DONE 0.7s
+
+#14 exporting to image
+#14 exporting layers
+#14 exporting layers 18.7s done
+#14 writing image sha256:c6f274d23c4351ad9ba029741dd9145f4ec22c3c641a6678a3b30971a7526489 done
+#14 naming to docker.io/library/devsync-tooling:runtime-followup 0.0s done
+#14 DONE 18.7s

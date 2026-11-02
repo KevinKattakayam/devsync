@@ -1,4 +1,4 @@
-FROM node:22-trixie-slim@sha256:2117f713a417f3aff682ac8f5bc2ebbdf1beed51f36e67ab1e0fd3866b6d2d8f AS base
+FROM node:22-alpine@sha256:fe4f6d74e20370acb04ad889077d14d0f64a9c8ea6a42bc60cddf1e844699914 AS base
 WORKDIR /app
 
 FROM base AS dependencies
@@ -24,8 +24,9 @@ RUN npm run build -- --webpack
 RUN node -e "require('fs').writeFileSync('build-settings.json', JSON.stringify({mode:process.env.DEPLOYMENT_MODE,clerk:process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || ''}))"
 
 FROM base AS runner
-# Runtime launches Node directly; package managers and unused privileged/terminal tools stay out.
-# Keep dpkg metadata intact so vulnerability scanners still report the installed OS packages.
+# Runtime launches Node directly; exclude package managers and unused Debian tool paths.
+# Alpine BusyBox retains multi-call applets; isolation depends on non-root/capability controls.
+# Keep OS package metadata intact so vulnerability scanners report installed packages.
 RUN rm -rf /usr/local/lib/node_modules/npm /opt/yarn-* /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/yarn /usr/local/bin/yarnpkg /usr/bin/mount /usr/bin/umount /usr/bin/nsenter /usr/bin/infocmp
 ENV NODE_ENV=production
 ENV PORT=3000

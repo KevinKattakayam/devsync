@@ -1,0 +1,138 @@
+#0 building with "default" instance using docker driver
+
+#1 [base 1/3] FROM docker.io/library/node:22-alpine@sha256:fe4f6d74e20370acb04ad889077d14d0f64a9c8ea6a42bc60cddf1e844699914
+#1 DONE 0.1s
+
+#2 [base 2/3] WORKDIR /app
+#2 DONE 0.0s
+
+#3 [internal] load build definition from devsync-frontend.Dockerfile
+#3 transferring dockerfile: 1.93kB 0.0s done
+#3 DONE 0.0s
+
+#4 [internal] load metadata for docker.io/library/node:22-alpine@sha256:fe4f6d74e20370acb04ad889077d14d0f64a9c8ea6a42bc60cddf1e844699914
+#4 DONE 0.0s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 157B done
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 11.54kB 0.1s done
+#6 DONE 0.1s
+
+#7 [dependencies 1/2] COPY package.json package-lock.json ./
+#7 DONE 0.2s
+
+#8 [runner 1/6] RUN rm -rf /usr/local/lib/node_modules/npm /opt/yarn-* /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/yarn /usr/local/bin/yarnpkg /usr/bin/mount /usr/bin/umount /usr/bin/nsenter /usr/bin/infocmp
+#8 DONE 7.1s
+
+#9 [dependencies 2/2] RUN npm ci
+#9 20.84 npm warn deprecated @opentelemetry/sdk-trace-node@2.10.0: Use @opentelemetry/sdk-trace package
+#9 31.07 npm warn deprecated @opentelemetry/propagator-jaeger@2.10.0: Package no longer supported. See https://github.com/open-telemetry/opentelemetry-js/pull/7077
+#9 37.60 npm warn deprecated @opentelemetry/sdk-trace-base@2.10.0: Use @opentelemetry/sdk-trace package
+#9 46.21 npm warn deprecated eslint@9.39.5: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+#9 107.7 
+#9 107.7 added 721 packages, and audited 722 packages in 2m
+#9 107.7 
+#9 107.7 229 packages are looking for funding
+#9 107.7   run `npm fund` for details
+#9 107.9 
+#9 107.9 16 moderate severity vulnerabilities
+#9 107.9 
+#9 107.9 To address issues that do not require attention, run:
+#9 107.9   npm audit fix
+#9 107.9 
+#9 107.9 To address all issues (including breaking changes), run:
+#9 107.9   npm audit fix --force
+#9 107.9 
+#9 107.9 Run `npm audit` for details.
+#9 107.9 npm notice
+#9 107.9 npm notice New major version of npm available! 10.9.9 -> 12.2.1
+#9 107.9 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+#9 107.9 npm notice To update run: npm install -g npm@12.2.1
+#9 107.9 npm notice
+#9 DONE 115.0s
+
+#10 [build 1/3] COPY . .
+#10 DONE 0.1s
+
+#11 [build 2/3] RUN npm run build -- --webpack
+#11 0.596 
+#11 0.596 > frontend@0.1.0 build
+#11 0.596 > next build --webpack
+#11 0.596 
+#11 1.202 ▲ Next.js 16.4.3 (webpack)
+#11 1.266 ✓ Running next.config.ts took 64ms
+#11 1.282 
+#11 1.316   Creating an optimized production build ...
+#11 28.56 ✓ Compiled successfully in 24.1s
+#11 28.56   Running TypeScript ...
+#11 36.48   Finished TypeScript in 7.9s ...
+#11 36.48   Collecting page data using 7 workers ...
+#11 39.43   Generating static pages using 7 workers (0/8) ...
+#11 40.22   Generating static pages using 7 workers (2/8) 
+#11 40.22   Generating static pages using 7 workers (4/8) 
+#11 40.22   Generating static pages using 7 workers (6/8) 
+#11 40.22 ✓ Generating static pages using 7 workers (8/8) in 790ms
+#11 40.88   Finalizing page optimization ...
+#11 40.88   Collecting build traces ...
+#11 62.19 
+#11 62.19 Route (app)
+#11 62.19 ┌ ○ /
+#11 62.19 ├ ○ /_not-found
+#11 62.19 ├ ƒ /api/auth/reset
+#11 62.19 ├ ƒ /api/superadmin/workspaces/[workspaceId]/kill-switch
+#11 62.19 ├ ƒ /dashboard
+#11 62.19 ├ ○ /design-system
+#11 62.19 ├ ƒ /healthz
+#11 62.19 ├ ƒ /invitations/[id]
+#11 62.19 ├ ƒ /login/[[...rest]]
+#11 62.19 ├ ƒ /settings/billing
+#11 62.19 ├ ƒ /sign-in/[[...rest]]
+#11 62.19 ├ ƒ /sign-up/[[...rest]]
+#11 62.19 ├ ƒ /signup/[[...rest]]
+#11 62.19 ├ ƒ /superadmin
+#11 62.19 ├ ƒ /workspace/[id]
+#11 62.19 ├ ƒ /workspace/[id]/decisions
+#11 62.19 ├ ƒ /workspace/[id]/digest
+#11 62.19 ├ ƒ /workspace/[id]/digest/activity/[activityId]
+#11 62.19 ├ ƒ /workspace/[id]/docs
+#11 62.19 ├ ƒ /workspace/[id]/docs/[docId]
+#11 62.19 ├ ƒ /workspace/[id]/kanban
+#11 62.19 ├ ƒ /workspace/[id]/settings
+#11 62.19 ├ ƒ /workspace/[id]/snippets
+#11 62.19 └ ƒ /workspace/[id]/snippets/safety
+#11 62.19 
+#11 62.19 
+#11 62.19 ƒ Proxy (Middleware)
+#11 62.19 
+#11 62.19 ○  (Static)   prerendered as static content
+#11 62.19 ƒ  (Dynamic)  server-rendered on demand
+#11 62.19 
+#11 DONE 63.1s
+
+#12 [build 3/3] RUN node -e "require('fs').writeFileSync('build-settings.json', JSON.stringify({mode:process.env.DEPLOYMENT_MODE,clerk:process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || ''}))"
+#12 DONE 2.3s
+
+#13 [runner 2/6] COPY --from=build --chown=node:node /app/public ./public
+#13 DONE 0.1s
+
+#14 [runner 3/6] COPY --from=build --chown=node:node /app/.next/standalone ./
+#14 DONE 7.9s
+
+#15 [runner 4/6] COPY --from=build --chown=node:node /app/.next/static ./.next/static
+#15 DONE 1.0s
+
+#16 [runner 5/6] COPY --from=build --chown=node:node /app/docker ./docker
+#16 DONE 0.4s
+
+#17 [runner 6/6] COPY --from=build --chown=node:node /app/build-settings.json ./build-settings.json
+#17 DONE 1.1s
+
+#18 exporting to image
+#18 exporting layers
+#18 exporting layers 1.2s done
+#18 writing image sha256:cd13ee677b78c171bf9ed8e5b0ce5fddad4e3b41b2ef16fa7174f524a95bc40b done
+#18 naming to docker.io/library/devsync-frontend:alpine-candidate 0.1s done
+#18 DONE 1.4s

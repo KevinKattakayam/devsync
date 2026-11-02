@@ -1,3 +1,5 @@
+> Historical Debian inventory. The runtime follow-up replaces the base with a tested Alpine candidate; see the [current inventory](../../../VULNERABILITIES.md) and [raw comparison](../runtime-followup/scan-comparison.json). Original counts and acceptance conditions below remain historical evidence.
+
 # Runtime image vulnerability inventory
 
 Saved Phase5a-2 scans list the same33 High/Critical package/advisory entries per image. Every entry originates in the inherited Debian12 base OS layer, not an application npm dependency or the later apt install layer. This table applies to both backend and frontend; saved-image-inventory.json retains each image identity and every full layer DiffID.

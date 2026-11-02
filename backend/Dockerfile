@@ -1,6 +1,6 @@
-FROM node:22-trixie-slim@sha256:2117f713a417f3aff682ac8f5bc2ebbdf1beed51f36e67ab1e0fd3866b6d2d8f AS base
+FROM node:22-alpine@sha256:fe4f6d74e20370acb04ad889077d14d0f64a9c8ea6a42bc60cddf1e844699914 AS base
 WORKDIR /app
-RUN apt-get update && apt-get install -y --no-install-recommends openssl ca-certificates && rm -rf /var/lib/apt/lists/*
+RUN apk add --no-cache openssl ca-certificates
 
 FROM base AS dependencies
 COPY package.json package-lock.json ./
@@ -20,8 +20,9 @@ FROM dependencies AS production-dependencies
 RUN npm prune --omit=dev --ignore-scripts
 
 FROM base AS runner
-# Runtime launches Node directly; package managers and unused privileged/terminal tools stay out.
-# Keep dpkg metadata intact so vulnerability scanners still report the installed OS packages.
+# Runtime launches Node directly; exclude package managers and unused Debian tool paths.
+# Alpine BusyBox retains multi-call applets; isolation depends on non-root/capability controls.
+# Keep OS package metadata intact so vulnerability scanners report installed packages.
 RUN rm -rf /usr/local/lib/node_modules/npm /opt/yarn-* /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/yarn /usr/local/bin/yarnpkg /usr/bin/mount /usr/bin/umount /usr/bin/nsenter /usr/bin/infocmp
 ENV NODE_ENV=production
 ENV PORT=5000

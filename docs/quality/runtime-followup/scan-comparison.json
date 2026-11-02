@@ -1,0 +1,52 @@
+{
+  "backend-before": {
+    "counts": {
+      "CRITICAL": 0,
+      "HIGH": 44,
+      "MEDIUM": 75,
+      "LOW": 60,
+      "UNKNOWN": 8
+    },
+    "imageId": "sha256:7d4655603f11332e5c5f5e3f87b8d3a504eb99b6771d75d85ba843fc5feed93e"
+  },
+  "frontend-before": {
+    "counts": {
+      "CRITICAL": 0,
+      "HIGH": 44,
+      "MEDIUM": 71,
+      "LOW": 60,
+      "UNKNOWN": 8
+    },
+    "imageId": "sha256:b0decc111c1dbbfdd2a311434ccc690ad1fdaf4be7ba6e2b518a4e2dcee10c22"
+  },
+  "alpine-base": {
+    "counts": {
+      "CRITICAL": 0,
+      "HIGH": 10,
+      "MEDIUM": 12,
+      "LOW": 1,
+      "UNKNOWN": 0
+    },
+    "imageId": "sha256:ae59e9992c6b3e963dd9dac9c476287048177ad8f90ac646669afb738705f56d"
+  },
+  "backend-candidate": {
+    "counts": {
+      "CRITICAL": 0,
+      "HIGH": 0,
+      "MEDIUM": 4,
+      "LOW": 0,
+      "UNKNOWN": 0
+    },
+    "imageId": "sha256:dd2da6900d90df7bff343c67e97888320fe7ca7b55fe335bb17109925ab8bd94"
+  },
+  "frontend-final": {
+    "counts": {
+      "CRITICAL": 0,
+      "HIGH": 0,
+      "MEDIUM": 0,
+      "LOW": 0,
+      "UNKNOWN": 0
+    },
+    "imageId": "sha256:584896c248fc05b3628e838eee2a47eeb5dd16e16dc8da4c6ed9aa0f5c57d662"
+  }
+}
