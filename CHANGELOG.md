@@ -1,3 +1,10 @@
+# Phase 5c — source-backed documentation and handoff
+
+- Rewrite README around actual features, screenshots, clone/setup commands and measured limits.
+- Add architecture diagrams, API/OpenAPI guide, contribution instructions and a consolidated operations runbook; replace stale deployment/walkthrough duplication with compatibility links.
+- Document security boundaries, privacy inventory/retention/rights gaps and GDPR/DPDP legal-review requirements without claiming compliance.
+- Add the final evidence report, remaining risks, mocks/scaffolds, human actions and exact verification records. Documentation only; both app gate sequences pass, with260 backend tests and76 component plus9 Node frontend tests.
+
 # Phase 5a-3 — runtime CVE remediation and shell test fixes
 
 - Pin both Node22 runtime bases to Debian13 by digest; remediate the saved zlib Critical and document every original/final finding. Final images0 Critical/44 High each; accept remaining stable-suite risks with explicit conditions, retaining unfiltered reports and CI gates.

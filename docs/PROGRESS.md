@@ -1,3 +1,27 @@
+# Phase 5c — documentation handoff complete; STOP
+
+Documentation only on upgrade/enterprise; no application code, API/WebSocket contract, migration, test/baseline, workflow or image changes. Root AGENTS.md exists and was read; earlier absence notes below are historical. Current authorization, design, audit, progress, quality and deployment evidence were checked against implementation. No push, deployment, key rotation or new product work.
+
+## Delivered
+
+- README now has the verified clone URL/branch, actual seeded editor/dashboard screenshots, keyless one-command Compose quickstart, source-backed feature limits, stack, structure and scripts.
+- New ARCHITECTURE.md includes system, data model, auth, realtime, AI and deployment Mermaid diagrams with code anchors. New API.md links OpenAPI and preserves versioned/legacy boundaries; no invented universal API response/security promise.
+- Consolidated DEPLOYMENT.md and ENTERPRISE_WALKTHROUGH.md into RUNBOOK/ARCHITECTURE/API and retained short compatibility links. Historical architecture/API/quality reports have current-reference notices; obsolete fixture counts/browser paths and the default frontend tutorial were replaced.
+- SECURITY, CONTRIBUTING and PRIVACY distinguish implemented controls from operational/legal obligations. RUNBOOK includes deploy/rollback, incident, backup/restore and key-rotation procedures; no executed recovery/rotation claim. GDPR/DPDP basics cite official sources, explicitly require counsel and do not assert compliance.
+- FINAL_REPORT maps actual before/after evidence and screenshots, missing measurements, remaining risks, test mocks/scaffolds and the consolidated requires-human-action list. It gives commands for local setup/gates/E2E/contracts and links hosted/recovery instructions without claiming those actions ran.
+
+## Actual validation
+
+Both app lint, format, strict types, tests and build pass, run sequentially once. Backend28 suites/260 tests; frontend17 files/76 component tests plus9 Node tests. Backend coverage80.88/71.34/74.69/83.17; frontend41.19/38.62/39.47/41.67 (statements/branches/functions/lines). The small backend variation from Phase5a-3 is preserved without altering code, tests, coverage baselines or thresholds. Raw commands/exits/output and documentation checks: [quality/phase5c/README.md](quality/phase5c/README.md). No new browser, scanner, Lighthouse, load, Compose, real Clerk, hosted CI or production results are claimed; earlier measurements retain source/scope labels.
+
+## Still open / requires human action
+
+This session does not close existing release/measurement/product gaps:44 High container entries per image still fail the unchanged CI gate despite documented conditional risk acceptance; npm Moderate findings need current review; broad core pointer drag, manual accessibility/incompletes, legacy GET cookie-reset/CSRF migration, ingestion isolation, ambiguous AI billing and CRDT embedding freshness remain. Lighthouse, load/capacity, hosted CI, real Clerk and production restore/PITR/rollout are unmeasured/unverified. Full PWA/offline and other recorded product deferrals were not built.
+
+See [FINAL_REPORT.md](FINAL_REPORT.md) for the consolidated human work: accounts/keys/identity mapping, hosting/domains/protected CI, migration/RLS/private Redis, optional providers/spend caps/integrations/telemetry, backup/restore and key rotation, retained-record cleanup, licensing/private disclosure and GDPR/DPDP/vendor/rights/retention legal review. Account export/deletion, cross-system erasure and automatic encryption-key rotation are not implemented. Documentation is not release approval. Commit and STOP.
+
+---
+
 # Phase 5a-3 — requested runtime and visual work complete; STOP
 
 Work on upgrade/enterprise only, no push. Root AGENTS.md remains absent; the user's supplied AGENTS.md rules apply, and frontend/AGENTS.md, progress and Phase5a-2 README were read. Only the two requested items: runtime image findings and the four visuals. No Lighthouse/load test/Phase5c, real provider sign-in, deployment or new product scope.

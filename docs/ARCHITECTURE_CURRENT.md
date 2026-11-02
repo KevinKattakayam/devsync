@@ -1,3 +1,5 @@
+> Historical snapshot: use [ARCHITECTURE.md](ARCHITECTURE.md) for the current source-backed architecture and [FINAL_REPORT.md](FINAL_REPORT.md) for measured limits. The observations below are retained as audit history.
+
 > This is the Phase0 architecture snapshot. Phase1b runtime changes are documented in [CRDT_OPERATIONS.md](CRDT_OPERATIONS.md), [API_OPERATIONS.md](API_OPERATIONS.md), ADR007–009 and [PROGRESS.md](PROGRESS.md); do not treat the snapshot persistence/API/telemetry descriptions below as the current implementation.
 
 > Phase0 architecture snapshot. Phase1a now uses Next16.4.3, aligned TipTap3.32.2, Zod4, disabled host execution, repaired permission boundaries, a source-backed migration baseline/tenant hierarchy constraint and an explicit seed. Authentication still uses Clerk; the requested custom cookie/password system is not implemented. See PROGRESS.md for current limits.

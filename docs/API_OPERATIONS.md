@@ -1,3 +1,5 @@
+> Historical contract milestone: the counts below describe Phase1e, not the current API inventory. Use [API.md](API.md) and the tracked OpenAPI artifact for current versioned interfaces.
+
 # Phase1e contract coverage
 
 `backend/openapi.json` now covers all 55 inventoried HTTP operations, with Zod path/query/body transport schemas, response DTOs/statuses, multipart upload, SSE event data, signatures, correlation headers and bodyless/redirect responses. Legacy backend aliases are declared alongside v1 paths. The2 frontend operations identify the frontend origin separately. Backend mounted routes fail generation if a contract is absent; independent AST tests guard app-level and Next handlers. `npm run openapi:check` checks the committed artifact.

@@ -1,3 +1,5 @@
+> Historical Phase5a report. Later remediation and remaining blockers are consolidated in [FINAL_REPORT.md](../FINAL_REPORT.md), with [Phase5a-3 results](phase5a-3/README.md) and [Phase5c documentation verification](phase5c/README.md). Findings below retain their original scope and date.
+
 # Phase 5a quality report
 
 Local upgrade/enterprise work; no push/deployment or Phase5b. This timebox prioritizes open Medium/Low fixes, measured quality/scanner evidence and browser verification. Missing results below are not zero or passing scores. Read [the finding ledger](FINDINGS.md) for every original Medium/Low ID and exact remaining scope. The Phase0 audit remains immutable.
