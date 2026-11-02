@@ -11,3 +11,4 @@ tooling
 *.tsbuildinfo
 test-results
 playwright-report
+**/.env*

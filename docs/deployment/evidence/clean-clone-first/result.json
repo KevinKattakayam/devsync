@@ -1,0 +1,12 @@
+{
+  "project": "devsync_phase5b_6da0db94f9",
+  "clone": "/tmp/devsync-phase5b-d_owpaub/checkout",
+  "checks": {
+    "cleanGitStatus": true,
+    "noCopiedDependencies": true,
+    "noPrivateEnvironmentFiles": true
+  },
+  "status": "failed",
+  "commit": "deeae0905c2c18afb2adbc66c92cfc65b79613ce",
+  "error": "compose-up.txt failed with exit 1"
+}

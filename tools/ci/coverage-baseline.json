@@ -1,0 +1,71 @@
+{
+  "backend": {
+    "total": {
+      "lines": {
+        "total": 3707,
+        "covered": 3078,
+        "skipped": 0,
+        "pct": 83.03
+      },
+      "statements": {
+        "total": 3979,
+        "covered": 3214,
+        "skipped": 0,
+        "pct": 80.77
+      },
+      "functions": {
+        "total": 653,
+        "covered": 487,
+        "skipped": 0,
+        "pct": 74.57
+      },
+      "branches": {
+        "total": 1921,
+        "covered": 1363,
+        "skipped": 0,
+        "pct": 70.95
+      },
+      "branchesTrue": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 100
+      }
+    }
+  },
+  "frontend": {
+    "total": {
+      "lines": {
+        "total": 2442,
+        "covered": 1002,
+        "skipped": 0,
+        "pct": 41.03
+      },
+      "statements": {
+        "total": 2737,
+        "covered": 1110,
+        "skipped": 0,
+        "pct": 40.55
+      },
+      "functions": {
+        "total": 907,
+        "covered": 354,
+        "skipped": 0,
+        "pct": 39.02
+      },
+      "branches": {
+        "total": 1924,
+        "covered": 732,
+        "skipped": 0,
+        "pct": 38.04
+      },
+      "branchesTrue": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 100
+      }
+    }
+  },
+  "source": "Measured Phase5a source7d33e55; initial adoption only. Later CI compares the successful base-commit artifact."
+}

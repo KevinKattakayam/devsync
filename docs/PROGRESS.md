@@ -1,6 +1,14 @@
-# Phase 5b — container foundation, group 1
+# Phase 5b — container/CI/deployment configuration; final clone check pending
 
-On upgrade/enterprise, no push or Phase5c. Preserved Phase5a evidence in its own0120530 commit; its visual failures and measurement deferrals remain open. Added multi-stage non-root application images/health checks, generated local credentials in separate administrative/runtime volumes, automatic migration/sample seeding, non-bypass runtime role provisioning and a Compose health/completion dependency graph. Unconfigured local identity shows setup guidance; no production fixture login or authority bypass. Production settings fail closed before container startup. Current group gates pass for both apps (lint/format/types/tests/build), and Compose configuration validates. Clean-clone startup is the next verification; no startup success claimed yet. CI/production deployment/backup notes remain in progress.
+Local upgrade/enterprise; no push, act, hosted job or deployment. Phase5a pending evidence was preserved separately as0120530. Multi-stage non-root images, liveness/readiness checks, local generated credential volumes, automatic migration/sample seeding and non-bypass runtime grants are implemented. API/worker do not mount administrative credentials. User chose keyless startup with setup guidance; no test login or authority bypass is enabled.
+
+Actual group gates pass: backend28 suites/259 tests, frontend17 files/74 component tests plus Node runner; both lint/format/strict types/build. Coverage80.87/71.34/74.69/83.11 backend and40.88/38.37/39.38/41.33 frontend (statements/branches/functions/lines), no decrease against measured Phase5a. Static actionlint validation and coverage gate unit/comparison checks pass. Hosted Actions results are not claimed.
+
+Clean clone deeae09 first failed on a missing build-stage fixture import; d75e5b9 fixed it and passed in99.304s with Docker cache, API/frontend UID1000, sample count1, liveness200, unauthenticated401, readiness503 without Clerk, runtime super/bypass flagsfalse and administrative mountabsent. Raw outputs retained under docs/deployment/evidence. Final worker-inclusive graph check follows this configuration commit.
+
+CI now contains cached app gates, nondecreasing coverage artifact comparison, npm/source/container security gates, existing SBOM/provenance/image publication behind all gates, seeded E2E/visual matrix and clean-clone Compose. Gated manual preview/production replaces independent ungated push deployment; Vercel Git auto-deploy disabled in config. DEPLOYMENT.md supplies exact settings, separate privileged migration/grant steps, protected environment/setup actions and backup/restore/rollback notes. No migration credentials exposed to runtime. Known Phase5a visual/pointer/scanner issues remain blockers rather than ignored failures.
+
+Requires human action: configure actual hosting/Clerk/tokens/public variables/environments/preview alias/isolated staging; apply production migrations/grants privately; verify hosted CI, real sign-in, production backup/restore and exact digest promotion if required. No such live results or RPO/RTO invented. No5c or new product feature work.
 
 ---
 

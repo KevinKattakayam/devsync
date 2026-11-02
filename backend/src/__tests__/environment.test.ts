@@ -39,3 +39,12 @@ it('allows only explicit local mode to omit identity configuration in a producti
   expect(() => validateEnvironment({ ...local, DEPLOYMENT_MODE: 'production' })).toThrow();
   expect(() => validateEnvironment({ ...production, DEPLOYMENT_MODE: 'typo' })).toThrow();
 });
+it('rejects missing service URLs and non-origin frontend destinations', () => {
+  for (const key of ['DATABASE_URL', 'REDIS_URL', 'FRONTEND_URL']) {
+    expect(() => validateEnvironment({ ...production, [key]: '' })).toThrow(key);
+  }
+  for (const path of ['/private', '/?token=private', '/#private'])
+    expect(() =>
+      validateEnvironment({ ...production, FRONTEND_URL: 'https://app.example.invalid' + path }),
+    ).toThrow('FRONTEND_URL');
+});

@@ -1,0 +1,60 @@
+name: Deploy reviewed preview
+on:
+  workflow_dispatch:
+    inputs:
+      sha:
+        description: Full reviewed commit SHA with successful Quality workflow
+        required: true
+        type: string
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: shared-preview
+  cancel-in-progress: false
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    outputs:
+      sha: ${{ steps.quality.outputs.sha }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22
+      - id: quality
+        run: node tools/ci/verify-quality.mjs
+        env:
+          DEPLOY_SHA: ${{ inputs.sha }}
+          GH_TOKEN: ${{ github.token }}
+  preview:
+    needs: verify
+    runs-on: ubuntu-24.04
+    environment: preview
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ needs.verify.outputs.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Build and deploy the existing Vercel project's preview environment
+        working-directory: frontend
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          PREVIEW_DOMAIN: ${{ vars.PREVIEW_DOMAIN }}
+        run: |
+          test -n "$VERCEL_TOKEN" && test -n "$VERCEL_ORG_ID" && test -n "$VERCEL_PROJECT_ID" && test -n "$PREVIEW_DOMAIN"
+          npm ci
+          npx --yes vercel@65.9.0 pull --yes --environment=preview --token "$VERCEL_TOKEN"
+          npx --yes vercel@65.9.0 build --token "$VERCEL_TOKEN"
+          deployment=$(npx --yes vercel@65.9.0 deploy --prebuilt --token "$VERCEL_TOKEN")
+          npx --yes vercel@65.9.0 alias set "$deployment" "$PREVIEW_DOMAIN" --token "$VERCEL_TOKEN"

@@ -1,8 +1,10 @@
-# Phase 5b — container foundation
+# Phase 5b — containers, gated CI and deployment configuration
 
 - Add multi-stage non-root application images with health checks and separate migration tooling.
 - Add local Compose credential initialization, migrations/seeds and a non-bypass runtime database role; keep administrative credentials out of the API container.
 - Add local identity setup guidance and explicit production configuration validation without enabling fixture authentication.
+- Add coverage-drop gating, security/E2E/Compose jobs and reviewed manual preview/production workflows; retain SBOM/provenance and publish only scanned images after all gates.
+- Document exact Vercel/Railway settings, separate migration/runtime authority, backups/restores and honest hosted verification limits.
 
 # Phase 5a — practical audit fixes and bounded quality evidence
 

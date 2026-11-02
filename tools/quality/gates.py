@@ -19,6 +19,7 @@ commands = [('lint', ['npm', 'run', 'lint']), ('format', ['npm', 'run', 'format:
 env = dict(os.environ)
 if service == 'frontend':
     env['QUALITY_COVERAGE'] = '1'
+    env['QUALITY_COVERAGE_DIRECTORY'] = str(output / 'frontend-coverage')
 results = []
 for name, command in commands:
     path = output / f'{service}-{name}.txt'

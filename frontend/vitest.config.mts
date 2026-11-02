@@ -11,7 +11,8 @@ export default defineConfig({
       provider: 'v8',
       include: ['src/**/*.{ts,tsx}'],
       reporter: ['text', 'json-summary'],
-      reportsDirectory: '../docs/quality/frontend-coverage',
+      reportsDirectory:
+        process.env.QUALITY_COVERAGE_DIRECTORY || '../docs/quality/frontend-coverage',
     },
   },
 });

@@ -1,4 +1,8 @@
 try {
+  if (process.env.PROCESS_ROLE === 'worker') {
+    process.kill(1, 0);
+    process.exit(0);
+  }
   const path = process.env.DEPLOYMENT_MODE === 'local' ? '/api/health' : '/api/ready';
   const response = await fetch(`http://127.0.0.1:${process.env.PORT || '5000'}${path}`, {
     signal: AbortSignal.timeout(2500),

@@ -2,6 +2,8 @@ import { readFile } from 'node:fs/promises';
 import { spawn } from 'node:child_process';
 try {
   const build = JSON.parse(await readFile('/app/build-settings.json', 'utf8'));
+  if (process.env.DEPLOYMENT_MODE && process.env.DEPLOYMENT_MODE !== build.mode)
+    throw new Error('Runtime mode differs from image build');
   process.env.DEPLOYMENT_MODE = build.mode;
   if (build.mode !== 'local' && (!build.clerk || !process.env.CLERK_SECRET_KEY?.startsWith('sk_')))
     throw new Error('Missing production Clerk settings');

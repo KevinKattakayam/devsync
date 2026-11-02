@@ -13,3 +13,6 @@ coverage/
 playwright-report/
 test-results/
 .worktrees/
+
+# Vercel CLI downloads private project environment settings/build output.
+.vercel/

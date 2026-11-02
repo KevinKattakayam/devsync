@@ -17,6 +17,10 @@ DevSync combines collaborative documents, task boards and stored code snippets. 
 
 Billing plan/invoice controls, complete offline support, broad import/export, i18n and several advanced editor/board features remain incomplete. No end-to-end document encryption, unlimited scale, support SLA or production readiness is claimed. The API/database can read workspace content. Repository-secret encryption at rest is a separate control.
 
+## One-command local containers
+
+Run `docker compose up --build --detach --wait`. The local stack migrates and seeds automatically and starts the API, frontend and background worker with PostgreSQL/Redis. Without Clerk keys, http://localhost:3000 shows setup guidance; private workspace access remains unavailable. This does not provision provider accounts or enable test login. See [DEPLOYMENT.md](DEPLOYMENT.md) for configuring actual identities, production settings and backup/restore steps.
+
 ## Local setup
 
 Use a supported Node version from both package manifests; the quality checks use Node22. Install Docker for the disposable PostgreSQL/Redis integration tests. Runtime PostgreSQL must include pgvector; Redis is required for shared admission and collaboration. Groq/OpenAI keys are optional; without them AI is unavailable while ordinary workspace work remains available.
