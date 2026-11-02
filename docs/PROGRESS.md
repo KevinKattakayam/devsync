@@ -1,3 +1,35 @@
+# Phase 4b — P02 decision receipts delivered; STOP
+
+Built **P02 only** on `upgrade/enterprise`, with local commit only and no push. Root AGENTS.md is absent; frontend guidance, progress, authorization matrix, proposals and DESIGN were read. The approved manual workflow is complete: source-backed drafts, explicit owner acceptance and supersession. No other proposal, Phase4c or PWA work was started.
+
+## Delivered
+
+- Additive forward-only Prisma migration creates a forced-tenant-RLS receipt table, same-workspace supersession foreign key and state constraints. Application rollback disables the flag and retains the table/data; no destructive down migration. Existing resource/CRDT storage and legacy/v1 contracts are preserved.
+- Strict versioned `/api/v2/workspaces/:workspaceId/decisions` endpoints support source search/current-source preview, listing, idempotent draft create, revision-checked edit/delete, owner acceptance and accepted-receipt supersession. Current central actor/tenant/role checks run inside each transaction. Exact quotes bind document/task identity and canonical source fingerprint; stale sources cannot be accepted. Source locks protect acceptance from concurrent edits. Acceptance is explicit, with verified actor/server time; accepted wording remains immutable.
+- All readers, including viewers, can inspect authorized source-backed receipts. OWNER/EDITOR can manage drafts; OWNER alone accepts/supersedes. Foreign workspace/source/receipt/replacement IDs cannot bypass scope, including for an owner belonging to both workspaces. Archived/deleted sources hide derivative quotes; source checks also precede create idempotency replay. Responses are no-store.
+- Decisions navigation/page and APIs are independently gated by **FEATURE_DECISION_RECEIPTS=true**, default off; example configuration is included for both services. New design-system UI has source selection/preview, quote/rationale editing, search, useful empty and error/retry states, skeletons, route boundary, confirmations and create/edit Undo subject to current revision/authority. Controlled modal focus restoration and scoped hover opacity corrections address actual keyboard/contrast failures.
+- Design, bounds, privacy, retention, versioned operations and migration rollback are documented in [features/decision-receipts.md](features/decision-receipts.md). No AI, paid API, model key or external content transmission is used, so no provider adapter/mock or key setup is required.
+
+## Actual validation
+
+Backend lint/format, application/seed/testing strict types, **22 suites / 222 tests**, and production build pass. Final browser-spec lint/format/types also pass after the keyboard/hover assertions. Real integration tests migrate disposable PostgreSQL and use a non-owner, non-bypass RLS role; cover draft CRUD, viewer create/edit/delete denial, editor acceptance denial, cross-workspace reads/sources/actual accepted replacement, forced RLS, membership removal, inactive users, suspension, stale quotes/revisions, archive/task deletion, idempotent replay and parallel acceptance. Unit tests cover bounded/strict input, authority-field forgery, fingerprint binding and plain-text block/hard-break preservation. Existing security, collaboration and data-layer suites remain passing; no test was deleted/weakened or rule suppressed.
+
+Frontend lint/format/strict types, **9 Node tests + 13 files / 60 component tests**, and webpack production build pass. **4 seeded fixture Playwright tests pass (43.8s)** at1440/390 in dark/light. The main journey creates/edits/accepts/supersedes/deletes drafts, checks viewer UI and actual mutation denials, source archival hiding, retry, Tab/Shift+Tab containment, Select Enter, and Escape focus return. **40 final screenshots and40 axe reports report zero violations**, including an explicitly hovered primary confirmation. Raw incompletes and honest review: [ui/after/decision-receipts/REVIEW.md](ui/after/decision-receipts/REVIEW.md); authoritative artifacts are in contrast-fix/. Actual outputs were shown in the session; the final browser console log is /tmp/devsync-decisions-browser-contrast-fix.log, not a fabricated committed transcript.
+
+Failures fixed: merged-route parameter typing, effect-cleanup lint, Badge API/formatting, unsettled source/modal axe sampling, an archive/loading synchronization race in the test, missing controlled-dialog focus return, and light hovered-primary contrast (reported4.39:1). Failed screenshots/reports are retained. The settled run was interrupted during diagnosis and is not claimed as a passing suite. All keyboard/axe assertions remain; no rule was disabled.
+
+## Exact limits and deferrals
+
+Manual nomination is the delivered P02 variant; automatic extraction and comment ingestion were not built because they require separate AI/provenance and comment support. No fake disabled controls or model stubs were added. One document/task source per receipt;200 stored receipts per workspace (including hidden-source records),50 of each source kind per search,64K preview/5K quote/8K rationale/200-character title. The pinned fingerprint is not a browsable historical snapshot. Task citations open the existing board rather than introducing a task-detail feature. Larger archives/pagination, multi-source decisions, exports, automated extraction and notifications are outside this bounded feature and were not started.
+
+Accepted records are retained rather than individually deleted; supersession is the correction path. Source disappearance hides receipts rather than purging stored excerpts. Live receipt updates/passive client eviction are not introduced; previously rendered text can remain until refresh/close, and every new read/action rechecks server authority. A short-lived pending request can finish after its dialog closes. Rapid actions can stack shared transient toasts over lower mobile metadata. Raw axe incompletes concern Radix hidden focus guards/background and partly obscured text; keyboard checks and token/screenshot review are documented, not a claim of screen-reader certification.360px, other browser engines, high zoom, long-corpus scale and assistive-technology review were not completed in this timebox. No additional unchanged rebuild, act run, provider call or evidence audit was performed.
+
+## Requires human action
+
+For deployment, apply the forward migration and opt in with FEATURE_DECISION_RECEIPTS=true on backend/frontend. Leave it false to keep the feature unavailable. No paid API/key or real Clerk sign-in is required for this feature's fixture tests. Broader hosted deployment, provider provisioning and earlier deferred work remain unchanged. Commit this feature and STOP; do not start another feature.
+
+---
+
 # Phase 3f — AI request cost and safety; stop here
 
 Implemented on `upgrade/enterprise`; no push or Phase4b. Root AGENTS.md is absent; frontend guidance, progress, authorization matrix, design and AI code were reviewed. This timebox prioritizes atomic admission and conservative failure behavior. PWA is explicitly deferred to **Phase5**.

@@ -44,7 +44,13 @@ import { AiCopilotDrawer } from '@/components/ai-copilot-drawer';
 import { DocumentTree, flattenDocuments } from './document-tree';
 import { useShellData, useWorkspacePresence } from './use-shell-data';
 
-export function AppShell({ children }: { children: ReactNode }) {
+export function AppShell({
+  children,
+  decisionReceiptsEnabled = false,
+}: {
+  children: ReactNode;
+  decisionReceiptsEnabled?: boolean;
+}) {
   const { user, isLoading, isAuthenticated } = useAuth();
   const router = useRouter();
   useEffect(() => {
@@ -59,12 +65,20 @@ export function AppShell({ children }: { children: ReactNode }) {
     );
   if (!isAuthenticated || !user) return null;
   return (
-    <Shell key={user.id} user={user}>
+    <Shell key={user.id} user={user} decisionReceiptsEnabled={decisionReceiptsEnabled}>
       {children}
     </Shell>
   );
 }
-function Shell({ children, user }: { children: ReactNode; user: User }) {
+function Shell({
+  children,
+  user,
+  decisionReceiptsEnabled,
+}: {
+  children: ReactNode;
+  user: User;
+  decisionReceiptsEnabled: boolean;
+}) {
   const pathname = usePathname();
   const router = useRouter();
   const { logout } = useAuth();
@@ -134,6 +148,9 @@ function Shell({ children, user }: { children: ReactNode; user: User }) {
     { path: '/docs', label: 'Documents', icon: FileText },
     { path: '/kanban', label: 'Sprint board', icon: Kanban },
     { path: '/snippets', label: 'Code snippets', icon: Code2 },
+    ...(decisionReceiptsEnabled
+      ? [{ path: '/decisions', label: 'Decisions', icon: FileText }]
+      : []),
     { path: '/settings', label: 'Settings', icon: Settings },
   ];
   const section = sections.find((item) => item.path && pathname.startsWith(base + item.path));

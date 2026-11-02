@@ -1,5 +1,13 @@
 import { Prisma } from '@prisma/client';
 import { z } from 'zod';
+import {
+  receiptContentSchema,
+  receiptEditSchema,
+  receiptRevisionSchema,
+  supersedeSchema,
+  sourceKindSchema,
+} from './services/decision-receipts';
+import { decisionSourcesQuery, decisionSourceQuery } from './routes/decision-receipts.routes';
 import { workspaceSearchSchema } from './schemas/search.schema';
 
 /** Transport DTOs: scalar columns follow Prisma; selected relations remain explicit. */
@@ -371,6 +379,44 @@ add('POST', `${base}/superadmin/workspaces/{workspaceId}/kill-switch`, killRespo
 add('POST', '/scim/v2/Users', scim, '201');
 add('PATCH', '/scim/v2/Users/{externalId}', scim);
 noContent('DELETE', '/scim/v2/Users/{externalId}');
+
+const decisionsBase = '/api/v2/workspaces/{workspaceId}/decisions';
+const receiptDto = model('DecisionReceipt');
+add(
+  'GET',
+  decisionsBase,
+  z.array(receiptDto.extend({ sourceTitle: z.string(), sourceChanged: z.boolean() })),
+);
+add(
+  'GET',
+  `${decisionsBase}/sources`,
+  z.array(z.object({ id: z.string(), title: z.string(), kind: sourceKindSchema }).strict()),
+  '200',
+  { query: decisionSourcesQuery },
+);
+add(
+  'GET',
+  `${decisionsBase}/source`,
+  z
+    .object({
+      id: z.string(),
+      title: z.string(),
+      kind: sourceKindSchema,
+      revision: z.string(),
+      text: z.string(),
+    })
+    .strict(),
+  '200',
+  { query: decisionSourceQuery },
+);
+add('POST', decisionsBase, receiptDto, '201', { body: receiptContentSchema });
+add('PATCH', `${decisionsBase}/{receiptId}`, receiptDto, '200', { body: receiptEditSchema });
+noContent('DELETE', `${decisionsBase}/{receiptId}`);
+contracts.get(`DELETE ${decisionsBase}/{receiptId}`)!.body = receiptRevisionSchema;
+add('POST', `${decisionsBase}/{receiptId}/accept`, receiptDto, '200', {
+  body: receiptRevisionSchema,
+});
+add('POST', `${decisionsBase}/{receiptId}/supersede`, receiptDto, '200', { body: supersedeSchema });
 
 const aiAllowance = z
   .object({

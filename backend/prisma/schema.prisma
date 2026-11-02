@@ -54,6 +54,7 @@ model Workspace {
   tokenUsage TokenUsage[]
   embeddingJobs EmbeddingJob[]
   invitations WorkspaceInvitation[]
+  decisionReceipts DecisionReceipt[]
 }
 
 model WorkspaceInvitation {
@@ -330,4 +331,28 @@ model DocumentCrdtBackup {
   restoredAt DateTime?
   document Document @relation(fields: [documentId, workspaceId], references: [id, workspaceId], onDelete: Restrict, onUpdate: Restrict)
   @@unique([documentId, workspaceId])
+}
+
+model DecisionReceipt {
+  id String @id @default(cuid())
+  workspaceId String
+  sourceKind String
+  sourceId String
+  sourceRevision String
+  excerpt String
+  title String
+  rationale String
+  status String @default("DRAFT")
+  revision Int @default(0)
+  createdBy String
+  acceptedBy String?
+  acceptedAt DateTime?
+  supersededById String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  supersededBy DecisionReceipt? @relation("DecisionSupersession", fields: [supersededById, workspaceId], references: [id, workspaceId], onDelete: Restrict, onUpdate: Restrict)
+  supersedes DecisionReceipt[] @relation("DecisionSupersession")
+  @@unique([id, workspaceId])
+  @@index([workspaceId, createdAt])
 }

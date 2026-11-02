@@ -42,6 +42,9 @@ async function main() {
     const env = {
       ...process.env,
       NODE_ENV: 'test',
+      FEATURE_DECISION_RECEIPTS: process.env.E2E_DECISIONS
+        ? 'true'
+        : process.env.FEATURE_DECISION_RECEIPTS,
       E2E_UI_CAPTURE: process.env.E2E_UI_CAPTURE,
       DATABASE_URL: postgres.getConnectionUri(),
       E2E_ADMIN_DATABASE_URL: postgres.getConnectionUri(),

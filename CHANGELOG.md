@@ -1,3 +1,11 @@
+# Phase 4b — P02 decision receipts
+
+- Add feature-flagged, tenant-isolated document/task decision receipts with exact revision-bound quotes, editable drafts, explicit owner acceptance and immutable supersession.
+- Add a forward-only Prisma migration with rollback instructions and versioned v2 contracts; preserve existing authorization and CRDT behavior.
+- Add design-system UI, loading/empty/retry states, keyboard focus restoration and hover contrast correction; enforce viewer read-only access on the server.
+- Verify222 backend tests,69 frontend tests and four seeded Playwright journeys;40 final axe captures report zero violations. Document raw incompletes, bounds and remaining review limits.
+- P02 only. No paid API/key, other feature or push.
+
 # Phase 3f — AI cost and safety
 
 - Enforce atomic user/workspace daily/monthly request allowances and concurrent-operation limits before AI provider calls; add authorized versioned usage API and settings display.

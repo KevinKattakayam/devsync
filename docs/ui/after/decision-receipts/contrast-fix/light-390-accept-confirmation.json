@@ -1,0 +1,223 @@
+{
+  "violations": [],
+  "incomplete": [
+    {
+      "id": "aria-hidden-focus",
+      "impact": "serious",
+      "tags": [
+        "cat.name-role-value",
+        "wcag2a",
+        "wcag412",
+        "TTv5",
+        "TT6.a",
+        "EN-301-549",
+        "EN-9.4.1.2",
+        "RGAAv4",
+        "RGAA-10.8.1"
+      ],
+      "description": "Ensure aria-hidden elements are not focusable nor contain focusable elements",
+      "help": "ARIA hidden element must not be focusable or contain focusable elements",
+      "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/aria-hidden-focus?application=axeAPI",
+      "nodes": [
+        {
+          "any": [],
+          "all": [
+            {
+              "id": "focusable-modal-open",
+              "data": null,
+              "relatedNodes": [
+                {
+                  "html": "<span data-radix-focus-guard=\"\" tabindex=\"0\" data-aria-hidden=\"true\" aria-hidden=\"true\" style=\"outline: none; opacity: 0; position: fixed; pointer-events: none;\"></span>",
+                  "target": [
+                    "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"]:nth-child(1)"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Check that focusable elements are not tabbable in the current state"
+            }
+          ],
+          "none": [],
+          "impact": "serious",
+          "html": "<span data-radix-focus-guard=\"\" tabindex=\"0\" data-aria-hidden=\"true\" aria-hidden=\"true\" style=\"outline: none; opacity: 0; position: fixed; pointer-events: none;\"></span>",
+          "target": [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"]:nth-child(1)"
+          ],
+          "failureSummary": "Fix all of the following:\n  Check that focusable elements are not tabbable in the current state"
+        },
+        {
+          "any": [],
+          "all": [
+            {
+              "id": "focusable-modal-open",
+              "data": null,
+              "relatedNodes": [
+                {
+                  "html": "<a href=\"#main-content\" class=\"ui-skip-link\" data-shell-region=\"skip\">Skip to content</a>",
+                  "target": [
+                    ".ui-skip-link"
+                  ]
+                },
+                {
+                  "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" aria-label=\"Open navigation\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button md:hidden\">",
+                  "target": [
+                    ".md\\:hidden"
+                  ]
+                },
+                {
+                  "html": "<button aria-label=\"Search and commands\" aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button shell-search\">",
+                  "target": [
+                    ".shell-search"
+                  ]
+                },
+                {
+                  "html": "<button aria-pressed=\"false\" aria-label=\"Enter focus mode\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button\">",
+                  "target": [
+                    "button[aria-label=\"Enter focus mode\"]"
+                  ]
+                },
+                {
+                  "html": "<button aria-label=\"Sample owner\" id=\"radix-_r_b_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button shell-user\">",
+                  "target": [
+                    "#radix-_r_b_"
+                  ]
+                },
+                {
+                  "html": "<button type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button enabled:hover:opacity-100\">Refresh receipts</button>",
+                  "target": [
+                    ".mb-8 > .flex-wrap.gap-2.flex > .enabled\\:hover\\:opacity-100.ui-button[data-variant=\"secondary\"]"
+                  ]
+                },
+                {
+                  "html": "<button type=\"button\" data-variant=\"primary\" data-size=\"default\" class=\"ui-button enabled:hover:opacity-100\">New receipt</button>",
+                  "target": [
+                    ".mb-8 > .flex-wrap.gap-2.flex > .enabled\\:hover\\:opacity-100.ui-button[data-variant=\"primary\"]"
+                  ]
+                },
+                {
+                  "html": "<input placeholder=\"Title, rationale, source or status\" class=\"ui-input\" value=\"\" style=\"\">",
+                  "target": [
+                    "input"
+                  ]
+                },
+                {
+                  "html": "<a class=\"text-primary underline underline-offset-4\" href=\"/workspace/devsync-sample/docs/cmvyyx0bu008p809imehkc92k\">Receipt source light-390</a>",
+                  "target": [
+                    ".text-primary"
+                  ]
+                },
+                {
+                  "html": "<button type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button enabled:hover:opacity-100\">Edit draft</button>",
+                  "target": [
+                    "#receipt-cmvyyx2iv009a809im6o7n8it > .flex-wrap.gap-2.flex > .enabled\\:hover\\:opacity-100.ui-button[data-variant=\"secondary\"]"
+                  ]
+                },
+                {
+                  "html": "<button type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button enabled:hover:opacity-100\">Delete draft</button>",
+                  "target": [
+                    ".enabled\\:hover\\:opacity-100.ui-button[data-variant=\"ghost\"]"
+                  ]
+                },
+                {
+                  "html": "<button type=\"button\" data-variant=\"primary\" data-size=\"default\" class=\"ui-button enabled:hover:opacity-100\">Accept decision</button>",
+                  "target": [
+                    "#receipt-cmvyyx2iv009a809im6o7n8it > .flex-wrap.gap-2.flex > .enabled\\:hover\\:opacity-100.ui-button[data-variant=\"primary\"]"
+                  ]
+                },
+                {
+                  "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button shell-copilot-trigger\">",
+                  "target": [
+                    ".shell-copilot-trigger"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Check that focusable elements are not tabbable in the current state"
+            }
+          ],
+          "none": [],
+          "impact": "serious",
+          "html": "<div class=\"app-shell\" data-aria-hidden=\"true\" aria-hidden=\"true\">",
+          "target": [
+            ".app-shell"
+          ],
+          "failureSummary": "Fix all of the following:\n  Check that focusable elements are not tabbable in the current state"
+        },
+        {
+          "any": [],
+          "all": [
+            {
+              "id": "focusable-modal-open",
+              "data": null,
+              "relatedNodes": [
+                {
+                  "html": "<span data-radix-focus-guard=\"\" tabindex=\"0\" data-aria-hidden=\"true\" aria-hidden=\"true\" style=\"outline: none; opacity: 0; position: fixed; pointer-events: none;\"></span>",
+                  "target": [
+                    "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"]:nth-child(14)"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Check that focusable elements are not tabbable in the current state"
+            }
+          ],
+          "none": [],
+          "impact": "serious",
+          "html": "<span data-radix-focus-guard=\"\" tabindex=\"0\" data-aria-hidden=\"true\" aria-hidden=\"true\" style=\"outline: none; opacity: 0; position: fixed; pointer-events: none;\"></span>",
+          "target": [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"]:nth-child(14)"
+          ],
+          "failureSummary": "Fix all of the following:\n  Check that focusable elements are not tabbable in the current state"
+        }
+      ]
+    },
+    {
+      "id": "color-contrast",
+      "impact": "serious",
+      "tags": [
+        "cat.color",
+        "wcag2aa",
+        "wcag143",
+        "TTv5",
+        "TT13.c",
+        "EN-301-549",
+        "EN-9.1.4.3",
+        "ACT",
+        "RGAAv4",
+        "RGAA-3.2.1"
+      ],
+      "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+      "help": "Elements must meet minimum color contrast ratio thresholds",
+      "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/color-contrast?application=axeAPI",
+      "nodes": [
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "contrastRatio": 0,
+                "fontSize": "10.5pt (14px)",
+                "fontWeight": "normal",
+                "messageKey": "elmPartiallyObscuring",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element's background color could not be determined because it partially overlaps other elements"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<p id=\"radix-_r_1e_\" class=\"mt-1 text-sm text-muted-foreground\">You are recording your explicit acceptance as a workspace owner. This freezes the quote and rationale.</p>",
+          "target": [
+            "#radix-_r_1e_"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it partially overlaps other elements"
+        }
+      ]
+    }
+  ],
+  "viewport": 390,
+  "scrollWidth": 390
+}

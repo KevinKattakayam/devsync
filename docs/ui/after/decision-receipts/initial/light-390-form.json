@@ -1,0 +1,387 @@
+{
+  "violations": [
+    {
+      "id": "color-contrast",
+      "impact": "serious",
+      "tags": [
+        "cat.color",
+        "wcag2aa",
+        "wcag143",
+        "TTv5",
+        "TT13.c",
+        "EN-301-549",
+        "EN-9.1.4.3",
+        "ACT",
+        "RGAAv4",
+        "RGAA-3.2.1"
+      ],
+      "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+      "help": "Elements must meet minimum color contrast ratio thresholds",
+      "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/color-contrast?application=axeAPI",
+      "nodes": [
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#8e8e90",
+                "bgColor": "#f7f7f7",
+                "contrastRatio": 3.05,
+                "fontSize": "10.5pt (14px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<button type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Find sources</button>",
+                  "target": [
+                    ".space-y-2:nth-child(1) > .flex-wrap.gap-2.flex > .ui-button[data-variant=\"secondary\"][type=\"button\"]"
+                  ]
+                },
+                {
+                  "html": "<div role=\"dialog\" id=\"radix-_r_l_\" data-state=\"open\" class=\"ui-dialog max-h-[90dvh] overflow-y-auto\" tabindex=\"-1\" aria-labelledby=\"radix-_r_m_\" aria-describedby=\"radix-_r_n_\" style=\"pointer-events: auto;\">",
+                  "target": [
+                    "#radix-_r_l_"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 3.05 (foreground color: #8e8e90, background color: #f7f7f7, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<button type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Find sources</button>",
+          "target": [
+            ".space-y-2:nth-child(1) > .flex-wrap.gap-2.flex > .ui-button[data-variant=\"secondary\"][type=\"button\"]"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.05 (foreground color: #8e8e90, background color: #f7f7f7, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#8f8f91",
+                "bgColor": "#fdfdfd",
+                "contrastRatio": 3.17,
+                "fontSize": "10.5pt (14px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<button type=\"button\" role=\"combobox\" aria-expanded=\"false\" aria-autocomplete=\"none\" dir=\"ltr\" data-state=\"closed\" aria-label=\"Decision source\" class=\"ui-input flex items-center justify-between gap-2\">",
+                  "target": [
+                    "button[role=\"combobox\"]"
+                  ]
+                },
+                {
+                  "html": "<div role=\"dialog\" id=\"radix-_r_l_\" data-state=\"open\" class=\"ui-dialog max-h-[90dvh] overflow-y-auto\" tabindex=\"-1\" aria-labelledby=\"radix-_r_m_\" aria-describedby=\"radix-_r_n_\" style=\"pointer-events: auto;\">",
+                  "target": [
+                    "#radix-_r_l_"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 3.17 (foreground color: #8f8f91, background color: #fdfdfd, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<span style=\"pointer-events: none;\">Receipt source light-390 · document</span>",
+          "target": [
+            "button[role=\"combobox\"] > span:nth-child(1)"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.17 (foreground color: #8f8f91, background color: #fdfdfd, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#8f9091",
+                "bgColor": "#fdfdfd",
+                "contrastRatio": 3.14,
+                "fontSize": "10.5pt (14px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<textarea required=\"\" maxlength=\"5000\" class=\"ui-input min-h-24 resize-y\">Receipt source light-390\n</textarea>",
+                  "target": [
+                    "textarea[maxlength=\"5000\"]"
+                  ]
+                },
+                {
+                  "html": "<div role=\"dialog\" id=\"radix-_r_l_\" data-state=\"open\" class=\"ui-dialog max-h-[90dvh] overflow-y-auto\" tabindex=\"-1\" aria-labelledby=\"radix-_r_m_\" aria-describedby=\"radix-_r_n_\" style=\"pointer-events: auto;\">",
+                  "target": [
+                    "#radix-_r_l_"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 3.14 (foreground color: #8f9091, background color: #fdfdfd, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<textarea required=\"\" maxlength=\"5000\" class=\"ui-input min-h-24 resize-y\">Receipt source light-390\n</textarea>",
+          "target": [
+            "textarea[maxlength=\"5000\"]"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.14 (foreground color: #8f9091, background color: #fdfdfd, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "fgColor": "#e4ebfa",
+                "bgColor": "#92ade8",
+                "contrastRatio": 1.87,
+                "fontSize": "10.5pt (14px)",
+                "fontWeight": "normal",
+                "messageKey": null,
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<button type=\"submit\" data-variant=\"primary\" data-size=\"default\" class=\"ui-button\">Save draft</button>",
+                  "target": [
+                    "button[type=\"submit\"]"
+                  ]
+                },
+                {
+                  "html": "<div role=\"dialog\" id=\"radix-_r_l_\" data-state=\"open\" class=\"ui-dialog max-h-[90dvh] overflow-y-auto\" tabindex=\"-1\" aria-labelledby=\"radix-_r_m_\" aria-describedby=\"radix-_r_n_\" style=\"pointer-events: auto;\">",
+                  "target": [
+                    "#radix-_r_l_"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element has insufficient color contrast of 1.87 (foreground color: #e4ebfa, background color: #92ade8, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<button type=\"submit\" data-variant=\"primary\" data-size=\"default\" class=\"ui-button\">Save draft</button>",
+          "target": [
+            "button[type=\"submit\"]"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 1.87 (foreground color: #e4ebfa, background color: #92ade8, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1"
+        }
+      ]
+    }
+  ],
+  "incomplete": [
+    {
+      "id": "aria-hidden-focus",
+      "impact": "serious",
+      "tags": [
+        "cat.name-role-value",
+        "wcag2a",
+        "wcag412",
+        "TTv5",
+        "TT6.a",
+        "EN-301-549",
+        "EN-9.4.1.2",
+        "RGAAv4",
+        "RGAA-10.8.1"
+      ],
+      "description": "Ensure aria-hidden elements are not focusable nor contain focusable elements",
+      "help": "ARIA hidden element must not be focusable or contain focusable elements",
+      "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/aria-hidden-focus?application=axeAPI",
+      "nodes": [
+        {
+          "any": [],
+          "all": [
+            {
+              "id": "focusable-modal-open",
+              "data": null,
+              "relatedNodes": [
+                {
+                  "html": "<span data-radix-focus-guard=\"\" tabindex=\"0\" data-aria-hidden=\"true\" aria-hidden=\"true\" style=\"outline: none; opacity: 0; position: fixed; pointer-events: none;\"></span>",
+                  "target": [
+                    "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"]:nth-child(1)"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Check that focusable elements are not tabbable in the current state"
+            }
+          ],
+          "none": [],
+          "impact": "serious",
+          "html": "<span data-radix-focus-guard=\"\" tabindex=\"0\" data-aria-hidden=\"true\" aria-hidden=\"true\" style=\"outline: none; opacity: 0; position: fixed; pointer-events: none;\"></span>",
+          "target": [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"]:nth-child(1)"
+          ],
+          "failureSummary": "Fix all of the following:\n  Check that focusable elements are not tabbable in the current state"
+        },
+        {
+          "any": [],
+          "all": [
+            {
+              "id": "focusable-modal-open",
+              "data": null,
+              "relatedNodes": [
+                {
+                  "html": "<a href=\"#main-content\" class=\"ui-skip-link\" data-shell-region=\"skip\">Skip to content</a>",
+                  "target": [
+                    ".ui-skip-link"
+                  ]
+                },
+                {
+                  "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" aria-label=\"Open navigation\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button md:hidden\">",
+                  "target": [
+                    ".md\\:hidden"
+                  ]
+                },
+                {
+                  "html": "<button aria-label=\"Search and commands\" aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button shell-search\">",
+                  "target": [
+                    ".shell-search"
+                  ]
+                },
+                {
+                  "html": "<button aria-pressed=\"false\" aria-label=\"Enter focus mode\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button ui-icon-button\">",
+                  "target": [
+                    "button[aria-label=\"Enter focus mode\"]"
+                  ]
+                },
+                {
+                  "html": "<button aria-label=\"Sample owner\" id=\"radix-_r_b_\" aria-haspopup=\"menu\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"ghost\" data-size=\"default\" class=\"ui-button shell-user\">",
+                  "target": [
+                    "#radix-_r_b_"
+                  ]
+                },
+                {
+                  "html": "<button type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button\">Refresh receipts</button>",
+                  "target": [
+                    ".mb-8 > .flex-wrap.gap-2.flex > .ui-button[data-variant=\"secondary\"][type=\"button\"]"
+                  ]
+                },
+                {
+                  "html": "<button type=\"button\" data-variant=\"primary\" data-size=\"default\" class=\"ui-button\">New receipt</button>",
+                  "target": [
+                    ".flex-wrap.gap-2.flex > .ui-button[data-variant=\"primary\"][type=\"button\"]"
+                  ]
+                },
+                {
+                  "html": "<input placeholder=\"Title, rationale, source or status\" class=\"ui-input\" value=\"\" style=\"\">",
+                  "target": [
+                    "input[value=\"\"]"
+                  ]
+                },
+                {
+                  "html": "<button type=\"button\" data-variant=\"primary\" data-size=\"default\" class=\"ui-button\">Create a receipt</button>",
+                  "target": [
+                    ".flex-col > .ui-button[data-variant=\"primary\"][type=\"button\"]"
+                  ]
+                },
+                {
+                  "html": "<button aria-haspopup=\"dialog\" aria-expanded=\"false\" data-state=\"closed\" type=\"button\" data-variant=\"secondary\" data-size=\"default\" class=\"ui-button shell-copilot-trigger\">",
+                  "target": [
+                    ".shell-copilot-trigger"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Check that focusable elements are not tabbable in the current state"
+            }
+          ],
+          "none": [],
+          "impact": "serious",
+          "html": "<div class=\"app-shell\" data-aria-hidden=\"true\" aria-hidden=\"true\">",
+          "target": [
+            ".app-shell"
+          ],
+          "failureSummary": "Fix all of the following:\n  Check that focusable elements are not tabbable in the current state"
+        },
+        {
+          "any": [],
+          "all": [
+            {
+              "id": "focusable-modal-open",
+              "data": null,
+              "relatedNodes": [
+                {
+                  "html": "<span data-radix-focus-guard=\"\" tabindex=\"0\" data-aria-hidden=\"true\" aria-hidden=\"true\" style=\"outline: none; opacity: 0; position: fixed; pointer-events: none;\"></span>",
+                  "target": [
+                    "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"]:nth-child(14)"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Check that focusable elements are not tabbable in the current state"
+            }
+          ],
+          "none": [],
+          "impact": "serious",
+          "html": "<span data-radix-focus-guard=\"\" tabindex=\"0\" data-aria-hidden=\"true\" aria-hidden=\"true\" style=\"outline: none; opacity: 0; position: fixed; pointer-events: none;\"></span>",
+          "target": [
+            "span[data-radix-focus-guard=\"\"][data-aria-hidden=\"true\"]:nth-child(14)"
+          ],
+          "failureSummary": "Fix all of the following:\n  Check that focusable elements are not tabbable in the current state"
+        }
+      ]
+    },
+    {
+      "id": "color-contrast",
+      "impact": "serious",
+      "tags": [
+        "cat.color",
+        "wcag2aa",
+        "wcag143",
+        "TTv5",
+        "TT13.c",
+        "EN-301-549",
+        "EN-9.1.4.3",
+        "ACT",
+        "RGAAv4",
+        "RGAA-3.2.1"
+      ],
+      "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+      "help": "Elements must meet minimum color contrast ratio thresholds",
+      "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/color-contrast?application=axeAPI",
+      "nodes": [
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "contrastRatio": 0,
+                "fontSize": "9.0pt (12px)",
+                "fontWeight": "normal",
+                "messageKey": "elmPartiallyObscuring",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [],
+              "impact": "serious",
+              "message": "Element's background color could not be determined because it partially overlaps other elements"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<p class=\"text-xs text-muted-foreground\">Plain text preview, first 64,000 characters. Quote a matching passage below.</p>",
+          "target": [
+            ".space-y-2:nth-child(4) > .text-xs"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it partially overlaps other elements"
+        }
+      ]
+    }
+  ],
+  "viewport": 390,
+  "scrollWidth": 390
+}
