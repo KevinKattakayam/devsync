@@ -1,3 +1,13 @@
+# Local Clerk sign-in routing correction — 2026-11-03
+
+Current secret and publishable-key frontend environment checks using Node fetch both return HTTP200. The earlier Python HTTP403 does not establish that the configured secret is invalid; that conclusion is superseded. No keys, prompts, user records or session tokens were printed or committed.
+
+Reproduced fresh-browser dashboard navigation entering the external Clerk handshake with ERR_NAME_NOT_RESOLVED, while direct local /sign-in and /login rendered the embedded email/password form. Configure the existing local /sign-in and /sign-up routes explicitly in ClerkProvider, clerkMiddleware and Docker build/runtime environment. Authentication protection remains enabled; no bypass or API contract change.
+
+Frontend lint, format check and strict TypeScript pass. Node runner reports4 test files passed/0 failed; Vitest17 files/76 tests passed. Local default Turbopack build stalled during compilation and was interrupted (exit130); do not treat it as a pass. Docker production webpack build passes, including TypeScript and static generation. Compose up --build --detach --wait frontend exits0 with healthy frontend/backend/Postgres/Redis. Browser checks with installed Chrome pass for2 fresh-page journeys: /dashboard redirects to local /sign-in and direct /sign-in loads; both show visible email/password fields and Continue button. No actual credentials submitted, real account login/session/dashboard access remains unverified. No key rotation inferred or performed. Local services remain running on ports3000/5000. Close the stale hosted Clerk tab and start at http://localhost:3000/sign-in.
+
+---
+
 # Runtime and Kanban follow-up — two requested items complete; STOP
 
 On upgrade/enterprise only, no push or deployment. Read AGENTS, current progress/final report and the container inventory. No API/WebSocket change, test modification, baseline refresh or security/coverage gate relaxation.

@@ -19,6 +19,8 @@ ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 ENV NEXT_PUBLIC_SOCKET_URL=$NEXT_PUBLIC_SOCKET_URL
 ENV NEXT_PUBLIC_YJS_URL=$NEXT_PUBLIC_YJS_URL
 ENV BACKEND_URL=$BACKEND_URL
+ENV NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+ENV NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN npm run build -- --webpack
 RUN node -e "require('fs').writeFileSync('build-settings.json', JSON.stringify({mode:process.env.DEPLOYMENT_MODE,clerk:process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || ''}))"
@@ -28,6 +30,8 @@ FROM base AS runner
 # Alpine BusyBox retains multi-call applets; isolation depends on non-root/capability controls.
 # Keep OS package metadata intact so vulnerability scanners report installed packages.
 RUN rm -rf /usr/local/lib/node_modules/npm /opt/yarn-* /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/yarn /usr/local/bin/yarnpkg /usr/bin/mount /usr/bin/umount /usr/bin/nsenter /usr/bin/infocmp
+ENV NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+ENV NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
 ENV NODE_ENV=production
 ENV PORT=3000
 ENV HOSTNAME=0.0.0.0

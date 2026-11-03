@@ -1,3 +1,8 @@
+# Local Clerk sign-in routing
+
+- Configure local sign-in/sign-up destinations in Clerk provider, proxy and Docker build/runtime so protected-page navigation uses the existing embedded form.
+- Validate current Clerk keys with HTTP200 API responses and verify dashboard-to-local-sign-in navigation in fresh Chrome pages. Real credential submission remains unverified.
+
 # Runtime security and Kanban follow-up
 
 - Compare current Debian and rebuilt pinned Node22 Alpine runtimes with unsuppressed Trivy output: remove44 High entries per runtime; backend4 Medium remain, frontend zero findings. Document musl support limits and every remaining CVE without changing security gates.
