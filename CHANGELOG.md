@@ -1,3 +1,7 @@
+# Local authentication clock investigation
+
+- Record measured37-second backend/Clerk clock skew, unsynchronized host NTP and successful rolled-back profile-sync database probes. Administrator time synchronization and authenticated retry remain required; no authentication controls relaxed.
+
 # Local Clerk sign-in routing
 
 - Configure local sign-in/sign-up destinations in Clerk provider, proxy and Docker build/runtime so protected-page navigation uses the existing embedded form.

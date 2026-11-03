@@ -1,3 +1,11 @@
+# Signed-in Clerk form / sync500 investigation — 2026-11-03
+
+User console confirms Clerk considers this browser signed in and suppresses SignIn; POST /api/auth/sync returns500. Backend log confirms repeated500, but privacy-safe logs do not identify the exception. Read-only Clerk profile lookups succeed inside the backend. All3 returned profiles have no existing local identity or email collision; profile upsert probes using the runtime role succeeded and explicitly rolled back, with no profile persistence. No session tokens were requested or printed.
+
+Measured container clock37 seconds behind Clerk HTTP Date (approximate HTTP clock comparison). Host timedatectl reports System clock synchronized:no, NTP active, packet count0, server n/a. This is a likely fresh-token nbf rejection cause, not a verified diagnosis of the exact500 exception. The token fallback can surface SDK verification errors as500; do not claim corrected status mapping. Restarting time sync via sudo -n systemctl restart systemd-timesyncd failed because an administrator password is required. Requires human action: restart/fix host NTP with local administrator access, confirm synchronization, then retry dashboard/session sync. No token clock-tolerance increase or authentication bypass applied. Actual authenticated journey and500 resolution remain unverified. Documentation only; no application changes or additional test/build claim.
+
+---
+
 # Local Clerk sign-in routing correction — 2026-11-03
 
 Current secret and publishable-key frontend environment checks using Node fetch both return HTTP200. The earlier Python HTTP403 does not establish that the configured secret is invalid; that conclusion is superseded. No keys, prompts, user records or session tokens were printed or committed.
