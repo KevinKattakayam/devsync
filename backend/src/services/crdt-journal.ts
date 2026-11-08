@@ -3,6 +3,9 @@ import { Prisma } from '@prisma/client';
 import * as Y from 'yjs';
 import { TenantPrismaClient, TenantTransaction } from '../lib/tenant-prisma';
 import { legacyDocument, projectDocument } from './crdt-schema';
+import { withWorkspaceAccess, WRITE_ROLES } from '../security/workspace-policy';
+import { queueEmbedding } from './embedding.service';
+import { ForbiddenError } from '../utils/errors';
 
 export interface DocumentRoom {
   workspaceId: string;
@@ -16,10 +19,11 @@ export class CrdtJournal {
     const rows = await tx.$queryRaw<
       { id: string }[]
     >`SELECT id FROM "Document" WHERE id=${room.documentId} AND "workspaceId"=${room.workspaceId} FOR UPDATE`;
-    if (!rows.length) throw new Error('Access denied');
+    if (!rows.length) throw new ForbiddenError('Access denied');
     const record = await tx.document.findUniqueOrThrow({
       where: { id: room.documentId, workspaceId: room.workspaceId },
     });
+    if (record.isArchived) throw new ForbiddenError('Access denied');
     const document = new Y.Doc();
     try {
       if (record.yjsState) Y.applyUpdate(document, record.yjsState);
@@ -61,43 +65,52 @@ export class CrdtJournal {
       }
     });
   }
-  async append(room: DocumentRoom, update: Uint8Array): Promise<void> {
+  async append(room: DocumentRoom, update: Uint8Array, actorId: string): Promise<void> {
     if (update.byteLength > 64 * 1024) throw new Error('Update too large');
     const digest = createHash('sha256').update(update).digest('hex');
-    await this.db.withTenantTransaction(room.workspaceId, async (tx) => {
-      const { document, updates } = await this.locked(tx, room);
-      try {
-        Y.applyUpdate(document, update); // Validate before accepting durable data.
-        if (Y.encodeStateAsUpdate(document).byteLength > MAX_STATE)
-          throw new Error('Document limit exceeded');
-        await tx.documentUpdate.upsert({
-          where: { documentId_digest: { documentId: room.documentId, digest } },
-          create: { ...room, digest, update: Buffer.from(update) },
-          update: {},
-        });
-        await tx.document.update({
-          where: { id: room.documentId },
-          data: {
-            crdtRevision: { increment: 1 },
-            content: projectDocument(document),
-            embeddingHash: null,
-          },
-        });
-        if (updates.length >= 63) {
+    await withWorkspaceAccess(
+      actorId,
+      room.workspaceId,
+      WRITE_ROLES,
+      async (tx) => {
+        const { document, updates } = await this.locked(tx, room);
+        try {
+          const before = Buffer.from(Y.encodeStateAsUpdate(document));
+          Y.applyUpdate(document, update); // Validate before accepting durable data.
+          if (before.equals(Buffer.from(Y.encodeStateAsUpdate(document)))) return;
+          if (Y.encodeStateAsUpdate(document).byteLength > MAX_STATE)
+            throw new Error('Document limit exceeded');
+          await tx.documentUpdate.upsert({
+            where: { documentId_digest: { documentId: room.documentId, digest } },
+            create: { ...room, digest, update: Buffer.from(update) },
+            update: {},
+          });
           await tx.document.update({
             where: { id: room.documentId },
             data: {
-              yjsState: Buffer.from(Y.encodeStateAsUpdate(document)),
+              crdtRevision: { increment: 1 },
               content: projectDocument(document),
               embeddingHash: null,
             },
           });
-          await tx.documentUpdate.deleteMany({ where: room });
+          await queueEmbedding('document', room.documentId, tx, room.workspaceId, actorId);
+          if (updates.length >= 63) {
+            await tx.document.update({
+              where: { id: room.documentId },
+              data: {
+                yjsState: Buffer.from(Y.encodeStateAsUpdate(document)),
+                content: projectDocument(document),
+                embeddingHash: null,
+              },
+            });
+            await tx.documentUpdate.deleteMany({ where: room });
+          }
+        } finally {
+          document.destroy();
         }
-      } finally {
-        document.destroy();
-      }
-    });
+      },
+      this.db,
+    );
   }
   /** Trusted callers must authorize the actor in this same tenant transaction. */
   async mutate(
@@ -134,7 +147,6 @@ export class CrdtJournal {
           data: {
             yjsState: Buffer.from(Y.encodeStateAsUpdate(document)),
             content: projectDocument(document),
-            embeddingHash: null,
           },
         });
         if (updates.length)

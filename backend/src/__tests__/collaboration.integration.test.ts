@@ -439,7 +439,7 @@ it('converts seeded legacy JSON with dry-run, retained backup, repeatable apply 
   Y.applyUpdate(document, await node.runtime.journal.load(room));
   const vector = Y.encodeStateVector(document);
   text(document).insert(0, 'NEW');
-  await node.runtime.journal.append(room, Y.encodeStateAsUpdate(document, vector));
+  await node.runtime.journal.append(room, Y.encodeStateAsUpdate(document, vector), 'a');
   document.destroy();
   await expect(migrateDocument(db, room, 'rollback')).rejects.toThrow('subsequent edits');
 });
@@ -606,4 +606,60 @@ it('rejects foreign-origin and excess WebSocket connections before admission', a
   await rejected('https://untrusted.invalid');
   await client(node.url, name);
   await rejected();
+});
+
+it('queues current CRDT edits atomically for indexing before acknowledgment', async () => {
+  const name = await room();
+  const node = await server();
+  const a = await client(node.url, name);
+  const documentId = name.split(':')[2];
+  text(a.document).insert(0, 'indexed ');
+  await until(() => !a.provider.hasUnsyncedChanges, 'indexed durable acknowledgment');
+  const job = await admin.embeddingJob.findUnique({
+    where: { resourceType_resourceId: { resourceType: 'document', resourceId: documentId } },
+  });
+  expect(job).toMatchObject({ workspaceId: 'workspace', status: 'pending' });
+  const record = await admin.document.findUniqueOrThrow({ where: { id: documentId } });
+  expect(JSON.stringify(record.content)).toContain('indexed ');
+  // Replaying already-applied state cannot create a new revision/indexing loop.
+  await Reflect.apply(node.runtime.journal.append, node.runtime.journal, [
+    { workspaceId: 'workspace', documentId },
+    Y.encodeStateAsUpdate(a.document),
+    'a',
+  ]);
+  expect((await admin.document.findUniqueOrThrow({ where: { id: documentId } })).crdtRevision).toBe(
+    record.crdtRevision,
+  );
+  expect(await admin.embeddingJob.findUnique({ where: { id: job!.id } })).toEqual(job);
+});
+
+it('denies stale viewer and revoked actors inside the journal transaction', async () => {
+  const name = await room();
+  const node = await server();
+  const roomScope = { workspaceId: 'workspace', documentId: name.split(':')[2] };
+  const change = new Y.Doc();
+  change.getMap('forbidden').set('value', 'must not persist');
+  try {
+    await expect(
+      node.runtime.journal.append(roomScope, Y.encodeStateAsUpdate(change), 'viewer'),
+    ).rejects.toThrow('Access denied');
+    await admin.workspaceMember.update({
+      where: { userId_workspaceId: { userId: 'b', workspaceId: 'workspace' } },
+      data: { role: 'VIEWER' },
+    });
+    try {
+      await expect(
+        node.runtime.journal.append(roomScope, Y.encodeStateAsUpdate(change), 'b'),
+      ).rejects.toThrow('Access denied');
+    } finally {
+      await admin.workspaceMember.update({
+        where: { userId_workspaceId: { userId: 'b', workspaceId: 'workspace' } },
+        data: { role: 'EDITOR' },
+      });
+    }
+    expect(await admin.documentUpdate.count({ where: roomScope })).toBe(0);
+    expect(await admin.embeddingJob.count({ where: { resourceId: roomScope.documentId } })).toBe(0);
+  } finally {
+    change.destroy();
+  }
 });

@@ -9,6 +9,7 @@ import { authorizeWorkspace } from '../security/workspace-policy';
 import { CrdtJournal, DocumentRoom } from './crdt-journal';
 import { collaborationAcl } from './collaboration-acl';
 import { EventEmitter } from 'events';
+import { ForbiddenError } from '../utils/errors';
 import { withPolicyDeadline } from '../security/policy-deadline';
 
 export interface Identity {
@@ -210,11 +211,20 @@ export function createCollaborationServer(http: HttpServer, options: Collaborati
       // A read-only sync-step2 carrying no new operations is a legal handshake.
       if (connection.readOnly) return;
       await enforce(context, connection);
-      if (context.documentId)
-        await journal.append(
-          { workspaceId: context.workspaceId, documentId: context.documentId },
-          payload,
-        );
+      if (context.documentId) {
+        try {
+          await journal.append(
+            { workspaceId: context.workspaceId, documentId: context.documentId },
+            payload,
+            context.user.id,
+          );
+        } catch (error) {
+          // A revocation can race the pre-frame check. Close the transport too,
+          // rather than leaving a connected socket after the transaction denies it.
+          if (error instanceof ForbiddenError) connection.webSocket.close(4403, 'Access revoked');
+          throw error;
+        }
+      }
     },
     async beforeHandleAwareness({ context, states, connection }) {
       // Redis relays and server-side awareness cleanup have no connection context.
@@ -254,7 +264,7 @@ export function createCollaborationServer(http: HttpServer, options: Collaborati
             await options.reconcile(candidate, room.workspaceId, lastContext.user.id);
             const update = Y.encodeStateAsUpdate(candidate, vector);
             if (update.byteLength > 2) {
-              await journal.append(room, update);
+              await journal.append(room, update, lastContext.user.id);
               Y.applyUpdate(document, update);
             }
           } finally {

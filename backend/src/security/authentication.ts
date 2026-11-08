@@ -1,6 +1,7 @@
 import { AsyncLocalStorage } from 'async_hooks';
 import { clerkClient, getAuth } from '@clerk/express';
 import type { Request } from 'express';
+import type {} from '../middleware/auth.middleware';
 import { ForbiddenError, UnauthorizedError } from '../utils/errors';
 
 export interface IdentityProfile {
