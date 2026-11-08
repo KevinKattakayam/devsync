@@ -42,6 +42,7 @@ async function main() {
     const env = {
       ...process.env,
       NODE_ENV: 'test',
+      AUTH_TRUSTED_ORIGIN: 'http://127.0.0.1:3001',
       AI_QUOTA_USER_DAILY: process.env.E2E_AI_COST ? '1' : process.env.AI_QUOTA_USER_DAILY,
       FEATURE_ASYNC_DIGEST: process.env.E2E_ASYNC_DIGEST
         ? 'true'

@@ -31,15 +31,6 @@
                   "$schema": "https://json-schema.org/draft/2020-12/schema",
                   "type": "string"
                 }
-              },
-              "Set-Cookie": {
-                "schema": {
-                  "$schema": "https://json-schema.org/draft/2020-12/schema",
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                }
               }
             }
           },
@@ -91,7 +82,120 @@
             }
           }
         },
-        "description": "Frontend cookie reset. Redirect destinations are constrained to same-origin root-relative paths; invalid destinations fall back to /login. Legacy GET cookie-clearing remains supported.",
+        "description": "Safe legacy redirect only; GET never clears cookies. Use same-origin POST for stale identity cookie reset.",
+        "servers": [
+          {
+            "url": "http://localhost:3000",
+            "description": "Frontend origin; configure for deployment."
+          }
+        ]
+      },
+      "post": {
+        "operationId": "post__api_auth_reset",
+        "security": [],
+        "parameters": [
+          {
+            "name": "redirect",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "x-validation-complete": false,
+        "x-contract-complete": true,
+        "responses": {
+          "303": {
+            "description": "No response body",
+            "headers": {
+              "Location": {
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "string"
+                }
+              },
+              "Set-Cookie": {
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Documented response DTO",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "headers": {}
+          },
+          "default": {
+            "description": "Error envelope; frontend handlers can also return a plain error field.",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "error": {
+                          "type": "string"
+                        },
+                        "code": {
+                          "type": "string"
+                        },
+                        "requestId": {
+                          "type": "string",
+                          "format": "uuid",
+                          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                        }
+                      },
+                      "required": [
+                        "error",
+                        "code",
+                        "requestId"
+                      ],
+                      "additionalProperties": {}
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "error": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "error"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": "Requires exact same-origin Origin. Clears only Clerk identity cookies; redirects to a safe local destination. Does not revoke provider sessions.",
         "servers": [
           {
             "url": "http://localhost:3000",
@@ -25333,14 +25437,80 @@
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "type": "string"
       },
-      "Header_get__api_auth_reset_Set_Cookie": {
+      "Error_get__api_auth_reset": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "anyOf": [
+          {
+            "type": "object",
+            "properties": {
+              "error": {
+                "type": "string"
+              },
+              "code": {
+                "type": "string"
+              },
+              "requestId": {
+                "type": "string",
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+              }
+            },
+            "required": [
+              "error",
+              "code",
+              "requestId"
+            ],
+            "additionalProperties": {}
+          },
+          {
+            "type": "object",
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "additionalProperties": false
+          }
+        ]
+      },
+      "Query_post__api_auth_reset": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "redirect": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Header_post__api_auth_reset_Location": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "string"
+      },
+      "Header_post__api_auth_reset_Set_Cookie": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "type": "array",
         "items": {
           "type": "string"
         }
       },
-      "Error_get__api_auth_reset": {
+      "Response_post__api_auth_reset_403": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "error"
+        ],
+        "additionalProperties": false
+      },
+      "Error_post__api_auth_reset": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "anyOf": [
           {

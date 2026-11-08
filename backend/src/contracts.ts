@@ -563,11 +563,25 @@ add('GET', '/api/auth/reset', z.never(), '307', {
   responses: {
     '307': {
       noContent: true,
-      headers: { Location: z.string(), 'Set-Cookie': z.array(z.string()) },
+      headers: { Location: z.string() },
     },
   },
   description:
-    'Frontend cookie reset. Redirect destinations are constrained to same-origin root-relative paths; invalid destinations fall back to /login. Legacy GET cookie-clearing remains supported.',
+    'Safe legacy redirect only; GET never clears cookies. Use same-origin POST for stale identity cookie reset.',
+});
+add('POST', '/api/auth/reset', z.never(), '303', {
+  surface: 'frontend',
+  bodyPolicy: 'ignored',
+  query: z.object({ redirect: z.string().optional() }).strict(),
+  responses: {
+    '303': {
+      noContent: true,
+      headers: { Location: z.string(), 'Set-Cookie': z.array(z.string()) },
+    },
+    '403': { schema: plainError },
+  },
+  description:
+    'Requires exact same-origin Origin. Clears only Clerk identity cookies; redirects to a safe local destination. Does not revoke provider sessions.',
 });
 add('POST', '/api/superadmin/workspaces/{workspaceId}/kill-switch', killResponse, '200', {
   surface: 'frontend',

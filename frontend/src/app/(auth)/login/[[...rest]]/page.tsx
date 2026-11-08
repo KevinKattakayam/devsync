@@ -6,12 +6,14 @@ export default function LoginPage() {
   return (
     <div className="flex flex-col justify-center items-center w-full min-h-[420px] space-y-4">
       <SignIn path="/login" routing="path" signUpUrl="/signup" fallbackRedirectUrl="/dashboard" />
-      <a
-        href="/api/auth/reset?redirect=/login"
-        className="text-[11px] text-muted-foreground hover:text-primary transition-colors underline underline-offset-4"
-      >
-        Clear stale session & reset
-      </a>
+      <form action="/api/auth/reset?redirect=/login" method="post">
+        <button
+          type="submit"
+          className="text-[11px] text-muted-foreground hover:text-primary transition-colors underline underline-offset-4"
+        >
+          Clear stale session & reset
+        </button>
+      </form>
     </div>
   );
 }

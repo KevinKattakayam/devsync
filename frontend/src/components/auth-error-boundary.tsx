@@ -45,13 +45,19 @@ export class AuthErrorBoundary extends Component<Props, State> {
               it and log in.
             </p>
           </div>
-          <a
-            href="/api/auth/reset?redirect=/login"
-            onClick={this.handleReset}
-            className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl gradient-primary text-white text-xs font-semibold shadow-lg shadow-primary/25 hover:opacity-90 transition-all"
+          <form
+            action="/api/auth/reset?redirect=/login"
+            method="post"
+            onSubmit={this.handleReset}
+            className="w-full"
           >
-            <RefreshCw className="w-4 h-4" /> Reset & Open Clean Sign In
-          </a>
+            <button
+              type="submit"
+              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl gradient-primary text-white text-xs font-semibold shadow-lg shadow-primary/25 hover:opacity-90 transition-all"
+            >
+              <RefreshCw className="w-4 h-4" /> Reset & Open Clean Sign In
+            </button>
+          </form>
         </div>
       );
     }
