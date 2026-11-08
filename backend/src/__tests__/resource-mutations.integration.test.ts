@@ -1904,3 +1904,59 @@ it('fails closed for binary extraction without an isolated worker and creates no
     else process.env.INGESTION_EXTRACTOR_URL = previous;
   }
 });
+
+it.each([false, true])(
+  'rechecks writer authority after isolated extraction completes (revoked=%s)',
+  async (revoked) => {
+    const { a } = await fixture();
+    const before = await admin.document.count({ where: { workspaceId: a } });
+    let received = 0;
+    const extractor = createServer((req, res) => {
+      req.resume();
+      received++;
+      void (async () => {
+        if (revoked)
+          await admin.workspaceMember.delete({
+            where: { userId_workspaceId: { userId: 'editor', workspaceId: a } },
+          });
+        // Deliberate service-boundary fixture, not an actual PDF/provider result.
+        res
+          .writeHead(200, { 'Content-Type': 'application/json' })
+          .end(JSON.stringify({ text: 'Synthetic extraction boundary fixture' }));
+      })().catch(() => res.writeHead(500).end());
+    });
+    await new Promise<void>((done) => extractor.listen(0, '127.0.0.1', done));
+    const address = extractor.address();
+    if (!address || typeof address === 'string') throw new Error('No extractor listener');
+    const previous = process.env.INGESTION_EXTRACTOR_URL;
+    process.env.INGESTION_EXTRACTOR_URL = `http://127.0.0.1:${address.port}/extract`;
+    try {
+      const result = await request(app)
+        .post(`/workspaces/${a}/documents/ingest`)
+        .set('x-fixture-actor', 'editor')
+        .attach('file', Buffer.from('%PDF-synthetic-boundary-fixture'), {
+          filename: 'synthetic.pdf',
+          contentType: 'application/pdf',
+        });
+      expect(received).toBe(1);
+      expect(result.status).toBe(revoked ? 403 : 201);
+      expect(await admin.document.count({ where: { workspaceId: a } })).toBe(
+        before + (revoked ? 0 : 1),
+      );
+      if (!revoked) {
+        const document = await admin.document.findUniqueOrThrow({
+          where: { id: result.body.documentId as string },
+        });
+        expect(document.yjsState).not.toBeNull();
+        expect(
+          await admin.embeddingJob.count({ where: { resourceId: document.id, workspaceId: a } }),
+        ).toBe(1);
+      }
+    } finally {
+      if (previous === undefined) delete process.env.INGESTION_EXTRACTOR_URL;
+      else process.env.INGESTION_EXTRACTOR_URL = previous;
+      extractor.closeAllConnections();
+      await new Promise<void>((done) => extractor.close(() => done()));
+    }
+  },
+);
