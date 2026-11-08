@@ -1,5 +1,6 @@
 FROM node:22-alpine@sha256:fe4f6d74e20370acb04ad889077d14d0f64a9c8ea6a42bc60cddf1e844699914 AS base
 WORKDIR /app
+RUN apk add --no-cache zlib=1.4-r0
 
 FROM base AS dependencies
 COPY package.json package-lock.json ./
