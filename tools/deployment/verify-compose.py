@@ -3,6 +3,7 @@ from pathlib import Path
 import json
 import os
 import subprocess
+import sys
 import tempfile
 import time
 import urllib.request
@@ -10,7 +11,8 @@ import urllib.error
 import uuid
 
 root = Path(__file__).resolve().parents[2]
-output = root / 'docs/deployment/evidence/clean-clone'
+output = root / (sys.argv[1] if len(sys.argv) > 1 else 'docs/deployment/evidence/clean-clone')
+output.resolve().relative_to(root)
 output.mkdir(parents=True, exist_ok=True)
 clone = Path(tempfile.mkdtemp(prefix='devsync-phase5b-')) / 'checkout'
 project = 'devsync_phase5b_' + uuid.uuid4().hex[:10]
@@ -45,6 +47,15 @@ try:
     assert report['checks']['workerUid'] != 0
     report['checks']['frontendUid']=int(run(compose+['exec','-T','frontend','id','-u'],'frontend-uid.txt').strip())
     assert report['checks']['backendUid'] != 0 and report['checks']['frontendUid'] != 0
+    extractor_id=run(compose+['ps','--quiet','extractor'],'extractor-id.txt').strip()
+    constraints=run(['docker','inspect','--format','{{.HostConfig.ReadonlyRootfs}} {{.HostConfig.Memory}} {{.HostConfig.NanoCpus}} {{.HostConfig.PidsLimit}}',extractor_id],'extractor-constraints.txt')
+    assert constraints.strip()=='true 536870912 1000000000 64'
+    networks=json.loads(run(['docker','inspect','--format','{{json .NetworkSettings.Networks}}',extractor_id],'extractor-networks.json'))
+    assert len(networks)==1
+    assert run(['docker','network','inspect','--format','{{.Internal}}',next(iter(networks))],'extractor-internal-network.txt').strip()=='true'
+    report['checks']['extractorUid']=int(run(compose+['exec','-T','extractor','id','-u'],'extractor-uid.txt').strip())
+    assert report['checks']['extractorUid']!=0
+    report['checks']['extractorIsolation']=True
     def get(url):
         try:
             with urllib.request.urlopen(url,timeout=10) as response: return response.status,response.read().decode()
