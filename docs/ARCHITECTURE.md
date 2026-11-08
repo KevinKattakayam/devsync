@@ -99,6 +99,8 @@ Clerk manages login, provider sessions and optional dashboard-configured methods
 
 ## Real-time document flow
 
+The client tracks connection and pending acknowledgments per Y.Doc, so room/account changes cannot borrow a prior replica's Saved state. Access denial/4403 disables editing and identifies pending local edits as unconfirmed. Local IndexedDB persistence is asynchronous and distinct from remote native journal acknowledgment. The [recovery verification](quality/realtime-recovery/README.md) exercises actual browser clients, compaction and application-server SIGKILL against real local PostgreSQL/Redis with fixture identity. No historical restore UI or new schema/wire format is added.
+
 ```mermaid
 sequenceDiagram
   participant B as TipTap and local Y.Doc

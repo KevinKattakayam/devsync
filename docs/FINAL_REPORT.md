@@ -1,3 +1,13 @@
+# Real-time editor and recovery — 2026-11-08
+
+The existing journal and snapshot design is retained. Fixed replica-scoped connection/pending display state and added explicit access-loss status, with failing-then-passing regressions. No CRDT replacement, migration, wire/API change, authorization bypass or weakened threshold.
+
+Actual Chrome fixtures now prove concurrent convergence, local IndexedDB reload/partition merge,600ms each-way frame latency with pending versus acknowledged state,70 repeated edits/compaction, actual server SIGKILL recovery from checkpoint plus acknowledged journal, viewer update rejection and member removal through API/Yjs/Socket.IO. A fresh fourth browser verifies recovery without relying on existing client caches. The prior wrapper-kill experiment failed and is retained separately. These results use fixture identity, not real Clerk sign-in.
+
+Both app gate sequences pass:305 backend tests,92 component tests and9 named Node tests; core12 plus recovery1 browser journeys. OpenAPI, RLS/transport regressions, unchanged coverage checks and source-security gates pass. Exact commands/exits, raw failures, scope limits and the inspected fixture screenshot are in [recovery verification](quality/realtime-recovery/README.md) and [RESULTS.json](quality/realtime-recovery/RESULTS.json). General revision history/restore, production disk/database-loss recovery, hosted CI and prior real-Clerk acceptance remain separate unfinished work. No production state/restart, push, deployment or automatic next phase.
+
+---
+
 # Identity lifecycle delivery — 2026-11-08
 
 Local implementation is verified; **real two-account acceptance is not complete**. Existing Clerk forms, invitations, member policy and workspace setup remain. Added production active-session verification across HTTP/Yjs/Socket.IO, guarded identity recovery, own-session settings, owner transfer, export-review recording and deletion planning. All existing OpenAPI operations remain semantically identical; new v2 paths and a forward-only forced-RLS table are additive. There is no automated erasure/export delivery or custom password system.

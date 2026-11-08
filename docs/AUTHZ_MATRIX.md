@@ -17,6 +17,10 @@ All new routes send `Cache-Control: no-store`. Existing verified-recipient invit
 
 Static route-by-route review of every registered REST route and every Socket.io input event. This is not a passing integration-test report. OWNER/EDITOR/VIEWER are database workspace roles; there is no per-document ownership ACL beyond membership. Authz checks do not overcome RLS context failures (G01). Protected application routers retain Helmet, configured CORS, parsing, request correlation and the production global IP limiter. Operational health/readiness and metrics are mounted before parsing/auth/rate limiting. Legacy route evidence line offsets below describe the pre-format Phase1a tree (0cee996); permission behavior remains as listed, with new transport/operational exceptions documented below.
 
+## Real-time recovery verification
+
+The [recovery journey](quality/realtime-recovery/README.md) dispatches a Yjs update through an actual read-only browser TipTap instance and observes native negative acknowledgment with no authoritative persistence. It removes a member while a browser update is delayed, then verifies API denial, disabled editing, Yjs/Socket.IO closure and no later subscription delivery. Existing transaction-time and independent-instance policies remain unchanged. Client access-loss display is feedback, not the authorization boundary. New generation/compaction/crash controls exist only in the isolated testing executable with explicit test mode, isolated database validation, strict inputs and random run capability; no product router mounts them.
+
 ## Phase1b aliases and operational exceptions
 
 Every application `/api/...` router below is also mounted at `/api/v1/...` with the same authorization middleware and handlers. Legacy aliases remain supported; see API_OPERATIONS.md. SCIM keeps `/scim/v2`.

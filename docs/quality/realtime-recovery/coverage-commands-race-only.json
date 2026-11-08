@@ -1,0 +1,48 @@
+[
+  {
+    "command": [
+      "node",
+      "tools/ci/coverage.mjs",
+      "backend",
+      "docs/quality/realtime-recovery/backend-coverage-summary.json",
+      "tools/ci/coverage-baseline.json"
+    ],
+    "exitCode": 0,
+    "report": "backend-coverage-baseline.json",
+    "retainedInputSnapshot": "backend-coverage-race-only.json"
+  },
+  {
+    "command": [
+      "node",
+      "tools/ci/coverage.mjs",
+      "backend",
+      "docs/quality/realtime-recovery/backend-coverage-summary.json",
+      "docs/quality/identity-lifecycle/backend-coverage-summary.json"
+    ],
+    "exitCode": 1,
+    "report": "backend-coverage-previous-phase-race-only-failed.txt",
+    "retainedInputSnapshot": "backend-coverage-race-only.json"
+  },
+  {
+    "command": [
+      "node",
+      "tools/ci/coverage.mjs",
+      "frontend",
+      "docs/quality/realtime-recovery/frontend-final/frontend-coverage/coverage-summary.json",
+      "tools/ci/coverage-baseline.json"
+    ],
+    "exitCode": 0,
+    "report": "frontend-coverage-baseline.json"
+  },
+  {
+    "command": [
+      "node",
+      "tools/ci/coverage.mjs",
+      "frontend",
+      "docs/quality/realtime-recovery/frontend-final/frontend-coverage/coverage-summary.json",
+      "docs/quality/identity-lifecycle/frontend-accepted/frontend-coverage/coverage-summary.json"
+    ],
+    "exitCode": 0,
+    "report": "frontend-coverage-previous-phase.json"
+  }
+]

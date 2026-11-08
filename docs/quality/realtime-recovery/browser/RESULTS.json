@@ -1,0 +1,37 @@
+{
+  "identity": "seeded fixtures; not real Clerk",
+  "status": "passed",
+  "browserClients": 3,
+  "concurrentConvergence": true,
+  "injectedLatency": {
+    "client": "owner",
+    "eachDirectionMs": 600,
+    "scope": "Hocuspocus frames; HTTP unchanged"
+  },
+  "localPendingBeforeRemoteAcknowledgement": true,
+  "indexedDbReloadAndPartitionMerge": true,
+  "snapshotAndJournalSurviveSigkill": {
+    "generationBefore": 0,
+    "generationAfter": 1,
+    "journalRowsBeforeCrash": 1,
+    "freshBrowserVerified": true
+  },
+  "viewerUpdateRejectedByActualProtocol": true,
+  "memberRevocation": {
+    "apiDenied": true,
+    "yjsClosed": true,
+    "socketIoClosed": true,
+    "delayedUpdateNotPersisted": true,
+    "furtherSubscriptionStopped": true
+  },
+  "nativeAcknowledgements": [
+    46,
+    41,
+    3
+  ],
+  "nativeRejectedUpdates": [
+    0,
+    0,
+    2
+  ]
+}

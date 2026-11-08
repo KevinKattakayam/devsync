@@ -1,0 +1,15 @@
+{
+  "files": [
+    "CHANGELOG.md",
+    "docs/PROGRESS.md",
+    "docs/FINAL_REPORT.md",
+    "docs/ARCHITECTURE.md",
+    "docs/AUTHZ_MATRIX.md",
+    "docs/RUNBOOK.md",
+    "docs/CRDT_OPERATIONS.md",
+    "docs/quality/realtime-recovery/README.md"
+  ],
+  "localLinksChecked": 155,
+  "missing": [],
+  "exitCode": 0
+}

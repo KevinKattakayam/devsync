@@ -1,3 +1,10 @@
+# Real-time editor and recovery — 2026-11-08
+
+- Scope connection/pending acknowledgments to the current Y.Doc and distinguish access loss from reconnectable offline state; retain native journal-acknowledgment semantics and server permissions.
+- Add guarded recovery fault injection and a direct server-process launcher. Verify actual Chrome convergence, IndexedDB reload/merge, repeated edits/compaction, journal plus snapshot recovery after SIGKILL, viewer protocol denial and API/Yjs/Socket.IO revocation.
+- Preserve original CRDT engine, migrations, contracts, tests and limits. Add a CI recovery target without changing scan/coverage gates; do not add a silent-overwrite restore UI.
+- Record305 backend tests,92 frontend component plus9 Node tests,13 browser journeys, both app gates, contracts/security/coverage evidence, retained failed attempts and a fixture-only recovery screenshot. Real Clerk/hosted/production restore limits remain explicit; no push/deployment or next phase.
+
 # Identity, roles and account lifecycle — 2026-11-08
 
 - Verify active provider sessions for production HTTP/Yjs/Socket.IO, with bounded monotonic caching and fail-closed errors; add test-first revocation/clock regressions.

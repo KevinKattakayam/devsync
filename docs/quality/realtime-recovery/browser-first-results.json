@@ -1,0 +1,15 @@
+{
+  "identity": "seeded fixtures; not real Clerk",
+  "status": "failed",
+  "browserClients": 3,
+  "nativeAcknowledgements": [
+    2,
+    4,
+    1
+  ],
+  "nativeRejectedUpdates": [
+    0,
+    0,
+    0
+  ]
+}

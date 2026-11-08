@@ -1,0 +1,17 @@
+
+> devsync-backend@1.0.0 test
+> node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand --runTestsByPath src/__tests__/recovery-controls.test.ts --coverage=false
+
+FAIL src/__tests__/recovery-controls.test.ts
+  ● Test suite failed to run
+
+    [96msrc/__tests__/recovery-controls.test.ts[0m:[93m3[0m:[93m40[0m - [91merror[0m[90m TS2307: [0mCannot find module '../../testing/recovery-controls' or its corresponding type declarations.
+
+    [7m3[0m import { createRecoveryControls } from '../../testing/recovery-controls';
+    [7m [0m [91m                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        5.481 s
+Ran all test suites within paths "src/__tests__/recovery-controls.test.ts".

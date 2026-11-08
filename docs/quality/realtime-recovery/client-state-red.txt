@@ -1,0 +1,57 @@
+
+> frontend@0.1.0 test:components
+> vitest run tests/local-first-yjs.test.tsx
+
+
+ RUN  v5.0.5 /home/kevin/devsync/frontend
+
+ ❯ tests/local-first-yjs.test.tsx (6 tests | 2 failed) 510ms
+   × does not carry a previous room acknowledgement or pending count into a new replica 112ms
+   × identifies revoked access separately from reconnectable network loss and resets it per room 57ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/local-first-yjs.test.tsx > does not carry a previous room acknowledgement or pending count into a new replica
+AssertionError: expected 'connected' to be 'offline' // Object.is equality
+
+Expected: "offline"
+Received: "connected"
+
+ ❯ tests/local-first-yjs.test.tsx:167:42
+    165|   view.rerender({ room: 'document:ws:new-unacknowledged-room' });
+    166|   await waitFor(() => expect(view.result.current.localReady).toBe(true…
+    167|   expect(view.result.current.syncStatus).toBe('offline');
+       |                                          ^
+    168|   expect(view.result.current.pending).toBe(false);
+    169|   expect(view.result.current.canWrite).toBe(false);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/local-first-yjs.test.tsx > identifies revoked access separately from reconnectable network loss and resets it per room
+AssertionError: expected { document: Doc{ …(20) }, …(5) } to match object { canWrite: false, accessDenied: true }
+(30 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "accessDenied": true,
+    "canWrite": false,
+  }
+
+ ❯ tests/local-first-yjs.test.tsx:182:31
+    180|     transport.providers[0].config.onDisconnect?.({ event: { code: 4403…
+    181|   });
+    182|   expect(view.result.current).toMatchObject({ canWrite: false, accessD…
+       |                               ^
+    183|   view.rerender({ room: 'document:ws:another-room' });
+    184|   await waitFor(() => expect(view.result.current.canWrite).toBe(true));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 4 passed (6)
+   Start at  14:08:01
+   Duration  1.96s (environment 52%, tests 30%, import 13%, transform 4%)
+

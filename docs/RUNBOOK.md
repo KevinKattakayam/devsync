@@ -14,6 +14,12 @@ Before enabling the new lifecycle UI in another environment, apply the additive 
 
 Provider session checks add bounded online Clerk dependencies (1500ms deadline; at most5-second positive cache per process plus existing transport audit cadence). Validate actual capacity/latency/revocation propagation before production. A provider outage denies access; do not disable this control to recover service. Local source/application gates pass; hosted Actions, production rollout and two-account provider acceptance remain separate unverified actions.
 
+## Application-server collaboration recovery
+
+Retain the same migrated PostgreSQL data and journal when restarting an application instance. The server rebuilds canonical state from its checkpoint plus committed updates. Native acknowledgments are remote commits; unsent/offline edits need a surviving local replica and successful authorized reconnect. Do not clear browser storage, import cached JSON as a replacement, bypass membership/provider checks or run the legacy conversion rollback to resolve a reconnect problem. Access-unavailable UI requires checking current authority; a snapshot grants no access.
+
+[Local recovery verification](quality/realtime-recovery/README.md) covers actual Chrome clients and application-server SIGKILL with DB/Redis available. It is not production backup/PITR, database/disk-loss recovery or Redis-outage evidence. Retain the existing writer-stopped backup/restore procedures for those separate operations. There is no general revision-history restore UI; conversion originals are not a revision archive. No migration is needed for this client/test patch. Isolated recovery test controls must never be exposed through production app entry points.
+
 ## One-command local stack
 
 From a clean checkout with Docker Engine/Compose available:

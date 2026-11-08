@@ -1,0 +1,23 @@
+{
+  "identity": "seeded fixtures; not real Clerk",
+  "status": "failed",
+  "browserClients": 3,
+  "concurrentConvergence": true,
+  "injectedLatency": {
+    "client": "owner",
+    "eachDirectionMs": 600,
+    "scope": "Hocuspocus frames; HTTP unchanged"
+  },
+  "localPendingBeforeRemoteAcknowledgement": true,
+  "indexedDbReloadAndPartitionMerge": true,
+  "nativeAcknowledgements": [
+    40,
+    40,
+    1
+  ],
+  "nativeRejectedUpdates": [
+    0,
+    0,
+    0
+  ]
+}

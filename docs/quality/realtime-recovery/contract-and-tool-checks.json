@@ -1,0 +1,51 @@
+[
+  {
+    "check": "openapi",
+    "command": [
+      "npm",
+      "run",
+      "openapi:check"
+    ],
+    "cwd": "backend",
+    "exitCode": 0,
+    "log": "openapi.txt"
+  },
+  {
+    "check": "browser-types-final",
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "cwd": "backend",
+    "exitCode": 0,
+    "log": "browser-types-final.txt"
+  },
+  {
+    "check": "ci-browser-syntax",
+    "command": [
+      "node",
+      "--check",
+      "tools/ci/browser.mjs"
+    ],
+    "cwd": ".",
+    "exitCode": 0,
+    "log": "ci-browser-syntax.txt"
+  },
+  {
+    "check": "coverage-policy",
+    "command": [
+      "node",
+      "--test",
+      "tools/ci/coverage.test.mjs"
+    ],
+    "cwd": ".",
+    "exitCode": 0,
+    "log": "coverage-policy.txt"
+  },
+  {
+    "check": "workflow-parse",
+    "command": "python3 yaml.safe_load(.github/workflows/main.yml)",
+    "exitCode": 0
+  }
+]

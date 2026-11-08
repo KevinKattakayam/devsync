@@ -1,0 +1,13 @@
+{
+  "command": [
+    "npm",
+    "run",
+    "build",
+    "--",
+    "--webpack"
+  ],
+  "cwd": "frontend",
+  "exitCode": 0,
+  "log": "frontend-build-retry.txt",
+  "reason": "Initial sandboxed Next build could not parse its TypeScript subprocess --showConfig output; rerun with required process permissions"
+}
