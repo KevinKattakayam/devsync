@@ -1,6 +1,7 @@
 import { spawn } from 'node:child_process';
 const targets = {
   core: {},
+  search: { E2E_SEARCH: '1' },
   'github-trail': {E2E_GITHUB_TRAIL:'1'},
   identity: {E2E_IDENTITY:'1'},
   recovery: { E2E_RECOVERY: '1' },
