@@ -1,0 +1,134 @@
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": PostgreSQL database "devsync_e2e_browser", schema "public" at "localhost:33043"
+
+17 migrations found in prisma/migrations
+
+Applying migration `20260729000000_baseline`
+Applying migration `20260729180000_enterprise_platform`
+Applying migration `20260815000000_phase_3_tenant_rls`
+Applying migration `20260815001000_scim_provisioning`
+Applying migration `20260815002000_commercial_billing`
+Applying migration `20261031000000_tenant_indexes`
+Applying migration `20261031010000_crdt_journal`
+Applying migration `202611010001_canonical_revision`
+Applying migration `202611010002_embedding_authority`
+Applying migration `202611010003_atomic_create_idempotency`
+Applying migration `202611010004_workspace_invitations`
+Applying migration `202611020001_decision_receipts`
+Applying migration `202611020002_snippet_safety`
+Applying migration `202611020003_async_digest`
+Applying migration `202611080001_export_requests`
+Applying migration `202611080002_github_execution_state`
+Applying migration `202611080003_search_text`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20260729000000_baseline/
+    └─ migration.sql
+  └─ 20260729180000_enterprise_platform/
+    └─ migration.sql
+  └─ 20260815000000_phase_3_tenant_rls/
+    └─ migration.sql
+  └─ 20260815001000_scim_provisioning/
+    └─ migration.sql
+  └─ 20260815002000_commercial_billing/
+    └─ migration.sql
+  └─ 20261031000000_tenant_indexes/
+    └─ migration.sql
+  └─ 20261031010000_crdt_journal/
+    └─ migration.sql
+  └─ 202611010001_canonical_revision/
+    └─ migration.sql
+  └─ 202611010002_embedding_authority/
+    └─ migration.sql
+  └─ 202611010003_atomic_create_idempotency/
+    └─ migration.sql
+  └─ 202611010004_workspace_invitations/
+    └─ migration.sql
+  └─ 202611020001_decision_receipts/
+    └─ migration.sql
+  └─ 202611020002_snippet_safety/
+    └─ migration.sql
+  └─ 202611020003_async_digest/
+    └─ migration.sql
+  └─ 202611080001_export_requests/
+    └─ migration.sql
+  └─ 202611080002_github_execution_state/
+    └─ migration.sql
+  └─ 202611080003_search_text/
+    └─ migration.sql
+      
+All migrations have been successfully applied.
+Sample workspace seeded. Sign in with the supplied Clerk test identities.
+/home/kevin/devsync/.worktrees/frontend-fixture
+Isolated fixture server ready
+▲ Next.js 16.4.3 (webpack)
+- Local:         http://127.0.0.1:3001
+- Network:       http://127.0.0.1:3001
+✓ Ready in 600ms
+✓ Running next.config.ts took 44ms
+○ Compiling /instrumentation ...
+
+✓ Generated AGENTS.md for AI agents. Set `agentRules: false` in next.config to disable.
+○ Compiling /(auth)/login/[[...rest]]/page ...
+ GET /login 200 in 716ms (proxy.ts: 93ms)
+ GET /login 200 in 709ms (next.js: 268ms, proxy.ts: 7ms, application-code: 435ms)
+
+Running 12 tests using 1 worker
+
+(node:500846) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 testing/browser/contracts.spec.ts:8:5 › Zod response contracts match real authenticated resource and service operations (1.8s)
+ GET /api/auth/reset?redirect=/login 307 in 1918ms (next.js: 1844ms, proxy.ts: 7ms, application-code: 67ms)
+ POST /api/auth/reset?redirect=/login 403 in 13ms (next.js: 2ms, proxy.ts: 5ms, application-code: 6ms)
+ GET /login 200 in 417ms (next.js: 125ms, proxy.ts: 5ms, application-code: 286ms)
+ POST /api/auth/reset?redirect=/login 303 in 19ms (next.js: 1.9ms, proxy.ts: 5ms, application-code: 12ms)
+  ✓   2 testing/browser/contracts.spec.ts:354:5 › stale-session reset preserves cookies on GET/foreign POST and clears identity only on browser POST (3.6s)
+ GET /login 200 in 133ms (next.js: 54ms, proxy.ts: 4ms, application-code: 75ms)
+ GET /dashboard 200 in 2.9s (next.js: 2.6s, proxy.ts: 6ms, application-code: 323ms)
+ GET /login 200 in 127ms (next.js: 64ms, proxy.ts: 4ms, application-code: 59ms)
+ GET /login 200 in 43ms (next.js: 10ms, proxy.ts: 6ms, application-code: 28ms)
+  ✓   3 testing/browser/journeys.spec.ts:10:7 › owner signs in and signs out with server session invalidation (5.0s)
+ GET /dashboard 200 in 61ms (next.js: 3ms, proxy.ts: 12ms, application-code: 46ms)
+ GET /login 200 in 119ms (next.js: 54ms, proxy.ts: 5ms, application-code: 61ms)
+ GET /login 200 in 48ms (next.js: 11ms, proxy.ts: 7ms, application-code: 30ms)
+  ✓   4 testing/browser/journeys.spec.ts:10:7 › editor signs in and signs out with server session invalidation (2.0s)
+ GET /dashboard 200 in 55ms (next.js: 2ms, proxy.ts: 4ms, application-code: 49ms)
+ GET /login 200 in 113ms (next.js: 52ms, proxy.ts: 4ms, application-code: 57ms)
+ GET /login 200 in 53ms (next.js: 12ms, proxy.ts: 6ms, application-code: 34ms)
+  ✓   5 testing/browser/journeys.spec.ts:10:7 › viewer signs in and signs out with server session invalidation (1.9s)
+ GET /dashboard 200 in 56ms (next.js: 3ms, proxy.ts: 4ms, application-code: 49ms)
+ GET /dashboard 200 in 67ms (next.js: 4ms, proxy.ts: 5ms, application-code: 58ms)
+  ✓   6 testing/browser/journeys.spec.ts:22:5 › owner creates a workspace from the dashboard (3.7s)
+○ Compiling /(dashboard)/workspace/[id]/docs/[docId]/page ...
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 5.1s (next.js: 4.6s, proxy.ts: 17ms, application-code: 490ms)
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 5.1s (next.js: 4.6s, proxy.ts: 13ms, application-code: 491ms)
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 5.1s (next.js: 4.6s, proxy.ts: 12ms, application-code: 492ms)
+  ✓   7 testing/browser/journeys.spec.ts:33:5 › two contexts edit the same document and both edits merge; viewer is read-only (8.7s)
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 166ms (next.js: 80ms, proxy.ts: 6ms, application-code: 80ms)
+  ✓   8 testing/browser/journeys.spec.ts:73:5 › owner removes an editor with an open document and access closes within seconds (2.2s)
+○ Compiling /(dashboard)/workspace/[id]/kanban/page ...
+Yjs was already imported. This breaks constructor checks and will lead to issues! - https://github.com/yjs/yjs/issues/438
+ GET /workspace/devsync-sample/kanban 200 in 5.4s (next.js: 5.1s, proxy.ts: 6ms, application-code: 350ms)
+○ Compiling /(dashboard)/workspace/[id]/snippets/page ...
+ GET /workspace/devsync-sample/kanban 200 in 167ms (next.js: 76ms, proxy.ts: 9ms, application-code: 81ms)
+ GET /workspace/devsync-sample/snippets 200 in 4.6s (next.js: 4.4s, proxy.ts: 5ms, application-code: 248ms)
+ GET /workspace/devsync-sample/snippets 200 in 151ms (next.js: 89ms, proxy.ts: 7ms, application-code: 56ms)
+  ✓   9 testing/browser/journeys.spec.ts:111:5 › owner moves a Kanban card and saves a snippet (16.6s)
+○ Compiling /(dashboard)/workspace/[id]/page ...
+ GET /workspace/cmw7wq1eh00cacft5h60afiy7 200 in 4.8s (next.js: 4.5s, proxy.ts: 8ms, application-code: 229ms)
+○ Compiling /(dashboard)/invitations/[id]/page ...
+ GET /workspace/cmw7wq1eh00cacft5h60afiy7 200 in 202ms (next.js: 113ms, proxy.ts: 8ms, application-code: 81ms)
+ GET /invitations/cmw7wq6xc00d1cft5xcsfgeha 200 in 5.6s (next.js: 5.3s, proxy.ts: 6ms, application-code: 258ms)
+ GET /workspace/cmw7wq1eh00cacft5h60afiy7 200 in 183ms (next.js: 98ms, proxy.ts: 6ms, application-code: 79ms)
+  ✓  10 testing/browser/journeys.spec.ts:160:7 › owner invites by email, recipient accepts with EDITOR, reuse cannot restore removed membership (15.8s)
+ GET /workspace/cmw7wqdm000dlcft51s7o89mq 200 in 78ms (next.js: 4ms, proxy.ts: 6ms, application-code: 69ms)
+ GET /invitations/cmw7wqfgg00eecft5k87msoat 200 in 187ms (next.js: 104ms, proxy.ts: 7ms, application-code: 76ms)
+  ✓  11 testing/browser/journeys.spec.ts:160:7 › owner invites by email, recipient accepts with VIEWER, reuse cannot restore removed membership (5.6s)
+ GET /invitations/cmw7wqhzy00fccft5654wquoq 200 in 155ms (next.js: 93ms, proxy.ts: 6ms, application-code: 56ms)
+  ✓  12 testing/browser/journeys.spec.ts:225:5 › invitation recipient binding, expiry, revocation, payload validation and concurrent acceptance (2.5s)
+
+  12 passed (1.2m)
+[?25h

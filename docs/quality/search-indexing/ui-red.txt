@@ -1,0 +1,33 @@
+
+ RUN  v5.0.5 /home/kevin/devsync/frontend
+
+ ❯ tests/knowledge-search.test.tsx (0 test)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/knowledge-search.test.tsx [ tests/knowledge-search.test.tsx ]
+Error: Failed to resolve import "@/components/search/knowledge-search" from "tests/knowledge-search.test.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /home/kevin/devsync/frontend/tests/knowledge-search.test.tsx:5:0
+  6  |  const __vi_import_0__ = await import("@testing-library/react");
+  7  |  const __vi_import_1__ = await import("react/jsx-dev-runtime");
+  8  |  const __vi_import_2__ = await import("@/components/search/knowledge-search");
+     |                                       ^
+  9  |  
+  10 |  import { afterEach, beforeEach, expect, it, vi } from "vitest";
+ ❯ TransformPluginContext._formatLog node_modules/vite/dist/node/chunks/node.js:8803:39
+ ❯ TransformPluginContext.error node_modules/vite/dist/node/chunks/node.js:8800:14
+ ❯ resolveId node_modules/vite/dist/node/chunks/node.js:26594:18
+ ❯ node_modules/vite/dist/node/chunks/node.js:26693:23
+ ❯ TransformPluginContext.transform node_modules/vite/dist/node/chunks/node.js:26666:4
+ ❯ EnvironmentPluginContainer.transform node_modules/vite/dist/node/chunks/node.js:8582:14
+ ❯ loadAndTransform node_modules/vite/dist/node/chunks/node.js:20155:26
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  no tests
+   Start at  19:26:50
+   Duration  1.01s (environment 99%, worker 1%)
+

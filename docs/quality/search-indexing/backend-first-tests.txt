@@ -1,0 +1,2083 @@
+
+> devsync-backend@1.0.0 test
+> node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand
+
+{"level":40,"time":1794146232056,"service":"devsync-api","requestId":"system","event":"ai_quota_storage_error","count":1}
+{"level":40,"time":1794146232138,"service":"devsync-api","requestId":"system","event":"ai_quota_storage_error","count":1}
+{"level":50,"time":1794146234302,"service":"devsync-api","msg":"Unexpected server error"}
+{"level":40,"time":1794146235498,"service":"devsync-api","requestId":"system","event":"ai_quota_storage_error","count":1}
+FAIL src/__tests__/resource-mutations.integration.test.ts (20.646 s)
+  ● Console
+
+    console.error
+      [beforeHandleMessage] Error: Message rejected
+          at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:205:55)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+    console.error
+      closing connection 2fd6b429-52e9-43c9-adaa-112a4ffcec8c (while handling document:resource-a-36:doc-resource-a-36) because of exception Error: Message rejected
+          at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:205:55)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+
+    console.error
+      [beforeHandleMessage] Error: Message rejected
+          at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:205:55)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+    console.error
+      closing connection e5e1e24b-f9d2-4d09-8a9e-b9e3ed07c25d (while handling document:resource-a-36:doc-resource-a-36) because of exception Error: Message rejected
+          at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:205:55)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+
+    console.warn
+      [Embedding] Semantic workspace context query skipped: Error
+
+      231 |       : results;
+      232 |   } catch (error) {
+    > 233 |     console.warn(
+          |             ^
+      234 |       '[Embedding] Semantic workspace context query skipped:',
+      235 |       error instanceof Error ? error.name : 'UnknownError',
+      236 |     );
+
+      at warn (src/services/embedding.service.ts:233:13)
+      at workspaceSearch (src/controllers/search.controller.ts:17:22)
+
+    console.warn
+      [Embedding] Semantic workspace context query skipped: Error
+
+      231 |       : results;
+      232 |   } catch (error) {
+    > 233 |     console.warn(
+          |             ^
+      234 |       '[Embedding] Semantic workspace context query skipped:',
+      235 |       error instanceof Error ? error.name : 'UnknownError',
+      236 |     );
+
+      at warn (src/services/embedding.service.ts:233:13)
+      at aiComplete (src/controllers/ai.controller.ts:47:29)
+
+    console.warn
+      [Embedding] Semantic workspace context query skipped: Error
+
+      231 |       : results;
+      232 |   } catch (error) {
+    > 233 |     console.warn(
+          |             ^
+      234 |       '[Embedding] Semantic workspace context query skipped:',
+      235 |       error instanceof Error ? error.name : 'UnknownError',
+      236 |     );
+
+      at warn (src/services/embedding.service.ts:233:13)
+      at workspaceSearch (src/controllers/search.controller.ts:17:22)
+
+  ● knowledge receipt derivatives and GitHub metadata retain source and owner authority
+
+    expect(received).toEqual(expected) // deep equality
+
+    Expected: ArrayContaining [ObjectContaining {"id": "cmw7wcffs01i5a1y4kvwixgoo"}, ObjectContaining {"href": "https://github.com/fixture/quartz/pull/7", "id": "cmw7wcffv01i9a1y4dnvee6lp:7"}]
+    Received: [{"freshness": "current_projection", "href": "/workspace/resource-a-110/decisions", "id": "cmw7wcffs01i5a1y4kvwixgoo", "indexedAt": "2026-11-08T13:57:15.688Z", "method": "lexical", "preview": "bounded evidence
+    quartz proof", "score": 0.07599088549613953, "title": "quartz decision", "type": "decision", "updatedAt": "2026-11-08T13:57:15.688Z"}]
+
+      2582 |     });
+      2583 |     const owner = await request(app).get(`/workspaces/${a}/knowledge?q=quartz`);
+    > 2584 |     expect(owner.body.results).toEqual(
+           |                                ^
+      2585 |       expect.arrayContaining([
+      2586 |         expect.objectContaining({ id: receipt.id }),
+      2587 |         expect.objectContaining({
+
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:2584:32)
+
+{"level":30,"time":1794146306864,"service":"devsync-api","req":{"id":"a581e9cf-20b0-419f-9def-c308bf8f4324","method":"GET"},"requestId":"a581e9cf-20b0-419f-9def-c308bf8f4324","res":{"statusCode":200},"responseTime":3,"msg":"request completed"}
+{"level":30,"time":1794146306873,"service":"devsync-api","req":{"id":"b45fa9f3-c144-47b8-8e87-35984441ecb2","method":"GET"},"requestId":"b45fa9f3-c144-47b8-8e87-35984441ecb2","res":{"statusCode":401},"responseTime":3,"msg":"request completed"}
+{"level":30,"time":1794146306881,"service":"devsync-api","req":{"id":"074c308a-7ef7-4848-8f48-55a294e55a61","method":"GET"},"requestId":"074c308a-7ef7-4848-8f48-55a294e55a61","res":{"statusCode":200},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1794146306884,"service":"devsync-api","req":{"id":"60c52457-1ddc-498c-95db-9023b287c242","method":"GET"},"requestId":"60c52457-1ddc-498c-95db-9023b287c242","res":{"statusCode":401},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1794146306888,"service":"devsync-api","req":{"id":"8e982759-792c-498f-9b14-f19fc4bc5b9a","method":"GET"},"requestId":"8e982759-792c-498f-9b14-f19fc4bc5b9a","res":{"statusCode":404},"responseTime":0,"msg":"request completed"}
+{"level":30,"time":1794146306898,"service":"devsync-api","req":{"id":"64b7d110-c695-4585-898a-5565c143317d","method":"POST"},"requestId":"64b7d110-c695-4585-898a-5565c143317d","res":{"statusCode":400},"responseTime":7,"msg":"request completed"}
+{"level":30,"time":1794146306908,"service":"devsync-api","req":{"id":"288009df-ebc3-49fa-905e-3b2a8fe2edce","method":"GET"},"requestId":"288009df-ebc3-49fa-905e-3b2a8fe2edce","res":{"statusCode":404},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1794146306910,"service":"devsync-api","req":{"id":"4ac2cf3d-bcc8-4329-bd72-9cb2de27ab56","method":"GET"},"requestId":"4ac2cf3d-bcc8-4329-bd72-9cb2de27ab56","res":{"statusCode":403},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1794146306913,"service":"devsync-api","req":{"id":"1b41960a-1e24-4f56-a08a-825a11cb0fc1","method":"GET"},"requestId":"1b41960a-1e24-4f56-a08a-825a11cb0fc1","res":{"statusCode":403},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1794146306916,"service":"devsync-api","req":{"id":"085a0aa4-4bed-4780-8b1f-5fc0a3de7e36","method":"GET"},"requestId":"085a0aa4-4bed-4780-8b1f-5fc0a3de7e36","res":{"statusCode":200},"responseTime":2,"msg":"request completed"}
+{"level":30,"time":1794146307563,"service":"devsync-api","req":{"id":"8cc0c993-6c7a-47e8-a902-594dfc6a83f7","method":"POST"},"requestId":"8cc0c993-6c7a-47e8-a902-594dfc6a83f7","res":{"statusCode":404},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1794146307568,"service":"devsync-api","req":{"id":"710a87f0-3c41-43d7-9048-5db64ad0af88","method":"GET"},"requestId":"710a87f0-3c41-43d7-9048-5db64ad0af88","res":{"statusCode":401},"responseTime":2,"msg":"request completed"}
+FAIL src/__tests__/api-reliability.test.ts
+  ● serves the generated versioned route and Zod contract without snapshot drift
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 740
+    + Received  +   0
+
+    @@ -232,22 +232,10 @@
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string",
+            },
+    -       "Correlation_get__api_v2_workspaces__workspaceId__search": Object {
+    -         "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -         "format": "uuid",
+    -         "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+    -         "type": "string",
+    -       },
+    -       "Correlation_get__api_v2_workspaces__workspaceId__search_source": Object {
+    -         "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -         "format": "uuid",
+    -         "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+    -         "type": "string",
+    -       },
+            "Correlation_get__api_v2_workspaces__workspaceId__snippet_safety_findings": Object {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string",
+    @@ -1095,22 +1083,10 @@
+              "maxLength": 191,
+              "minLength": 1,
+              "type": "string",
+            },
+            "Path_get__api_v2_workspaces__workspaceId__lifecycle_workspaceId": Object {
+    -         "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -         "maxLength": 191,
+    -         "minLength": 1,
+    -         "type": "string",
+    -       },
+    -       "Path_get__api_v2_workspaces__workspaceId__search_source_workspaceId": Object {
+    -         "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -         "maxLength": 191,
+    -         "minLength": 1,
+    -         "type": "string",
+    -       },
+    -       "Path_get__api_v2_workspaces__workspaceId__search_workspaceId": Object {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "maxLength": 191,
+              "minLength": 1,
+              "type": "string",
+            },
+    @@ -1621,85 +1597,12 @@
+            },
+            "Query_get__api_v2_workspaces__workspaceId__lifecycle": Object {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "additionalProperties": false,
+              "properties": Object {},
+    -         "type": "object",
+    -       },
+    -       "Query_get__api_v2_workspaces__workspaceId__search": Object {
+    -         "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -         "additionalProperties": false,
+    -         "properties": Object {
+    -           "after": Object {
+    -             "format": "date-time",
+    -             "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+    -             "type": "string",
+    -           },
+    -           "assigneeId": Object {
+    -             "maxLength": 191,
+    -             "minLength": 1,
+    -             "type": "string",
+    -           },
+    -           "before": Object {
+    -             "format": "date-time",
+    -             "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+    -             "type": "string",
+    -           },
+    -           "limit": Object {
+    -             "default": 20,
+    -             "maximum": 50,
+    -             "minimum": 1,
+    -             "type": "integer",
+    -           },
+    -           "q": Object {
+    -             "maxLength": 500,
+    -             "minLength": 2,
+    -             "type": "string",
+    -           },
+    -           "type": Object {
+    -             "enum": Array [
+    -               "document",
+    -               "task",
+    -               "snippet",
+    -               "decision",
+    -               "pull_request",
+    -             ],
+    -             "type": "string",
+    -           },
+    -         },
+    -         "required": Array [
+    -           "q",
+    -           "limit",
+    -         ],
+              "type": "object",
+    -       },
+    -       "Query_get__api_v2_workspaces__workspaceId__search_source": Object {
+    -         "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -         "additionalProperties": false,
+    -         "properties": Object {
+    -           "id": Object {
+    -             "maxLength": 400,
+    -             "minLength": 1,
+    -             "type": "string",
+    -           },
+    -           "type": Object {
+    -             "enum": Array [
+    -               "document",
+    -               "task",
+    -               "snippet",
+    -               "decision",
+    -               "pull_request",
+    -             ],
+    -             "type": "string",
+    -           },
+            },
+    -         "required": Array [
+    -           "type",
+    -           "id",
+    -         ],
+    -         "type": "object",
+    -       },
+            "Query_get__api_v2_workspaces__workspaceId__snippet_safety_findings": Object {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "additionalProperties": false,
+              "properties": Object {
+                "snippetId": Object {
+    @@ -2192,20 +2095,10 @@
+            "RequestTrace_get__api_v2_workspaces__workspaceId__lifecycle": Object {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "pattern": "^[a-fA-F0-9]{32}$",
+              "type": "string",
+            },
+    -       "RequestTrace_get__api_v2_workspaces__workspaceId__search": Object {
+    -         "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -         "pattern": "^[a-fA-F0-9]{32}$",
+    -         "type": "string",
+    -       },
+    -       "RequestTrace_get__api_v2_workspaces__workspaceId__search_source": Object {
+    -         "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -         "pattern": "^[a-fA-F0-9]{32}$",
+    -         "type": "string",
+    -       },
+            "RequestTrace_get__api_v2_workspaces__workspaceId__snippet_safety_findings": Object {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "pattern": "^[a-fA-F0-9]{32}$",
+              "type": "string",
+            },
+    @@ -6806,181 +6699,11 @@
+              "required": Array [
+                "workspaceName",
+                "retainedCrdtBackups",
+                "requests",
+                "deletionRequiresReview",
+    -         ],
+    -         "type": "object",
+    -       },
+    -       "Response_get__api_v2_workspaces__workspaceId__search_200": Object {
+    -         "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -         "additionalProperties": false,
+    -         "properties": Object {
+    -           "results": Object {
+    -             "items": Object {
+    -               "additionalProperties": false,
+    -               "properties": Object {
+    -                 "freshness": Object {
+    -                   "const": "current_projection",
+    -                   "type": "string",
+    -                 },
+    -                 "href": Object {
+    -                   "type": "string",
+    -                 },
+    -                 "id": Object {
+    -                   "type": "string",
+    -                 },
+    -                 "indexedAt": Object {
+    -                   "format": "date-time",
+    -                   "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+    -                   "type": "string",
+    -                 },
+    -                 "method": Object {
+    -                   "const": "lexical",
+    -                   "type": "string",
+    -                 },
+    -                 "preview": Object {
+    -                   "type": "string",
+    -                 },
+    -                 "score": Object {
+    -                   "type": "number",
+    -                 },
+    -                 "title": Object {
+    -                   "type": "string",
+    -                 },
+    -                 "type": Object {
+    -                   "enum": Array [
+    -                     "document",
+    -                     "task",
+    -                     "snippet",
+    -                     "decision",
+    -                     "pull_request",
+    -                   ],
+    -                   "type": "string",
+    -                 },
+    -                 "updatedAt": Object {
+    -                   "format": "date-time",
+    -                   "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+    -                   "type": "string",
+    -                 },
+    -               },
+    -               "required": Array [
+    -                 "type",
+    -                 "id",
+    -                 "title",
+    -                 "preview",
+    -                 "updatedAt",
+    -                 "indexedAt",
+    -                 "freshness",
+    -                 "method",
+    -                 "href",
+    -                 "score",
+    -               ],
+    -               "type": "object",
+    -             },
+    -             "type": "array",
+    -           },
+    -           "retrievedAt": Object {
+    -             "format": "date-time",
+    -             "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+    -             "type": "string",
+    -           },
+    -           "semantic": Object {
+    -             "const": "not_requested",
+    -             "type": "string",
+    -           },
+    -         },
+    -         "required": Array [
+    -           "results",
+    -           "retrievedAt",
+    -           "semantic",
+    -         ],
+    -         "type": "object",
+    -       },
+    -       "Response_get__api_v2_workspaces__workspaceId__search_source_200": Object {
+    -         "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -         "additionalProperties": false,
+    -         "properties": Object {
+    -           "results": Object {
+    -             "items": Object {
+    -               "additionalProperties": false,
+    -               "properties": Object {
+    -                 "freshness": Object {
+    -                   "const": "current_projection",
+    -                   "type": "string",
+    -                 },
+    -                 "href": Object {
+    -                   "type": "string",
+    -                 },
+    -                 "id": Object {
+    -                   "type": "string",
+    -                 },
+    -                 "indexedAt": Object {
+    -                   "format": "date-time",
+    -                   "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+    -                   "type": "string",
+    -                 },
+    -                 "method": Object {
+    -                   "const": "lexical",
+    -                   "type": "string",
+    -                 },
+    -                 "preview": Object {
+    -                   "type": "string",
+    -                 },
+    -                 "score": Object {
+    -                   "type": "number",
+    -                 },
+    -                 "title": Object {
+    -                   "type": "string",
+    -                 },
+    -                 "type": Object {
+    -                   "enum": Array [
+    -                     "document",
+    -                     "task",
+    -                     "snippet",
+    -                     "decision",
+    -                     "pull_request",
+              ],
+    -                   "type": "string",
+    -                 },
+    -                 "updatedAt": Object {
+    -                   "format": "date-time",
+    -                   "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+    -                   "type": "string",
+    -                 },
+    -               },
+    -               "required": Array [
+    -                 "type",
+    -                 "id",
+    -                 "title",
+    -                 "preview",
+    -                 "updatedAt",
+    -                 "indexedAt",
+    -                 "freshness",
+    -                 "method",
+    -                 "href",
+    -                 "score",
+    -               ],
+    -               "type": "object",
+    -             },
+    -             "type": "array",
+    -           },
+    -           "retrievedAt": Object {
+    -             "format": "date-time",
+    -             "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+    -             "type": "string",
+    -           },
+    -           "semantic": Object {
+    -             "const": "not_requested",
+    -             "type": "string",
+    -           },
+    -         },
+    -         "required": Array [
+    -           "results",
+    -           "retrievedAt",
+    -           "semantic",
+    -         ],
+              "type": "object",
+            },
+            "Response_get__api_v2_workspaces__workspaceId__snippet_safety_findings_200": Object {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "items": Object {
+    @@ -10801,24 +10524,14 @@
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "pattern": "^[a-fA-F0-9]{32}$",
+              "type": "string",
+            },
+            "Trace_get__api_v2_workspaces__workspaceId__lifecycle": Object {
+    -         "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -         "pattern": "^[a-fA-F0-9]{32}$",
+    -         "type": "string",
+    -       },
+    -       "Trace_get__api_v2_workspaces__workspaceId__search": Object {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "pattern": "^[a-fA-F0-9]{32}$",
+              "type": "string",
+            },
+    -       "Trace_get__api_v2_workspaces__workspaceId__search_source": Object {
+    -         "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -         "pattern": "^[a-fA-F0-9]{32}$",
+    -         "type": "string",
+    -       },
+            "Trace_get__api_v2_workspaces__workspaceId__snippet_safety_findings": Object {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "pattern": "^[a-fA-F0-9]{32}$",
+              "type": "string",
+            },
+    @@ -25677,463 +25390,10 @@
+                          },
+                        },
+                        "required": Array [
+                          "newOwnerUserId",
+                          "previousOwnerRole",
+    -                   ],
+    -                   "type": "object",
+    -                 },
+    -               },
+    -             },
+    -             "description": "Documented response DTO",
+    -             "headers": Object {
+    -               "X-Request-ID": Object {
+    -                 "description": "Fresh server-generated request UUID.",
+    -                 "schema": Object {
+    -                   "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -                   "format": "uuid",
+    -                   "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+    -                   "type": "string",
+    -                 },
+    -               },
+    -               "trace_id": Object {
+    -                 "description": "Present when a trace is available.",
+    -                 "schema": Object {
+    -                   "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -                   "pattern": "^[a-fA-F0-9]{32}$",
+    -                   "type": "string",
+    -                 },
+    -               },
+    -             },
+    -           },
+    -           "default": Object {
+    -             "content": Object {
+    -               "application/json": Object {
+    -                 "schema": Object {
+    -                   "$ref": "#/components/schemas/ApiError",
+    -                 },
+    -               },
+    -             },
+    -             "description": "Error envelope; frontend handlers can also return a plain error field.",
+    -             "headers": Object {
+    -               "X-Request-ID": Object {
+    -                 "description": "Fresh server-generated request UUID.",
+    -                 "schema": Object {
+    -                   "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -                   "format": "uuid",
+    -                   "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+    -                   "type": "string",
+    -                 },
+    -               },
+    -               "trace_id": Object {
+    -                 "description": "Present when a trace is available.",
+    -                 "schema": Object {
+    -                   "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -                   "pattern": "^[a-fA-F0-9]{32}$",
+    -                   "type": "string",
+    -                 },
+    -               },
+    -             },
+    -           },
+    -         },
+    -         "security": Array [
+    -           Object {
+    -             "ClerkSession": Array [],
+    -           },
+    -           Object {
+    -             "ClerkCookie": Array [],
+    -           },
+    -         ],
+    -         "x-contract-complete": true,
+    -         "x-validation-complete": false,
+    -       },
+    -     },
+    -     "/api/v2/workspaces/{workspaceId}/search": Object {
+    -       "get": Object {
+    -         "operationId": "get__api_v2_workspaces__workspaceId__search",
+    -         "parameters": Array [
+    -           Object {
+    -             "in": "path",
+    -             "name": "workspaceId",
+    -             "required": true,
+    -             "schema": Object {
+    -               "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -               "maxLength": 191,
+    -               "minLength": 1,
+    -               "type": "string",
+    -             },
+    -           },
+    -           Object {
+    -             "in": "query",
+    -             "name": "q",
+    -             "required": true,
+    -             "schema": Object {
+    -               "maxLength": 500,
+    -               "minLength": 2,
+    -               "type": "string",
+    -             },
+    -           },
+    -           Object {
+    -             "in": "query",
+    -             "name": "limit",
+    -             "required": true,
+    -             "schema": Object {
+    -               "default": 20,
+    -               "maximum": 50,
+    -               "minimum": 1,
+    -               "type": "integer",
+    -             },
+    -           },
+    -           Object {
+    -             "in": "query",
+    -             "name": "type",
+    -             "required": false,
+    -             "schema": Object {
+    -               "enum": Array [
+    -                 "document",
+    -                 "task",
+    -                 "snippet",
+    -                 "decision",
+    -                 "pull_request",
+    -               ],
+    -               "type": "string",
+    -             },
+    -           },
+    -           Object {
+    -             "in": "query",
+    -             "name": "assigneeId",
+    -             "required": false,
+    -             "schema": Object {
+    -               "maxLength": 191,
+    -               "minLength": 1,
+    -               "type": "string",
+    -             },
+    -           },
+    -           Object {
+    -             "in": "query",
+    -             "name": "after",
+    -             "required": false,
+    -             "schema": Object {
+    -               "format": "date-time",
+    -               "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+    -               "type": "string",
+    -             },
+    -           },
+    -           Object {
+    -             "in": "query",
+    -             "name": "before",
+    -             "required": false,
+    -             "schema": Object {
+    -               "format": "date-time",
+    -               "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+    -               "type": "string",
+    -             },
+    -           },
+    -           Object {
+    -             "description": "Optional legacy trace ID; invalid values are ignored.",
+    -             "in": "header",
+    -             "name": "trace_id",
+    -             "required": false,
+    -             "schema": Object {
+    -               "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -               "pattern": "^[a-fA-F0-9]{32}$",
+    -               "type": "string",
+    -             },
+    -           },
+    -         ],
+    -         "responses": Object {
+    -           "200": Object {
+    -             "content": Object {
+    -               "application/json": Object {
+    -                 "schema": Object {
+    -                   "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -                   "additionalProperties": false,
+    -                   "properties": Object {
+    -                     "results": Object {
+    -                       "items": Object {
+    -                         "additionalProperties": false,
+    -                         "properties": Object {
+    -                           "freshness": Object {
+    -                             "const": "current_projection",
+    -                             "type": "string",
+    -                           },
+    -                           "href": Object {
+    -                             "type": "string",
+    -                           },
+    -                           "id": Object {
+    -                             "type": "string",
+    -                           },
+    -                           "indexedAt": Object {
+    -                             "format": "date-time",
+    -                             "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+    -                             "type": "string",
+    -                           },
+    -                           "method": Object {
+    -                             "const": "lexical",
+    -                             "type": "string",
+    -                           },
+    -                           "preview": Object {
+    -                             "type": "string",
+    -                           },
+    -                           "score": Object {
+    -                             "type": "number",
+    -                           },
+    -                           "title": Object {
+    -                             "type": "string",
+    -                           },
+    -                           "type": Object {
+    -                             "enum": Array [
+    -                               "document",
+    -                               "task",
+    -                               "snippet",
+    -                               "decision",
+    -                               "pull_request",
+    -                             ],
+    -                             "type": "string",
+    -                           },
+    -                           "updatedAt": Object {
+    -                             "format": "date-time",
+    -                             "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+    -                             "type": "string",
+    -                           },
+    -                         },
+    -                         "required": Array [
+    -                           "type",
+    -                           "id",
+    -                           "title",
+    -                           "preview",
+    -                           "updatedAt",
+    -                           "indexedAt",
+    -                           "freshness",
+    -                           "method",
+    -                           "href",
+    -                           "score",
+    -                         ],
+    -                         "type": "object",
+    -                       },
+    -                       "type": "array",
+    -                     },
+    -                     "retrievedAt": Object {
+    -                       "format": "date-time",
+    -                       "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+    -                       "type": "string",
+    -                     },
+    -                     "semantic": Object {
+    -                       "const": "not_requested",
+    -                       "type": "string",
+    -                     },
+    -                   },
+    -                   "required": Array [
+    -                     "results",
+    -                     "retrievedAt",
+    -                     "semantic",
+    -                   ],
+    -                   "type": "object",
+    -                 },
+    -               },
+    -             },
+    -             "description": "Documented response DTO",
+    -             "headers": Object {
+    -               "X-Request-ID": Object {
+    -                 "description": "Fresh server-generated request UUID.",
+    -                 "schema": Object {
+    -                   "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -                   "format": "uuid",
+    -                   "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+    -                   "type": "string",
+    -                 },
+    -               },
+    -               "trace_id": Object {
+    -                 "description": "Present when a trace is available.",
+    -                 "schema": Object {
+    -                   "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -                   "pattern": "^[a-fA-F0-9]{32}$",
+    -                   "type": "string",
+    -                 },
+    -               },
+    -             },
+    -           },
+    -           "default": Object {
+    -             "content": Object {
+    -               "application/json": Object {
+    -                 "schema": Object {
+    -                   "$ref": "#/components/schemas/ApiError",
+    -                 },
+    -               },
+    -             },
+    -             "description": "Error envelope; frontend handlers can also return a plain error field.",
+    -             "headers": Object {
+    -               "X-Request-ID": Object {
+    -                 "description": "Fresh server-generated request UUID.",
+    -                 "schema": Object {
+    -                   "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -                   "format": "uuid",
+    -                   "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+    -                   "type": "string",
+    -                 },
+    -               },
+    -               "trace_id": Object {
+    -                 "description": "Present when a trace is available.",
+    -                 "schema": Object {
+    -                   "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -                   "pattern": "^[a-fA-F0-9]{32}$",
+    -                   "type": "string",
+    -                 },
+    -               },
+    -             },
+    -           },
+    -         },
+    -         "security": Array [
+    -           Object {
+    -             "ClerkSession": Array [],
+    -           },
+    -           Object {
+    -             "ClerkCookie": Array [],
+    -           },
+    -         ],
+    -         "x-contract-complete": true,
+    -         "x-validation-complete": false,
+    -       },
+    -     },
+    -     "/api/v2/workspaces/{workspaceId}/search/source": Object {
+    -       "get": Object {
+    -         "operationId": "get__api_v2_workspaces__workspaceId__search_source",
+    -         "parameters": Array [
+    -           Object {
+    -             "in": "path",
+    -             "name": "workspaceId",
+    -             "required": true,
+    -             "schema": Object {
+    -               "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -               "maxLength": 191,
+    -               "minLength": 1,
+    -               "type": "string",
+    -             },
+    -           },
+    -           Object {
+    -             "in": "query",
+    -             "name": "type",
+    -             "required": true,
+    -             "schema": Object {
+    -               "enum": Array [
+    -                 "document",
+    -                 "task",
+    -                 "snippet",
+    -                 "decision",
+    -                 "pull_request",
+    -               ],
+    -               "type": "string",
+    -             },
+    -           },
+    -           Object {
+    -             "in": "query",
+    -             "name": "id",
+    -             "required": true,
+    -             "schema": Object {
+    -               "maxLength": 400,
+    -               "minLength": 1,
+    -               "type": "string",
+    -             },
+    -           },
+    -           Object {
+    -             "description": "Optional legacy trace ID; invalid values are ignored.",
+    -             "in": "header",
+    -             "name": "trace_id",
+    -             "required": false,
+    -             "schema": Object {
+    -               "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -               "pattern": "^[a-fA-F0-9]{32}$",
+    -               "type": "string",
+    -             },
+    -           },
+    -         ],
+    -         "responses": Object {
+    -           "200": Object {
+    -             "content": Object {
+    -               "application/json": Object {
+    -                 "schema": Object {
+    -                   "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -                   "additionalProperties": false,
+    -                   "properties": Object {
+    -                     "results": Object {
+    -                       "items": Object {
+    -                         "additionalProperties": false,
+    -                         "properties": Object {
+    -                           "freshness": Object {
+    -                             "const": "current_projection",
+    -                             "type": "string",
+    -                           },
+    -                           "href": Object {
+    -                             "type": "string",
+    -                           },
+    -                           "id": Object {
+    -                             "type": "string",
+    -                           },
+    -                           "indexedAt": Object {
+    -                             "format": "date-time",
+    -                             "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+    -                             "type": "string",
+    -                           },
+    -                           "method": Object {
+    -                             "const": "lexical",
+    -                             "type": "string",
+    -                           },
+    -                           "preview": Object {
+    -                             "type": "string",
+    -                           },
+    -                           "score": Object {
+    -                             "type": "number",
+    -                           },
+    -                           "title": Object {
+    -                             "type": "string",
+    -                           },
+    -                           "type": Object {
+    -                             "enum": Array [
+    -                               "document",
+    -                               "task",
+    -                               "snippet",
+    -                               "decision",
+    -                               "pull_request",
+    -                             ],
+    -                             "type": "string",
+    -                           },
+    -                           "updatedAt": Object {
+    -                             "format": "date-time",
+    -                             "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+    -                             "type": "string",
+    -                           },
+    -                         },
+    -                         "required": Array [
+    -                           "type",
+    -                           "id",
+    -                           "title",
+    -                           "preview",
+    -                           "updatedAt",
+    -                           "indexedAt",
+    -                           "freshness",
+    -                           "method",
+    -                           "href",
+    -                           "score",
+    -                         ],
+    -                         "type": "object",
+    -                       },
+    -                       "type": "array",
+    -                     },
+    -                     "retrievedAt": Object {
+    -                       "format": "date-time",
+    -                       "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+    -                       "type": "string",
+    -                     },
+    -                     "semantic": Object {
+    -                       "const": "not_requested",
+    -                       "type": "string",
+    -                     },
+    -                   },
+    -                   "required": Array [
+    -                     "results",
+    -                     "retrievedAt",
+    -                     "semantic",
+                        ],
+                        "type": "object",
+                      },
+                    },
+                  },
+
+      87 | });
+      88 | it('serves the generated versioned route and Zod contract without snapshot drift', async () => {
+    > 89 |   expect(JSON.parse(readFileSync('openapi.json', 'utf8'))).toEqual(apiDocument);
+         |                                                            ^
+      90 |   const response = await request(app).get('/api/docs');
+      91 |   expect(response.status).toBe(200);
+      92 |   expect(response.body.openapi).toBe('3.1.0');
+
+      at Object.<anonymous> (src/__tests__/api-reliability.test.ts:89:60)
+
+(node:443281) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1794146315626,"service":"devsync-api","req":{"id":"284ef50d-e022-4422-8f11-b6be1514243d","method":"GET"},"requestId":"284ef50d-e022-4422-8f11-b6be1514243d","res":{"statusCode":200},"responseTime":3,"msg":"request completed"}
+{"level":30,"time":1794146316324,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794146316325,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794146316325,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794146316325,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794146316325,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794146316325,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794146316325,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794146316325,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794146316326,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794146316326,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794146316326,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794146316326,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794146316326,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794146316326,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794146316326,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794146316326,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794146316326,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794146316326,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794146316326,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794146316326,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794146316328,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794146316329,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794146316329,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794146316331,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794146316331,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794146316331,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794146316334,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794146316334,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794146316341,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794146316341,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794146316342,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"monthly"}
+{"level":30,"time":1794146316342,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794146316343,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"concurrent"}
+{"level":30,"time":1794146316343,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794146316343,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794146316344,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":40,"time":1794146316345,"service":"devsync-api","requestId":"system","event":"ai_quota_storage_error","count":1}
+{"level":30,"time":1794146316347,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794146316348,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794146316348,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794146316350,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794146316351,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794146316351,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"monthly"}
+{"level":30,"time":1794146316353,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794146316354,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794146316354,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794146316356,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794146316356,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794146316357,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"monthly"}
+{"level":30,"time":1794146316358,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794146316359,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"concurrent"}
+{"level":30,"time":1794146316359,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794146316360,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794146316360,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794146316365,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794146316365,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794146316365,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794146316365,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794146316365,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794146316365,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794146316365,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794146316365,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794146316365,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794146316365,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794146316365,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794146316365,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794146316366,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794146316366,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794146316366,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794146316366,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794146316366,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794146316366,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794146316366,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794146316366,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794146316367,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794146316368,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794146316368,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794146316370,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794146316370,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794146316371,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794146316373,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794146316375,"service":"devsync-api","requestId":"system","event":"ai_reservation_refunded","count":1}
+{"level":30,"time":1794146316378,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794146316378,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794146316381,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794146316382,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794146316383,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794146316391,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794146316391,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794146316392,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794146316392,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794146316392,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794146316392,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794146316392,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794146316392,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794146316392,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794146316392,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794146316392,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794146316392,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794146316392,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794146316392,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794146316392,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794146316392,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794146316392,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794146316392,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794146316392,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794146316392,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794146316397,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794146316397,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794146316398,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794146325581,"service":"devsync-api","req":{"id":"f026d130-89d9-41b5-b109-b2148720f0d7","method":"POST"},"requestId":"f026d130-89d9-41b5-b109-b2148720f0d7","res":{"statusCode":401},"responseTime":2,"msg":"request completed"}
+{"level":30,"time":1794146325588,"service":"devsync-api","req":{"id":"3966a6d3-431b-4606-83f1-7a40750101ba","method":"POST"},"requestId":"3966a6d3-431b-4606-83f1-7a40750101ba","res":{"statusCode":401},"responseTime":0,"msg":"request completed"}
+{"level":30,"time":1794146325596,"service":"devsync-api","req":{"id":"ca0ffc9f-e269-43d4-8d95-45f58e5abf55","method":"POST"},"requestId":"ca0ffc9f-e269-43d4-8d95-45f58e5abf55","res":{"statusCode":401},"responseTime":0,"msg":"request completed"}
+{"level":30,"time":1794146325600,"service":"devsync-api","req":{"id":"0d0f43fd-e327-48c6-a761-68b81b84e386","method":"POST"},"requestId":"0d0f43fd-e327-48c6-a761-68b81b84e386","res":{"statusCode":401},"responseTime":0,"msg":"request completed"}
+{"level":30,"time":1794146325603,"service":"devsync-api","req":{"id":"1add892b-5a37-49e8-80d3-f619ef7d3922","method":"POST"},"requestId":"1add892b-5a37-49e8-80d3-f619ef7d3922","res":{"statusCode":401},"responseTime":0,"msg":"request completed"}
+{"level":30,"time":1794146325607,"service":"devsync-api","req":{"id":"abfcdf7e-efdd-4c65-b4d8-928632ddfe3b","method":"POST"},"requestId":"abfcdf7e-efdd-4c65-b4d8-928632ddfe3b","res":{"statusCode":503},"err":{"type":"HttpError"},"responseTime":1,"msg":"request errored"}
+{"level":30,"time":1794146325610,"service":"devsync-api","req":{"id":"a1970a18-0a3e-4b6b-983d-b3422396b066","method":"POST"},"requestId":"a1970a18-0a3e-4b6b-983d-b3422396b066","res":{"statusCode":401},"responseTime":0,"msg":"request completed"}
+{"level":30,"time":1794146325620,"service":"devsync-api","req":{"id":"853adc12-33f6-425e-97d1-155a489dcca8","method":"POST"},"requestId":"853adc12-33f6-425e-97d1-155a489dcca8","res":{"statusCode":401},"responseTime":0,"msg":"request completed"}
+{"level":30,"time":1794146325625,"service":"devsync-api","req":{"id":"2922655f-5f36-4086-8e95-6779e1ead6fc","method":"POST"},"requestId":"2922655f-5f36-4086-8e95-6779e1ead6fc","res":{"statusCode":401},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1794146325629,"service":"devsync-api","req":{"id":"e2d24894-1364-431b-92bd-21b6870c444c","method":"POST"},"requestId":"e2d24894-1364-431b-92bd-21b6870c444c","res":{"statusCode":401},"responseTime":1,"msg":"request completed"}
+{"level":50,"time":1794146325632,"service":"devsync-api","req":{"id":"c9715d0c-94dd-4b83-aa35-883d45c5a493","method":"POST"},"requestId":"c9715d0c-94dd-4b83-aa35-883d45c5a493","msg":"Unexpected server error"}
+{"level":30,"time":1794146325632,"service":"devsync-api","req":{"id":"c9715d0c-94dd-4b83-aa35-883d45c5a493","method":"POST"},"requestId":"c9715d0c-94dd-4b83-aa35-883d45c5a493","res":{"statusCode":500},"err":{"type":"HttpError"},"responseTime":1,"msg":"request errored"}
+{"level":30,"time":1794146325636,"service":"devsync-api","req":{"id":"35aae28d-0e52-48b2-a4fd-a5740fef2d1a","method":"POST"},"requestId":"35aae28d-0e52-48b2-a4fd-a5740fef2d1a","res":{"statusCode":200},"responseTime":0,"msg":"request completed"}
+----------------------------------|---------|----------|---------|---------|-------------------------------------------------------
+File                              | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s                                     
+----------------------------------|---------|----------|---------|---------|-------------------------------------------------------
+All files                         |   83.13 |    73.94 |   76.75 |   85.44 |                                                       
+ src                              |    74.6 |    81.87 |   42.85 |   76.63 |                                                       
+  app.ts                          |    97.8 |       50 |      80 |   98.88 | 122                                                   
+  config-environment.ts           |     100 |    94.73 |     100 |     100 | 11,35                                                 
+  contracts.ts                    |   96.73 |       75 |     100 |     100 | 36,45-65,77,185                                       
+  openapi.ts                      |   96.51 |     95.4 |    90.9 |   97.43 | 83,158                                                
+  server.ts                       |       0 |        0 |       0 |       0 | 1-99                                                  
+  worker.ts                       |       0 |        0 |       0 |       0 | 1-103                                                 
+ src/agents                       |   82.53 |       65 |      70 |   87.93 |                                                       
+  pr-summary.agent.ts             |   81.81 |    66.66 |      75 |      90 | 50,80                                                 
+  task-completion.agent.ts        |   82.92 |    64.28 |   66.66 |   86.84 | 68,78,82,88,118                                       
+ src/controllers                  |   89.21 |    71.16 |   84.82 |   90.83 |                                                       
+  ai.controller.ts                |   82.53 |    54.34 |   54.54 |    86.2 | 36,45,54,83,120-121,142-145                           
+  auth.controller.ts              |   95.83 |       85 |     100 |     100 | 48-80                                                 
+  document.controller.ts          |   96.47 |    82.05 |     100 |   97.61 | 177,190                                               
+  github-repository.controller.ts |     100 |       90 |     100 |     100 | 117                                                   
+  invitation.controller.ts        |   32.35 |        0 |       0 |   33.33 | 14-43,47-52,56-71                                     
+  search.controller.ts            |    91.3 |       50 |   66.66 |   95.23 | 53                                                    
+  snippet.controller.ts           |   96.49 |    73.68 |   91.66 |   98.21 | 50                                                    
+  task.controller.ts              |    95.1 |    67.39 |     100 |   96.37 | 76,205,303,362-375                                    
+  workspace.controller.ts         |   84.95 |    77.41 |   86.36 |   85.71 | 117-145,170,230,238                                   
+ src/extraction                   |    87.5 |    75.67 |   72.22 |   92.72 |                                                       
+  extract-child.ts                |   69.04 |    56.66 |      20 |   77.14 | 42-57                                                 
+  server.ts                       |   96.51 |    88.63 |    92.3 |     100 | 27,47-52,63,112                                       
+ src/lib                          |   53.24 |    51.04 |      42 |   55.05 |                                                       
+  cache.ts                        |       0 |        0 |       0 |       0 | 1-67                                                  
+  create-idempotency.ts           |   89.79 |    82.92 |     100 |   93.02 | 19,26,59                                              
+  idempotency.ts                  |       0 |        0 |       0 |       0 | 1-27                                                  
+  lifecycle.ts                    |   91.66 |       60 |      75 |    90.9 | 6,27                                                  
+  prisma.ts                       |   93.75 |       70 |   66.66 |   93.75 | 36                                                    
+  queue.ts                        |   31.25 |        0 |       0 |   31.25 | 41,49-62,72-114,120-124                               
+  redis.ts                        |   26.31 |    16.66 |    9.09 |   32.25 | 12-20,25-27,41-45,51-64                               
+  tenant-prisma.ts                |   93.33 |       75 |     100 |   93.33 | 19                                                    
+ src/middleware                   |   74.12 |    58.58 |   73.52 |   75.93 |                                                       
+  ai-quota.middleware.ts          |   52.77 |    18.18 |   42.85 |   59.37 | 17-33,42-43                                           
+  auth.middleware.ts              |   51.51 |    42.85 |      25 |   53.33 | 28,45-56,62-66                                        
+  billing.middleware.ts           |   94.11 |       70 |   66.66 |   94.11 | 35                                                    
+  error.middleware.ts             |      72 |    69.04 |     100 |   70.21 | 37-38,50-51,58-59,62-63,66-67,70-71,74-75             
+  rate-limit.middleware.ts        |   85.71 |       50 |      50 |   85.71 | 20                                                    
+  rbac.middleware.ts              |   94.73 |    83.33 |     100 |   94.73 | 13                                                    
+  request-context.middleware.ts   |     100 |      100 |     100 |     100 |                                                       
+  tracing.middleware.ts           |   85.71 |       50 |     100 |     100 | 14-15                                                 
+  validate.middleware.ts          |    92.3 |       50 |     100 |   91.66 | 15                                                    
+ src/observability                |      70 |    57.14 |      48 |   70.52 |                                                       
+  ai.ts                           |     100 |      100 |     100 |     100 |                                                       
+  logger.ts                       |     100 |      100 |     100 |     100 |                                                       
+  metrics.ts                      |   94.73 |    92.85 |   85.71 |   94.28 | 32,77                                                 
+  reporting.ts                    |   31.57 |     12.5 |      25 |   35.29 | 4-27,31,34-35                                         
+  request-scope.ts                |     100 |      100 |     100 |     100 |                                                       
+  telemetry.ts                    |   34.78 |        0 |      10 |   34.78 | 9-74,78-79                                            
+ src/routes                       |   93.84 |     76.6 |   94.39 |   94.65 |                                                       
+  ai-v3.routes.ts                 |    62.5 |        0 |       0 |   61.29 | 13-19,24-28,41-44                                     
+  ai.routes.ts                    |     100 |      100 |     100 |     100 |                                                       
+  async-digest.routes.ts          |   98.11 |    83.33 |     100 |     100 | 95                                                    
+  auth.routes.ts                  |     100 |      100 |     100 |     100 |                                                       
+  decision-receipts.routes.ts     |   91.66 |     82.5 |   95.23 |   92.85 | 63,69,107-120,161                                     
+  document.routes.ts              |     100 |      100 |     100 |     100 |                                                       
+  github-execution.routes.ts      |     100 |      100 |     100 |     100 |                                                       
+  github-installation.routes.ts   |   86.48 |    62.85 |   66.66 |   88.88 | 25,40,43,47                                           
+  github-webhook.routes.ts        |   94.93 |    85.71 |     100 |   97.36 | 187,230                                               
+  health.routes.ts                |   83.33 |    70.83 |      90 |   84.37 | 16-17,54-56                                           
+  ingestion.routes.ts             |   93.33 |       60 |     100 |   93.33 | 30,69                                                 
+  knowledge-search.routes.ts      |     100 |      100 |     100 |     100 |                                                       
+  lifecycle.routes.ts             |   97.77 |    78.94 |     100 |    97.7 | 23,73                                                 
+  scim.routes.ts                  |      92 |    68.18 |     100 |   92.85 | 130-131,161-163                                       
+  snippet-safety.routes.ts        |     100 |      100 |     100 |     100 |                                                       
+  snippet.routes.ts               |     100 |      100 |     100 |     100 |                                                       
+  stripe.webhook.ts               |   91.66 |       75 |     100 |   91.66 | 8                                                     
+  superadmin.routes.ts            |     100 |       75 |     100 |     100 | 25                                                    
+  task.routes.ts                  |     100 |      100 |     100 |     100 |                                                       
+  workspace.routes.ts             |     100 |      100 |     100 |     100 |                                                       
+ src/schemas                      |     100 |      100 |     100 |     100 |                                                       
+  search.schema.ts                |     100 |      100 |     100 |     100 |                                                       
+ src/scripts                      |       0 |        0 |       0 |       0 |                                                       
+  openapi.ts                      |       0 |        0 |       0 |       0 | 1-24                                                  
+ src/security                     |   81.29 |    74.35 |   86.76 |   85.54 |                                                       
+  authentication.ts               |   57.57 |    26.31 |      50 |   60.71 | 33-38,46-50                                           
+  invitation-policy.ts            |   16.66 |        0 |       0 |   18.18 | 7-54                                                  
+  policy-deadline.ts              |   85.71 |    33.33 |   66.66 |     100 | 2-12                                                  
+  provider-sessions.ts            |   84.48 |    80.48 |    87.5 |    87.5 | 83,89,97-102                                          
+  realtime-identity.ts            |   73.91 |    70.83 |   66.66 |   80.95 | 16,23-24,28                                           
+  rich-text.ts                    |   86.36 |    85.71 |     100 |     100 | 7,11,13-14                                            
+  service-policy.ts               |    87.9 |    83.89 |     100 |   93.63 | 24,62,83,115,135,209,246                              
+  snippet-preflight.ts            |     100 |      100 |     100 |     100 |                                                       
+  workspace-policy.ts             |      92 |     90.9 |     100 |   95.65 | 35,62                                                 
+ src/services                     |   84.53 |    78.03 |   82.45 |   87.63 |                                                       
+  ai-gateway.service.ts           |       0 |        0 |       0 |       0 | 1-100                                                 
+  ai-prompt.ts                    |     100 |      100 |     100 |     100 |                                                       
+  ai-provider.ts                  |   96.66 |       90 |   91.66 |     100 | 76,80,83                                              
+  ai-quota.ts                     |      90 |       86 |   93.75 |    90.9 | 26-29,155,159                                         
+  ai-schema.ts                    |     100 |      100 |     100 |     100 |                                                       
+  async-digest.ts                 |   97.36 |    95.23 |     100 |   98.57 | 201                                                   
+  billing.service.ts              |   68.57 |    45.71 |      60 |   70.58 | 10-11,21,29-36,67-73                                  
+  cloudinary.service.ts           |       0 |      100 |       0 |       0 | 1-32                                                  
+  collaboration-acl.ts            |     100 |      100 |     100 |     100 |                                                       
+  collaboration-server.ts         |   89.88 |    82.74 |   94.44 |   93.36 | 183-185,250-252,286-287,341-342,396-397,401-402,430   
+  crdt-journal.ts                 |   91.78 |       80 |     100 |   95.45 | 54-55,82                                              
+  crdt-migration.ts               |   86.36 |    76.19 |     100 |   97.22 | 57                                                    
+  crdt-schema.ts                  |     100 |      100 |     100 |     100 |                                                       
+  crdt-sync.service.ts            |   78.57 |    73.33 |     100 |   84.61 | 30,33,52-63                                           
+  decision-receipts.ts            |   97.61 |     86.2 |     100 |     100 | 24,26,61,65                                           
+  embedding-runner.ts             |    87.5 |       50 |      80 |   93.33 | 15                                                    
+  embedding.service.ts            |   85.14 |    76.56 |   81.25 |   89.24 | 29-40,223                                             
+  extraction-client.ts            |   89.47 |    83.33 |     100 |   91.17 | 33,57,61                                              
+  github-execution.ts             |   93.87 |    81.57 |     100 |     100 | 54-55,60,63-68,83                                     
+  github-work-source.ts           |   98.18 |    92.85 |     100 |     100 | 23,35,64                                              
+  ingestion.service.ts            |   63.63 |    69.69 |   53.33 |   66.31 | 42-50,68-69,74-95,121-130,142-143,173,184,194,200,203 
+  knowledge-search.ts             |   84.31 |    70.17 |     100 |   94.59 | 115,132                                               
+  secret.service.ts               |     100 |      100 |     100 |     100 |                                                       
+  yjs.service.ts                  |   82.35 |       25 |   66.66 |    87.5 | 8-9                                                   
+ src/socket                       |   87.17 |     74.7 |    83.6 |   88.65 |                                                       
+  index.ts                        |   58.33 |      100 |   33.33 |   58.33 | 11-17,20-22                                           
+  kanban.handler.ts               |   90.62 |       88 |      75 |   90.62 | 60,64,95                                              
+  presence-store.ts               |   97.77 |    79.16 |   88.88 |   97.43 | 24                                                    
+  presence.handler.ts             |   78.08 |    45.45 |    90.9 |   81.42 | 51-52,88-92,102-111                                   
+  rate-limiter.ts                 |      96 |     87.5 |     100 |      96 | 66                                                    
+  server.ts                       |   88.41 |    75.82 |   83.87 |   90.54 | 76,79,89,126,142-143,150-151,154-155,164,166,181,206  
+ src/utils                        |     100 |       20 |     100 |     100 |                                                       
+  errors.ts                       |     100 |       20 |     100 |     100 | 14-26,38                                              
+----------------------------------|---------|----------|---------|---------|-------------------------------------------------------
+
+Summary of all failing tests
+FAIL src/__tests__/resource-mutations.integration.test.ts (20.646 s)
+  ● knowledge receipt derivatives and GitHub metadata retain source and owner authority
+
+    expect(received).toEqual(expected) // deep equality
+
+    Expected: ArrayContaining [ObjectContaining {"id": "cmw7wcffs01i5a1y4kvwixgoo"}, ObjectContaining {"href": "https://github.com/fixture/quartz/pull/7", "id": "cmw7wcffv01i9a1y4dnvee6lp:7"}]
+    Received: [{"freshness": "current_projection", "href": "/workspace/resource-a-110/decisions", "id": "cmw7wcffs01i5a1y4kvwixgoo", "indexedAt": "2026-11-08T13:57:15.688Z", "method": "lexical", "preview": "bounded evidence
+    quartz proof", "score": 0.07599088549613953, "title": "quartz decision", "type": "decision", "updatedAt": "2026-11-08T13:57:15.688Z"}]
+
+      2582 |     });
+      2583 |     const owner = await request(app).get(`/workspaces/${a}/knowledge?q=quartz`);
+    > 2584 |     expect(owner.body.results).toEqual(
+           |                                ^
+      2585 |       expect.arrayContaining([
+      2586 |         expect.objectContaining({ id: receipt.id }),
+      2587 |         expect.objectContaining({
+
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:2584:32)
+
+FAIL src/__tests__/api-reliability.test.ts
+  ● serves the generated versioned route and Zod contract without snapshot drift
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 740
+    + Received  +   0
+
+    @@ -232,22 +232,10 @@
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string",
+            },
+    -       "Correlation_get__api_v2_workspaces__workspaceId__search": Object {
+    -         "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -         "format": "uuid",
+    -         "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+    -         "type": "string",
+    -       },
+    -       "Correlation_get__api_v2_workspaces__workspaceId__search_source": Object {
+    -         "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -         "format": "uuid",
+    -         "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+    -         "type": "string",
+    -       },
+            "Correlation_get__api_v2_workspaces__workspaceId__snippet_safety_findings": Object {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+              "type": "string",
+    @@ -1095,22 +1083,10 @@
+              "maxLength": 191,
+              "minLength": 1,
+              "type": "string",
+            },
+            "Path_get__api_v2_workspaces__workspaceId__lifecycle_workspaceId": Object {
+    -         "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -         "maxLength": 191,
+    -         "minLength": 1,
+    -         "type": "string",
+    -       },
+    -       "Path_get__api_v2_workspaces__workspaceId__search_source_workspaceId": Object {
+    -         "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -         "maxLength": 191,
+    -         "minLength": 1,
+    -         "type": "string",
+    -       },
+    -       "Path_get__api_v2_workspaces__workspaceId__search_workspaceId": Object {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "maxLength": 191,
+              "minLength": 1,
+              "type": "string",
+            },
+    @@ -1621,85 +1597,12 @@
+            },
+            "Query_get__api_v2_workspaces__workspaceId__lifecycle": Object {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "additionalProperties": false,
+              "properties": Object {},
+    -         "type": "object",
+    -       },
+    -       "Query_get__api_v2_workspaces__workspaceId__search": Object {
+    -         "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -         "additionalProperties": false,
+    -         "properties": Object {
+    -           "after": Object {
+    -             "format": "date-time",
+    -             "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+    -             "type": "string",
+    -           },
+    -           "assigneeId": Object {
+    -             "maxLength": 191,
+    -             "minLength": 1,
+    -             "type": "string",
+    -           },
+    -           "before": Object {
+    -             "format": "date-time",
+    -             "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+    -             "type": "string",
+    -           },
+    -           "limit": Object {
+    -             "default": 20,
+    -             "maximum": 50,
+    -             "minimum": 1,
+    -             "type": "integer",
+    -           },
+    -           "q": Object {
+    -             "maxLength": 500,
+    -             "minLength": 2,
+    -             "type": "string",
+    -           },
+    -           "type": Object {
+    -             "enum": Array [
+    -               "document",
+    -               "task",
+    -               "snippet",
+    -               "decision",
+    -               "pull_request",
+    -             ],
+    -             "type": "string",
+    -           },
+    -         },
+    -         "required": Array [
+    -           "q",
+    -           "limit",
+    -         ],
+              "type": "object",
+    -       },
+    -       "Query_get__api_v2_workspaces__workspaceId__search_source": Object {
+    -         "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -         "additionalProperties": false,
+    -         "properties": Object {
+    -           "id": Object {
+    -             "maxLength": 400,
+    -             "minLength": 1,
+    -             "type": "string",
+    -           },
+    -           "type": Object {
+    -             "enum": Array [
+    -               "document",
+    -               "task",
+    -               "snippet",
+    -               "decision",
+    -               "pull_request",
+    -             ],
+    -             "type": "string",
+    -           },
+            },
+    -         "required": Array [
+    -           "type",
+    -           "id",
+    -         ],
+    -         "type": "object",
+    -       },
+            "Query_get__api_v2_workspaces__workspaceId__snippet_safety_findings": Object {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "additionalProperties": false,
+              "properties": Object {
+                "snippetId": Object {
+    @@ -2192,20 +2095,10 @@
+            "RequestTrace_get__api_v2_workspaces__workspaceId__lifecycle": Object {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "pattern": "^[a-fA-F0-9]{32}$",
+              "type": "string",
+            },
+    -       "RequestTrace_get__api_v2_workspaces__workspaceId__search": Object {
+    -         "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -         "pattern": "^[a-fA-F0-9]{32}$",
+    -         "type": "string",
+    -       },
+    -       "RequestTrace_get__api_v2_workspaces__workspaceId__search_source": Object {
+    -         "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -         "pattern": "^[a-fA-F0-9]{32}$",
+    -         "type": "string",
+    -       },
+            "RequestTrace_get__api_v2_workspaces__workspaceId__snippet_safety_findings": Object {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "pattern": "^[a-fA-F0-9]{32}$",
+              "type": "string",
+            },
+    @@ -6806,181 +6699,11 @@
+              "required": Array [
+                "workspaceName",
+                "retainedCrdtBackups",
+                "requests",
+                "deletionRequiresReview",
+    -         ],
+    -         "type": "object",
+    -       },
+    -       "Response_get__api_v2_workspaces__workspaceId__search_200": Object {
+    -         "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -         "additionalProperties": false,
+    -         "properties": Object {
+    -           "results": Object {
+    -             "items": Object {
+    -               "additionalProperties": false,
+    -               "properties": Object {
+    -                 "freshness": Object {
+    -                   "const": "current_projection",
+    -                   "type": "string",
+    -                 },
+    -                 "href": Object {
+    -                   "type": "string",
+    -                 },
+    -                 "id": Object {
+    -                   "type": "string",
+    -                 },
+    -                 "indexedAt": Object {
+    -                   "format": "date-time",
+    -                   "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+    -                   "type": "string",
+    -                 },
+    -                 "method": Object {
+    -                   "const": "lexical",
+    -                   "type": "string",
+    -                 },
+    -                 "preview": Object {
+    -                   "type": "string",
+    -                 },
+    -                 "score": Object {
+    -                   "type": "number",
+    -                 },
+    -                 "title": Object {
+    -                   "type": "string",
+    -                 },
+    -                 "type": Object {
+    -                   "enum": Array [
+    -                     "document",
+    -                     "task",
+    -                     "snippet",
+    -                     "decision",
+    -                     "pull_request",
+    -                   ],
+    -                   "type": "string",
+    -                 },
+    -                 "updatedAt": Object {
+    -                   "format": "date-time",
+    -                   "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+    -                   "type": "string",
+    -                 },
+    -               },
+    -               "required": Array [
+    -                 "type",
+    -                 "id",
+    -                 "title",
+    -                 "preview",
+    -                 "updatedAt",
+    -                 "indexedAt",
+    -                 "freshness",
+    -                 "method",
+    -                 "href",
+    -                 "score",
+    -               ],
+    -               "type": "object",
+    -             },
+    -             "type": "array",
+    -           },
+    -           "retrievedAt": Object {
+    -             "format": "date-time",
+    -             "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+    -             "type": "string",
+    -           },
+    -           "semantic": Object {
+    -             "const": "not_requested",
+    -             "type": "string",
+    -           },
+    -         },
+    -         "required": Array [
+    -           "results",
+    -           "retrievedAt",
+    -           "semantic",
+    -         ],
+    -         "type": "object",
+    -       },
+    -       "Response_get__api_v2_workspaces__workspaceId__search_source_200": Object {
+    -         "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -         "additionalProperties": false,
+    -         "properties": Object {
+    -           "results": Object {
+    -             "items": Object {
+    -               "additionalProperties": false,
+    -               "properties": Object {
+    -                 "freshness": Object {
+    -                   "const": "current_projection",
+    -                   "type": "string",
+    -                 },
+    -                 "href": Object {
+    -                   "type": "string",
+    -                 },
+    -                 "id": Object {
+    -                   "type": "string",
+    -                 },
+    -                 "indexedAt": Object {
+    -                   "format": "date-time",
+    -                   "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+    -                   "type": "string",
+    -                 },
+    -                 "method": Object {
+    -                   "const": "lexical",
+    -                   "type": "string",
+    -                 },
+    -                 "preview": Object {
+    -                   "type": "string",
+    -                 },
+    -                 "score": Object {
+    -                   "type": "number",
+    -                 },
+    -                 "title": Object {
+    -                   "type": "string",
+    -                 },
+    -                 "type": Object {
+    -                   "enum": Array [
+    -                     "document",
+    -                     "task",
+    -                     "snippet",
+    -                     "decision",
+    -                     "pull_request",
+              ],
+    -                   "type": "string",
+    -                 },
+    -                 "updatedAt": Object {
+    -                   "format": "date-time",
+    -                   "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+    -                   "type": "string",
+    -                 },
+    -               },
+    -               "required": Array [
+    -                 "type",
+    -                 "id",
+    -                 "title",
+    -                 "preview",
+    -                 "updatedAt",
+    -                 "indexedAt",
+    -                 "freshness",
+    -                 "method",
+    -                 "href",
+    -                 "score",
+    -               ],
+    -               "type": "object",
+    -             },
+    -             "type": "array",
+    -           },
+    -           "retrievedAt": Object {
+    -             "format": "date-time",
+    -             "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+    -             "type": "string",
+    -           },
+    -           "semantic": Object {
+    -             "const": "not_requested",
+    -             "type": "string",
+    -           },
+    -         },
+    -         "required": Array [
+    -           "results",
+    -           "retrievedAt",
+    -           "semantic",
+    -         ],
+              "type": "object",
+            },
+            "Response_get__api_v2_workspaces__workspaceId__snippet_safety_findings_200": Object {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "items": Object {
+    @@ -10801,24 +10524,14 @@
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "pattern": "^[a-fA-F0-9]{32}$",
+              "type": "string",
+            },
+            "Trace_get__api_v2_workspaces__workspaceId__lifecycle": Object {
+    -         "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -         "pattern": "^[a-fA-F0-9]{32}$",
+    -         "type": "string",
+    -       },
+    -       "Trace_get__api_v2_workspaces__workspaceId__search": Object {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "pattern": "^[a-fA-F0-9]{32}$",
+              "type": "string",
+            },
+    -       "Trace_get__api_v2_workspaces__workspaceId__search_source": Object {
+    -         "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -         "pattern": "^[a-fA-F0-9]{32}$",
+    -         "type": "string",
+    -       },
+            "Trace_get__api_v2_workspaces__workspaceId__snippet_safety_findings": Object {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "pattern": "^[a-fA-F0-9]{32}$",
+              "type": "string",
+            },
+    @@ -25677,463 +25390,10 @@
+                          },
+                        },
+                        "required": Array [
+                          "newOwnerUserId",
+                          "previousOwnerRole",
+    -                   ],
+    -                   "type": "object",
+    -                 },
+    -               },
+    -             },
+    -             "description": "Documented response DTO",
+    -             "headers": Object {
+    -               "X-Request-ID": Object {
+    -                 "description": "Fresh server-generated request UUID.",
+    -                 "schema": Object {
+    -                   "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -                   "format": "uuid",
+    -                   "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+    -                   "type": "string",
+    -                 },
+    -               },
+    -               "trace_id": Object {
+    -                 "description": "Present when a trace is available.",
+    -                 "schema": Object {
+    -                   "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -                   "pattern": "^[a-fA-F0-9]{32}$",
+    -                   "type": "string",
+    -                 },
+    -               },
+    -             },
+    -           },
+    -           "default": Object {
+    -             "content": Object {
+    -               "application/json": Object {
+    -                 "schema": Object {
+    -                   "$ref": "#/components/schemas/ApiError",
+    -                 },
+    -               },
+    -             },
+    -             "description": "Error envelope; frontend handlers can also return a plain error field.",
+    -             "headers": Object {
+    -               "X-Request-ID": Object {
+    -                 "description": "Fresh server-generated request UUID.",
+    -                 "schema": Object {
+    -                   "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -                   "format": "uuid",
+    -                   "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+    -                   "type": "string",
+    -                 },
+    -               },
+    -               "trace_id": Object {
+    -                 "description": "Present when a trace is available.",
+    -                 "schema": Object {
+    -                   "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -                   "pattern": "^[a-fA-F0-9]{32}$",
+    -                   "type": "string",
+    -                 },
+    -               },
+    -             },
+    -           },
+    -         },
+    -         "security": Array [
+    -           Object {
+    -             "ClerkSession": Array [],
+    -           },
+    -           Object {
+    -             "ClerkCookie": Array [],
+    -           },
+    -         ],
+    -         "x-contract-complete": true,
+    -         "x-validation-complete": false,
+    -       },
+    -     },
+    -     "/api/v2/workspaces/{workspaceId}/search": Object {
+    -       "get": Object {
+    -         "operationId": "get__api_v2_workspaces__workspaceId__search",
+    -         "parameters": Array [
+    -           Object {
+    -             "in": "path",
+    -             "name": "workspaceId",
+    -             "required": true,
+    -             "schema": Object {
+    -               "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -               "maxLength": 191,
+    -               "minLength": 1,
+    -               "type": "string",
+    -             },
+    -           },
+    -           Object {
+    -             "in": "query",
+    -             "name": "q",
+    -             "required": true,
+    -             "schema": Object {
+    -               "maxLength": 500,
+    -               "minLength": 2,
+    -               "type": "string",
+    -             },
+    -           },
+    -           Object {
+    -             "in": "query",
+    -             "name": "limit",
+    -             "required": true,
+    -             "schema": Object {
+    -               "default": 20,
+    -               "maximum": 50,
+    -               "minimum": 1,
+    -               "type": "integer",
+    -             },
+    -           },
+    -           Object {
+    -             "in": "query",
+    -             "name": "type",
+    -             "required": false,
+    -             "schema": Object {
+    -               "enum": Array [
+    -                 "document",
+    -                 "task",
+    -                 "snippet",
+    -                 "decision",
+    -                 "pull_request",
+    -               ],
+    -               "type": "string",
+    -             },
+    -           },
+    -           Object {
+    -             "in": "query",
+    -             "name": "assigneeId",
+    -             "required": false,
+    -             "schema": Object {
+    -               "maxLength": 191,
+    -               "minLength": 1,
+    -               "type": "string",
+    -             },
+    -           },
+    -           Object {
+    -             "in": "query",
+    -             "name": "after",
+    -             "required": false,
+    -             "schema": Object {
+    -               "format": "date-time",
+    -               "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+    -               "type": "string",
+    -             },
+    -           },
+    -           Object {
+    -             "in": "query",
+    -             "name": "before",
+    -             "required": false,
+    -             "schema": Object {
+    -               "format": "date-time",
+    -               "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$",
+    -               "type": "string",
+    -             },
+    -           },
+    -           Object {
+    -             "description": "Optional legacy trace ID; invalid values are ignored.",
+    -             "in": "header",
+    -             "name": "trace_id",
+    -             "required": false,
+    -             "schema": Object {
+    -               "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -               "pattern": "^[a-fA-F0-9]{32}$",
+    -               "type": "string",
+    -             },
+    -           },
+    -         ],
+    -         "responses": Object {
+    -           "200": Object {
+    -             "content": Object {
+    -               "application/json": Object {
+    -                 "schema": Object {
+    -                   "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -                   "additionalProperties": false,
+    -                   "properties": Object {
+    -                     "results": Object {
+    -                       "items": Object {
+    -                         "additionalProperties": false,
+    -                         "properties": Object {
+    -                           "freshness": Object {
+    -                             "const": "current_projection",
+    -                             "type": "string",
+    -                           },
+    -                           "href": Object {
+    -                             "type": "string",
+    -                           },
+    -                           "id": Object {
+    -                             "type": "string",
+    -                           },
+    -                           "indexedAt": Object {
+    -                             "format": "date-time",
+    -                             "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+    -                             "type": "string",
+    -                           },
+    -                           "method": Object {
+    -                             "const": "lexical",
+    -                             "type": "string",
+    -                           },
+    -                           "preview": Object {
+    -                             "type": "string",
+    -                           },
+    -                           "score": Object {
+    -                             "type": "number",
+    -                           },
+    -                           "title": Object {
+    -                             "type": "string",
+    -                           },
+    -                           "type": Object {
+    -                             "enum": Array [
+    -                               "document",
+    -                               "task",
+    -                               "snippet",
+    -                               "decision",
+    -                               "pull_request",
+    -                             ],
+    -                             "type": "string",
+    -                           },
+    -                           "updatedAt": Object {
+    -                             "format": "date-time",
+    -                             "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+    -                             "type": "string",
+    -                           },
+    -                         },
+    -                         "required": Array [
+    -                           "type",
+    -                           "id",
+    -                           "title",
+    -                           "preview",
+    -                           "updatedAt",
+    -                           "indexedAt",
+    -                           "freshness",
+    -                           "method",
+    -                           "href",
+    -                           "score",
+    -                         ],
+    -                         "type": "object",
+    -                       },
+    -                       "type": "array",
+    -                     },
+    -                     "retrievedAt": Object {
+    -                       "format": "date-time",
+    -                       "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+    -                       "type": "string",
+    -                     },
+    -                     "semantic": Object {
+    -                       "const": "not_requested",
+    -                       "type": "string",
+    -                     },
+    -                   },
+    -                   "required": Array [
+    -                     "results",
+    -                     "retrievedAt",
+    -                     "semantic",
+    -                   ],
+    -                   "type": "object",
+    -                 },
+    -               },
+    -             },
+    -             "description": "Documented response DTO",
+    -             "headers": Object {
+    -               "X-Request-ID": Object {
+    -                 "description": "Fresh server-generated request UUID.",
+    -                 "schema": Object {
+    -                   "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -                   "format": "uuid",
+    -                   "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+    -                   "type": "string",
+    -                 },
+    -               },
+    -               "trace_id": Object {
+    -                 "description": "Present when a trace is available.",
+    -                 "schema": Object {
+    -                   "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -                   "pattern": "^[a-fA-F0-9]{32}$",
+    -                   "type": "string",
+    -                 },
+    -               },
+    -             },
+    -           },
+    -           "default": Object {
+    -             "content": Object {
+    -               "application/json": Object {
+    -                 "schema": Object {
+    -                   "$ref": "#/components/schemas/ApiError",
+    -                 },
+    -               },
+    -             },
+    -             "description": "Error envelope; frontend handlers can also return a plain error field.",
+    -             "headers": Object {
+    -               "X-Request-ID": Object {
+    -                 "description": "Fresh server-generated request UUID.",
+    -                 "schema": Object {
+    -                   "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -                   "format": "uuid",
+    -                   "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+    -                   "type": "string",
+    -                 },
+    -               },
+    -               "trace_id": Object {
+    -                 "description": "Present when a trace is available.",
+    -                 "schema": Object {
+    -                   "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -                   "pattern": "^[a-fA-F0-9]{32}$",
+    -                   "type": "string",
+    -                 },
+    -               },
+    -             },
+    -           },
+    -         },
+    -         "security": Array [
+    -           Object {
+    -             "ClerkSession": Array [],
+    -           },
+    -           Object {
+    -             "ClerkCookie": Array [],
+    -           },
+    -         ],
+    -         "x-contract-complete": true,
+    -         "x-validation-complete": false,
+    -       },
+    -     },
+    -     "/api/v2/workspaces/{workspaceId}/search/source": Object {
+    -       "get": Object {
+    -         "operationId": "get__api_v2_workspaces__workspaceId__search_source",
+    -         "parameters": Array [
+    -           Object {
+    -             "in": "path",
+    -             "name": "workspaceId",
+    -             "required": true,
+    -             "schema": Object {
+    -               "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -               "maxLength": 191,
+    -               "minLength": 1,
+    -               "type": "string",
+    -             },
+    -           },
+    -           Object {
+    -             "in": "query",
+    -             "name": "type",
+    -             "required": true,
+    -             "schema": Object {
+    -               "enum": Array [
+    -                 "document",
+    -                 "task",
+    -                 "snippet",
+    -                 "decision",
+    -                 "pull_request",
+    -               ],
+    -               "type": "string",
+    -             },
+    -           },
+    -           Object {
+    -             "in": "query",
+    -             "name": "id",
+    -             "required": true,
+    -             "schema": Object {
+    -               "maxLength": 400,
+    -               "minLength": 1,
+    -               "type": "string",
+    -             },
+    -           },
+    -           Object {
+    -             "description": "Optional legacy trace ID; invalid values are ignored.",
+    -             "in": "header",
+    -             "name": "trace_id",
+    -             "required": false,
+    -             "schema": Object {
+    -               "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -               "pattern": "^[a-fA-F0-9]{32}$",
+    -               "type": "string",
+    -             },
+    -           },
+    -         ],
+    -         "responses": Object {
+    -           "200": Object {
+    -             "content": Object {
+    -               "application/json": Object {
+    -                 "schema": Object {
+    -                   "$schema": "https://json-schema.org/draft/2020-12/schema",
+    -                   "additionalProperties": false,
+    -                   "properties": Object {
+    -                     "results": Object {
+    -                       "items": Object {
+    -                         "additionalProperties": false,
+    -                         "properties": Object {
+    -                           "freshness": Object {
+    -                             "const": "current_projection",
+    -                             "type": "string",
+    -                           },
+    -                           "href": Object {
+    -                             "type": "string",
+    -                           },
+    -                           "id": Object {
+    -                             "type": "string",
+    -                           },
+    -                           "indexedAt": Object {
+    -                             "format": "date-time",
+    -                             "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+    -                             "type": "string",
+    -                           },
+    -                           "method": Object {
+    -                             "const": "lexical",
+    -                             "type": "string",
+    -                           },
+    -                           "preview": Object {
+    -                             "type": "string",
+    -                           },
+    -                           "score": Object {
+    -                             "type": "number",
+    -                           },
+    -                           "title": Object {
+    -                             "type": "string",
+    -                           },
+    -                           "type": Object {
+    -                             "enum": Array [
+    -                               "document",
+    -                               "task",
+    -                               "snippet",
+    -                               "decision",
+    -                               "pull_request",
+    -                             ],
+    -                             "type": "string",
+    -                           },
+    -                           "updatedAt": Object {
+    -                             "format": "date-time",
+    -                             "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+    -                             "type": "string",
+    -                           },
+    -                         },
+    -                         "required": Array [
+    -                           "type",
+    -                           "id",
+    -                           "title",
+    -                           "preview",
+    -                           "updatedAt",
+    -                           "indexedAt",
+    -                           "freshness",
+    -                           "method",
+    -                           "href",
+    -                           "score",
+    -                         ],
+    -                         "type": "object",
+    -                       },
+    -                       "type": "array",
+    -                     },
+    -                     "retrievedAt": Object {
+    -                       "format": "date-time",
+    -                       "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+    -                       "type": "string",
+    -                     },
+    -                     "semantic": Object {
+    -                       "const": "not_requested",
+    -                       "type": "string",
+    -                     },
+    -                   },
+    -                   "required": Array [
+    -                     "results",
+    -                     "retrievedAt",
+    -                     "semantic",
+                        ],
+                        "type": "object",
+                      },
+                    },
+                  },
+
+      87 | });
+      88 | it('serves the generated versioned route and Zod contract without snapshot drift', async () => {
+    > 89 |   expect(JSON.parse(readFileSync('openapi.json', 'utf8'))).toEqual(apiDocument);
+         |                                                            ^
+      90 |   const response = await request(app).get('/api/docs');
+      91 |   expect(response.status).toBe(200);
+      92 |   expect(response.body.openapi).toBe('3.1.0');
+
+      at Object.<anonymous> (src/__tests__/api-reliability.test.ts:89:60)
+
+
+Test Suites: 2 failed, 31 passed, 33 total
+Tests:       2 failed, 322 passed, 324 total
+Snapshots:   0 total
+Time:        113.331 s
+Ran all test suites.

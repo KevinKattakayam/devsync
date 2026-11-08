@@ -1,0 +1,181 @@
+
+> devsync-backend@1.0.0 test
+> node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand --runTestsByPath src/__tests__/resource-mutations.integration.test.ts --testNamePattern=search returns projected
+
+{"level":40,"time":1794146129500,"service":"devsync-api","requestId":"system","event":"ai_quota_storage_error","count":1}
+  console.warn
+    [Embedding] Semantic workspace context query skipped: Error
+
+      231 |       : results;
+      232 |   } catch (error) {
+    > 233 |     console.warn(
+          |             ^
+      234 |       '[Embedding] Semantic workspace context query skipped:',
+      235 |       error instanceof Error ? error.name : 'UnknownError',
+      236 |     );
+
+      at warn (src/services/embedding.service.ts:233:13)
+      at workspaceSearch (src/controllers/search.controller.ts:15:22)
+
+FAIL src/__tests__/resource-mutations.integration.test.ts (14.11 s)
+  ● search returns projected TipTap body edits without an embedding provider
+
+    expect(received).toEqual(expected) // deep equality
+
+    Expected: ArrayContaining [ObjectContaining {"id": "doc-resource-a-1"}]
+    Received: []
+
+      2428 |     const result = await request(app).get(`/workspaces/${a}/search?q=freshbodyquartz`).set('x-fixture-actor', 'viewer');
+      2429 |     expect(result.status).toBe(200);
+    > 2430 |     expect(result.body.results).toEqual(expect.arrayContaining([expect.objectContaining({ id })]));
+           |                                 ^
+      2431 |   } finally { doc.destroy(); }
+      2432 | });
+      2433 |
+
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:2430:33)
+
+----------------------------------|---------|----------|---------|---------|-------------------------------------------------------------------------------
+File                              | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s                                                             
+----------------------------------|---------|----------|---------|---------|-------------------------------------------------------------------------------
+All files                         |   15.43 |     2.84 |    5.78 |   16.38 |                                                                               
+ src                              |       0 |        0 |       0 |       0 |                                                                               
+  app.ts                          |       0 |        0 |       0 |       0 | 1-129                                                                         
+  config-environment.ts           |       0 |        0 |       0 |       0 | 2-45                                                                          
+  contracts.ts                    |       0 |        0 |       0 |       0 | 1-715                                                                         
+  openapi.ts                      |       0 |        0 |       0 |       0 | 1-239                                                                         
+  server.ts                       |       0 |        0 |       0 |       0 | 1-99                                                                          
+  worker.ts                       |       0 |        0 |       0 |       0 | 1-103                                                                         
+ src/agents                       |   22.22 |        0 |       0 |   24.13 |                                                                               
+  pr-summary.agent.ts             |   22.72 |        0 |       0 |      25 | 21-58,80                                                                      
+  task-completion.agent.ts        |   21.95 |        0 |       0 |   23.68 | 23-100,118                                                                    
+ src/controllers                  |    21.8 |     1.39 |    1.78 |   22.24 |                                                                               
+  ai.controller.ts                |   22.22 |     4.34 |       0 |   22.41 | 28-150                                                                        
+  auth.controller.ts              |   29.16 |        0 |       0 |   31.11 | 31-58,63-83,88-103                                                            
+  document.controller.ts          |   23.52 |        0 |       0 |    23.8 | 40-64,68-91,95-151,155-211,215-222                                            
+  github-repository.controller.ts |   21.81 |        0 |       0 |   22.64 | 27-45,59-67,71-97,101-124,128-137                                             
+  invitation.controller.ts        |       0 |        0 |       0 |       0 | 2-71                                                                          
+  search.controller.ts            |   76.19 |       50 |   33.33 |   78.94 | 55-61                                                                         
+  snippet.controller.ts           |   24.56 |        0 |       0 |      25 | 8-9,39-57,62-99,104-134,139-146,152                                           
+  task.controller.ts              |   18.18 |        0 |       0 |   18.84 | 25-79,127-143,147-176,180-218,222-231,235-240,244-285,289-319,323-334,338-387 
+  workspace.controller.ts         |   16.81 |        0 |       0 |   16.96 | 36,47-112,117-145,150-175,180-195,200-207,212-265,270-298,302-320,325-337     
+ src/extraction                   |       0 |        0 |       0 |       0 |                                                                               
+  extract-child.ts                |       0 |        0 |       0 |       0 | 2-57                                                                          
+  server.ts                       |       0 |        0 |       0 |       0 | 1-112                                                                         
+ src/lib                          |    16.2 |    10.41 |      14 |   17.67 |                                                                               
+  cache.ts                        |       0 |        0 |       0 |       0 | 1-67                                                                          
+  create-idempotency.ts           |   16.32 |        0 |       0 |    18.6 | 9-19,24-27,39-62                                                              
+  idempotency.ts                  |       0 |        0 |       0 |       0 | 1-27                                                                          
+  lifecycle.ts                    |       0 |        0 |       0 |       0 | 1-56                                                                          
+  prisma.ts                       |   93.75 |       70 |   66.66 |   93.75 | 36                                                                            
+  queue.ts                        |       0 |        0 |       0 |       0 | 1-124                                                                         
+  redis.ts                        |       0 |        0 |       0 |       0 | 1-64                                                                          
+  tenant-prisma.ts                |      80 |       75 |     100 |      80 | 19,49-50                                                                      
+ src/middleware                   |   11.94 |        0 |    2.94 |   11.76 |                                                                               
+  ai-quota.middleware.ts          |       0 |        0 |       0 |       0 | 2-56                                                                          
+  auth.middleware.ts              |   21.21 |        0 |       0 |   23.33 | 22-35,45-56,62-66                                                             
+  billing.middleware.ts           |   23.52 |        0 |       0 |   23.52 | 20-40                                                                         
+  error.middleware.ts             |      16 |        0 |       0 |   12.76 | 16-33,36-79                                                                   
+  rate-limit.middleware.ts        |       0 |        0 |       0 |       0 | 1-23                                                                          
+  rbac.middleware.ts              |       0 |        0 |       0 |       0 | 2-34                                                                          
+  request-context.middleware.ts   |       0 |        0 |       0 |       0 | 1-32                                                                          
+  tracing.middleware.ts           |       0 |        0 |       0 |       0 | 2-16                                                                          
+  validate.middleware.ts          |   38.46 |        0 |   33.33 |   41.66 | 7-15                                                                          
+ src/observability                |      32 |    14.28 |       8 |   31.57 |                                                                               
+  ai.ts                           |   27.27 |      100 |       0 |   27.27 | 7-18                                                                          
+  logger.ts                       |     100 |    83.33 |     100 |     100 | 24                                                                            
+  metrics.ts                      |   39.47 |        0 |       0 |   37.14 | 32,39,47,51-60,63-77                                                          
+  reporting.ts                    |   26.31 |        0 |       0 |   29.41 | 4-27,30-31,34-35                                                              
+  request-scope.ts                |     100 |      100 |     100 |     100 |                                                                               
+  telemetry.ts                    |       0 |        0 |       0 |       0 | 1-83                                                                          
+ src/routes                       |    12.8 |     0.64 |    3.73 |   13.24 |                                                                               
+  ai-v3.routes.ts                 |       0 |        0 |       0 |       0 | 1-47                                                                          
+  ai.routes.ts                    |       0 |      100 |     100 |       0 | 1-23                                                                          
+  async-digest.routes.ts          |       0 |        0 |       0 |       0 | 1-106                                                                         
+  auth.routes.ts                  |       0 |      100 |     100 |       0 | 1-14                                                                          
+  decision-receipts.routes.ts     |       0 |        0 |       0 |       0 | 1-297                                                                         
+  document.routes.ts              |       0 |      100 |     100 |       0 | 1-21                                                                          
+  github-execution.routes.ts      |    42.3 |       20 |      25 |      44 | 12-40                                                                         
+  github-installation.routes.ts   |   21.62 |        0 |       0 |   22.22 | 21-70                                                                         
+  github-webhook.routes.ts        |   18.98 |        0 |       0 |   19.73 | 52-55,68-238                                                                  
+  health.routes.ts                |       0 |        0 |       0 |       0 | 1-65                                                                          
+  ingestion.routes.ts             |   46.66 |       20 |      25 |   46.66 | 27-30,52-86                                                                   
+  knowledge-search.routes.ts      |       0 |        0 |       0 |       0 | 1-16                                                                          
+  lifecycle.routes.ts             |   28.88 |        0 |   11.76 |   29.88 | 18-24,27-28,34-62,66-73,77-84,93-121,125-148,152-193                          
+  scim.routes.ts                  |   18.66 |        0 |       0 |      20 | 26-45,48-106,110-149,153-168                                                  
+  snippet-safety.routes.ts        |       0 |        0 |       0 |       0 | 1-159                                                                         
+  snippet.routes.ts               |       0 |      100 |     100 |       0 | 1-19                                                                          
+  stripe.webhook.ts               |   41.66 |        0 |       0 |   41.66 | 5-12                                                                          
+  superadmin.routes.ts            |    42.3 |        0 |       0 |    42.3 | 9-30,38-51                                                                    
+  task.routes.ts                  |       0 |      100 |     100 |       0 | 1-45                                                                          
+  workspace.routes.ts             |       0 |      100 |     100 |       0 | 1-155                                                                         
+ src/schemas                      |     100 |      100 |     100 |     100 |                                                                               
+  search.schema.ts                |     100 |      100 |     100 |     100 |                                                                               
+ src/scripts                      |       0 |        0 |       0 |       0 |                                                                               
+  openapi.ts                      |       0 |        0 |       0 |       0 | 1-24                                                                          
+ src/security                     |    17.4 |     6.81 |    5.88 |   19.87 |                                                                               
+  authentication.ts               |   27.27 |        0 |       0 |   32.14 | 21,24-30,33-38,46-50                                                          
+  invitation-policy.ts            |       0 |        0 |       0 |       0 | 1-54                                                                          
+  policy-deadline.ts              |   14.28 |        0 |       0 |      20 | 4-12                                                                          
+  provider-sessions.ts            |   15.51 |     4.87 |    6.25 |   18.75 | 26-89,93-102                                                                  
+  realtime-identity.ts            |   21.73 |        0 |       0 |    23.8 | 15-29,40-41                                                                   
+  rich-text.ts                    |    9.09 |        0 |       0 |   13.33 | 5-22                                                                          
+  service-policy.ts               |   10.48 |        0 |       0 |   11.81 | 12-17,23-43,55-71,82-93,100-130,134-186,208-232,241-246                       
+  snippet-preflight.ts            |   11.36 |        0 |       0 |   10.81 | 24-70,73-85                                                                   
+  workspace-policy.ts             |      46 |    43.18 |    37.5 |      50 | 17-23,35,48,62,84-108                                                         
+ src/services                     |   19.64 |     3.08 |   11.17 |   21.33 |                                                                               
+  ai-gateway.service.ts           |       0 |        0 |       0 |       0 | 1-100                                                                         
+  ai-prompt.ts                    |      50 |      100 |       0 |      50 | 6-8                                                                           
+  ai-provider.ts                  |   16.66 |        0 |       0 |      18 | 3,6,12-25,33-55,67-87                                                         
+  ai-quota.ts                     |   51.42 |        6 |      50 |   51.51 | 26-29,49-61,67-75,154-208                                                     
+  ai-schema.ts                    |     100 |      100 |     100 |     100 |                                                                               
+  async-digest.ts                 |   26.31 |        0 |       0 |   28.57 | 20,33,36-40,88-96,125-126,134-174,199-219,229-234                             
+  billing.service.ts              |   25.71 |     2.85 |       0 |   26.47 | 10-11,15-36,47-73                                                             
+  cloudinary.service.ts           |       0 |      100 |       0 |       0 | 1-32                                                                          
+  collaboration-acl.ts            |      75 |      100 |       0 |      75 | 5                                                                             
+  collaboration-server.ts         |    4.66 |        0 |       0 |     5.3 | 46-56,60-443                                                                  
+  crdt-journal.ts                 |   64.38 |       50 |   66.66 |   69.69 | 54-55,82,98-106,121-157                                                       
+  crdt-migration.ts               |       0 |        0 |       0 |       0 | 1-75                                                                          
+  crdt-schema.ts                  |     100 |      100 |     100 |     100 |                                                                               
+  crdt-sync.service.ts            |   17.85 |        0 |       0 |   19.23 | 18-33,47-80                                                                   
+  decision-receipts.ts            |   28.57 |        0 |       0 |   33.33 | 23-27,32,42-66,79-84                                                          
+  embedding-runner.ts             |   18.75 |        0 |       0 |      20 | 9-27                                                                          
+  embedding.service.ts            |   35.64 |    14.06 |   18.75 |    38.7 | 29-44,82-83,88-98,116-157,168-189,202-223                                     
+  extraction-client.ts            |    7.89 |        0 |       0 |    8.82 | 5-61                                                                          
+  github-execution.ts             |    10.2 |        0 |       0 |   11.11 | 42-100                                                                        
+  github-work-source.ts           |       0 |        0 |       0 |       0 | 1-119                                                                         
+  ingestion.service.ts            |   11.11 |        0 |       0 |   11.57 | 23-148,171-269                                                                
+  knowledge-search.ts             |       0 |        0 |       0 |       0 | 1-86                                                                          
+  secret.service.ts               |   18.51 |        0 |       0 |   19.23 | 7-10,14-17,22-36                                                              
+  yjs.service.ts                  |       0 |        0 |       0 |       0 | 2-25                                                                          
+ src/socket                       |   15.66 |        0 |    3.27 |   16.87 |                                                                               
+  index.ts                        |      50 |      100 |       0 |      50 | 8,11-17,20-22                                                                 
+  kanban.handler.ts               |   28.12 |        0 |       0 |   28.12 | 33-83,95                                                                      
+  presence-store.ts               |      20 |        0 |   11.11 |   23.07 | 22-71                                                                         
+  presence.handler.ts             |   15.06 |        0 |       0 |   15.71 | 41-125                                                                        
+  rate-limiter.ts                 |      20 |        0 |   33.33 |      20 | 38-75                                                                         
+  server.ts                       |    9.14 |        0 |       0 |   10.13 | 47-271                                                                        
+ src/utils                        |   66.66 |        0 |   16.66 |   66.66 |                                                                               
+  errors.ts                       |   66.66 |        0 |   16.66 |   66.66 | 15,21,27,33,39                                                                
+----------------------------------|---------|----------|---------|---------|-------------------------------------------------------------------------------
+Jest: Coverage for statements (15.4%) does not meet "global" threshold (40%)
+Jest: Coverage for branches (2.71%) does not meet "global" threshold (21%)
+Jest: Coverage for lines (16.27%) does not meet "global" threshold (42%)
+Jest: Coverage for functions (5.3%) does not meet "global" threshold (30%)
+Jest: Coverage for statements (4.66%) does not meet "./src/services/collaboration-server.ts" threshold (70%)
+Jest: Coverage for branches (0%) does not meet "./src/services/collaboration-server.ts" threshold (60%)
+Jest: Coverage for lines (5.3%) does not meet "./src/services/collaboration-server.ts" threshold (80%)
+Jest: Coverage for functions (0%) does not meet "./src/services/collaboration-server.ts" threshold (80%)
+Jest: Coverage for statements (64.38%) does not meet "./src/services/crdt-journal.ts" threshold (85%)
+Jest: Coverage for branches (50%) does not meet "./src/services/crdt-journal.ts" threshold (60%)
+Jest: Coverage for lines (69.69%) does not meet "./src/services/crdt-journal.ts" threshold (90%)
+Jest: Coverage for functions (66.66%) does not meet "./src/services/crdt-journal.ts" threshold (100%)
+Jest: Coverage for statements (0%) does not meet "./src/services/crdt-migration.ts" threshold (85%)
+Jest: Coverage for branches (0%) does not meet "./src/services/crdt-migration.ts" threshold (70%)
+Jest: Coverage for lines (0%) does not meet "./src/services/crdt-migration.ts" threshold (95%)
+Jest: Coverage for functions (0%) does not meet "./src/services/crdt-migration.ts" threshold (100%)
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 113 skipped, 114 total
+Snapshots:   0 total
+Time:        17.65 s
+Ran all test suites within paths "src/__tests__/resource-mutations.integration.test.ts".

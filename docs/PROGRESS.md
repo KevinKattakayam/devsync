@@ -1,3 +1,13 @@
+# Search correctness and permission-aware indexing — local delivery
+
+Started clean at4873ae3 on upgrade/enterprise. Preflight found existing transactional CRDT projection/outbox scheduling, tenant/RLS policy and optional pgvector fallback; these were preserved. Reproduced the TipTap JSON-body search miss and invalidated-vector retrieval before fixing them. Also preserved legacy string document embedding input after a development regression exposed that compatibility edge, and reproduced/fixed non-UTC boundary filtering in the new query.
+
+Added v2 lexical search/source-open contracts over existing documents/tasks/snippets/flagged receipts/owner-only connected PR metadata, with source/assignee/UTC time filters, no-store and current source checks. Additive transactional DDL provides TipTap text extraction and four full-text expression indexes; no copied source store, mass update, RLS bypass or protocol change. The workspace search page uses current member choices, explicit lexical/read-time freshness and permission rechecks before navigation. Semantic retrieval stays separate; the new flow requires no AI key.
+
+Local verification passes:326 backend tests,97 component/9 Node tests, both complete app gate sequences, search Chrome1/core Chrome12, unchanged coverage comparisons, OpenAPI and security checks. Local commands, failures, browser evidence, rollback and limits are in [phase verification](quality/search-indexing/README.md) and RESULTS.json. No real provider acceptance, hosted CI, capacity certification or production migration is implied. Existing GitHub repositories remain untouched; prior provider and unfinished planning/work-graph tasks remain open. No push/deployment or automatic next phase.
+
+---
+
 # GitHub PR and CI trail — local delivery, live acceptance pending
 
 Read the existing repository/controller/HMAC/service-policy/schema/tests before changes, starting clean at62faef6 on upgrade/enterprise. Preserved owner-only repository access, tenant task filtering, raw-body signature checks and wire contracts. Added transactionally ordered PR/review/check evidence and authenticated-body replay receipts with forced tenant RLS; signed App withdrawal disables subsequent repository webhook/job admission and hides old evidence. Owner settings show timestamped recorded facts, canonical PR/review links, disconnected state and explicit unknown deployment/live access. No merged→deployed inference.

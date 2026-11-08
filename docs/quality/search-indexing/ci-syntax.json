@@ -1,0 +1,18 @@
+[
+  {
+    "command": [
+      "node",
+      "--check",
+      "tools/ci/browser.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "python3",
+      "-c",
+      "import yaml; yaml.safe_load(open('.github/workflows/main.yml')); print('workflow YAML valid')"
+    ],
+    "exitCode": 0
+  }
+]

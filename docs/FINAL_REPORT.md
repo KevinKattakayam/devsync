@@ -1,3 +1,11 @@
+# Search correctness and knowledge indexing — local phase
+
+The new versioned workspace search reads canonical committed projections using Postgres full text and existing tenant authority. It covers local documents/tasks/snippets, flagged source-visible receipts and owner-only connected recorded PR metadata. Source opens repeat current checks; archive/revocation/foreign IDs do not disclose result titles. Lexical results and read-time timestamps are explicit, with source/assignee/UTC filters and no AI-key requirement. Existing pgvector/AI retrieval remains separate and now excludes invalidated embeddings. Existing CRDT/outbox scheduling is retained; legacy contracts remain unchanged.
+
+Local verification passes:326 backend tests,97 component/9 Node tests, both complete app gate sequences, search Chrome1/core Chrome12, unchanged coverage comparisons, OpenAPI and security checks. Additive transactional function/index DDL requires an operator-reviewed migration window; it does not rewrite source rows. [Verification, exact commands, retained failures and limits](quality/search-indexing/README.md). Fixture browser identities do not establish real Clerk/GitHub/AI success. No hosted CI, production capacity/migration, push, deployment or automatic next phase is claimed.
+
+---
+
 # GitHub execution trail follow-up
 
 Read the existing repository/controller/HMAC/service-policy/schema/tests before changes, starting clean at62faef6 on upgrade/enterprise. Preserved owner-only repository access, tenant task filtering, raw-body signature checks and wire contracts. Added transactionally ordered PR/review/check evidence and authenticated-body replay receipts with forced tenant RLS; signed App withdrawal disables subsequent repository webhook/job admission and hides old evidence. Owner settings show timestamped recorded facts, canonical PR/review links, disconnected state and explicit unknown deployment/live access. No merged→deployed inference.

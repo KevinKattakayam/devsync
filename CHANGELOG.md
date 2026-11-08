@@ -1,3 +1,10 @@
+# Permission-aware knowledge search
+
+- Repair committed TipTap-body keyword lookup and exclude invalidated semantic vectors; preserve legacy string bodies and existing CRDT/outbox policy.
+- Add v2 lexical search and permission-checked source opens with source/assignee/UTC filters, receipt-source visibility and owner-only connected PR metadata.
+- Add transactional Postgres text extraction/GIN indexes and a workspace search page with explicit freshness and safe error handling. No source-copy service, mass data update or contract break.
+- Local verification/evidence and migration/rollback limits: docs/quality/search-indexing/README.md. Real providers/hosted rollout remain unverified; no push/deployment.
+
 # GitHub execution trail — local delivery
 
 - Fence stale PR/check/review events and identical signed-body replay inside the existing webhook transaction; add forced-RLS execution metadata and receipt tables with a safe additive migration.

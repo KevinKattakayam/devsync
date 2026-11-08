@@ -1,0 +1,4 @@
+6ceabe7 fix(search): normalize mixed timestamps for inclusive UTC filters
+75e4a7c test(search): verify live editor indexing and permission loss in Chrome
+812fbe2 feat(search): expose lexical knowledge search with checked source opens
+1415ae0 fix(search): query current authorized projections and reject stale vectors

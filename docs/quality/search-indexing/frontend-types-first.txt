@@ -1,0 +1,5 @@
+
+> frontend@0.1.0 typecheck
+> tsc --noEmit
+
+src/components/search/knowledge-search.tsx(197,21): error TS2322: Type '"outline"' is not assignable to type '"ghost" | "primary" | "secondary" | "destructive" | undefined'.

@@ -1,0 +1,20 @@
+{
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "-v",
+    "/home/kevin/devsync:/repo:ro",
+    "-v",
+    "/home/kevin/devsync/docs/quality/search-indexing:/reports",
+    "zricethezav/gitleaks@sha256:691af3c7c5a48b16f187ce3446d5f194838f91238f27270ed36eef6359a574d9",
+    "git",
+    "/repo",
+    "--config=/repo/.gitleaks.toml",
+    "--log-opts=--all",
+    "--redact=100",
+    "--report-format=json",
+    "--report-path=/reports/gitleaks-history.json"
+  ],
+  "exitCode": 0
+}

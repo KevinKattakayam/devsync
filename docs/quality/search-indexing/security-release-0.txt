@@ -1,0 +1,27 @@
+               
+               
+┌─────────────┐
+│ Scan Status │
+└─────────────┘
+  Scanning 247 files with 74 Code rules:
+                                                                                                                        
+  Language   Rules   Files          Origin      Rules                                                                   
+ ──────────────────────────        ───────────────────                                                                  
+  ts            74     239          Community      74                                                                   
+  js            68       1                                                                                              
+                                                                                                                        
+                
+                
+┌──────────────┐
+│ Scan Summary │
+└──────────────┘
+✅ Scan completed successfully.
+ • Findings: 0 (0 blocking)
+ • Rules run: 74
+ • Targets scanned: 240
+ • Parsed lines: ~99.9%
+ • No ignore information available
+ • For a detailed list of skipped files and lines, run semgrep with the --verbose flag
+Ran 74 rules on 240 files: 0 findings.
+(need more rules? `semgrep login` for additional free Semgrep Registry rules)
+
