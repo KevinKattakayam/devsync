@@ -1,0 +1,6 @@
+
+> devsync-backend@1.0.0 typecheck
+> tsc --noEmit && tsc -p tsconfig.seed.json && tsc -p tsconfig.testing.json
+
+src/routes/github-execution.routes.ts(11,45): error TS2339: Property 'workspaceId' does not exist on type '{}'.
+src/routes/github-execution.routes.ts(12,42): error TS2339: Property 'repositoryId' does not exist on type '{}'.

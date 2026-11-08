@@ -1,0 +1,27 @@
+
+> devsync-backend@1.0.0 test
+> node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand --runTestsByPath src/__tests__/resource-mutations.integration.test.ts --testNamePattern=identical signed payload --coverage=false
+
+FAIL src/__tests__/resource-mutations.integration.test.ts (10.086 s)
+  ● GitHub rejects identical signed payload replay under a different delivery ID
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 202
+    Received: 200
+
+      2331 |       )
+      2332 |     ).status,
+    > 2333 |   ).toBe(202);
+           |     ^
+      2334 |   expect(await admin.activity.count({ where: { workspaceId: a, type: 'github_push' } })).toBe(1);
+      2335 | });
+      2336 |
+
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:2333:5)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 111 skipped, 112 total
+Snapshots:   0 total
+Time:        10.265 s
+Ran all test suites within paths "src/__tests__/resource-mutations.integration.test.ts".

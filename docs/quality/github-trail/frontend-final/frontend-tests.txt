@@ -1,0 +1,100 @@
+
+> frontend@0.1.0 test
+> node --test tests/*.test.mjs && vitest run
+
+TAP version 13
+# Subtest: I01 Next meets the current critical advisory remediation floor
+ok 1 - I01 Next meets the current critical advisory remediation floor
+  ---
+  duration_ms: 3.098332
+  type: 'test'
+  ...
+# Subtest: I01 unused NextAuth is absent from the installed frontend
+ok 2 - I01 unused NextAuth is absent from the installed frontend
+  ---
+  duration_ms: 2.246599
+  type: 'test'
+  ...
+# Subtest: fixture generator refuses production, development and unset modes
+ok 3 - fixture generator refuses production, development and unset modes
+  ---
+  duration_ms: 3.6264
+  type: 'test'
+  ...
+# Subtest: production source cannot select or import the test authentication adapter
+ok 4 - production source cannot select or import the test authentication adapter
+  ---
+  duration_ms: 64.458669
+  type: 'test'
+  ...
+# Subtest: code blocks and inline code escape HTML
+ok 5 - code blocks and inline code escape HTML
+  ---
+  duration_ms: 3.204128
+  type: 'test'
+  ...
+# Subtest: E02 treats ordinary HTML, handlers and malformed tags as inert text
+ok 6 - E02 treats ordinary HTML, handlers and malformed tags as inert text
+  ---
+  duration_ms: 1.177101
+  type: 'test'
+  ...
+# Subtest: E02 escapes HTML inside headings, lists and table cells
+ok 7 - E02 escapes HTML inside headings, lists and table cells
+  ---
+  duration_ms: 0.674149
+  type: 'test'
+  ...
+# Subtest: :root text, status and control tokens meet their WCAG AA contrast thresholds
+ok 8 - :root text, status and control tokens meet their WCAG AA contrast thresholds
+  ---
+  duration_ms: 3.840061
+  type: 'test'
+  ...
+# Subtest: .dark text, status and control tokens meet their WCAG AA contrast thresholds
+ok 9 - .dark text, status and control tokens meet their WCAG AA contrast thresholds
+  ---
+  duration_ms: 2.59953
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1156.221932
+
+ RUN  v5.0.5 /home/kevin/devsync/frontend
+      Coverage enabled with v8
+
+ ❯ tests/settings.test.tsx (10 tests | 1 failed) 14829ms
+   × loads permissions with the local principal and supports settings/member search 5143ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/settings.test.tsx > loads permissions with the local principal and supports settings/member search
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/settings.test.tsx:91:1
+     89|   await screen.findByRole('heading', { name: 'Members & roles' });
+     90| }
+     91| it('loads permissions with the local principal and supports settings/m…
+       | ^
+     92|   const user = userEvent.setup();
+     93|   render(<SettingsPage />);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 21 passed (22)
+      Tests  1 failed | 93 passed (94)
+   Start at  17:58:46
+   Duration  28.74s (environment 40%, tests 37%, import 20%, worker 2%, transform 2%)
+
+Environment  jsdom was created 22 times · 67.30s total, 40% of tracked time
+             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+             learn more: https://vitest.dev/guide/improving-performance#test-environments
+

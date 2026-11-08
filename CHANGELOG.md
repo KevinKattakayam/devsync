@@ -1,3 +1,10 @@
+# GitHub execution trail — local delivery
+
+- Fence stale PR/check/review events and identical signed-body replay inside the existing webhook transaction; add forced-RLS execution metadata and receipt tables with a safe additive migration.
+- Record signed App withdrawal, deny disconnected repository work and expose an owner-only timestamped evidence panel with deployment/live-access limits.
+- Preserve tests, signatures, tenant policy, legacy compatibility and scan/coverage thresholds. Verify320 backend tests and95 component/9 Node tests; retain failures and fixture-browser evidence.
+- Live integration is pending at user request; existing GitHub repositories remain untouched. No push/deployment or automatic next phase.
+
 # Work graph foundation — incomplete
 
 - Audit reusable source references and owner-only repository bindings; add an internal fail-closed GitHub source-proof adapter with fixture tests.

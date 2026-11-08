@@ -1,0 +1,106 @@
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": PostgreSQL database "devsync_e2e_browser", schema "public" at "localhost:32977"
+
+16 migrations found in prisma/migrations
+
+Applying migration `20260729000000_baseline`
+Applying migration `20260729180000_enterprise_platform`
+Applying migration `20260815000000_phase_3_tenant_rls`
+Applying migration `20260815001000_scim_provisioning`
+Applying migration `20260815002000_commercial_billing`
+Applying migration `20261031000000_tenant_indexes`
+Applying migration `20261031010000_crdt_journal`
+Applying migration `202611010001_canonical_revision`
+Applying migration `202611010002_embedding_authority`
+Applying migration `202611010003_atomic_create_idempotency`
+Applying migration `202611010004_workspace_invitations`
+Applying migration `202611020001_decision_receipts`
+Applying migration `202611020002_snippet_safety`
+Applying migration `202611020003_async_digest`
+Applying migration `202611080001_export_requests`
+Applying migration `202611080002_github_execution_state`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20260729000000_baseline/
+    └─ migration.sql
+  └─ 20260729180000_enterprise_platform/
+    └─ migration.sql
+  └─ 20260815000000_phase_3_tenant_rls/
+    └─ migration.sql
+  └─ 20260815001000_scim_provisioning/
+    └─ migration.sql
+  └─ 20260815002000_commercial_billing/
+    └─ migration.sql
+  └─ 20261031000000_tenant_indexes/
+    └─ migration.sql
+  └─ 20261031010000_crdt_journal/
+    └─ migration.sql
+  └─ 202611010001_canonical_revision/
+    └─ migration.sql
+  └─ 202611010002_embedding_authority/
+    └─ migration.sql
+  └─ 202611010003_atomic_create_idempotency/
+    └─ migration.sql
+  └─ 202611010004_workspace_invitations/
+    └─ migration.sql
+  └─ 202611020001_decision_receipts/
+    └─ migration.sql
+  └─ 202611020002_snippet_safety/
+    └─ migration.sql
+  └─ 202611020003_async_digest/
+    └─ migration.sql
+  └─ 202611080001_export_requests/
+    └─ migration.sql
+  └─ 202611080002_github_execution_state/
+    └─ migration.sql
+      
+All migrations have been successfully applied.
+Sample workspace seeded. Sign in with the supplied Clerk test identities.
+/home/kevin/devsync/.worktrees/frontend-fixture
+Isolated fixture server ready
+▲ Next.js 16.4.3 (webpack)
+- Local:         http://127.0.0.1:3001
+- Network:       http://127.0.0.1:3001
+✓ Ready in 600ms
+✓ Running next.config.ts took 49ms
+○ Compiling /instrumentation ...
+
+✓ Generated AGENTS.md for AI agents. Set `agentRules: false` in next.config to disable.
+○ Compiling /(auth)/login/[[...rest]]/page ...
+ GET /login 200 in 1667ms (next.js: 1140ms, proxy.ts: 90ms, application-code: 437ms)
+
+Running 1 test using 1 worker
+
+(node:386037) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ GET /workspace/devsync-sample/settings 200 in 4.0s (next.js: 3.6s, proxy.ts: 14ms, application-code: 305ms)
+  ✘  1 testing/browser/github-trail.spec.ts:4:5 › signed fixture PR/check trail is timestamped, owner-only and never claims deployment (1.5m)
+
+
+  1) testing/browser/github-trail.spec.ts:4:5 › signed fixture PR/check trail is timestamped, owner-only and never claims deployment 
+
+    Test timeout of 90000ms exceeded.
+
+    Error: locator.selectOption: Test ended.
+    Call log:
+      - waiting for getByLabel('Repository', { exact: true })
+
+
+      104 |     await page.goto(`/workspace/${workspace}/settings`);
+      105 |     await page.getByText('GitHub execution trail', { exact: true }).click();
+    > 106 |     await page.getByLabel('Repository', { exact: true }).selectOption(repository.id);
+          |                                                          ^
+      107 |     await expect(page.getByRole('link', { name: 'PR #7' })).toHaveAttribute(
+      108 |       'href',
+      109 |       'https://github.com/fixture/repository/pull/7',
+        at /home/kevin/devsync/backend/testing/browser/github-trail.spec.ts:106:58
+
+    Error Context: test-results/github-trail-signed-fixtur-4a624-and-never-claims-deployment/error-context.md
+
+  1 failed
+    testing/browser/github-trail.spec.ts:4:5 › signed fixture PR/check trail is timestamped, owner-only and never claims deployment 
+[?25h
+Browser orchestration command exited 1

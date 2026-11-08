@@ -1,3 +1,13 @@
+# GitHub PR and CI trail — local delivery, live acceptance pending
+
+Read the existing repository/controller/HMAC/service-policy/schema/tests before changes, starting clean at62faef6 on upgrade/enterprise. Preserved owner-only repository access, tenant task filtering, raw-body signature checks and wire contracts. Added transactionally ordered PR/review/check evidence and authenticated-body replay receipts with forced tenant RLS; signed App withdrawal disables subsequent repository webhook/job admission and hides old evidence. Owner settings show timestamped recorded facts, canonical PR/review links, disconnected state and explicit unknown deployment/live access. No merged→deployed inference.
+
+Final app gates pass:320 backend tests,95 frontend component plus9 Node tests, strict types/lint/format/builds, OpenAPI and security checks. Coverage comparisons pass without lower baselines. Failures and actual browser outcome are retained in [verification](quality/github-trail/README.md) and RESULTS.json. Browser identities/webhook payloads are fixtures, not real GitHub success.
+
+User explicitly instructed skipping live GitHub testing because no separate test repository exists and forbade changing existing repositories. No existing GitHub repository was accessed/modified, no live mutation, push or deployment occurred. Manual separate test-App/repository/webhook setup and individually approved live acceptance actions remain pending. Legacy unversioned events lack ordering guarantees; same-version ambiguity fails conservatively. Production rollout/hosted CI and the existing optional summary outbox gap remain explicit. No automatic next phase.
+
+---
+
 # Unified work graph — incomplete foundation checkpoint
 
 Source audit found reusable receipt/digest source proofs and owner-only GitHub repository bindings, but no WorkLink persistence/API/panel. Added an internal GitHub issue/PR proof adapter with narrowly scoped installation tokens, canonical repository/URL checks, redirect refusal and redacted errors. It is not mounted as a product route and does not implement local authorization by itself. Fixture crypto/transport tests do not prove live provider success. The initial full baseline found a prior handshake-budget fixture race; synchronized handshake preconditions without removing assertions or changing production limits. [Evidence and remaining engineering](quality/work-graph/README.md).

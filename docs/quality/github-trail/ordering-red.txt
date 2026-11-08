@@ -1,0 +1,27 @@
+
+> devsync-backend@1.0.0 test
+> node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand --runTestsByPath src/__tests__/resource-mutations.integration.test.ts --testNamePattern=older PR open --coverage=false
+
+FAIL src/__tests__/resource-mutations.integration.test.ts (20.448 s)
+  ● GitHub rejects an older PR open event after merge without reversing the task
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 202
+    Received: 200
+
+      1022 |   expect((await githubEvent(repository.repositoryId, repository.webhookSecret, merged)).status).toBe(200);
+      1023 |   const stale = await githubEvent(repository.repositoryId, repository.webhookSecret, { action: 'opened', pull_request: { number: 71, title: `Fixes ${key}`, updated_at: '2026-11-08T11:00:00Z' } });
+    > 1024 |   expect(stale.status).toBe(202);
+           |                        ^
+      1025 |   expect((await admin.task.findUniqueOrThrow({ where: { id: `task-${a}` } })).columnId).toBe(`target-${a}`);
+      1026 | });
+      1027 | it('G08/D07 signed GitHub scope is repository-bound, transactionally retryable and duplicate-safe', async () => {
+
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:1024:24)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 108 skipped, 109 total
+Snapshots:   0 total
+Time:        20.935 s
+Ran all test suites within paths "src/__tests__/resource-mutations.integration.test.ts".

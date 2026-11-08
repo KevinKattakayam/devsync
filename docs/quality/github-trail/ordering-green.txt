@@ -1,0 +1,27 @@
+
+> devsync-backend@1.0.0 test
+> node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand --runTestsByPath src/__tests__/resource-mutations.integration.test.ts --testNamePattern=older PR open|signed GitHub --coverage=false
+
+FAIL src/__tests__/resource-mutations.integration.test.ts (21.404 s)
+  ● G08/D07 signed GitHub scope is repository-bound, transactionally retryable and duplicate-safe
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 2
+
+      1063 |     401,
+      1064 |   );
+    > 1065 |   expect(await admin.gitHubWebhookDelivery.count()).toBe(0);
+           |                                                     ^
+      1066 |   const delivery = randomBytes(16).toString('hex');
+      1067 |   await admin.gitHubRepository.update({
+      1068 |     where: { id: repository.id },
+
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:1065:53)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 107 skipped, 1 passed, 109 total
+Snapshots:   0 total
+Time:        21.891 s
+Ran all test suites within paths "src/__tests__/resource-mutations.integration.test.ts".

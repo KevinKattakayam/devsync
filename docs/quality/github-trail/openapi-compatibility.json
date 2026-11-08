@@ -1,0 +1,7 @@
+{
+  "priorOperationChanges": [],
+  "newPaths": [
+    "/api/v2/webhooks/github-installation",
+    "/api/v2/workspaces/{workspaceId}/github-repositories/{repositoryId}/execution"
+  ]
+}

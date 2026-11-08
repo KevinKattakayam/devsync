@@ -1,0 +1,5 @@
+{
+  "wallElapsedMs": 1001,
+  "monotonicElapsedMs": 1000,
+  "scope": "A local interval observation; not NTP or provider synchronization proof"
+}

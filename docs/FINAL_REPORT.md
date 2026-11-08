@@ -1,3 +1,13 @@
+# GitHub execution trail follow-up
+
+Read the existing repository/controller/HMAC/service-policy/schema/tests before changes, starting clean at62faef6 on upgrade/enterprise. Preserved owner-only repository access, tenant task filtering, raw-body signature checks and wire contracts. Added transactionally ordered PR/review/check evidence and authenticated-body replay receipts with forced tenant RLS; signed App withdrawal disables subsequent repository webhook/job admission and hides old evidence. Owner settings show timestamped recorded facts, canonical PR/review links, disconnected state and explicit unknown deployment/live access. No merged→deployed inference.
+
+Final app gates pass:320 backend tests,95 frontend component plus9 Node tests, strict types/lint/format/builds, OpenAPI and security checks. Coverage comparisons pass without lower baselines. Failures and actual browser outcome are retained in [verification](quality/github-trail/README.md) and RESULTS.json. Browser identities/webhook payloads are fixtures, not real GitHub success.
+
+User explicitly instructed skipping live GitHub testing because no separate test repository exists and forbade changing existing repositories. No existing GitHub repository was accessed/modified, no live mutation, push or deployment occurred. Manual separate test-App/repository/webhook setup and individually approved live acceptance actions remain pending. Legacy unversioned events lack ordering guarantees; same-version ambiguity fails conservatively. Production rollout/hosted CI and the existing optional summary outbox gap remain explicit. No automatic next phase.
+
+---
+
 # Real-time editor and recovery — 2026-11-08
 
 The existing journal and snapshot design is retained. Fixed replica-scoped connection/pending display state and added explicit access-loss status, with failing-then-passing regressions. No CRDT replacement, migration, wire/API change, authorization bypass or weakened threshold.
