@@ -1,0 +1,15 @@
+{
+  "files": [
+    "docs/PROGRESS.md",
+    "docs/FINAL_REPORT.md",
+    "docs/ARCHITECTURE.md",
+    "docs/AUTHZ_MATRIX.md",
+    "docs/PRIVACY.md",
+    "docs/RUNBOOK.md",
+    "CHANGELOG.md",
+    "docs/quality/identity-lifecycle/README.md"
+  ],
+  "localLinksChecked": 168,
+  "missing": [],
+  "exitCode": 0
+}

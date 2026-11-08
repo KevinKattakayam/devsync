@@ -1,3 +1,11 @@
+# Identity, roles and account lifecycle — 2026-11-08
+
+- Verify active provider sessions for production HTTP/Yjs/Socket.IO, with bounded monotonic caching and fail-closed errors; add test-first revocation/clock regressions.
+- Gate workspace rendering on successful identity sync and add explicit recovery, native sign-out failure handling and account-switch race protection.
+- Add own-session settings, account deletion prerequisites, exact-name-confirmed owner transfer and manual workspace export-review requests through compatible v2 routes and additive forced-RLS migration. Preserve existing invitations, roles and source policy; no export delivery or deletion service claimed.
+- Verify300 backend tests,89 frontend component plus9 Node tests, both app gates, real DB/RLS/transport regressions,12 core and1 lifecycle fixture browser journeys, contracts, coverage and source security checks. Preserve failed attempts and unchanged thresholds.
+- Record the Google browser rejection and clock/setup observations honestly: real two-account Clerk acceptance remains external action required. No push, deployment, credential capture, provider-success claim or automatic next phase.
+
 # Release correctness and security — 2026-11-08
 
 - Classify Clerk sync rejection/unavailability without exposing SDK details or relaxing verification; add failing-then-passing regressions.

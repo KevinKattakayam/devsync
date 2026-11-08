@@ -1,3 +1,13 @@
+# Identity lifecycle delivery — 2026-11-08
+
+Local implementation is verified; **real two-account acceptance is not complete**. Existing Clerk forms, invitations, member policy and workspace setup remain. Added production active-session verification across HTTP/Yjs/Socket.IO, guarded identity recovery, own-session settings, owner transfer, export-review recording and deletion planning. All existing OpenAPI operations remain semantically identical; new v2 paths and a forward-only forced-RLS table are additive. There is no automated erasure/export delivery or custom password system.
+
+Final local gates pass for both apps, with300 backend tests,89 frontend component tests and9 Node tests. Core12 and lifecycle1 browser journeys pass with fixture identities; real PostgreSQL/RLS and transport tests pass. Coverage comparisons, OpenAPI, source scans and High/Critical npm gates pass without weakening policy. Full-tree Moderate/Low advisories remain visible. See [phase record](quality/identity-lifecycle/README.md) and [commands/exits](quality/identity-lifecycle/RESULTS.json) for exact scopes, raw failures/retries, coverage, migration/rollback and limitations. No new production runtime-image or hosted CI result is inferred.
+
+The approved real-account attempt was blocked before successful sign-in; the user screenshot shows Google's secure-browser rejection. No real invite/removal/revocation criterion was demonstrated. HTTP200 provider probes are reachability checks only. Historical clock discrepancies were recorded without increasing JWT tolerance or asserting they caused that rejection. The isolated local app remains at localhost3410 for operator verification in normal supported browser profiles; the phase checklist identifies provider configuration/time synchronization and every remaining real-account assertion. No credentials were recorded, accounts deleted, push/deployment performed or next phase started. Earlier report sections below retain their historical scopes.
+
+---
+
 # Release correctness follow-up — 2026-11-08
 
 The release-correctness phase adds red/green authentication handling, a mutation-free legacy reset GET plus exact-Origin POST, bounded credential-free PDF/OCR extraction, configured authenticated uploads and atomic CRDT indexing scheduling with transaction-time revocation closure. No identity bypass, RLS bypass, test/assertion removal, security/coverage threshold reduction, push or deployment. Existing migrated-schema and wire behaviors remain; no new migration was needed.

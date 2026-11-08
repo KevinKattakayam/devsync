@@ -1,0 +1,3 @@
+c5d5b72 test(identity): cover lifecycle journeys and preserve provider smoke limits
+b329f73 feat(identity): add guarded recovery and lifecycle settings
+299ed93 fix(identity): enforce provider sessions and transactional lifecycle policies

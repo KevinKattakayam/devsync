@@ -1,6 +1,12 @@
 # Architecture
 
-This describes the tracked implementation on `upgrade/enterprise` after the runtime and Kanban follow-up, not a running production installation. [FINAL_REPORT.md](FINAL_REPORT.md) separates source behavior from executed tests. [ARCHITECTURE_CURRENT.md](ARCHITECTURE_CURRENT.md) is the historical Phase0 snapshot.
+This describes the tracked implementation on `upgrade/enterprise` through the identity lifecycle work, not a running production installation. [FINAL_REPORT.md](FINAL_REPORT.md) separates source behavior from executed tests. [ARCHITECTURE_CURRENT.md](ARCHITECTURE_CURRENT.md) is the historical Phase0 snapshot.
+
+## Identity and lifecycle additions
+
+Production HTTP and initial realtime identity verification bind a verified Clerk JWT to an active provider session for the same subject/session. Socket.IO and Yjs also recheck provider status through their existing ongoing authorization audits. The shared adapter has a bounded positive cache (at most5 seconds, monotonic clock), a1500ms provider deadline and fail-closed errors; JWT expiry, active local principal, current tenant membership and source policy remain separate requirements. Provider availability, API limits and propagation must be validated before production. See [provider adapter](../backend/src/security/provider-sessions.ts), [HTTP identity](../backend/src/security/authentication.ts) and [realtime identity](../backend/src/security/realtime-identity.ts).
+
+The frontend waits for successful local identity synchronization before displaying signed-in workspace children and offers uncached-token retry and native Clerk sign-out. Account settings list/revoke only the authenticated user's provider sessions and show a non-destructive deletion plan. Owner workspace settings use compatible v2 lifecycle routes for exact-name-confirmed ownership transfer and export-review requests. Transfer promotes an active same-tenant member and demotes the caller to EDITOR in the existing locked tenant transaction, then invalidates collaboration access. The additive, forced-RLS WorkspaceExportRequest table records manual review only; there is no export bundle, erasure service or automatic provider account deletion. [Routes](../backend/src/routes/lifecycle.routes.ts), [migration](../backend/prisma/migrations/202611080001_export_requests/migration.sql), [verification and rollback](quality/identity-lifecycle/README.md). Real two-account provider acceptance remains unverified.
 
 ## System
 

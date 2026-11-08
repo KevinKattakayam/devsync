@@ -1,0 +1,9 @@
+
+> devsync-backend@1.0.0 typecheck
+> tsc --noEmit && tsc -p tsconfig.seed.json && tsc -p tsconfig.testing.json
+
+src/routes/lifecycle.routes.ts(97,29): error TS2339: Property 'workspaceId' does not exist on type '{}'.
+src/routes/lifecycle.routes.ts(101,46): error TS2339: Property 'workspaceId' does not exist on type '{}'.
+src/routes/lifecycle.routes.ts(129,27): error TS2339: Property 'workspaceId' does not exist on type '{}'.
+src/routes/lifecycle.routes.ts(133,44): error TS2339: Property 'workspaceId' does not exist on type '{}'.
+src/routes/lifecycle.routes.ts(154,41): error TS2339: Property 'workspaceId' does not exist on type '{}'.

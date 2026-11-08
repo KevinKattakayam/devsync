@@ -1,6 +1,19 @@
 > Phase1a status: D01/D02/E01 and D03–D08 application boundaries are repaired and regression-tested; D08 also has a tested composite database constraint. This matrix is not a claim that full Phase1a centralization is complete. Phase1c closes ongoing transport workspace revocation and D09 assignment checks for converted REST handlers. Broader G01 tenant-context coverage, Provider identity provisioning/linking remains open; current actor/service/maintenance policies and limits are listed below. See PROGRESS.md for the complete scope ledger.
 
-# Authorization matrix — updated during Phase 1c
+# Authorization matrix — identity lifecycle additions
+
+Production Clerk authentication now also checks an active provider session bound to the same verified subject/session. The bounded positive cache lasts at most5 seconds; ongoing Socket.IO/Yjs audits recheck provider status as well as existing membership/expiry policies. Provider failure denies access. Local fixture tests exercise adapters and policies; real two-account acceptance is still externally blocked. [Evidence](quality/identity-lifecycle/README.md).
+
+| Additive v2 route | Required authority | Validation / effect |
+|---|---|---|
+| `GET /api/v2/account/deletion-plan` | Active self via central principal policy | Own owned-workspace metadata/sole-active-owner prerequisites; deletes nothing |
+| `GET /api/v2/account/sessions` | Active self; provider subject from authenticated local mapping | At most100 own active sessions; no IP/token; explicit truncation flag |
+| `POST /api/v2/account/sessions/:sessionId/revoke` | Active self; production bearer authentication; same provider session owner | Strict empty body; bounded ID; provider-confirmed revocation, not cookie clearing |
+| `GET /api/v2/workspaces/:workspaceId/lifecycle` | Current active OWNER in central tenant transaction | Retained CRDT backup count and up to100 review records; no content export |
+| `POST /api/v2/workspaces/:workspaceId/lifecycle/export-requests` | Current active OWNER; production bearer authentication | Strict exact-name confirmation; forced tenant RLS; deduplicated REVIEW_REQUIRED record, no delivery |
+| `POST /api/v2/workspaces/:workspaceId/lifecycle/transfer` | Current active OWNER; production bearer authentication | Exact-name confirmation; active same-tenant target member, not self; atomic target OWNER/caller EDITOR and collaboration invalidation |
+
+All new routes send `Cache-Control: no-store`. Existing verified-recipient invitations, owner/editor/viewer permissions, last-owner protections and legacy/v1/transport contracts remain. Source: [lifecycle routes](../backend/src/routes/lifecycle.routes.ts), [session adapter](../backend/src/security/provider-sessions.ts), [real DB policy regressions](../backend/src/__tests__/resource-mutations.integration.test.ts).
 
 Static route-by-route review of every registered REST route and every Socket.io input event. This is not a passing integration-test report. OWNER/EDITOR/VIEWER are database workspace roles; there is no per-document ownership ACL beyond membership. Authz checks do not overcome RLS context failures (G01). Protected application routers retain Helmet, configured CORS, parsing, request correlation and the production global IP limiter. Operational health/readiness and metrics are mounted before parsing/auth/rate limiting. Legacy route evidence line offsets below describe the pre-format Phase1a tree (0cee996); permission behavior remains as listed, with new transport/operational exceptions documented below.
 

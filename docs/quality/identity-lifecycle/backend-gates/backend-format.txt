@@ -1,0 +1,8 @@
+
+> devsync-backend@1.0.0 format:check
+> prettier --check . --ignore-unknown
+
+Checking formatting...
+[warn] src/__tests__/provider-session.test.ts
+[warn] src/security/provider-sessions.ts
+[warn] Code style issues found in 2 files. Run Prettier with --write to fix.

@@ -1,0 +1,17 @@
+{
+  "independentHttpChecks": [
+    {
+      "source": "api.github.com",
+      "status": 200,
+      "httpDateMinusLocalSeconds": -19803
+    },
+    {
+      "source": "www.google.com",
+      "status": 204,
+      "httpDateMinusLocalSeconds": -19800
+    }
+  ],
+  "timeServiceExit": 0,
+  "timeServiceStatus": "NTP=no\nNTPSynchronized=no",
+  "noClockChangePerformed": true
+}

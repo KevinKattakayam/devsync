@@ -1,0 +1,9 @@
+
+> devsync-backend@1.0.0 test
+> node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand --runTestsByPath src/__tests__/provider-session.test.ts --coverage=false
+
+Test Suites: 1 passed, 1 total
+Tests:       5 passed, 5 total
+Snapshots:   0 total
+Time:        6.303 s, estimated 8 s
+Ran all test suites within paths "src/__tests__/provider-session.test.ts".

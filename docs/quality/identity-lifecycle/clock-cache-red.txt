@@ -1,0 +1,28 @@
+
+> devsync-backend@1.0.0 test
+> node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand --runTestsByPath src/__tests__/provider-session.test.ts --testNamePattern=host clock --coverage=false
+
+FAIL src/__tests__/provider-session.test.ts (7.088 s)
+  ● does not extend cached authority when the host clock is corrected backwards
+
+    expect(received).rejects.toThrow()
+
+    Received promise resolved instead of rejected
+    Resolved to value: undefined
+
+       98 |  const sessions=Reflect.construct(ProviderSessions,[{get,list:async()=>({data:[],totalCount:0}),revoke:async()=>record('revoked')},()=>wall,()=>ticks]) as ProviderSessions;
+       99 |  await sessions.assertActive('sess_fixture','user_fixture');wall-=19800000;ticks+=5001;status='revoked';
+    > 100 |  await expect(sessions.assertActive('sess_fixture','user_fixture')).rejects.toThrow('revoked');
+          |        ^
+      101 |  expect(get).toHaveBeenCalledTimes(2);
+      102 | });
+      103 |
+
+      at expect (node_modules/expect/build/index.js:2116:15)
+      at Object.<anonymous> (src/__tests__/provider-session.test.ts:100:8)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 4 skipped, 5 total
+Snapshots:   0 total
+Time:        7.392 s
+Ran all test suites within paths "src/__tests__/provider-session.test.ts".

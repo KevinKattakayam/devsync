@@ -1,3 +1,28 @@
+# Identity, member roles and account lifecycle — 2026-11-08
+
+Implementation and local verification delivered on `upgrade/enterprise`; **the real-account definition of done remains externally blocked**. Initial checkout was clean at166085b. Existing Clerk forms/sign-out, verified-recipient invitations, workspace setup, central owner/editor/viewer policy, last-owner protections, membership revocation and tenant/source isolation were inspected and retained. No duplicate invitation system or custom password authentication was added. No push, deployment, production data/schema change, account deletion or auth/RLS/test/coverage bypass.
+
+## Changes verified locally
+
+- Bind production HTTP and realtime identity to the same active Clerk session; recheck during ongoing Socket.IO/Yjs audits. Bounded coalescing cache uses monotonic time (at most5 seconds,2000 entries), provider deadline1500ms, independent JWT expiry and fail-closed redacted errors. Own-session list/revocation is provider-backed and cannot select another principal. Provider capacity/latency and real propagation still need operational validation.
+- Withhold signed-in workspace children until local identity sync succeeds; add explicit recovery and honest failed-sign-out handling. Regression covers delayed sign-out failure after switching accounts so the previous token getter is not restored.
+- Add `/settings` for sessions and a non-destructive account deletion plan. Extend existing owner workspace settings with metadata editing, exact-name-confirmed transfer to an active same-tenant member and manual export-review requests. Transfer atomically makes target OWNER/caller EDITOR and invalidates stale collaboration access. VIEWER invite controls are hidden using the existing local-role policy.
+- Add only compatible v2 lifecycle routes and the forward-only WorkspaceExportRequest table with forced tenant RLS, strict review-only status and requester FK. No export file/job/email or automated erasure is implied. Existing OpenAPI operations are semantically unchanged; six paths are additive. Rollback retains review records and security controls; ownership changes are not automatically reversed.
+
+## Verification and limitations
+
+Both apps pass lint, format, strict types, full tests and build: backend31 suites/300 tests; frontend21 files/89 component tests plus9 Node tests. Backend coverage82.30/72.96/76.06/84.56; frontend44.75/41.04/42.34/45.45 (statements/branches/functions/lines); unchanged checked-in baseline comparisons pass. Real PostgreSQL/RLS and transport regressions run in the backend suite. Core browser12 passed and lifecycle browser1 passed use seeded fixture identities, not Clerk login. OpenAPI drift, workflow parsing and helper syntax checks pass. Semgrep74 rules/229 targets/zero findings; redacted backend/frontend source secret scans zero findings. Full npm audits retain backend29 Moderate/2 Low and frontend8 Moderate, zero High/Critical; no threshold was relaxed. Earlier failed/interrupted attempts and red/green regressions are retained separately in [phase verification](quality/identity-lifecycle/README.md) and RESULTS.json. No new visual baseline, credential screenshot, load benchmark, production image certification or hosted CI result.
+
+The user approved two accounts, entered interactive sign-in, reported rejection and supplied Google's “browser or app may not be secure” screenshot. **No successful real Clerk sign-in, invite acceptance, member-removal journey or provider revocation was demonstrated.** Private key/environment probes returned200 only for reachability. Initial HTTP Date comparisons showed approximately19800 seconds of clock difference; after the user corrected time, residual16/22-second offsets and unsynchronized NTP were observed. These are historical observations, not a proven cause of Google's browser rejection or a current clock certification. No JWT tolerance increase or provider-browser evasion was applied.
+
+## External acceptance required; STOP
+
+The isolated local stack is left at http://localhost:3410/sign-in (API5410), with existing volumes preserved and the final frontend refreshed successfully. Operator must verify stable synchronized time, matching private Clerk configuration/origins and enabled sign-in methods, then use normal supported Chrome profiles for two approved accounts (or Clerk email sign-in if already enabled). Follow the exact [manual checklist](quality/identity-lifecycle/README.md): successful `/auth/me` for both, verified-email VIEWER invite acceptance, denied writes/owner operations, removal denied API/Yjs/Socket.IO, own provider-session revocation while JWT remains unexpired, and sign-out/recovery. Do not send credentials/tokens or export storage state. A bare “continue” does not count as successful sign-in evidence.
+
+Account-wide erasure/export delivery, retention/legal decisions, hosted CI and production rollout remain open with their actual engineering/operator scope; keys alone cannot finish them. Stop this phase here pending demonstrated real-account acceptance; do not start another phase or deploy automatically.
+
+---
+
 # Release-blocking correctness and security — 2026-11-08
 
 Local correction scope verified on upgrade/enterprise; provider/hosted actions remain required. No checkout/rebase/merge/cherry-pick, push, deployment, credential rotation or production data/schema change. Initial tree was clean at39b98bc; local main was an ancestor with0 main-only/66 upgrade-only commits, and this branch was two ahead of cached upstream. Remote refs were not refreshed. Root/frontend instructions, current reports/architecture/authz/runbook, actual code, tests and migrations were read before changes.

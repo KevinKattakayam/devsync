@@ -1,0 +1,10 @@
+{
+  "status": "external_provider_action_required",
+  "realProvider": true,
+  "credentialsOrTokensRecorded": false,
+  "screenshots": false,
+  "traces": false,
+  "checks": [],
+  "blocker": "User-provided screenshot shows Google refused the automation-controlled browser before successful Clerk sign-in. Normal-browser/operator smoke remains required.",
+  "realAccountCriteriaMet": false
+}

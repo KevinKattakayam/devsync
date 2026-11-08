@@ -1,0 +1,6 @@
+
+> frontend@0.1.0 typecheck
+> tsc --noEmit
+
+tests/identity-recovery.test.tsx(68,7): error TS2322: Type 'Promise<void>' is not assignable to type 'Promise<undefined>'.
+  Type 'void' is not assignable to type 'undefined'.

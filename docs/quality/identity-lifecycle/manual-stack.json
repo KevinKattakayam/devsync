@@ -1,0 +1,7 @@
+{
+  "command": "FRONTEND_PORT=3410 BACKEND_PORT=5410 docker compose --project-name devsync_identity_20261108 --env-file .env up --build --detach --wait --wait-timeout 180",
+  "exit": 0,
+  "privateKeyValuesRecorded": false,
+  "buildOutputDiscarded": true,
+  "frontend": "http://localhost:3410"
+}

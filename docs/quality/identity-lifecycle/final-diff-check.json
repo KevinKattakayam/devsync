@@ -1,0 +1,37 @@
+{
+  "sourceAndDocumentation": {
+    "command": [
+      "git",
+      "diff",
+      "166085b",
+      "--check",
+      "--",
+      ".",
+      ":(exclude)docs/quality/identity-lifecycle"
+    ],
+    "exitCode": 0
+  },
+  "evidenceMarkdownAndJson": {
+    "command": [
+      "git",
+      "diff",
+      "--cached",
+      "--check",
+      "--",
+      "docs/quality/identity-lifecycle/README.md",
+      "docs/quality/identity-lifecycle/*.json"
+    ],
+    "exitCode": 0
+  },
+  "rawLogs": {
+    "command": [
+      "git",
+      "diff",
+      "--cached",
+      "--check"
+    ],
+    "exitCode": 2,
+    "diagnosticLines": 1041,
+    "classification": "Preserved unedited terminal output has trailing spaces and final blank lines. Not a source formatting failure; logs were not rewritten to hide output."
+  }
+}

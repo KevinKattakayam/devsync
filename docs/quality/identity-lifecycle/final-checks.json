@@ -1,0 +1,72 @@
+[
+  {
+    "check": "openapi-final",
+    "command": [
+      "npm",
+      "run",
+      "openapi:check"
+    ],
+    "cwd": "backend",
+    "exitCode": 1,
+    "log": "openapi-final.txt"
+  },
+  {
+    "check": "manual-helper-syntax",
+    "command": [
+      "node",
+      "--check",
+      "tools/quality/real-identity-smoke.mjs"
+    ],
+    "cwd": ".",
+    "exitCode": 0,
+    "log": "manual-helper-syntax.txt"
+  },
+  {
+    "check": "ci-browser-syntax",
+    "command": [
+      "node",
+      "--check",
+      "tools/ci/browser.mjs"
+    ],
+    "cwd": ".",
+    "exitCode": 0,
+    "log": "ci-browser-syntax.txt"
+  },
+  {
+    "check": "diff-check",
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "cwd": ".",
+    "exitCode": 0,
+    "log": "diff-check.txt"
+  },
+  {
+    "check": "backend-coverage-final",
+    "command": [
+      "node",
+      "tools/ci/coverage.mjs",
+      "backend",
+      "docs/quality/identity-lifecycle/backend-coverage-summary.json",
+      "tools/ci/coverage-baseline.json"
+    ],
+    "cwd": ".",
+    "exitCode": 0,
+    "log": "backend-coverage-final.txt"
+  },
+  {
+    "check": "frontend-coverage-final",
+    "command": [
+      "node",
+      "tools/ci/coverage.mjs",
+      "frontend",
+      "docs/quality/identity-lifecycle/frontend-accepted/frontend-coverage/coverage-summary.json",
+      "tools/ci/coverage-baseline.json"
+    ],
+    "cwd": ".",
+    "exitCode": 0,
+    "log": "frontend-coverage-final.txt"
+  }
+]

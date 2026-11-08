@@ -1,0 +1,34 @@
+[
+  {
+    "service": "devsync_identity_20261108-worker-1",
+    "state": "exited 255 false 2026-11-08T07:58:48.585304948Z 2026-11-08T08:11:08.709241409Z"
+  },
+  {
+    "service": "devsync_identity_20261108-frontend-1",
+    "state": "exited 255 false 2026-11-08T07:58:48.733867519Z 2026-11-08T08:11:08.707610559Z"
+  },
+  {
+    "service": "devsync_identity_20261108-initialize-1",
+    "state": "exited 0 false 2026-11-08T07:58:40.689402179Z 2026-11-08T07:58:42.488995946Z"
+  },
+  {
+    "service": "devsync_identity_20261108-postgres-1",
+    "state": "exited 255 false 2026-11-08T07:58:34.935275147Z 2026-11-08T08:11:08.705372813Z"
+  },
+  {
+    "service": "devsync_identity_20261108-extractor-1",
+    "state": "running 0 false 2026-11-08T08:11:10.750784427Z 2026-11-08T08:11:08.711938826Z"
+  },
+  {
+    "service": "devsync_identity_20261108-redis-1",
+    "state": "exited 255 false 2026-11-08T07:58:34.330466041Z 2026-11-08T08:11:08.705262185Z"
+  },
+  {
+    "service": "devsync_identity_20261108-bootstrap-1",
+    "state": "exited 0 false 2026-11-08T07:58:34.125028052Z 2026-11-08T07:58:34.361465702Z"
+  },
+  {
+    "service": "devsync_identity_20261108-backend-1",
+    "state": "exited 255 false 2026-11-08T02:42:03.683702581Z 2026-11-08T08:11:08.711561924Z"
+  }
+]

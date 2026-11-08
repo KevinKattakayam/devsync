@@ -1,8 +1,18 @@
-> Current runtime follow-up: the application bases now use pinned Node22/Alpine. Local scans show0 Critical/0 High, backend4 Medium/frontend0 findings; see [current inventory](../VULNERABILITIES.md) for platform tradeoffs and [latest progress](PROGRESS.md). The Debian-specific Phase5a-3 risk section below is historical; capability/no-new-privileges and separate authority requirements still apply.
+> Runtime evidence: release-correctness scans report zero findings in the tested local API/extractor/frontend images after dependency/zlib fixes. No new image scan or production result is inferred from the identity phase. See [current inventory](../VULNERABILITIES.md) and [latest progress](PROGRESS.md). Historical Phase5a-3 risks remain historical; capability/no-new-privileges and separate authority requirements still apply.
 
 # Operations runbook
 
-These are configuration and operating instructions, not a claim that hosted CI, Vercel, Railway, real Clerk login or a production restore was executed here. Current measured results are in [FINAL_REPORT.md](FINAL_REPORT.md) and [Phase5a-3](quality/phase5a-3/README.md); [Phase5b](deployment/RESULTS.md) records the earlier delivery. These are operating procedures, not evidence of hosted execution.
+These are configuration and operating instructions, not a claim that hosted CI, Vercel, Railway, real Clerk login or a production restore was executed here. Current measured results are in [FINAL_REPORT.md](FINAL_REPORT.md); [Phase5a-3](quality/phase5a-3/README.md) and [Phase5b](deployment/RESULTS.md) record earlier delivery. These are operating procedures, not evidence of hosted execution.
+
+## Identity lifecycle acceptance and rollout
+
+The current real two-account smoke is blocked before successful sign-in: Google rejected the controlled browser. HTTP200 key/environment probes and fixture tests do not establish real identity success. Use normal supported Chrome opened by the operator, or an already enabled Clerk-managed email sign-in method; do not spoof automation or weaken verification. The isolated local stack `devsync_identity_20261108` is available at http://localhost:3410/sign-in (API5410). No volume removal or production change is authorized. Exact manual checks, clock observations, evidence and limitations are in [identity lifecycle verification](quality/identity-lifecycle/README.md).
+
+Privately verify matching Clerk instance keys, allowed origins/redirects and two approved distinct accounts with verified email. Restore host time synchronization before trusting fresh-token verification; do not increase JWT tolerance. Complete sign-in/recovery, verified-recipient VIEWER invite acceptance, denied writes/owner operations, removal denial through API/Yjs/Socket.IO, and real own-session revocation before JWT expiry. Passwords, MFA codes, tokens and provider keys must remain private. Record statuses/booleans only; no credential screenshots, traces or exported storage state.
+
+Before enabling the new lifecycle UI in another environment, apply the additive `202611080001_export_requests` migration through the reviewed privileged procedure below, then runtime grants. No existing rows are rewritten. Roll back only to a schema-compatible app while retaining review records and session verification; no table drop or automatic ownership reversal is supplied. Transfer changes real authority, so refresh membership after an ambiguous response and coordinate with the new owner. Export requests are manual review records, not queued deliveries. Account deletion stays a plan requiring operator/legal review of ownership, retention/holds, derivatives, provider records, queues and backups.
+
+Provider session checks add bounded online Clerk dependencies (1500ms deadline; at most5-second positive cache per process plus existing transport audit cadence). Validate actual capacity/latency/revocation propagation before production. A provider outage denies access; do not disable this control to recover service. Local source/application gates pass; hosted Actions, production rollout and two-account provider acceptance remain separate unverified actions.
 
 ## One-command local stack
 

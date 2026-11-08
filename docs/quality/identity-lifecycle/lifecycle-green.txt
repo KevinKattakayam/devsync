@@ -1,0 +1,9 @@
+
+> devsync-backend@1.0.0 test
+> node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand --runTestsByPath src/__tests__/resource-mutations.integration.test.ts --testNamePattern=lifecycle: --coverage=false
+
+Test Suites: 1 passed, 1 total
+Tests:       101 skipped, 3 passed, 104 total
+Snapshots:   0 total
+Time:        12.832 s, estimated 15 s
+Ran all test suites within paths "src/__tests__/resource-mutations.integration.test.ts".
