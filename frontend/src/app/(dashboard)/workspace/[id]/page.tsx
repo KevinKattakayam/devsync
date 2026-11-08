@@ -24,8 +24,11 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 
+import { loadWorkspaceAccess } from '@/lib/workspace-access';
+
 export default function WorkspacePage() {
   const { id } = useParams<{ id: string }>();
+  const [role, setRole] = useState('');
   const [workspace, setWorkspace] = useState<Workspace | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [showInvite, setShowInvite] = useState(false);
@@ -35,10 +38,12 @@ export default function WorkspacePage() {
 
   useEffect(() => {
     let disposed = false;
-    workspaceApi
-      .get(id)
-      .then(({ data }) => {
-        if (!disposed) setWorkspace(data);
+    loadWorkspaceAccess(id)
+      .then(({ workspace, role }) => {
+        if (!disposed) {
+          setWorkspace(workspace);
+          setRole(role);
+        }
       })
       .catch(() => {
         if (!disposed) toast.error('Failed to load workspace data');
@@ -125,6 +130,7 @@ export default function WorkspacePage() {
 
         <div className="flex flex-wrap items-center gap-3">
           <button
+            disabled={role !== 'OWNER'}
             onClick={() => setShowInvite(true)}
             className="flex items-center gap-1.5 px-4 py-2 rounded-xl gradient-primary text-primary-foreground text-xs font-semibold hover:opacity-90 transition-all shadow-md glow-sm"
           >
@@ -224,6 +230,7 @@ export default function WorkspacePage() {
               {workspace.members?.length || 0})
             </h3>
             <button
+              disabled={role !== 'OWNER'}
               onClick={() => setShowInvite(true)}
               className="p-1 rounded-md bg-secondary/80 hover:bg-secondary text-muted-foreground hover:text-foreground transition-colors"
               title="Add member"

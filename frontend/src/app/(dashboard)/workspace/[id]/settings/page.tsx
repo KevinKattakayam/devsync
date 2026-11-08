@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { useAuth } from '@/providers/auth-provider';
 import { Badge, Button, EmptyState, Input } from '@/components/ui';
+import { WorkspaceLifecycle } from '@/components/settings/lifecycle';
 import { AiUsage } from '@/components/settings/ai-usage';
 import { Members } from '@/components/settings/members';
 import { Invitations } from '@/components/settings/invitations';
@@ -21,6 +22,7 @@ function Settings({ workspaceId }: { workspaceId: string }) {
   const [attempt, setAttempt] = useState(0);
   const [snapshot, setSnapshot] = useState<{ attempt: number; data?: Access; error?: boolean }>();
   const [query, setQuery] = useState('');
+  const [lifecycleOpen, setLifecycleOpen] = useState(false);
   const [invitationIndex, setInvitationIndex] = useState('');
   useEffect(() => {
     let disposed = false;
@@ -99,6 +101,9 @@ function Settings({ workspaceId }: { workspaceId: string }) {
           aria-label="Settings sections"
           className="flex flex-wrap content-start gap-2 md:flex-col"
         >
+          <a href="/settings" className="rounded-md px-3 py-2 text-sm hover:bg-secondary">
+            Account & sessions
+          </a>
           <a
             onClick={() => setQuery('')}
             href="#members"
@@ -173,6 +178,25 @@ function Settings({ workspaceId }: { workspaceId: string }) {
               query={invitationsSection ? '' : normalized}
             />
           </section>
+          {owner &&
+            (!normalized ||
+              'lifecycle ownership transfer export deletion setup'.includes(normalized)) && (
+              <details onToggle={(event) => setLifecycleOpen(event.currentTarget.open)}>
+                <summary className="cursor-pointer rounded-lg border p-4 font-medium">
+                  Workspace setup & lifecycle
+                </summary>
+                {lifecycleOpen && (
+                  <div className="pt-5">
+                    <WorkspaceLifecycle
+                      key={`${attempt}:${workspace.id}`}
+                      workspace={workspace}
+                      actorId={actorId}
+                      refresh={refresh}
+                    />
+                  </div>
+                )}
+              </details>
+            )}
         </div>
       </div>
     </div>
