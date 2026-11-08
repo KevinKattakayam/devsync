@@ -66,15 +66,15 @@ export async function searchKnowledge(
       : Prisma.sql`to_tsvector('simple', title || E'\n' || body) @@ websearch_to_tsquery('simple', ${input.q})`;
     const rows = await tx.$queryRaw<Row[]>`
       WITH sources AS (
-        SELECT 'document'::text AS type, d.id, d.title, devsync_document_text(d.content) AS body, d."updatedAt", NULL::text AS "assigneeId"
+        SELECT 'document'::text AS type, d.id, d.title, devsync_document_text(d.content) AS body, d."updatedAt" AT TIME ZONE 'UTC' AS "updatedAt", NULL::text AS "assigneeId"
         FROM "Document" d WHERE d."workspaceId"=${workspaceId} AND NOT d."isArchived"
         UNION ALL
-        SELECT 'snippet', s.id, s.title, COALESCE(s.description,'') || E'\n' || s.code, s."updatedAt", NULL::text FROM "Snippet" s WHERE s."workspaceId"=${workspaceId}
+        SELECT 'snippet', s.id, s.title, COALESCE(s.description,'') || E'\n' || s.code, s."updatedAt" AT TIME ZONE 'UTC', NULL::text FROM "Snippet" s WHERE s."workspaceId"=${workspaceId}
         UNION ALL
-        SELECT 'task', t.id, t.title, COALESCE(t."taskKey",'') || E'\n' || COALESCE(t.description,''), t."updatedAt", t."assigneeId"
+        SELECT 'task', t.id, t.title, COALESCE(t."taskKey",'') || E'\n' || COALESCE(t.description,''), t."updatedAt" AT TIME ZONE 'UTC', t."assigneeId"
         FROM "Task" t JOIN "Column" c ON c.id=t."columnId" JOIN "Board" b ON b.id=c."boardId" WHERE b."workspaceId"=${workspaceId}
         UNION ALL
-        SELECT 'decision', r.id, r.title, r.rationale || E'\n' || r.excerpt, r."updatedAt", NULL::text
+        SELECT 'decision', r.id, r.title, r.rationale || E'\n' || r.excerpt, r."updatedAt" AT TIME ZONE 'UTC', NULL::text
         FROM "DecisionReceipt" r WHERE r."workspaceId"=${workspaceId} AND ${process.env.FEATURE_DECISION_RECEIPTS === 'true'} AND (
           (r."sourceKind"='document' AND EXISTS(SELECT 1 FROM "Document" d WHERE d.id=r."sourceId" AND d."workspaceId"=${workspaceId} AND NOT d."isArchived")) OR
           (r."sourceKind"='task' AND EXISTS(SELECT 1 FROM "Task" t JOIN "Column" c ON c.id=t."columnId" JOIN "Board" b ON b.id=c."boardId" WHERE t.id=r."sourceId" AND b."workspaceId"=${workspaceId}))
@@ -90,8 +90,8 @@ export async function searchKnowledge(
         ${input.type ? Prisma.sql`AND type=${input.type}` : Prisma.empty}
         ${opening ? Prisma.sql`AND id=${input.id}` : Prisma.empty}
         ${!opening && input.assigneeId ? Prisma.sql`AND type='task' AND "assigneeId"=${input.assigneeId}` : Prisma.empty}
-        ${!opening && input.after ? Prisma.sql`AND "updatedAt">=${new Date(input.after)}` : Prisma.empty}
-        ${!opening && input.before ? Prisma.sql`AND "updatedAt"<=${new Date(input.before)}` : Prisma.empty}
+        ${!opening && input.after ? Prisma.sql`AND "updatedAt">=${input.after}::timestamptz` : Prisma.empty}
+        ${!opening && input.before ? Prisma.sql`AND "updatedAt"<=${input.before}::timestamptz` : Prisma.empty}
       ORDER BY score DESC,"updatedAt" DESC,type,id LIMIT ${opening ? 1 : input.limit}`;
     const retrievedAt = new Date().toISOString();
     const results = rows.map((row) => {

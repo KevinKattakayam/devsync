@@ -1,3 +1,4 @@
+import { searchKnowledge } from '../services/knowledge-search';
 import { createKnowledgeSearchRouter } from '../routes/knowledge-search.routes';
 import { createGitHubExecutionRouter } from '../routes/github-execution.routes';
 import { githubInstallationRouter } from '../routes/github-installation.routes';
@@ -105,6 +106,7 @@ let postgres: StartedPostgreSqlContainer;
 let admin: PrismaClient;
 let db: TenantPrismaClient;
 let sequence = 0;
+let runtimeDatabaseUrl: string;
 const app = express();
 app.use(
   express.json({
@@ -213,7 +215,8 @@ beforeAll(async () => {
   const url = new URL(postgres.getConnectionUri());
   url.username = 'resource_runtime';
   url.password = password;
-  db = createTenantPrismaClient(new PrismaClient({ datasourceUrl: url.toString() }));
+  runtimeDatabaseUrl = url.toString();
+  db = createTenantPrismaClient(new PrismaClient({ datasourceUrl: runtimeDatabaseUrl }));
   for (const id of ['owner', 'editor', 'viewer', 'foreign', 'inactive', 'superadmin'])
     await admin.user.create({
       data: {
@@ -2686,4 +2689,33 @@ it('embedding preserves legacy string document bodies while excluding TipTap att
       return Array<number>(1536).fill(0.01);
     }),
   );
+});
+
+it('knowledge timestamps and inclusive filters use UTC under a non-UTC database session', async () => {
+  const { a } = await fixture();
+  const instant = '2026-11-08T10:00:00.000Z';
+  await admin.document.update({
+    where: { id: `doc-${a}` },
+    data: { title: 'regionalquartz', updatedAt: new Date(instant) },
+  });
+  await admin.$executeRawUnsafe("ALTER ROLE resource_runtime SET timezone TO 'Asia/Kolkata'");
+  const regional = createTenantPrismaClient(
+    new PrismaClient({ datasourceUrl: runtimeDatabaseUrl }),
+  );
+  try {
+    const result = await withDatabase(regional, () =>
+      searchKnowledge('viewer', a, {
+        q: 'regionalquartz',
+        limit: 20,
+        after: instant,
+        before: instant,
+      }),
+    );
+    expect(result.results).toEqual(
+      expect.arrayContaining([expect.objectContaining({ id: `doc-${a}`, updatedAt: instant })]),
+    );
+  } finally {
+    await regional.$disconnect();
+    await admin.$executeRawUnsafe("ALTER ROLE resource_runtime SET timezone TO 'UTC'");
+  }
 });
