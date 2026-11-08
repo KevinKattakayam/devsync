@@ -717,8 +717,13 @@ it('closes an admitted transport when writer authority changes before its journa
 it('keeps frame and message-window admission limits enforced on an authenticated connection', async () => {
   const name = await room();
   const node = await server();
-  await client(node.url, name);
+  const active = await client(node.url, name);
+  await until(
+    () => !active.provider.hasUnsyncedChanges,
+    'handshake acknowledgement before budget assertions',
+  );
   const connection = [...node.runtime.connections][0];
+  await connection.waitForPendingMessages();
   const check = (payload: Uint8Array) =>
     connection.callbacks.beforeHandleMessage(connection, payload);
   // Exercise the installed library's policy callback without allocating a large wire queue.
