@@ -1,3 +1,8 @@
+# Task planning preflight — in progress
+
+- Audit existing Kanban schema, tenant policy, drag/keyboard/undo behavior and direct task writers before implementation.
+- Record missing planning features and completion-policy decision; no application/schema/test changes or completed task-planning delivery claimed.
+
 # Real-time editor and recovery — 2026-11-08
 
 - Scope connection/pending acknowledgments to the current Y.Doc and distinguish access loss from reconnectable offline state; retain native journal-acknowledgment semantics and server permissions.

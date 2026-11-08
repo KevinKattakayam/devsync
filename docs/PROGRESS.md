@@ -1,3 +1,9 @@
+# Task planning — preflight in progress, 2026-11-08
+
+Read-only source audit at35142de identifies existing priorities/dates/assignee validation/label storage, serialized reorder, native/keyboard moves and Undo. Missing planning/workflow features and all direct task writers are mapped in [preflight](quality/task-planning/PREFLIGHT.md). GitHub column automation and legacy PATCH/move/Undo must share any future completion policy. No application, test or migration change; no phase-completion/provider-success claim. Pending user choice: reviewer approval authority, which is absent from current policy and materially controls completion permissions. Proposed default is assigned reviewer approval with auditable owner override. Implementation remains outstanding; this is not a released planning feature.
+
+---
+
 # Real-time editor and recovery — 2026-11-08
 
 Local phase delivered on `upgrade/enterprise`, starting clean atfadb379. Existing TipTap3/Yjs/Hocuspocus journal, snapshots, native acknowledgments, presence, viewer policy, membership/source isolation and ongoing provider checks remain. Root/frontend instructions, architecture/authz/current reports, CRDT operations/ADRs, actual code, related tests and migrations were read before changes. No engine replacement, schema migration, product API/WebSocket change, admission/rate/coverage/scan reduction, push or deployment.
