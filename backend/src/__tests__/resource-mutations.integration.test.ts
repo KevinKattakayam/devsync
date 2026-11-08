@@ -1,3 +1,4 @@
+import { createKnowledgeSearchRouter } from '../routes/knowledge-search.routes';
 import { createGitHubExecutionRouter } from '../routes/github-execution.routes';
 import { githubInstallationRouter } from '../routes/github-installation.routes';
 import { providerSessions } from '../security/provider-sessions';
@@ -55,6 +56,7 @@ import { startEmbeddingPolling } from '../services/embedding-runner';
 import { getMe, updateMe } from '../controllers/auth.controller';
 import { withIdentityProfileAccess } from '../security/service-policy';
 import {
+  semanticWorkspaceContext,
   queueEmbedding,
   refreshEmbedding,
   claimEmbeddingJobs,
@@ -134,6 +136,10 @@ app.use(
 app.use(
   '/workspaces/:workspaceId/repos/:repositoryId/execution',
   createGitHubExecutionRouter((_req, _res, next) => next()),
+);
+app.use(
+  '/workspaces/:workspaceId/knowledge',
+  createKnowledgeSearchRouter((_req, _res, next) => next()),
 );
 app.use('/scim/v2', scimRouter);
 app.get('/auth/me', getMe);
@@ -2410,4 +2416,274 @@ it('GitHub review dismissal and PR renaming retain stable provider identities', 
     headSha: sha,
   });
   expect(JSON.stringify(trail.body)).not.toContain('Before rename');
+});
+
+it('search returns projected TipTap body edits without an embedding provider', async () => {
+  const { a } = await fixture();
+  const id = `doc-${a}`;
+  const journal = new CrdtJournal(db);
+  const doc = new Y.Doc();
+  try {
+    Y.applyUpdate(doc, await journal.load({ workspaceId: a, documentId: id }));
+    const paragraph = new Y.XmlElement('paragraph');
+    const text = new Y.XmlText();
+    text.insert(0, 'freshbodyquartz');
+    paragraph.insert(0, [text]);
+    doc.getXmlFragment('default').insert(0, [paragraph]);
+    await journal.append({ workspaceId: a, documentId: id }, Y.encodeStateAsUpdate(doc), 'editor');
+    const result = await request(app)
+      .get(`/workspaces/${a}/search?q=freshbodyquartz`)
+      .set('x-fixture-actor', 'viewer');
+    expect(result.status).toBe(200);
+    expect(result.body.results).toEqual(expect.arrayContaining([expect.objectContaining({ id })]));
+  } finally {
+    doc.destroy();
+  }
+});
+
+it('knowledge search scopes source types, dates, assignees and fresh CRDT projections for every reader', async () => {
+  const { a, b } = await fixture();
+  await admin.task.update({
+    where: { id: `task-${a}` },
+    data: { assigneeId: 'editor', description: 'quartz searchable task' },
+  });
+  await admin.document.update({
+    where: { id: `doc-${a}` },
+    data: {
+      content: {
+        type: 'doc',
+        content: [
+          { type: 'paragraph', content: [{ type: 'text', text: 'quartz knowledge body' }] },
+        ],
+      },
+    },
+  });
+  for (const actor of ['owner', 'editor', 'viewer']) {
+    const r = await request(app)
+      .get(`/workspaces/${a}/knowledge?q=quartz`)
+      .set('x-fixture-actor', actor);
+    expect(r.status).toBe(200);
+    expect(r.headers['cache-control']).toBe('no-store');
+    expect(r.body.results).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: `doc-${a}`,
+          freshness: 'current_projection',
+          method: 'lexical',
+        }),
+        expect.objectContaining({ id: `task-${a}` }),
+      ]),
+    );
+    expect(JSON.stringify(r.body)).not.toContain(b);
+  }
+  const filtered = await request(app).get(`/workspaces/${a}/knowledge?q=quartz&assigneeId=editor`);
+  expect(filtered.body.results.map((v: { id: string }) => v.id)).toEqual([`task-${a}`]);
+  expect(
+    (await request(app).get(`/workspaces/${a}/knowledge?q=quartz&type=snippet`)).body.results,
+  ).toEqual([]);
+  expect(
+    (await request(app).get(`/workspaces/${a}/knowledge?q=quartz&after=2099-01-01T00:00:00Z`)).body
+      .results,
+  ).toEqual([]);
+  expect(
+    (await request(app).get(`/workspaces/${a}/knowledge?q=quartz&before=2000-01-01T00:00:00Z`)).body
+      .results,
+  ).toEqual([]);
+  expect(
+    (
+      await request(app).get(
+        `/workspaces/${a}/knowledge?q=quartz&before=2000-01-01T00:00:00Z&after=2099-01-01T00:00:00Z`,
+      )
+    ).status,
+  ).toBe(400);
+  expect((await request(app).get(`/workspaces/${b}/knowledge?q=quartz`)).status).toBe(403);
+  expect(
+    (await request(app).get(`/workspaces/${a}/knowledge/source?type=document&id=doc-${b}`)).status,
+  ).toBe(404);
+  expect(
+    (await request(app).get(`/workspaces/${a}/knowledge/source?type=document&id=doc-${a}`)).status,
+  ).toBe(200);
+  await admin.document.update({ where: { id: `doc-${a}` }, data: { isArchived: true } });
+  expect(
+    (await request(app).get(`/workspaces/${a}/knowledge/source?type=document&id=doc-${a}`)).status,
+  ).toBe(404);
+  expect(
+    (await request(app).get(`/workspaces/${a}/knowledge?q=quartz&type=document`)).body.results,
+  ).toEqual([]);
+  await admin.workspaceMember.delete({
+    where: { userId_workspaceId: { userId: 'viewer', workspaceId: a } },
+  });
+  expect(
+    (
+      await request(app)
+        .get(`/workspaces/${a}/knowledge/source?type=task&id=task-${a}`)
+        .set('x-fixture-actor', 'viewer')
+    ).status,
+  ).toBe(403);
+  expect(
+    (
+      await request(app)
+        .get(`/workspaces/${a}/knowledge?q=quartz`)
+        .set('x-fixture-actor', 'inactive')
+    ).status,
+  ).toBe(403);
+});
+it('knowledge receipt derivatives and GitHub metadata retain source and owner authority', async () => {
+  const { a, b } = await fixture();
+  const oldFlag = process.env.FEATURE_DECISION_RECEIPTS;
+  try {
+    process.env.FEATURE_DECISION_RECEIPTS = 'true';
+    const receipt = await admin.decisionReceipt.create({
+      data: {
+        workspaceId: a,
+        sourceKind: 'document',
+        sourceId: `doc-${a}`,
+        sourceRevision: 'a'.repeat(64),
+        excerpt: 'quartz proof',
+        title: 'quartz decision',
+        rationale: 'bounded evidence',
+        createdBy: 'owner',
+      },
+    });
+    const foreign = await admin.decisionReceipt.create({
+      data: {
+        workspaceId: a,
+        sourceKind: 'document',
+        sourceId: `doc-${b}`,
+        sourceRevision: 'a'.repeat(64),
+        excerpt: 'quartz foreign',
+        title: 'hiddenquartz',
+        rationale: 'never disclose',
+        createdBy: 'owner',
+      },
+    });
+    const repo = await admin.gitHubRepository.create({
+      data: {
+        workspaceId: a,
+        repositoryId: `repo-${a}`,
+        installationId: '456',
+        owner: 'fixture',
+        name: 'quartz',
+        webhookSecret: 'fixture-not-a-secret',
+      },
+    });
+    await admin.gitHubExecutionState.create({
+      data: {
+        repositoryId: repo.id,
+        workspaceId: a,
+        kind: 'pull_request',
+        subject: '7',
+        state: 'open',
+        headSha: 'a'.repeat(40),
+        providerAt: new Date(),
+        rank: 1,
+        pullNumber: 7,
+      },
+    });
+    const owner = await request(app).get(`/workspaces/${a}/knowledge?q=quartz`);
+    expect(owner.body.results).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ id: receipt.id }),
+        expect.objectContaining({
+          id: `${repo.id}:7`,
+          href: 'https://github.com/fixture/quartz/pull/7',
+        }),
+      ]),
+    );
+    expect(JSON.stringify(owner.body)).not.toContain(foreign.id);
+    const viewer = await request(app)
+      .get(`/workspaces/${a}/knowledge?q=quartz`)
+      .set('x-fixture-actor', 'viewer');
+    expect(viewer.body.results.some((v: { type: string }) => v.type === 'pull_request')).toBe(
+      false,
+    );
+    expect(
+      (
+        await request(app)
+          .get(`/workspaces/${a}/knowledge/source?type=pull_request&id=${repo.id}:7`)
+          .set('x-fixture-actor', 'editor')
+      ).status,
+    ).toBe(404);
+    await admin.gitHubRepository.update({
+      where: { id: repo.id },
+      data: { providerDisconnectedAt: new Date() },
+    });
+    expect(
+      (
+        await request(app).get(
+          `/workspaces/${a}/knowledge/source?type=pull_request&id=${repo.id}:7`,
+        )
+      ).status,
+    ).toBe(404);
+    await admin.document.update({ where: { id: `doc-${a}` }, data: { isArchived: true } });
+    expect(
+      (await request(app).get(`/workspaces/${a}/knowledge/source?type=decision&id=${receipt.id}`))
+        .status,
+    ).toBe(404);
+    process.env.FEATURE_DECISION_RECEIPTS = 'false';
+    expect(
+      (await request(app).get(`/workspaces/${a}/knowledge?q=quartz&type=decision`)).body.results,
+    ).toEqual([]);
+  } finally {
+    if (oldFlag === undefined) delete process.env.FEATURE_DECISION_RECEIPTS;
+    else process.env.FEATURE_DECISION_RECEIPTS = oldFlag;
+  }
+});
+it('semantic retrieval excludes invalidated vectors and embedding uses only TipTap text', async () => {
+  const { a } = await fixture();
+  const id = `doc-${a}`;
+  await admin.document.update({
+    where: { id },
+    data: {
+      content: {
+        type: 'doc',
+        content: [
+          {
+            type: 'paragraph',
+            attrs: { privateAttribute: 'notbodymarker' },
+            content: [{ type: 'text', text: 'semanticquartz' }],
+          },
+        ],
+      },
+    },
+  });
+  await withDatabase(db, () =>
+    db.withTenantTransaction(a, (tx) => queueEmbedding('document', id, tx, a, 'editor')),
+  );
+  const provider = jest.fn(async (text: string) => {
+    expect(text).toContain('semanticquartz');
+    expect(text).not.toContain('notbodymarker');
+    return Array<number>(1536).fill(0.01);
+  });
+  await withDatabase(db, () => refreshEmbedding('document', id, a, provider));
+  const queryProvider = async () => Array<number>(1536).fill(0.01);
+  expect(
+    (
+      await withDatabase(db, () =>
+        semanticWorkspaceContext(a, 'semanticquartz', 20, 'viewer', queryProvider),
+      )
+    ).some((v) => v.type === 'document'),
+  ).toBe(true);
+  await admin.document.update({ where: { id }, data: { embeddingHash: null } });
+  expect(
+    (
+      await withDatabase(db, () =>
+        semanticWorkspaceContext(a, 'semanticquartz', 20, 'viewer', queryProvider),
+      )
+    ).some((v) => v.type === 'document'),
+  ).toBe(false);
+});
+it('embedding preserves legacy string document bodies while excluding TipTap attributes', async () => {
+  const { a } = await fixture();
+  const id = `doc-${a}`;
+  await admin.document.update({ where: { id }, data: { content: 'legacyquartzbody' } });
+  await withDatabase(db, () =>
+    db.withTenantTransaction(a, (tx) => queueEmbedding('document', id, tx, a, 'editor')),
+  );
+  await withDatabase(db, () =>
+    refreshEmbedding('document', id, a, async (text) => {
+      expect(text).toContain('legacyquartzbody');
+      return Array<number>(1536).fill(0.01);
+    }),
+  );
 });

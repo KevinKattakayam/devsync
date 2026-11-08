@@ -1,3 +1,4 @@
+import { knowledgeSearchRouter } from './routes/knowledge-search.routes';
 import { githubInstallationRouter } from './routes/github-installation.routes';
 import express from 'express';
 import {
@@ -97,6 +98,8 @@ mounts.push({
   prefix: '/api/v2/workspaces/:workspaceId/github-repositories/:repositoryId/execution',
   router: githubExecutionRouter,
 });
+app.use('/api/v2/workspaces/:workspaceId/search', knowledgeSearchRouter);
+mounts.push({ prefix: '/api/v2/workspaces/:workspaceId/search', router: knowledgeSearchRouter });
 app.use('/api/v2/account', accountLifecycle);
 mounts.push({ prefix: '/api/v2/account', router: accountLifecycle });
 app.use('/api/v2/workspaces/:workspaceId/lifecycle', workspaceLifecycle);

@@ -14667,6 +14667,459 @@
         }
       }
     },
+    "/api/v2/workspaces/{workspaceId}/search": {
+      "get": {
+        "operationId": "get__api_v2_workspaces__workspaceId__search",
+        "security": [
+          {
+            "ClerkSession": []
+          },
+          {
+            "ClerkCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "workspaceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 191
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 500
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "default": 20,
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "document",
+                "task",
+                "snippet",
+                "decision",
+                "pull_request"
+              ]
+            }
+          },
+          {
+            "name": "assigneeId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 191
+            }
+          },
+          {
+            "name": "after",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+            }
+          },
+          {
+            "name": "before",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+            }
+          },
+          {
+            "name": "trace_id",
+            "in": "header",
+            "required": false,
+            "description": "Optional legacy trace ID; invalid values are ignored.",
+            "schema": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "type": "string",
+              "pattern": "^[a-fA-F0-9]{32}$"
+            }
+          }
+        ],
+        "x-validation-complete": false,
+        "x-contract-complete": true,
+        "responses": {
+          "200": {
+            "description": "Documented response DTO",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "object",
+                  "properties": {
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "document",
+                              "task",
+                              "snippet",
+                              "decision",
+                              "pull_request"
+                            ]
+                          },
+                          "id": {
+                            "type": "string"
+                          },
+                          "title": {
+                            "type": "string"
+                          },
+                          "preview": {
+                            "type": "string"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                          },
+                          "indexedAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                          },
+                          "freshness": {
+                            "type": "string",
+                            "const": "current_projection"
+                          },
+                          "method": {
+                            "type": "string",
+                            "const": "lexical"
+                          },
+                          "href": {
+                            "type": "string"
+                          },
+                          "score": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "id",
+                          "title",
+                          "preview",
+                          "updatedAt",
+                          "indexedAt",
+                          "freshness",
+                          "method",
+                          "href",
+                          "score"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "retrievedAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                    },
+                    "semantic": {
+                      "type": "string",
+                      "const": "not_requested"
+                    }
+                  },
+                  "required": [
+                    "results",
+                    "retrievedAt",
+                    "semantic"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "headers": {
+              "X-Request-ID": {
+                "description": "Fresh server-generated request UUID.",
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                }
+              },
+              "trace_id": {
+                "description": "Present when a trace is available.",
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "string",
+                  "pattern": "^[a-fA-F0-9]{32}$"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error envelope; frontend handlers can also return a plain error field.",
+            "headers": {
+              "X-Request-ID": {
+                "description": "Fresh server-generated request UUID.",
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                }
+              },
+              "trace_id": {
+                "description": "Present when a trace is available.",
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "string",
+                  "pattern": "^[a-fA-F0-9]{32}$"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/workspaces/{workspaceId}/search/source": {
+      "get": {
+        "operationId": "get__api_v2_workspaces__workspaceId__search_source",
+        "security": [
+          {
+            "ClerkSession": []
+          },
+          {
+            "ClerkCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "workspaceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 191
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "document",
+                "task",
+                "snippet",
+                "decision",
+                "pull_request"
+              ]
+            }
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 400
+            }
+          },
+          {
+            "name": "trace_id",
+            "in": "header",
+            "required": false,
+            "description": "Optional legacy trace ID; invalid values are ignored.",
+            "schema": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "type": "string",
+              "pattern": "^[a-fA-F0-9]{32}$"
+            }
+          }
+        ],
+        "x-validation-complete": false,
+        "x-contract-complete": true,
+        "responses": {
+          "200": {
+            "description": "Documented response DTO",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "object",
+                  "properties": {
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "document",
+                              "task",
+                              "snippet",
+                              "decision",
+                              "pull_request"
+                            ]
+                          },
+                          "id": {
+                            "type": "string"
+                          },
+                          "title": {
+                            "type": "string"
+                          },
+                          "preview": {
+                            "type": "string"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                          },
+                          "indexedAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                          },
+                          "freshness": {
+                            "type": "string",
+                            "const": "current_projection"
+                          },
+                          "method": {
+                            "type": "string",
+                            "const": "lexical"
+                          },
+                          "href": {
+                            "type": "string"
+                          },
+                          "score": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "id",
+                          "title",
+                          "preview",
+                          "updatedAt",
+                          "indexedAt",
+                          "freshness",
+                          "method",
+                          "href",
+                          "score"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "retrievedAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                    },
+                    "semantic": {
+                      "type": "string",
+                      "const": "not_requested"
+                    }
+                  },
+                  "required": [
+                    "results",
+                    "retrievedAt",
+                    "semantic"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "headers": {
+              "X-Request-ID": {
+                "description": "Fresh server-generated request UUID.",
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                }
+              },
+              "trace_id": {
+                "description": "Present when a trace is available.",
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "string",
+                  "pattern": "^[a-fA-F0-9]{32}$"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error envelope; frontend handlers can also return a plain error field.",
+            "headers": {
+              "X-Request-ID": {
+                "description": "Fresh server-generated request UUID.",
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                }
+              },
+              "trace_id": {
+                "description": "Present when a trace is available.",
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "string",
+                  "pattern": "^[a-fA-F0-9]{32}$"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v2/workspaces/{workspaceId}/snippet-safety/findings": {
       "get": {
         "operationId": "get__api_v2_workspaces__workspaceId__snippet_safety_findings",
@@ -25570,6 +26023,293 @@
           "items",
           "liveAccess",
           "deployment"
+        ],
+        "additionalProperties": false
+      },
+      "Path_get__api_v2_workspaces__workspaceId__search_workspaceId": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 191
+      },
+      "Query_get__api_v2_workspaces__workspaceId__search": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "q": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 500
+          },
+          "limit": {
+            "default": 20,
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "document",
+              "task",
+              "snippet",
+              "decision",
+              "pull_request"
+            ]
+          },
+          "assigneeId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 191
+          },
+          "after": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+          },
+          "before": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+          }
+        },
+        "required": [
+          "q",
+          "limit"
+        ],
+        "additionalProperties": false
+      },
+      "Correlation_get__api_v2_workspaces__workspaceId__search": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "string",
+        "format": "uuid",
+        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+      },
+      "Trace_get__api_v2_workspaces__workspaceId__search": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "string",
+        "pattern": "^[a-fA-F0-9]{32}$"
+      },
+      "RequestTrace_get__api_v2_workspaces__workspaceId__search": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "string",
+        "pattern": "^[a-fA-F0-9]{32}$"
+      },
+      "Response_get__api_v2_workspaces__workspaceId__search_200": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "results": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "document",
+                    "task",
+                    "snippet",
+                    "decision",
+                    "pull_request"
+                  ]
+                },
+                "id": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "preview": {
+                  "type": "string"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                },
+                "indexedAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                },
+                "freshness": {
+                  "type": "string",
+                  "const": "current_projection"
+                },
+                "method": {
+                  "type": "string",
+                  "const": "lexical"
+                },
+                "href": {
+                  "type": "string"
+                },
+                "score": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "type",
+                "id",
+                "title",
+                "preview",
+                "updatedAt",
+                "indexedAt",
+                "freshness",
+                "method",
+                "href",
+                "score"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "retrievedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          },
+          "semantic": {
+            "type": "string",
+            "const": "not_requested"
+          }
+        },
+        "required": [
+          "results",
+          "retrievedAt",
+          "semantic"
+        ],
+        "additionalProperties": false
+      },
+      "Path_get__api_v2_workspaces__workspaceId__search_source_workspaceId": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 191
+      },
+      "Query_get__api_v2_workspaces__workspaceId__search_source": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "document",
+              "task",
+              "snippet",
+              "decision",
+              "pull_request"
+            ]
+          },
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 400
+          }
+        },
+        "required": [
+          "type",
+          "id"
+        ],
+        "additionalProperties": false
+      },
+      "Correlation_get__api_v2_workspaces__workspaceId__search_source": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "string",
+        "format": "uuid",
+        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+      },
+      "Trace_get__api_v2_workspaces__workspaceId__search_source": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "string",
+        "pattern": "^[a-fA-F0-9]{32}$"
+      },
+      "RequestTrace_get__api_v2_workspaces__workspaceId__search_source": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "string",
+        "pattern": "^[a-fA-F0-9]{32}$"
+      },
+      "Response_get__api_v2_workspaces__workspaceId__search_source_200": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "results": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "document",
+                    "task",
+                    "snippet",
+                    "decision",
+                    "pull_request"
+                  ]
+                },
+                "id": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "preview": {
+                  "type": "string"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                },
+                "indexedAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                },
+                "freshness": {
+                  "type": "string",
+                  "const": "current_projection"
+                },
+                "method": {
+                  "type": "string",
+                  "const": "lexical"
+                },
+                "href": {
+                  "type": "string"
+                },
+                "score": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "type",
+                "id",
+                "title",
+                "preview",
+                "updatedAt",
+                "indexedAt",
+                "freshness",
+                "method",
+                "href",
+                "score"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "retrievedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          },
+          "semantic": {
+            "type": "string",
+            "const": "not_requested"
+          }
+        },
+        "required": [
+          "results",
+          "retrievedAt",
+          "semantic"
         ],
         "additionalProperties": false
       },

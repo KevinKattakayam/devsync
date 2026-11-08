@@ -1,3 +1,4 @@
+import { knowledgeQuery, knowledgeSourceQuery, knowledgePage } from './services/knowledge-search';
 import { installationInput } from './routes/github-installation.routes';
 import { githubExecutionSchema } from './services/github-execution';
 import { exportRequestInput, transferInput, revokeSessionInput } from './routes/lifecycle.routes';
@@ -709,3 +710,10 @@ add(
   '200',
   { body: installationInput },
 );
+
+add('GET', '/api/v2/workspaces/{workspaceId}/search', knowledgePage, '200', {
+  query: knowledgeQuery,
+});
+add('GET', '/api/v2/workspaces/{workspaceId}/search/source', knowledgePage, '200', {
+  query: knowledgeSourceQuery,
+});
