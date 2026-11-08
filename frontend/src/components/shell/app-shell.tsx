@@ -161,6 +161,7 @@ function Shell({
     { path: '', label: 'Overview', icon: LayoutDashboard },
     { path: '/docs', label: 'Documents', icon: FileText },
     { path: '/kanban', label: 'Sprint board', icon: Kanban },
+    { path: '/search', label: 'Search knowledge', icon: Search },
     ...(snippetSafetyEnabled
       ? [{ path: '/snippets/safety', label: 'Snippet safety', icon: Code2 }]
       : []),
