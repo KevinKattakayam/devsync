@@ -244,6 +244,7 @@ jobs:
           [
             core,
             identity,
+            recovery,
             ai-cost,
             editor,
             kanban,

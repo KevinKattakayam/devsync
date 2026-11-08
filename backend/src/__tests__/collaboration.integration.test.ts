@@ -663,3 +663,102 @@ it('denies stale viewer and revoked actors inside the journal transaction', asyn
     change.destroy();
   }
 });
+
+it('closes an admitted transport when writer authority changes before its journal transaction', async () => {
+  const name = await room();
+  const node = await server({ sweepMs: 60000 });
+  const editor = await client(node.url, name, 'b');
+  const scope = { workspaceId: 'workspace', documentId: name.split(':')[2] };
+  const append = node.runtime.journal.append.bind(node.runtime.journal);
+  let arrived = false;
+  let release: () => void = () => {};
+  const barrier = new Promise<void>((resolve) => {
+    release = resolve;
+  });
+  // Delay only: the actual tenant transaction and writer policy still execute.
+  const pause = jest.spyOn(node.runtime.journal, 'append').mockImplementation(async (...args) => {
+    arrived = true;
+    await barrier;
+    return append(...args);
+  });
+  let closed = false;
+  editor.provider.on('disconnect', () => {
+    closed = true;
+  });
+  text(editor.document).insert(0, 'REVOKED_BETWEEN_CHECK_AND_COMMIT');
+  try {
+    await until(() => arrived, 'authorized frame reaches journal boundary');
+    await admin.workspaceMember.update({
+      where: { userId_workspaceId: { userId: 'b', workspaceId: 'workspace' } },
+      data: { role: 'VIEWER' },
+    });
+    release();
+    await until(() => closed, 'transaction denial closes transport without passive sweep');
+    editor.socket.disconnect();
+    expect(await admin.documentUpdate.count({ where: scope })).toBe(0);
+    expect(await admin.embeddingJob.count({ where: { resourceId: scope.documentId } })).toBe(0);
+    const recovered = new Y.Doc();
+    try {
+      Y.applyUpdate(recovered, await node.runtime.journal.load(scope));
+      expect(text(recovered).toString()).toBe('hello');
+    } finally {
+      recovered.destroy();
+    }
+  } finally {
+    release();
+    pause.mockRestore();
+    await admin.workspaceMember.update({
+      where: { userId_workspaceId: { userId: 'b', workspaceId: 'workspace' } },
+      data: { role: 'EDITOR' },
+    });
+  }
+});
+
+it('keeps frame and message-window admission limits enforced on an authenticated connection', async () => {
+  const name = await room();
+  const node = await server();
+  await client(node.url, name);
+  const connection = [...node.runtime.connections][0];
+  const check = (payload: Uint8Array) =>
+    connection.callbacks.beforeHandleMessage(connection, payload);
+  // Exercise the installed library's policy callback without allocating a large wire queue.
+  await expect(check(new Uint8Array(65537))).rejects.toThrow('Message rejected');
+  connection.context.started = Date.now() - 10001;
+  connection.context.messages = 120;
+  await expect(check(new Uint8Array())).resolves.toBeUndefined();
+  expect(connection.context.messages).toBe(1);
+  connection.context.messages = 120;
+  await expect(check(new Uint8Array())).rejects.toThrow('Message rate exceeded');
+  expect(await admin.documentUpdate.count({ where: { documentId: name.split(':')[2] } })).toBe(0);
+});
+
+it('compacts the sixty-fourth acknowledged edit and recovers its snapshot on an independent server', async () => {
+  const name = await room();
+  const node = await server({ storeDebounceMs: 60000 });
+  const writer = await client(node.url, name);
+  const scope = { workspaceId: 'workspace', documentId: name.split(':')[2] };
+  await until(() => !writer.provider.hasUnsyncedChanges, 'initial sync acknowledgement');
+  await expect(node.runtime.journal.append(scope, new Uint8Array(65537), 'a')).rejects.toThrow(
+    'Update too large',
+  );
+  expect(await admin.documentUpdate.count({ where: scope })).toBe(0);
+  for (let edit = 0; edit < 63; edit++) {
+    text(writer.document).insert(0, `[${edit}]`);
+    await until(() => !writer.provider.hasUnsyncedChanges, 'each journal edit acknowledged');
+  }
+  expect(await admin.documentUpdate.count({ where: scope })).toBe(63);
+  text(writer.document).insert(0, 'CHECKPOINT_64');
+  await until(() => !writer.provider.hasUnsyncedChanges, 'compacted edit acknowledged');
+  expect(await admin.documentUpdate.count({ where: scope })).toBe(0);
+  const stored = await admin.document.findUniqueOrThrow({ where: { id: scope.documentId } });
+  const snapshot = new Y.Doc();
+  try {
+    Y.applyUpdate(snapshot, stored.yjsState!);
+    expect(text(snapshot).toString()).toBe(text(writer.document).toString());
+  } finally {
+    snapshot.destroy();
+  }
+  const independent = await server();
+  const reader = await client(independent.url, name, 'b');
+  expect(text(reader.document).toString()).toBe(text(writer.document).toString());
+});

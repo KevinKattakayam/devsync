@@ -2,6 +2,7 @@ import { spawn } from 'node:child_process';
 const targets = {
   core: {},
   identity: {E2E_IDENTITY:'1'},
+  recovery: { E2E_RECOVERY: '1' },
   'ai-cost': { E2E_AI_COST: '1' },
   editor: { E2E_EDITOR: '1' },
   kanban: { E2E_KANBAN: '1' },

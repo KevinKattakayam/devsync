@@ -54,6 +54,7 @@ async function main() {
         ? 'true'
         : process.env.FEATURE_DECISION_RECEIPTS,
       E2E_UI_CAPTURE: process.env.E2E_UI_CAPTURE,
+      E2E_RECOVERY: process.env.E2E_RECOVERY,
       DATABASE_URL: postgres.getConnectionUri(),
       E2E_ADMIN_DATABASE_URL: postgres.getConnectionUri(),
       REDIS_URL: `redis://${redis.getHost()}:${redis.getMappedPort(6379)}`,
@@ -139,16 +140,35 @@ async function main() {
           );
       } else throw new Error('Unknown UI capture target');
     }
-    const backend = spawn(
-      process.execPath,
-      ['node_modules/tsx/dist/cli.mjs', 'testing/server.ts'],
-      {
+    let generation = 0;
+    let restarting: Promise<void> | undefined;
+    const startBackend = () => {
+      const child = spawn(process.execPath, ['--import', 'tsx', 'testing/server.ts'], {
         cwd: resolve(root, 'backend'),
-        env,
-        stdio: 'inherit',
-      },
-    );
-    children.push(backend);
+        env: { ...env, E2E_GENERATION: String(generation) },
+        stdio: ['inherit', 'inherit', 'inherit', 'ipc'],
+      });
+      children.push(child);
+      child.on('message', (message: unknown) => {
+        if (env.E2E_RECOVERY !== '1' || message !== 'recovery:crash' || restarting) return;
+        restarting = (async () => {
+          const exited = new Promise<void>((done) => child.once('exit', () => done()));
+          child.kill('SIGKILL');
+          await exited;
+          generation += 1;
+          const replacement = startBackend();
+          await ready('http://127.0.0.1:5501/api/health', replacement);
+        })()
+          .catch(() => {
+            console.error('Recovery fixture restart failed');
+          })
+          .finally(() => {
+            restarting = undefined;
+          });
+      });
+      return child;
+    };
+    const backend = startBackend();
     await ready('http://127.0.0.1:5501/api/health', backend);
     const frontend = spawn(
       process.execPath,
@@ -179,7 +199,7 @@ async function main() {
       child.kill('SIGTERM');
       await Promise.race([
         new Promise((done) => {
-          if (child.exitCode !== null) done(null);
+          if (child.exitCode !== null || child.signalCode !== null) done(null);
           else child.once('exit', done);
         }),
         new Promise((done) =>
