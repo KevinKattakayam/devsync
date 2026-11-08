@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation';
 import { useAuth } from '@/providers/auth-provider';
 import { Badge, Button, EmptyState, Input } from '@/components/ui';
 import { WorkspaceLifecycle } from '@/components/settings/lifecycle';
+import { GitHubExecution } from '@/components/settings/github-execution';
 import { AiUsage } from '@/components/settings/ai-usage';
 import { Members } from '@/components/settings/members';
 import { Invitations } from '@/components/settings/invitations';
@@ -23,6 +24,7 @@ function Settings({ workspaceId }: { workspaceId: string }) {
   const [snapshot, setSnapshot] = useState<{ attempt: number; data?: Access; error?: boolean }>();
   const [query, setQuery] = useState('');
   const [lifecycleOpen, setLifecycleOpen] = useState(false);
+  const [githubOpen, setGithubOpen] = useState(false);
   const [invitationIndex, setInvitationIndex] = useState('');
   useEffect(() => {
     let disposed = false;
@@ -178,6 +180,14 @@ function Settings({ workspaceId }: { workspaceId: string }) {
               query={invitationsSection ? '' : normalized}
             />
           </section>
+          {owner && !normalized && (
+            <details onToggle={(e) => setGithubOpen(e.currentTarget.open)}>
+              <summary className="cursor-pointer rounded-lg border p-4 font-medium">
+                GitHub execution trail
+              </summary>
+              {githubOpen && <GitHubExecution key={workspaceId} workspaceId={workspaceId} />}
+            </details>
+          )}
           {owner &&
             (!normalized ||
               'lifecycle ownership transfer export deletion setup'.includes(normalized)) && (
