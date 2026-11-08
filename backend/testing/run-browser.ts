@@ -58,6 +58,11 @@ async function main() {
       DATABASE_URL: postgres.getConnectionUri(),
       E2E_ADMIN_DATABASE_URL: postgres.getConnectionUri(),
       REDIS_URL: `redis://${redis.getHost()}:${redis.getMappedPort(6379)}`,
+      GITHUB_APP_ID: process.env.E2E_GITHUB_TRAIL ? '123' : '',
+      GITHUB_APP_WEBHOOK_SECRET: process.env.E2E_GITHUB_TRAIL
+        ? randomBytes(32).toString('hex')
+        : '',
+      GITHUB_APP_PRIVATE_KEY: '',
       CLERK_SECRET_KEY: '',
       CLERK_PUBLISHABLE_KEY: '',
       GROQ_API_KEY: '',

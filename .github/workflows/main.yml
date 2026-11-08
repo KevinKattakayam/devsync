@@ -245,6 +245,7 @@ jobs:
             core,
             identity,
             recovery,
+            github-trail,
             ai-cost,
             editor,
             kanban,
