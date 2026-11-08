@@ -1,4 +1,4 @@
-title = "DevSync: default rules with two reviewed non-credential exceptions"
+title = "DevSync: default rules with reviewed exact non-credential exceptions"
 [extend]
 useDefault = true
 
@@ -18,4 +18,13 @@ targetRules = ["generic-api-key"]
 condition = "AND"
 regexTarget = "secret"
 paths = ['''(^|/)backend/src/__tests__/resource-mutations\.integration\.test\.ts$''']
+regexes = ['''^fixture-secret-123$''']
+
+# Public non-credential used twice by the scanner's own detection regression.
+[[allowlists]]
+description = "Public webhook sentinel in the scanner regression generator only"
+targetRules = ["generic-api-key"]
+condition = "AND"
+regexTarget = "secret"
+paths = ['''(^|/)tools/quality/gitleaks-regression\.py$''']
 regexes = ['''^fixture-secret-123$''']
