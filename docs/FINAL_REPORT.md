@@ -1,3 +1,13 @@
+# Release correctness follow-up — 2026-11-08
+
+The release-correctness phase adds red/green authentication handling, a mutation-free legacy reset GET plus exact-Origin POST, bounded credential-free PDF/OCR extraction, configured authenticated uploads and atomic CRDT indexing scheduling with transaction-time revocation closure. No identity bypass, RLS bypass, test/assertion removal, security/coverage threshold reduction, push or deployment. Existing migrated-schema and wire behaviors remain; no new migration was needed.
+
+All three final local runtime images report zero Trivy findings across all severities after fixing the original npm chains and the newly discovered stable zlib advisory. The clean-clone Compose graph passes with separate runtime authority, denied keyless private access and extractor resource/network isolation. Source gates, browser flows, raw failures/retries, exact image IDs and provider limitations are in [release verification](quality/release-correctness/README.md) and its RESULTS.json. Synthetic fixtures establish local correctness; they do not establish real Clerk/GitHub/AI success.
+
+Real sign-in/session revocation, actual GitHub deliveries, hosted CI/coverage artifacts and production extractor/hosting isolation still require operator actions. The GitHub summary enqueue/outbox limit, Stripe replay/order handling, privacy rights/retention, manual accessibility, capacity and recovery remain explicitly open. The historical report below is not relabeled as a fresh measurement.
+
+---
+
 # Runtime and Kanban follow-up
 
 This update supersedes the Phase5c snapshot's44-High runtime and pointer-drag blockers below. Same-database Trivy scans: backend0C/44H/75M/60L/8U → **0C/0H/4M/0L/0U**; frontend0C/44H/71M/60L/8U → **zero findings**. Both runtimes pin the tested official Node22 Alpine variant; musl support/architecture tradeoffs and every remaining package/CVE/fixed version are explicit in [VULNERABILITIES.md](../VULNERABILITIES.md). Four Medium dependency rows remain; their non-exploitability is not verified. No scanner suppression, CI exception or weakened gate.

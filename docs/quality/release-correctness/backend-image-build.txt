@@ -1,0 +1,141 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 2.43kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/node:22-alpine@sha256:fe4f6d74e20370acb04ad889077d14d0f64a9c8ea6a42bc60cddf1e844699914
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 177B done
+#3 DONE 0.0s
+
+#4 [base 1/3] FROM docker.io/library/node:22-alpine@sha256:fe4f6d74e20370acb04ad889077d14d0f64a9c8ea6a42bc60cddf1e844699914
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 2.14MB 0.0s done
+#5 DONE 0.0s
+
+#6 [base 2/3] WORKDIR /app
+#6 CACHED
+
+#7 [base 3/3] RUN apk add --no-cache openssl ca-certificates
+#7 CACHED
+
+#8 [dependencies 1/3] COPY package.json package-lock.json ./
+#8 DONE 0.0s
+
+#9 [dependencies 2/3] COPY prisma/schema.prisma ./prisma/schema.prisma
+#9 DONE 0.0s
+
+#10 [dependencies 3/3] RUN npm ci
+#10 4.111 npm warn deprecated node-domexception@1.0.0: Use your platform's native DOMException instead
+#10 4.839 npm warn deprecated levelup@4.4.0: Superseded by abstract-level (https://github.com/Level/community#faq)
+#10 4.890 npm warn deprecated level-js@5.0.2: Superseded by browser-level (https://github.com/Level/community#faq)
+#10 4.909 npm warn deprecated level-concat-iterator@2.0.1: Superseded by abstract-level (https://github.com/Level/community#faq)
+#10 4.932 npm warn deprecated level-codec@9.0.2: Superseded by level-transcoder (https://github.com/Level/community#faq)
+#10 5.150 npm warn deprecated level-packager@5.1.1: Superseded by abstract-level (https://github.com/Level/community#faq)
+#10 5.182 npm warn deprecated level-errors@2.0.1: Superseded by abstract-level (https://github.com/Level/community#faq)
+#10 5.719 npm warn deprecated leveldown@5.6.0: Superseded by classic-level (https://github.com/Level/community#faq)
+#10 5.844 npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+#10 6.289 npm warn deprecated encoding-down@6.3.0: Superseded by abstract-level (https://github.com/Level/community#faq)
+#10 6.380 npm warn deprecated deferred-leveldown@5.3.0: Superseded by abstract-level (https://github.com/Level/community#faq)
+#10 6.549 npm warn deprecated eslint@9.39.5: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+#10 7.240 npm warn deprecated abstract-leveldown@6.2.3: Superseded by abstract-level (https://github.com/Level/community#faq)
+#10 73.18 
+#10 73.18 > devsync-backend@1.0.0 postinstall
+#10 73.18 > prisma generate
+#10 73.18 
+#10 73.55 Prisma schema loaded from prisma/schema.prisma
+#10 74.35 
+#10 74.35 ✔ Generated Prisma Client (v5.22.0) to ./node_modules/@prisma/client in 432ms
+#10 74.35 
+#10 74.35 Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
+#10 74.35 
+#10 74.35 Tip: Want to turn off tips and other hints? https://pris.ly/tip-4-nohints
+#10 74.35 
+#10 74.56 
+#10 74.56 added 1016 packages, and audited 1017 packages in 1m
+#10 74.56 
+#10 74.56 173 packages are looking for funding
+#10 74.56   run `npm fund` for details
+#10 74.70 
+#10 74.70 31 vulnerabilities (2 low, 29 moderate)
+#10 74.70 
+#10 74.70 To address issues that do not require attention, run:
+#10 74.70   npm audit fix
+#10 74.70 
+#10 74.70 To address all issues (including breaking changes), run:
+#10 74.70   npm audit fix --force
+#10 74.70 
+#10 74.70 Run `npm audit` for details.
+#10 74.71 npm notice
+#10 74.71 npm notice New major version of npm available! 10.9.9 -> 12.2.2
+#10 74.71 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+#10 74.71 npm notice To update run: npm install -g npm@12.2.2
+#10 74.71 npm notice
+#10 DONE 74.8s
+
+#11 [build 1/3] COPY . .
+#11 DONE 0.1s
+
+#12 [production-dependencies 1/1] RUN npm prune --omit=dev --ignore-scripts
+#12 4.145 
+#12 4.145 up to date, audited 492 packages in 4s
+#12 4.145 
+#12 4.145 84 packages are looking for funding
+#12 4.145   run `npm fund` for details
+#12 4.146 
+#12 4.146 found 0 vulnerabilities
+#12 DONE 4.2s
+
+#13 [build 2/3] RUN npm run build && npx tsc -p tsconfig.seed-build.json
+#13 0.254 
+#13 0.254 > devsync-backend@1.0.0 build
+#13 0.254 > prisma generate && tsc
+#13 0.254 
+#13 0.676 Prisma schema loaded from prisma/schema.prisma
+#13 1.423 
+#13 1.423 ✔ Generated Prisma Client (v5.22.0) to ./node_modules/@prisma/client in 327ms
+#13 1.423 
+#13 1.423 Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
+#13 1.423 
+#13 1.423 Tip: Interested in query caching in just a few lines of code? Try Accelerate today! https://pris.ly/tip-3-accelerate
+#13 1.423 
+#13 ...
+
+#14 [runner 1/7] RUN rm -rf /usr/local/lib/node_modules/npm /opt/yarn-* /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/yarn /usr/local/bin/yarnpkg /usr/bin/mount /usr/bin/umount /usr/bin/nsenter /usr/bin/infocmp
+#14 CACHED
+
+#15 [runner 2/7] COPY --from=production-dependencies --chown=node:node /app/node_modules ./node_modules
+#15 DONE 5.2s
+
+#13 [build 2/3] RUN npm run build && npx tsc -p tsconfig.seed-build.json
+#13 DONE 19.9s
+
+#16 [build 3/3] RUN mkdir -p /state/admin /state/runtime && chown -R node:node /state
+#16 DONE 0.7s
+
+#17 [runner 3/7] COPY --from=build --chown=node:node /app/dist ./dist
+#17 DONE 1.3s
+
+#18 [runner 4/7] COPY --from=build --chown=node:node /app/prisma/schema.prisma ./prisma/schema.prisma
+#18 DONE 0.2s
+
+#19 [runner 5/7] COPY --from=build --chown=node:node /app/prisma/migrations ./prisma/migrations
+#19 DONE 0.3s
+
+#20 [runner 6/7] COPY --from=build --chown=node:node /app/docker ./docker
+#20 DONE 0.2s
+
+#21 [runner 7/7] COPY --from=build --chown=node:node /app/package.json ./package.json
+#21 DONE 0.2s
+
+#22 exporting to image
+#22 exporting layers
+#22 exporting layers 3.3s done
+#22 writing image sha256:4c2250a27d674ba6cf5cf835ebb18f82a3788b3018f683637b7f2ed183453dd1 done
+#22 naming to docker.io/library/devsync-backend:release-correctness 0.0s done
+#22 DONE 3.4s

@@ -1,0 +1,5 @@
+{
+  "status": "unavailable",
+  "attemptExit": 1,
+  "reason": "No historical backend coverage-summary JSON at the attempted Phase5c path; do not invent a prior artifact. Current checked-in first-adoption baseline comparison passes. Hosted base-artifact comparison remains required."
+}

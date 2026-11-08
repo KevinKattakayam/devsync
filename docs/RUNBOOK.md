@@ -20,6 +20,14 @@ For actual local sign-in, configure private root .env settings CLERK_SECRET_KEY,
 
 Compose is a local setup, not an internet-facing production database template. Production uses private managed settings, separate identities, TLS and explicit migration operations below.
 
+## Isolated binary extraction and stale-cookie recovery
+
+Compose now starts a separate extractor with an internal-only network, no API/worker credentials, non-root UID, read-only filesystem,64MiB tmpfs,512MiB memory, one CPU and64 PID limits. It uses a pinned offline English OCR model and kills its child after30 seconds. The API retains pre-buffer and final transactional writer checks. Binary extraction is unavailable503 without INGESTION_EXTRACTOR_URL; there is no in-process fallback. Text ingestion remains supported without the service. Do not connect a public/shared worker or mount runtime database/provider credentials into it.
+
+For hosted operation, build the backend Dockerfile `extractor` target and provision equivalent isolation/private routing before setting API INGESTION_EXTRACTOR_URL to the service's `/extract` endpoint. Verify synthetic PDF/image success, page/pixel/byte limits, timeout and actual host isolation before enabling uploads. `python3 tools/quality/verify-extractor.py` exercises the named local verification artifact only; it is not a hosted deployment command. See [phase evidence/setup](quality/release-correctness/README.md).
+
+Set frontend AUTH_TRUSTED_ORIGIN to its exact browser origin (HTTPS in hosted environments); Compose supplies its localhost origin. GET `/api/auth/reset` preserves its307 redirect without changing cookies; same-origin POST clears only Clerk cookies and redirects303. Missing/foreign Origin denies403. Do not use caller-controlled Host/forwarded headers as a substitute for configuring a normalizing proxy. Cookie clearing is not provider session revocation.
+
 ## Existing Vercel frontend
 
 Use the existing project, with repository Root Directory **frontend**, Next.js framework, Node22, `npm ci`, and `npm run build -- --webpack`. frontend/vercel.json records these settings and disables independent Git auto-deployments so they cannot bypass Quality. Set settings in both Production and Preview environments, with separate Preview identity/backend resources.

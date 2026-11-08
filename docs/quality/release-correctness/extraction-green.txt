@@ -1,0 +1,16 @@
+
+> devsync-backend@1.0.0 test
+> jest --runInBand --runTestsByPath src/__tests__/extraction.test.ts --coverage=false
+
+FAIL src/__tests__/extraction.test.ts (8.278 s)
+  ● extracts synthetic PDF text locally and rejects PDFs above the page budget
+
+    Setting up fake worker failed: "A dynamic import callback was invoked without --experimental-vm-modules".
+
+      at node_modules/pdf-parse/node_modules/pdfjs-dist/legacy/build/pdf.mjs:21328:31
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 7 passed, 8 total
+Snapshots:   0 total
+Time:        8.566 s
+Ran all test suites within paths "src/__tests__/extraction.test.ts".

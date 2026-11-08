@@ -1,3 +1,13 @@
+# Release correctness and security — 2026-11-08
+
+- Classify Clerk sync rejection/unavailability without exposing SDK details or relaxing verification; add failing-then-passing regressions.
+- Remove cookie mutation from legacy reset GET while preserving307; add exact-Origin POST/303, proxy canonical-origin configuration, identity-only clearing and genuine browser coverage.
+- Schedule CRDT indexing atomically with writer-authorized journal commits; avoid replay churn and close transaction-time revoked transports. Preserve existing wire/RLS contracts and migration rollback assertions.
+- Isolate bounded PDF/OCR work with offline model and explicit container constraints; fail closed without a worker, retain text ingestion, and recheck writer authority after extraction. Route uploads through the configured authenticated client.
+- Patch runtime dependency chains and newly identified stable zlib advisory. Final local API/extractor/frontend scans report zero vulnerability findings; retain full-tree Moderate/Low advisories, unsuppressed scans and SBOMs. Add the extractor to unchanged CI image security gates.
+- Triage the scanner generator's public test sentinel using an exact non-credential exception and seven detection regressions; preserve thresholds and other-path/new-value detection.
+- Record passing source gates(287 backend tests;83 frontend component plus9 Node tests), browser/security/contracts, actual extractor and clean-clone isolation evidence, failed attempts, provider setup requirements and hosted-CI limitations. No push/deployment, real provider-success claim, production data change or destructive migration.
+
 # Local authentication clock investigation
 
 - Record measured37-second backend/Clerk clock skew, unsynchronized host NTP and successful rolled-back profile-sync database probes. Administrator time synchronization and authenticated retry remain required; no authentication controls relaxed.

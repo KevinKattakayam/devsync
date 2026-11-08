@@ -1,3 +1,17 @@
+# Release correctness runtime follow-up — 2026-11-08
+
+The current local API, extractor and keyless-local frontend images each have **zero reported findings across all severities** in the retained Trivy0.68.2 scans using the same fresh database. [Exact image IDs, unsuppressed reports and SBOMs](docs/quality/release-correctness/README.md) are retained in docs/quality/release-correctness. This is local amd64 evidence, not hosted CI, an all-architecture assessment or production approval.
+
+The prior four runtime glob/minimatch rows below are closed by Sentry11.11.0 (glob14.0.4/minimatch11.0.5) and a scoped same-major gaxios7.3.1 selection under gcp-metadata8.1.4, removing its rimraf/glob chain. No broad major-version glob override was used. Normal lockfile installs, strict types, actual DB/Redis/protocol tests, telemetry and builds were exercised. Actual GCP metadata/provider behavior remains unverified.
+
+The first fresh scan also found a new Medium zlib CVE-2026-4738 at1.3.2-r1. Both application bases now explicitly install fixed zlib1.4-r0 from the same stable Alpine3.24 main repository. No unstable distribution or blanket OS upgrade was used. The intermediate finding, stable package policy, final scans and native PDF/OCR checks remain in the phase evidence. Existing pinned Node image digest and musl/platform support tradeoffs remain unchanged.
+
+Current npm audits report backend production0 advisories; full backend29 Moderate/2 Low and frontend8 Moderate. These development/full-tree findings remain visible; the High/Critical gates and coverage policies were not relaxed. Build/tooling artifacts are not represented as having clean runtime scans. Recheck all findings against the actual promoted image and current advisory database before release.
+
+The historical snapshot below is retained as before evidence; its four remaining findings and "current" terminology are superseded by this follow-up.
+
+---
+
 # Current runtime vulnerability inventory
 
 Local runtime follow-up on upgrade/enterprise. Both runtime Dockerfiles now pin the official Node22 Alpine variant to sha256:fe4f6d74e20370acb04ad889077d14d0f64a9c8ea6a42bc60cddf1e844699914. No unstable Debian packages or scanner suppressions were introduced. This is a local amd64 verification, not hosted CI or a production assessment.

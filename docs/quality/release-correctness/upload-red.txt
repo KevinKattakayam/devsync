@@ -1,0 +1,30 @@
+
+ RUN  v5.0.5 /home/kevin/devsync/frontend
+
+ ❯ tests/document-ingestion.test.tsx (1 test | 1 failed) 6ms
+   × uploads through the configured authenticated API origin and preserves multipart boundaries 5ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/document-ingestion.test.tsx > uploads through the configured authenticated API origin and preserves multipart boundaries
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ tests/document-ingestion.test.tsx:20:18
+     18|   };
+     19|   const upload = Reflect.get(documentApi, 'ingest') as ((workspace: st…
+     20|   expect(upload).toBeTypeOf('function');
+       |                  ^
+     21|   expect((await upload!('workspace/id', new File(['synthetic text'], '…
+     22|   expect(called).toBe(true);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  08:35:01
+   Duration  657ms (environment 85%, import 9%, transform 4%, tests 1%, worker 1%)
+

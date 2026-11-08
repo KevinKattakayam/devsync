@@ -1,0 +1,87 @@
+
+> devsync-backend@1.0.0 test
+> node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand --runTestsByPath src/__tests__/realtime-revocation.integration.test.ts --coverage=false
+
+  console.error
+    [beforeHandleMessage] ForbiddenError: Access denied
+        at authorizeWorkspace (/home/kevin/devsync/backend/src/security/workspace-policy.ts:48:11)
+        at authorize (/home/kevin/devsync/backend/src/services/collaboration-server.ts:67:20)
+        at withPolicyDeadline (/home/kevin/devsync/backend/src/security/policy-deadline.ts:5:12)
+        at enforce (/home/kevin/devsync/backend/src/services/collaboration-server.ts:87:7)
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:207:7)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5) {
+      statusCode: 403,
+      isOperational: true
+    }
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+  console.error
+    closing connection e34714d3-b2ac-484c-a0ce-b2ff5ab9c017 (while handling document:team-a-1:doc-team-a-1) because of exception ForbiddenError: Access denied
+        at authorizeWorkspace (/home/kevin/devsync/backend/src/security/workspace-policy.ts:48:11)
+        at authorize (/home/kevin/devsync/backend/src/services/collaboration-server.ts:67:20)
+        at withPolicyDeadline (/home/kevin/devsync/backend/src/security/policy-deadline.ts:5:12)
+        at enforce (/home/kevin/devsync/backend/src/services/collaboration-server.ts:87:7)
+        at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:207:7)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5) {
+      statusCode: 403,
+      isOperational: true
+    }
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+
+  console.error
+    [onAuthenticate] ForbiddenError: Access denied
+        at authorizeWorkspace (/home/kevin/devsync/backend/src/security/workspace-policy.ts:48:11)
+        at Object.onAuthenticate (/home/kevin/devsync/backend/src/services/collaboration-server.ts:148:22)
+        at ClientConnection.handleQueueingMessage (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/ClientConnection.ts:531:5) {
+      statusCode: 403,
+      isOperational: true
+    }
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at ClientConnection.handleQueueingMessage (node_modules/@hocuspocus/server/src/ClientConnection.ts:531:5)
+
+  console.error
+    [beforeSync] ForbiddenError: Access denied
+        at authorizeWorkspace (/home/kevin/devsync/backend/src/security/workspace-policy.ts:48:11)
+        at /home/kevin/devsync/backend/src/security/workspace-policy.ts:69:5
+        at Proxy._transactionWithCallback (/home/kevin/devsync/backend/node_modules/@prisma/client/runtime/library.js:130:8000)
+        at /home/kevin/devsync/backend/src/lib/tenant-prisma.ts:34:20
+        at CrdtJournal.append (/home/kevin/devsync/backend/src/services/crdt-journal.ts:71:5)
+        at Object.beforeSync (/home/kevin/devsync/backend/src/services/collaboration-server.ts:216:11)
+        at MessageReceiver.readSyncMessage (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/MessageReceiver.ts:207:4)
+        at MessageReceiver.apply (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/MessageReceiver.ts:54:5)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:275:6) {
+      statusCode: 403,
+      isOperational: true
+    }
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at MessageReceiver.readSyncMessage (node_modules/@hocuspocus/server/src/MessageReceiver.ts:207:4)
+      at MessageReceiver.apply (node_modules/@hocuspocus/server/src/MessageReceiver.ts:54:5)
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:275:6)
+
+  console.error
+    closing connection d4c98b49-b9be-48b9-b388-eaca9f4ada4d (while handling document:team-a-2:doc-team-a-2) because of exception ForbiddenError: Access denied
+        at authorizeWorkspace (/home/kevin/devsync/backend/src/security/workspace-policy.ts:48:11)
+        at /home/kevin/devsync/backend/src/security/workspace-policy.ts:69:5
+        at Proxy._transactionWithCallback (/home/kevin/devsync/backend/node_modules/@prisma/client/runtime/library.js:130:8000)
+        at /home/kevin/devsync/backend/src/lib/tenant-prisma.ts:34:20
+        at CrdtJournal.append (/home/kevin/devsync/backend/src/services/crdt-journal.ts:71:5)
+        at Object.beforeSync (/home/kevin/devsync/backend/src/services/collaboration-server.ts:216:11)
+        at MessageReceiver.readSyncMessage (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/MessageReceiver.ts:207:4)
+        at MessageReceiver.apply (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/MessageReceiver.ts:54:5)
+        at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:275:6) {
+      statusCode: 403,
+      isOperational: true
+    }
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+
+Test Suites: 1 passed, 1 total
+Tests:       4 passed, 4 total
+Snapshots:   0 total
+Time:        13.533 s, estimated 21 s
+Ran all test suites within paths "src/__tests__/realtime-revocation.integration.test.ts".

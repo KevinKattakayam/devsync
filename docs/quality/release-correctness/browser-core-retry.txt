@@ -1,0 +1,117 @@
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": PostgreSQL database "devsync_e2e_browser", schema "public" at "localhost:32810"
+
+14 migrations found in prisma/migrations
+
+Applying migration `20260729000000_baseline`
+Applying migration `20260729180000_enterprise_platform`
+Applying migration `20260815000000_phase_3_tenant_rls`
+Applying migration `20260815001000_scim_provisioning`
+Applying migration `20260815002000_commercial_billing`
+Applying migration `20261031000000_tenant_indexes`
+Applying migration `20261031010000_crdt_journal`
+Applying migration `202611010001_canonical_revision`
+Applying migration `202611010002_embedding_authority`
+Applying migration `202611010003_atomic_create_idempotency`
+Applying migration `202611010004_workspace_invitations`
+Applying migration `202611020001_decision_receipts`
+Applying migration `202611020002_snippet_safety`
+Applying migration `202611020003_async_digest`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20260729000000_baseline/
+    └─ migration.sql
+  └─ 20260729180000_enterprise_platform/
+    └─ migration.sql
+  └─ 20260815000000_phase_3_tenant_rls/
+    └─ migration.sql
+  └─ 20260815001000_scim_provisioning/
+    └─ migration.sql
+  └─ 20260815002000_commercial_billing/
+    └─ migration.sql
+  └─ 20261031000000_tenant_indexes/
+    └─ migration.sql
+  └─ 20261031010000_crdt_journal/
+    └─ migration.sql
+  └─ 202611010001_canonical_revision/
+    └─ migration.sql
+  └─ 202611010002_embedding_authority/
+    └─ migration.sql
+  └─ 202611010003_atomic_create_idempotency/
+    └─ migration.sql
+  └─ 202611010004_workspace_invitations/
+    └─ migration.sql
+  └─ 202611020001_decision_receipts/
+    └─ migration.sql
+  └─ 202611020002_snippet_safety/
+    └─ migration.sql
+  └─ 202611020003_async_digest/
+    └─ migration.sql
+      
+All migrations have been successfully applied.
+Sample workspace seeded. Sign in with the supplied Clerk test identities.
+/home/kevin/devsync/.worktrees/frontend-fixture
+Isolated fixture server ready
+▲ Next.js 16.4.3 (webpack)
+- Local:         http://127.0.0.1:3001
+- Network:       http://127.0.0.1:3001
+✓ Ready in 366ms
+✓ Running next.config.ts took 60ms
+
+✓ Generated AGENTS.md for AI agents. Set `agentRules: false` in next.config to disable.
+○ Compiling /(auth)/login/[[...rest]]/page ...
+ GET /login 200 in 893ms (proxy.ts: 68ms)
+ GET /login 200 in 89ms (next.js: 35ms, proxy.ts: 7ms, application-code: 47ms)
+
+Running 11 tests using 1 worker
+
+(node:84579) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 testing/browser/contracts.spec.ts:8:5 › Zod response contracts match real authenticated resource and service operations (906ms)
+ GET /dashboard 200 in 2.3s (next.js: 1988ms, proxy.ts: 5ms, application-code: 277ms)
+ GET /login 200 in 84ms (next.js: 42ms, proxy.ts: 4ms, application-code: 39ms)
+ GET /login 200 in 35ms (next.js: 11ms, proxy.ts: 4ms, application-code: 20ms)
+  ✓   2 testing/browser/journeys.spec.ts:10:7 › owner signs in and signs out with server session invalidation (4.1s)
+ GET /dashboard 200 in 59ms (next.js: 3ms, proxy.ts: 9ms, application-code: 47ms)
+ GET /login 200 in 70ms (next.js: 35ms, proxy.ts: 4ms, application-code: 31ms)
+ GET /login 200 in 31ms (next.js: 8ms, proxy.ts: 4ms, application-code: 19ms)
+  ✓   3 testing/browser/journeys.spec.ts:10:7 › editor signs in and signs out with server session invalidation (1.6s)
+ GET /dashboard 200 in 53ms (next.js: 10ms, proxy.ts: 3ms, application-code: 40ms)
+ GET /login 200 in 68ms (next.js: 34ms, proxy.ts: 4ms, application-code: 30ms)
+ GET /login 200 in 32ms (next.js: 7ms, proxy.ts: 4ms, application-code: 20ms)
+  ✓   4 testing/browser/journeys.spec.ts:10:7 › viewer signs in and signs out with server session invalidation (1.7s)
+ GET /dashboard 200 in 48ms (next.js: 2ms, proxy.ts: 3ms, application-code: 43ms)
+ GET /dashboard 200 in 36ms (next.js: 1.6ms, proxy.ts: 3ms, application-code: 32ms)
+  ✓   5 testing/browser/journeys.spec.ts:22:5 › owner creates a workspace from the dashboard (3.0s)
+○ Compiling /(dashboard)/workspace/[id]/docs/[docId]/page ...
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 11.9s (next.js: 10.4s, proxy.ts: 24ms, application-code: 1491ms)
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 11.9s (next.js: 10.4s, proxy.ts: 24ms, application-code: 1492ms)
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 11.9s (next.js: 10.4s, proxy.ts: 11ms, application-code: 1495ms)
+  ✓   6 testing/browser/journeys.spec.ts:33:5 › two contexts edit the same document and both edits merge; viewer is read-only (25.0s)
+ GET /workspace/devsync-sample/docs/devsync-sample-doc 200 in 407ms (next.js: 224ms, proxy.ts: 22ms, application-code: 161ms)
+  ✓   7 testing/browser/journeys.spec.ts:73:5 › owner removes an editor with an open document and access closes within seconds (5.9s)
+○ Compiling /(dashboard)/workspace/[id]/kanban/page ...
+Yjs was already imported. This breaks constructor checks and will lead to issues! - https://github.com/yjs/yjs/issues/438
+ GET /workspace/devsync-sample/kanban 200 in 6.1s (next.js: 5.7s, proxy.ts: 10ms, application-code: 330ms)
+ GET /workspace/devsync-sample/kanban 200 in 229ms (next.js: 91ms, proxy.ts: 10ms, application-code: 129ms)
+ GET /workspace/devsync-sample/snippets 200 in 4.4s (next.js: 4.1s, proxy.ts: 9ms, application-code: 298ms)
+ GET /workspace/devsync-sample/snippets 200 in 130ms (next.js: 61ms, proxy.ts: 4ms, application-code: 65ms)
+  ✓   8 testing/browser/journeys.spec.ts:111:5 › owner moves a Kanban card and saves a snippet (18.0s)
+○ Compiling /(dashboard)/workspace/[id]/page ...
+ GET /workspace/cmw79fbqi00cdjhrx8yjllgl0 200 in 8.0s (next.js: 7.7s, proxy.ts: 6ms, application-code: 281ms)
+○ Compiling /(dashboard)/invitations/[id]/page ...
+ GET /workspace/cmw79fbqi00cdjhrx8yjllgl0 200 in 238ms (next.js: 101ms, proxy.ts: 14ms, application-code: 123ms)
+ GET /invitations/cmw79fk5e00d2jhrxsnplyuu3 200 in 6.6s (next.js: 6.3s, proxy.ts: 10ms, application-code: 269ms)
+ GET /workspace/cmw79fbqi00cdjhrx8yjllgl0 200 in 194ms (next.js: 92ms, proxy.ts: 6ms, application-code: 95ms)
+  ✓   9 testing/browser/journeys.spec.ts:160:7 › owner invites by email, recipient accepts with EDITOR, reuse cannot restore removed membership (20.3s)
+ GET /workspace/cmw79fre800dmjhrxfeqcqz8f 200 in 88ms (next.js: 5ms, proxy.ts: 10ms, application-code: 74ms)
+ GET /invitations/cmw79ftqm00edjhrxwrp6q36g 200 in 178ms (next.js: 102ms, proxy.ts: 8ms, application-code: 69ms)
+  ✓  10 testing/browser/journeys.spec.ts:160:7 › owner invites by email, recipient accepts with VIEWER, reuse cannot restore removed membership (6.0s)
+ GET /invitations/cmw79fw3o00fbjhrx06jxzpsm 200 in 126ms (next.js: 72ms, proxy.ts: 10ms, application-code: 44ms)
+  ✓  11 testing/browser/journeys.spec.ts:225:5 › invitation recipient binding, expiry, revocation, payload validation and concurrent acceptance (2.7s)
+
+  11 passed (1.5m)
+[?25h

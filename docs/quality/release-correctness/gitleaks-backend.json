@@ -1,0 +1,22 @@
+[
+ {
+  "RuleID": "generic-api-key",
+  "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+  "StartLine": 649,
+  "EndLine": 649,
+  "StartColumn": 12,
+  "EndColumn": 46,
+  "Match": "webhookSecret: 'REDACTED'",
+  "Secret": "REDACTED",
+  "File": "/source/__tests__/resource-mutations.integration.test.ts",
+  "SymlinkFile": "",
+  "Commit": "",
+  "Entropy": 3.5724313,
+  "Author": "",
+  "Email": "",
+  "Date": "",
+  "Message": "",
+  "Tags": [],
+  "Fingerprint": "/source/__tests__/resource-mutations.integration.test.ts:generic-api-key:649"
+ }
+]

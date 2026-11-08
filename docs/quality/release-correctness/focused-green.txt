@@ -1,0 +1,41 @@
+
+> devsync-backend@1.0.0 test
+> jest --runInBand --runTestsByPath src/__tests__/extraction.test.ts src/__tests__/collaboration.integration.test.ts src/__tests__/auth-sync.test.ts src/__tests__/dependency-policy.test.ts --coverage=false
+
+FAIL src/__tests__/extraction.test.ts
+  ● rejects oversized output and releases the worker after a canceled deadline
+
+    expect(received).rejects.toThrow()
+
+    Received promise resolved instead of rejected
+    Resolved to value: {Symbol(state): {"aborted": false, "body": {"length": null, "source": null, "stream": {Symbol(kType): "ReadableStream", Symbol(kState): {"controller": {Symbol(kType): "ReadableByteStreamController", Symbol(kState): {"autoAllocateChunkSize": undefined, "byobRequest": null, "cancelAlgorithm": [Function anonymous], "closeRequested": false, "highWaterMark": 0, "pendingPullIntos": [], "pullAgain": false, "pullAlgorithm": [Function anonymous], "pulling": false, "queue": [], "queueTotalSize": 0, "started": true, "stream": [Circular]}}, "disturbed": false, "reader": undefined, "state": "readable", "storedError": undefined, "transfer": {"port1": undefined, "port2": undefined, "promise": undefined, "writable": undefined}}, Symbol(nodejs.webstream.isClosedPromise): {"promise": Promise {}, "reject": [Function anonymous], "resolve": [Function anonymous]}, Symbol(nodejs.webstream.controllerErrorFunction): [Function anonymous]}}, "cacheState": "", "headersList": {"cookies": null, Symbol(headers map): Map {"date" => {"name": "date", "value": "Sun, 08 Nov 2026 03:04:46 GMT"}, "connection" => {"name": "connection", "value": "keep-alive"}, "keep-alive" => {"name": "keep-alive", "value": "timeout=5"}, "transfer-encoding" => {"name": "transfer-encoding", "value": "chunked"}}, Symbol(headers map sorted): null}, "rangeRequested": false, "requestIncludesCredentials": true, "status": 422, "statusText": "Unprocessable Entity", "timingAllowPassed": true, "timingInfo": {"decodedBodySize": 0, "encodedBodySize": 0, "endTime": 0, "finalConnectionTimingInfo": {"ALPNNegotiatedProtocol": undefined, "connectionEndTime": 31582.638556, "connectionStartTime": 31582.638556, "domainLookupEndTime": 31582.638556, "domainLookupStartTime": 31582.638556, "secureConnectionStartTime": 31582.638556}, "finalNetworkRequestStartTime": 31583.541585, "finalNetworkResponseStartTime": 31624.062817, "finalServiceWorkerStartTime": 0, "postRedirectStartTime": 31582.638556, "redirectEndTime": 0, "redirectStartTime": 0, "startTime": 31582.638556}, "type": "basic", "urlList": ["http://127.0.0.1:39341/extract"]}, Symbol(headers): {}}
+
+      93 |     40,
+      94 |   );
+    > 95 |   await expect(
+         |         ^
+      96 |     fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/pdf' }, body: 'pdf' }),
+      97 |   ).rejects.toThrow();
+      98 |   expect(aborted).toBe(true);
+
+      at expect (node_modules/expect/build/index.js:2116:15)
+      at Object.<anonymous> (src/__tests__/extraction.test.ts:95:9)
+
+{"level":30,"time":1794107086723,"service":"devsync-api","req":{"id":"62691980-5884-4677-a922-db99f82e044a","method":"POST"},"requestId":"62691980-5884-4677-a922-db99f82e044a","res":{"statusCode":401},"responseTime":2,"msg":"request completed"}
+{"level":30,"time":1794107086728,"service":"devsync-api","req":{"id":"dc6640b2-c83c-46fa-a69f-35887824679d","method":"POST"},"requestId":"dc6640b2-c83c-46fa-a69f-35887824679d","res":{"statusCode":401},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1794107086732,"service":"devsync-api","req":{"id":"d6679162-43de-4524-8ccd-53d8f56c5c9e","method":"POST"},"requestId":"d6679162-43de-4524-8ccd-53d8f56c5c9e","res":{"statusCode":401},"responseTime":0,"msg":"request completed"}
+{"level":30,"time":1794107086735,"service":"devsync-api","req":{"id":"66af3073-524f-469c-89ad-64cfe6d6a8fb","method":"POST"},"requestId":"66af3073-524f-469c-89ad-64cfe6d6a8fb","res":{"statusCode":401},"responseTime":0,"msg":"request completed"}
+{"level":30,"time":1794107086737,"service":"devsync-api","req":{"id":"f3f10402-9262-4e00-886a-6df5bd2c635c","method":"POST"},"requestId":"f3f10402-9262-4e00-886a-6df5bd2c635c","res":{"statusCode":401},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1794107086744,"service":"devsync-api","req":{"id":"89dfc8b9-2992-4a74-84a4-8b8dcab5a8f4","method":"POST"},"requestId":"89dfc8b9-2992-4a74-84a4-8b8dcab5a8f4","res":{"statusCode":503},"err":{"type":"HttpError"},"responseTime":1,"msg":"request errored"}
+{"level":30,"time":1794107086747,"service":"devsync-api","req":{"id":"c369d0f0-5f26-428a-ab5a-9381ec0c6119","method":"POST"},"requestId":"c369d0f0-5f26-428a-ab5a-9381ec0c6119","res":{"statusCode":401},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1794107086749,"service":"devsync-api","req":{"id":"adac7b45-99aa-450d-8741-795376841c07","method":"POST"},"requestId":"adac7b45-99aa-450d-8741-795376841c07","res":{"statusCode":401},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1794107086751,"service":"devsync-api","req":{"id":"c27c81b8-b6cf-41b8-9a76-f08a7a17e806","method":"POST"},"requestId":"c27c81b8-b6cf-41b8-9a76-f08a7a17e806","res":{"statusCode":401},"responseTime":0,"msg":"request completed"}
+{"level":30,"time":1794107086753,"service":"devsync-api","req":{"id":"ceb90465-e8c1-4d0f-b3da-17e89aba66c4","method":"POST"},"requestId":"ceb90465-e8c1-4d0f-b3da-17e89aba66c4","res":{"statusCode":401},"responseTime":0,"msg":"request completed"}
+{"level":50,"time":1794107086756,"service":"devsync-api","req":{"id":"cf68364b-bdf1-4765-957f-7af476e33cbd","method":"POST"},"requestId":"cf68364b-bdf1-4765-957f-7af476e33cbd","msg":"Unexpected server error"}
+{"level":30,"time":1794107086756,"service":"devsync-api","req":{"id":"cf68364b-bdf1-4765-957f-7af476e33cbd","method":"POST"},"requestId":"cf68364b-bdf1-4765-957f-7af476e33cbd","res":{"statusCode":500},"err":{"type":"HttpError"},"responseTime":1,"msg":"request errored"}
+
+Test Suites: 1 failed, 3 passed, 4 total
+Tests:       1 failed, 39 passed, 40 total
+Snapshots:   0 total
+Time:        32.176 s
+Ran all test suites within paths "src/__tests__/extraction.test.ts", "src/__tests__/collaboration.integration.test.ts", "src/__tests__/auth-sync.test.ts", "src/__tests__/dependency-policy.test.ts".
