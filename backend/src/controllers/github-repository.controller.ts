@@ -119,7 +119,7 @@ export async function updateRepository(req: Request, res: Response, next: NextFu
         });
       },
     );
-    res.json({ ...repository, webhookSecret: undefined });
+    res.json({ ...repository, webhookSecret: undefined, providerDisconnectedAt: undefined });
   } catch (error) {
     next(error);
   }

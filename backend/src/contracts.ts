@@ -1,3 +1,5 @@
+import { installationInput } from './routes/github-installation.routes';
+import { githubExecutionSchema } from './services/github-execution';
 import { exportRequestInput, transferInput, revokeSessionInput } from './routes/lifecycle.routes';
 import { aiCompleteSchema } from './services/ai-schema';
 import { aiUsageV3Query } from './services/ai-schema';
@@ -324,7 +326,10 @@ add('POST', `${base}/snippets/execute`, apiErrorSchema, '503', {
   description: 'Execution remains disabled. The request body is ignored; no code is executed.',
 });
 add('GET', `${base}/workspaces/{id}/github-repositories`, z.array(repository));
-const repositoryWrite = model('GitHubRepository').omit({ webhookSecret: true });
+const repositoryWrite = model('GitHubRepository').omit({
+  webhookSecret: true,
+  providerDisconnectedAt: true,
+});
 add('POST', `${base}/workspaces/{id}/github-repositories`, repositoryWrite, '201');
 add('PATCH', `${base}/workspaces/{id}/github-repositories/{repositoryId}`, repositoryWrite);
 noContent('DELETE', `${base}/workspaces/{id}/github-repositories/{repositoryId}`);
@@ -679,3 +684,28 @@ export function requireRouteContract(method: string, path: string) {
   if (!contract) throw new Error(`Route has no Zod contract: ${method.toUpperCase()} ${path}`);
   return contract;
 }
+
+add(
+  'GET',
+  '/api/v2/workspaces/{workspaceId}/github-repositories/{repositoryId}/execution',
+  z
+    .object({
+      items: z.array(
+        githubExecutionSchema.extend({
+          providerAt: z.iso.datetime(),
+          observedAt: z.iso.datetime(),
+        }),
+      ),
+      liveAccess: z.enum(['not_verified', 'disconnected']),
+      deployment: z.literal('unknown'),
+    })
+    .strict(),
+);
+
+add(
+  'POST',
+  '/api/v2/webhooks/github-installation',
+  z.object({ processed: z.string().optional(), ignored: z.string().optional() }),
+  '200',
+  { body: installationInput },
+);

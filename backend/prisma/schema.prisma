@@ -231,6 +231,7 @@ model GitHubRepository {
   id              String    @id @default(cuid())
   workspaceId     String
   installationId  String?
+  providerDisconnectedAt DateTime? @db.Timestamptz
   repositoryId    String    @unique
   owner           String
   name            String
@@ -240,8 +241,27 @@ model GitHubRepository {
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
   workspace       Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  executionStates GitHubExecutionState[]
+  webhookProofs GitHubWebhookProof[]
 
   @@unique([workspaceId, owner, name])
+  @@unique([id, workspaceId])
+}
+
+model GitHubExecutionState {
+  repositoryId String
+  workspaceId String
+  kind String
+  subject String
+  state String
+  conclusion String?
+  headSha String?
+  pullNumber Int?
+  providerAt DateTime @db.Timestamptz
+  observedAt DateTime @default(now()) @db.Timestamptz
+  rank Int
+  repository GitHubRepository @relation(fields: [repositoryId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  @@id([repositoryId, kind, subject])
 }
 
 model GitHubWebhookDelivery {
@@ -396,4 +416,13 @@ model WorkspaceExportRequest {
   requester   User      @relation(fields: [requestedBy], references: [id], onDelete: Restrict)
 
   @@unique([workspaceId, requestedBy])
+}
+
+model GitHubWebhookProof {
+ repositoryId String
+ workspaceId String
+ digest String
+ observedAt DateTime @default(now()) @db.Timestamptz
+ repository GitHubRepository @relation(fields: [repositoryId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+ @@id([repositoryId, digest])
 }

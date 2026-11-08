@@ -1,3 +1,5 @@
+import { createGitHubExecutionRouter } from '../routes/github-execution.routes';
+import { githubInstallationRouter } from '../routes/github-installation.routes';
 import { providerSessions } from '../security/provider-sessions';
 import express from 'express';
 import {
@@ -129,10 +131,15 @@ app.use(
   '/api/v2/workspaces/:workspaceId/lifecycle',
   createWorkspaceLifecycleRouter((_req, _res, next) => next()),
 );
+app.use(
+  '/workspaces/:workspaceId/repos/:repositoryId/execution',
+  createGitHubExecutionRouter((_req, _res, next) => next()),
+);
 app.use('/scim/v2', scimRouter);
 app.get('/auth/me', getMe);
 app.patch('/auth/me', updateMe);
 app.use('/github', githubRouter);
+app.use('/github-installation', githubInstallationRouter);
 app.use('/stripe', stripeRouter);
 app.use('/superadmin', superadminRouter);
 app.post('/workspaces', workspaces.createWorkspace);
@@ -2134,4 +2141,273 @@ it('lifecycle: provider session routes bind the current principal and reject inj
     list.mockRestore();
     revoke.mockRestore();
   }
+});
+
+it('GitHub rejects an older PR open event after merge without reversing the task', async () => {
+  const { a } = await fixture(),
+    repository = await repositoryFixture(a);
+  await admin.gitHubRepository.update({
+    where: { id: repository.id },
+    data: { prOpenedColumnId: `column-${a}`, prMergedColumnId: `target-${a}` },
+  });
+  const key = `ORDER-${sequence}`;
+  await admin.task.update({ where: { id: `task-${a}` }, data: { taskKey: key } });
+  const merged = {
+    action: 'closed',
+    pull_request: {
+      number: 71,
+      merged: true,
+      title: `Fixes ${key}`,
+      updated_at: '2026-11-08T12:00:00Z',
+    },
+  };
+  expect(
+    (await githubEvent(repository.repositoryId, repository.webhookSecret, merged)).status,
+  ).toBe(200);
+  const stale = await githubEvent(repository.repositoryId, repository.webhookSecret, {
+    action: 'opened',
+    pull_request: { number: 71, title: `Fixes ${key}`, updated_at: '2026-11-08T11:00:00Z' },
+  });
+  expect(stale.status).toBe(202);
+  expect((await admin.task.findUniqueOrThrow({ where: { id: `task-${a}` } })).columnId).toBe(
+    `target-${a}`,
+  );
+});
+
+it('GitHub check evidence is ordered, tenant isolated and owner-only without deployment inference', async () => {
+  const { a, b } = await fixture(),
+    repository = await repositoryFixture(a),
+    sha = 'a'.repeat(40);
+  const payload = {
+    action: 'completed',
+    check_run: {
+      id: 91,
+      status: 'completed',
+      conclusion: 'success',
+      head_sha: sha,
+      started_at: '2026-11-08T10:00:00Z',
+      completed_at: '2026-11-08T10:05:00Z',
+    },
+  };
+  expect(
+    (await githubEvent(repository.repositoryId, 'incorrect', payload, undefined, 'check_run'))
+      .status,
+  ).toBe(401);
+  expect(
+    (
+      await githubEvent(
+        repository.repositoryId,
+        repository.webhookSecret,
+        payload,
+        undefined,
+        'check_run',
+      )
+    ).status,
+  ).toBe(200);
+  expect(
+    (
+      await githubEvent(
+        repository.repositoryId,
+        repository.webhookSecret,
+        {
+          action: 'created',
+          check_run: {
+            id: 91,
+            status: 'in_progress',
+            head_sha: sha,
+            started_at: '2026-11-08T10:00:00Z',
+          },
+        },
+        undefined,
+        'check_run',
+      )
+    ).status,
+  ).toBe(202);
+  const url = `/workspaces/${a}/repos/${repository.id}/execution`;
+  const result = await request(app).get(url);
+  expect(result.status).toBe(200);
+  expect(result.body.items[0]).toMatchObject({
+    kind: 'check_run',
+    state: 'completed',
+    conclusion: 'success',
+    providerAt: '2026-11-08T10:05:00.000Z',
+  });
+  expect(result.body.deployment).toBe('unknown');
+  expect(result.body.liveAccess).toBe('not_verified');
+  expect((await request(app).get(url).set('x-fixture-actor', 'viewer')).status).toBe(403);
+  expect((await request(app).get(`/workspaces/${b}/repos/${repository.id}/execution`)).status).toBe(
+    403,
+  );
+  expect((await db.$queryRaw<unknown[]>`SELECT * FROM "GitHubExecutionState"`).length).toBe(0);
+  await admin.gitHubRepository.delete({ where: { id: repository.id } });
+  expect((await request(app).get(url)).status).toBe(404);
+});
+
+it('signed App withdrawal is idempotent, installation-bound and denies future repository work', async () => {
+  const { a, b } = await fixture(),
+    first = await repositoryFixture(a),
+    other = await repositoryFixture(b);
+  await admin.gitHubRepository.update({ where: { id: first.id }, data: { installationId: '456' } });
+  await admin.gitHubRepository.update({ where: { id: other.id }, data: { installationId: '999' } });
+  const oldId = process.env.GITHUB_APP_ID,
+    oldSecret = process.env.GITHUB_APP_WEBHOOK_SECRET,
+    secret = randomBytes(32).toString('hex');
+  process.env.GITHUB_APP_ID = '123';
+  process.env.GITHUB_APP_WEBHOOK_SECRET = secret;
+  const body = JSON.stringify({ action: 'deleted', installation: { id: 456, app_id: 123 } });
+  const deliver = (signature: string) =>
+    request(app)
+      .post('/github-installation')
+      .set('Content-Type', 'application/json')
+      .set('x-github-event', 'installation')
+      .set('x-hub-signature-256', signature)
+      .send(body);
+  try {
+    expect((await deliver('invalid')).status).toBe(401);
+    expect(
+      (await admin.gitHubRepository.findUniqueOrThrow({ where: { id: first.id } }))
+        .providerDisconnectedAt,
+    ).toBeNull();
+    const signature = `sha256=${createHmac('sha256', secret).update(body).digest('hex')}`;
+    expect((await deliver(signature)).status).toBe(200);
+    const disconnected = (
+      await admin.gitHubRepository.findUniqueOrThrow({ where: { id: first.id } })
+    ).providerDisconnectedAt;
+    expect(disconnected).not.toBeNull();
+    expect((await deliver(signature)).status).toBe(200);
+    expect(
+      (await admin.gitHubRepository.findUniqueOrThrow({ where: { id: first.id } }))
+        .providerDisconnectedAt,
+    ).toEqual(disconnected);
+    expect(
+      (await admin.gitHubRepository.findUniqueOrThrow({ where: { id: other.id } }))
+        .providerDisconnectedAt,
+    ).toBeNull();
+    expect(
+      (
+        await githubEvent(first.repositoryId, first.webhookSecret, {
+          action: 'opened',
+          pull_request: { title: 'Fixes TEST-123' },
+        })
+      ).status,
+    ).toBe(403);
+    const trail = await request(app).get(`/workspaces/${a}/repos/${first.id}/execution`);
+    expect(trail.body).toMatchObject({
+      items: [],
+      liveAccess: 'disconnected',
+      deployment: 'unknown',
+    });
+  } finally {
+    if (oldId === undefined) delete process.env.GITHUB_APP_ID;
+    else process.env.GITHUB_APP_ID = oldId;
+    if (oldSecret === undefined) delete process.env.GITHUB_APP_WEBHOOK_SECRET;
+    else process.env.GITHUB_APP_WEBHOOK_SECRET = oldSecret;
+  }
+});
+
+it('GitHub rejects identical signed payload replay under a different delivery ID', async () => {
+  const { a } = await fixture(),
+    repository = await repositoryFixture(a);
+  const payload = { ref: 'refs/heads/main', commits: [], pusher: { name: 'fixture' } };
+  expect(
+    (
+      await githubEvent(
+        repository.repositoryId,
+        repository.webhookSecret,
+        payload,
+        'proof-first',
+        'push',
+      )
+    ).status,
+  ).toBe(200);
+  expect(
+    (
+      await githubEvent(
+        repository.repositoryId,
+        repository.webhookSecret,
+        payload,
+        'proof-second',
+        'push',
+      )
+    ).status,
+  ).toBe(202);
+  expect(await admin.activity.count({ where: { workspaceId: a, type: 'github_push' } })).toBe(1);
+});
+
+it('GitHub review dismissal and PR renaming retain stable provider identities', async () => {
+  const { a } = await fixture(),
+    repository = await repositoryFixture(a),
+    sha = 'a'.repeat(40);
+  const pr = {
+    number: 84,
+    state: 'open',
+    head: { sha },
+    updated_at: '2026-11-08T10:00:00Z',
+    title: 'Before rename',
+  };
+  expect(
+    (
+      await githubEvent(repository.repositoryId, repository.webhookSecret, {
+        action: 'opened',
+        pull_request: pr,
+      })
+    ).status,
+  ).toBe(202);
+  expect(
+    (
+      await githubEvent(repository.repositoryId, repository.webhookSecret, {
+        action: 'edited',
+        pull_request: { ...pr, title: 'After rename', updated_at: '2026-11-08T10:01:00Z' },
+      })
+    ).status,
+  ).toBe(202);
+  const review = {
+    id: 98,
+    state: 'approved',
+    commit_id: sha,
+    submitted_at: '2026-11-08T10:02:00Z',
+  };
+  expect(
+    (
+      await githubEvent(
+        repository.repositoryId,
+        repository.webhookSecret,
+        { action: 'submitted', pull_request: pr, review },
+        undefined,
+        'pull_request_review',
+      )
+    ).status,
+  ).toBe(200);
+  expect(
+    (
+      await githubEvent(
+        repository.repositoryId,
+        repository.webhookSecret,
+        { action: 'dismissed', pull_request: pr, review: { ...review, state: 'dismissed' } },
+        undefined,
+        'pull_request_review',
+      )
+    ).status,
+  ).toBe(200);
+  expect(
+    (
+      await githubEvent(
+        repository.repositoryId,
+        repository.webhookSecret,
+        { action: 'submitted', pull_request: pr, review },
+        undefined,
+        'pull_request_review',
+      )
+    ).status,
+  ).toBe(202);
+  const trail = await request(app).get(`/workspaces/${a}/repos/${repository.id}/execution`);
+  expect(trail.body.items.filter((r: { kind: string }) => r.kind === 'pull_request')).toHaveLength(
+    1,
+  );
+  expect(trail.body.items.find((r: { kind: string }) => r.kind === 'review')).toMatchObject({
+    state: 'dismissed',
+    pullNumber: 84,
+    headSha: sha,
+  });
+  expect(JSON.stringify(trail.body)).not.toContain('Before rename');
 });
