@@ -57,6 +57,15 @@ export const workspaceApi = {
 
 // Document API
 export const documentApi = {
+  ingest: (workspaceId: string, file: File) => {
+    const body = new FormData();
+    body.append('file', file);
+    return api.post<{ documentId: string }>(
+      `/workspaces/${encodeURIComponent(workspaceId)}/documents/ingest`,
+      body,
+      { headers: { 'Content-Type': undefined } },
+    );
+  },
   list: (workspaceId: string) => api.get(`/workspaces/${workspaceId}/documents`),
   get: (id: string) => api.get(`/documents/${id}`),
   create: (workspaceId: string, data?: { title?: string; parentId?: string }) =>

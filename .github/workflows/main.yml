@@ -162,9 +162,17 @@ jobs:
       matrix:
         include:
           - service: backend
+            artifact: backend
+            target: runner
             image: devsync-api
           - service: frontend
+            artifact: frontend
+            target: runner
             image: devsync-web
+          - service: backend
+            artifact: extractor
+            target: extractor
+            image: devsync-extractor
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
@@ -174,12 +182,12 @@ jobs:
         uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8
         with:
           context: ${{ matrix.service }}
-          target: runner
+          target: ${{ matrix.target }}
           load: true
           push: false
-          tags: devsync-${{ matrix.service }}:ci
-          cache-from: type=gha,scope=${{ matrix.service }}
-          cache-to: type=gha,scope=${{ matrix.service }},mode=max
+          tags: devsync-${{ matrix.artifact }}:ci
+          cache-from: type=gha,scope=${{ matrix.artifact }}
+          cache-to: type=gha,scope=${{ matrix.artifact }},mode=max
           build-args: |
             DEPLOYMENT_MODE=production
             NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=${{ vars.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
@@ -190,19 +198,19 @@ jobs:
       - name: Trivy blocks High and Critical vulnerabilities
         run: |
           mkdir -p security
-          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD/security:/reports" aquasec/trivy@sha256:05d0126976bdedcd0782a0336f77832dbea1c81b9cc5e4b3a5ea5d2ec863aca7 image --scanners vuln --exit-code 1 --severity HIGH,CRITICAL --format json --output /reports/trivy.json "devsync-${{ matrix.service }}:ci"
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD/security:/reports" aquasec/trivy@sha256:05d0126976bdedcd0782a0336f77832dbea1c81b9cc5e4b3a5ea5d2ec863aca7 image --scanners vuln --exit-code 1 --severity HIGH,CRITICAL --format json --output /reports/trivy.json "devsync-${{ matrix.artifact }}:ci"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
-          name: container-security-${{ matrix.service }}
+          name: container-security-${{ matrix.artifact }}
           path: security/trivy.json
           if-no-files-found: warn
       - name: Preserve CycloneDX SBOM
         run: |
-          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD/security:/reports" aquasec/trivy@sha256:05d0126976bdedcd0782a0336f77832dbea1c81b9cc5e4b3a5ea5d2ec863aca7 image --format cyclonedx --output /reports/sbom.cdx.json "devsync-${{ matrix.service }}:ci"
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD/security:/reports" aquasec/trivy@sha256:05d0126976bdedcd0782a0336f77832dbea1c81b9cc5e4b3a5ea5d2ec863aca7 image --format cyclonedx --output /reports/sbom.cdx.json "devsync-${{ matrix.artifact }}:ci"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: sbom-${{ matrix.service }}-${{ github.sha }}
+          name: sbom-${{ matrix.artifact }}-${{ github.sha }}
           path: security/sbom.cdx.json
           if-no-files-found: error
           retention-days: 365
@@ -214,7 +222,7 @@ jobs:
         run: |
           image="ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/${{ matrix.image }}:${GITHUB_SHA}"
           printf '%s' "$GHCR_TOKEN" | docker login ghcr.io --username "$GITHUB_ACTOR" --password-stdin
-          docker tag "devsync-${{ matrix.service }}:ci" "$image"
+          docker tag "devsync-${{ matrix.artifact }}:ci" "$image"
           docker push "$image"
           reference=$(docker inspect "$image" --format '{{index .RepoDigests 0}}')
           echo "image=${image%:*}" >> "$GITHUB_OUTPUT"

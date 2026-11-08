@@ -18,7 +18,6 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { toast } from 'sonner';
-import { useAuth } from '@/providers/auth-provider';
 
 const TEMPLATES = [
   {
@@ -173,7 +172,6 @@ const TEMPLATES = [
 export default function DocsPage() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
-  const { getToken } = useAuth();
   const [docs, setDocs] = useState<Document[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [search, setSearch] = useState('');
@@ -234,29 +232,14 @@ export default function DocsPage() {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const formData = new FormData();
-    formData.append('file', file);
-
     setIsUploading(true);
     const toastId = toast.loading(`Ingesting "${file.name}" with OCR AI...`);
 
     try {
-      const token = await getToken();
-      const res = await fetch(`http://localhost:5000/api/workspaces/${id}/documents/ingest`, {
-        method: 'POST',
-        headers: token ? { Authorization: `Bearer ${token}` } : {},
-        body: formData,
-      });
-
-      if (!res.ok) {
-        const errorData = await res.json().catch(() => ({}));
-        throw new Error(errorData.error || 'OCR Document ingestion failed');
-      }
-
-      const result = await res.json();
+      const { data: result } = await documentApi.ingest(id, file);
       toast.success('Document ingested and converted to rich text!', { id: toastId });
       loadDocs();
-      const docId = result.documentId || result.id;
+      const docId = result.documentId;
       if (docId) {
         router.push(`/workspace/${id}/docs/${docId}`);
       }

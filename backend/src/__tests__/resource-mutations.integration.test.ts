@@ -1883,3 +1883,24 @@ it('I02 fixture configuration cannot start in production or target an ordinary d
     }),
   ).toEqual({ secret });
 });
+
+it('fails closed for binary extraction without an isolated worker and creates no document', async () => {
+  const { a } = await fixture();
+  const previous = process.env.INGESTION_EXTRACTOR_URL;
+  delete process.env.INGESTION_EXTRACTOR_URL;
+  try {
+    const count = await admin.document.count({ where: { workspaceId: a } });
+    const result = await request(app)
+      .post(`/workspaces/${a}/documents/ingest`)
+      .set('x-fixture-actor', 'editor')
+      .attach('file', Buffer.from('%PDF-untrusted'), {
+        filename: 'untrusted.pdf',
+        contentType: 'application/pdf',
+      });
+    expect(result.status).toBe(503);
+    expect(await admin.document.count({ where: { workspaceId: a } })).toBe(count);
+  } finally {
+    if (previous === undefined) delete process.env.INGESTION_EXTRACTOR_URL;
+    else process.env.INGESTION_EXTRACTOR_URL = previous;
+  }
+});

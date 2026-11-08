@@ -1,6 +1,6 @@
 FROM node:22-alpine@sha256:fe4f6d74e20370acb04ad889077d14d0f64a9c8ea6a42bc60cddf1e844699914 AS base
 WORKDIR /app
-RUN apk add --no-cache openssl ca-certificates
+RUN apk add --no-cache openssl ca-certificates zlib=1.4-r0
 
 FROM base AS dependencies
 COPY package.json package-lock.json ./
@@ -38,3 +38,14 @@ EXPOSE 5000
 HEALTHCHECK --interval=15s --timeout=4s --start-period=30s --retries=5 CMD ["node", "docker/health.mjs"]
 ENTRYPOINT ["node", "docker/entrypoint.mjs"]
 CMD ["node", "dist/server.js"]
+
+# Untrusted binary extraction has no application credentials or outbound network.
+FROM runner AS extractor
+COPY --from=build --chown=node:node /app/node_modules/@tesseract.js-data/eng/4.0.0_best_int/eng.traineddata.gz /app/ocr-data/eng.traineddata.gz
+EXPOSE 5001
+HEALTHCHECK --interval=15s --timeout=4s --start-period=30s --retries=5 CMD ["node", "-e", "fetch('http://127.0.0.1:5001/healthz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+ENTRYPOINT ["node", "dist/extraction/server.js"]
+CMD []
+
+# Preserve the API as the default docker build target.
+FROM runner AS final
