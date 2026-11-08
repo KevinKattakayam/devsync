@@ -457,6 +457,7 @@ function DocumentEditor({ workspaceId, docId }: { workspaceId: string; docId: st
     syncStatus,
     canWrite,
     pending,
+    accessDenied,
   } = useLocalFirstYDoc(`document:${workspaceId}:${docId}`, getToken, user?.id);
   useCRDTGarbageCollector(ydoc);
 
@@ -583,6 +584,7 @@ function DocumentEditor({ workspaceId, docId }: { workspaceId: string; docId: st
           status={syncStatus}
           pending={pending || !localReady}
           canWrite={canWrite}
+          accessDenied={accessDenied}
         />
         {doc?.author && <span>by {doc.author.name}</span>}
         {connectedUsers > 0 && (

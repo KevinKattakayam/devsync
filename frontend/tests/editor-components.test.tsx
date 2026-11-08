@@ -46,3 +46,11 @@ it('announces pending and offline state instead of claiming unacknowledged chang
   view.rerender(<DocumentSyncStatus status="connected" pending={false} canWrite={false} />);
   expect(screen.getByRole('status').textContent).toBe('Saved · Read only');
 });
+
+it('explains remote acknowledgements and stops claiming save progress after access denial', () => {
+  const view = render(<DocumentSyncStatus status="connected" pending={false} canWrite />);
+  expect(screen.getByRole('status').getAttribute('title')).toContain('server journal');
+  view.rerender(<DocumentSyncStatus status="offline" pending canWrite={false} accessDenied />);
+  expect(screen.getByRole('status').textContent).toBe('Access unavailable — editing stopped');
+  expect(screen.getByRole('status').getAttribute('title')).toContain('not confirmed remotely');
+});

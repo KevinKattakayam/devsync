@@ -150,3 +150,37 @@ it('fails closed on renewal failure without exposing provider error text', async
   if (typeof callback !== 'function') throw new Error('Missing token callback');
   await expect(callback()).rejects.toThrow('Authentication required');
 });
+
+it('does not carry a previous room acknowledgement or pending count into a new replica', async () => {
+  let release: (value: string) => void = () => {};
+  const token = vi
+    .fn<(options?: { skipCache?: boolean }) => Promise<string | null>>()
+    .mockResolvedValue('fixture-token');
+  const view = renderHook(({ room }) => useLocalFirstYDoc(room, token, 'alice'), {
+    initialProps: { room: 'document:ws:previous-ack' },
+  });
+  await waitFor(() => expect(view.result.current.syncStatus).toBe('connected'));
+  act(() => transport.providers[0].config.onUnsyncedChanges?.({ number: 3 }));
+  token.mockImplementationOnce(() => new Promise<string>((resolve) => (release = resolve)));
+  view.rerender({ room: 'document:ws:new-unacknowledged-room' });
+  await waitFor(() => expect(view.result.current.localReady).toBe(true));
+  expect(view.result.current.syncStatus).toBe('offline');
+  expect(view.result.current.pending).toBe(false);
+  expect(view.result.current.canWrite).toBe(false);
+  await act(async () => release('fixture-token'));
+  await waitFor(() => expect(view.result.current.syncStatus).toBe('connected'));
+});
+
+it('identifies revoked access separately from reconnectable network loss and resets it per room', async () => {
+  const view = renderHook(({ room }) => useLocalFirstYDoc(room, getToken, 'alice'), {
+    initialProps: { room: 'document:ws:revoked-access' },
+  });
+  await waitFor(() => expect(view.result.current.canWrite).toBe(true));
+  act(() => {
+    transport.providers[0].config.onDisconnect?.({ event: { code: 4403 } as CloseEvent });
+  });
+  expect(view.result.current).toMatchObject({ canWrite: false, accessDenied: true });
+  view.rerender({ room: 'document:ws:another-room' });
+  await waitFor(() => expect(view.result.current.canWrite).toBe(true));
+  expect(view.result.current).toMatchObject({ accessDenied: false });
+});

@@ -4,13 +4,16 @@ export function DocumentSyncStatus({
   status,
   pending,
   canWrite,
+  accessDenied = false,
 }: {
   status: SyncStatus;
   pending: boolean;
   canWrite: boolean;
+  accessDenied?: boolean;
 }) {
-  const label =
-    status === 'offline'
+  const label = accessDenied
+    ? 'Access unavailable — editing stopped'
+    : status === 'offline'
       ? 'Offline — awaiting sync'
       : status === 'connecting'
         ? 'Connecting…'
@@ -18,7 +21,15 @@ export function DocumentSyncStatus({
           ? 'Saving…'
           : 'Saved';
   return (
-    <span role="status" aria-live="polite">
+    <span
+      role="status"
+      aria-live="polite"
+      title={
+        accessDenied
+          ? 'Pending local edits are not confirmed remotely. Check current workspace access before retrying.'
+          : 'Saved means pending Yjs updates were acknowledged by the server journal. Offline edits still await remote confirmation; local browser persistence is separate.'
+      }
+    >
       {label}
       {!canWrite && status === 'connected' ? ' · Read only' : ''}
     </span>

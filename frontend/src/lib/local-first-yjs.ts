@@ -15,6 +15,7 @@ export interface LocalFirstYDoc {
   syncStatus: SyncStatus;
   canWrite: boolean;
   pending: boolean;
+  accessDenied: boolean;
 }
 
 // StrictMode briefly releases then reacquires the same document. Defer disposal
@@ -22,8 +23,8 @@ export interface LocalFirstYDoc {
 const leases = new WeakMap<Y.Doc, number>();
 
 /**
- * IndexedDB is the write-ahead durable store. Hocuspocus is deliberately
- * secondary: every mutation reaches this Y.Doc synchronously while offline.
+ * Mutations reach Y.Doc synchronously and IndexedDB persists them asynchronously.
+ * Local persistence and remote journal acknowledgement are separate guarantees.
  */
 export function useLocalFirstYDoc(
   room: string,
@@ -35,16 +36,18 @@ export function useLocalFirstYDoc(
     [room, principal],
   );
   const [readyDocument, setReadyDocument] = useState<Y.Doc | null>(null);
-  const [syncStatus, setSyncStatus] = useState<SyncStatus>('offline');
+  const [connection, setConnection] = useState<{ document: Y.Doc; status: SyncStatus }>();
   const [provider, setProvider] = useState<HocuspocusProvider | null>(null);
   const [writableDocument, setWritableDocument] = useState<Y.Doc | null>(null);
-  const [pending, setPending] = useState(false);
+  const [acknowledgements, setAcknowledgements] = useState<{ document: Y.Doc; pending: boolean }>();
+  const [deniedDocument, setDeniedDocument] = useState<Y.Doc | null>(null);
   const setHealth = useSyncHealthStore((state) => state.setStatus);
 
   useEffect(() => {
     if (!principal) return;
     leases.set(document, (leases.get(document) ?? 0) + 1);
     let disposed = false;
+    const setSyncStatus = (status: SyncStatus) => setConnection({ document, status });
     const persistence = new IndexeddbPersistence(`devsync:${principal}:${room}`, document);
     void persistence.whenSynced
       .then(() => {
@@ -91,14 +94,18 @@ export function useLocalFirstYDoc(
             }
           },
           onAuthenticated: ({ scope }) => {
-            if (!disposed) setWritableDocument(scope === 'read-write' ? document : null);
+            if (!disposed) {
+              setDeniedDocument(null);
+              setWritableDocument(scope === 'read-write' ? document : null);
+            }
           },
           onUnsyncedChanges: ({ number }) => {
-            if (!disposed) setPending(number > 0);
+            if (!disposed) setAcknowledgements({ document, pending: number > 0 });
           },
           onAuthenticationFailed: () => {
             if (!disposed) {
               setWritableDocument(null);
+              setDeniedDocument(document);
               setSyncStatus('offline');
               setHealth('offline');
             }
@@ -117,7 +124,10 @@ export function useLocalFirstYDoc(
           },
           onDisconnect: ({ event }) => {
             if (!disposed) {
-              if (event.code === 4403) setWritableDocument(null);
+              if (event.code === 4403) {
+                setWritableDocument(null);
+                setDeniedDocument(document);
+              }
               setSyncStatus('offline');
               setHealth('offline');
             }
@@ -187,9 +197,10 @@ export function useLocalFirstYDoc(
     document,
     provider: provider?.document === document ? provider : null,
     localReady: readyDocument === document,
-    syncStatus,
+    syncStatus: connection?.document === document ? connection.status : 'offline',
     canWrite: writableDocument === document,
-    pending,
+    pending: acknowledgements?.document === document ? acknowledgements.pending : false,
+    accessDenied: deniedDocument === document,
   };
 }
 
