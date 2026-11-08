@@ -1,3 +1,4 @@
+import { providerSessions } from '../security/provider-sessions';
 import express, { ErrorRequestHandler } from 'express';
 import request from 'supertest';
 import { createServer } from 'http';
@@ -31,6 +32,14 @@ const errors: ErrorRequestHandler = (error: unknown, _req, res, _next) => {
     .json({ error: 'Request rejected' });
 };
 app.use(errors);
+// The provider status is an explicit active-session fixture; DB/role assertions stay unchanged.
+const providerStatusFixture = jest
+  .spyOn(providerSessions, 'assertActive')
+  .mockImplementation(async (sessionId, userId) => {
+    if (sessionId !== 'sess_critical_fixture' || !userId)
+      throw new Error('Invalid provider fixture');
+  });
+afterAll(() => providerStatusFixture.mockRestore());
 beforeEach(() => {
   jest.clearAllMocks();
   db.$transaction.mockImplementation(async (operation) => {
@@ -55,11 +64,11 @@ beforeEach(() => {
   db.workspace.findUnique.mockResolvedValue({ id: 'workspace-a', suspendedAt: null } as Awaited<
     ReturnType<typeof prisma.workspace.findUnique>
   >);
-  jest
-    .mocked(verifyToken)
-    .mockResolvedValue({ sub: 'clerk-a', exp: Math.floor(Date.now() / 1000) + 60 } as Awaited<
-      ReturnType<typeof verifyToken>
-    >);
+  jest.mocked(verifyToken).mockResolvedValue({
+    sub: 'clerk-a',
+    sid: 'sess_critical_fixture',
+    exp: Math.floor(Date.now() / 1000) + 60,
+  } as Awaited<ReturnType<typeof verifyToken>>);
 });
 describe('D01 profile mutation boundary', () => {
   it.each([

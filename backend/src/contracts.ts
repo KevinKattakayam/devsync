@@ -1,3 +1,4 @@
+import { exportRequestInput, transferInput, revokeSessionInput } from './routes/lifecycle.routes';
 import { aiCompleteSchema } from './services/ai-schema';
 import { aiUsageV3Query } from './services/ai-schema';
 import { Prisma } from '@prisma/client';
@@ -592,6 +593,86 @@ add('POST', '/api/superadmin/workspaces/{workspaceId}/kill-switch', killResponse
     '403': { schema: z.union([plainError, apiErrorSchema]) },
   },
 });
+
+const exportRequestResponse = z
+  .object({
+    id: z.string(),
+    workspaceId: z.string(),
+    requestedBy: z.string(),
+    status: z.literal('REVIEW_REQUIRED'),
+    createdAt: z.iso.datetime(),
+  })
+  .strict();
+add(
+  'GET',
+  '/api/v2/account/deletion-plan',
+  z
+    .object({
+      deletionAvailable: z.literal(false),
+      providerManaged: z.literal(true),
+      ownedWorkspaces: z.array(
+        z
+          .object({
+            id: z.string(),
+            name: z.string(),
+            activeOwners: z.number().int(),
+            requiresTransfer: z.boolean(),
+          })
+          .strict(),
+      ),
+      steps: z.array(z.string()),
+    })
+    .strict(),
+);
+add(
+  'GET',
+  '/api/v2/account/sessions',
+  z
+    .object({
+      items: z.array(
+        z
+          .object({
+            id: z.string(),
+            current: z.boolean(),
+            createdAt: z.number(),
+            lastActiveAt: z.number(),
+          })
+          .strict(),
+      ),
+      hasMore: z.boolean(),
+    })
+    .strict(),
+);
+add('POST', '/api/v2/account/sessions/{sessionId}/revoke', z.never(), '204', {
+  body: revokeSessionInput,
+  responses: { '204': { noContent: true } },
+});
+add(
+  'GET',
+  '/api/v2/workspaces/{workspaceId}/lifecycle',
+  z
+    .object({
+      workspaceName: z.string(),
+      retainedCrdtBackups: z.number().int(),
+      requests: z.array(exportRequestResponse),
+      deletionRequiresReview: z.literal(true),
+    })
+    .strict(),
+);
+add(
+  'POST',
+  '/api/v2/workspaces/{workspaceId}/lifecycle/export-requests',
+  exportRequestResponse,
+  '201',
+  { body: exportRequestInput },
+);
+add(
+  'POST',
+  '/api/v2/workspaces/{workspaceId}/lifecycle/transfer',
+  z.object({ newOwnerUserId: z.string(), previousOwnerRole: z.literal('EDITOR') }).strict(),
+  '200',
+  { body: transferInput },
+);
 export const routeContracts: ReadonlyMap<string, RouteContract> = contracts;
 export function requireRouteContract(method: string, path: string) {
   const contract = routeContracts.get(`${method.toUpperCase()} ${path}`);

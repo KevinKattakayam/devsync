@@ -9,6 +9,7 @@ datasource db {
 }
 
 model User {
+  exportRequests WorkspaceExportRequest[]
   id           String            @id @default(cuid())
   clerkId      String            @unique
   email        String            @unique
@@ -28,6 +29,7 @@ model User {
 }
 
 model Workspace {
+  exportRequests WorkspaceExportRequest[]
   id          String            @id @default(cuid())
   name        String
   slug        String            @unique
@@ -382,4 +384,16 @@ model AsyncDigestPreference {
   workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   @@id([workspaceId, userId])
+}
+
+model WorkspaceExportRequest {
+  id          String    @id @default(cuid())
+  workspaceId String
+  requestedBy String
+  status      String    @default("REVIEW_REQUIRED")
+  createdAt   DateTime  @default(now())
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  requester   User      @relation(fields: [requestedBy], references: [id], onDelete: Restrict)
+
+  @@unique([workspaceId, requestedBy])
 }

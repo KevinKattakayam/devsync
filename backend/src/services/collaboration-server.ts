@@ -16,6 +16,8 @@ export interface Identity {
   id: string;
   name: string;
   expiresAt: number;
+  clerkId?: string;
+  sessionId?: string;
 }
 export interface Context {
   user: Identity;
@@ -28,6 +30,7 @@ export interface Context {
 export interface CollaborationOptions {
   db: TenantPrismaClient;
   identify(token: string): Promise<Identity>;
+  verifySession?(identity: Identity): Promise<void>;
   redisUrl?: string;
   maxRooms?: number;
   maxClients?: number;
@@ -64,6 +67,7 @@ export function createCollaborationServer(http: HttpServer, options: Collaborati
   let closing = false;
   async function authorize(context: Context) {
     if (!context?.user || context.user.expiresAt <= Date.now()) throw new Error('Session expired');
+    await options.verifySession?.(context.user);
     const member = await authorizeWorkspace(
       context.user.id,
       context.workspaceId,

@@ -6,6 +6,7 @@ import { prisma } from '../lib/prisma';
 import { syncClerkUser } from '../middleware/auth.middleware';
 
 import { requestSubject } from '../security/authentication';
+import { providerSessions } from '../security/provider-sessions';
 import { verifyToken } from '@clerk/backend';
 import { TokenVerificationError, TokenVerificationErrorReason } from '@clerk/backend/errors';
 
@@ -36,13 +37,17 @@ export async function syncMe(req: Request, res: Response, next: NextFunction) {
     if (!clerkId) {
       const match = /^Bearer ([^\s]+)$/i.exec(req.headers.authorization || '');
       if (!match || match[1].length > 16384) throw new UnauthorizedError('Authentication required');
+      let claims: Awaited<ReturnType<typeof verifyToken>>;
       try {
-        const claims = await verifyToken(match[1], { secretKey: process.env.CLERK_SECRET_KEY });
-        if (typeof claims.sub === 'string' && claims.sub.length > 0) clerkId = claims.sub;
+        claims = await verifyToken(match[1], { secretKey: process.env.CLERK_SECRET_KEY });
       } catch (error) {
         if (error instanceof TokenVerificationError && invalidTokenReasons.has(error.reason))
           throw new UnauthorizedError('Invalid or expired session');
         throw new AppError('Identity verification unavailable', 503);
+      }
+      if (typeof claims.sub === 'string' && claims.sub.length > 0) {
+        await providerSessions.assertActive(claims.sid, claims.sub);
+        clerkId = claims.sub;
       }
     }
 

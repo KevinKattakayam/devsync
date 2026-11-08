@@ -2,7 +2,7 @@ import { Server as HttpServer } from 'http';
 import { prisma } from '../lib/prisma';
 import { createCollaborationServer } from './collaboration-server';
 import { reconcileOfflineAiActions } from './crdt-sync.service';
-import { identifyRealtimeSession } from '../security/realtime-identity';
+import { identifyRealtimeSession, verifyRealtimeSession } from '../security/realtime-identity';
 let runtime: ReturnType<typeof createCollaborationServer> | null = null;
 export function getHocuspocus() {
   if (!runtime) throw new Error('Collaboration not initialized');
@@ -14,6 +14,7 @@ export function setupHocuspocusServer(http: HttpServer) {
     redisUrl: process.env.REDIS_URL,
     reconcile: reconcileOfflineAiActions,
     identify: identifyRealtimeSession,
+    verifySession: verifyRealtimeSession,
   });
   return runtime.hocuspocus;
 }

@@ -1,4 +1,9 @@
+import { providerSessions } from '../security/provider-sessions';
 import express from 'express';
+import {
+  createAccountLifecycleRouter,
+  createWorkspaceLifecycleRouter,
+} from '../routes/lifecycle.routes';
 import request from 'supertest';
 import { PostgreSqlContainer, StartedPostgreSqlContainer } from '@testcontainers/postgresql';
 import { Prisma, PrismaClient } from '@prisma/client';
@@ -56,7 +61,10 @@ import {
 } from '../services/embedding.service';
 jest.mock('@clerk/express', () => ({
   ...jest.requireActual<typeof import('@clerk/express')>('@clerk/express'),
-  getAuth: (req: express.Request) => ({ userId: req.header('x-verified-clerk-fixture') || null }),
+  getAuth: (req: express.Request) => ({
+    userId: req.header('x-verified-clerk-fixture') || null,
+    sessionId: 'sess_fixture_superadmin',
+  }),
 }));
 jest.mock('../lib/queue', () => ({
   QueueNames: { PR_SUMMARY: 'fixture-pr', TASK_COMPLETION: 'fixture-task' },
@@ -113,6 +121,14 @@ app.use((req, _res, next) =>
     next();
   }),
 );
+app.use(
+  '/api/v2/account',
+  createAccountLifecycleRouter((_req, _res, next) => next()),
+);
+app.use(
+  '/api/v2/workspaces/:workspaceId/lifecycle',
+  createWorkspaceLifecycleRouter((_req, _res, next) => next()),
+);
 app.use('/scim/v2', scimRouter);
 app.get('/auth/me', getMe);
 app.patch('/auth/me', updateMe);
@@ -157,6 +173,14 @@ app.patch('/tasks/:taskId', tasks.updateTask);
 app.patch('/tasks/:taskId/move', tasks.moveTask);
 app.delete('/tasks/:taskId', tasks.deleteTask);
 app.use(errorMiddleware);
+// The provider status is an explicit active-session fixture; DB/role assertions stay unchanged.
+const providerStatusFixture = jest
+  .spyOn(providerSessions, 'assertActive')
+  .mockImplementation(async (sessionId, userId) => {
+    if (sessionId !== 'sess_fixture_superadmin' || !userId)
+      throw new Error('Invalid provider fixture');
+  });
+afterAll(() => providerStatusFixture.mockRestore());
 beforeAll(async () => {
   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
   const migration = spawnSync(
@@ -1960,3 +1984,154 @@ it.each([false, true])(
     }
   },
 );
+
+it('lifecycle: scopes plans and export requests to current owners without exporting content', async () => {
+  const { a, b } = await fixture();
+  const base = `/api/v2/workspaces/${a}/lifecycle`;
+  expect((await request(app).get(base).set('x-fixture-actor', 'viewer')).status).toBe(403);
+  expect((await request(app).get(`/api/v2/workspaces/${b}/lifecycle`)).status).toBe(403);
+  const plan = await request(app).get(base);
+  expect(plan.status).toBe(200);
+  expect(plan.body.workspaceName).toBe(a);
+  const denied = await request(app)
+    .post(`${base}/export-requests`)
+    .set('x-fixture-actor', 'viewer')
+    .send({ confirmName: a });
+  expect(denied.status).toBe(403);
+  const first = await request(app).post(`${base}/export-requests`).send({ confirmName: a });
+  expect(first.status).toBe(201);
+  expect(first.body.status).toBe('REVIEW_REQUIRED');
+  expect(first.body).not.toHaveProperty('content');
+  const again = await request(app).post(`${base}/export-requests`).send({ confirmName: a });
+  expect(again.body.id).toBe(first.body.id);
+  expect(
+    (await request(app).post(`${base}/export-requests`).send({ confirmName: a, userId: 'foreign' }))
+      .status,
+  ).toBe(400);
+});
+it('lifecycle: ownership transfer is atomic, same-tenant and requires explicit confirmation', async () => {
+  const { a, b } = await fixture();
+  const target = await admin.workspaceMember.findUniqueOrThrow({
+    where: { userId_workspaceId: { userId: 'editor', workspaceId: a } },
+  });
+  const foreign = await admin.workspaceMember.findFirstOrThrow({ where: { workspaceId: b } });
+  const path = `/api/v2/workspaces/${a}/lifecycle/transfer`;
+  expect(
+    (await request(app).post(path).send({ confirmName: a, newOwnerMemberId: foreign.id })).status,
+  ).toBe(404);
+  expect(
+    (await request(app).post(path).send({ confirmName: 'wrong', newOwnerMemberId: target.id }))
+      .status,
+  ).toBe(409);
+  expect(
+    (
+      await request(app)
+        .post(path)
+        .set('x-fixture-actor', 'viewer')
+        .send({ confirmName: a, newOwnerMemberId: target.id })
+    ).status,
+  ).toBe(403);
+  expect(
+    (await request(app).post(path).send({ confirmName: a, newOwnerMemberId: target.id })).status,
+  ).toBe(200);
+  expect((await admin.workspaceMember.findUniqueOrThrow({ where: { id: target.id } })).role).toBe(
+    'OWNER',
+  );
+  expect(
+    (
+      await admin.workspaceMember.findUniqueOrThrow({
+        where: { userId_workspaceId: { userId: 'owner', workspaceId: a } },
+      })
+    ).role,
+  ).toBe('EDITOR');
+  expect((await request(app).get(`/api/v2/workspaces/${a}/lifecycle`)).status).toBe(403);
+});
+it('lifecycle: account deletion planning never deletes an identity and flags sole ownership', async () => {
+  const { a } = await fixture();
+  const plan = await request(app).get('/api/v2/account/deletion-plan');
+  expect(plan.status).toBe(200);
+  expect(plan.body.deletionAvailable).toBe(false);
+  expect(plan.body.ownedWorkspaces.find((w: { id: string }) => w.id === a).requiresTransfer).toBe(
+    true,
+  );
+  expect(
+    (await request(app).get('/api/v2/account/deletion-plan').set('x-fixture-actor', 'inactive'))
+      .status,
+  ).toBe(403);
+  expect(await admin.user.findUnique({ where: { id: 'owner' } })).not.toBeNull();
+});
+
+it('lifecycle: export metadata has forced tenant RLS and mismatched confirmation fails closed', async () => {
+  const { a, b } = await fixture();
+  const path = `/api/v2/workspaces/${a}/lifecycle/export-requests`;
+  expect((await request(app).post(path).send({ confirmName: 'wrong name' })).status).toBe(409);
+  const created = await request(app).post(path).send({ confirmName: a });
+  expect(created.status).toBe(201);
+  expect(
+    await db.withTenantTransaction(b, (tx) =>
+      tx.workspaceExportRequest.findMany({ where: { id: created.body.id as string } }),
+    ),
+  ).toEqual([]);
+  await expect(
+    db.withTenantTransaction(b, (tx) =>
+      tx.workspaceExportRequest.create({ data: { workspaceId: a, requestedBy: 'owner' } }),
+    ),
+  ).rejects.toThrow(/row-level security/);
+});
+it('lifecycle: refuses self and inactive ownership targets without demoting the actor', async () => {
+  const { a } = await fixture();
+  const path = `/api/v2/workspaces/${a}/lifecycle/transfer`;
+  const own = await admin.workspaceMember.findUniqueOrThrow({
+    where: { userId_workspaceId: { userId: 'owner', workspaceId: a } },
+  });
+  const inactive = await admin.workspaceMember.findUniqueOrThrow({
+    where: { userId_workspaceId: { workspaceId: a, userId: 'inactive' } },
+  });
+  expect(
+    (await request(app).post(path).send({ confirmName: a, newOwnerMemberId: own.id })).status,
+  ).toBe(400);
+  expect(
+    (await request(app).post(path).send({ confirmName: a, newOwnerMemberId: inactive.id })).status,
+  ).toBe(403);
+  expect((await admin.workspaceMember.findUniqueOrThrow({ where: { id: own.id } })).role).toBe(
+    'OWNER',
+  );
+});
+it('lifecycle: deletion planning recognizes another active owner without disclosing their identity', async () => {
+  const { a } = await fixture();
+  await admin.workspaceMember.update({
+    where: { userId_workspaceId: { workspaceId: a, userId: 'editor' } },
+    data: { role: 'OWNER' },
+  });
+  const result = await request(app).get('/api/v2/account/deletion-plan');
+  expect(result.body.ownedWorkspaces.find((w: { id: string }) => w.id === a)).toMatchObject({
+    activeOwners: 2,
+    requiresTransfer: false,
+  });
+  expect(JSON.stringify(result.body)).not.toContain('editor@example.test');
+});
+it('lifecycle: provider session routes bind the current principal and reject injected actor fields', async () => {
+  const list = jest
+    .spyOn(providerSessions, 'list')
+    .mockResolvedValue({ items: [], hasMore: false });
+  const revoke = jest.spyOn(providerSessions, 'revoke').mockResolvedValue(undefined);
+  try {
+    expect((await request(app).get('/api/v2/account/sessions')).status).toBe(200);
+    expect(list).toHaveBeenCalledWith('fixture', undefined);
+    expect(
+      (
+        await request(app)
+          .post('/api/v2/account/sessions/sess_fixture/revoke')
+          .send({ userId: 'foreign' })
+      ).status,
+    ).toBe(400);
+    expect(revoke).not.toHaveBeenCalled();
+    expect(
+      (await request(app).post('/api/v2/account/sessions/sess_fixture/revoke').send({})).status,
+    ).toBe(204);
+    expect(revoke).toHaveBeenCalledWith('sess_fixture', 'fixture');
+  } finally {
+    list.mockRestore();
+    revoke.mockRestore();
+  }
+});

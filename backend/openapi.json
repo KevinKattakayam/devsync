@@ -10892,6 +10892,378 @@
         "x-legacy-alias": "/api/workspaces/invitations/{invitationId}/accept"
       }
     },
+    "/api/v2/account/deletion-plan": {
+      "get": {
+        "operationId": "get__api_v2_account_deletion_plan",
+        "security": [
+          {
+            "ClerkSession": []
+          },
+          {
+            "ClerkCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "trace_id",
+            "in": "header",
+            "required": false,
+            "description": "Optional legacy trace ID; invalid values are ignored.",
+            "schema": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "type": "string",
+              "pattern": "^[a-fA-F0-9]{32}$"
+            }
+          }
+        ],
+        "x-validation-complete": false,
+        "x-contract-complete": true,
+        "responses": {
+          "200": {
+            "description": "Documented response DTO",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "object",
+                  "properties": {
+                    "deletionAvailable": {
+                      "type": "boolean",
+                      "const": false
+                    },
+                    "providerManaged": {
+                      "type": "boolean",
+                      "const": true
+                    },
+                    "ownedWorkspaces": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "activeOwners": {
+                            "type": "integer",
+                            "minimum": -9007199254740991,
+                            "maximum": 9007199254740991
+                          },
+                          "requiresTransfer": {
+                            "type": "boolean"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name",
+                          "activeOwners",
+                          "requiresTransfer"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "steps": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "deletionAvailable",
+                    "providerManaged",
+                    "ownedWorkspaces",
+                    "steps"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "headers": {
+              "X-Request-ID": {
+                "description": "Fresh server-generated request UUID.",
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                }
+              },
+              "trace_id": {
+                "description": "Present when a trace is available.",
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "string",
+                  "pattern": "^[a-fA-F0-9]{32}$"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error envelope; frontend handlers can also return a plain error field.",
+            "headers": {
+              "X-Request-ID": {
+                "description": "Fresh server-generated request UUID.",
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                }
+              },
+              "trace_id": {
+                "description": "Present when a trace is available.",
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "string",
+                  "pattern": "^[a-fA-F0-9]{32}$"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/account/sessions": {
+      "get": {
+        "operationId": "get__api_v2_account_sessions",
+        "security": [
+          {
+            "ClerkSession": []
+          },
+          {
+            "ClerkCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "trace_id",
+            "in": "header",
+            "required": false,
+            "description": "Optional legacy trace ID; invalid values are ignored.",
+            "schema": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "type": "string",
+              "pattern": "^[a-fA-F0-9]{32}$"
+            }
+          }
+        ],
+        "x-validation-complete": false,
+        "x-contract-complete": true,
+        "responses": {
+          "200": {
+            "description": "Documented response DTO",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "current": {
+                            "type": "boolean"
+                          },
+                          "createdAt": {
+                            "type": "number"
+                          },
+                          "lastActiveAt": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "current",
+                          "createdAt",
+                          "lastActiveAt"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "hasMore": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "items",
+                    "hasMore"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "headers": {
+              "X-Request-ID": {
+                "description": "Fresh server-generated request UUID.",
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                }
+              },
+              "trace_id": {
+                "description": "Present when a trace is available.",
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "string",
+                  "pattern": "^[a-fA-F0-9]{32}$"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error envelope; frontend handlers can also return a plain error field.",
+            "headers": {
+              "X-Request-ID": {
+                "description": "Fresh server-generated request UUID.",
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                }
+              },
+              "trace_id": {
+                "description": "Present when a trace is available.",
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "string",
+                  "pattern": "^[a-fA-F0-9]{32}$"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/account/sessions/{sessionId}/revoke": {
+      "post": {
+        "operationId": "post__api_v2_account_sessions__sessionId__revoke",
+        "security": [
+          {
+            "ClerkSession": []
+          },
+          {
+            "ClerkCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "sessionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 191
+            }
+          },
+          {
+            "name": "trace_id",
+            "in": "header",
+            "required": false,
+            "description": "Optional legacy trace ID; invalid values are ignored.",
+            "schema": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "type": "string",
+              "pattern": "^[a-fA-F0-9]{32}$"
+            }
+          }
+        ],
+        "x-validation-complete": false,
+        "x-contract-complete": true,
+        "responses": {
+          "204": {
+            "description": "No response body",
+            "headers": {
+              "X-Request-ID": {
+                "description": "Fresh server-generated request UUID.",
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                }
+              },
+              "trace_id": {
+                "description": "Present when a trace is available.",
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "string",
+                  "pattern": "^[a-fA-F0-9]{32}$"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error envelope; frontend handlers can also return a plain error field.",
+            "headers": {
+              "X-Request-ID": {
+                "description": "Fresh server-generated request UUID.",
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                }
+              },
+              "trace_id": {
+                "description": "Present when a trace is available.",
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "string",
+                  "pattern": "^[a-fA-F0-9]{32}$"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "type": "object",
+                "properties": {},
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v2/ai/usage": {
       "get": {
         "operationId": "get__api_v2_ai_usage",
@@ -13476,6 +13848,453 @@
                 "required": [
                   "enabled",
                   "expectedRevision"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/workspaces/{workspaceId}/lifecycle": {
+      "get": {
+        "operationId": "get__api_v2_workspaces__workspaceId__lifecycle",
+        "security": [
+          {
+            "ClerkSession": []
+          },
+          {
+            "ClerkCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "workspaceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 191
+            }
+          },
+          {
+            "name": "trace_id",
+            "in": "header",
+            "required": false,
+            "description": "Optional legacy trace ID; invalid values are ignored.",
+            "schema": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "type": "string",
+              "pattern": "^[a-fA-F0-9]{32}$"
+            }
+          }
+        ],
+        "x-validation-complete": false,
+        "x-contract-complete": true,
+        "responses": {
+          "200": {
+            "description": "Documented response DTO",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "object",
+                  "properties": {
+                    "workspaceName": {
+                      "type": "string"
+                    },
+                    "retainedCrdtBackups": {
+                      "type": "integer",
+                      "minimum": -9007199254740991,
+                      "maximum": 9007199254740991
+                    },
+                    "requests": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "workspaceId": {
+                            "type": "string"
+                          },
+                          "requestedBy": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "type": "string",
+                            "const": "REVIEW_REQUIRED"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "workspaceId",
+                          "requestedBy",
+                          "status",
+                          "createdAt"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "deletionRequiresReview": {
+                      "type": "boolean",
+                      "const": true
+                    }
+                  },
+                  "required": [
+                    "workspaceName",
+                    "retainedCrdtBackups",
+                    "requests",
+                    "deletionRequiresReview"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "headers": {
+              "X-Request-ID": {
+                "description": "Fresh server-generated request UUID.",
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                }
+              },
+              "trace_id": {
+                "description": "Present when a trace is available.",
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "string",
+                  "pattern": "^[a-fA-F0-9]{32}$"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error envelope; frontend handlers can also return a plain error field.",
+            "headers": {
+              "X-Request-ID": {
+                "description": "Fresh server-generated request UUID.",
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                }
+              },
+              "trace_id": {
+                "description": "Present when a trace is available.",
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "string",
+                  "pattern": "^[a-fA-F0-9]{32}$"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/workspaces/{workspaceId}/lifecycle/export-requests": {
+      "post": {
+        "operationId": "post__api_v2_workspaces__workspaceId__lifecycle_export_requests",
+        "security": [
+          {
+            "ClerkSession": []
+          },
+          {
+            "ClerkCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "workspaceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 191
+            }
+          },
+          {
+            "name": "trace_id",
+            "in": "header",
+            "required": false,
+            "description": "Optional legacy trace ID; invalid values are ignored.",
+            "schema": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "type": "string",
+              "pattern": "^[a-fA-F0-9]{32}$"
+            }
+          }
+        ],
+        "x-validation-complete": false,
+        "x-contract-complete": true,
+        "responses": {
+          "201": {
+            "description": "Documented response DTO",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "workspaceId": {
+                      "type": "string"
+                    },
+                    "requestedBy": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string",
+                      "const": "REVIEW_REQUIRED"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "workspaceId",
+                    "requestedBy",
+                    "status",
+                    "createdAt"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "headers": {
+              "X-Request-ID": {
+                "description": "Fresh server-generated request UUID.",
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                }
+              },
+              "trace_id": {
+                "description": "Present when a trace is available.",
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "string",
+                  "pattern": "^[a-fA-F0-9]{32}$"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error envelope; frontend handlers can also return a plain error field.",
+            "headers": {
+              "X-Request-ID": {
+                "description": "Fresh server-generated request UUID.",
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                }
+              },
+              "trace_id": {
+                "description": "Present when a trace is available.",
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "string",
+                  "pattern": "^[a-fA-F0-9]{32}$"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "type": "object",
+                "properties": {
+                  "confirmName": {
+                    "type": "string",
+                    "minLength": 2,
+                    "maxLength": 50
+                  }
+                },
+                "required": [
+                  "confirmName"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/workspaces/{workspaceId}/lifecycle/transfer": {
+      "post": {
+        "operationId": "post__api_v2_workspaces__workspaceId__lifecycle_transfer",
+        "security": [
+          {
+            "ClerkSession": []
+          },
+          {
+            "ClerkCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "workspaceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 191
+            }
+          },
+          {
+            "name": "trace_id",
+            "in": "header",
+            "required": false,
+            "description": "Optional legacy trace ID; invalid values are ignored.",
+            "schema": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "type": "string",
+              "pattern": "^[a-fA-F0-9]{32}$"
+            }
+          }
+        ],
+        "x-validation-complete": false,
+        "x-contract-complete": true,
+        "responses": {
+          "200": {
+            "description": "Documented response DTO",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "object",
+                  "properties": {
+                    "newOwnerUserId": {
+                      "type": "string"
+                    },
+                    "previousOwnerRole": {
+                      "type": "string",
+                      "const": "EDITOR"
+                    }
+                  },
+                  "required": [
+                    "newOwnerUserId",
+                    "previousOwnerRole"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "headers": {
+              "X-Request-ID": {
+                "description": "Fresh server-generated request UUID.",
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                }
+              },
+              "trace_id": {
+                "description": "Present when a trace is available.",
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "string",
+                  "pattern": "^[a-fA-F0-9]{32}$"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error envelope; frontend handlers can also return a plain error field.",
+            "headers": {
+              "X-Request-ID": {
+                "description": "Fresh server-generated request UUID.",
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                }
+              },
+              "trace_id": {
+                "description": "Present when a trace is available.",
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "string",
+                  "pattern": "^[a-fA-F0-9]{32}$"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "type": "object",
+                "properties": {
+                  "confirmName": {
+                    "type": "string",
+                    "minLength": 2,
+                    "maxLength": 50
+                  },
+                  "newOwnerMemberId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 191
+                  }
+                },
+                "required": [
+                  "confirmName",
+                  "newOwnerMemberId"
                 ],
                 "additionalProperties": false
               }
@@ -24249,6 +25068,410 @@
         "required": [
           "revision",
           "replacementId"
+        ],
+        "additionalProperties": false
+      },
+      "Query_get__api_v2_account_deletion_plan": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "Correlation_get__api_v2_account_deletion_plan": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "string",
+        "format": "uuid",
+        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+      },
+      "Trace_get__api_v2_account_deletion_plan": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "string",
+        "pattern": "^[a-fA-F0-9]{32}$"
+      },
+      "RequestTrace_get__api_v2_account_deletion_plan": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "string",
+        "pattern": "^[a-fA-F0-9]{32}$"
+      },
+      "Response_get__api_v2_account_deletion_plan_200": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "deletionAvailable": {
+            "type": "boolean",
+            "const": false
+          },
+          "providerManaged": {
+            "type": "boolean",
+            "const": true
+          },
+          "ownedWorkspaces": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "activeOwners": {
+                  "type": "integer",
+                  "minimum": -9007199254740991,
+                  "maximum": 9007199254740991
+                },
+                "requiresTransfer": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "id",
+                "name",
+                "activeOwners",
+                "requiresTransfer"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "steps": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "deletionAvailable",
+          "providerManaged",
+          "ownedWorkspaces",
+          "steps"
+        ],
+        "additionalProperties": false
+      },
+      "Query_get__api_v2_account_sessions": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "Correlation_get__api_v2_account_sessions": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "string",
+        "format": "uuid",
+        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+      },
+      "Trace_get__api_v2_account_sessions": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "string",
+        "pattern": "^[a-fA-F0-9]{32}$"
+      },
+      "RequestTrace_get__api_v2_account_sessions": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "string",
+        "pattern": "^[a-fA-F0-9]{32}$"
+      },
+      "Response_get__api_v2_account_sessions_200": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "current": {
+                  "type": "boolean"
+                },
+                "createdAt": {
+                  "type": "number"
+                },
+                "lastActiveAt": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "id",
+                "current",
+                "createdAt",
+                "lastActiveAt"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "hasMore": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "items",
+          "hasMore"
+        ],
+        "additionalProperties": false
+      },
+      "Path_post__api_v2_account_sessions__sessionId__revoke_sessionId": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 191
+      },
+      "Query_post__api_v2_account_sessions__sessionId__revoke": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "Correlation_post__api_v2_account_sessions__sessionId__revoke": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "string",
+        "format": "uuid",
+        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+      },
+      "Trace_post__api_v2_account_sessions__sessionId__revoke": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "string",
+        "pattern": "^[a-fA-F0-9]{32}$"
+      },
+      "RequestTrace_post__api_v2_account_sessions__sessionId__revoke": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "string",
+        "pattern": "^[a-fA-F0-9]{32}$"
+      },
+      "Request_post__api_v2_account_sessions__sessionId__revoke": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "Path_get__api_v2_workspaces__workspaceId__lifecycle_workspaceId": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 191
+      },
+      "Query_get__api_v2_workspaces__workspaceId__lifecycle": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "Correlation_get__api_v2_workspaces__workspaceId__lifecycle": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "string",
+        "format": "uuid",
+        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+      },
+      "Trace_get__api_v2_workspaces__workspaceId__lifecycle": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "string",
+        "pattern": "^[a-fA-F0-9]{32}$"
+      },
+      "RequestTrace_get__api_v2_workspaces__workspaceId__lifecycle": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "string",
+        "pattern": "^[a-fA-F0-9]{32}$"
+      },
+      "Response_get__api_v2_workspaces__workspaceId__lifecycle_200": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "workspaceName": {
+            "type": "string"
+          },
+          "retainedCrdtBackups": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991
+          },
+          "requests": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "workspaceId": {
+                  "type": "string"
+                },
+                "requestedBy": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string",
+                  "const": "REVIEW_REQUIRED"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                }
+              },
+              "required": [
+                "id",
+                "workspaceId",
+                "requestedBy",
+                "status",
+                "createdAt"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "deletionRequiresReview": {
+            "type": "boolean",
+            "const": true
+          }
+        },
+        "required": [
+          "workspaceName",
+          "retainedCrdtBackups",
+          "requests",
+          "deletionRequiresReview"
+        ],
+        "additionalProperties": false
+      },
+      "Path_post__api_v2_workspaces__workspaceId__lifecycle_export_requests_workspaceId": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 191
+      },
+      "Query_post__api_v2_workspaces__workspaceId__lifecycle_export_requests": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "Correlation_post__api_v2_workspaces__workspaceId__lifecycle_export_requests": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "string",
+        "format": "uuid",
+        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+      },
+      "Trace_post__api_v2_workspaces__workspaceId__lifecycle_export_requests": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "string",
+        "pattern": "^[a-fA-F0-9]{32}$"
+      },
+      "RequestTrace_post__api_v2_workspaces__workspaceId__lifecycle_export_requests": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "string",
+        "pattern": "^[a-fA-F0-9]{32}$"
+      },
+      "Response_post__api_v2_workspaces__workspaceId__lifecycle_export_requests_201": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "workspaceId": {
+            "type": "string"
+          },
+          "requestedBy": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "const": "REVIEW_REQUIRED"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          }
+        },
+        "required": [
+          "id",
+          "workspaceId",
+          "requestedBy",
+          "status",
+          "createdAt"
+        ],
+        "additionalProperties": false
+      },
+      "Request_post__api_v2_workspaces__workspaceId__lifecycle_export_requests": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "confirmName": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 50
+          }
+        },
+        "required": [
+          "confirmName"
+        ],
+        "additionalProperties": false
+      },
+      "Path_post__api_v2_workspaces__workspaceId__lifecycle_transfer_workspaceId": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 191
+      },
+      "Query_post__api_v2_workspaces__workspaceId__lifecycle_transfer": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "Correlation_post__api_v2_workspaces__workspaceId__lifecycle_transfer": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "string",
+        "format": "uuid",
+        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+      },
+      "Trace_post__api_v2_workspaces__workspaceId__lifecycle_transfer": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "string",
+        "pattern": "^[a-fA-F0-9]{32}$"
+      },
+      "RequestTrace_post__api_v2_workspaces__workspaceId__lifecycle_transfer": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "string",
+        "pattern": "^[a-fA-F0-9]{32}$"
+      },
+      "Response_post__api_v2_workspaces__workspaceId__lifecycle_transfer_200": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "newOwnerUserId": {
+            "type": "string"
+          },
+          "previousOwnerRole": {
+            "type": "string",
+            "const": "EDITOR"
+          }
+        },
+        "required": [
+          "newOwnerUserId",
+          "previousOwnerRole"
+        ],
+        "additionalProperties": false
+      },
+      "Request_post__api_v2_workspaces__workspaceId__lifecycle_transfer": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "confirmName": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 50
+          },
+          "newOwnerMemberId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 191
+          }
+        },
+        "required": [
+          "confirmName",
+          "newOwnerMemberId"
         ],
         "additionalProperties": false
       },

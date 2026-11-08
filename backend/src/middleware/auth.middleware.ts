@@ -1,12 +1,13 @@
 import { Request, Response, NextFunction } from 'express';
 import { requestSubject, identityProfile } from '../security/authentication';
-import { UnauthorizedError } from '../utils/errors';
+import { AppError, UnauthorizedError } from '../utils/errors';
 import { prisma } from '../lib/prisma';
 import { withIdentityProfileAccess } from '../security/service-policy';
 
 declare global {
   namespace Express {
     interface Request {
+      providerSessionId?: string;
       user?: { userId: string; clerkId: string; email: string };
     }
   }
@@ -31,11 +32,7 @@ export async function authMiddleware(
     req.user = { userId: user.id, clerkId: user.clerkId, email: user.email };
     next();
   } catch (error) {
-    next(
-      error instanceof UnauthorizedError
-        ? error
-        : new UnauthorizedError('Invalid or expired session'),
-    );
+    next(error instanceof AppError ? error : new UnauthorizedError('Invalid or expired session'));
   }
 }
 

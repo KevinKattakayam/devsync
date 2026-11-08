@@ -1,4 +1,8 @@
 import express from 'express';
+import {
+  createAccountLifecycleRouter,
+  createWorkspaceLifecycleRouter,
+} from './routes/lifecycle.routes';
 import { clerkMiddleware } from '@clerk/express';
 import cors from 'cors';
 import helmet from 'helmet';
@@ -81,6 +85,12 @@ app.use('/api/v2/workspaces/:workspaceId/digest', asyncDigestRoutes);
 mounts.push({ prefix: '/api/v2/workspaces/:workspaceId/digest', router: asyncDigestRoutes });
 app.use('/api/v2/workspaces/:workspaceId/decisions', decisionReceiptRoutes);
 mounts.push({ prefix: '/api/v2/workspaces/:workspaceId/decisions', router: decisionReceiptRoutes });
+const accountLifecycle = createAccountLifecycleRouter(),
+  workspaceLifecycle = createWorkspaceLifecycleRouter();
+app.use('/api/v2/account', accountLifecycle);
+mounts.push({ prefix: '/api/v2/account', router: accountLifecycle });
+app.use('/api/v2/workspaces/:workspaceId/lifecycle', workspaceLifecycle);
+mounts.push({ prefix: '/api/v2/workspaces/:workspaceId/lifecycle', router: workspaceLifecycle });
 app.get('/api/v2/ai/usage', authMiddleware, aiUsage);
 mountApi('/webhooks/github', githubWebhookRoutes, [{ GithubSignature: [] }]);
 mountApi('/webhooks/stripe', stripeWebhookRoutes, [{ StripeSignature: [] }]);

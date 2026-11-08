@@ -143,7 +143,7 @@ async function fixture() {
   }
   return { a, b };
 }
-async function server() {
+async function server(verifySession?: (identity: RealtimeIdentity) => Promise<void>) {
   const http = createServer();
   const bus = new EventEmitter();
   const identify = async (token: string): Promise<RealtimeIdentity> => {
@@ -153,8 +153,22 @@ async function server() {
     return { id, name: id, expiresAt: Date.now() + (token === 'short' ? 1000 : 60000) };
   };
   const redisUrl = `redis://:${encodeURIComponent('fixture:@pass/?#')}@${redis.getHost()}:${redis.getMappedPort(6379)}`;
-  const socket = createSocketServer(http, { db, identify, redisUrl, acl: bus, sweepMs: 100 });
-  const crdt = createCollaborationServer(http, { db, identify, redisUrl, acl: bus, sweepMs: 100 });
+  const socket = createSocketServer(http, {
+    db,
+    identify,
+    verifySession,
+    redisUrl,
+    acl: bus,
+    sweepMs: 100,
+  });
+  const crdt = createCollaborationServer(http, {
+    db,
+    identify,
+    verifySession,
+    redisUrl,
+    acl: bus,
+    sweepMs: 100,
+  });
   await socket.ready;
   await new Promise<void>((resolve) => http.listen(0, '127.0.0.1', resolve));
   const address = http.address();
@@ -360,4 +374,21 @@ it('expires idle sessions, rejects inactive users, and renews only the original 
   ).toBeGreaterThan(Date.now() + 10000);
   renew.emit('session:refresh', { token: 'owner' });
   await until(() => !renew.connected, 'principal swap rejected');
+});
+
+it('evicts idle Socket.IO and Yjs connections when the provider session check denies them', async () => {
+  const { a } = await fixture();
+  let revoked = false;
+  const node = await server(async () => {
+    if (revoked) throw new Error('Provider revoked');
+  });
+  const socket = await client(node);
+  await join(node, socket, a);
+  const document = await documentClient(node, a);
+  let closed = false;
+  document.provider.on('disconnect', () => {
+    closed = true;
+  });
+  revoked = true;
+  await until(() => !socket.connected && closed, 'provider session revocation', 3000);
 });

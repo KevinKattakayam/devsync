@@ -1,3 +1,6 @@
+jest.mock('../security/provider-sessions', () => ({
+  providerSessions: { assertActive: jest.fn(async () => undefined) },
+}));
 jest.mock('../security/authentication', () => ({ requestSubject: jest.fn() }));
 jest.mock('../middleware/auth.middleware', () => ({ syncClerkUser: jest.fn() }));
 jest.mock('@clerk/backend', () => ({ verifyToken: jest.fn() }));
@@ -69,7 +72,9 @@ it('preserves verified middleware identity and does not hide profile persistence
 });
 
 it('synchronizes only the verified bearer subject on fallback success', async () => {
-  const claims = { sub: 'user_verified' } as Awaited<ReturnType<typeof verifyToken>>;
+  const claims = { sub: 'user_verified', sid: 'sess_verified' } as Awaited<
+    ReturnType<typeof verifyToken>
+  >;
   jest.mocked(verifyToken).mockResolvedValue(claims);
   jest.mocked(syncClerkUser).mockResolvedValue({
     id: 'local',
