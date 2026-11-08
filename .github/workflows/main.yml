@@ -243,6 +243,7 @@ jobs:
         target:
           [
             core,
+            identity,
             ai-cost,
             editor,
             kanban,
