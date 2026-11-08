@@ -1,3 +1,9 @@
+# Work graph foundation — incomplete
+
+- Audit reusable source references and owner-only repository bindings; add an internal fail-closed GitHub source-proof adapter with fixture tests.
+- Synchronize the existing handshake-budget regression's initial preconditions, preserving its assertions and production limits.
+- Record remaining graph persistence/API/UI/acceptance work explicitly; no unified graph feature or live provider success claimed.
+
 # Task planning preflight — in progress
 
 - Audit existing Kanban schema, tenant policy, drag/keyboard/undo behavior and direct task writers before implementation.

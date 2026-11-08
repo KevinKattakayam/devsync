@@ -1,0 +1,1225 @@
+
+> devsync-backend@1.0.0 test
+> node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand
+
+FAIL src/__tests__/collaboration.integration.test.ts (39.36 s)
+  ● Console
+
+    console.info
+      Collaboration scenario: merges two real clients editing the same paragraph concurrently
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:19:11)
+
+    console.info
+      Closing collaboration clients and servers
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:87:11)
+
+    console.error
+      [beforeHandleMessage] Error: Message rejected
+          at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:205:55)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+    console.error
+      closing connection f3509322-7a77-4067-bbd7-e7f184c29ad7 (while handling document:workspace:document-1) because of exception Error: Message rejected
+          at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:205:55)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+
+    console.error
+      [beforeHandleMessage] Error: Message rejected
+          at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:205:55)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+    console.error
+      closing connection 967f1f29-38e1-444e-bd10-d75006d34add (while handling document:workspace:document-1) because of exception Error: Message rejected
+          at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:205:55)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+
+    console.info
+      Collaboration cleanup complete
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:98:11)
+
+    console.info
+      Collaboration scenario: merges offline edits on reconnect rather than replacing server text
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:19:11)
+
+    console.info
+      Closing collaboration clients and servers
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:87:11)
+
+    console.error
+      [beforeHandleMessage] Error: Message rejected
+          at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:205:55)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+    console.error
+      closing connection 89c5c692-dbde-4b33-bfbc-be62c02f53b1 (while handling document:workspace:document-2) because of exception Error: Message rejected
+          at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:205:55)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+
+    console.error
+      [beforeHandleMessage] Error: Message rejected
+          at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:205:55)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/ClientConnection.ts:290:4
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+      at node_modules/@hocuspocus/server/src/ClientConnection.ts:290:4
+
+    console.error
+      closing connection 42cbf3a1-7a91-460e-abca-9c49943b1923 (while handling document:workspace:document-2) because of exception Error: Message rejected
+          at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:205:55)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/ClientConnection.ts:290:4
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+      at node_modules/@hocuspocus/server/src/ClientConnection.ts:290:4
+
+    console.info
+      Collaboration cleanup complete
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:98:11)
+
+    console.info
+      Collaboration scenario: rejects viewer mutations at the actual server protocol and journal
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:19:11)
+
+    console.info
+      Closing collaboration clients and servers
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:87:11)
+
+    console.error
+      [beforeHandleMessage] Error: Message rejected
+          at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:205:55)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+    console.error
+      closing connection 7a45e398-313b-4703-88a1-7a9d84129b9c (while handling document:workspace:document-3) because of exception Error: Message rejected
+          at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:205:55)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+
+    console.error
+      [beforeHandleMessage] Error: Message rejected
+          at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:205:55)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+    console.error
+      closing connection 782588a4-4395-4afa-bec9-9d599e36e81b (while handling document:workspace:document-3) because of exception Error: Message rejected
+          at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:205:55)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+
+    console.info
+      Collaboration cleanup complete
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:98:11)
+
+    console.info
+      Collaboration scenario: cuts off a removed member without waiting for another edit
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:19:11)
+
+    console.error
+      [beforeSync] ForbiddenError: Access denied
+          at authorizeWorkspace (/home/kevin/devsync/backend/src/security/workspace-policy.ts:48:11)
+          at authorize (/home/kevin/devsync/backend/src/services/collaboration-server.ts:71:20)
+          at withPolicyDeadline (/home/kevin/devsync/backend/src/security/policy-deadline.ts:5:12)
+          at enforce (/home/kevin/devsync/backend/src/services/collaboration-server.ts:91:7)
+          at Object.beforeSync (/home/kevin/devsync/backend/src/services/collaboration-server.ts:217:7)
+          at MessageReceiver.readSyncMessage (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/MessageReceiver.ts:207:4)
+          at MessageReceiver.apply (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/MessageReceiver.ts:54:5)
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:275:6) {
+        statusCode: 403,
+        isOperational: true
+      }
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at MessageReceiver.readSyncMessage (node_modules/@hocuspocus/server/src/MessageReceiver.ts:207:4)
+      at MessageReceiver.apply (node_modules/@hocuspocus/server/src/MessageReceiver.ts:54:5)
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:275:6)
+
+    console.error
+      closing connection 4ec74f08-ffac-4bc0-a1b8-91db3d516473 (while handling document:workspace:document-4) because of exception ForbiddenError: Access denied
+          at authorizeWorkspace (/home/kevin/devsync/backend/src/security/workspace-policy.ts:48:11)
+          at authorize (/home/kevin/devsync/backend/src/services/collaboration-server.ts:71:20)
+          at withPolicyDeadline (/home/kevin/devsync/backend/src/security/policy-deadline.ts:5:12)
+          at enforce (/home/kevin/devsync/backend/src/services/collaboration-server.ts:91:7)
+          at Object.beforeSync (/home/kevin/devsync/backend/src/services/collaboration-server.ts:217:7)
+          at MessageReceiver.readSyncMessage (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/MessageReceiver.ts:207:4)
+          at MessageReceiver.apply (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/MessageReceiver.ts:54:5)
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:275:6) {
+        statusCode: 403,
+        isOperational: true
+      }
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+
+    console.info
+      Closing collaboration clients and servers
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:87:11)
+
+    console.info
+      Collaboration cleanup complete
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:98:11)
+
+    console.info
+      Collaboration scenario: cuts off a downgraded editor and requires a new read-only session
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:19:11)
+
+    console.error
+      [beforeSync] Error: Access changed
+          at authorize (/home/kevin/devsync/backend/src/services/collaboration-server.ts:77:45)
+          at withPolicyDeadline (/home/kevin/devsync/backend/src/security/policy-deadline.ts:5:12)
+          at enforce (/home/kevin/devsync/backend/src/services/collaboration-server.ts:91:7)
+          at Object.beforeSync (/home/kevin/devsync/backend/src/services/collaboration-server.ts:217:7)
+          at MessageReceiver.readSyncMessage (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/MessageReceiver.ts:207:4)
+          at MessageReceiver.apply (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/MessageReceiver.ts:54:5)
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:275:6)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at MessageReceiver.readSyncMessage (node_modules/@hocuspocus/server/src/MessageReceiver.ts:207:4)
+      at MessageReceiver.apply (node_modules/@hocuspocus/server/src/MessageReceiver.ts:54:5)
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:275:6)
+
+    console.error
+      closing connection 545d834e-e714-4617-98b3-0dfeeb32d113 (while handling document:workspace:document-5) because of exception Error: Access changed
+          at authorize (/home/kevin/devsync/backend/src/services/collaboration-server.ts:77:45)
+          at withPolicyDeadline (/home/kevin/devsync/backend/src/security/policy-deadline.ts:5:12)
+          at enforce (/home/kevin/devsync/backend/src/services/collaboration-server.ts:91:7)
+          at Object.beforeSync (/home/kevin/devsync/backend/src/services/collaboration-server.ts:217:7)
+          at MessageReceiver.readSyncMessage (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/MessageReceiver.ts:207:4)
+          at MessageReceiver.apply (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/MessageReceiver.ts:54:5)
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:275:6)
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+
+    console.info
+      Closing collaboration clients and servers
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:87:11)
+
+    console.error
+      [beforeHandleMessage] Error: Message rejected
+          at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:205:55)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+    console.error
+      closing connection e8e9517b-a964-4590-8395-9eccacf0eea1 (while handling document:workspace:document-5) because of exception Error: Message rejected
+          at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:205:55)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+
+    console.info
+      Collaboration cleanup complete
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:98:11)
+
+    console.info
+      Collaboration scenario: rejects forged document workspace prefixes and non-member rooms
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:19:11)
+
+    console.error
+      [onAuthenticate] ForbiddenError: Access denied
+          at authorizeWorkspace (/home/kevin/devsync/backend/src/security/workspace-policy.ts:48:11)
+          at Object.onAuthenticate (/home/kevin/devsync/backend/src/services/collaboration-server.ts:152:22)
+          at ClientConnection.handleQueueingMessage (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/ClientConnection.ts:531:5) {
+        statusCode: 403,
+        isOperational: true
+      }
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at ClientConnection.handleQueueingMessage (node_modules/@hocuspocus/server/src/ClientConnection.ts:531:5)
+
+    console.error
+      [onAuthenticate] Error: Access denied
+          at authorize (/home/kevin/devsync/backend/src/services/collaboration-server.ts:86:15)
+          at Object.onAuthenticate (/home/kevin/devsync/backend/src/services/collaboration-server.ts:160:7)
+          at ClientConnection.handleQueueingMessage (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/ClientConnection.ts:531:5)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at ClientConnection.handleQueueingMessage (node_modules/@hocuspocus/server/src/ClientConnection.ts:531:5)
+
+    console.error
+      [onAuthenticate] ForbiddenError: Access denied
+          at authorizeWorkspace (/home/kevin/devsync/backend/src/security/workspace-policy.ts:48:11)
+          at Object.onAuthenticate (/home/kevin/devsync/backend/src/services/collaboration-server.ts:152:22)
+          at ClientConnection.handleQueueingMessage (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/ClientConnection.ts:531:5) {
+        statusCode: 403,
+        isOperational: true
+      }
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at ClientConnection.handleQueueingMessage (node_modules/@hocuspocus/server/src/ClientConnection.ts:531:5)
+
+    console.info
+      Closing collaboration clients and servers
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:87:11)
+
+    console.info
+      Collaboration cleanup complete
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:98:11)
+
+    console.info
+      Collaboration scenario: authenticates awareness names and cleans remote presence on disconnect
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:19:11)
+
+    console.info
+      Closing collaboration clients and servers
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:87:11)
+
+    console.error
+      [beforeHandleMessage] Error: Message rejected
+          at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:205:55)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+    console.error
+      closing connection 076cf0bc-eec3-440c-8ba2-02351ae8f685 (while handling document:workspace:document-7) because of exception Error: Message rejected
+          at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:205:55)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+
+    console.info
+      Collaboration cleanup complete
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:98:11)
+
+    console.info
+      Collaboration scenario: recovers acknowledged updates from the journal before snapshot compaction
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:19:11)
+
+    console.info
+      Closing collaboration clients and servers
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:87:11)
+
+    console.error
+      [beforeHandleMessage] Error: Message rejected
+          at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:205:55)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/ClientConnection.ts:290:4
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+      at node_modules/@hocuspocus/server/src/ClientConnection.ts:290:4
+
+    console.error
+      closing connection 3ebc2608-f260-4347-ae0e-4b3a39356686 (while handling document:workspace:document-8) because of exception Error: Message rejected
+          at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:205:55)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/ClientConnection.ts:290:4
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+      at node_modules/@hocuspocus/server/src/ClientConnection.ts:290:4
+
+    console.info
+      Collaboration cleanup complete
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:98:11)
+
+    console.info
+      Collaboration scenario: synchronizes two backend instances through real Redis fanout
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:19:11)
+
+    console.info
+      Closing collaboration clients and servers
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:87:11)
+
+    console.error
+      [beforeHandleMessage] Error: Message rejected
+          at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:205:55)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+    console.error
+      closing connection 58dafda4-a42b-4418-ba7a-198d46a80316 (while handling document:workspace:document-9) because of exception Error: Message rejected
+          at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:205:55)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+
+    console.info
+      Collaboration cleanup complete
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:98:11)
+
+    console.info
+      Collaboration scenario: converts seeded legacy JSON with dry-run, retained backup, repeatable apply and guarded rollback
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:19:11)
+
+    console.info
+      Closing collaboration clients and servers
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:87:11)
+
+    console.info
+      Collaboration cleanup complete
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:98:11)
+
+    console.info
+      Collaboration scenario: resolves legacy bare IDs through tenant memberships and rejects malformed rooms
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:19:11)
+
+    console.error
+      [onAuthenticate] Error: Access denied
+          at parseRoom (/home/kevin/devsync/backend/src/services/collaboration-server.ts:56:9)
+          at Object.parseRoom [as onAuthenticate] (/home/kevin/devsync/backend/src/services/collaboration-server.ts:132:20)
+          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at ClientConnection.handleQueueingMessage (node_modules/@hocuspocus/server/src/ClientConnection.ts:531:5)
+
+    console.info
+      Closing collaboration clients and servers
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:87:11)
+
+    console.error
+      [beforeHandleMessage] Error: Message rejected
+          at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:205:55)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+    console.error
+      closing connection 4f8db05d-169b-458e-8d8d-7adc97553954 (while handling document-10) because of exception Error: Message rejected
+          at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:205:55)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+
+    console.info
+      Collaboration cleanup complete
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:98:11)
+
+    console.info
+      Collaboration scenario: keeps viewers read-only in ephemeral workspace and Kanban rooms
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:19:11)
+
+    console.info
+      Closing collaboration clients and servers
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:87:11)
+
+    console.info
+      Collaboration cleanup complete
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:98:11)
+
+    console.info
+      Collaboration scenario: enforces room admission, per-room connections and expired tokens
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:19:11)
+
+    console.error
+      [onAuthenticate] Error: Room limit exceeded
+          at Object.onAuthenticate (/home/kevin/devsync/backend/src/services/collaboration-server.ts:162:15)
+          at ClientConnection.handleQueueingMessage (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/ClientConnection.ts:531:5)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at ClientConnection.handleQueueingMessage (node_modules/@hocuspocus/server/src/ClientConnection.ts:531:5)
+
+    console.error
+      [onAuthenticate] Error: Room connection limit exceeded
+          at Object.onAuthenticate (/home/kevin/devsync/backend/src/services/collaboration-server.ts:167:15)
+          at ClientConnection.handleQueueingMessage (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/ClientConnection.ts:531:5)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at ClientConnection.handleQueueingMessage (node_modules/@hocuspocus/server/src/ClientConnection.ts:531:5)
+
+    console.error
+      [onAuthenticate] Error: Session expired
+          at Object.onAuthenticate (/home/kevin/devsync/backend/src/services/collaboration-server.ts:131:15)
+          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at ClientConnection.handleQueueingMessage (node_modules/@hocuspocus/server/src/ClientConnection.ts:531:5)
+
+    console.info
+      Closing collaboration clients and servers
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:87:11)
+
+    console.error
+      [beforeHandleMessage] Error: Message rejected
+          at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:205:55)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+    console.error
+      closing connection 6124458e-fa07-43f5-8678-de2f84ecebb4 (while handling document:workspace:document-11) because of exception Error: Message rejected
+          at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:205:55)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+
+    console.info
+      Collaboration cleanup complete
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:98:11)
+
+    console.info
+      Collaboration scenario: renews the same identity but disconnects a token attempting to change principals
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:19:11)
+
+    console.error
+      [onTokenSync] Error: Access denied
+          at Object.onTokenSync (/home/kevin/devsync/backend/src/services/collaboration-server.ts:194:51)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Object.onTokenSyncCallback (node_modules/@hocuspocus/server/src/ClientConnection.ts:401:12)
+
+    console.error
+      Error: Access denied
+          at Object.onTokenSync (/home/kevin/devsync/backend/src/services/collaboration-server.ts:194:51)
+
+      at Object.onTokenSyncCallback (node_modules/@hocuspocus/server/src/ClientConnection.ts:418:13)
+
+    console.info
+      Closing collaboration clients and servers
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:87:11)
+
+    console.info
+      Collaboration cleanup complete
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:98:11)
+
+    console.info
+      Collaboration scenario: applies every renewal to the live connection after Hocuspocus copies hook context
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:19:11)
+
+    console.info
+      Closing collaboration clients and servers
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:87:11)
+
+    console.error
+      [beforeHandleMessage] Error: Message rejected
+          at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:205:55)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+    console.error
+      closing connection 683d6259-fd89-49b7-a2f8-5546d3eaf626 (while handling document:workspace:document-14) because of exception Error: Message rejected
+          at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:205:55)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+
+    console.info
+      Collaboration cleanup complete
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:98:11)
+
+    console.info
+      Collaboration scenario: evicts local membership changes immediately and expires passive sessions
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:19:11)
+
+    console.error
+      [beforeHandleMessage] Error: Access changed
+          at authorize (/home/kevin/devsync/backend/src/services/collaboration-server.ts:77:45)
+          at withPolicyDeadline (/home/kevin/devsync/backend/src/security/policy-deadline.ts:5:12)
+          at enforce (/home/kevin/devsync/backend/src/services/collaboration-server.ts:91:7)
+          at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:211:7)
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/ClientConnection.ts:290:4
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+      at node_modules/@hocuspocus/server/src/ClientConnection.ts:290:4
+
+    console.error
+      closing connection ebdc1a8c-d365-4b11-9b9d-0c6f99836db1 (while handling document:workspace:document-15) because of exception Error: Access changed
+          at authorize (/home/kevin/devsync/backend/src/services/collaboration-server.ts:77:45)
+          at withPolicyDeadline (/home/kevin/devsync/backend/src/security/policy-deadline.ts:5:12)
+          at enforce (/home/kevin/devsync/backend/src/services/collaboration-server.ts:91:7)
+          at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:211:7)
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/ClientConnection.ts:290:4
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+      at node_modules/@hocuspocus/server/src/ClientConnection.ts:290:4
+
+    console.info
+      Closing collaboration clients and servers
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:87:11)
+
+    console.info
+      Collaboration cleanup complete
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:98:11)
+
+    console.info
+      Collaboration scenario: journals server reconciliation before broadcasting the resulting state
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:19:11)
+
+    console.info
+      Closing collaboration clients and servers
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:87:11)
+
+    console.error
+      [beforeHandleMessage] Error: Message rejected
+          at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:205:55)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+    console.error
+      closing connection 18ec02bc-21f7-404d-a3c4-8abe18f3874d (while handling document:workspace:document-16) because of exception Error: Message rejected
+          at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:205:55)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+
+    console.info
+      Collaboration cleanup complete
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:98:11)
+
+    console.info
+      Collaboration scenario: rejects foreign-origin and excess WebSocket connections before admission
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:19:11)
+
+    console.info
+      Closing collaboration clients and servers
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:87:11)
+
+    console.error
+      [beforeHandleMessage] Error: Message rejected
+          at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:205:55)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/ClientConnection.ts:290:4
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+      at node_modules/@hocuspocus/server/src/ClientConnection.ts:290:4
+
+    console.error
+      closing connection 74b6dc61-557e-44f1-a22a-525cd48ba9f3 (while handling document:workspace:document-17) because of exception Error: Message rejected
+          at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:205:55)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/ClientConnection.ts:290:4
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+      at node_modules/@hocuspocus/server/src/ClientConnection.ts:290:4
+
+    console.info
+      Collaboration cleanup complete
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:98:11)
+
+    console.info
+      Collaboration scenario: queues current CRDT edits atomically for indexing before acknowledgment
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:19:11)
+
+    console.info
+      Closing collaboration clients and servers
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:87:11)
+
+    console.error
+      [beforeHandleMessage] Error: Message rejected
+          at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:205:55)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+    console.error
+      closing connection b9c65e25-1110-4e6e-9554-82e1c5729a88 (while handling document:workspace:document-18) because of exception Error: Message rejected
+          at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:205:55)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+
+    console.info
+      Collaboration cleanup complete
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:98:11)
+
+    console.info
+      Collaboration scenario: denies stale viewer and revoked actors inside the journal transaction
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:19:11)
+
+    console.info
+      Closing collaboration clients and servers
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:87:11)
+
+    console.info
+      Collaboration cleanup complete
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:98:11)
+
+    console.info
+      Collaboration scenario: closes an admitted transport when writer authority changes before its journal transaction
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:19:11)
+
+    console.error
+      [beforeSync] ForbiddenError: Access denied
+          at authorizeWorkspace (/home/kevin/devsync/backend/src/security/workspace-policy.ts:48:11)
+          at /home/kevin/devsync/backend/src/security/workspace-policy.ts:69:5
+          at Proxy._transactionWithCallback (/home/kevin/devsync/backend/node_modules/@prisma/client/runtime/library.js:130:8000)
+          at /home/kevin/devsync/backend/src/lib/tenant-prisma.ts:34:20
+          at CrdtJournal.append (/home/kevin/devsync/backend/src/services/crdt-journal.ts:71:5)
+          at Object.beforeSync (/home/kevin/devsync/backend/src/services/collaboration-server.ts:220:11)
+          at MessageReceiver.readSyncMessage (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/MessageReceiver.ts:207:4)
+          at MessageReceiver.apply (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/MessageReceiver.ts:54:5)
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:275:6) {
+        statusCode: 403,
+        isOperational: true
+      }
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at MessageReceiver.readSyncMessage (node_modules/@hocuspocus/server/src/MessageReceiver.ts:207:4)
+      at MessageReceiver.apply (node_modules/@hocuspocus/server/src/MessageReceiver.ts:54:5)
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:275:6)
+
+    console.error
+      closing connection 055147de-ce62-480b-b584-4382a32a6536 (while handling document:workspace:document-20) because of exception ForbiddenError: Access denied
+          at authorizeWorkspace (/home/kevin/devsync/backend/src/security/workspace-policy.ts:48:11)
+          at /home/kevin/devsync/backend/src/security/workspace-policy.ts:69:5
+          at Proxy._transactionWithCallback (/home/kevin/devsync/backend/node_modules/@prisma/client/runtime/library.js:130:8000)
+          at /home/kevin/devsync/backend/src/lib/tenant-prisma.ts:34:20
+          at CrdtJournal.append (/home/kevin/devsync/backend/src/services/crdt-journal.ts:71:5)
+          at Object.beforeSync (/home/kevin/devsync/backend/src/services/collaboration-server.ts:220:11)
+          at MessageReceiver.readSyncMessage (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/MessageReceiver.ts:207:4)
+          at MessageReceiver.apply (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/MessageReceiver.ts:54:5)
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:275:6) {
+        statusCode: 403,
+        isOperational: true
+      }
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+
+    console.info
+      Closing collaboration clients and servers
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:87:11)
+
+    console.info
+      Collaboration cleanup complete
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:98:11)
+
+    console.info
+      Collaboration scenario: keeps frame and message-window admission limits enforced on an authenticated connection
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:19:11)
+
+    console.error
+      [beforeHandleMessage] Error: Message rejected
+          at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:205:55)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+          at Object.<anonymous> (/home/kevin/devsync/backend/src/__tests__/collaboration.integration.test.ts:725:3)
+
+      723 |     connection.callbacks.beforeHandleMessage(connection, payload);
+      724 |   // Exercise the installed library's policy callback without allocating a large wire queue.
+    > 725 |   await expect(check(new Uint8Array(65537))).rejects.toThrow('Message rejected');
+          |   ^
+      726 |   connection.context.started = Date.now() - 10001;
+      727 |   connection.context.messages = 120;
+      728 |   await expect(check(new Uint8Array())).resolves.toBeUndefined();
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:725:3)
+
+    console.info
+      Closing collaboration clients and servers
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:87:11)
+
+    console.error
+      [beforeHandleMessage] Error: Message rejected
+          at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:205:55)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/ClientConnection.ts:290:4
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+      at node_modules/@hocuspocus/server/src/ClientConnection.ts:290:4
+
+    console.error
+      closing connection eedbeed8-5b3c-4e10-8123-fbc74956c83c (while handling document:workspace:document-21) because of exception Error: Message rejected
+          at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:205:55)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/ClientConnection.ts:290:4
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+      at node_modules/@hocuspocus/server/src/ClientConnection.ts:290:4
+
+    console.info
+      Collaboration cleanup complete
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:98:11)
+
+    console.info
+      Collaboration scenario: compacts the sixty-fourth acknowledged edit and recovers its snapshot on an independent server
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:19:11)
+
+    console.info
+      Closing collaboration clients and servers
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:87:11)
+
+    console.error
+      [beforeHandleMessage] Error: Message rejected
+          at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:205:55)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at node_modules/@hocuspocus/server/src/Hocuspocus.ts:589:16
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+    console.error
+      closing connection 9f6909a1-fea9-424b-97f3-edd55e439869 (while handling document:workspace:document-22) because of exception Error: Message rejected
+          at Object.beforeHandleMessage (/home/kevin/devsync/backend/src/services/collaboration-server.ts:205:55)
+          at /home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Hocuspocus.ts:583:29
+          at processTicksAndRejections (node:internal/process/task_queues:103:5)
+          at Connection.processMessages (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/Connection.ts:271:5)
+
+      at Connection.processMessages (node_modules/@hocuspocus/server/src/Connection.ts:288:13)
+
+    console.info
+      Collaboration cleanup complete
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:98:11)
+
+  ● keeps frame and message-window admission limits enforced on an authenticated connection
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      727 |   connection.context.messages = 120;
+      728 |   await expect(check(new Uint8Array())).resolves.toBeUndefined();
+    > 729 |   expect(connection.context.messages).toBe(1);
+          |                                       ^
+      730 |   connection.context.messages = 120;
+      731 |   await expect(check(new Uint8Array())).rejects.toThrow('Message rate exceeded');
+      732 |   expect(await admin.documentUpdate.count({ where: { documentId: name.split(':')[2] } })).toBe(0);
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:729:39)
+
+{"level":40,"time":1794131215670,"service":"devsync-api","requestId":"system","event":"ai_quota_storage_error","count":1}
+{"level":40,"time":1794131215716,"service":"devsync-api","requestId":"system","event":"ai_quota_storage_error","count":1}
+{"level":50,"time":1794131218009,"service":"devsync-api","msg":"Unexpected server error"}
+{"level":30,"time":1794131257016,"service":"devsync-api","req":{"id":"5eeae503-0d62-489a-b1bc-73937e69b433","method":"GET"},"requestId":"5eeae503-0d62-489a-b1bc-73937e69b433","res":{"statusCode":200},"responseTime":2,"msg":"request completed"}
+{"level":30,"time":1794131257025,"service":"devsync-api","req":{"id":"d59df6b7-d297-453a-b74f-bbfe3d6bce15","method":"GET"},"requestId":"d59df6b7-d297-453a-b74f-bbfe3d6bce15","res":{"statusCode":401},"responseTime":3,"msg":"request completed"}
+{"level":30,"time":1794131257032,"service":"devsync-api","req":{"id":"861b64e2-5188-4ea8-b748-e025ef76e642","method":"GET"},"requestId":"861b64e2-5188-4ea8-b748-e025ef76e642","res":{"statusCode":200},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1794131257035,"service":"devsync-api","req":{"id":"73e558e0-be8a-495f-ad0f-72ffd3fefe9d","method":"GET"},"requestId":"73e558e0-be8a-495f-ad0f-72ffd3fefe9d","res":{"statusCode":401},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1794131257040,"service":"devsync-api","req":{"id":"6322635c-4096-4144-ac2e-5da0ab3b2c26","method":"GET"},"requestId":"6322635c-4096-4144-ac2e-5da0ab3b2c26","res":{"statusCode":404},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1794131257052,"service":"devsync-api","req":{"id":"cf0b9bbf-d35f-4178-93a4-5f1568c58819","method":"POST"},"requestId":"cf0b9bbf-d35f-4178-93a4-5f1568c58819","res":{"statusCode":400},"responseTime":9,"msg":"request completed"}
+{"level":30,"time":1794131257063,"service":"devsync-api","req":{"id":"511f075c-2347-4779-9fb6-e05d2d06ec74","method":"GET"},"requestId":"511f075c-2347-4779-9fb6-e05d2d06ec74","res":{"statusCode":404},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1794131257065,"service":"devsync-api","req":{"id":"f466552d-2279-47fb-8aa8-0451398e7836","method":"GET"},"requestId":"f466552d-2279-47fb-8aa8-0451398e7836","res":{"statusCode":403},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1794131257068,"service":"devsync-api","req":{"id":"1b1087e4-282f-41ac-877b-721ca86e638d","method":"GET"},"requestId":"1b1087e4-282f-41ac-877b-721ca86e638d","res":{"statusCode":403},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1794131257072,"service":"devsync-api","req":{"id":"26605021-9e73-4830-a098-1322788ce215","method":"GET"},"requestId":"26605021-9e73-4830-a098-1322788ce215","res":{"statusCode":200},"responseTime":2,"msg":"request completed"}
+{"level":30,"time":1794131257179,"service":"devsync-api","req":{"id":"0cd9baa9-0ecf-4a97-bcf3-9062c30fd5bc","method":"GET"},"requestId":"0cd9baa9-0ecf-4a97-bcf3-9062c30fd5bc","res":{"statusCode":200},"responseTime":5,"msg":"request completed"}
+{"level":30,"time":1794131257228,"service":"devsync-api","req":{"id":"53292374-ec8e-4415-bb75-d851e3df8ab5","method":"POST"},"requestId":"53292374-ec8e-4415-bb75-d851e3df8ab5","res":{"statusCode":404},"responseTime":2,"msg":"request completed"}
+{"level":30,"time":1794131257232,"service":"devsync-api","req":{"id":"d013c46a-cdd0-49b8-b145-1074c6283c01","method":"GET"},"requestId":"d013c46a-cdd0-49b8-b145-1074c6283c01","res":{"statusCode":401},"responseTime":1,"msg":"request completed"}
+(node:224862) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1794131261286,"service":"devsync-api","req":{"id":"e59344aa-f53f-4989-9d58-372c0909f033","method":"GET"},"requestId":"e59344aa-f53f-4989-9d58-372c0909f033","res":{"statusCode":200},"responseTime":2,"msg":"request completed"}
+{"level":30,"time":1794131263103,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794131263104,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794131263104,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794131263104,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794131263104,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794131263104,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794131263104,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794131263104,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794131263104,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794131263105,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794131263105,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794131263105,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794131263105,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794131263105,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794131263105,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794131263105,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794131263105,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794131263105,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794131263105,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794131263105,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794131263107,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794131263108,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794131263108,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794131263111,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794131263111,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794131263112,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794131263115,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794131263115,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794131263118,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794131263119,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794131263119,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"monthly"}
+{"level":30,"time":1794131263120,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794131263121,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"concurrent"}
+{"level":30,"time":1794131263121,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794131263122,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794131263122,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":40,"time":1794131263124,"service":"devsync-api","requestId":"system","event":"ai_quota_storage_error","count":1}
+{"level":30,"time":1794131263131,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794131263132,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794131263133,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794131263135,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794131263135,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794131263136,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"monthly"}
+{"level":30,"time":1794131263138,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794131263138,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794131263138,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794131263140,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794131263141,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794131263141,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"monthly"}
+{"level":30,"time":1794131263143,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794131263144,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"concurrent"}
+{"level":30,"time":1794131263145,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794131263145,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794131263145,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794131263150,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794131263150,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794131263150,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794131263150,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794131263150,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794131263150,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794131263150,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794131263150,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794131263150,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794131263150,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794131263151,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794131263151,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794131263151,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794131263151,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794131263151,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794131263151,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794131263151,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794131263151,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794131263151,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794131263151,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794131263152,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794131263152,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794131263152,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794131263154,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794131263155,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794131263155,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794131263157,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794131263157,"service":"devsync-api","requestId":"system","event":"ai_reservation_refunded","count":1}
+{"level":30,"time":1794131263159,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794131263160,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794131263161,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794131263162,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794131263162,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794131263167,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794131263167,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794131263167,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794131263167,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794131263167,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794131263167,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794131263167,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794131263167,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794131263167,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794131263167,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794131263167,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794131263167,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794131263167,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794131263167,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794131263167,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794131263167,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794131263167,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794131263168,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794131263168,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794131263168,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794131263168,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794131263168,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794131263169,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794131269150,"service":"devsync-api","req":{"id":"f6351793-53e9-4087-804f-deb25de594a4","method":"POST"},"requestId":"f6351793-53e9-4087-804f-deb25de594a4","res":{"statusCode":401},"responseTime":2,"msg":"request completed"}
+{"level":30,"time":1794131269159,"service":"devsync-api","req":{"id":"fb4dddc6-04e4-4e6c-bb34-2f3015b805cb","method":"POST"},"requestId":"fb4dddc6-04e4-4e6c-bb34-2f3015b805cb","res":{"statusCode":401},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1794131269166,"service":"devsync-api","req":{"id":"c89f58f0-1554-42af-b486-3aa7aea9e329","method":"POST"},"requestId":"c89f58f0-1554-42af-b486-3aa7aea9e329","res":{"statusCode":401},"responseTime":0,"msg":"request completed"}
+{"level":30,"time":1794131269176,"service":"devsync-api","req":{"id":"1009c289-fe27-4c02-aa41-01c39c397bca","method":"POST"},"requestId":"1009c289-fe27-4c02-aa41-01c39c397bca","res":{"statusCode":401},"responseTime":0,"msg":"request completed"}
+{"level":30,"time":1794131269180,"service":"devsync-api","req":{"id":"e7e518c9-c6c6-461f-b5e8-920f9b0eccce","method":"POST"},"requestId":"e7e518c9-c6c6-461f-b5e8-920f9b0eccce","res":{"statusCode":401},"responseTime":0,"msg":"request completed"}
+{"level":30,"time":1794131269184,"service":"devsync-api","req":{"id":"35986343-89de-4e15-9221-d675246ad258","method":"POST"},"requestId":"35986343-89de-4e15-9221-d675246ad258","res":{"statusCode":503},"err":{"type":"HttpError"},"responseTime":1,"msg":"request errored"}
+{"level":30,"time":1794131269187,"service":"devsync-api","req":{"id":"b458b4f7-9d9e-4857-8518-37e65e32c98d","method":"POST"},"requestId":"b458b4f7-9d9e-4857-8518-37e65e32c98d","res":{"statusCode":401},"responseTime":0,"msg":"request completed"}
+{"level":30,"time":1794131269191,"service":"devsync-api","req":{"id":"d48fb490-b807-4695-89fe-3c89be10855f","method":"POST"},"requestId":"d48fb490-b807-4695-89fe-3c89be10855f","res":{"statusCode":401},"responseTime":0,"msg":"request completed"}
+{"level":30,"time":1794131269194,"service":"devsync-api","req":{"id":"f285c41e-8206-454a-b2d4-6114145f58ba","method":"POST"},"requestId":"f285c41e-8206-454a-b2d4-6114145f58ba","res":{"statusCode":401},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1794131269198,"service":"devsync-api","req":{"id":"8c25cab8-f6fd-4436-a49d-50f287d0db76","method":"POST"},"requestId":"8c25cab8-f6fd-4436-a49d-50f287d0db76","res":{"statusCode":401},"responseTime":1,"msg":"request completed"}
+{"level":50,"time":1794131269201,"service":"devsync-api","req":{"id":"2251888e-556b-470e-a293-17e30db7c2ce","method":"POST"},"requestId":"2251888e-556b-470e-a293-17e30db7c2ce","msg":"Unexpected server error"}
+{"level":30,"time":1794131269201,"service":"devsync-api","req":{"id":"2251888e-556b-470e-a293-17e30db7c2ce","method":"POST"},"requestId":"2251888e-556b-470e-a293-17e30db7c2ce","res":{"statusCode":500},"err":{"type":"HttpError"},"responseTime":1,"msg":"request errored"}
+{"level":30,"time":1794131269205,"service":"devsync-api","req":{"id":"5306e065-62d4-4eed-ac09-b6e3ab0c9807","method":"POST"},"requestId":"5306e065-62d4-4eed-ac09-b6e3ab0c9807","res":{"statusCode":200},"responseTime":0,"msg":"request completed"}
+----------------------------------|---------|----------|---------|---------|-------------------------------------------------------
+File                              | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s                                     
+----------------------------------|---------|----------|---------|---------|-------------------------------------------------------
+All files                         |   82.52 |    73.29 |   76.29 |   84.79 |                                                       
+ src                              |   73.98 |    81.87 |   44.44 |   76.03 |                                                       
+  app.ts                          |   98.78 |       50 |     100 |     100 | 41-54                                                 
+  config-environment.ts           |     100 |    94.73 |     100 |     100 | 11,35                                                 
+  contracts.ts                    |   96.61 |       75 |     100 |     100 | 33,42-62,74,182                                       
+  openapi.ts                      |   96.51 |     95.4 |    90.9 |   97.43 | 83,158                                                
+  server.ts                       |       0 |        0 |       0 |       0 | 1-99                                                  
+  worker.ts                       |       0 |        0 |       0 |       0 | 1-103                                                 
+ src/agents                       |   82.53 |       65 |      70 |   87.93 |                                                       
+  pr-summary.agent.ts             |   81.81 |    66.66 |      75 |      90 | 50,80                                                 
+  task-completion.agent.ts        |   82.92 |    64.28 |   66.66 |   86.84 | 68,78,82,88,118                                       
+ src/controllers                  |   89.01 |    71.16 |   83.92 |   90.63 |                                                       
+  ai.controller.ts                |   82.53 |    54.34 |   54.54 |    86.2 | 36,45,54,83,120-121,142-145                           
+  auth.controller.ts              |   95.83 |       85 |     100 |     100 | 48-80                                                 
+  document.controller.ts          |   96.47 |    82.05 |     100 |   97.61 | 177,190                                               
+  github-repository.controller.ts |     100 |       90 |     100 |     100 | 117                                                   
+  invitation.controller.ts        |   32.35 |        0 |       0 |   33.33 | 14-43,47-52,56-71                                     
+  search.controller.ts            |   85.71 |       50 |      50 |   89.47 | 55-56                                                 
+  snippet.controller.ts           |   96.49 |    73.68 |   91.66 |   98.21 | 50                                                    
+  task.controller.ts              |    95.1 |    67.39 |     100 |   96.37 | 76,205,303,362-375                                    
+  workspace.controller.ts         |   84.95 |    77.41 |   86.36 |   85.71 | 117-145,170,230,238                                   
+ src/extraction                   |    87.5 |    75.67 |   72.22 |   92.72 |                                                       
+  extract-child.ts                |   69.04 |    56.66 |      20 |   77.14 | 42-57                                                 
+  server.ts                       |   96.51 |    88.63 |    92.3 |     100 | 27,47-52,63,112                                       
+ src/lib                          |   53.24 |    51.04 |      42 |   55.05 |                                                       
+  cache.ts                        |       0 |        0 |       0 |       0 | 1-67                                                  
+  create-idempotency.ts           |   89.79 |    82.92 |     100 |   93.02 | 19,26,59                                              
+  idempotency.ts                  |       0 |        0 |       0 |       0 | 1-27                                                  
+  lifecycle.ts                    |   91.66 |       60 |      75 |    90.9 | 6,27                                                  
+  prisma.ts                       |   93.75 |       70 |   66.66 |   93.75 | 36                                                    
+  queue.ts                        |   31.25 |        0 |       0 |   31.25 | 41,49-62,72-114,120-124                               
+  redis.ts                        |   26.31 |    16.66 |    9.09 |   32.25 | 12-20,25-27,41-45,51-64                               
+  tenant-prisma.ts                |   93.33 |       75 |     100 |   93.33 | 19                                                    
+ src/middleware                   |   74.12 |    58.58 |   73.52 |   75.93 |                                                       
+  ai-quota.middleware.ts          |   52.77 |    18.18 |   42.85 |   59.37 | 17-33,42-43                                           
+  auth.middleware.ts              |   51.51 |    42.85 |      25 |   53.33 | 28,45-56,62-66                                        
+  billing.middleware.ts           |   94.11 |       70 |   66.66 |   94.11 | 35                                                    
+  error.middleware.ts             |      72 |    69.04 |     100 |   70.21 | 37-38,50-51,58-59,62-63,66-67,70-71,74-75             
+  rate-limit.middleware.ts        |   85.71 |       50 |      50 |   85.71 | 20                                                    
+  rbac.middleware.ts              |   94.73 |    83.33 |     100 |   94.73 | 13                                                    
+  request-context.middleware.ts   |     100 |      100 |     100 |     100 |                                                       
+  tracing.middleware.ts           |   85.71 |       50 |     100 |     100 | 14-15                                                 
+  validate.middleware.ts          |    92.3 |       50 |     100 |   91.66 | 15                                                    
+ src/observability                |      70 |    57.14 |      48 |   70.52 |                                                       
+  ai.ts                           |     100 |      100 |     100 |     100 |                                                       
+  logger.ts                       |     100 |      100 |     100 |     100 |                                                       
+  metrics.ts                      |   94.73 |    92.85 |   85.71 |   94.28 | 32,77                                                 
+  reporting.ts                    |   31.57 |     12.5 |      25 |   35.29 | 4-27,31,34-35                                         
+  request-scope.ts                |     100 |      100 |     100 |     100 |                                                       
+  telemetry.ts                    |   34.78 |        0 |      10 |   34.78 | 9-74,78-79                                            
+ src/routes                       |   93.51 |    73.92 |   94.89 |   94.29 |                                                       
+  ai-v3.routes.ts                 |    62.5 |        0 |       0 |   61.29 | 13-19,24-28,41-44                                     
+  ai.routes.ts                    |     100 |      100 |     100 |     100 |                                                       
+  async-digest.routes.ts          |   98.11 |    83.33 |     100 |     100 | 95                                                    
+  auth.routes.ts                  |     100 |      100 |     100 |     100 |                                                       
+  decision-receipts.routes.ts     |   91.66 |     82.5 |   95.23 |   92.85 | 63,69,107-120,161                                     
+  document.routes.ts              |     100 |      100 |     100 |     100 |                                                       
+  github-webhook.routes.ts        |   91.42 |    74.68 |     100 |   94.02 | 130,150,163,206                                       
+  health.routes.ts                |   83.33 |    70.83 |      90 |   84.37 | 16-17,54-56                                           
+  ingestion.routes.ts             |   93.33 |       60 |     100 |   93.33 | 30,69                                                 
+  lifecycle.routes.ts             |   97.77 |    78.94 |     100 |    97.7 | 23,73                                                 
+  scim.routes.ts                  |      92 |    68.18 |     100 |   92.85 | 130-131,161-163                                       
+  snippet-safety.routes.ts        |     100 |      100 |     100 |     100 |                                                       
+  snippet.routes.ts               |     100 |      100 |     100 |     100 |                                                       
+  stripe.webhook.ts               |   91.66 |       75 |     100 |   91.66 | 8                                                     
+  superadmin.routes.ts            |     100 |       75 |     100 |     100 | 25                                                    
+  task.routes.ts                  |     100 |      100 |     100 |     100 |                                                       
+  workspace.routes.ts             |     100 |      100 |     100 |     100 |                                                       
+ src/schemas                      |     100 |      100 |     100 |     100 |                                                       
+  search.schema.ts                |     100 |      100 |     100 |     100 |                                                       
+ src/scripts                      |       0 |        0 |       0 |       0 |                                                       
+  openapi.ts                      |       0 |        0 |       0 |       0 | 1-24                                                  
+ src/security                     |   81.36 |    74.34 |   86.76 |   85.45 |                                                       
+  authentication.ts               |   57.57 |    26.31 |      50 |   60.71 | 33-38,46-50                                           
+  invitation-policy.ts            |   16.66 |        0 |       0 |   18.18 | 7-54                                                  
+  policy-deadline.ts              |   85.71 |    33.33 |   66.66 |     100 | 2-12                                                  
+  provider-sessions.ts            |   84.48 |    80.48 |    87.5 |    87.5 | 83,89,97-102                                          
+  realtime-identity.ts            |   73.91 |    70.83 |   66.66 |   80.95 | 16,23-24,28                                           
+  rich-text.ts                    |   86.36 |    85.71 |     100 |     100 | 7,11,13-14                                            
+  service-policy.ts               |   88.33 |    84.21 |     100 |   93.51 | 24,62,82,113,133,207,244                              
+  snippet-preflight.ts            |     100 |      100 |     100 |     100 |                                                       
+  workspace-policy.ts             |      92 |     90.9 |     100 |   95.65 | 35,62                                                 
+ src/services                     |   83.48 |    77.76 |   81.32 |   86.45 |                                                       
+  ai-gateway.service.ts           |       0 |        0 |       0 |       0 | 1-100                                                 
+  ai-prompt.ts                    |     100 |      100 |     100 |     100 |                                                       
+  ai-provider.ts                  |   96.66 |       90 |   91.66 |     100 | 76,80,83                                              
+  ai-quota.ts                     |      90 |       86 |   93.75 |    90.9 | 26-29,155,159                                         
+  ai-schema.ts                    |     100 |      100 |     100 |     100 |                                                       
+  async-digest.ts                 |   97.36 |    95.23 |     100 |   98.57 | 201                                                   
+  billing.service.ts              |   68.57 |    45.71 |      60 |   70.58 | 10-11,21,29-36,67-73                                  
+  cloudinary.service.ts           |       0 |      100 |       0 |       0 | 1-32                                                  
+  collaboration-acl.ts            |     100 |      100 |     100 |     100 |                                                       
+  collaboration-server.ts         |   89.49 |    82.23 |   94.44 |   93.36 | 183-185,250-252,286-287,341-342,396-397,401-402,430   
+  crdt-journal.ts                 |   91.78 |       80 |     100 |   95.45 | 54-55,82                                              
+  crdt-migration.ts               |   86.36 |    76.19 |     100 |   97.22 | 57                                                    
+  crdt-schema.ts                  |     100 |      100 |     100 |     100 |                                                       
+  crdt-sync.service.ts            |   78.57 |    73.33 |     100 |   84.61 | 30,33,52-63                                           
+  decision-receipts.ts            |   97.61 |     86.2 |     100 |     100 | 24,26,61,65                                           
+  embedding-runner.ts             |    87.5 |       50 |      80 |   93.33 | 15                                                    
+  embedding.service.ts            |   79.24 |    70.58 |   76.47 |   85.26 | 34-45,206-226                                         
+  extraction-client.ts            |   89.47 |    83.33 |     100 |   91.17 | 33,57,61                                              
+  github-work-source.ts           |   98.18 |    92.85 |     100 |     100 | 23,35,64                                              
+  ingestion.service.ts            |   63.63 |    69.69 |   53.33 |   66.31 | 42-50,68-69,74-95,121-130,142-143,173,184,194,200,203 
+  secret.service.ts               |     100 |      100 |     100 |     100 |                                                       
+  yjs.service.ts                  |   82.35 |       25 |   66.66 |    87.5 | 8-9                                                   
+ src/socket                       |   87.17 |     74.7 |    83.6 |   88.65 |                                                       
+  index.ts                        |   58.33 |      100 |   33.33 |   58.33 | 11-17,20-22                                           
+  kanban.handler.ts               |   90.62 |       88 |      75 |   90.62 | 60,64,95                                              
+  presence-store.ts               |   97.77 |    79.16 |   88.88 |   97.43 | 24                                                    
+  presence.handler.ts             |   78.08 |    45.45 |    90.9 |   81.42 | 51-52,88-92,102-111                                   
+  rate-limiter.ts                 |      96 |     87.5 |     100 |      96 | 66                                                    
+  server.ts                       |   88.41 |    75.82 |   83.87 |   90.54 | 76,79,89,126,142-143,150-151,154-155,164,166,181,206  
+ src/utils                        |     100 |       20 |     100 |     100 |                                                       
+  errors.ts                       |     100 |       20 |     100 |     100 | 14-26,38                                              
+----------------------------------|---------|----------|---------|---------|-------------------------------------------------------
+
+Summary of all failing tests
+FAIL src/__tests__/collaboration.integration.test.ts (39.36 s)
+  ● keeps frame and message-window admission limits enforced on an authenticated connection
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      727 |   connection.context.messages = 120;
+      728 |   await expect(check(new Uint8Array())).resolves.toBeUndefined();
+    > 729 |   expect(connection.context.messages).toBe(1);
+          |                                       ^
+      730 |   connection.context.messages = 120;
+      731 |   await expect(check(new Uint8Array())).rejects.toThrow('Message rate exceeded');
+      732 |   expect(await admin.documentUpdate.count({ where: { documentId: name.split(':')[2] } })).toBe(0);
+
+      at Object.<anonymous> (src/__tests__/collaboration.integration.test.ts:729:39)
+
+
+Test Suites: 1 failed, 32 passed, 33 total
+Tests:       1 failed, 314 passed, 315 total
+Snapshots:   0 total
+Time:        104.753 s
+Ran all test suites.

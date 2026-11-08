@@ -1,0 +1,33 @@
+{
+  "phase": "Unified linked work graph",
+  "status": "incomplete_foundation_checkpoint",
+  "baseCommit": "3d92625",
+  "workLinkImplemented": false,
+  "graphMigrationAdded": false,
+  "relatedWorkPanelImplemented": false,
+  "graphBrowserFlowVerified": false,
+  "liveGitHubVerified": false,
+  "adapterMountedInProduct": false,
+  "backendTestsPassed": 315,
+  "frontendComponentTestsPassed": 92,
+  "frontendNodeTestsPassed": 9,
+  "gateRecords": [
+    "backend-final/backend-gates.json",
+    "frontend-retry/frontend-gates.json"
+  ],
+  "allFinalAppGateExitCodes": 0,
+  "backendPriorPhaseCoverageComparisonExitCode": 0,
+  "frontendPriorPhaseCoverageComparison": "coverage-status.json: exit1 remains outstanding; unchanged async-digest has one fewer covered statement/function; no threshold lowered",
+  "securityRecords": "security-commands.json",
+  "openapiRecord": "openapi-command.json",
+  "retainedFailures": [
+    "provider-red.txt missing module",
+    "backend/backend-tests.txt initial counter assertion: expected1/received2",
+    "frontend-coverage-comparison-failed.txt",
+    "frontend-coverage-comparison.txt"
+  ],
+  "testSynchronization": "Await initial acknowledgement and pending-message drainage; original assertions unchanged; no production server change",
+  "remainingEngineeringAndSetup": "README.md",
+  "push": false,
+  "deployment": false
+}

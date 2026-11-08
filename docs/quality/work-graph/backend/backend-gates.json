@@ -1,0 +1,45 @@
+[
+  {
+    "gate": "lint",
+    "command": [
+      "npm",
+      "run",
+      "lint"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 3.155,
+    "output": "backend-lint.txt"
+  },
+  {
+    "gate": "format",
+    "command": [
+      "npm",
+      "run",
+      "format:check"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 4.765,
+    "output": "backend-format.txt"
+  },
+  {
+    "gate": "types",
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 28.419,
+    "output": "backend-types.txt"
+  },
+  {
+    "gate": "tests",
+    "command": [
+      "npm",
+      "test"
+    ],
+    "exitCode": 1,
+    "elapsedSeconds": 105.422,
+    "output": "backend-tests.txt"
+  }
+]

@@ -1,3 +1,13 @@
+# Unified work graph — incomplete foundation checkpoint
+
+Source audit found reusable receipt/digest source proofs and owner-only GitHub repository bindings, but no WorkLink persistence/API/panel. Added an internal GitHub issue/PR proof adapter with narrowly scoped installation tokens, canonical repository/URL checks, redirect refusal and redacted errors. It is not mounted as a product route and does not implement local authorization by itself. Fixture crypto/transport tests do not prove live provider success. The initial full baseline found a prior handshake-budget fixture race; synchronized handshake preconditions without removing assertions or changing production limits. [Evidence and remaining engineering](quality/work-graph/README.md).
+
+Final app gate sequences pass (315 backend tests;92 component/9 Node tests); OpenAPI and source-security exits0. An additional frontend prior-phase coverage comparison still fails after unchanged rerun in async-digest; configured thresholds pass and none were lowered. Exact failures/results are retained.
+
+The phase remains incomplete: migration, local endpoint authorization, links/backlinks/search/idempotency, Related work UI, OpenAPI additions, DB/browser acceptance and real provider verification are outstanding. Keys alone cannot finish those engineering tasks. No graph flow or completed delivery claim, push or deployment. Earlier task planning remains unfinished and is not automatically resumed.
+
+---
+
 # Task planning — preflight in progress, 2026-11-08
 
 Read-only source audit at35142de identifies existing priorities/dates/assignee validation/label storage, serialized reorder, native/keyboard moves and Undo. Missing planning/workflow features and all direct task writers are mapped in [preflight](quality/task-planning/PREFLIGHT.md). GitHub column automation and legacy PATCH/move/Undo must share any future completion policy. No application, test or migration change; no phase-completion/provider-success claim. Pending user choice: reviewer approval authority, which is absent from current policy and materially controls completion permissions. Proposed default is assigned reviewer approval with auditable owner override. Implementation remains outstanding; this is not a released planning feature.
