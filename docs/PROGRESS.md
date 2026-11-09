@@ -1,3 +1,13 @@
+# Phase 11 inbox — local delivery, incomplete acceptance
+
+Added a feature-flagged inbox page and workspace navigation, individual read controls, owner-only failed automation records from the existing audit, and personal timezone, quiet-hours and batch-interval preferences. Failed execution records use current source checks and their own tenant/user RLS read markers. The inbox and existing digest hide displayed records on disconnect/hidden state and recheck authority on reconnect or focus. A bounded preview groups up to 25 unread Activity events per batch and resolves quiet hours in the selected timezone; it schedules nothing and excludes automation failures. Email and push remain inactive.
+
+Backend gates passed 39 suites / 372 tests and frontend gates passed 27 files / 118 component tests, lint, formatting, strict types, builds and coverage comparisons. One local Chrome fixture flow passed the accessibility scan, individual read and membership-removal checks. See [verification and rollout](quality/inbox/README.md). No provider delivery, hosted CI or production migration is claimed.
+
+**Phase 11 remains incomplete:** mention, review-request and owner-decision-request producers do not exist; no recipient events are inferred. Durable provider delivery and production batching are not implemented or scheduled, and the inbox retains the existing seven-day digest acknowledgement window. GitHub-source failure behavior relies on the existing owner execution reader and still needs live provider acceptance. No push, deploy or Phase 12 work occurred.
+
+---
+
 # Phase 11 assignment notifications — local increment
 
 Task creation and reassignment through the task controller now record recipient-bound assignment Activity in the same transaction. The inbox includes it only for the recorded recipient while that user remains the current assignee and the task remains in the workspace. Existing digest items and acknowledgement semantics are unchanged. Earlier assignments are not backfilled. Mentions, review requests and owner-decision requests lack recipient-bound Activity producers. Failed automation executions have owner-only audit records but no authorized digest Activity adapter; that category remains unimplemented. Task archive is not represented in the current task schema.

@@ -1,3 +1,8 @@
+# Phase 11 inbox — local delivery, incomplete acceptance
+
+- Add an accessible inbox with per-event read controls, owner-only recorded automation failures and cache clearing on disconnect or reconnection checks.
+- Add tenant/user RLS scheduling preferences and a bounded timezone-aware batch preview. No email, push or scheduled delivery is active; remaining categories and production delivery are pending.
+
 # Phase 11 assignment notifications — local increment
 
 - Record actual task assignments at creation or reassignment and expose recipient-scoped Activity in the existing inbox, subject to current task and workspace visibility. Other notification categories remain pending.
