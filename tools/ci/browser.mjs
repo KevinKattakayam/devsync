@@ -1,5 +1,6 @@
 import { spawn } from 'node:child_process';
 const targets = {
+  grounded: { E2E_GROUNDED: '1' },
   core: {},
   'decision-execution': { E2E_DECISION_EXECUTION: '1' },
   search: { E2E_SEARCH: '1' },

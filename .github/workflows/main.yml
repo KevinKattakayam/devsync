@@ -247,6 +247,7 @@ jobs:
             recovery,
             github-trail,
             decision-execution,
+            grounded,
             search,
             ai-cost,
             editor,

@@ -43,6 +43,8 @@ async function main() {
       ...process.env,
       NODE_ENV: 'test',
       AUTH_TRUSTED_ORIGIN: 'http://127.0.0.1:3001',
+      FEATURE_GROUNDED_AI: process.env.E2E_GROUNDED ? 'true' : 'false',
+      NEXT_PUBLIC_FEATURE_GROUNDED_AI: process.env.E2E_GROUNDED ? 'true' : 'false',
       AI_QUOTA_USER_DAILY: process.env.E2E_AI_COST ? '1' : process.env.AI_QUOTA_USER_DAILY,
       FEATURE_ASYNC_DIGEST: process.env.E2E_ASYNC_DIGEST
         ? 'true'
