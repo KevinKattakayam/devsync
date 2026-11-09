@@ -1,4 +1,5 @@
 'use client';
+import { ExecutionTimeline } from './execution-timeline';
 import { useEffect, useRef, useState, type ComponentProps } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/providers/auth-provider';
@@ -249,6 +250,14 @@ export function Receipts({ workspaceId }: { workspaceId: string }) {
                     : ' · Awaiting owner acceptance'}
                 </p>
               </div>
+              {item.status !== 'DRAFT' && (
+                <ExecutionTimeline
+                  workspaceId={workspaceId}
+                  receiptId={item.id}
+                  canWrite={canWrite && item.status === 'ACCEPTED'}
+                  owner={owner}
+                />
+              )}
               {item.status === 'SUPERSEDED' &&
                 (item.supersededById ? (
                   <a
