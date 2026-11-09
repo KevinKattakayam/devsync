@@ -418,6 +418,28 @@ add('PUT', `${digestBase}/preferences`, digestPreferenceSchema, '200', {
   body: digestPreferenceWrite,
 });
 add('GET', `${digestBase}/items`, digestPageSchema, '200', { query: digestQuerySchema });
+add(
+  'GET',
+  `${digestBase}/inbox`,
+  digestPageSchema.extend({
+    items: z.array(
+      digestItemSchema.extend({
+        eventType: z.enum(['doc_created', 'snippet_created', 'task_created', 'task_assigned']),
+        category: z.enum(['activity', 'assigned_task']),
+        read: z.boolean(),
+      }),
+    ),
+  }),
+  '200',
+  { query: digestQuerySchema },
+);
+add(
+  'PUT',
+  `${digestBase}/inbox/{activityId}/read`,
+  z.object({ read: z.boolean() }).strict(),
+  '200',
+  { body: z.object({ read: z.boolean() }).strict() },
+);
 add('POST', `${digestBase}/acknowledge`, digestPreferenceSchema, '200', { body: digestAckSchema });
 
 const safetyBase = '/api/v2/workspaces/{workspaceId}/snippet-safety';

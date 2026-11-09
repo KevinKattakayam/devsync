@@ -1,4 +1,6 @@
 import { Router } from 'express';
+import { z } from 'zod';
+import { Prisma } from '@prisma/client';
 import { authMiddleware } from '../middleware/auth.middleware';
 import { validate } from '../middleware/validate.middleware';
 import { withWorkspaceAccess, READ_ROLES } from '../security/workspace-policy';
@@ -67,6 +69,62 @@ router.get<{ workspaceId: string }>('/items', async (req, res, next) => {
     next(error);
   }
 });
+// The initial inbox exposes the same source-checked, unacknowledged activity
+// window as the digest. The existing acknowledgement endpoint persists its watermark.
+const inboxReadInput = z.object({ read: z.boolean() }).strict();
+router.get<{ workspaceId: string }>('/inbox', async (req, res, next) => {
+  try {
+    const { cursor } = digestQuerySchema.parse(req.query);
+    res.json(
+      await withWorkspaceAccess(
+        req.user!.userId,
+        req.params.workspaceId,
+        READ_ROLES,
+        async (tx) => {
+          const page = await digestPage(tx, req.params.workspaceId, req.user!.userId, cursor, true);
+          const states = page.items.length
+            ? await tx.$queryRaw<{ activityId: string }[]>(
+                Prisma.sql`SELECT "activityId" FROM "InboxReadState" WHERE "workspaceId"=${req.params.workspaceId} AND "userId"=${req.user!.userId} AND "activityId" IN (${Prisma.join(page.items.map((item) => item.activityId))})`,
+              )
+            : [];
+          const read = new Set(states.map((state) => state.activityId));
+          return {
+            ...page,
+            items: page.items.map((item) => ({
+              ...item,
+              category: item.eventType === 'task_assigned' ? 'assigned_task' : 'activity',
+              read: read.has(item.activityId),
+            })),
+          };
+        },
+      ),
+    );
+  } catch (error) {
+    next(error);
+  }
+});
+router.put<{ workspaceId: string; activityId: string }>(
+  '/inbox/:activityId/read',
+  validate(inboxReadInput),
+  async (req, res, next) => {
+    try {
+      const { read } = inboxReadInput.parse(req.body);
+      const { workspaceId, activityId } = req.params;
+      const userId = req.user!.userId;
+      await withWorkspaceAccess(userId, workspaceId, READ_ROLES, async (tx) => {
+        await digestPreference(tx, workspaceId, userId);
+        await digestEvent(tx, workspaceId, activityId, userId);
+        if (read)
+          await tx.$executeRaw`INSERT INTO "InboxReadState" ("workspaceId","userId","activityId") VALUES (${workspaceId},${userId},${activityId}) ON CONFLICT DO NOTHING`;
+        else
+          await tx.$executeRaw`DELETE FROM "InboxReadState" WHERE "workspaceId"=${workspaceId} AND "userId"=${userId} AND "activityId"=${activityId}`;
+      });
+      res.json({ read });
+    } catch (error) {
+      next(error);
+    }
+  },
+);
 router.post('/acknowledge', validate(digestAckSchema), async (req, res, next) => {
   try {
     const input = digestAckSchema.parse(req.body),

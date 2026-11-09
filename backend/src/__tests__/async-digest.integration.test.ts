@@ -15,7 +15,7 @@ import {
 } from '../services/async-digest';
 import { createDocument } from '../controllers/document.controller';
 import { createSnippet } from '../controllers/snippet.controller';
-import { createTask } from '../controllers/task.controller';
+import { createTask, updateTask } from '../controllers/task.controller';
 import router from '../routes/async-digest.routes';
 import { createTenantPrismaClient, TenantPrismaClient } from '../lib/tenant-prisma';
 import { withDatabase } from '../lib/prisma';
@@ -49,6 +49,7 @@ app.use('/workspaces/:workspaceId/digest', router);
 app.post('/sources/:id/documents', createDocument);
 app.post('/sources/:id/snippets', createSnippet);
 app.post('/sources/columns/:columnId/tasks', createTask);
+app.patch('/sources/tasks/:taskId', updateTask);
 app.use(errorMiddleware);
 beforeAll(async () => {
   container = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
@@ -149,6 +150,122 @@ async function page(path: string, actor = 'owner', cursor?: string) {
     ).body,
   );
 }
+it('records assignments for the current recipient and hides reassigned, moved and deleted tasks', async () => {
+  const f = await fixture();
+  const board = await admin.board.create({
+    data: {
+      workspaceId: f.a,
+      name: 'Assignments',
+      columns: { create: { name: 'Todo', position: 0 } },
+    },
+    include: { columns: true },
+  });
+  const task = (
+    await request(app)
+      .post(`/sources/columns/${board.columns[0].id}/tasks`)
+      .send({ title: 'Assigned task', assigneeId: 'viewer' })
+      .expect(201)
+  ).body;
+  await enable(f.path, 'viewer');
+  await enable(f.path, 'editor');
+  const inbox = async (actor: string) =>
+    (await request(app).get(`${f.path}/inbox`).set('x-test-actor', actor).expect(200)).body.items;
+  const assigned = (await inbox('viewer')).filter(
+    (item: { category?: string }) => item.category === 'assigned_task',
+  );
+  expect(assigned).toHaveLength(1);
+  const readPath = `${f.path}/inbox/${assigned[0].activityId}/read`;
+  await request(app).put(readPath).set('x-test-actor', 'editor').send({ read: true }).expect(404);
+  await request(app).put(readPath).set('x-test-actor', 'viewer').send({ read: true }).expect(200);
+  expect(
+    (await inbox('viewer')).find(
+      (item: { activityId: string }) => item.activityId === assigned[0].activityId,
+    ).read,
+  ).toBe(true);
+  expect(
+    (await inbox('editor')).filter(
+      (item: { category?: string }) => item.category === 'assigned_task',
+    ),
+  ).toHaveLength(0);
+  await request(app).patch(`/sources/tasks/${task.id}`).send({ assigneeId: 'editor' }).expect(200);
+  await request(app).put(readPath).set('x-test-actor', 'viewer').send({ read: false }).expect(404);
+  expect(
+    (await inbox('viewer')).filter(
+      (item: { category?: string }) => item.category === 'assigned_task',
+    ),
+  ).toHaveLength(0);
+  expect(
+    (await inbox('editor')).filter(
+      (item: { category?: string }) => item.category === 'assigned_task',
+    ),
+  ).toHaveLength(1);
+  const other = await admin.board.create({
+    data: { workspaceId: f.b, name: 'Other', columns: { create: { name: 'Todo', position: 0 } } },
+    include: { columns: true },
+  });
+  await admin.task.update({ where: { id: task.id }, data: { columnId: other.columns[0].id } });
+  const movedEvent = await admin.activity.findFirstOrThrow({
+    where: {
+      workspaceId: f.a,
+      type: 'task_assigned',
+      metadata: { path: ['recipientId'], equals: 'editor' },
+    },
+  });
+  await request(app)
+    .put(`${f.path}/inbox/${movedEvent.id}/read`)
+    .set('x-test-actor', 'editor')
+    .send({ read: true })
+    .expect(404);
+  expect(
+    (await inbox('editor')).filter(
+      (item: { category?: string }) => item.category === 'assigned_task',
+    ),
+  ).toHaveLength(0);
+  await admin.task.delete({ where: { id: task.id } });
+  expect(
+    (await inbox('editor')).filter(
+      (item: { category?: string }) => item.category === 'assigned_task',
+    ),
+  ).toHaveLength(0);
+});
+it('limits the inbox to current members and hides archived sources', async () => {
+  const f = await fixture();
+  await enable(f.path, 'viewer');
+  const inbox = await request(app).get(`${f.path}/inbox`).set('x-test-actor', 'viewer').expect(200);
+  expect(inbox.body.items.map((item: { activityId: string }) => item.activityId)).toContain(
+    f.event.id,
+  );
+  const readPath = `${f.path}/inbox/${f.event.id}/read`;
+  await request(app).put(readPath).set('x-test-actor', 'viewer').send({ read: true }).expect(200);
+  expect(
+    (await request(app).get(`${f.path}/inbox`).set('x-test-actor', 'viewer')).body.items[0].read,
+  ).toBe(true);
+  await enable(f.path, 'editor');
+  expect(
+    (await request(app).get(`${f.path}/inbox`).set('x-test-actor', 'editor')).body.items[0].read,
+  ).toBe(false);
+  await request(app)
+    .put(`/workspaces/${f.b}/digest/inbox/${f.event.id}/read`)
+    .set('x-test-actor', 'foreign')
+    .send({ read: true })
+    .expect(404);
+  await request(app).put(readPath).set('x-test-actor', 'viewer').send({ read: false }).expect(200);
+  expect(
+    (await request(app).get(`${f.path}/inbox`).set('x-test-actor', 'viewer')).body.items[0].read,
+  ).toBe(false);
+  await admin.document.update({ where: { id: f.doc.id }, data: { isArchived: true } });
+  await request(app).put(readPath).set('x-test-actor', 'viewer').send({ read: true }).expect(404);
+  const afterArchive = await request(app)
+    .get(`${f.path}/inbox`)
+    .set('x-test-actor', 'viewer')
+    .expect(200);
+  expect(afterArchive.body.items).toEqual([]);
+  await admin.workspaceMember.delete({
+    where: { userId_workspaceId: { userId: 'viewer', workspaceId: f.a } },
+  });
+  await request(app).put(readPath).set('x-test-actor', 'viewer').send({ read: true }).expect(403);
+  await request(app).get(`${f.path}/inbox`).set('x-test-actor', 'viewer').expect(403);
+});
 it('defaults off and requires personal opt in without creating a preference on read', async () => {
   delete process.env.FEATURE_ASYNC_DIGEST;
   await request(app).get('/workspaces/a/digest/preferences').expect(404);

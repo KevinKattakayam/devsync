@@ -275,6 +275,19 @@ export async function createTask(req: Request, res: Response, next: NextFunction
               workspaceId,
             },
           });
+          if (result.assigneeId)
+            await tx.activity.create({
+              data: {
+                type: 'task_assigned',
+                message: 'A task was assigned to you.',
+                metadata: {
+                  ...digestSource('task', result.id, result.updatedAt.toISOString()),
+                  recipientId: result.assigneeId,
+                },
+                userId: req.user!.userId,
+                workspaceId,
+              },
+            });
           await queueEmbedding('task', result.id, tx, workspaceId, req.user!.userId);
           return result;
         },
@@ -296,6 +309,10 @@ export async function updateTask(req: Request, res: Response, next: NextFunction
       WRITE_ROLES,
       async (tx, workspaceId) => {
         await requireAssignee(tx, workspaceId, data.assigneeId);
+        const previous =
+          data.assigneeId !== undefined
+            ? await tx.task.findUniqueOrThrow({ where: { id }, select: { assigneeId: true } })
+            : null;
         if (columnId !== undefined || position !== undefined) {
           const existing = await tx.task.findUniqueOrThrow({ where: { id } });
           const targetId = columnId ?? existing.columnId;
@@ -310,6 +327,19 @@ export async function updateTask(req: Request, res: Response, next: NextFunction
           },
           include: taskInclude,
         });
+        if (result.assigneeId && previous && previous.assigneeId !== result.assigneeId)
+          await tx.activity.create({
+            data: {
+              type: 'task_assigned',
+              message: 'A task was assigned to you.',
+              metadata: {
+                ...digestSource('task', result.id, result.updatedAt.toISOString()),
+                recipientId: result.assigneeId,
+              },
+              userId: req.user!.userId,
+              workspaceId,
+            },
+          });
         await queueEmbedding('task', result.id, tx, workspaceId, req.user!.userId);
         return result;
       },
