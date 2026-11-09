@@ -1,0 +1,194 @@
+{
+  "status": "incomplete-foundation",
+  "branch": "upgrade/enterprise",
+  "baseCommit": "f638641",
+  "backendGates": [
+    {
+      "gate": "lint",
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 2.744,
+      "output": "backend-lint.txt"
+    },
+    {
+      "gate": "format",
+      "command": [
+        "npm",
+        "run",
+        "format:check"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 3.866,
+      "output": "backend-format.txt"
+    },
+    {
+      "gate": "types",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 18.651,
+      "output": "backend-types.txt"
+    },
+    {
+      "gate": "tests",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 113.52,
+      "output": "backend-tests.txt"
+    },
+    {
+      "gate": "build",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 9.296,
+      "output": "backend-build.txt"
+    }
+  ],
+  "backendTests": 340,
+  "backendSuites": 37,
+  "coverageComparison": {
+    "service": "backend",
+    "status": "passed",
+    "metrics": {
+      "statements": 84.26,
+      "branches": 75.12,
+      "functions": 78.27,
+      "lines": 86.59
+    }
+  },
+  "openapiCheck": 0,
+  "security": [
+    {
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "-v",
+        "/home/kevin/devsync:/repo:ro",
+        "-v",
+        "/home/kevin/devsync/docs/quality/automation:/reports",
+        "-w",
+        "/repo",
+        "semgrep/semgrep@sha256:b68f9b68483955b85042dac7b4533757779625a02dcf91e470da4c2df1b430be",
+        "semgrep",
+        "scan",
+        "--config",
+        "p/typescript",
+        "--no-git-ignore",
+        "--metrics=off",
+        "--disable-version-check",
+        "--error",
+        "--json",
+        "--output",
+        "/reports/semgrep.json",
+        "backend/src",
+        "frontend/src"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "-v",
+        "/home/kevin/devsync:/repo:ro",
+        "zricethezav/gitleaks@sha256:691af3c7c5a48b16f187ce3446d5f194838f91238f27270ed36eef6359a574d9",
+        "dir",
+        "/repo/backend/src",
+        "--config=/repo/.gitleaks.toml",
+        "--redact=100",
+        "--no-banner"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "-v",
+        "/home/kevin/devsync:/repo:ro",
+        "zricethezav/gitleaks@sha256:691af3c7c5a48b16f187ce3446d5f194838f91238f27270ed36eef6359a574d9",
+        "dir",
+        "/repo/frontend/src",
+        "--config=/repo/.gitleaks.toml",
+        "--redact=100",
+        "--no-banner"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "-v",
+        "/home/kevin/devsync:/repo:ro",
+        "zricethezav/gitleaks@sha256:691af3c7c5a48b16f187ce3446d5f194838f91238f27270ed36eef6359a574d9",
+        "dir",
+        "/repo/docs/quality/automation",
+        "--config=/repo/.gitleaks.toml",
+        "--redact=100",
+        "--no-banner"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "-v",
+        "/home/kevin/devsync:/repo:ro",
+        "zricethezav/gitleaks@sha256:691af3c7c5a48b16f187ce3446d5f194838f91238f27270ed36eef6359a574d9",
+        "dir",
+        "/repo/backend/testing",
+        "--config=/repo/.gitleaks.toml",
+        "--redact=100",
+        "--no-banner"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "-v",
+        "/home/kevin/devsync:/repo:ro",
+        "zricethezav/gitleaks@sha256:691af3c7c5a48b16f187ce3446d5f194838f91238f27270ed36eef6359a574d9",
+        "dir",
+        "/repo/frontend/tests",
+        "--config=/repo/.gitleaks.toml",
+        "--redact=100",
+        "--no-banner"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "browser": "not run; no frontend exists",
+  "providers": "not contacted",
+  "remaining": "see README.md; rule persistence, authorization, event ingestion, approval, idempotency, debounce, loop enforcement, execution, auditing and UI remain",
+  "operations": {
+    "push": false,
+    "deploy": false,
+    "productionDataChanged": false,
+    "phase11Started": false,
+    "localImplementationCommit": "649ad0a"
+  }
+}

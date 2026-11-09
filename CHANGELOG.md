@@ -1,3 +1,8 @@
+# Rules and approval-based automation — incomplete foundation
+
+- Add strict internal rule/event preview and automation-only dead-letter/error redaction with local Redis retry tests. No rule API, execution, approval, event hookup, audit UI or frontend exists yet.
+- Record passing backend gates and explicit remaining Phase 10 work in `docs/quality/automation/README.md`. No provider, push or deployment claims.
+
 # Grounded AI assistant — local preview delivery
 
 - Reuse gateway/quota and permission-aware lexical retrieval for structured cited previews; recheck sources after remote calls and reject fabricated reference IDs or executable/unrequested actions.

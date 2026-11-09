@@ -1,3 +1,11 @@
+# Rules and approval-based automation — incomplete foundation
+
+Added a side-effect-free strict rule/event preview and automation-specific queue error/dead-letter redaction. The preview is not an authorization or approval mechanism; no rule persistence, action execution, event ingestion, UI or audit timeline exists yet. Source BullMQ jobs retain their own data, so future producers must use opaque, nonsensitive payloads. Existing queue behavior is preserved for other queues.
+
+Backend verification passes: 37 suites/340 tests, including actual disposable Redis retry/redaction coverage, and lint/format/types/build plus coverage comparison, OpenAPI and source-security scans. No real provider or browser success is claimed. [Exact verification, limitations and remaining Phase 10 work](quality/automation/README.md). No push, deployment, production-data change or Phase 11 work.
+
+---
+
 # Grounded AI assistant — local preview delivery, evaluation pending
 
 Extended the existing gateway/quota and lexical retrieval with a flagged structured preview endpoint and Copilot panel. Current source authority is rechecked after generation; fabricated references, unknown/executable actions and unrequested drafts reject. Task/decision/link outputs remain manual-review previews and cannot mutate or accept work. Existing receipt immutability and owner-only PR visibility remain in force.
