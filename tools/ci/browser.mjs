@@ -1,5 +1,6 @@
 import { spawn } from 'node:child_process';
 const targets = {
+  inbox: { E2E_INBOX: '1', E2E_ASYNC_DIGEST: '1' },
   automation: { E2E_AUTOMATION: '1' },
   grounded: { E2E_GROUNDED: '1' },
   core: {},

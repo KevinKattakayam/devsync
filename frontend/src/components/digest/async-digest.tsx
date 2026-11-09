@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState, type ComponentProps } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/providers/auth-provider';
+import { useSocket } from '@/providers/socket-provider';
 import { Badge, Button, EmptyState, Skeleton, toast } from '@/components/ui';
 import {
   digestApi,
@@ -26,6 +27,7 @@ export function AsyncDigest({ workspaceId }: { workspaceId: string }) {
   return <Digest key={`${workspaceId}:${user?.id}`} workspaceId={workspaceId} />;
 }
 export function Digest({ workspaceId }: { workspaceId: string }) {
+  const { socket } = useSocket();
   const [attempt, setAttempt] = useState(0),
     [snapshot, setSnapshot] = useState<{
       attempt: number;
@@ -49,19 +51,50 @@ export function Digest({ workspaceId }: { workspaceId: string }) {
   }, []);
   useEffect(() => {
     let active = true;
+    const token = ++request.current;
     void digestApi
       .preference(workspaceId)
       .then(async (preference) => {
         const page = preference.enabled ? await digestApi.items(workspaceId) : undefined;
-        if (active) setSnapshot({ attempt, preference, page });
+        if (active && request.current === token) setSnapshot({ attempt, preference, page });
       })
       .catch(() => {
-        if (active) setSnapshot({ attempt, error: true });
+        if (active && request.current === token) setSnapshot({ attempt, error: true });
       });
     return () => {
       active = false;
     };
   }, [workspaceId, attempt]);
+  useEffect(() => {
+    const clear = () => {
+      request.current++;
+      setSnapshot(undefined);
+    };
+    const refresh = () => {
+      clear();
+      setAttempt((v) => v + 1);
+    };
+    const visibility = () => {
+      if (document.hidden) clear();
+      else refresh();
+    };
+    window.addEventListener('offline', clear);
+    window.addEventListener('online', refresh);
+    window.addEventListener('focus', refresh);
+    document.addEventListener('visibilitychange', visibility);
+    socket?.on('disconnect', clear);
+    socket?.on('connect', refresh);
+    socket?.on('workspace:suspended', clear);
+    return () => {
+      window.removeEventListener('offline', clear);
+      window.removeEventListener('online', refresh);
+      window.removeEventListener('focus', refresh);
+      document.removeEventListener('visibilitychange', visibility);
+      socket?.off('disconnect', clear);
+      socket?.off('connect', refresh);
+      socket?.off('workspace:suspended', clear);
+    };
+  }, [socket]);
   const refresh = () => {
     request.current++;
     setActionError('');
@@ -78,6 +111,7 @@ export function Digest({ workspaceId }: { workspaceId: string }) {
     try {
       await digestApi.setEnabled(workspaceId, value, preference.revision);
       if (alive.current && token === request.current) {
+        window.dispatchEvent(new Event('devsync:digest-preference-changed'));
         refresh();
       }
     } catch {
@@ -140,6 +174,12 @@ export function Digest({ workspaceId }: { workspaceId: string }) {
           <p className="max-w-2xl text-sm leading-6 text-muted-foreground">
             Recorded workspace activity, with a source for every entry.
           </p>
+          <Link
+            className="inline-block text-sm text-primary underline underline-offset-4"
+            href={`/workspace/${encodeURIComponent(workspaceId)}/inbox`}
+          >
+            Open inbox
+          </Link>
         </div>
         <DigestButton variant="secondary" disabled={busy} onClick={refresh}>
           Refresh digest
