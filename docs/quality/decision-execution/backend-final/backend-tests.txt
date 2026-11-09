@@ -1,0 +1,565 @@
+
+> devsync-backend@1.0.0 test
+> node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand
+
+{"level":40,"time":1794150950348,"service":"devsync-api","requestId":"system","event":"ai_quota_storage_error","count":1}
+{"level":40,"time":1794150950413,"service":"devsync-api","requestId":"system","event":"ai_quota_storage_error","count":1}
+{"level":50,"time":1794150952842,"service":"devsync-api","msg":"Unexpected server error"}
+{"level":40,"time":1794150954248,"service":"devsync-api","requestId":"system","event":"ai_quota_storage_error","count":1}
+{"level":30,"time":1794150991364,"service":"devsync-api","req":{"id":"6b286bb3-2c97-4c22-88dd-a36384174c6a","method":"GET"},"requestId":"6b286bb3-2c97-4c22-88dd-a36384174c6a","res":{"statusCode":200},"responseTime":3,"msg":"request completed"}
+{"level":30,"time":1794150991373,"service":"devsync-api","req":{"id":"e9f5d579-1db2-4ff1-9b69-95a00e2f955e","method":"GET"},"requestId":"e9f5d579-1db2-4ff1-9b69-95a00e2f955e","res":{"statusCode":401},"responseTime":3,"msg":"request completed"}
+{"level":30,"time":1794150991380,"service":"devsync-api","req":{"id":"3837b46a-e704-45c1-a1b5-59e3d743296f","method":"GET"},"requestId":"3837b46a-e704-45c1-a1b5-59e3d743296f","res":{"statusCode":200},"responseTime":0,"msg":"request completed"}
+{"level":30,"time":1794150991384,"service":"devsync-api","req":{"id":"a65511c1-76f3-462f-9f9f-8609b2912c51","method":"GET"},"requestId":"a65511c1-76f3-462f-9f9f-8609b2912c51","res":{"statusCode":401},"responseTime":2,"msg":"request completed"}
+{"level":30,"time":1794150991388,"service":"devsync-api","req":{"id":"1feeed2d-8730-42c0-a27e-ae1e083ff892","method":"GET"},"requestId":"1feeed2d-8730-42c0-a27e-ae1e083ff892","res":{"statusCode":404},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1794150991397,"service":"devsync-api","req":{"id":"f3d037c8-8657-4cc1-8525-44091d3d0961","method":"POST"},"requestId":"f3d037c8-8657-4cc1-8525-44091d3d0961","res":{"statusCode":400},"responseTime":6,"msg":"request completed"}
+{"level":30,"time":1794150991407,"service":"devsync-api","req":{"id":"4518937d-299d-40d9-b54c-35c1cc83d262","method":"GET"},"requestId":"4518937d-299d-40d9-b54c-35c1cc83d262","res":{"statusCode":404},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1794150991410,"service":"devsync-api","req":{"id":"5d5cafe6-a3d9-4bbe-9baa-a919e4f7ffaa","method":"GET"},"requestId":"5d5cafe6-a3d9-4bbe-9baa-a919e4f7ffaa","res":{"statusCode":403},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1794150991412,"service":"devsync-api","req":{"id":"cf7f7846-4308-42d2-a614-a3d11feaba18","method":"GET"},"requestId":"cf7f7846-4308-42d2-a614-a3d11feaba18","res":{"statusCode":403},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1794150991416,"service":"devsync-api","req":{"id":"a40d67d6-0dfa-4504-985d-6c5191c24b9e","method":"GET"},"requestId":"a40d67d6-0dfa-4504-985d-6c5191c24b9e","res":{"statusCode":200},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1794150992105,"service":"devsync-api","req":{"id":"dc7ec680-768a-4050-861b-e6028fa7852b","method":"POST"},"requestId":"dc7ec680-768a-4050-861b-e6028fa7852b","res":{"statusCode":404},"responseTime":2,"msg":"request completed"}
+{"level":30,"time":1794150992109,"service":"devsync-api","req":{"id":"94f6e4fb-d194-4d63-b7f3-8369a94a28ea","method":"GET"},"requestId":"94f6e4fb-d194-4d63-b7f3-8369a94a28ea","res":{"statusCode":401},"responseTime":1,"msg":"request completed"}
+FAIL src/__tests__/api-reliability.test.ts
+  ● serves the generated versioned route and Zod contract without snapshot drift
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  0
+    + Received  + 54
+
+    @@ -6668,10 +6668,22 @@
+                    "type": Array [
+                      "string",
+                      "null",
+                    ],
+                  },
+    +             "repositoryName": Object {
+    +               "type": Array [
+    +                 "string",
+    +                 "null",
+    +               ],
+    +             },
+    +             "repositoryOwner": Object {
+    +               "type": Array [
+    +                 "string",
+    +                 "null",
+    +               ],
+    +             },
+                  "taskId": Object {
+                    "type": Array [
+                      "string",
+                      "null",
+                    ],
+    @@ -6680,11 +6692,23 @@
+                    "type": Array [
+                      "string",
+                      "null",
+                    ],
+                  },
+    +             "taskUpdatedAt": Object {
+    +               "anyOf": Array [
+    +                 Object {
+    +                   "format": "date-time",
+    +                   "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+    +                   "type": "string",
+                      },
+    +                 Object {
+    +                   "type": "null",
+    +                 },
+    +               ],
+    +             },
+    +           },
+                "required": Array [
+                  "id",
+                  "kind",
+                  "evidence",
+                  "occurredAt",
+    @@ -6692,10 +6716,13 @@
+                  "createdBy",
+                  "taskId",
+                  "repositoryId",
+                  "pullNumber",
+                  "taskTitle",
+    +             "taskUpdatedAt",
+    +             "repositoryOwner",
+    +             "repositoryName",
+                  "pullState",
+                  "pullProviderAt",
+                  "pullObservedAt",
+                  "githubEvidence",
+                ],
+    @@ -24752,25 +24779,49 @@
+                              "format": "date-time",
+                              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+                              "type": "string",
+                            },
+                            "repositoryId": Object {
+    +                         "type": Array [
+    +                           "string",
+    +                           "null",
+    +                         ],
+    +                       },
+    +                       "repositoryName": Object {
+                              "type": Array [
+                                "string",
+                                "null",
+                              ],
+                            },
+    +                       "repositoryOwner": Object {
+    +                         "type": Array [
+    +                           "string",
+    +                           "null",
+    +                         ],
+    +                       },
+                            "taskId": Object {
+                              "type": Array [
+                                "string",
+                                "null",
+                              ],
+                            },
+                            "taskTitle": Object {
+                              "type": Array [
+                                "string",
+                                "null",
+    +                         ],
+    +                       },
+    +                       "taskUpdatedAt": Object {
+    +                         "anyOf": Array [
+    +                           Object {
+    +                             "format": "date-time",
+    +                             "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+    +                             "type": "string",
+    +                           },
+    +                           Object {
+    +                             "type": "null",
+    +                           },
+                              ],
+                            },
+                          },
+                          "required": Array [
+                            "id",
+    @@ -24781,10 +24832,13 @@
+                            "createdBy",
+                            "taskId",
+                            "repositoryId",
+                            "pullNumber",
+                            "taskTitle",
+    +                       "taskUpdatedAt",
+    +                       "repositoryOwner",
+    +                       "repositoryName",
+                            "pullState",
+                            "pullProviderAt",
+                            "pullObservedAt",
+                            "githubEvidence",
+                          ],
+
+      87 | });
+      88 | it('serves the generated versioned route and Zod contract without snapshot drift', async () => {
+    > 89 |   expect(JSON.parse(readFileSync('openapi.json', 'utf8'))).toEqual(apiDocument);
+         |                                                            ^
+      90 |   const response = await request(app).get('/api/docs');
+      91 |   expect(response.status).toBe(200);
+      92 |   expect(response.body.openapi).toBe('3.1.0');
+
+      at Object.<anonymous> (src/__tests__/api-reliability.test.ts:89:60)
+
+(node:606743) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1794151002475,"service":"devsync-api","req":{"id":"b9b0f758-8bb4-4cb6-8043-136c8f786eb0","method":"GET"},"requestId":"b9b0f758-8bb4-4cb6-8043-136c8f786eb0","res":{"statusCode":200},"responseTime":2,"msg":"request completed"}
+{"level":30,"time":1794151003401,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794151003402,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794151003402,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794151003402,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794151003403,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794151003403,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794151003403,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794151003403,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794151003403,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794151003403,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794151003404,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794151003404,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794151003404,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794151003404,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794151003404,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794151003404,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794151003404,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794151003404,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794151003404,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794151003404,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794151003408,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794151003408,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794151003409,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794151003413,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794151003413,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794151003414,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794151003418,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794151003418,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794151003421,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794151003422,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794151003422,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"monthly"}
+{"level":30,"time":1794151003423,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794151003424,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"concurrent"}
+{"level":30,"time":1794151003424,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794151003425,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794151003425,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":40,"time":1794151003428,"service":"devsync-api","requestId":"system","event":"ai_quota_storage_error","count":1}
+{"level":30,"time":1794151003432,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794151003432,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794151003432,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794151003438,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794151003438,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794151003439,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"monthly"}
+{"level":30,"time":1794151003441,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794151003441,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794151003442,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794151003444,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794151003445,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794151003445,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"monthly"}
+{"level":30,"time":1794151003447,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794151003448,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"concurrent"}
+{"level":30,"time":1794151003449,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794151003449,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794151003449,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794151003455,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794151003455,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794151003455,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794151003455,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794151003455,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794151003455,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794151003455,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794151003455,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794151003455,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794151003456,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794151003456,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794151003456,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794151003456,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794151003456,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794151003456,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794151003456,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794151003456,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794151003456,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794151003456,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794151003456,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794151003457,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794151003457,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794151003458,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794151003460,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794151003460,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794151003461,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794151003463,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794151003469,"service":"devsync-api","requestId":"system","event":"ai_reservation_refunded","count":1}
+{"level":30,"time":1794151003471,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794151003471,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794151003474,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794151003474,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794151003475,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794151003481,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794151003481,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794151003481,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794151003481,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794151003481,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794151003481,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794151003481,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794151003482,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794151003482,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794151003482,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794151003482,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794151003482,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794151003482,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794151003482,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794151003482,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794151003482,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794151003482,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794151003482,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794151003482,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794151003482,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794151003483,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794151003483,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794151003483,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794151007347,"service":"devsync-api","req":{"id":"5bcce24d-ebe0-42be-841c-fc4ee06aced4","method":"POST"},"requestId":"5bcce24d-ebe0-42be-841c-fc4ee06aced4","res":{"statusCode":401},"responseTime":2,"msg":"request completed"}
+{"level":30,"time":1794151007354,"service":"devsync-api","req":{"id":"40bb1377-1876-47a0-a4f0-31be526f2ce0","method":"POST"},"requestId":"40bb1377-1876-47a0-a4f0-31be526f2ce0","res":{"statusCode":401},"responseTime":0,"msg":"request completed"}
+{"level":30,"time":1794151007362,"service":"devsync-api","req":{"id":"2f12d276-753e-4e3a-9d58-da8abfe8796c","method":"POST"},"requestId":"2f12d276-753e-4e3a-9d58-da8abfe8796c","res":{"statusCode":401},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1794151007365,"service":"devsync-api","req":{"id":"af1866c3-6e2e-419f-b5c0-388a7be88db9","method":"POST"},"requestId":"af1866c3-6e2e-419f-b5c0-388a7be88db9","res":{"statusCode":401},"responseTime":0,"msg":"request completed"}
+{"level":30,"time":1794151007375,"service":"devsync-api","req":{"id":"78875e2c-d289-433d-8c1d-ac6fa748072a","method":"POST"},"requestId":"78875e2c-d289-433d-8c1d-ac6fa748072a","res":{"statusCode":401},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1794151007379,"service":"devsync-api","req":{"id":"28c32cf8-b058-4dfc-8674-998a9b7e15ee","method":"POST"},"requestId":"28c32cf8-b058-4dfc-8674-998a9b7e15ee","res":{"statusCode":503},"err":{"type":"HttpError"},"responseTime":1,"msg":"request errored"}
+{"level":30,"time":1794151007383,"service":"devsync-api","req":{"id":"765e1600-3561-4893-ab1d-5bfe5dd8368f","method":"POST"},"requestId":"765e1600-3561-4893-ab1d-5bfe5dd8368f","res":{"statusCode":401},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1794151007386,"service":"devsync-api","req":{"id":"87019931-96ec-4bc5-9ec2-a61569a3e4bd","method":"POST"},"requestId":"87019931-96ec-4bc5-9ec2-a61569a3e4bd","res":{"statusCode":401},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1794151007389,"service":"devsync-api","req":{"id":"bd3a3321-c9f6-47cb-8e64-f5ba61fd0b56","method":"POST"},"requestId":"bd3a3321-c9f6-47cb-8e64-f5ba61fd0b56","res":{"statusCode":401},"responseTime":0,"msg":"request completed"}
+{"level":30,"time":1794151007393,"service":"devsync-api","req":{"id":"3884c437-e041-47c5-80a3-86da678fb2da","method":"POST"},"requestId":"3884c437-e041-47c5-80a3-86da678fb2da","res":{"statusCode":401},"responseTime":1,"msg":"request completed"}
+{"level":50,"time":1794151007396,"service":"devsync-api","req":{"id":"16dca6fe-aa0d-4daa-86ac-26a2f3ed6638","method":"POST"},"requestId":"16dca6fe-aa0d-4daa-86ac-26a2f3ed6638","msg":"Unexpected server error"}
+{"level":30,"time":1794151007396,"service":"devsync-api","req":{"id":"16dca6fe-aa0d-4daa-86ac-26a2f3ed6638","method":"POST"},"requestId":"16dca6fe-aa0d-4daa-86ac-26a2f3ed6638","res":{"statusCode":500},"err":{"type":"HttpError"},"responseTime":0,"msg":"request errored"}
+{"level":30,"time":1794151007400,"service":"devsync-api","req":{"id":"0c58cbbe-3a55-4e98-a16d-dc8243a1c00c","method":"POST"},"requestId":"0c58cbbe-3a55-4e98-a16d-dc8243a1c00c","res":{"statusCode":200},"responseTime":0,"msg":"request completed"}
+----------------------------------|---------|----------|---------|---------|-------------------------------------------------------
+File                              | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s                                     
+----------------------------------|---------|----------|---------|---------|-------------------------------------------------------
+All files                         |    83.3 |    74.45 |   76.84 |   85.59 |                                                       
+ src                              |    74.8 |    81.87 |   42.85 |   76.82 |                                                       
+  app.ts                          |    97.8 |       50 |      80 |   98.88 | 122                                                   
+  config-environment.ts           |     100 |    94.73 |     100 |     100 | 11,35                                                 
+  contracts.ts                    |    96.8 |       75 |     100 |     100 | 40,49-69,81,189                                       
+  openapi.ts                      |   96.51 |     95.4 |    90.9 |   97.43 | 83,158                                                
+  server.ts                       |       0 |        0 |       0 |       0 | 1-99                                                  
+  worker.ts                       |       0 |        0 |       0 |       0 | 1-103                                                 
+ src/agents                       |   82.53 |       65 |      70 |   87.93 |                                                       
+  pr-summary.agent.ts             |   81.81 |    66.66 |      75 |      90 | 50,80                                                 
+  task-completion.agent.ts        |   82.92 |    64.28 |   66.66 |   86.84 | 68,78,82,88,118                                       
+ src/controllers                  |   89.21 |    71.16 |   84.82 |   90.83 |                                                       
+  ai.controller.ts                |   82.53 |    54.34 |   54.54 |    86.2 | 36,45,54,83,120-121,142-145                           
+  auth.controller.ts              |   95.83 |       85 |     100 |     100 | 48-80                                                 
+  document.controller.ts          |   96.47 |    82.05 |     100 |   97.61 | 177,190                                               
+  github-repository.controller.ts |     100 |       90 |     100 |     100 | 117                                                   
+  invitation.controller.ts        |   32.35 |        0 |       0 |   33.33 | 14-43,47-52,56-71                                     
+  search.controller.ts            |    91.3 |       50 |   66.66 |   95.23 | 53                                                    
+  snippet.controller.ts           |   96.49 |    73.68 |   91.66 |   98.21 | 50                                                    
+  task.controller.ts              |    95.1 |    67.39 |     100 |   96.37 | 76,205,303,362-375                                    
+  workspace.controller.ts         |   84.95 |    77.41 |   86.36 |   85.71 | 117-145,170,230,238                                   
+ src/extraction                   |    87.5 |    75.67 |   72.22 |   92.72 |                                                       
+  extract-child.ts                |   69.04 |    56.66 |      20 |   77.14 | 42-57                                                 
+  server.ts                       |   96.51 |    88.63 |    92.3 |     100 | 27,47-52,63,112                                       
+ src/lib                          |   53.24 |    51.04 |      42 |   55.05 |                                                       
+  cache.ts                        |       0 |        0 |       0 |       0 | 1-67                                                  
+  create-idempotency.ts           |   89.79 |    82.92 |     100 |   93.02 | 19,26,59                                              
+  idempotency.ts                  |       0 |        0 |       0 |       0 | 1-27                                                  
+  lifecycle.ts                    |   91.66 |       60 |      75 |    90.9 | 6,27                                                  
+  prisma.ts                       |   93.75 |       70 |   66.66 |   93.75 | 36                                                    
+  queue.ts                        |   31.25 |        0 |       0 |   31.25 | 41,49-62,72-114,120-124                               
+  redis.ts                        |   26.31 |    16.66 |    9.09 |   32.25 | 12-20,25-27,41-45,51-64                               
+  tenant-prisma.ts                |   93.33 |       75 |     100 |   93.33 | 19                                                    
+ src/middleware                   |   74.12 |    58.58 |   73.52 |   75.93 |                                                       
+  ai-quota.middleware.ts          |   52.77 |    18.18 |   42.85 |   59.37 | 17-33,42-43                                           
+  auth.middleware.ts              |   51.51 |    42.85 |      25 |   53.33 | 28,45-56,62-66                                        
+  billing.middleware.ts           |   94.11 |       70 |   66.66 |   94.11 | 35                                                    
+  error.middleware.ts             |      72 |    69.04 |     100 |   70.21 | 37-38,50-51,58-59,62-63,66-67,70-71,74-75             
+  rate-limit.middleware.ts        |   85.71 |       50 |      50 |   85.71 | 20                                                    
+  rbac.middleware.ts              |   94.73 |    83.33 |     100 |   94.73 | 13                                                    
+  request-context.middleware.ts   |     100 |      100 |     100 |     100 |                                                       
+  tracing.middleware.ts           |   85.71 |       50 |     100 |     100 | 14-15                                                 
+  validate.middleware.ts          |    92.3 |       50 |     100 |   91.66 | 15                                                    
+ src/observability                |      70 |    57.14 |      48 |   70.52 |                                                       
+  ai.ts                           |     100 |      100 |     100 |     100 |                                                       
+  logger.ts                       |     100 |      100 |     100 |     100 |                                                       
+  metrics.ts                      |   94.73 |    92.85 |   85.71 |   94.28 | 32,77                                                 
+  reporting.ts                    |   31.57 |     12.5 |      25 |   35.29 | 4-27,31,34-35                                         
+  request-scope.ts                |     100 |      100 |     100 |     100 |                                                       
+  telemetry.ts                    |   34.78 |        0 |      10 |   34.78 | 9-74,78-79                                            
+ src/routes                       |   93.72 |    76.38 |   94.59 |   94.93 |                                                       
+  ai-v3.routes.ts                 |    62.5 |        0 |       0 |   61.29 | 13-19,24-28,41-44                                     
+  ai.routes.ts                    |     100 |      100 |     100 |     100 |                                                       
+  async-digest.routes.ts          |   98.11 |    83.33 |     100 |     100 | 95                                                    
+  auth.routes.ts                  |     100 |      100 |     100 |     100 |                                                       
+  decision-receipts.routes.ts     |   91.66 |    79.62 |      96 |   94.67 | 65,71,109-122,163                                     
+  document.routes.ts              |     100 |      100 |     100 |     100 |                                                       
+  github-execution.routes.ts      |     100 |      100 |     100 |     100 |                                                       
+  github-installation.routes.ts   |   86.48 |    62.85 |   66.66 |   88.88 | 25,40,43,47                                           
+  github-webhook.routes.ts        |   94.93 |    85.71 |     100 |   97.36 | 187,230                                               
+  health.routes.ts                |   83.33 |    70.83 |      90 |   84.37 | 16-17,54-56                                           
+  ingestion.routes.ts             |   93.33 |       60 |     100 |   93.33 | 30,69                                                 
+  knowledge-search.routes.ts      |     100 |      100 |     100 |     100 |                                                       
+  lifecycle.routes.ts             |   97.77 |    78.94 |     100 |    97.7 | 23,73                                                 
+  scim.routes.ts                  |      92 |    68.18 |     100 |   92.85 | 130-131,161-163                                       
+  snippet-safety.routes.ts        |     100 |      100 |     100 |     100 |                                                       
+  snippet.routes.ts               |     100 |      100 |     100 |     100 |                                                       
+  stripe.webhook.ts               |   91.66 |       75 |     100 |   91.66 | 8                                                     
+  superadmin.routes.ts            |     100 |       75 |     100 |     100 | 25                                                    
+  task.routes.ts                  |     100 |      100 |     100 |     100 |                                                       
+  workspace.routes.ts             |     100 |      100 |     100 |     100 |                                                       
+ src/schemas                      |     100 |      100 |     100 |     100 |                                                       
+  search.schema.ts                |     100 |      100 |     100 |     100 |                                                       
+ src/scripts                      |       0 |        0 |       0 |       0 |                                                       
+  openapi.ts                      |       0 |        0 |       0 |       0 | 1-24                                                  
+ src/security                     |   81.29 |    74.35 |   86.76 |   85.54 |                                                       
+  authentication.ts               |   57.57 |    26.31 |      50 |   60.71 | 33-38,46-50                                           
+  invitation-policy.ts            |   16.66 |        0 |       0 |   18.18 | 7-54                                                  
+  policy-deadline.ts              |   85.71 |    33.33 |   66.66 |     100 | 2-12                                                  
+  provider-sessions.ts            |   84.48 |    80.48 |    87.5 |    87.5 | 83,89,97-102                                          
+  realtime-identity.ts            |   73.91 |    70.83 |   66.66 |   80.95 | 16,23-24,28                                           
+  rich-text.ts                    |   86.36 |    85.71 |     100 |     100 | 7,11,13-14                                            
+  service-policy.ts               |    87.9 |    83.89 |     100 |   93.63 | 24,62,83,115,135,209,246                              
+  snippet-preflight.ts            |     100 |      100 |     100 |     100 |                                                       
+  workspace-policy.ts             |      92 |     90.9 |     100 |   95.65 | 35,62                                                 
+ src/services                     |   84.81 |    79.62 |   82.35 |   87.59 |                                                       
+  ai-gateway.service.ts           |       0 |        0 |       0 |       0 | 1-100                                                 
+  ai-prompt.ts                    |     100 |      100 |     100 |     100 |                                                       
+  ai-provider.ts                  |   96.66 |       90 |   91.66 |     100 | 76,80,83                                              
+  ai-quota.ts                     |      90 |       86 |   93.75 |    90.9 | 26-29,155,159                                         
+  ai-schema.ts                    |     100 |      100 |     100 |     100 |                                                       
+  async-digest.ts                 |   97.36 |    95.23 |     100 |   98.57 | 201                                                   
+  billing.service.ts              |   68.57 |    45.71 |      60 |   70.58 | 10-11,21,29-36,67-73                                  
+  cloudinary.service.ts           |       0 |      100 |       0 |       0 | 1-32                                                  
+  collaboration-acl.ts            |     100 |      100 |     100 |     100 |                                                       
+  collaboration-server.ts         |   89.88 |    83.24 |   94.44 |   93.36 | 183-185,250-252,286-287,341-342,396-397,401-402,430   
+  crdt-journal.ts                 |   91.78 |       80 |     100 |   95.45 | 54-55,82                                              
+  crdt-migration.ts               |   86.36 |    76.19 |     100 |   97.22 | 57                                                    
+  crdt-schema.ts                  |     100 |      100 |     100 |     100 |                                                       
+  crdt-sync.service.ts            |   78.57 |    73.33 |     100 |   84.61 | 30,33,52-63                                           
+  decision-receipts.ts            |   97.61 |    89.65 |     100 |     100 | 24,26,61                                              
+  embedding-runner.ts             |    87.5 |       50 |      80 |   93.33 | 15                                                    
+  embedding.service.ts            |   85.14 |    77.27 |   81.25 |   89.24 | 29-40,223                                             
+  extraction-client.ts            |   89.47 |    83.33 |     100 |   91.17 | 33,57,61                                              
+  github-execution.ts             |   93.87 |    81.57 |     100 |     100 | 54-55,60,63-68,83                                     
+  github-work-source.ts           |   98.18 |    92.85 |     100 |     100 | 23,35,64                                              
+  ingestion.service.ts            |   63.63 |    69.69 |   53.33 |   66.31 | 42-50,68-69,74-95,121-130,142-143,173,184,194,200,203 
+  knowledge-search.ts             |   94.11 |    92.68 |     100 |   93.93 | 101-102                                               
+  secret.service.ts               |     100 |      100 |     100 |     100 |                                                       
+  yjs.service.ts                  |   82.35 |       25 |   66.66 |    87.5 | 8-9                                                   
+ src/socket                       |   87.17 |     74.7 |    83.6 |   88.65 |                                                       
+  index.ts                        |   58.33 |      100 |   33.33 |   58.33 | 11-17,20-22                                           
+  kanban.handler.ts               |   90.62 |       88 |      75 |   90.62 | 60,64,95                                              
+  presence-store.ts               |   97.77 |    79.16 |   88.88 |   97.43 | 24                                                    
+  presence.handler.ts             |   78.08 |    45.45 |    90.9 |   81.42 | 51-52,88-92,102-111                                   
+  rate-limiter.ts                 |      96 |     87.5 |     100 |      96 | 66                                                    
+  server.ts                       |   88.41 |    75.82 |   83.87 |   90.54 | 76,79,89,126,142-143,150-151,154-155,164,166,181,206  
+ src/utils                        |     100 |       20 |     100 |     100 |                                                       
+  errors.ts                       |     100 |       20 |     100 |     100 | 14-26,38                                              
+----------------------------------|---------|----------|---------|---------|-------------------------------------------------------
+
+Summary of all failing tests
+FAIL src/__tests__/api-reliability.test.ts
+  ● serves the generated versioned route and Zod contract without snapshot drift
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  0
+    + Received  + 54
+
+    @@ -6668,10 +6668,22 @@
+                    "type": Array [
+                      "string",
+                      "null",
+                    ],
+                  },
+    +             "repositoryName": Object {
+    +               "type": Array [
+    +                 "string",
+    +                 "null",
+    +               ],
+    +             },
+    +             "repositoryOwner": Object {
+    +               "type": Array [
+    +                 "string",
+    +                 "null",
+    +               ],
+    +             },
+                  "taskId": Object {
+                    "type": Array [
+                      "string",
+                      "null",
+                    ],
+    @@ -6680,11 +6692,23 @@
+                    "type": Array [
+                      "string",
+                      "null",
+                    ],
+                  },
+    +             "taskUpdatedAt": Object {
+    +               "anyOf": Array [
+    +                 Object {
+    +                   "format": "date-time",
+    +                   "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+    +                   "type": "string",
+                      },
+    +                 Object {
+    +                   "type": "null",
+    +                 },
+    +               ],
+    +             },
+    +           },
+                "required": Array [
+                  "id",
+                  "kind",
+                  "evidence",
+                  "occurredAt",
+    @@ -6692,10 +6716,13 @@
+                  "createdBy",
+                  "taskId",
+                  "repositoryId",
+                  "pullNumber",
+                  "taskTitle",
+    +             "taskUpdatedAt",
+    +             "repositoryOwner",
+    +             "repositoryName",
+                  "pullState",
+                  "pullProviderAt",
+                  "pullObservedAt",
+                  "githubEvidence",
+                ],
+    @@ -24752,25 +24779,49 @@
+                              "format": "date-time",
+                              "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+                              "type": "string",
+                            },
+                            "repositoryId": Object {
+    +                         "type": Array [
+    +                           "string",
+    +                           "null",
+    +                         ],
+    +                       },
+    +                       "repositoryName": Object {
+                              "type": Array [
+                                "string",
+                                "null",
+                              ],
+                            },
+    +                       "repositoryOwner": Object {
+    +                         "type": Array [
+    +                           "string",
+    +                           "null",
+    +                         ],
+    +                       },
+                            "taskId": Object {
+                              "type": Array [
+                                "string",
+                                "null",
+                              ],
+                            },
+                            "taskTitle": Object {
+                              "type": Array [
+                                "string",
+                                "null",
+    +                         ],
+    +                       },
+    +                       "taskUpdatedAt": Object {
+    +                         "anyOf": Array [
+    +                           Object {
+    +                             "format": "date-time",
+    +                             "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$",
+    +                             "type": "string",
+    +                           },
+    +                           Object {
+    +                             "type": "null",
+    +                           },
+                              ],
+                            },
+                          },
+                          "required": Array [
+                            "id",
+    @@ -24781,10 +24832,13 @@
+                            "createdBy",
+                            "taskId",
+                            "repositoryId",
+                            "pullNumber",
+                            "taskTitle",
+    +                       "taskUpdatedAt",
+    +                       "repositoryOwner",
+    +                       "repositoryName",
+                            "pullState",
+                            "pullProviderAt",
+                            "pullObservedAt",
+                            "githubEvidence",
+                          ],
+
+      87 | });
+      88 | it('serves the generated versioned route and Zod contract without snapshot drift', async () => {
+    > 89 |   expect(JSON.parse(readFileSync('openapi.json', 'utf8'))).toEqual(apiDocument);
+         |                                                            ^
+      90 |   const response = await request(app).get('/api/docs');
+      91 |   expect(response.status).toBe(200);
+      92 |   expect(response.body.openapi).toBe('3.1.0');
+
+      at Object.<anonymous> (src/__tests__/api-reliability.test.ts:89:60)
+
+
+Test Suites: 1 failed, 32 passed, 33 total
+Tests:       1 failed, 328 passed, 329 total
+Snapshots:   0 total
+Time:        107.743 s, estimated 108 s
+Ran all test suites.

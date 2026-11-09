@@ -1,3 +1,11 @@
+# Evidence-linked decision-to-execution receipts — partial local delivery
+
+Phase 08 extends the existing manually accepted receipt system with timestamped human assertions/outcomes, same-workspace task links and owner-only references to existing GitHub PR/check/review evidence. It preserves accepted receipt immutability and fingerprints, uses additive forced-RLS insertion-only event storage, rechecks source visibility, and labels signed webhook records as unverified live-provider observations. A task/PR timeline is integrated into the existing receipt UI.
+
+Local evidence: 33 backend suites/330 tests, 24 frontend files/102 component tests plus 9 Node tests, lint/format/types/builds, unchanged coverage thresholds, OpenAPI, security scans, high-severity dependency audits, and one actual Chrome fixture flow for owner/viewer visibility. The browser fixture used local PostgreSQL/Redis, fixture identity and a locally signed PR webhook; no real Clerk/GitHub provider flow or screenshot is claimed. The missing trusted deployment-verification policy/adapter is engineering and product work, not merely unavailable credentials. Live GitHub acceptance, hosted CI and production migration remain pending. No push/deployment or Phase 09 work. [Exact commands, logs, failed attempts and limitations](quality/decision-execution/README.md).
+
+---
+
 # Search correctness and knowledge indexing — local phase
 
 The new versioned workspace search reads canonical committed projections using Postgres full text and existing tenant authority. It covers local documents/tasks/snippets, flagged source-visible receipts and owner-only connected recorded PR metadata. Source opens repeat current checks; archive/revocation/foreign IDs do not disclose result titles. Lexical results and read-time timestamps are explicit, with source/assignee/UTC filters and no AI-key requirement. Existing pgvector/AI retrieval remains separate and now excludes invalidated embeddings. Existing CRDT/outbox scheduling is retained; legacy contracts remain unchanged.

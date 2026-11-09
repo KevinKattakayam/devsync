@@ -1,3 +1,8 @@
+# Decision execution timeline — partial local delivery (2026-11-09)
+
+- Extend existing accepted receipts with tenant-scoped, insert-only timestamped human assertion/outcome, task and owner-only existing GitHub PR evidence timeline. Add API contracts, current-source rechecks, frontend linking and provenance labels, DB/API authorization regressions, and fixture-only owner/viewer Chrome flow.
+- Local lint, format, types, tests, builds, coverage, OpenAPI and security gates pass. No production deployment proof is supported; the trusted deployment adapter/policy, live GitHub acceptance, hosted CI and migration rollout remain pending. See `docs/quality/decision-execution/README.md`.
+
 # Permission-aware knowledge search
 
 - Repair committed TipTap-body keyword lookup and exclude invalidated semantic vectors; preserve legacy string bodies and existing CRDT/outbox policy.

@@ -1,0 +1,226 @@
+
+> frontend@0.1.0 test
+> node --test tests/*.test.mjs && vitest run
+
+TAP version 13
+# Subtest: I01 Next meets the current critical advisory remediation floor
+ok 1 - I01 Next meets the current critical advisory remediation floor
+  ---
+  duration_ms: 1.648028
+  type: 'test'
+  ...
+# Subtest: I01 unused NextAuth is absent from the installed frontend
+ok 2 - I01 unused NextAuth is absent from the installed frontend
+  ---
+  duration_ms: 1.17793
+  type: 'test'
+  ...
+# Subtest: fixture generator refuses production, development and unset modes
+ok 3 - fixture generator refuses production, development and unset modes
+  ---
+  duration_ms: 1.871314
+  type: 'test'
+  ...
+# Subtest: production source cannot select or import the test authentication adapter
+ok 4 - production source cannot select or import the test authentication adapter
+  ---
+  duration_ms: 36.957225
+  type: 'test'
+  ...
+# Subtest: code blocks and inline code escape HTML
+ok 5 - code blocks and inline code escape HTML
+  ---
+  duration_ms: 1.533456
+  type: 'test'
+  ...
+# Subtest: E02 treats ordinary HTML, handlers and malformed tags as inert text
+ok 6 - E02 treats ordinary HTML, handlers and malformed tags as inert text
+  ---
+  duration_ms: 0.576585
+  type: 'test'
+  ...
+# Subtest: E02 escapes HTML inside headings, lists and table cells
+ok 7 - E02 escapes HTML inside headings, lists and table cells
+  ---
+  duration_ms: 0.326223
+  type: 'test'
+  ...
+# Subtest: :root text, status and control tokens meet their WCAG AA contrast thresholds
+ok 8 - :root text, status and control tokens meet their WCAG AA contrast thresholds
+  ---
+  duration_ms: 1.998616
+  type: 'test'
+  ...
+# Subtest: .dark text, status and control tokens meet their WCAG AA contrast thresholds
+ok 9 - .dark text, status and control tokens meet their WCAG AA contrast thresholds
+  ---
+  duration_ms: 1.329761
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 649.977288
+
+ RUN  v5.0.5 /home/kevin/devsync/frontend
+      Coverage enabled with v8
+
+
+ Test Files  23 passed (23)
+      Tests  97 passed (97)
+   Start at  20:41:19
+   Duration  14.82s (environment 40%, tests 34%, import 22%, transform 2%, worker 2%)
+
+Environment  jsdom was created 23 times · 34.26s total, 40% of tracked time
+             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+             learn more: https://vitest.dev/guide/improving-performance#test-environments
+
+ % Coverage report from v8
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |   46.13 |    41.53 |   43.21 |   46.88 |                   
+ src               |   53.33 |    43.75 |   33.33 |      50 |                   
+  ...ation.node.ts |       0 |        0 |     100 |       0 | 4-6               
+  ...umentation.ts |       0 |        0 |       0 |       0 | 4-5               
+  proxy.ts         |      80 |       70 |      50 |   77.77 | 15-16             
+ src/app           |   10.52 |    33.33 |      10 |   10.52 |                   
+  error.tsx        |       0 |        0 |       0 |       0 | 1-15              
+  page.tsx         |       0 |        0 |       0 |       0 | 1-430             
+ src/app/(auth)    |       0 |      100 |       0 |       0 |                   
+  layout.tsx       |       0 |      100 |       0 |       0 | 5                 
+ ...in/[[...rest]] |       0 |      100 |       0 |       0 |                   
+  page.tsx         |       0 |      100 |       0 |       0 | 1-6               
+ ...in/[[...rest]] |       0 |      100 |       0 |       0 |                   
+  page.tsx         |       0 |      100 |       0 |       0 | 1-6               
+ ...up/[[...rest]] |       0 |      100 |       0 |       0 |                   
+  page.tsx         |       0 |      100 |       0 |       0 | 1-6               
+ ...up/[[...rest]] |       0 |      100 |       0 |       0 |                   
+  page.tsx         |       0 |      100 |       0 |       0 | 1-6               
+ ...pp/(dashboard) |       0 |      100 |       0 |       0 |                   
+  layout.tsx       |       0 |      100 |       0 |       0 | 2-4               
+ ...ard)/dashboard |   79.24 |     59.4 |   74.13 |   80.45 |                   
+  page.tsx         |   78.84 |     59.4 |   73.68 |      80 | ...93,287,320,382 
+ ...vitations/[id] |       0 |        0 |       0 |       0 |                   
+  page.tsx         |       0 |        0 |       0 |       0 | 1-33              
+ ...oard)/settings |   73.33 |     57.5 |   68.18 |   78.84 |                   
+  page.tsx         |   73.33 |     57.5 |   68.18 |   78.84 | ...,85-86,174-195 
+ ...ttings/billing |       0 |      100 |       0 |       0 |                   
+  page.tsx         |       0 |      100 |       0 |       0 | 4                 
+ ...workspace/[id] |       0 |        0 |       0 |       0 |                   
+  page.tsx         |       0 |        0 |       0 |       0 | 1-325             
+ ...[id]/decisions |       0 |        0 |       0 |       0 |                   
+  error.tsx        |       0 |      100 |       0 |       0 | 1-4               
+  loading.tsx      |       0 |      100 |       0 |       0 | 3                 
+  page.tsx         |       0 |        0 |       0 |       0 | 3-7               
+ ...ce/[id]/digest |       0 |        0 |       0 |       0 |                   
+  error.tsx        |       0 |      100 |       0 |       0 | 1-4               
+  loading.tsx      |       0 |      100 |       0 |       0 | 3                 
+  page.tsx         |       0 |        0 |       0 |       0 | 3-7               
+ ...y/[activityId] |       0 |        0 |       0 |       0 |                   
+  page.tsx         |       0 |        0 |       0 |       0 | 3-11              
+ ...pace/[id]/docs |       0 |        0 |       0 |       0 |                   
+  page.tsx         |       0 |        0 |       0 |       0 | 1-411             
+ ...]/docs/[docId] |       0 |        0 |       0 |       0 |                   
+  error.tsx        |       0 |      100 |       0 |       0 | 1-4               
+  page.tsx         |       0 |        0 |       0 |       0 | 1-636             
+ ...ce/[id]/kanban |       0 |        0 |       0 |       0 |                   
+  page.tsx         |       0 |        0 |       0 |       0 | 1-472             
+ ...ce/[id]/search |       0 |      100 |       0 |       0 |                   
+  page.tsx         |       0 |      100 |       0 |       0 | 3-4               
+ .../[id]/settings |   91.11 |     91.3 |      75 |      90 |                   
+  page.tsx         |   90.69 |     91.3 |   73.33 |   89.47 | 110-117,184-194   
+ .../[id]/snippets |       0 |        0 |       0 |       0 |                   
+  page.tsx         |       0 |        0 |       0 |       0 | 1-639             
+ ...nippets/safety |       0 |        0 |       0 |       0 |                   
+  error.tsx        |       0 |      100 |       0 |       0 | 1-4               
+  loading.tsx      |       0 |      100 |       0 |       0 | 3                 
+  page.tsx         |       0 |        0 |       0 |       0 | 3-7               
+ ...p/(superadmin) |       0 |        0 |       0 |       0 |                   
+  layout.tsx       |       0 |        0 |       0 |       0 | 8-10              
+ ...in)/superadmin |       0 |        0 |       0 |       0 |                   
+  page.tsx         |       0 |        0 |       0 |       0 | 12-44             
+ ...api/auth/reset |   95.83 |    93.75 |     100 |   95.83 |                   
+  route.ts         |   95.83 |    93.75 |     100 |   95.83 | 33                
+ ...d]/kill-switch |       0 |        0 |       0 |       0 |                   
+  route.ts         |       0 |        0 |       0 |       0 | 5-29              
+ .../design-system |       0 |        0 |       0 |       0 |                   
+  page.tsx         |       0 |        0 |       0 |       0 | 4-5               
+  workbench.tsx    |       0 |        0 |       0 |       0 | 1-342             
+ src/components    |   23.22 |    14.95 |   22.22 |    23.4 |                   
+  ...ot-drawer.tsx |       0 |        0 |       0 |       0 | 1-207             
+  ...-boundary.tsx |       0 |        0 |       0 |       0 | 1-65              
+  ...d-palette.tsx |   78.26 |       80 |      60 |   80.48 | ...10,117-118,128 
+  ...ics-modal.tsx |       0 |        0 |       0 |       0 | 1-190             
+  ...s-manager.tsx |       0 |        0 |       0 |       0 | 1-41              
+ ...ents/dashboard |   89.65 |     87.5 |   77.77 |   92.85 |                   
+  ...workspace.tsx |      88 |    83.33 |      60 |   91.66 | 66-76             
+ ...ents/decisions |   52.28 |    51.74 |   44.61 |   53.93 |                   
+  ...-receipts.tsx |   61.44 |    58.75 |   54.71 |   64.62 | ...66-585,633-643 
+  ...-timeline.tsx |    3.22 |        0 |       0 |    3.22 | 37-147            
+ ...ponents/digest |   87.61 |    64.94 |      90 |    90.1 |                   
+  async-digest.tsx |   87.61 |    64.94 |      90 |    90.1 | ...05,125-126,169 
+ ...ponents/editor |   12.71 |     6.52 |      14 |   12.14 |                   
+  commands.ts      |   68.18 |      100 |      50 |      65 | 7-13,25-37,49,68  
+  tools.tsx        |       0 |        0 |       0 |       0 | 1-319             
+ ...ponents/search |   81.81 |    51.06 |   81.81 |   83.95 |                   
+  ...ge-search.tsx |   81.81 |    51.06 |   81.81 |   83.95 | ...25,133-134,208 
+ ...nents/settings |   82.13 |    66.23 |   76.04 |    85.4 |                   
+  ai-usage.tsx     |     100 |    85.71 |     100 |     100 | 28-34             
+  ...execution.tsx |   85.36 |    61.11 |      80 |   88.23 | 37,161-163        
+  invitations.tsx  |   77.66 |    57.57 |      64 |      80 | ...83,173,244-301 
+  lifecycle.tsx    |   72.58 |    54.05 |   65.21 |   78.18 | ...35-136,175,192 
+  members.tsx      |   88.04 |    77.77 |   86.36 |    92.1 | 69-77,129,235,268 
+ ...mponents/shell |   85.21 |    77.32 |   77.35 |    87.6 |                   
+  app-shell.tsx    |      80 |    76.92 |   65.62 |   82.71 | ...28-429,478-488 
+  ...ment-tree.tsx |     100 |       85 |     100 |     100 | 63,80-84          
+  ...shell-data.ts |   93.75 |    72.72 |    90.9 |   96.42 | 38                
+ ...nents/snippets |   63.63 |    69.49 |    60.6 |   62.63 |                   
+  ...et-safety.tsx |   63.63 |    69.49 |    60.6 |   62.63 | ...80,320-331,370 
+ src/components/ui |   89.32 |    85.07 |   84.78 |   91.66 |                   
+  ...d-palette.tsx |   86.11 |    86.66 |   78.57 |   90.62 | 119-122           
+  controls.tsx     |   84.61 |       80 |      85 |   84.61 | 156,227-231       
+  overlays.tsx     |   88.88 |      100 |   83.33 |   88.88 | 136               
+  ...background.ts |   96.87 |    84.61 |     100 |     100 | 42-44             
+ ...ents/workspace |   15.15 |    18.82 |   16.66 |   18.18 |                   
+  ...vity-feed.tsx |       0 |        0 |       0 |       0 | 1-117             
+  ...nc-status.tsx |     100 |    93.33 |     100 |     100 | 18                
+  ...r-surface.tsx |    87.5 |       50 |     100 |     100 | 8-15              
+  presence-bar.tsx |       0 |        0 |       0 |       0 | 1-26              
+  ...ace-stats.tsx |       0 |        0 |       0 |       0 | 1-77              
+ src/hooks         |       0 |        0 |       0 |       0 |                   
+  ...-collector.ts |       0 |        0 |       0 |       0 | 1-29              
+ src/lib           |   45.43 |    31.66 |   40.35 |   46.18 |                   
+  ...-lifecycle.ts |   46.66 |        0 |       0 |      50 | 4,78-92           
+  ai-stream.ts     |   88.37 |       75 |      80 |     100 | 19-31,34,43,51    
+  api.ts           |   33.33 |    10.34 |     9.3 |   33.33 | ...23-138,150-199 
+  async-digest.ts  |       0 |        0 |       0 |       0 | 23-34             
+  ...board-data.ts |   91.66 |       50 |    87.5 |    91.3 | 69,84             
+  ...n-receipts.ts |       0 |        0 |       0 |       0 | 33-63             
+  errors.ts        |       0 |        0 |       0 |       0 | 4-6               
+  ...-first-yjs.ts |    72.8 |    57.35 |   62.06 |   75.24 | ...66-173,214-235 
+  markdown.ts      |       0 |        0 |       0 |       0 | 6-196             
+  safe-redirect.ts |     100 |     87.5 |     100 |     100 | 6                 
+  ...-preflight.ts |   70.73 |       20 |   63.63 |   74.28 | 49-52,58-60,66-67 
+  ...safety-api.ts |       0 |        0 |       0 |       0 | 8-20              
+  ...ion-cursor.ts |       0 |        0 |       0 |       0 | 14-50             
+  ...e-document.ts |    92.3 |       75 |   81.81 |     100 | 30                
+  utils.ts         |      12 |        0 |      50 |      15 | 9-28,41-46        
+  ...ace-access.ts |    90.9 |       50 |     100 |     100 | 19                
+ src/providers     |   86.73 |    74.02 |   77.77 |   89.41 |                   
+  ...-provider.tsx |   91.83 |    75.55 |   76.47 |   95.34 | 25,69             
+  ...-provider.tsx |    85.1 |    71.87 |   88.88 |    87.5 | 39,52,64-66       
+  ...-provider.tsx |       0 |      100 |       0 |       0 | 1-7               
+-------------------|---------|----------|---------|---------|-------------------
+
+=============================== Coverage summary ===============================
+Statements   : 46.13% ( 1433/3106 )
+Branches     : 41.53% ( 912/2196 )
+Functions    : 43.21% ( 443/1025 )
+Lines        : 46.88% ( 1302/2777 )
+================================================================================

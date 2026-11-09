@@ -1,0 +1,89 @@
+{
+  "phase": "08 — evidence-linked decision-to-execution receipts",
+  "branch": "upgrade/enterprise",
+  "baseCommit": "e139327",
+  "status": "partial-local-delivery",
+  "verificationDate": "2026-11-09",
+  "gates": {
+    "backend": {
+      "lint": 0,
+      "format": 0,
+      "strictTypes": 0,
+      "tests": 0,
+      "build": 0,
+      "testSuites": 33,
+      "testsPassed": 330,
+      "coverageComparison": 0,
+      "coverage": {
+        "statements": 83.39,
+        "branches": 74.58,
+        "functions": 76.98,
+        "lines": 85.61
+      },
+      "evidence": "backend-proof/backend-gates.json"
+    },
+    "frontend": {
+      "lint": 0,
+      "format": 0,
+      "strictTypes": 0,
+      "tests": 0,
+      "build": 0,
+      "testFiles": 24,
+      "componentTestsPassed": 102,
+      "nodeTestsPassed": 9,
+      "coverageComparison": 0,
+      "coverage": {
+        "statements": 47.33,
+        "branches": 42.82,
+        "functions": 44.75,
+        "lines": 48.14
+      },
+      "evidence": "frontend-final-pickers/frontend-gates.json"
+    },
+    "openapiCheck": 0,
+    "openapiCompatibility": {
+      "priorOperationChanges": 0,
+      "addedPaths": [
+        "/api/v2/workspaces/{workspaceId}/decisions/{receiptId}/timeline"
+      ]
+    },
+    "databaseIntegration": "passed inside backend test suite against disposable PostgreSQL with non-bypass tenant role",
+    "browser": {
+      "exitCode": 0,
+      "journeysPassed": 1,
+      "identity": "local fixture identities",
+      "providerEvidence": "locally signed fixture webhook; no live GitHub provider access",
+      "evidence": "browser-final-linked.txt",
+      "screenshot": "none"
+    },
+    "semgrep": 0,
+    "gitleaks": 0,
+    "npmAuditHighOrCritical": {
+      "backend": 0,
+      "frontend": 0,
+      "evidence": "audits.json"
+    }
+  },
+  "retainedFailedAttempts": [
+    "backend-final and backend-final-exact exited 1 after OpenAPI source changed during their running tests; superseded by backend-proof.",
+    "browser-linked exited 1 because the test selected a combobox using an incorrect locator; corrected role/name locator passed in browser-final-linked.txt.",
+    "focused backend test command exited 1 because it ran under the repository's full-suite coverage thresholds; complete backend suite and coverage comparison pass. No threshold was changed."
+  ],
+  "notVerifiedOrNotImplemented": [
+    "No independent trusted deployment attestation policy or provider-backed verified-deployment adapter is implemented; deployment_verified is not an accepted timeline event.",
+    "Live GitHub acceptance was skipped at the user's request because no disposable repository was approved. Existing GitHub repositories were not accessed or modified.",
+    "Real Clerk sign-in, hosted CI, production migration, production data, deployment and restore were not exercised."
+  ],
+  "operations": {
+    "push": false,
+    "deploy": false,
+    "productionDataChanged": false,
+    "phase09Started": false,
+    "localCommits": [
+      "c4a622f — feat(decisions): add scoped execution evidence timeline",
+      "31e54dd — feat(decisions): show linked delivery evidence",
+      "de869ea — test(decisions): verify owner and viewer timeline flow"
+    ],
+    "documentationCommit": "recorded separately after this verification evidence commit"
+  }
+}

@@ -1,3 +1,13 @@
+# Decision execution timeline — partial local delivery, 2026-11-09
+
+On `upgrade/enterprise`, extended the accepted decision receipt system with optional timestamped human assertions/outcomes, task links and owner-only links to existing recorded GitHub PR/check/review evidence. Existing accepted receipt state/fingerprints remain immutable; source and task visibility are rechecked, the migration enforces tenant RLS and insertion-only event policies, and current disconnected/deleted resources are hidden. UI and API distinguish human statements from signed webhook records and explicitly state that live GitHub access is unverified. `deployment_verified` is not an accepted event and no production deployment is inferred.
+
+Local gates: backend33 suites/330 tests, frontend24 files/102 component tests plus9 Node tests, lint/format/types/builds, both coverage comparisons, OpenAPI consistency, Semgrep/Gitleaks and high-severity npm audits pass. Actual Chrome owner/viewer flow passed using fixture identity, local database/Redis and a locally signed PR webhook; this is not a real GitHub or Clerk integration. Exact commands/status and retained failed attempts are in [Phase 08 verification](quality/decision-execution/README.md) and `RESULTS.json`.
+
+**Not complete:** a trusted deployment attestation policy and provider-backed verified-deployment adapter remain engineering/product work; live GitHub acceptance is pending because no disposable repository was approved. Hosted CI and production migration were not run. Migration rollout requires independent backup/restore and grants review; actor retention needs legal/product direction. No screenshot, push, deployment, production data change or Phase 09 work occurred.
+
+---
+
 # Search correctness and permission-aware indexing — local delivery
 
 Started clean at4873ae3 on upgrade/enterprise. Preflight found existing transactional CRDT projection/outbox scheduling, tenant/RLS policy and optional pgvector fallback; these were preserved. Reproduced the TipTap JSON-body search miss and invalidated-vector retrieval before fixing them. Also preserved legacy string document embedding input after a development regression exposed that compatibility edge, and reproduced/fixed non-UTC boundary filtering in the new query.
