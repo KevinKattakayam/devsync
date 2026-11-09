@@ -3,7 +3,7 @@
 import { HocuspocusProvider, HocuspocusProviderWebsocket } from '@hocuspocus/provider';
 import { IndexeddbPersistence } from 'y-indexeddb';
 import * as Y from 'yjs';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 import { useSyncHealthStore } from '@/stores/sync-health.store';
 
 export type SyncStatus = 'offline' | 'connecting' | 'connected';
@@ -206,31 +206,44 @@ export function useLocalFirstYDoc(
 
 export interface LocalFirstRecord<T> {
   value: T | null;
-  set(value: T): void;
+  error: 'invalid_json' | null;
+  set(value: T): boolean;
 }
 
-/** Local durable JSON record for task/board projections and optimistic edits. */
+/** A room-scoped projection; malformed stored data is preserved for recovery. */
 export function useLocalFirstRecord<T>(document: Y.Doc, key: string): LocalFirstRecord<T> {
   const map = document.getMap<string>(`record:${key}`);
-  const [value, setValue] = useState<T | null>(() => {
-    const serialized = map.get('value');
-    return serialized ? (JSON.parse(serialized) as T) : null;
-  });
-
-  useEffect(() => {
-    const update = (): void => {
-      const serialized = map.get('value');
-      setValue(serialized ? (JSON.parse(serialized) as T) : null);
-    };
-    map.observe(update);
-    return () => map.unobserve(update);
-  }, [map]);
-
-  const set = useCallback(
-    (next: T): void => {
-      map.set('value', JSON.stringify(next));
+  const subscribe = useCallback(
+    (changed: () => void) => {
+      map.observe(changed);
+      return () => map.unobserve(changed);
     },
     [map],
   );
-  return useMemo(() => ({ value, set }), [set, value]);
+  const snapshot = useCallback(() => map.get('value'), [map]);
+  const serialized = useSyncExternalStore(subscribe, snapshot, () => undefined);
+  const result = useMemo(() => {
+    if (serialized === undefined) return { value: null, error: null };
+    try {
+      return { value: JSON.parse(serialized) as T, error: null };
+    } catch {
+      return { value: null, error: 'invalid_json' as const };
+    }
+  }, [serialized]);
+  const set = useCallback(
+    (next: T): boolean => {
+      const existing = map.get('value');
+      if (existing !== undefined) {
+        try {
+          JSON.parse(existing);
+        } catch {
+          return false;
+        }
+      }
+      map.set('value', JSON.stringify(next));
+      return true;
+    },
+    [map],
+  );
+  return useMemo(() => ({ ...result, set }), [result, set]);
 }

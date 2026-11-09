@@ -203,6 +203,16 @@ export default function KanbanPage() {
     setDragOverColumn(null);
     if (draggedTask) void moveTask(draggedTask, columnId);
   };
+  if (localBoards.error)
+    return (
+      <div role="alert" className="p-8">
+        <h1 className="text-xl font-semibold">Local board data needs recovery</h1>
+        <p className="my-4">
+          Stored local data could not be read and has been preserved. Avoid clearing browser storage
+          until you have recovered any local drafts.
+        </p>
+      </div>
+    );
   if (loadError)
     return (
       <div role="alert" className="p-8">
