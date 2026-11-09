@@ -13,7 +13,11 @@ import {
   supersedeSchema,
   sourceKindSchema,
 } from './services/decision-receipts';
-import { decisionSourcesQuery, decisionSourceQuery } from './routes/decision-receipts.routes';
+import {
+  timelineInput,
+  decisionSourcesQuery,
+  decisionSourceQuery,
+} from './routes/decision-receipts.routes';
 import {
   safetyInputSchema,
   safetySaveSchema,
@@ -465,6 +469,42 @@ add(
   '200',
   { query: decisionSourceQuery },
 );
+const timelineEvidence = z
+  .object({
+    kind: z.string(),
+    subject: z.string(),
+    state: z.string(),
+    conclusion: z.string().nullable(),
+    providerAt: z.iso.datetime(),
+    observedAt: z.iso.datetime(),
+    headSha: z.string().nullable(),
+  })
+  .strict();
+const timelineEvent = z
+  .object({
+    id: z.string(),
+    kind: z.string(),
+    evidence: z.string(),
+    occurredAt: z.iso.datetime(),
+    recordedAt: z.iso.datetime(),
+    createdBy: z.string(),
+    taskId: z.string().nullable(),
+    repositoryId: z.string().nullable(),
+    pullNumber: z.number().int().nullable(),
+    taskTitle: z.string().nullable(),
+    taskUpdatedAt: z.iso.datetime().nullable(),
+    repositoryOwner: z.string().nullable(),
+    repositoryName: z.string().nullable(),
+    pullState: z.string().nullable(),
+    pullProviderAt: z.iso.datetime().nullable(),
+    pullObservedAt: z.iso.datetime().nullable(),
+    githubEvidence: z.array(timelineEvidence),
+  })
+  .strict();
+add('GET', `${decisionsBase}/{receiptId}/timeline`, z.array(timelineEvent));
+add('POST', `${decisionsBase}/{receiptId}/timeline`, z.object({ id: z.string() }).strict(), '201', {
+  body: timelineInput,
+});
 add('POST', decisionsBase, receiptDto, '201', { body: receiptContentSchema });
 add('PATCH', `${decisionsBase}/{receiptId}`, receiptDto, '200', { body: receiptEditSchema });
 noContent('DELETE', `${decisionsBase}/{receiptId}`);

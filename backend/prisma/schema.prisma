@@ -9,6 +9,7 @@ datasource db {
 }
 
 model User {
+  decisionExecutionEvents DecisionExecutionEvent[]
   exportRequests WorkspaceExportRequest[]
   id           String            @id @default(cuid())
   clerkId      String            @unique
@@ -360,6 +361,7 @@ model DocumentCrdtBackup {
 }
 
 model DecisionReceipt {
+  executionEvents DecisionExecutionEvent[]
   id String @id @default(cuid())
   workspaceId String
   sourceKind String
@@ -381,6 +383,23 @@ model DecisionReceipt {
   supersedes DecisionReceipt[] @relation("DecisionSupersession")
   @@unique([id, workspaceId])
   @@index([workspaceId, createdAt])
+}
+
+model DecisionExecutionEvent {
+  id String @id
+  workspaceId String
+  receiptId String
+  kind String
+  evidence String
+  occurredAt DateTime @db.Timestamptz(6)
+  recordedAt DateTime @default(now()) @db.Timestamptz(6)
+  createdBy String
+  taskId String?
+  repositoryId String?
+  pullNumber Int?
+  receipt DecisionReceipt @relation(fields: [receiptId, workspaceId], references: [id, workspaceId], onDelete: Cascade, onUpdate: NoAction)
+  creator User @relation(fields: [createdBy], references: [id], onDelete: Restrict, onUpdate: NoAction)
+  @@index([workspaceId, receiptId, recordedAt, id], map: "DecisionExecutionEvent_receipt_timeline_idx")
 }
 
 model SnippetSafetyFinding {
