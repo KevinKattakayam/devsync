@@ -1,3 +1,15 @@
+# Phase 11 assignment notifications — local increment
+
+Task creation and reassignment through the task controller now record recipient-bound assignment Activity in the same transaction. The inbox includes it only for the recorded recipient while that user remains the current assignee and the task remains in the workspace. Existing digest items and acknowledgement semantics are unchanged. Earlier assignments are not backfilled. Mentions, review requests and owner-decision requests lack recipient-bound Activity producers. Failed automation executions have owner-only audit records but no authorized digest Activity adapter; that category remains unimplemented. Task archive is not represented in the current task schema.
+
+The digest integration suite passed 10 tests against disposable PostgreSQL with coverage disabled for this focused run; the full backend gate passed 38 suites / 367 tests, lint, format, strict types, build and the accepted coverage comparison. OpenAPI generation/check also passed. Assignment create/reassign, recipient isolation, read-state authority, move/delete, document archive and membership removal are covered. Full gates, remaining categories, preferences, batching, quiet hours, frontend and revocation cache handling remain pending. No provider delivery is claimed. See `docs/quality/inbox/README.md`.
+
+Phase 11 increment: added per-user, per-workspace inbox read markers with forced RLS and current source checks. Focused disposable PostgreSQL regression, backend typecheck and OpenAPI check pass. The inbox still uses the digest acknowledgement window; full phase verification and remaining notification features are pending.
+
+# Phase 11 inbox — in progress
+
+Added a preliminary digest inbox endpoint, OpenAPI registration, and a membership/archive regression. The OpenAPI generation and consistency check pass. Individual read state, remaining categories, preferences, UI and full verification remain incomplete.
+
 # Rules and approval-based automation — local implementation, incomplete acceptance
 
 Phase 10 now has tenant-scoped disabled-by-default rules, explicit owner approval, preview, durable event deduplication, debounce, bounded worker leases/retries, redacted audit records and owner settings. Task triggers are explicit human assertions; signed GitHub webhook observations are labeled as such. Local notifications are workspace activities, not external posts. GitHub PR reports use existing recorded evidence; CI status updates fail closed because trusted independent CI verification and the linked-work graph are not implemented. No automatic task review/blocker detection is claimed.

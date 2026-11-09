@@ -1,3 +1,13 @@
+# Phase 11 assignment notifications — local increment
+
+- Record actual task assignments at creation or reassignment and expose recipient-scoped Activity in the existing inbox, subject to current task and workspace visibility. Other notification categories remain pending.
+
+Phase 11 increment: added per-user, per-workspace inbox read markers with forced RLS and current source checks. Focused disposable PostgreSQL regression, backend typecheck and OpenAPI check pass. The inbox still uses the digest acknowledgement window; full phase verification and remaining notification features are pending.
+
+# Phase 11 inbox — in progress
+
+- Add a preliminary Activity-backed inbox endpoint, OpenAPI registration, and membership/archive regression; full inbox functionality remains unfinished.
+
 # Rules and approval-based automation — local implementation
 
 - Add tenant-scoped opt-in rules, owner approval and audit, deduplicated/debounced durable events, opaque queue payloads, bounded leases and retries, and local activity actions.
