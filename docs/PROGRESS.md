@@ -1,3 +1,11 @@
+# Phase 12 local draft export — incomplete
+
+Added a user-confirmed unencrypted Yjs draft export, bounded to 8 MiB of encoded state, with exact account/room metadata and detached inspection support. It makes no server mutation and does not reapply files to the live replica. Download status says requested, not saved. The document UI explicitly states that per-edit local storage confirmation is unavailable. The existing remote journal acknowledgement and access-denial behavior remains intact.
+
+Focused export tests (4), the frontend full gate (124 component tests), unchanged coverage comparison, pinned Semgrep/Gitleaks, and the existing actual-Chrome recovery journey pass. The browser uses fixture identities and real local services; no real provider acceptance is claimed. Backend verification is recorded in `docs/quality/offline-drafts/README.md`.
+
+**Phase 12 remains incomplete:** y-indexeddb integration lacks per-edit transaction receipts/error propagation. Bounded durable storage, quota failure handling, coordinated multi-tab purge, recovery application and stale-auth/full-storage acceptance remain engineering work. Export limits do not bound existing browser storage. Existing room/account scoping and previous malformed-data protections are preserved. No push, deploy or Phase 13 work.
+
 # Explicit offline states and local drafts — in progress
 
 Reproduced and repaired cross-document local board projection carryover and malformed JSON crashes in the existing Yjs record helper. Unreadable local data is retained and automatic replacement is refused; the board displays a recovery warning. Focused frontend tests (8) and strict types passed. Frontend lint, format, types, 120 component tests, build and unchanged coverage comparison pass; five local Chrome Kanban regressions pass. This is verification of the narrow repair, not full offline acceptance. Per-edit IndexedDB transaction confirmation, bounded storage, purge/recovery controls and complete offline acceptance remain unfinished. Existing CRDT and server authorization are preserved.
