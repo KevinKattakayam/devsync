@@ -20,6 +20,13 @@ import router from '../routes/async-digest.routes';
 import { createTenantPrismaClient, TenantPrismaClient } from '../lib/tenant-prisma';
 import { withDatabase } from '../lib/prisma';
 import { errorMiddleware } from '../middleware/error.middleware';
+import { createAutomationRule, setAutomationEnabled } from '../services/automation-store';
+import {
+  submitAutomationEvent,
+  approveAutomationExecution,
+  claimAutomationExecution,
+  failAutomationClaim,
+} from '../services/automation-execution';
 jest.mock('../middleware/auth.middleware', () => ({
   authMiddleware: (_req: express.Request, _res: express.Response, next: express.NextFunction) =>
     next(),
@@ -227,6 +234,136 @@ it('records assignments for the current recipient and hides reassigned, moved an
       (item: { category?: string }) => item.category === 'assigned_task',
     ),
   ).toHaveLength(0);
+});
+it('shows failed automation only to current owners while its source exists', async () => {
+  const f = await fixture();
+  const previous = process.env.FEATURE_AUTOMATION;
+  try {
+    process.env.FEATURE_AUTOMATION = 'true';
+    const board = await admin.board.create({
+      data: { workspaceId: f.a, name: 'Rules', columns: { create: { name: 'Todo', position: 0 } } },
+      include: { columns: true },
+    });
+    const task = await admin.task.create({
+      data: { columnId: board.columns[0].id, title: 'Test task', position: 0 },
+    });
+    const rule = await withDatabase(db, () =>
+      createAutomationRule('owner', f.a, {
+        title: 'Review',
+        trigger: 'task_review',
+        action: 'notify',
+        condition: 'always',
+        debounceSeconds: 1,
+      }),
+    );
+    await withDatabase(db, () => setAutomationEnabled('owner', f.a, rule.id, true));
+    const event = await withDatabase(db, () =>
+      submitAutomationEvent(
+        'editor',
+        f.a,
+        { trigger: 'task_review', taskId: task.id },
+        'failure-inbox-fixture',
+      ),
+    );
+    const id = event.executions[0].id;
+    await withDatabase(db, () => approveAutomationExecution('owner', f.a, id));
+    for (let i = 0; i < 3; i++) {
+      const claim = await withDatabase(db, () => claimAutomationExecution(f.a, id));
+      await withDatabase(db, () => failAutomationClaim(f.a, id, claim!.token));
+    }
+    await enable(f.path);
+    const path = `${f.path}/inbox/automation-failures`;
+    const list = await request(app).get(path).expect(200);
+    expect(list.body.items).toEqual([
+      expect.objectContaining({ executionId: id, read: false, category: 'failed_automation' }),
+    ]);
+    await enable(f.path, 'editor');
+    expect(
+      (await request(app).get(path).set('x-test-actor', 'editor').expect(200)).body.items,
+    ).toEqual([]);
+    await request(app)
+      .put(`${path}/${id}/read`)
+      .set('x-test-actor', 'editor')
+      .send({ read: true })
+      .expect(403);
+    await request(app).put(`${path}/${id}/read`).send({ read: true }).expect(200);
+    expect((await request(app).get(path).expect(200)).body.items[0].read).toBe(true);
+    await admin.workspaceMember.update({
+      where: { userId_workspaceId: { userId: 'editor', workspaceId: f.a } },
+      data: { role: 'OWNER' },
+    });
+    expect(
+      (await request(app).get(path).set('x-test-actor', 'editor').expect(200)).body.items[0].read,
+    ).toBe(false);
+    await request(app)
+      .put(`${path}/${id}/read`)
+      .set('x-test-actor', 'editor')
+      .send({ read: true })
+      .expect(200);
+    await request(app).put(`${path}/${id}/read`).send({ read: false }).expect(200);
+    expect(
+      (await request(app).get(path).set('x-test-actor', 'editor').expect(200)).body.items[0].read,
+    ).toBe(true);
+    process.env.FEATURE_AUTOMATION = 'false';
+    expect((await request(app).get(path).expect(200)).body.items).toEqual([]);
+    await request(app).put(`${path}/${id}/read`).send({ read: true }).expect(404);
+    process.env.FEATURE_AUTOMATION = 'true';
+    await admin.task.delete({ where: { id: task.id } });
+    expect((await request(app).get(path).expect(200)).body.items).toEqual([]);
+    await request(app).put(`${path}/${id}/read`).send({ read: false }).expect(404);
+    await admin.workspaceMember.delete({
+      where: { userId_workspaceId: { userId: 'owner', workspaceId: f.a } },
+    });
+    await request(app).get(path).expect(403);
+  } finally {
+    if (previous === undefined) delete process.env.FEATURE_AUTOMATION;
+    else process.env.FEATURE_AUTOMATION = previous;
+  }
+});
+it('keeps notification scheduling preferences personal, tenant scoped and validated', async () => {
+  const f = await fixture();
+  const path = `${f.path}/notification-preferences`;
+  const input = { timezone: 'America/New_York', quietStart: 1320, quietEnd: 420, batchMinutes: 60 };
+  await request(app).put(path).set('x-test-actor', 'viewer').send(input).expect(200, input);
+  await enable(f.path, 'viewer');
+  const preview = await request(app)
+    .get(`${f.path}/inbox/batch-preview`)
+    .set('x-test-actor', 'viewer')
+    .expect(200);
+  expect(
+    preview.body.batches.flatMap((batch: { activityIds: string[] }) => batch.activityIds),
+  ).toContain(f.event.id);
+  expect(preview.body.delivery).toBe('not_scheduled');
+  expect((await request(app).get(path).set('x-test-actor', 'viewer').expect(200)).body).toEqual(
+    input,
+  );
+  expect(
+    (await request(app).get(path).set('x-test-actor', 'editor').expect(200)).body.timezone,
+  ).toBe('UTC');
+  await request(app)
+    .put(path)
+    .set('x-test-actor', 'viewer')
+    .send({ ...input, timezone: 'invalid/timezone' })
+    .expect(400);
+  await request(app)
+    .put(path)
+    .set('x-test-actor', 'viewer')
+    .send({ ...input, quietEnd: null })
+    .expect(400);
+  await request(app)
+    .put(path)
+    .set('x-test-actor', 'viewer')
+    .send({ ...input, email: true })
+    .expect(400);
+  await request(app)
+    .get(`/workspaces/${f.b}/digest/notification-preferences`)
+    .set('x-test-actor', 'viewer')
+    .expect(403);
+  await admin.workspaceMember.delete({
+    where: { userId_workspaceId: { userId: 'viewer', workspaceId: f.a } },
+  });
+  await request(app).get(path).set('x-test-actor', 'viewer').expect(403);
+  await request(app).get(`${f.path}/inbox/batch-preview`).set('x-test-actor', 'viewer').expect(403);
 });
 it('limits the inbox to current members and hides archived sources', async () => {
   const f = await fixture();

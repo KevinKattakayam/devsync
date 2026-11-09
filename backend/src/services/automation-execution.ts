@@ -511,99 +511,103 @@ export async function executeAutomationExecution(
   });
 }
 export async function listAutomationExecutions(actorId: string, workspaceId: string) {
-  return withWorkspaceAccess(actorId, workspaceId, OWNER_ROLES, async (tx) => {
-    const executions = await tx.$queryRaw<
-      (Execution & {
-        origin: string;
-        trigger: string;
-        taskId: string | null;
-        repositoryId: string | null;
-        sourceId: string;
-        sourceRevision: string;
-        eventActorId: string | null;
-        action: string;
-        current: boolean;
-      })[]
-    >`SELECT x.*,e.origin,e.trigger,e."taskId",e."repositoryId",e."sourceId",e."sourceRevision",e."actorId" AS "eventActorId",r.action,(r.enabled AND r.version=x."ruleVersion") AS current FROM "AutomationExecution" x JOIN "AutomationEvent" e ON e.id=x."eventId" AND e."workspaceId"=x."workspaceId" JOIN "AutomationRule" r ON r.id=x."ruleId" AND r."workspaceId"=x."workspaceId" WHERE x."workspaceId"=${workspaceId} AND ((e.origin='human_assertion' AND EXISTS (SELECT 1 FROM "Task" t JOIN "Column" c ON c.id=t."columnId" JOIN "Board" b ON b.id=c."boardId" WHERE t.id=e."taskId" AND b."workspaceId"=${workspaceId})) OR (e.origin='signed_webhook' AND EXISTS (SELECT 1 FROM "GitHubRepository" g WHERE g.id=e."repositoryId" AND g."workspaceId"=${workspaceId} AND g."providerDisconnectedAt" IS NULL))) ORDER BY x."createdAt" DESC,x.id LIMIT 100`;
-    if (!executions.length) return [];
-    const auditRows = await tx.$queryRaw<
-      { executionId: string; kind: string; actorId: string | null; createdAt: Date }[]
-    >`SELECT "executionId",kind,"actorId","createdAt" FROM "AutomationAudit" WHERE "workspaceId"=${workspaceId} AND "executionId" IN (${Prisma.join(executions.map((item) => item.id))}) ORDER BY "createdAt",id LIMIT 1000`;
-    const results = [];
-    for (const item of executions) {
-      let report = null;
-      let source:
-        | { kind: 'task'; title: string; actorId: string }
-        | {
-            kind: 'github';
-            repository: string;
-            subject: string;
-            providerAt: Date;
-            observedAt: Date;
-            liveAccess: 'not_verified';
-          };
-      if (item.origin === 'signed_webhook') {
-        try {
-          const github = await githubSource(tx, workspaceId, item);
-          source = {
-            kind: 'github',
+  return withWorkspaceAccess(actorId, workspaceId, OWNER_ROLES, (tx) =>
+    listAutomationExecutionsForOwner(tx, workspaceId),
+  );
+}
+/** Call only inside a transaction that has already checked OWNER authority. */
+export async function listAutomationExecutionsForOwner(tx: TenantTransaction, workspaceId: string) {
+  const executions = await tx.$queryRaw<
+    (Execution & {
+      origin: string;
+      trigger: string;
+      taskId: string | null;
+      repositoryId: string | null;
+      sourceId: string;
+      sourceRevision: string;
+      eventActorId: string | null;
+      action: string;
+      current: boolean;
+    })[]
+  >`SELECT x.*,e.origin,e.trigger,e."taskId",e."repositoryId",e."sourceId",e."sourceRevision",e."actorId" AS "eventActorId",r.action,(r.enabled AND r.version=x."ruleVersion") AS current FROM "AutomationExecution" x JOIN "AutomationEvent" e ON e.id=x."eventId" AND e."workspaceId"=x."workspaceId" JOIN "AutomationRule" r ON r.id=x."ruleId" AND r."workspaceId"=x."workspaceId" WHERE x."workspaceId"=${workspaceId} AND ((e.origin='human_assertion' AND EXISTS (SELECT 1 FROM "Task" t JOIN "Column" c ON c.id=t."columnId" JOIN "Board" b ON b.id=c."boardId" WHERE t.id=e."taskId" AND b."workspaceId"=${workspaceId})) OR (e.origin='signed_webhook' AND EXISTS (SELECT 1 FROM "GitHubRepository" g WHERE g.id=e."repositoryId" AND g."workspaceId"=${workspaceId} AND g."providerDisconnectedAt" IS NULL))) ORDER BY x."createdAt" DESC,x.id LIMIT 100`;
+  if (!executions.length) return [];
+  const auditRows = await tx.$queryRaw<
+    { executionId: string; kind: string; actorId: string | null; createdAt: Date }[]
+  >`SELECT "executionId",kind,"actorId","createdAt" FROM "AutomationAudit" WHERE "workspaceId"=${workspaceId} AND "executionId" IN (${Prisma.join(executions.map((item) => item.id))}) ORDER BY "createdAt",id LIMIT 1000`;
+  const results = [];
+  for (const item of executions) {
+    let report = null;
+    let source:
+      | { kind: 'task'; title: string; actorId: string }
+      | {
+          kind: 'github';
+          repository: string;
+          subject: string;
+          providerAt: Date;
+          observedAt: Date;
+          liveAccess: 'not_verified';
+        };
+    if (item.origin === 'signed_webhook') {
+      try {
+        const github = await githubSource(tx, workspaceId, item);
+        source = {
+          kind: 'github',
+          repository: `${github.owner}/${github.name}`,
+          subject: github.subject,
+          providerAt: github.providerAt,
+          observedAt: github.observedAt,
+          liveAccess: 'not_verified',
+        };
+        if (item.trigger === 'pr_merged' && item.status === 'completed')
+          report = {
+            kind: 'signed_webhook_record' as const,
             repository: `${github.owner}/${github.name}`,
-            subject: github.subject,
+            pullNumber: Number(github.subject),
             providerAt: github.providerAt,
             observedAt: github.observedAt,
-            liveAccess: 'not_verified',
+            liveAccess: 'not_verified' as const,
           };
-          if (item.trigger === 'pr_merged' && item.status === 'completed')
-            report = {
-              kind: 'signed_webhook_record' as const,
-              repository: `${github.owner}/${github.name}`,
-              pullNumber: Number(github.subject),
-              providerAt: github.providerAt,
-              observedAt: github.observedAt,
-              liveAccess: 'not_verified' as const,
-            };
-        } catch (error) {
-          if (error instanceof NotFoundError || error instanceof ConflictError) continue;
-          throw error;
-        }
-      } else {
-        if (!item.taskId || !item.eventActorId) continue;
-        const task = await tx.task.findFirst({
-          where: { id: item.taskId, column: { board: { workspaceId } } },
-          select: { title: true },
-        });
-        if (!task) continue;
-        source = { kind: 'task', title: task.title, actorId: item.eventActorId };
+      } catch (error) {
+        if (error instanceof NotFoundError || error instanceof ConflictError) continue;
+        throw error;
       }
-      let current = item.current;
-      if (current && (item.status === 'pending_approval' || item.status === 'approved')) {
-        try {
-          await currentSources(tx, workspaceId, item);
-        } catch (error) {
-          if (
-            error instanceof ForbiddenError ||
-            error instanceof NotFoundError ||
-            error instanceof ConflictError
-          )
-            current = false;
-          else throw error;
-        }
-      }
-      const {
-        repositoryId: _repositoryId,
-        sourceId: _sourceId,
-        sourceRevision: _sourceRevision,
-        eventActorId: _eventActorId,
-        ...safe
-      } = item;
-      results.push({
-        ...safe,
-        current,
-        source,
-        report,
-        audit: auditRows.filter((row) => row.executionId === item.id),
+    } else {
+      if (!item.taskId || !item.eventActorId) continue;
+      const task = await tx.task.findFirst({
+        where: { id: item.taskId, column: { board: { workspaceId } } },
+        select: { title: true },
       });
+      if (!task) continue;
+      source = { kind: 'task', title: task.title, actorId: item.eventActorId };
     }
-    return results;
-  });
+    let current = item.current;
+    if (current && (item.status === 'pending_approval' || item.status === 'approved')) {
+      try {
+        await currentSources(tx, workspaceId, item);
+      } catch (error) {
+        if (
+          error instanceof ForbiddenError ||
+          error instanceof NotFoundError ||
+          error instanceof ConflictError
+        )
+          current = false;
+        else throw error;
+      }
+    }
+    const {
+      repositoryId: _repositoryId,
+      sourceId: _sourceId,
+      sourceRevision: _sourceRevision,
+      eventActorId: _eventActorId,
+      ...safe
+    } = item;
+    results.push({
+      ...safe,
+      current,
+      source,
+      report,
+      audit: auditRows.filter((row) => row.executionId === item.id),
+    });
+  }
+  return results;
 }

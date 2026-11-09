@@ -10,6 +10,7 @@ import { groundedInput, groundedOutput } from './services/grounded-ai';
 import { aiUsageV3Query } from './services/ai-schema';
 import { Prisma } from '@prisma/client';
 import { z } from 'zod';
+import { inboxDeliveryPreferenceSchema } from './services/inbox-preferences';
 import {
   receiptContentSchema,
   receiptEditSchema,
@@ -412,12 +413,33 @@ add('PATCH', '/scim/v2/Users/{externalId}', scim);
 noContent('DELETE', '/scim/v2/Users/{externalId}');
 
 const digestBase = '/api/v2/workspaces/{workspaceId}/digest';
+add('GET', `${digestBase}/notification-preferences`, inboxDeliveryPreferenceSchema);
+add('PUT', `${digestBase}/notification-preferences`, inboxDeliveryPreferenceSchema, '200', {
+  body: inboxDeliveryPreferenceSchema,
+});
 add('GET', `${digestBase}/preferences`, digestPreferenceSchema);
 add('GET', `${digestBase}/events/{activityId}`, digestItemSchema);
 add('PUT', `${digestBase}/preferences`, digestPreferenceSchema, '200', {
   body: digestPreferenceWrite,
 });
 add('GET', `${digestBase}/items`, digestPageSchema, '200', { query: digestQuerySchema });
+add(
+  'GET',
+  `${digestBase}/inbox/batch-preview`,
+  z
+    .object({
+      delivery: z.literal('not_scheduled'),
+      batches: z.array(
+        z
+          .object({ activityIds: z.array(z.string()).max(25), eligibleAt: z.iso.datetime() })
+          .strict(),
+      ),
+      nextCursor: z.string().nullable(),
+    })
+    .strict(),
+  '200',
+  { query: digestQuerySchema },
+);
 add(
   'GET',
   `${digestBase}/inbox`,
@@ -432,6 +454,32 @@ add(
   }),
   '200',
   { query: digestQuerySchema },
+);
+add(
+  'GET',
+  `${digestBase}/inbox/automation-failures`,
+  z
+    .object({
+      items: z.array(
+        z
+          .object({
+            executionId: z.string(),
+            category: z.literal('failed_automation'),
+            recordedAt: z.iso.datetime(),
+            sourceKind: z.enum(['task', 'github']),
+            read: z.boolean(),
+          })
+          .strict(),
+      ),
+    })
+    .strict(),
+);
+add(
+  'PUT',
+  `${digestBase}/inbox/automation-failures/{executionId}/read`,
+  z.object({ read: z.boolean() }).strict(),
+  '200',
+  { body: z.object({ read: z.boolean() }).strict() },
 );
 add(
   'PUT',
