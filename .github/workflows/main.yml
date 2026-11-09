@@ -246,6 +246,7 @@ jobs:
             identity,
             recovery,
             github-trail,
+            decision-execution,
             search,
             ai-cost,
             editor,

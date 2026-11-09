@@ -50,9 +50,10 @@ async function main() {
       FEATURE_SNIPPET_SAFETY: process.env.E2E_SNIPPET_SAFETY
         ? 'true'
         : process.env.FEATURE_SNIPPET_SAFETY,
-      FEATURE_DECISION_RECEIPTS: process.env.E2E_DECISIONS
-        ? 'true'
-        : process.env.FEATURE_DECISION_RECEIPTS,
+      FEATURE_DECISION_RECEIPTS:
+        process.env.E2E_DECISIONS || process.env.E2E_DECISION_EXECUTION
+          ? 'true'
+          : process.env.FEATURE_DECISION_RECEIPTS,
       E2E_UI_CAPTURE: process.env.E2E_UI_CAPTURE,
       E2E_RECOVERY: process.env.E2E_RECOVERY,
       DATABASE_URL: postgres.getConnectionUri(),
