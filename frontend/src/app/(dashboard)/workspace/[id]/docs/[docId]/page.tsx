@@ -12,6 +12,7 @@ import { Document } from '@/types';
 import { useEditor } from '@tiptap/react';
 import { EditorSurface } from '@/components/workspace/editor-surface';
 import { DocumentSyncStatus } from '@/components/workspace/document-sync-status';
+import { DraftExport } from '@/components/workspace/draft-export';
 import StarterKit from '@tiptap/starter-kit';
 import Placeholder from '@tiptap/extension-placeholder';
 import Highlight from '@tiptap/extension-highlight';
@@ -586,6 +587,15 @@ function DocumentEditor({ workspaceId, docId }: { workspaceId: string; docId: st
           canWrite={canWrite}
           accessDenied={accessDenied}
         />
+        <span>Local storage: per-edit confirmation unavailable</span>
+        {localReady && user?.id && (
+          <DraftExport
+            key={`${user.id}:${docId}`}
+            document={ydoc}
+            principal={user.id}
+            room={`document:${workspaceId}:${docId}`}
+          />
+        )}
         {doc?.author && <span>by {doc.author.name}</span>}
         {connectedUsers > 0 && (
           <span className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-success/10 text-success text-[10px] font-medium">
