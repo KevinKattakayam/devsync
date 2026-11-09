@@ -1,4 +1,7 @@
 import { knowledgeQuery, knowledgeSourceQuery, knowledgePage } from './services/knowledge-search';
+import { createAutomationRuleInput } from './services/automation-store';
+import { automationEnabledInput } from './routes/automation.routes';
+import { automationHumanEventInput, automationPreviewInput } from './services/automation-execution';
 import { installationInput } from './routes/github-installation.routes';
 import { githubExecutionSchema } from './services/github-execution';
 import { exportRequestInput, transferInput, revokeSessionInput } from './routes/lifecycle.routes';
@@ -442,6 +445,131 @@ add(
 );
 
 const decisionsBase = '/api/v2/workspaces/{workspaceId}/decisions';
+const automationBase = '/api/v2/workspaces/{workspaceId}/automation';
+const automationRuleDto = z
+  .object({
+    id: z.string(),
+    workspaceId: z.string(),
+    createdBy: z.string(),
+    title: z.string(),
+    trigger: z.enum(['task_review', 'blocker', 'pr_merged', 'ci_passed']),
+    action: z.enum(['notify', 'escalate', 'prepare_report', 'update_linked_status']),
+    condition: z.enum(['always', 'high_priority']),
+    debounceSeconds: z.number().int(),
+    enabled: z.boolean(),
+    version: z.number().int(),
+    createdAt: z.iso.datetime(),
+    updatedAt: z.iso.datetime(),
+  })
+  .strict();
+add('GET', automationBase, z.array(automationRuleDto));
+add('POST', automationBase, automationRuleDto, '201', {
+  body: createAutomationRuleInput,
+});
+add('PATCH', `${automationBase}/{ruleId}/enabled`, automationRuleDto, '200', {
+  body: automationEnabledInput,
+});
+const automationExecutionDto = z
+  .object({
+    id: z.string(),
+    workspaceId: z.string(),
+    ruleId: z.string(),
+    eventId: z.string(),
+    ruleVersion: z.number().int(),
+    status: z.enum([
+      'pending_approval',
+      'approved',
+      'completed',
+      'unavailable',
+      'cancelled',
+      'failed',
+    ]),
+    approvedBy: z.string().nullable(),
+    errorCode: z.string().nullable(),
+    createdAt: z.iso.datetime(),
+    updatedAt: z.iso.datetime(),
+  })
+  .strict();
+add(
+  'POST',
+  `${automationBase}/preview`,
+  z
+    .object({
+      eligible: z.boolean(),
+      requiresApproval: z.literal(true),
+      reason: z.enum([
+        'eligible',
+        'disabled',
+        'wrong_trigger',
+        'condition_failed',
+        'debounced',
+        'verification_unavailable',
+      ]),
+    })
+    .strict(),
+  '200',
+  { body: automationPreviewInput },
+);
+add(
+  'POST',
+  `${automationBase}/events`,
+  z.object({ eventId: z.string(), executions: z.array(automationExecutionDto) }).strict(),
+  '201',
+  {
+    body: automationHumanEventInput,
+    headers: { 'Idempotency-Key': { schema: z.string().min(1).max(128), required: true } },
+  },
+);
+add(
+  'GET',
+  `${automationBase}/executions`,
+  z.array(
+    automationExecutionDto.extend({
+      origin: z.enum(['human_assertion', 'signed_webhook']),
+      trigger: z.enum(['task_review', 'blocker', 'pr_merged', 'ci_passed']),
+      taskId: z.string().nullable(),
+      current: z.boolean(),
+      action: z.enum(['notify', 'escalate', 'prepare_report', 'update_linked_status']),
+      source: z.discriminatedUnion('kind', [
+        z.object({ kind: z.literal('task'), title: z.string(), actorId: z.string() }).strict(),
+        z
+          .object({
+            kind: z.literal('github'),
+            repository: z.string(),
+            subject: z.string(),
+            providerAt: z.iso.datetime(),
+            observedAt: z.iso.datetime(),
+            liveAccess: z.literal('not_verified'),
+          })
+          .strict(),
+      ]),
+      report: z
+        .object({
+          kind: z.literal('signed_webhook_record'),
+          repository: z.string(),
+          pullNumber: z.number().int(),
+          providerAt: z.iso.datetime(),
+          observedAt: z.iso.datetime(),
+          liveAccess: z.literal('not_verified'),
+        })
+        .strict()
+        .nullable(),
+      audit: z.array(
+        z
+          .object({
+            executionId: z.string(),
+            kind: z.string(),
+            actorId: z.string().nullable(),
+            createdAt: z.iso.datetime(),
+          })
+          .strict(),
+      ),
+    }),
+  ),
+);
+add('POST', `${automationBase}/executions/{executionId}/approve`, automationExecutionDto, '200', {
+  body: z.object({}).strict(),
+});
 const receiptDto = model('DecisionReceipt');
 add(
   'GET',

@@ -2,6 +2,7 @@ import { Queue, Worker, Job } from 'bullmq';
 import { redis } from './redis';
 import { activeTraceId } from '../observability/telemetry';
 import { createHash } from 'crypto';
+import Redis from 'ioredis';
 
 /** Shared BullMQ connection config — reuses the primary Redis client's connection options. */
 const connection = {
@@ -59,12 +60,24 @@ export function withTraceContext<T extends object>(data: T): T & TracedJobData {
 // ── Queue instances ──────────────────────────────────────────────
 
 const queues = new Map<string, Queue>();
+const automationConnections = new Map<Queue, Redis>();
 
 export function getQueue(name: string): Queue {
   let queue = queues.get(name);
   if (!queue) {
+    const producer =
+      name === QueueNames.AUTOMATION
+        ? new Redis({
+            ...connection,
+            username: redis.options.username,
+            maxRetriesPerRequest: 1,
+            enableOfflineQueue: false,
+            connectTimeout: 3000,
+          })
+        : undefined;
+    producer?.on('error', () => console.error('[Automation] Queue unavailable'));
     queue = new Queue(name, {
-      connection,
+      connection: producer || connection,
       defaultJobOptions: {
         removeOnComplete: { count: 500 },
         removeOnFail: { count: 1000 },
@@ -72,9 +85,21 @@ export function getQueue(name: string): Queue {
         backoff: { type: 'exponential', delay: 1000 },
       },
     });
+    if (producer) automationConnections.set(queue, producer);
+    if (name === QueueNames.AUTOMATION)
+      queue.on('error', () => console.error('[Automation] Queue unavailable'));
     queues.set(name, queue);
   }
   return queue;
+}
+
+/** Replace a stalled automation producer; pending jobs remain recoverable in PostgreSQL. */
+export function resetAutomationQueue(expected: Queue): void {
+  if (queues.get(QueueNames.AUTOMATION) !== expected) return;
+  queues.delete(QueueNames.AUTOMATION);
+  automationConnections.get(expected)?.disconnect();
+  automationConnections.delete(expected);
+  void expected.close().catch(() => console.error('[Automation] Queue close failed'));
 }
 
 // ── Worker factory ───────────────────────────────────────────────
@@ -95,7 +120,10 @@ export function createWorker<T = unknown>(
         }
       : processor;
   const worker = new Worker<T>(queueName, safeProcessor, {
-    connection,
+    connection:
+      queueName === QueueNames.AUTOMATION
+        ? { ...connection, username: redis.options.username }
+        : connection,
     concurrency,
   });
 
@@ -154,6 +182,8 @@ export function createWorker<T = unknown>(
 export async function closeQueues(): Promise<void> {
   const closePromises: Promise<void>[] = [];
   for (const [, queue] of queues) {
+    automationConnections.get(queue)?.disconnect();
+    automationConnections.delete(queue);
     closePromises.push(queue.close());
   }
   await Promise.allSettled(closePromises);

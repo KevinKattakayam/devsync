@@ -1,4 +1,25 @@
 import { searchKnowledge } from '../services/knowledge-search';
+import {
+  automationJob,
+  automationJobId,
+  processAutomationJob,
+} from '../services/automation-worker';
+import { GenericContainer } from 'testcontainers';
+import { Queue, Worker } from 'bullmq';
+import { createAutomationRouter } from '../routes/automation.routes';
+import {
+  submitAutomationEvent,
+  approveAutomationExecution,
+  listAutomationExecutions,
+  executeAutomationExecution,
+  claimAutomationExecution,
+  failAutomationClaim,
+} from '../services/automation-execution';
+import {
+  createAutomationRule,
+  setAutomationEnabled,
+  listAutomationRules,
+} from '../services/automation-store';
 import { groundedPreview } from '../services/grounded-ai';
 import aiV3Router from '../routes/ai-v3.routes';
 import { evaluateGroundedCases } from '../../testing/ai-eval/grounded';
@@ -147,6 +168,10 @@ app.use(
   createKnowledgeSearchRouter((_req, _res, next) => next()),
 );
 app.use('/scim/v2', scimRouter);
+app.use(
+  '/automation/:workspaceId',
+  createAutomationRouter((_req, _res, next) => next()),
+);
 app.use('/ai-v3', aiV3Router);
 app.get('/auth/me', getMe);
 app.patch('/auth/me', updateMe);
@@ -2875,5 +2900,871 @@ it('grounded API flag denies disabled access and enabled empty retrieval never c
   } finally {
     if (old === undefined) delete process.env.FEATURE_GROUNDED_AI;
     else process.env.FEATURE_GROUNDED_AI = old;
+  }
+});
+
+it('automation rules default disabled and only current owners may enable them in their own workspace', async () => {
+  const { a, b } = await fixture();
+  const input = {
+    title: 'Review notification',
+    trigger: 'task_review',
+    action: 'notify',
+    debounceSeconds: 30,
+    condition: 'always',
+  };
+  const create = (actor: string, workspaceId: string) =>
+    withDatabase(db, () => createAutomationRule(actor, workspaceId, input));
+  await expect(create('viewer', a)).rejects.toThrow();
+  await expect(create('editor', a)).rejects.toThrow();
+  await expect(create('owner', b)).rejects.toThrow();
+  const rule = await create('owner', a);
+  expect(rule.enabled).toBe(false);
+  await admin.workspaceMember.create({ data: { workspaceId: b, userId: 'owner', role: 'OWNER' } });
+  await expect(
+    withDatabase(db, () => setAutomationEnabled('editor', a, rule.id, true)),
+  ).rejects.toThrow();
+  await expect(
+    withDatabase(db, () => setAutomationEnabled('owner', b, rule.id, true)),
+  ).rejects.toThrow('Rule unavailable');
+  expect(
+    await db.withTenantTransaction(
+      b,
+      (tx) => tx.$queryRaw`SELECT id FROM "AutomationRule" WHERE id=${rule.id}`,
+    ),
+  ).toEqual([]);
+  const enabled = await withDatabase(db, () => setAutomationEnabled('owner', a, rule.id, true));
+  expect(enabled.enabled).toBe(true);
+  expect(
+    (await withDatabase(db, () => setAutomationEnabled('owner', a, rule.id, true))).version,
+  ).toBe(enabled.version);
+  expect(await withDatabase(db, () => listAutomationRules('viewer', a))).toEqual(
+    expect.arrayContaining([expect.objectContaining({ id: rule.id, enabled: true })]),
+  );
+  await admin.workspaceMember.delete({
+    where: { userId_workspaceId: { userId: 'viewer', workspaceId: a } },
+  });
+  await expect(withDatabase(db, () => listAutomationRules('viewer', a))).rejects.toThrow();
+});
+
+it('automation rule API is flagged, validates input and enforces owner and viewer roles', async () => {
+  const { a } = await fixture();
+  const before = process.env.FEATURE_AUTOMATION;
+  const input = {
+    title: 'Review notice',
+    trigger: 'task_review',
+    action: 'notify',
+    condition: 'always',
+    debounceSeconds: 30,
+  };
+  try {
+    process.env.FEATURE_AUTOMATION = 'false';
+    expect((await request(app).get(`/automation/${a}`)).status).toBe(404);
+    process.env.FEATURE_AUTOMATION = 'true';
+    expect(
+      (await request(app).post(`/automation/${a}`).set('x-fixture-actor', 'viewer').send(input))
+        .status,
+    ).toBe(403);
+    expect(
+      (
+        await request(app)
+          .post(`/automation/${a}`)
+          .send({ ...input, action: 'update_linked_status' })
+      ).status,
+    ).toBe(400);
+    const created = await request(app).post(`/automation/${a}`).send(input);
+    expect(created.status).toBe(201);
+    expect(created.body.enabled).toBe(false);
+    expect(
+      (
+        await request(app)
+          .patch(`/automation/${a}/${created.body.id}/enabled`)
+          .set('x-fixture-actor', 'editor')
+          .send({ enabled: true })
+      ).status,
+    ).toBe(403);
+    expect(
+      (
+        await request(app)
+          .patch(`/automation/${a}/${created.body.id}/enabled`)
+          .send({ enabled: true })
+      ).status,
+    ).toBe(200);
+    const list = await request(app).get(`/automation/${a}`).set('x-fixture-actor', 'viewer');
+    expect(list.status).toBe(200);
+    expect(list.headers['cache-control']).toBe('no-store');
+    expect(list.body).toEqual(
+      expect.arrayContaining([expect.objectContaining({ id: created.body.id, enabled: true })]),
+    );
+  } finally {
+    if (before === undefined) delete process.env.FEATURE_AUTOMATION;
+    else process.env.FEATURE_AUTOMATION = before;
+  }
+});
+
+it('automation rule creation binds idempotency to current owner authority and payload', async () => {
+  const { a } = await fixture();
+  const previous = process.env.FEATURE_AUTOMATION;
+  const data = {
+    title: 'Retry-safe rule',
+    trigger: 'task_review',
+    action: 'notify',
+    condition: 'always',
+    debounceSeconds: 30,
+  };
+  try {
+    process.env.FEATURE_AUTOMATION = 'true';
+    const create = (payload: object) =>
+      request(app)
+        .post(`/automation/${a}`)
+        .set('Idempotency-Key', 'rule-fixture-key')
+        .send(payload);
+    const [first, second] = await Promise.all([create(data), create(data)]);
+    expect([first.status, second.status]).toEqual([201, 201]);
+    expect(first.body.id).toBe(second.body.id);
+    expect((await create({ ...data, title: 'Different' })).status).toBe(409);
+    await admin.workspaceMember.delete({
+      where: { userId_workspaceId: { userId: 'owner', workspaceId: a } },
+    });
+    expect((await create(data)).status).toBe(403);
+  } finally {
+    if (previous === undefined) delete process.env.FEATURE_AUTOMATION;
+    else process.env.FEATURE_AUTOMATION = previous;
+  }
+});
+
+it('automation requires current owner approval, deduplicates events, debounces and rechecks tenant source', async () => {
+  const { a, b } = await fixture();
+  await admin.workspaceMember.create({ data: { workspaceId: b, userId: 'owner', role: 'OWNER' } });
+  const rule = await withDatabase(db, () =>
+    createAutomationRule('owner', a, {
+      title: 'Review notice',
+      trigger: 'task_review',
+      action: 'notify',
+      condition: 'always',
+      debounceSeconds: 60,
+    }),
+  );
+  const input = { trigger: 'task_review', taskId: `task-${a}` };
+  const submit = (actor: string, payload: object, key: string) =>
+    withDatabase(db, () => submitAutomationEvent(actor, a, payload, key));
+  expect((await submit('editor', input, 'off')).executions).toHaveLength(0);
+  await withDatabase(db, () => setAutomationEnabled('owner', a, rule.id, true));
+  await expect(submit('viewer', input, 'viewer')).rejects.toThrow();
+  await expect(submit('owner', { ...input, taskId: `task-${b}` }, 'foreign')).rejects.toThrow();
+  const [first, retry] = await Promise.all([
+    submit('editor', input, 'same-event'),
+    submit('editor', input, 'same-event'),
+  ]);
+  expect(first.eventId).toBe(retry.eventId);
+  expect(first.executions).toHaveLength(1);
+  expect(retry.executions[0].id).toBe(first.executions[0].id);
+  await expect(
+    submit('editor', { trigger: 'blocker', taskId: `task-${a}` }, 'same-event'),
+  ).rejects.toThrow();
+  expect((await submit('editor', input, 'debounced')).executions).toHaveLength(0);
+  const executionId = first.executions[0].id;
+  await expect(
+    withDatabase(db, () => approveAutomationExecution('owner', b, executionId)),
+  ).rejects.toThrow('Execution unavailable');
+  await expect(submit('editor', { ...input, depth: 1 }, 'forged-chain')).rejects.toThrow();
+  await expect(
+    withDatabase(db, () => executeAutomationExecution(a, executionId, 'unapproved')),
+  ).rejects.toThrow();
+  await expect(
+    withDatabase(db, () => approveAutomationExecution('editor', a, executionId)),
+  ).rejects.toThrow();
+  expect(
+    (await withDatabase(db, () => approveAutomationExecution('owner', a, executionId))).status,
+  ).toBe('approved');
+  const before = await admin.activity.count({
+    where: { workspaceId: a, type: 'automation_notification' },
+  });
+  const claims = await Promise.all([
+    withDatabase(db, () => claimAutomationExecution(a, executionId)),
+    withDatabase(db, () => claimAutomationExecution(a, executionId)),
+  ]);
+  expect(claims.filter(Boolean)).toHaveLength(1);
+  const token = claims.find(Boolean)!.token;
+  const [one, two] = await Promise.all([
+    withDatabase(db, () => executeAutomationExecution(a, executionId, token)),
+    withDatabase(db, () => executeAutomationExecution(a, executionId, token)),
+  ]);
+  expect(one.status).toBe('completed');
+  expect(two.status).toBe('completed');
+  expect(
+    await admin.activity.count({ where: { workspaceId: a, type: 'automation_notification' } }),
+  ).toBe(before + 1);
+  const timeline = await withDatabase(db, () => listAutomationExecutions('owner', a));
+  expect(timeline).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        id: executionId,
+        status: 'completed',
+        errorCode: null,
+      }),
+    ]),
+  );
+  expect(JSON.stringify(timeline)).not.toContain('private-fixture-error');
+  await expect(withDatabase(db, () => listAutomationExecutions('viewer', a))).rejects.toThrow();
+  const visible = await request(app)
+    .get(`/workspaces/${a}/activities`)
+    .set('x-fixture-actor', 'viewer');
+  expect(
+    visible.body.some((item: { type: string }) => item.type === 'automation_notification'),
+  ).toBe(true);
+  await admin.task.delete({ where: { id: `task-${a}` } });
+  const afterDeletion = await request(app)
+    .get(`/workspaces/${a}/activities`)
+    .set('x-fixture-actor', 'viewer');
+  expect(
+    afterDeletion.body.some((item: { type: string }) => item.type === 'automation_notification'),
+  ).toBe(false);
+});
+
+it('automation preview is read-only and event approval is separately authorized', async () => {
+  const { a, b } = await fixture();
+  const previous = process.env.FEATURE_AUTOMATION;
+  try {
+    process.env.FEATURE_AUTOMATION = 'true';
+    const rule = await withDatabase(db, () =>
+      createAutomationRule('owner', a, {
+        title: 'Preview rule',
+        trigger: 'task_review',
+        action: 'notify',
+        condition: 'always',
+        debounceSeconds: 30,
+      }),
+    );
+    const preview = { ruleId: rule.id, trigger: 'task_review', taskId: `task-${a}` };
+    const path = `/automation/${a}`;
+    expect((await request(app).post(`${path}/preview`).send(preview)).body).toMatchObject({
+      eligible: false,
+      reason: 'disabled',
+      requiresApproval: true,
+    });
+    await withDatabase(db, () => setAutomationEnabled('owner', a, rule.id, true));
+    expect(
+      (
+        await request(app)
+          .post(`${path}/preview`)
+          .send({ ...preview, ruleId: 'missing-rule' })
+      ).status,
+    ).toBe(404);
+    expect(
+      (
+        await request(app)
+          .post(`${path}/preview`)
+          .send({ ...preview, trigger: 'blocker' })
+      ).body,
+    ).toMatchObject({ eligible: false, reason: 'wrong_trigger' });
+    const priorityRule = await withDatabase(db, () =>
+      createAutomationRule('owner', a, {
+        title: 'Urgent review',
+        trigger: 'task_review',
+        action: 'notify',
+        condition: 'high_priority',
+        debounceSeconds: 30,
+      }),
+    );
+    await withDatabase(db, () => setAutomationEnabled('owner', a, priorityRule.id, true));
+    await admin.task.update({ where: { id: `task-${a}` }, data: { priority: 'LOW' } });
+    expect(
+      (
+        await request(app)
+          .post(`${path}/preview`)
+          .send({ ...preview, ruleId: priorityRule.id })
+      ).body,
+    ).toMatchObject({ eligible: false, reason: 'condition_failed' });
+    expect(
+      (await request(app).post(`${path}/preview`).set('x-fixture-actor', 'viewer').send(preview))
+        .status,
+    ).toBe(403);
+    expect(
+      (
+        await request(app)
+          .post(`${path}/preview`)
+          .send({ ...preview, taskId: `task-${b}` })
+      ).status,
+    ).toBe(404);
+    expect((await request(app).post(`${path}/preview`).send(preview)).body).toMatchObject({
+      eligible: true,
+      reason: 'eligible',
+      requiresApproval: true,
+    });
+    expect((await request(app).get(`${path}/executions`)).body).toEqual([]);
+    const event = await request(app)
+      .post(`${path}/events`)
+      .set('Idempotency-Key', 'event-preview-fixture')
+      .send({ trigger: 'task_review', taskId: `task-${a}` });
+    expect(event.status).toBe(201);
+    const id = event.body.executions[0].id as string;
+    expect((await request(app).post(`${path}/preview`).send(preview)).body).toMatchObject({
+      eligible: false,
+      reason: 'debounced',
+    });
+    expect(
+      (
+        await request(app)
+          .post(`${path}/executions/${id}/approve`)
+          .set('x-fixture-actor', 'editor')
+          .send({})
+      ).status,
+    ).toBe(403);
+    expect((await request(app).post(`${path}/executions/${id}/approve`).send({})).body.status).toBe(
+      'approved',
+    );
+    expect(
+      (await request(app).get(`${path}/executions`).set('x-fixture-actor', 'viewer')).status,
+    ).toBe(403);
+    expect((await request(app).get(`${path}/executions`)).body).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id,
+          status: 'approved',
+          current: true,
+          origin: 'human_assertion',
+        }),
+      ]),
+    );
+  } finally {
+    if (previous === undefined) delete process.env.FEATURE_AUTOMATION;
+    else process.env.FEATURE_AUTOMATION = previous;
+  }
+});
+
+it('automation leases serialize attempts and fail closed after three redacted failures', async () => {
+  const { a } = await fixture();
+  const rule = await withDatabase(db, () =>
+    createAutomationRule('owner', a, {
+      title: 'Bounded retries',
+      trigger: 'task_review',
+      action: 'notify',
+      condition: 'always',
+      debounceSeconds: 1,
+    }),
+  );
+  await withDatabase(db, () => setAutomationEnabled('owner', a, rule.id, true));
+  const event = await withDatabase(db, () =>
+    submitAutomationEvent(
+      'editor',
+      a,
+      { trigger: 'task_review', taskId: `task-${a}` },
+      'lease-fixture',
+    ),
+  );
+  const id = event.executions[0].id;
+  await withDatabase(db, () => approveAutomationExecution('owner', a, id));
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    const claim = await withDatabase(db, () => claimAutomationExecution(a, id));
+    expect(claim?.attempt).toBe(attempt);
+    expect(await withDatabase(db, () => claimAutomationExecution(a, id))).toBeNull();
+    const result = await withDatabase(db, () => failAutomationClaim(a, id, claim!.token));
+    expect(result.status).toBe(attempt === 3 ? 'failed' : 'approved');
+  }
+  const timeline = await withDatabase(db, () => listAutomationExecutions('owner', a));
+  expect(timeline).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({ id, status: 'failed', errorCode: 'worker_failed' }),
+    ]),
+  );
+  expect(
+    await admin.activity.count({ where: { workspaceId: a, type: 'automation_notification' } }),
+  ).toBe(0);
+});
+
+it('automation cancels approved work when its initiating member loses write access', async () => {
+  const { a } = await fixture();
+  const rule = await withDatabase(db, () =>
+    createAutomationRule('owner', a, {
+      title: 'Revocation',
+      trigger: 'task_review',
+      action: 'notify',
+      condition: 'always',
+      debounceSeconds: 1,
+    }),
+  );
+  await withDatabase(db, () => setAutomationEnabled('owner', a, rule.id, true));
+  const event = await withDatabase(db, () =>
+    submitAutomationEvent(
+      'editor',
+      a,
+      { trigger: 'task_review', taskId: `task-${a}` },
+      'revocation-fixture',
+    ),
+  );
+  const id = event.executions[0].id;
+  await withDatabase(db, () => approveAutomationExecution('owner', a, id));
+  await admin.workspaceMember.delete({
+    where: { userId_workspaceId: { userId: 'editor', workspaceId: a } },
+  });
+  const claim = await withDatabase(db, () => claimAutomationExecution(a, id));
+  expect(
+    (await withDatabase(db, () => executeAutomationExecution(a, id, claim!.token))).status,
+  ).toBe('cancelled');
+  expect(
+    await admin.activity.count({ where: { workspaceId: a, type: 'automation_notification' } }),
+  ).toBe(0);
+  expect(
+    await db.withTenantTransaction(
+      a,
+      (tx) => tx.$executeRaw`UPDATE "AutomationAudit" SET kind='failed' WHERE "executionId"=${id}`,
+    ),
+  ).toBe(0);
+  expect(
+    await db.withTenantTransaction(
+      a,
+      (tx) => tx.$executeRaw`DELETE FROM "AutomationAudit" WHERE "executionId"=${id}`,
+    ),
+  ).toBe(0);
+});
+
+it('duplicate opaque BullMQ jobs produce exactly one approved local activity', async () => {
+  const { a } = await fixture();
+  const redisContainer = await new GenericContainer('redis:7-alpine')
+    .withExposedPorts(6379)
+    .start();
+  const connection = {
+    host: redisContainer.getHost(),
+    port: redisContainer.getMappedPort(6379),
+    maxRetriesPerRequest: null,
+  };
+  const name = `automation-fixture-${randomBytes(8).toString('hex')}`;
+  const queue = new Queue(name, { connection });
+  let worker: Worker | undefined;
+  const previousFlag = process.env.FEATURE_AUTOMATION,
+    previousKey = process.env.ENCRYPTION_KEY;
+  try {
+    process.env.FEATURE_AUTOMATION = 'true';
+    process.env.ENCRYPTION_KEY = randomBytes(32).toString('hex');
+    const rule = await withDatabase(db, () =>
+      createAutomationRule('owner', a, {
+        title: 'Queue once',
+        trigger: 'task_review',
+        action: 'notify',
+        condition: 'always',
+        debounceSeconds: 1,
+      }),
+    );
+    await withDatabase(db, () => setAutomationEnabled('owner', a, rule.id, true));
+    const event = await withDatabase(db, () =>
+      submitAutomationEvent(
+        'editor',
+        a,
+        { trigger: 'task_review', taskId: `task-${a}` },
+        'queue-once',
+      ),
+    );
+    const executionId = event.executions[0].id;
+    await withDatabase(db, () => approveAutomationExecution('owner', a, executionId));
+    const data = automationJob(a, executionId),
+      jobId = automationJobId(executionId);
+    expect(JSON.stringify(data)).not.toContain(a);
+    await Promise.all([
+      queue.add('execute', data, { jobId }),
+      queue.add('execute', data, { jobId }),
+    ]);
+    worker = new Worker(
+      name,
+      async (job) => withDatabase(db, () => processAutomationJob(job.data)),
+      { connection, concurrency: 2 },
+    );
+    const deadline = Date.now() + 15000;
+    while (
+      Date.now() < deadline &&
+      (await admin.automationExecution.findUniqueOrThrow({ where: { id: executionId } })).status !==
+        'completed'
+    )
+      await new Promise((resolve) => setTimeout(resolve, 30));
+    expect(
+      (await admin.automationExecution.findUniqueOrThrow({ where: { id: executionId } })).status,
+    ).toBe('completed');
+    await withDatabase(db, () => processAutomationJob(data));
+    expect(
+      await admin.activity.count({ where: { workspaceId: a, type: 'automation_notification' } }),
+    ).toBe(1);
+    expect(
+      await admin.automationAudit.count({
+        where: { workspaceId: a, executionId, kind: 'completed' },
+      }),
+    ).toBe(1);
+  } finally {
+    await worker?.close();
+    await queue.close();
+    await redisContainer.stop();
+    if (previousFlag === undefined) delete process.env.FEATURE_AUTOMATION;
+    else process.env.FEATURE_AUTOMATION = previousFlag;
+    if (previousKey === undefined) delete process.env.ENCRYPTION_KEY;
+    else process.env.ENCRYPTION_KEY = previousKey;
+  }
+});
+
+it('signed PR redelivery creates one owner-only approval and only a locally recorded report', async () => {
+  const { a } = await fixture(),
+    repository = await repositoryFixture(a);
+  const previous = process.env.FEATURE_AUTOMATION;
+  try {
+    process.env.FEATURE_AUTOMATION = 'true';
+    const rule = await withDatabase(db, () =>
+      createAutomationRule('owner', a, {
+        title: 'PR report',
+        trigger: 'pr_merged',
+        action: 'prepare_report',
+        condition: 'always',
+        debounceSeconds: 30,
+      }),
+    );
+    await withDatabase(db, () => setAutomationEnabled('owner', a, rule.id, true));
+    const payload = {
+      action: 'closed',
+      pull_request: {
+        number: 83,
+        merged: true,
+        updated_at: '2026-11-09T10:00:00Z',
+        head: { sha: 'a'.repeat(40) },
+      },
+    };
+    expect(
+      (await githubEvent(repository.repositoryId, 'incorrect-fixture-secret', payload)).status,
+    ).toBe(401);
+    expect(await withDatabase(db, () => listAutomationExecutions('owner', a))).toHaveLength(0);
+    expect(
+      (await githubEvent(repository.repositoryId, repository.webhookSecret, payload)).status,
+    ).toBe(202);
+    expect(
+      (await githubEvent(repository.repositoryId, repository.webhookSecret, payload)).status,
+    ).toBe(202);
+    const pending = await withDatabase(db, () => listAutomationExecutions('owner', a));
+    expect(pending).toHaveLength(1);
+    expect(pending[0]).toMatchObject({ status: 'pending_approval', origin: 'signed_webhook' });
+    expect(pending[0]).toMatchObject({
+      source: {
+        kind: 'github',
+        repository: `fixture/${a}`,
+        subject: '83',
+        liveAccess: 'not_verified',
+      },
+      action: 'prepare_report',
+    });
+    await expect(withDatabase(db, () => listAutomationExecutions('viewer', a))).rejects.toThrow();
+    const id = pending[0].id;
+    await withDatabase(db, () => approveAutomationExecution('owner', a, id));
+    const claim = await withDatabase(db, () => claimAutomationExecution(a, id));
+    expect(
+      (await withDatabase(db, () => executeAutomationExecution(a, id, claim!.token))).status,
+    ).toBe('completed');
+    expect(await withDatabase(db, () => claimAutomationExecution(a, id))).toBeNull();
+    expect(
+      (await withDatabase(db, () => executeAutomationExecution(a, id, claim!.token))).status,
+    ).toBe('completed');
+    expect((await withDatabase(db, () => listAutomationExecutions('owner', a)))[0]).toMatchObject({
+      report: { kind: 'signed_webhook_record', pullNumber: 83, liveAccess: 'not_verified' },
+    });
+    expect(
+      await admin.automationAudit.count({
+        where: { workspaceId: a, executionId: id, kind: 'completed' },
+      }),
+    ).toBe(1);
+    await admin.gitHubRepository.update({
+      where: { id: repository.id },
+      data: { providerDisconnectedAt: new Date() },
+    });
+    expect(await withDatabase(db, () => listAutomationExecutions('owner', a))).toEqual([]);
+  } finally {
+    if (previous === undefined) delete process.env.FEATURE_AUTOMATION;
+    else process.env.FEATURE_AUTOMATION = previous;
+  }
+});
+
+it('a signed CI fixture cannot update linked status or establish verified CI', async () => {
+  const { a } = await fixture(),
+    repository = await repositoryFixture(a);
+  const previous = process.env.FEATURE_AUTOMATION;
+  try {
+    process.env.FEATURE_AUTOMATION = 'true';
+    const rule = await withDatabase(db, () =>
+      createAutomationRule('owner', a, {
+        title: 'CI update',
+        trigger: 'ci_passed',
+        action: 'update_linked_status',
+        condition: 'always',
+        debounceSeconds: 30,
+      }),
+    );
+    await withDatabase(db, () => setAutomationEnabled('owner', a, rule.id, true));
+    const taskBefore = await admin.task.findUniqueOrThrow({ where: { id: `task-${a}` } });
+    const payload = {
+      action: 'completed',
+      check_run: {
+        id: 331,
+        status: 'completed',
+        conclusion: 'success',
+        head_sha: 'b'.repeat(40),
+        completed_at: '2026-11-09T10:05:00Z',
+      },
+    };
+    expect(
+      (
+        await githubEvent(
+          repository.repositoryId,
+          repository.webhookSecret,
+          payload,
+          undefined,
+          'check_run',
+        )
+      ).status,
+    ).toBe(200);
+    const pending = await withDatabase(db, () => listAutomationExecutions('owner', a));
+    expect(pending).toHaveLength(1);
+    const id = pending[0].id;
+    await withDatabase(db, () => approveAutomationExecution('owner', a, id));
+    const claim = await withDatabase(db, () => claimAutomationExecution(a, id));
+    expect(
+      await withDatabase(db, () => executeAutomationExecution(a, id, claim!.token)),
+    ).toMatchObject({ status: 'unavailable', errorCode: 'ci_verification_unavailable' });
+    expect(await admin.task.findUniqueOrThrow({ where: { id: `task-${a}` } })).toEqual(taskBefore);
+    expect(
+      JSON.stringify(await withDatabase(db, () => listAutomationExecutions('owner', a))),
+    ).not.toContain('deployment_verified');
+  } finally {
+    if (previous === undefined) delete process.env.FEATURE_AUTOMATION;
+    else process.env.FEATURE_AUTOMATION = previous;
+  }
+});
+
+it('GitHub automation rule configuration is visible only to owners', async () => {
+  const { a } = await fixture();
+  const rule = await withDatabase(db, () =>
+    createAutomationRule('owner', a, {
+      title: 'Private repository workflow',
+      trigger: 'pr_merged',
+      action: 'prepare_report',
+      condition: 'always',
+      debounceSeconds: 30,
+    }),
+  );
+  await expect(
+    admin.$executeRaw`UPDATE "AutomationRule" SET action='notify' WHERE id=${rule.id}`,
+  ).rejects.toThrow();
+  expect(await withDatabase(db, () => listAutomationRules('owner', a))).toEqual(
+    expect.arrayContaining([expect.objectContaining({ id: rule.id })]),
+  );
+  expect(await withDatabase(db, () => listAutomationRules('editor', a))).not.toEqual(
+    expect.arrayContaining([expect.objectContaining({ id: rule.id })]),
+  );
+  expect(await withDatabase(db, () => listAutomationRules('viewer', a))).not.toEqual(
+    expect.arrayContaining([expect.objectContaining({ id: rule.id })]),
+  );
+  const previous = process.env.FEATURE_AUTOMATION;
+  try {
+    process.env.FEATURE_AUTOMATION = 'true';
+    const preview = await request(app)
+      .post(`/automation/${a}/preview`)
+      .set('x-fixture-actor', 'editor')
+      .send({ ruleId: rule.id, trigger: 'task_review', taskId: `task-${a}` });
+    expect(preview.status).toBe(404);
+  } finally {
+    if (previous === undefined) delete process.env.FEATURE_AUTOMATION;
+    else process.env.FEATURE_AUTOMATION = previous;
+  }
+});
+
+it('rule quota does not prevent a previously authorized idempotent retry', async () => {
+  const { a } = await fixture();
+  const input = {
+    title: 'Original',
+    trigger: 'task_review',
+    action: 'notify',
+    condition: 'always',
+    debounceSeconds: 30,
+  };
+  const original = await withDatabase(db, () =>
+    createAutomationRule('owner', a, input, 'limit-replay'),
+  );
+  await admin.$executeRaw`INSERT INTO "AutomationRule" (id,"workspaceId","createdBy",title,trigger,action,condition,"debounceSeconds") SELECT ${'limit-' + a + '-'} || n,${a},'owner','Fixture','task_review','notify','always',30 FROM generate_series(1,99) n`;
+  expect(
+    (await withDatabase(db, () => createAutomationRule('owner', a, input, 'limit-replay'))).id,
+  ).toBe(original.id);
+  await expect(
+    withDatabase(db, () => createAutomationRule('owner', a, input, 'new-key')),
+  ).rejects.toThrow('Rule limit reached');
+});
+
+it('automation rule updates reject stale versions without invalidating idempotent retries', async () => {
+  const { a } = await fixture();
+  const previous = process.env.FEATURE_AUTOMATION;
+  try {
+    process.env.FEATURE_AUTOMATION = 'true';
+    const rule = await withDatabase(db, () =>
+      createAutomationRule('owner', a, {
+        title: 'Version',
+        trigger: 'task_review',
+        action: 'notify',
+        condition: 'always',
+        debounceSeconds: 30,
+      }),
+    );
+    const path = `/automation/${a}/${rule.id}/enabled`;
+    const enable = await request(app)
+      .patch(path)
+      .send({ enabled: true, expectedVersion: rule.version });
+    expect(enable.status).toBe(200);
+    const replay = await request(app)
+      .patch(path)
+      .send({ enabled: true, expectedVersion: rule.version });
+    expect(replay.status).toBe(200);
+    expect(replay.body.version).toBe(enable.body.version);
+    expect(
+      (await request(app).patch(path).send({ enabled: false, expectedVersion: rule.version }))
+        .status,
+    ).toBe(409);
+    expect((await request(app).get(`/automation/${a}`)).body[0].enabled).toBe(true);
+  } finally {
+    if (previous === undefined) delete process.env.FEATURE_AUTOMATION;
+    else process.env.FEATURE_AUTOMATION = previous;
+  }
+});
+
+it('disabling a rule after approval cancels the action before it writes', async () => {
+  const { a } = await fixture();
+  const rule = await withDatabase(db, () =>
+    createAutomationRule('owner', a, {
+      title: 'Disable before execution',
+      trigger: 'task_review',
+      action: 'notify',
+      condition: 'always',
+      debounceSeconds: 1,
+    }),
+  );
+  await withDatabase(db, () => setAutomationEnabled('owner', a, rule.id, true));
+  const event = await withDatabase(db, () =>
+    submitAutomationEvent(
+      'editor',
+      a,
+      { trigger: 'task_review', taskId: `task-${a}` },
+      'disabled-fixture',
+    ),
+  );
+  const id = event.executions[0].id;
+  await withDatabase(db, () => approveAutomationExecution('owner', a, id));
+  await withDatabase(db, () => setAutomationEnabled('owner', a, rule.id, false));
+  const lease = await withDatabase(db, () => claimAutomationExecution(a, id));
+  expect(
+    await withDatabase(db, () => executeAutomationExecution(a, id, lease!.token)),
+  ).toMatchObject({ status: 'cancelled', errorCode: 'rule_disabled' });
+  expect(
+    await admin.activity.count({ where: { workspaceId: a, type: 'automation_notification' } }),
+  ).toBe(0);
+});
+
+it('deleted task sources hide automation derivatives and cannot be approved', async () => {
+  const { a } = await fixture();
+  const rule = await withDatabase(db, () =>
+    createAutomationRule('owner', a, {
+      title: 'Deleted source',
+      trigger: 'task_review',
+      action: 'notify',
+      condition: 'always',
+      debounceSeconds: 1,
+    }),
+  );
+  await withDatabase(db, () => setAutomationEnabled('owner', a, rule.id, true));
+  const event = await withDatabase(db, () =>
+    submitAutomationEvent(
+      'editor',
+      a,
+      { trigger: 'task_review', taskId: `task-${a}` },
+      'source-delete-fixture',
+    ),
+  );
+  await admin.task.delete({ where: { id: `task-${a}` } });
+  expect(await withDatabase(db, () => listAutomationExecutions('owner', a))).toEqual([]);
+  await expect(
+    withDatabase(db, () => approveAutomationExecution('owner', a, event.executions[0].id)),
+  ).rejects.toThrow('Source unavailable');
+});
+
+it('expired automation leases cannot complete or clear a newer claim', async () => {
+  const { a } = await fixture();
+  const rule = await withDatabase(db, () =>
+    createAutomationRule('owner', a, {
+      title: 'Lease recovery',
+      trigger: 'task_review',
+      action: 'notify',
+      condition: 'always',
+      debounceSeconds: 1,
+    }),
+  );
+  await withDatabase(db, () => setAutomationEnabled('owner', a, rule.id, true));
+  const event = await withDatabase(db, () =>
+    submitAutomationEvent(
+      'editor',
+      a,
+      { trigger: 'task_review', taskId: `task-${a}` },
+      'lease-recovery-fixture',
+    ),
+  );
+  const id = event.executions[0].id;
+  await withDatabase(db, () => approveAutomationExecution('owner', a, id));
+  const first = await withDatabase(db, () => claimAutomationExecution(a, id));
+  await admin.automationLease.update({
+    where: { executionId: id },
+    data: { leaseUntil: new Date(Date.now() - 1000) },
+  });
+  const next = await withDatabase(db, () => claimAutomationExecution(a, id));
+  expect(next?.attempt).toBe(2);
+  await expect(
+    withDatabase(db, () => executeAutomationExecution(a, id, first!.token)),
+  ).rejects.toThrow('Execution lease unavailable');
+  await expect(withDatabase(db, () => failAutomationClaim(a, id, first!.token))).rejects.toThrow(
+    'Execution lease unavailable',
+  );
+  expect(
+    (await withDatabase(db, () => executeAutomationExecution(a, id, next!.token))).status,
+  ).toBe('completed');
+  expect(
+    await admin.activity.count({ where: { workspaceId: a, type: 'automation_notification' } }),
+  ).toBe(1);
+});
+
+it('owner previews recorded GitHub evidence without forging an automation event', async () => {
+  const { a } = await fixture(),
+    repo = await repositoryFixture(a);
+  const previous = process.env.FEATURE_AUTOMATION;
+  try {
+    process.env.FEATURE_AUTOMATION = 'true';
+    const rule = await withDatabase(db, () =>
+      createAutomationRule('owner', a, {
+        title: 'PR preview',
+        trigger: 'pr_merged',
+        action: 'prepare_report',
+        condition: 'always',
+        debounceSeconds: 30,
+      }),
+    );
+    const payload = {
+      action: 'closed',
+      pull_request: { number: 17, merged: true, updated_at: '2026-11-09T11:00:00Z' },
+    };
+    expect((await githubEvent(repo.repositoryId, repo.webhookSecret, payload)).status).toBe(202);
+    await withDatabase(db, () => setAutomationEnabled('owner', a, rule.id, true));
+    const path = `/automation/${a}/preview`;
+    const input = { ruleId: rule.id, trigger: 'pr_merged', repositoryId: repo.id, subject: '17' };
+    expect(
+      (await request(app).post(path).set('x-fixture-actor', 'editor').send(input)).status,
+    ).toBe(404);
+    expect((await request(app).post(path).send(input)).body).toMatchObject({
+      eligible: true,
+      requiresApproval: true,
+      reason: 'eligible',
+    });
+    expect(await withDatabase(db, () => listAutomationExecutions('owner', a))).toEqual([]);
+    await admin.gitHubRepository.update({
+      where: { id: repo.id },
+      data: { providerDisconnectedAt: new Date() },
+    });
+    expect((await request(app).post(path).send(input)).status).toBe(404);
+  } finally {
+    if (previous === undefined) delete process.env.FEATURE_AUTOMATION;
+    else process.env.FEATURE_AUTOMATION = previous;
   }
 });

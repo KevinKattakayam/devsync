@@ -1,4 +1,5 @@
 import { knowledgeSearchRouter } from './routes/knowledge-search.routes';
+import { createAutomationRouter } from './routes/automation.routes';
 import { githubInstallationRouter } from './routes/github-installation.routes';
 import express from 'express';
 import {
@@ -90,6 +91,9 @@ app.use('/api/v2/workspaces/:workspaceId/decisions', decisionReceiptRoutes);
 mounts.push({ prefix: '/api/v2/workspaces/:workspaceId/decisions', router: decisionReceiptRoutes });
 const accountLifecycle = createAccountLifecycleRouter(),
   workspaceLifecycle = createWorkspaceLifecycleRouter();
+const automation = createAutomationRouter();
+app.use('/api/v2/workspaces/:workspaceId/automation', automation);
+mounts.push({ prefix: '/api/v2/workspaces/:workspaceId/automation', router: automation });
 app.use(
   '/api/v2/workspaces/:workspaceId/github-repositories/:repositoryId/execution',
   githubExecutionRouter,

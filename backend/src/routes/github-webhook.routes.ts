@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { recordAutomationGitHubEvent } from '../services/automation-execution';
 import { randomUUID, createHash } from 'crypto';
 import { z } from 'zod';
 import { getQueue, QueueNames } from '../lib/queue';
@@ -105,6 +106,14 @@ router.post('/', validate(githubEnvelopeSchema), async (req, res, next) => {
           ))
         )
           return { status: 202, body: { ignored: 'Stale or unversioned execution event' } };
+        await recordAutomationGitHubEvent(
+          tx,
+          repository,
+          event,
+          payload.action,
+          event === 'check_run' ? payload.check_run : payload.pull_request,
+          digest,
+        );
         if (event === 'check_run' || event === 'pull_request_review')
           return { status: 200, body: { processed: 'Check evidence recorded' } };
         if (
