@@ -1,3 +1,11 @@
+# Rules and approval-based automation — local implementation, incomplete acceptance
+
+Phase 10 now has tenant-scoped disabled-by-default rules, explicit owner approval, preview, durable event deduplication, debounce, bounded worker leases/retries, redacted audit records and owner settings. Task triggers are explicit human assertions; signed GitHub webhook observations are labeled as such. Local notifications are workspace activities, not external posts. GitHub PR reports use existing recorded evidence; CI status updates fail closed because trusted independent CI verification and the linked-work graph are not implemented. No automatic task review/blocker detection is claimed.
+
+The fixture Chrome approval/denial flow, frontend gates, OpenAPI consistency, source scans and high-severity dependency audits passed. The backend full gate and both unchanged coverage comparisons also pass; exact evidence is recorded in [Phase 10 verification](quality/automation/README.md). No live GitHub testing was authorized. No production migration, push, deployment or Phase 11 work occurred.
+
+---
+
 # Rules and approval-based automation — incomplete foundation
 
 Added a side-effect-free strict rule/event preview and automation-specific queue error/dead-letter redaction. The preview is not an authorization or approval mechanism; no rule persistence, action execution, event ingestion, UI or audit timeline exists yet. Source BullMQ jobs retain their own data, so future producers must use opaque, nonsensitive payloads. Existing queue behavior is preserved for other queues.

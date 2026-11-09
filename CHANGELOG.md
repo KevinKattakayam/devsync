@@ -1,3 +1,8 @@
+# Rules and approval-based automation — local implementation
+
+- Add tenant-scoped opt-in rules, owner approval and audit, deduplicated/debounced durable events, opaque queue payloads, bounded leases and retries, and local activity actions.
+- Add owner settings and isolated fixture browser coverage. Human task assertions and signed GitHub observations retain distinct provenance; CI updates remain unavailable without trusted verification and linked-work support. See `docs/quality/automation/README.md` for verification and rollout limits.
+
 # Rules and approval-based automation — incomplete foundation
 
 - Add strict internal rule/event preview and automation-only dead-letter/error redaction with local Redis retry tests. No rule API, execution, approval, event hookup, audit UI or frontend exists yet.

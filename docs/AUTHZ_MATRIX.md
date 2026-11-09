@@ -225,3 +225,15 @@ The timeline inherits `FEATURE_DECISION_RECEIPTS` and active workspace policy. O
 ## Grounded assistant previews
 
 `POST /api/v3/ai/grounded` requires authenticated current active workspace membership, billing admission and the grounded AI flag. Read purposes allow current READ_ROLES; task/decision/link proposals additionally require WRITE_ROLES before generation and again before return. Search retains owner-only PR metadata and current-source/archive/receipt flags. No source IDs or URLs supplied by the model determine authority. All citations reference retrieved accessible sources rechecked after I/O. The model has no write/accept capability; explicit manual workflows preserve existing permissions.
+
+
+## Phase 10 automation
+
+| Operation | Owner | Editor / viewer | Source and tenant conditions |
+| --- | --- | --- | --- |
+| Create, enable or approve rule; view execution audit | Allowed | Denied | Active workspace membership, forced tenant RLS, current source and rule checks |
+| List rules | Allowed | Allowed for non-GitHub rules | GitHub configuration and evidence remain owner-only |
+| Submit task review or blocker assertion | Allowed | Editor allowed; viewer denied | Current task in workspace; explicit human assertion and idempotency key |
+| GitHub event admission | Signed webhook pathway | No direct user submission | Connected repository, verified webhook signature and existing delivery proof; live provider access not established |
+
+Worker executions recheck current approver, submitting writer and source; a removed or archived source cannot expose its derivative activity. CI status update fails closed.

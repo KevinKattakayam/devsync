@@ -187,3 +187,8 @@ The existing flagged decision receipts can have append-only execution events. Cu
 ## Grounded assistant previews
 
 The optional grounded preview endpoint reuses the existing completion gateway/quota and lexical knowledge service. Strict structured citations and proposal schemas have no mutation capability; source authority and source identity/content metadata are rechecked after provider I/O. Existing stream contracts remain. See [implementation, flags and evaluation limitations](quality/grounded-ai/README.md).
+
+
+## Phase 10 automation boundary
+
+When enabled, workspace rules and event/audit/lease records use forced tenant RLS. Owner approval precedes a worker claim; membership, rule version and source are rechecked at execution. The Redis job carries an opaque execution ID and encrypted tenant locator, while transactional idempotency and leases keep local activities single-effect under retry. Human task assertions and signed GitHub webhook observations retain distinct provenance. No external write or AI action is performed by the new automation worker. CI linked-status mutation is unavailable until independent verification and the linked-work graph exist. See [verification and rollout](quality/automation/README.md).

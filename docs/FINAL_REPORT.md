@@ -170,3 +170,8 @@ Use disposable data and keep private values out of output. These are instruction
 Both applications passed lint, format, strict types, tests and build in this documentation session: backend28 suites/260 tests; frontend17 files/76 component tests and9 separate Node tests. Current backend coverage is statements80.88%, branches71.34%, functions74.69%, lines83.17%; frontend41.19%,38.62%,39.47%,41.67%. The small backend statement/branch variation from the earlier snapshot is retained in the raw tables; no source, test or threshold was changed to force a percentage.
 
 This session's exact commands, gate exits and raw logs are retained in [quality/phase5c](quality/phase5c). The documentation link inventory checks local targets; it is not an external-link uptime, rendered Mermaid, legal or operational validation. No application code, baseline or contract changes were needed. No new performance/security/browser result is claimed.
+
+
+## Phase 10 automation checkpoint
+
+Tenant-scoped opt-in rules and owner-approved local actions now have durable deduplication, bounded retry leases, audit and an owner interface. Task review/blocker is a human assertion; GitHub observations are signed webhook records, not live verification. Trusted CI verification, linked-status mutation and automatic task-state detection remain incomplete. See [the Phase 10 evidence and rollout plan](quality/automation/README.md). No live GitHub test, production migration or deployment was performed.
