@@ -89,6 +89,12 @@
                   ]
                 },
                 {
+                  "html": "<a aria-label=\"Search knowledge\" class=\"shell-nav-link\" href=\"/workspace/devsync-sample/search\">",
+                  "target": [
+                    "a[aria-label=\"Search knowledge\"]"
+                  ]
+                },
+                {
                   "html": "<a aria-label=\"Code snippets\" class=\"shell-nav-link\" href=\"/workspace/devsync-sample/snippets\">",
                   "target": [
                     "a[aria-label=\"Code snippets\"]"

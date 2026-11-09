@@ -1,3 +1,7 @@
+# Explicit offline states and local drafts — in progress
+
+Reproduced and repaired cross-document local board projection carryover and malformed JSON crashes in the existing Yjs record helper. Unreadable local data is retained and automatic replacement is refused; the board displays a recovery warning. Focused frontend tests (8) and strict types passed. Frontend lint, format, types, 120 component tests, build and unchanged coverage comparison pass; five local Chrome Kanban regressions pass. This is verification of the narrow repair, not full offline acceptance. Per-edit IndexedDB transaction confirmation, bounded storage, purge/recovery controls and complete offline acceptance remain unfinished. Existing CRDT and server authorization are preserved.
+
 # Phase 11 inbox — local delivery, incomplete acceptance
 
 - Add an accessible inbox with per-event read controls, owner-only recorded automation failures and cache clearing on disconnect or reconnection checks.

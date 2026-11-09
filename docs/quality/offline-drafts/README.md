@@ -1,0 +1,11 @@
+# Offline drafts — initial correctness increment, incomplete phase
+
+Existing Yjs/IndexedDB persistence, native journal acknowledgements and recovery/revocation controls were inspected and retained. `localReady` reports hydration, not a per-edit disk transaction guarantee. The y-indexeddb dependency does not expose a per-edit acknowledged write result in its current integration. No new sync engine, queued admin action or provider claim was added.
+
+Two regressions were reproduced before implementation: cross-document JSON projection carryover and a crash on malformed stored JSON. The record hook now subscribes to the current Yjs map, preserving malformed bytes and refusing automatic replacement. The board shows a recovery warning. Generic JSON shape validation, explicit recovery/export/purge UI, bounded storage and quota handling are still needed; no full offline-first claim is made.
+
+Verification: focused `npx vitest run tests/local-record.test.tsx tests/local-first-yjs.test.tsx` exit 0 (8 tests); `python3 tools/quality/gates.py frontend docs/quality/offline-drafts/frontend` exit 0 for lint, format, types, 120 component tests and build. Coverage comparison against `docs/quality/inbox/phase11-frontend-final2/frontend-coverage/coverage-summary.json` exit 0. Pinned Gitleaks frontend source scan exit 0. No backend or API change was made; no new OpenAPI contract or migration is required.
+
+`E2E_CHROMIUM_PATH=/opt/google/chrome/chrome node tools/ci/browser.mjs kanban` exit 0: five actual Chrome fixture journeys with isolated local services. They verify existing board interactions and permissions, not full offline acceptance. The harness refreshed fixture captures in `docs/ui/after/kanban/initial`; a representative dark desktop capture was inspected. No live identity/provider integration was tested. The first quality-gate approval review timed out; its authorized retry passed.
+
+Remaining phase work: local edit durability confirmation, bounded storage, quota failures, safe purge/recovery controls, explicit offline draft states and new multi-tab/device/reload/revocation/stale-auth acceptance. Existing realtime recovery evidence is historical evidence rather than a rerun in this increment. No production data change, push or deployment occurred.
