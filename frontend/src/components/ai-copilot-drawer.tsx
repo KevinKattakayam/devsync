@@ -1,6 +1,7 @@
 'use client';
 
 import { errorMessage } from '@/lib/errors';
+import { GroundedAssistant } from '@/components/grounded-assistant';
 
 import { useState, useRef, useEffect } from 'react';
 import { usePathname, useParams } from 'next/navigation';
@@ -139,6 +140,9 @@ export function AiCopilotDrawer() {
         description="Workspace AI assistant"
         className="shell-copilot"
       >
+        {process.env.NEXT_PUBLIC_FEATURE_GROUNDED_AI === 'true' && (
+          <GroundedAssistant workspaceId={workspaceId} />
+        )}
         <div className="mb-3 flex justify-end">
           <IconButton
             label="Clear chat"
