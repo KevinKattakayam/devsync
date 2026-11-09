@@ -248,6 +248,7 @@ jobs:
             github-trail,
             decision-execution,
             grounded,
+            automation,
             search,
             ai-cost,
             editor,

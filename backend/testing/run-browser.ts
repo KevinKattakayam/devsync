@@ -43,6 +43,8 @@ async function main() {
       ...process.env,
       NODE_ENV: 'test',
       AUTH_TRUSTED_ORIGIN: 'http://127.0.0.1:3001',
+      FEATURE_AUTOMATION: process.env.E2E_AUTOMATION ? 'true' : 'false',
+      NEXT_PUBLIC_FEATURE_AUTOMATION: process.env.E2E_AUTOMATION ? 'true' : 'false',
       FEATURE_GROUNDED_AI: process.env.E2E_GROUNDED ? 'true' : 'false',
       NEXT_PUBLIC_FEATURE_GROUNDED_AI: process.env.E2E_GROUNDED ? 'true' : 'false',
       AI_QUOTA_USER_DAILY: process.env.E2E_AI_COST ? '1' : process.env.AI_QUOTA_USER_DAILY,
@@ -178,6 +180,14 @@ async function main() {
     };
     const backend = startBackend();
     await ready('http://127.0.0.1:5501/api/health', backend);
+    if (process.env.E2E_AUTOMATION) {
+      const worker = spawn(process.execPath, ['--import', 'tsx', 'src/worker.ts'], {
+        cwd: resolve(root, 'backend'),
+        env,
+        stdio: 'inherit',
+      });
+      children.push(worker);
+    }
     const frontend = spawn(
       process.execPath,
       [

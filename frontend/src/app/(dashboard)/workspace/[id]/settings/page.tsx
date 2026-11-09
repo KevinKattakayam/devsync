@@ -7,6 +7,7 @@ import { Badge, Button, EmptyState, Input } from '@/components/ui';
 import { WorkspaceLifecycle } from '@/components/settings/lifecycle';
 import { GitHubExecution } from '@/components/settings/github-execution';
 import { AiUsage } from '@/components/settings/ai-usage';
+import { AutomationRules } from '@/components/settings/automation-rules';
 import { Members } from '@/components/settings/members';
 import { Invitations } from '@/components/settings/invitations';
 import { SettingsError, SettingsLoading } from '@/components/settings/states';
@@ -81,6 +82,15 @@ function Settings({ workspaceId }: { workspaceId: string }) {
         </Button>
       </header>
       {showAi && <AiUsage workspaceId={workspaceId} />}
+      {process.env.NEXT_PUBLIC_FEATURE_AUTOMATION === 'true' &&
+        (!normalized || 'automation rules'.includes(normalized)) && (
+          <AutomationRules
+            key={`${attempt}:${role}`}
+            workspaceId={workspaceId}
+            owner={owner}
+            members={workspace.members}
+          />
+        )}
       <div className="mb-8">
         <label className="block space-y-2 text-sm">
           <span>Search settings</span>
