@@ -220,3 +220,8 @@ Document journal appends now acquire the current workspace writer transaction be
 ## Decision execution evidence
 
 The timeline inherits `FEATURE_DECISION_RECEIPTS` and active workspace policy. OWNER, EDITOR and VIEWER may read visible non-PR events; OWNER and EDITOR may append human assertions, human-confirmed outcomes and same-workspace task references to accepted receipts. PR references require OWNER, an existing connected same-workspace repository and a recorded PR. PR evidence is returned only to OWNER. Every request rechecks receipt source visibility. Tenant RLS permits event SELECT and INSERT, but no direct UPDATE or DELETE; authorized workspace deletion follows the receipt cascade. No route can record a verified deployment. [Phase evidence](quality/decision-execution/README.md).
+
+
+## Grounded assistant previews
+
+`POST /api/v3/ai/grounded` requires authenticated current active workspace membership, billing admission and the grounded AI flag. Read purposes allow current READ_ROLES; task/decision/link proposals additionally require WRITE_ROLES before generation and again before return. Search retains owner-only PR metadata and current-source/archive/receipt flags. No source IDs or URLs supplied by the model determine authority. All citations reference retrieved accessible sources rechecked after I/O. The model has no write/accept capability; explicit manual workflows preserve existing permissions.

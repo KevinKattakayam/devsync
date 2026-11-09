@@ -1,3 +1,9 @@
+# Grounded AI assistant — local preview delivery
+
+- Reuse gateway/quota and permission-aware lexical retrieval for structured cited previews; recheck sources after remote calls and reject fabricated reference IDs or executable/unrequested actions.
+- Add optional Copilot draft panel, evaluator adapter, tenant/source regression tests and fixture Chrome outage/role journey. Human-reviewed evaluation data is unavailable; no real model-quality, exact cost or factual-truth claim.
+- Verification, setup, flags and rollback: `docs/quality/grounded-ai/README.md`. No migration, push, deploy or production data change.
+
 # Decision execution timeline — partial local delivery (2026-11-09)
 
 - Extend existing accepted receipts with tenant-scoped, insert-only timestamped human assertion/outcome, task and owner-only existing GitHub PR evidence timeline. Add API contracts, current-source rechecks, frontend linking and provenance labels, DB/API authorization regressions, and fixture-only owner/viewer Chrome flow.

@@ -1,0 +1,22 @@
+[
+  {
+    "cwd": "backend",
+    "command": [
+      "npm",
+      "audit",
+      "--json",
+      "--audit-level=high"
+    ],
+    "exitCode": 0
+  },
+  {
+    "cwd": "frontend",
+    "command": [
+      "npm",
+      "audit",
+      "--json",
+      "--audit-level=high"
+    ],
+    "exitCode": 0
+  }
+]

@@ -1,3 +1,11 @@
+# Grounded AI assistant — local preview delivery, evaluation pending
+
+Extended the existing gateway/quota and lexical retrieval with a flagged structured preview endpoint and Copilot panel. Current source authority is rechecked after generation; fabricated references, unknown/executable actions and unrequested drafts reject. Task/decision/link outputs remain manual-review previews and cannot mutate or accept work. Existing receipt immutability and owner-only PR visibility remain in force.
+
+Local verification passes: 34 backend suites/336 tests, 25 frontend files/104 component tests plus9 Node tests, both app lint/format/types/builds, unchanged coverage comparisons, contracts/security and one fixture Chrome journey. Exact commands and retained failures are recorded in [grounded assistant evidence](quality/grounded-ai/README.md). User confirmed no reviewed evaluation cases are available; live model-quality/cost evaluation remains pending. The evaluator adapter requires review attribution and reports diagnostics/latency with cost unavailable, without claiming factual truth. No live provider success, push, deployment or production-data change is claimed.
+
+---
+
 # Evidence-linked decision-to-execution receipts — partial local delivery
 
 Phase 08 extends the existing manually accepted receipt system with timestamped human assertions/outcomes, same-workspace task links and owner-only references to existing GitHub PR/check/review evidence. It preserves accepted receipt immutability and fingerprints, uses additive forced-RLS insertion-only event storage, rechecks source visibility, and labels signed webhook records as unverified live-provider observations. A task/PR timeline is integrated into the existing receipt UI.

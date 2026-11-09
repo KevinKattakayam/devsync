@@ -1,0 +1,6 @@
+
+> frontend@0.1.0 typecheck
+> tsc --noEmit
+
+tests/grounded-assistant.test.tsx(39,44): error TS2339: Property 'toHaveTextContent' does not exist on type 'Assertion<void, HTMLElement>'.
+tests/grounded-assistant.test.tsx(47,44): error TS2339: Property 'toHaveTextContent' does not exist on type 'Assertion<void, HTMLElement>'.

@@ -182,3 +182,8 @@ The additive v2 workspace search/source-open routes use current central READ_ROL
 ## Decision execution evidence (local implementation)
 
 The existing flagged decision receipts can have append-only execution events. Current workspace roles and the receipt's source are checked on every timeline read and write; linked tasks are rechecked in the same workspace, while linked GitHub PR metadata remains owner-only and disappears when its repository binding is unavailable. Check runs are associated with the recorded PR head SHA and reviews with the PR number, with provider and observation timestamps and bounded results. Signed webhook facts are labeled as such; current provider access and deployment are not inferred. Authorized workspace deletion cascades receipt event removal. See [verification and outstanding deployment evidence](quality/decision-execution/README.md).
+
+
+## Grounded assistant previews
+
+The optional grounded preview endpoint reuses the existing completion gateway/quota and lexical knowledge service. Strict structured citations and proposal schemas have no mutation capability; source authority and source identity/content metadata are rechecked after provider I/O. Existing stream contracts remain. See [implementation, flags and evaluation limitations](quality/grounded-ai/README.md).
