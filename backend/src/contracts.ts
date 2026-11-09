@@ -3,6 +3,7 @@ import { installationInput } from './routes/github-installation.routes';
 import { githubExecutionSchema } from './services/github-execution';
 import { exportRequestInput, transferInput, revokeSessionInput } from './routes/lifecycle.routes';
 import { aiCompleteSchema } from './services/ai-schema';
+import { groundedInput, groundedOutput } from './services/grounded-ai';
 import { aiUsageV3Query } from './services/ai-schema';
 import { Prisma } from '@prisma/client';
 import { z } from 'zod';
@@ -554,6 +555,22 @@ add(
     .strict(),
   '200',
   { query: aiUsageV3Query },
+);
+add(
+  'POST',
+  '/api/v3/ai/grounded',
+  groundedOutput.extend({
+    status: z.enum(['preview', 'insufficient_evidence']),
+    sources: z.array(
+      z.object({ reference: z.number().int(), ...knowledgePage.shape.results.element.shape }),
+    ),
+    notice: z.string(),
+    provider: z.enum(['groq', 'openai']).optional(),
+    latencyMs: z.number().optional(),
+    cost: z.literal('unavailable').optional(),
+  }),
+  '200',
+  { body: groundedInput },
 );
 add('POST', '/api/v3/ai/complete', aiEventSchema, '200', {
   body: aiCompleteSchema,

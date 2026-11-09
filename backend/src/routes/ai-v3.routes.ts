@@ -9,6 +9,7 @@ import { AiLimitError } from '../services/ai-quota';
 import { AI_MAX_BODY_BYTES, AI_MAX_INPUT_CHARACTERS } from '../services/ai-provider';
 import { AppError } from '../utils/errors';
 import { aiUsageV3Query } from '../services/ai-schema';
+import { groundedInput, groundedPreview } from '../services/grounded-ai';
 export const boundAiRequest: RequestHandler = (req, _res, next) => {
   const input = aiCompleteSchema.parse(req.body);
   if (
@@ -20,6 +21,26 @@ export const boundAiRequest: RequestHandler = (req, _res, next) => {
 };
 const router = Router();
 router.use(authMiddleware);
+router.post(
+  '/grounded',
+  aiLimiter,
+  (req, res, next) => {
+    if (process.env.FEATURE_GROUNDED_AI !== 'true') return res.sendStatus(404);
+    next();
+  },
+  validate(groundedInput),
+  meteredAiRequest,
+  async (req, res, next) => {
+    res.setHeader('Cache-Control', 'no-store');
+    try {
+      const result = await groundedPreview(req.user!.userId, req.body);
+      if (result.status === 'insufficient_evidence') req.aiQuotaRefund = true;
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  },
+);
 router.get('/usage', (req, res, next) => {
   try {
     aiUsageV3Query.parse(req.query);

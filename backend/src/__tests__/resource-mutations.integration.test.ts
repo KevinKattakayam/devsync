@@ -1,4 +1,7 @@
 import { searchKnowledge } from '../services/knowledge-search';
+import { groundedPreview } from '../services/grounded-ai';
+import aiV3Router from '../routes/ai-v3.routes';
+import { evaluateGroundedCases } from '../../testing/ai-eval/grounded';
 import { createKnowledgeSearchRouter } from '../routes/knowledge-search.routes';
 import { createGitHubExecutionRouter } from '../routes/github-execution.routes';
 import { githubInstallationRouter } from '../routes/github-installation.routes';
@@ -144,6 +147,7 @@ app.use(
   createKnowledgeSearchRouter((_req, _res, next) => next()),
 );
 app.use('/scim/v2', scimRouter);
+app.use('/ai-v3', aiV3Router);
 app.get('/auth/me', getMe);
 app.patch('/auth/me', updateMe);
 app.use('/github', githubRouter);
@@ -2717,5 +2721,159 @@ it('knowledge timestamps and inclusive filters use UTC under a non-UTC database 
   } finally {
     await regional.$disconnect();
     await admin.$executeRawUnsafe("ALTER ROLE resource_runtime SET timezone TO 'UTC'");
+  }
+});
+
+it('grounded previews reject foreign authority, viewer drafts, fabricated citations and source withdrawal', async () => {
+  const { a, b } = await fixture();
+  const generate = jest.mocked(completeWithFallback);
+  generate.mockClear();
+  const input = { workspaceId: a, prompt: 'Document', purpose: 'qa' };
+  await expect(withDatabase(db, () => groundedPreview('foreign', input))).rejects.toThrow();
+  await expect(
+    withDatabase(db, () => groundedPreview('viewer', { ...input, purpose: 'meeting_tasks' })),
+  ).rejects.toThrow();
+  expect(generate).not.toHaveBeenCalled();
+  generate.mockResolvedValue({
+    provider: 'groq',
+    content: JSON.stringify({
+      claims: [{ text: 'Fixture claim', references: [999] }],
+      proposals: [],
+    }),
+  });
+  await expect(withDatabase(db, () => groundedPreview('viewer', input))).rejects.toThrow(
+    'invalid structure or citations',
+  );
+  generate.mockImplementation(async () => {
+    await admin.document.update({ where: { id: `doc-${a}` }, data: { isArchived: true } });
+    return {
+      provider: 'groq',
+      content: JSON.stringify({
+        claims: [{ text: 'Fixture claim', references: [1] }],
+        proposals: [],
+      }),
+    };
+  });
+  await expect(withDatabase(db, () => groundedPreview('viewer', input))).rejects.toThrow(
+    'Source unavailable',
+  );
+  generate.mockClear();
+  expect(await withDatabase(db, () => groundedPreview('viewer', input))).toMatchObject({
+    status: 'insufficient_evidence',
+    sources: [],
+  });
+  expect(generate).not.toHaveBeenCalled();
+  expect((await admin.document.findUniqueOrThrow({ where: { id: `doc-${b}` } })).isArchived).toBe(
+    false,
+  );
+});
+
+it('grounded previews cite current local sources without writing tasks or accepting receipts', async () => {
+  const { a } = await fixture();
+  jest.mocked(completeWithFallback).mockResolvedValue({
+    provider: 'groq',
+    content: JSON.stringify({
+      claims: [{ text: 'Fixture summary', references: [1] }],
+      proposals: [
+        {
+          kind: 'task',
+          title: 'Review document',
+          description: 'Human review required',
+          references: [1],
+        },
+      ],
+    }),
+  });
+  const before = await admin.task.count();
+  const result = await withDatabase(db, () =>
+    groundedPreview('editor', { workspaceId: a, prompt: 'Document', purpose: 'meeting_tasks' }),
+  );
+  expect(result).toMatchObject({
+    status: 'preview',
+    cost: 'unavailable',
+    sources: [{ id: `doc-${a}` }],
+    proposals: [{ kind: 'task' }],
+  });
+  expect(await admin.task.count()).toBe(before);
+  jest.mocked(completeWithFallback).mockResolvedValue({
+    provider: 'groq',
+    content: JSON.stringify({
+      claims: [{ text: 'Synthetic fixture summary', references: [1] }],
+      proposals: [],
+    }),
+  });
+  const evaluation = await withDatabase(db, () =>
+    evaluateGroundedCases([
+      {
+        id: 'synthetic-structural-only',
+        actorId: 'editor',
+        workspaceId: a,
+        prompt: 'Document',
+        reviewedBy: 'unit-test-fixture-not-model-evaluation',
+        reviewedAt: '2026-11-09T00:00:00Z',
+        expectedSourceIds: [`doc-${a}`],
+        expectedStatements: ['Synthetic fixture summary'],
+      },
+    ]),
+  );
+  expect(evaluation).toMatchObject({
+    reports: [
+      {
+        status: 'preview',
+        expectedCitationsPresent: true,
+        expectedStatementsPresent: true,
+        costUsd: null,
+        humanSemanticReviewRequired: true,
+      },
+    ],
+    factualTruthVerified: false,
+  });
+  jest.mocked(completeWithFallback).mockRejectedValue(new Error('private provider detail'));
+  await expect(
+    withDatabase(db, () =>
+      groundedPreview('editor', { workspaceId: a, prompt: 'Document', purpose: 'qa' }),
+    ),
+  ).rejects.toThrow('AI provider unavailable');
+});
+
+it('grounded API flag denies disabled access and enabled empty retrieval never calls a model', async () => {
+  const { a } = await fixture();
+  const old = process.env.FEATURE_GROUNDED_AI;
+  const generate = jest.mocked(completeWithFallback);
+  generate.mockClear();
+  try {
+    process.env.FEATURE_GROUNDED_AI = 'false';
+    expect(
+      (
+        await request(app)
+          .post('/ai-v3/grounded')
+          .set('x-verified-clerk-fixture', 'fixture_owner')
+          .send({ workspaceId: a, prompt: 'Document', purpose: 'qa' })
+      ).status,
+    ).toBe(404);
+    process.env.FEATURE_GROUNDED_AI = 'true';
+    expect(
+      (
+        await request(app)
+          .post('/ai-v3/grounded')
+          .set('x-verified-clerk-fixture', 'fixture_owner')
+          .send({})
+      ).status,
+    ).toBe(400);
+    const result = await request(app)
+      .post('/ai-v3/grounded')
+      .set('x-verified-clerk-fixture', 'fixture_owner')
+      .send({ workspaceId: a, prompt: 'unfindablegroundingfixture', purpose: 'qa' });
+    expect(result.status).toBe(200);
+    expect(result.headers['cache-control']).toBe('no-store');
+    expect(result.body).toMatchObject({
+      status: 'insufficient_evidence',
+      sources: [],
+      proposals: [],
+    });
+    expect(generate).not.toHaveBeenCalled();
+  } finally {
+    if (old === undefined) delete process.env.FEATURE_GROUNDED_AI;
+    else process.env.FEATURE_GROUNDED_AI = old;
   }
 });
