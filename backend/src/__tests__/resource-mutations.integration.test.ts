@@ -62,6 +62,7 @@ import { aiComplete } from '../controllers/ai.controller';
 import { meteredAiRequest } from '../middleware/billing.middleware';
 import { createIngestionRouter } from '../routes/ingestion.routes';
 import workspaceRouter from '../routes/workspace.routes';
+import { parseTaskCsv } from '../services/task-csv';
 import { ingestDocument } from '../services/ingestion.service';
 import { workspaceSearch } from '../controllers/search.controller';
 import { reconcileOfflineAiActions } from '../services/crdt-sync.service';
@@ -211,6 +212,7 @@ app.post('/workspaces/:id/snippets', snippets.createSnippet);
 app.patch('/snippets/:snippetId', snippets.updateSnippet);
 app.delete('/snippets/:snippetId', snippets.deleteSnippet);
 app.get('/workspaces/:id/boards', tasks.getBoards);
+app.get('/workspaces/:id/tasks/export-csv', tasks.exportTasksCsv);
 app.post('/workspaces/:id/boards', tasks.createBoard);
 app.post('/boards/:boardId/columns', tasks.createColumn);
 app.patch('/columns/:columnId', tasks.updateColumn);
@@ -3895,4 +3897,47 @@ test('Markdown export explicitly rejects unsupported document formatting', async
     (await request(app).get(`/documents/${id}/export-markdown`).set('x-fixture-actor', 'editor'))
       .status,
   ).toBe(400);
+});
+
+test('task CSV export enforces membership and workspace isolation with safe formula cells', async () => {
+  const { a, b } = await fixture();
+  await admin.task.update({
+    where: { id: `task-${a}` },
+    data: { title: '=SUM(1,2)', description: 'local only' },
+  });
+  await admin.task.update({ where: { id: `task-${b}` }, data: { title: 'foreign private' } });
+  const url = `/workspaces/${a}/tasks/export-csv`;
+  for (const actor of ['owner', 'editor', 'viewer']) {
+    const result = await request(app).get(url).set('x-fixture-actor', actor);
+    expect(result.status).toBe(200);
+    expect(result.headers['content-type']).toMatch(/^text\/csv/);
+    expect(result.headers['cache-control']).toBe('no-store');
+    expect(result.headers['content-disposition']).toContain('attachment');
+    expect(result.text).toContain("'=SUM(1,2)");
+    expect(result.text).toContain('local only');
+    expect(result.text).not.toContain('foreign private');
+    expect(parseTaskCsv(Buffer.from(result.text))).toMatchObject([
+      { title: '=SUM(1,2)', description: 'local only' },
+    ]);
+  }
+  expect((await request(app).get(url).set('x-fixture-actor', 'foreign')).status).toBe(403);
+  await admin.workspaceMember.delete({
+    where: { userId_workspaceId: { userId: 'viewer', workspaceId: a } },
+  });
+  expect((await request(app).get(url).set('x-fixture-actor', 'viewer')).status).toBe(403);
+  await admin.task.delete({ where: { id: `task-${a}` } });
+  expect((await request(app).get(url).set('x-fixture-actor', 'editor')).text).not.toContain(
+    'local only',
+  );
+  await admin.workspace.update({ where: { id: a }, data: { suspendedAt: new Date() } });
+  expect((await request(app).get(url).set('x-fixture-actor', 'owner')).status).toBe(403);
+});
+
+test('task CSV export route requires authentication', async () => {
+  const unauthenticated = express();
+  unauthenticated.use('/workspaces', workspaceRouter);
+  unauthenticated.use(errorMiddleware);
+  expect((await request(unauthenticated).get('/workspaces/unknown/tasks/export-csv')).status).toBe(
+    401,
+  );
 });

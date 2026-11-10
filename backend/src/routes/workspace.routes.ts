@@ -30,6 +30,7 @@ import {
 } from '../controllers/document.controller';
 import {
   getBoards,
+  exportTasksCsv,
   createBoard,
   createColumn,
   updateColumn,
@@ -143,6 +144,7 @@ router.post(
 );
 
 // Boards & Tasks
+router.get('/:id/tasks/export-csv', requireWorkspaceMember(), exportTasksCsv);
 router.get('/:id/boards', requireWorkspaceMember(), getBoards);
 router.post(
   '/:id/boards',

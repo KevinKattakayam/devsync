@@ -1,3 +1,9 @@
+# Phase 13 workspace task CSV export
+
+Authenticated current workspace members can export the existing version 1 task CSV schema. The tenant transaction limits results to the requested workspace, rechecks membership and blocks suspended workspaces. The existing codec protects spreadsheet cells; exports exceeding 1,000 tasks or 1 MiB fail instead of truncating. Task keys, labels and other fields outside the codec are not included. Task, column and board models do not currently have an archived state; deleted tasks are absent.
+
+Focused fixture PostgreSQL authorization tests passed (2 tests; coverage disabled only for that focused run). The full backend gate passed 42 suites / 392 tests, lint, formatting, strict types and build. Existing coverage baseline, OpenAPI consistency and pinned source/test security scans passed. See [verification](quality/task-csv-export/README.md). CSV import and other Phase 13 portability features remain incomplete.
+
 # Phase 13 task CSV codec increment
 
 Added a standalone version 1 task CSV codec for column ID, title, description, priority, assignee ID and due date. Files are limited to 1 MiB and 1,000 task rows, with bounded fields and strict UTF-8, header and value validation. All serialized data cells carry a literal apostrophe to prevent spreadsheet formula execution; the parser removes exactly one prefix for round-trip fidelity. Task keys and labels are outside this schema.

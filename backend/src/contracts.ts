@@ -317,6 +317,11 @@ add(
   `${base}/workspaces/{id}/boards`,
   z.array(board.extend({ columns: z.array(column.extend({ tasks: z.array(task) })) })),
 );
+add('GET', `${base}/workspaces/{id}/tasks/export-csv`, z.string(), '200', {
+  responses: { '200': { schema: z.string(), mime: 'text/csv' } },
+  description:
+    'Exports at most 1000 workspace tasks using the version 1 formula-protected CSV schema.',
+});
 add('POST', `${base}/workspaces/{id}/boards`, board.extend({ columns: z.array(column) }), '201');
 add('POST', `${base}/tasks/boards/{boardId}/columns`, column, '201');
 add('PATCH', `${base}/tasks/columns/{columnId}`, column);
