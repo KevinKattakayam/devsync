@@ -1,3 +1,13 @@
+# Phase 13 workspace archive export
+
+Authenticated active workspace members can download a bounded workspace-scoped ZIP containing supported document Markdown and task CSV v1. The versioned manifest uses generated paths and SHA-256 hashes, identifies excluded resources and warns that content is not redacted. Current membership and a fresh source fingerprint are checked after compression; unsupported documents or changes reject the request before delivery. Document titles, task keys, labels and other resources are excluded. This is not a complete account backup.
+
+Focused ZIP and PostgreSQL authorization tests passed; full backend gates passed 45 suites / 408 tests, lint, formatting, strict types and build. OpenAPI, unchanged coverage baseline and pinned security scans passed. See [verification](quality/workspace-archive/README.md). Browser controls, workspace restore and remaining Phase 13 portability acceptance are incomplete.
+
+# Phase 13 workspace archive — incomplete
+
+Added an isolated version 1 manifest helper with fixed generated paths, SHA-256 hashes and entry/aggregate input bounds. Two focused unit tests passed with coverage disabled. This helper is not connected to a ZIP writer, authorization, database snapshot, API or OpenAPI; workspace archive export remains unimplemented. No full gate or commit was completed for this partial work.
+
 # Phase 13 bounded document PDF export
 
 Added authenticated PDF export from the currently authorized committed CRDT projection. The in-process `pdf-lib` renderer uses built-in fonts, does not parse HTML or fetch external resources, supports the restricted heading and paragraph format, and rejects unsupported structures and unrenderable characters. Bounds are 256 KiB Markdown input, 40 pages and 2 MiB output.
