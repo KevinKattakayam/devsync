@@ -6,13 +6,30 @@ export function DraftExport({
   document,
   principal,
   room,
+  onPurge,
 }: {
   document: Y.Doc;
   principal: string;
   room: string;
+  onPurge?: () => Promise<void>;
 }) {
   const [confirmed, setConfirmed] = useState(false);
   const [message, setMessage] = useState('');
+  const [purgeConfirmed, setPurgeConfirmed] = useState(false);
+  const [purging, setPurging] = useState(false);
+  async function purge() {
+    if (!purgeConfirmed || !onPurge || purging) return;
+    setPurging(true);
+    try {
+      await onPurge();
+    } catch {
+      setMessage(
+        'Removal could not be confirmed. Keep your export and check local storage access.',
+      );
+    } finally {
+      setPurging(false);
+    }
+  }
   function download() {
     if (!confirmed) return;
     try {
@@ -51,6 +68,37 @@ export function DraftExport({
         Export local draft
       </button>
       {message && <p role="status">{message}</p>}
+      {onPurge && (
+        <fieldset className="mt-4 space-y-2">
+          <legend>Remove the saved browser draft</legend>
+          <p>
+            This can discard unconfirmed edits. Export first and verify the file. Other
+            current-version tabs will disconnect from this draft. Close older DevSync tabs first;
+            they do not honor the purge marker.
+          </p>
+          <p>
+            The server document and downloaded exports are not deleted. Automatic local reload stays
+            blocked after removal. Restoring a recovery file is currently disabled. Close this tab
+            afterward to release its in-memory copy.
+          </p>
+          <label className="block">
+            <input
+              type="checkbox"
+              checked={purgeConfirmed}
+              onChange={(event) => setPurgeConfirmed(event.target.checked)}
+            />{' '}
+            I have preserved any needed edits and confirm removal of this saved browser draft.
+          </label>
+          <button
+            type="button"
+            disabled={!purgeConfirmed || purging}
+            className="underline"
+            onClick={() => void purge()}
+          >
+            Remove saved browser draft
+          </button>
+        </fieldset>
+      )}
     </details>
   );
 }

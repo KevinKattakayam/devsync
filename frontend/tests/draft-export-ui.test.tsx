@@ -24,3 +24,22 @@ it('requires explicit plaintext consent and reports a request rather than a save
   expect(await screen.findByText(/Download requested/)).toBeTruthy();
   document.destroy();
 });
+it('requires separate removal confirmation and does not automatically purge on export', async () => {
+  const document = new Y.Doc(),
+    purge = vi.fn().mockResolvedValue(undefined);
+  render(
+    <DraftExport document={document} principal="alice" room="document:ws:doc" onPurge={purge} />,
+  );
+  await userEvent.click(screen.getByText('Local draft recovery'));
+  const button = screen.getByRole('button', { name: 'Remove saved browser draft' });
+  expect(button.hasAttribute('disabled')).toBe(true);
+  expect(purge).not.toHaveBeenCalled();
+  await userEvent.click(
+    screen.getByLabelText(
+      'I have preserved any needed edits and confirm removal of this saved browser draft.',
+    ),
+  );
+  await userEvent.click(button);
+  expect(purge).toHaveBeenCalledOnce();
+  document.destroy();
+});

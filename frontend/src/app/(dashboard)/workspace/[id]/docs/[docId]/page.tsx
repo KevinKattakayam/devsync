@@ -13,6 +13,7 @@ import { useEditor } from '@tiptap/react';
 import { EditorSurface } from '@/components/workspace/editor-surface';
 import { DocumentSyncStatus } from '@/components/workspace/document-sync-status';
 import { DraftExport } from '@/components/workspace/draft-export';
+import { LocalDraftStatus } from '@/components/workspace/local-draft-status';
 import StarterKit from '@tiptap/starter-kit';
 import Placeholder from '@tiptap/extension-placeholder';
 import Highlight from '@tiptap/extension-highlight';
@@ -455,10 +456,13 @@ function DocumentEditor({ workspaceId, docId }: { workspaceId: string; docId: st
     document: ydoc,
     provider,
     localReady,
+    localPersistence,
     syncStatus,
     canWrite,
     pending,
     accessDenied,
+    serverRejected,
+    purgeLocal,
   } = useLocalFirstYDoc(`document:${workspaceId}:${docId}`, getToken, user?.id);
   useCRDTGarbageCollector(ydoc);
 
@@ -529,6 +533,18 @@ function DocumentEditor({ workspaceId, docId }: { workspaceId: string; docId: st
       setTitleSaving(false);
     }
   };
+  if (localPersistence === 'purged' || localPersistence === 'purging')
+    return (
+      <div className="mx-auto max-w-3xl px-4 py-12">
+        <h1 className="text-xl font-semibold">Local draft recovery</h1>
+        <LocalDraftStatus status={localPersistence} />
+        <p className="my-4">
+          This document is disconnected in this tab. The server document and downloaded exports are
+          unchanged. Close this tab to release its in-memory copy. Automatic local reload remains
+          blocked; recovery-file restoration is disabled.
+        </p>
+      </div>
+    );
   const cachedContent = localReady && ydoc.getXmlFragment('default').length > 0;
   if (loadError && !cachedContent)
     return (
@@ -586,14 +602,24 @@ function DocumentEditor({ workspaceId, docId }: { workspaceId: string; docId: st
           pending={pending || !localReady}
           canWrite={canWrite}
           accessDenied={accessDenied}
+          serverRejected={serverRejected}
         />
-        <span>Local storage: per-edit confirmation unavailable</span>
+        <LocalDraftStatus status={localPersistence} />
+        <span>
+          Server reconciliation:{' '}
+          {accessDenied || serverRejected
+            ? 'blocked'
+            : syncStatus === 'connected'
+              ? 'connection synchronized'
+              : 'awaiting connection'}
+        </span>
         {localReady && user?.id && (
           <DraftExport
             key={`${user.id}:${docId}`}
             document={ydoc}
             principal={user.id}
             room={`document:${workspaceId}:${docId}`}
+            onPurge={purgeLocal}
           />
         )}
         {doc?.author && <span>by {doc.author.name}</span>}
