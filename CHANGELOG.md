@@ -1,3 +1,9 @@
+# Phase 13 task CSV codec increment
+
+Added a standalone version 1 task CSV codec for column ID, title, description, priority, assignee ID and due date. Files are limited to 1 MiB and 1,000 task rows, with bounded fields and strict UTF-8, header and value validation. All serialized data cells carry a literal apostrophe to prevent spreadsheet formula execution; the parser removes exactly one prefix for round-trip fidelity. Task keys and labels are outside this schema.
+
+Focused codec tests passed (3 tests, coverage disabled); backend lint, format check, strict types and build passed. This is a codec only: task import/export endpoints, authorization, relationship validation, database idempotency and integration tests remain pending. No production data was changed.
+
 # Phase 13 Markdown export increment
 
 Authenticated workspace members can export committed Yjs journal content as Markdown. Export rechecks current membership and archived status under tenant authorization and rejects rich-text structures outside the restricted import subset rather than losing content. Focused tests cover a stale projection, import/export round-trip, revoked and foreign members, archived documents and unsupported formatting. The full backend gate passed 41 suites / 387 tests, lint, formatting, strict types and build; OpenAPI and the existing coverage baseline passed. See [verification](quality/markdown-export/README.md). Other Phase 13 portability features remain incomplete.
