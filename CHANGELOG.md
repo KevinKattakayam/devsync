@@ -1,3 +1,7 @@
+# Phase 13 frontend import/export controls
+
+Added accessible authenticated controls for Markdown import, document Markdown/PDF downloads, task CSV import/export and workspace archive download using the existing API client. Current workspace role controls visibility; task and Markdown imports require owner/editor, exports follow existing member/source access, and the archive requires an explicit privacy confirmation. Added bounded UTF-8 file reads, stable request idempotency for selected imports, loading/error feedback and explicit download-initiated wording. Verification passed: 34 component files / 156 tests, 9 Node tests, frontend lint/format/types/build, coverage comparison, OpenAPI, pinned scoped scans and one Chrome fixture journey. Details: [verification](docs/quality/import-export-controls/README.md). No backend API or dependency changed.
+
 # Phase 13 workspace archive export
 
 Authenticated active workspace members can download a bounded workspace-scoped ZIP containing supported document Markdown and task CSV v1. The versioned manifest uses generated paths and SHA-256 hashes, identifies excluded resources and warns that content is not redacted. Current membership and a fresh source fingerprint are checked after compression; unsupported documents or changes reject the request before delivery. Document titles, task keys, labels and other resources are excluded. This is not a complete account backup.
