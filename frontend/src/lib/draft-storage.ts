@@ -1,7 +1,9 @@
 import * as Y from 'yjs';
 export const MAX_DRAFT_BYTES = 8 * 1024 * 1024;
 export class DraftStorageError extends Error {
-  constructor(readonly code: 'limit_exceeded' | 'quota_exceeded' | 'failed' | 'corrupt') {
+  constructor(
+    readonly code: 'limit_exceeded' | 'quota_exceeded' | 'failed' | 'corrupt' | 'purged',
+  ) {
     super(`Local draft storage: ${code}`);
   }
 }
@@ -74,7 +76,7 @@ function snapshotTransaction(
     const document = new Y.Doc();
     let transaction: IDBTransaction;
     try {
-      transaction = db.transaction('updates', incoming ? 'readwrite' : 'readonly');
+      transaction = db.transaction(['updates', 'custom'], incoming ? 'readwrite' : 'readonly');
     } catch {
       document.destroy();
       reject(new DraftStorageError('failed'));
@@ -102,55 +104,65 @@ function snapshotTransaction(
       else reject(new DraftStorageError('failed'));
     };
     const store = transaction.objectStore('updates');
-    const cursor = store.openCursor();
-    cursor.onsuccess = () => {
-      const entry = cursor.result;
-      if (entry) {
-        const value: unknown = entry.value;
-        if (
-          !ArrayBuffer.isView(value) ||
-          Object.prototype.toString.call(value) !== '[object Uint8Array]'
-        ) {
-          abort('corrupt');
-          return;
-        }
-        bytes += value.byteLength;
-        if (++rows > 1024 || bytes > MAX_DRAFT_BYTES * 2) {
-          abort('limit_exceeded');
-          return;
-        }
-        try {
-          Y.applyUpdate(document, new Uint8Array(value.buffer, value.byteOffset, value.byteLength));
-        } catch {
-          abort('corrupt');
-          return;
-        }
-        entry.continue();
-      } else {
-        try {
-          if (incoming) Y.applyUpdate(document, incoming);
-          result = Y.encodeStateAsUpdate(document);
-          if (result.byteLength > limit) {
+    const scan = () => {
+      const cursor = store.openCursor();
+      cursor.onsuccess = () => {
+        const entry = cursor.result;
+        if (entry) {
+          const value: unknown = entry.value;
+          if (
+            !ArrayBuffer.isView(value) ||
+            Object.prototype.toString.call(value) !== '[object Uint8Array]'
+          ) {
+            abort('corrupt');
+            return;
+          }
+          bytes += value.byteLength;
+          if (++rows > 1024 || bytes > MAX_DRAFT_BYTES * 2) {
             abort('limit_exceeded');
             return;
           }
-        } catch {
-          abort('corrupt');
-          return;
-        }
-        if (incoming && result) {
           try {
-            store.clear();
-            store.add(result);
-          } catch (error) {
-            abort(
-              error instanceof DOMException && error.name === 'QuotaExceededError'
-                ? 'quota_exceeded'
-                : 'failed',
+            Y.applyUpdate(
+              document,
+              new Uint8Array(value.buffer, value.byteOffset, value.byteLength),
             );
+          } catch {
+            abort('corrupt');
+            return;
+          }
+          entry.continue();
+        } else {
+          try {
+            if (incoming) Y.applyUpdate(document, incoming);
+            result = Y.encodeStateAsUpdate(document);
+            if (result.byteLength > limit) {
+              abort('limit_exceeded');
+              return;
+            }
+          } catch {
+            abort('corrupt');
+            return;
+          }
+          if (incoming && result) {
+            try {
+              store.clear();
+              store.add(result);
+            } catch (error) {
+              abort(
+                error instanceof DOMException && error.name === 'QuotaExceededError'
+                  ? 'quota_exceeded'
+                  : 'failed',
+              );
+            }
           }
         }
-      }
+      };
+    };
+    const guard = transaction.objectStore('custom').get('devsync:purged');
+    guard.onsuccess = () => {
+      if (guard.result === true) abort('purged');
+      else scan();
     };
   });
 }
@@ -163,4 +175,39 @@ export function commitDraftSnapshot(
 }
 export function readDraftSnapshot(db: IDBDatabase) {
   return snapshotTransaction(db, undefined, MAX_DRAFT_BYTES);
+}
+
+/** Atomic tombstone stops all current adapters from writing a cleared draft again. */
+export function purgeDraftSnapshot(db: IDBDatabase): Promise<void> {
+  return new Promise((resolve, reject) => {
+    let failure: DraftStorageError | undefined;
+    let transaction: IDBTransaction;
+    try {
+      transaction = db.transaction(['updates', 'custom'], 'readwrite');
+    } catch {
+      reject(new DraftStorageError('failed'));
+      return;
+    }
+    transaction.oncomplete = () => resolve();
+    transaction.onabort = () =>
+      reject(
+        failure ??
+          new DraftStorageError(
+            transaction.error?.name === 'QuotaExceededError' ? 'quota_exceeded' : 'failed',
+          ),
+      );
+    try {
+      transaction.objectStore('updates').clear();
+      const custom = transaction.objectStore('custom');
+      custom.clear();
+      custom.put(true, 'devsync:purged');
+    } catch (error) {
+      failure = new DraftStorageError(
+        error instanceof DOMException && error.name === 'QuotaExceededError'
+          ? 'quota_exceeded'
+          : 'failed',
+      );
+      transaction.abort();
+    }
+  });
 }

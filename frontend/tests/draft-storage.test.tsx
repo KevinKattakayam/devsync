@@ -2,7 +2,12 @@ import 'fake-indexeddb/auto';
 import { expect, it, vi } from 'vitest';
 import { IndexeddbPersistence } from 'y-indexeddb';
 import * as Y from 'yjs';
-import { openDraftDatabase, commitDraftSnapshot, readDraftSnapshot } from '@/lib/draft-storage';
+import {
+  openDraftDatabase,
+  commitDraftSnapshot,
+  readDraftSnapshot,
+  purgeDraftSnapshot,
+} from '@/lib/draft-storage';
 it('merges two independent replicas atomically and reloads both committed contributions', async () => {
   const name = `devsync:storage-test:${crypto.randomUUID()}`;
   const a = await openDraftDatabase(name),
@@ -96,4 +101,40 @@ it('reports closed or denied storage without acknowledging a commit', async () =
   } finally {
     open.mockRestore();
   }
+});
+it('purges atomically and prevents an already-open connection from repopulating the store', async () => {
+  const name = `devsync:storage-test:${crypto.randomUUID()}`;
+  const first = await openDraftDatabase(name),
+    other = await openDraftDatabase(name);
+  const document = new Y.Doc();
+  document.getText('draft').insert(0, 'private');
+  await commitDraftSnapshot(first, Y.encodeStateAsUpdate(document));
+  await purgeDraftSnapshot(first);
+  await expect(commitDraftSnapshot(other, Y.encodeStateAsUpdate(document))).rejects.toMatchObject({
+    code: 'purged',
+  });
+  await expect(readDraftSnapshot(other)).rejects.toMatchObject({ code: 'purged' });
+  first.close();
+  other.close();
+  document.destroy();
+});
+it('rolls back the clear if the purge marker cannot be committed', async () => {
+  const db = await openDraftDatabase(`devsync:storage-test:${crypto.randomUUID()}`),
+    document = new Y.Doc();
+  document.getText('draft').insert(0, 'keep me');
+  await commitDraftSnapshot(db, Y.encodeStateAsUpdate(document));
+  const put = vi.spyOn(IDBObjectStore.prototype, 'put').mockImplementationOnce(() => {
+    throw new DOMException('fixture purge quota', 'QuotaExceededError');
+  });
+  try {
+    await expect(purgeDraftSnapshot(db)).rejects.toMatchObject({ code: 'quota_exceeded' });
+  } finally {
+    put.mockRestore();
+  }
+  const recovered = new Y.Doc();
+  Y.applyUpdate(recovered, await readDraftSnapshot(db));
+  expect(recovered.getText('draft').toString()).toBe('keep me');
+  db.close();
+  document.destroy();
+  recovered.destroy();
 });
