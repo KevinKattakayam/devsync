@@ -12,6 +12,8 @@ import { useLocalFirstRecord, useLocalFirstYDoc } from '@/lib/local-first-yjs';
 import { useAuth } from '@/providers/auth-provider';
 import { useCRDTGarbageCollector } from '@/hooks/use-crdt-garbage-collector';
 import { SprintAnalyticsModal } from '@/components/sprint-analytics-modal';
+import { TaskCsvControls } from '@/components/workspace/portability-controls';
+import { loadWorkspaceAccess } from '@/lib/workspace-access';
 
 const priorityConfig: Record<string, { color: string; bg: string; label: string }> = {
   LOW: { color: 'text-foreground', bg: 'bg-secondary', label: 'Low' },
@@ -30,6 +32,17 @@ export default function KanbanPage() {
   const boards = useMemo(() => localBoards.value ?? [], [localBoards.value]);
   const [attempt, setAttempt] = useState(0);
   const [loadError, setLoadError] = useState(false);
+  const [workspaceAccess, setWorkspaceAccess] = useState<{
+    workspaceId: string;
+    role: string;
+  } | null>(null);
+  const [accessErrorWorkspace, setAccessErrorWorkspace] = useState<string | null>(null);
+  const workspaceRole = workspaceAccess?.workspaceId === id ? workspaceAccess.role : '';
+  const accessState = workspaceRole
+    ? 'ready'
+    : accessErrorWorkspace === id
+      ? 'unavailable'
+      : 'loading';
   const [busy, setBusy] = useState(false);
   const canWrite = boardSync.canWrite;
   const [isLoading, setIsLoading] = useState(true);
@@ -58,6 +71,24 @@ export default function KanbanPage() {
       disposed = true;
     };
   }, [id, setLocalBoards, attempt]);
+
+  useEffect(() => {
+    let disposed = false;
+    void loadWorkspaceAccess(id)
+      .then(({ role }) => {
+        if (!disposed) {
+          setWorkspaceAccess({ workspaceId: id, role });
+        }
+      })
+      .catch(() => {
+        if (!disposed) {
+          setAccessErrorWorkspace(id);
+        }
+      });
+    return () => {
+      disposed = true;
+    };
+  }, [id]);
 
   const persistBoards = useCallback(
     (next: Board[]): void => {
@@ -250,13 +281,32 @@ export default function KanbanPage() {
             {canWrite ? 'Drag cards, or use Move for keyboard access.' : 'Read only'}
           </p>
         </div>
-        <button
-          onClick={() => setShowAnalytics(true)}
-          className="flex items-center gap-2 px-3.5 py-2 rounded-xl glass border-white/10 hover:border-primary/40 text-xs font-semibold text-foreground hover:bg-white/[0.04] transition-all shadow-sm"
-        >
-          <BarChart3 className="w-4 h-4 text-foreground" />
-          <span>Sprint Analytics</span>
-        </button>
+        <div className="flex flex-wrap items-center gap-3">
+          {workspaceRole && (
+            <TaskCsvControls
+              workspaceId={id}
+              canEdit={workspaceRole === 'OWNER' || workspaceRole === 'EDITOR'}
+            />
+          )}
+          {accessState === 'loading' && (
+            <p role="status" className="text-xs text-muted-foreground">
+              Checking current workspace permissions…
+            </p>
+          )}
+          {accessState === 'unavailable' && (
+            <p role="alert" className="text-xs text-destructive">
+              Current workspace access could not be verified. Task import/export controls are
+              hidden.
+            </p>
+          )}
+          <button
+            onClick={() => setShowAnalytics(true)}
+            className="flex items-center gap-2 px-3.5 py-2 rounded-xl glass border-white/10 hover:border-primary/40 text-xs font-semibold text-foreground hover:bg-white/[0.04] transition-all shadow-sm"
+          >
+            <BarChart3 className="w-4 h-4 text-foreground" />
+            <span>Sprint Analytics</span>
+          </button>
+        </div>
       </div>
       <div className="flex-1 overflow-x-auto px-6 pb-6">
         <div className="flex gap-4 h-full min-w-max">

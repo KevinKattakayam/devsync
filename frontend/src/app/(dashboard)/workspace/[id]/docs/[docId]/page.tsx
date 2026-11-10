@@ -31,6 +31,7 @@ import { Users, Sparkles } from 'lucide-react';
 import { Button, Dialog, DialogContent, Input, Skeleton } from '@/components/ui';
 import { EditorTools } from '@/components/editor/tools';
 import { toast } from 'sonner';
+import { DocumentExportControls } from '@/components/workspace/portability-controls';
 
 // ── Collaboration cursor colors ──────────────────────────────
 
@@ -596,6 +597,11 @@ function DocumentEditor({ workspaceId, docId }: { workspaceId: string; docId: st
         placeholder={loadError ? 'Document title unavailable' : 'Untitled'}
         maxLength={200}
       />
+      {doc && (
+        <div className="mb-4">
+          <DocumentExportControls documentId={docId} archived={doc.isArchived} />
+        </div>
+      )}
       <div className="flex flex-wrap items-center gap-3 mb-6 text-xs text-muted-foreground">
         <DocumentSyncStatus
           status={syncStatus}

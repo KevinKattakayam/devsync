@@ -16,6 +16,7 @@ const targets = {
   dashboard: { E2E_DASHBOARD: '1' },
   decisions: { E2E_DECISIONS: '1' },
   'snippet-safety': { E2E_SNIPPET_SAFETY: '1' },
+  portability: { E2E_PORTABILITY: '1' },
   'async-digest': { E2E_ASYNC_DIGEST: '1' },
   shell: { E2E_SHELL: '1', E2E_SHELL_PASS: 'final' },
 };

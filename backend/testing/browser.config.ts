@@ -1,8 +1,10 @@
 import { defineConfig } from '@playwright/test';
 export default defineConfig({
   testDir: './browser',
-  testMatch: process.env.E2E_INBOX
-    ? 'inbox.spec.ts'
+  testMatch: process.env.E2E_PORTABILITY
+    ? 'portability.spec.ts'
+    : process.env.E2E_INBOX
+      ? 'inbox.spec.ts'
     : process.env.E2E_AUTOMATION
       ? 'automation.spec.ts'
       : process.env.E2E_GROUNDED
@@ -43,6 +45,7 @@ export default defineConfig({
                                           ? 'capture.spec.ts'
                                           : ['journeys.spec.ts', 'contracts.spec.ts'],
   timeout:
+    process.env.E2E_PORTABILITY ||
     process.env.E2E_RECOVERY ||
     process.env.E2E_QUALITY ||
     process.env.E2E_SHELL ||

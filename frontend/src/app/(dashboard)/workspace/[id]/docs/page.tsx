@@ -18,6 +18,11 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { toast } from 'sonner';
+import { loadWorkspaceAccess } from '@/lib/workspace-access';
+import {
+  MarkdownImportControl,
+  WorkspaceArchiveControl,
+} from '@/components/workspace/portability-controls';
 
 const TEMPLATES = [
   {
@@ -176,6 +181,10 @@ export default function DocsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [isUploading, setIsUploading] = useState(false);
+  const [access, setAccess] = useState<{ workspaceId: string; role: string } | null>(null);
+  const [accessErrorWorkspace, setAccessErrorWorkspace] = useState<string | null>(null);
+  const role = access?.workspaceId === id ? access.role : '';
+  const accessState = role ? 'ready' : accessErrorWorkspace === id ? 'unavailable' : 'loading';
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const loadDocs = async () => {
@@ -201,6 +210,24 @@ export default function DocsPage() {
       })
       .finally(() => {
         if (!disposed) setIsLoading(false);
+      });
+    return () => {
+      disposed = true;
+    };
+  }, [id]);
+
+  useEffect(() => {
+    let disposed = false;
+    void loadWorkspaceAccess(id)
+      .then(({ role: currentRole }) => {
+        if (!disposed) {
+          setAccess({ workspaceId: id, role: currentRole });
+        }
+      })
+      .catch(() => {
+        if (!disposed) {
+          setAccessErrorWorkspace(id);
+        }
       });
     return () => {
       disposed = true;
@@ -287,6 +314,11 @@ export default function DocsPage() {
         </div>
 
         <div className="flex flex-wrap items-center gap-2.5">
+          <MarkdownImportControl
+            workspaceId={id}
+            canEdit={role === 'OWNER' || role === 'EDITOR'}
+            onImported={(documentId) => router.push(`/workspace/${id}/docs/${documentId}`)}
+          />
           <input
             type="file"
             ref={fileInputRef}
@@ -313,6 +345,21 @@ export default function DocsPage() {
             <Plus className="w-4 h-4" /> New Document
           </button>
         </div>
+        {role && (
+          <div className="basis-full border-t border-border pt-4">
+            <WorkspaceArchiveControl workspaceId={id} />
+          </div>
+        )}
+        {accessState === 'loading' && (
+          <p role="status" className="basis-full text-xs text-muted-foreground">
+            Checking current workspace permissions…
+          </p>
+        )}
+        {accessState === 'unavailable' && (
+          <p role="alert" className="basis-full text-xs text-destructive">
+            Current workspace access could not be verified. Import and archive controls are hidden.
+          </p>
+        )}
       </div>
 
       {/* Quick Template Gallery */}
