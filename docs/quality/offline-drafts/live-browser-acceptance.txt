@@ -1,0 +1,128 @@
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": PostgreSQL database "devsync_e2e_browser", schema "public" at "localhost:32793"
+
+23 migrations found in prisma/migrations
+
+Applying migration `20260729000000_baseline`
+Applying migration `20260729180000_enterprise_platform`
+Applying migration `20260815000000_phase_3_tenant_rls`
+Applying migration `20260815001000_scim_provisioning`
+Applying migration `20260815002000_commercial_billing`
+Applying migration `20261031000000_tenant_indexes`
+Applying migration `20261031010000_crdt_journal`
+Applying migration `202611010001_canonical_revision`
+Applying migration `202611010002_embedding_authority`
+Applying migration `202611010003_atomic_create_idempotency`
+Applying migration `202611010004_workspace_invitations`
+Applying migration `202611020001_decision_receipts`
+Applying migration `202611020002_snippet_safety`
+Applying migration `202611020003_async_digest`
+Applying migration `202611080001_export_requests`
+Applying migration `202611080002_github_execution_state`
+Applying migration `202611080003_search_text`
+Applying migration `202611080004_receipt_timeline`
+Applying migration `202611090001_automation_rules`
+Applying migration `202611090002_automation_executions`
+Applying migration `202611100001_inbox_read_state`
+Applying migration `202611100002_inbox_delivery_preferences`
+Applying migration `202611100003_inbox_automation_read_state`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20260729000000_baseline/
+    └─ migration.sql
+  └─ 20260729180000_enterprise_platform/
+    └─ migration.sql
+  └─ 20260815000000_phase_3_tenant_rls/
+    └─ migration.sql
+  └─ 20260815001000_scim_provisioning/
+    └─ migration.sql
+  └─ 20260815002000_commercial_billing/
+    └─ migration.sql
+  └─ 20261031000000_tenant_indexes/
+    └─ migration.sql
+  └─ 20261031010000_crdt_journal/
+    └─ migration.sql
+  └─ 202611010001_canonical_revision/
+    └─ migration.sql
+  └─ 202611010002_embedding_authority/
+    └─ migration.sql
+  └─ 202611010003_atomic_create_idempotency/
+    └─ migration.sql
+  └─ 202611010004_workspace_invitations/
+    └─ migration.sql
+  └─ 202611020001_decision_receipts/
+    └─ migration.sql
+  └─ 202611020002_snippet_safety/
+    └─ migration.sql
+  └─ 202611020003_async_digest/
+    └─ migration.sql
+  └─ 202611080001_export_requests/
+    └─ migration.sql
+  └─ 202611080002_github_execution_state/
+    └─ migration.sql
+  └─ 202611080003_search_text/
+    └─ migration.sql
+  └─ 202611080004_receipt_timeline/
+    └─ migration.sql
+  └─ 202611090001_automation_rules/
+    └─ migration.sql
+  └─ 202611090002_automation_executions/
+    └─ migration.sql
+  └─ 202611100001_inbox_read_state/
+    └─ migration.sql
+  └─ 202611100002_inbox_delivery_preferences/
+    └─ migration.sql
+  └─ 202611100003_inbox_automation_read_state/
+    └─ migration.sql
+      
+All migrations have been successfully applied.
+Sample workspace seeded. Sign in with the supplied Clerk test identities.
+/home/kevin/devsync/.worktrees/frontend-fixture
+Isolated fixture server ready
+▲ Next.js 16.4.3 (webpack)
+- Local:         http://127.0.0.1:3001
+- Network:       http://127.0.0.1:3001
+✓ Ready in 448ms
+✓ Running next.config.ts took 34ms
+
+✓ Generated AGENTS.md for AI agents. Set `agentRules: false` in next.config to disable.
+○ Compiling /(auth)/login/[[...rest]]/page ...
+ GET /login 200 in 1035ms (proxy.ts: 84ms)
+ GET /login 200 in 463ms (next.js: 24ms, proxy.ts: 5ms, application-code: 434ms)
+
+Running 4 tests using 1 worker
+
+(node:53160) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+○ Compiling /(dashboard)/workspace/[id]/docs/[docId]/page ...
+ GET /workspace/cmwai313c0004r7o0tvhdfwow/docs/cmwai316l000rr7o058rvyiw9 200 in 5.9s (next.js: 5.4s, proxy.ts: 16ms, application-code: 556ms)
+ GET /workspace/cmwai313c0004r7o0tvhdfwow/docs/cmwai316l000rr7o058rvyiw9 200 in 5.9s (next.js: 5.4s, proxy.ts: 16ms, application-code: 557ms)
+ GET /workspace/cmwai313c0004r7o0tvhdfwow/docs/cmwai316l000rr7o058rvyiw9 200 in 5.9s (next.js: 5.4s, proxy.ts: 19ms, application-code: 558ms)
+ GET /workspace/cmwai313c0004r7o0tvhdfwow/docs/cmwai316l000rr7o058rvyiw9 200 in 133ms (next.js: 51ms, proxy.ts: 4ms, application-code: 78ms)
+Isolated fixture server ready
+ GET /workspace/cmwai313c0004r7o0tvhdfwow/docs/cmwai316l000rr7o058rvyiw9 200 in 141ms (next.js: 54ms, proxy.ts: 5ms, application-code: 82ms)
+ GET /workspace/cmwai313c0004r7o0tvhdfwow/docs/cmwai316l000rr7o058rvyiw9 200 in 304ms (next.js: 67ms, proxy.ts: 9ms, application-code: 229ms)
+ GET /workspace/cmwai313c0004r7o0tvhdfwow/docs/cmwai316l000rr7o058rvyiw9 200 in 310ms (next.js: 128ms, proxy.ts: 10ms, application-code: 172ms)
+ GET /workspace/cmwai313c0004r7o0tvhdfwow/docs/cmwai316l000rr7o058rvyiw9 200 in 342ms (next.js: 186ms, proxy.ts: 11ms, application-code: 145ms)
+  ✓  1 testing/browser/recovery.spec.ts:87:5 › actual browser replicas recover journal and snapshots across latency, offline reload, SIGKILL and revocation (fixture identities) (32.6s)
+ GET /workspace/devsync-sample/docs/cmwai3q630050tok3j8eprbg5 200 in 140ms (next.js: 60ms, proxy.ts: 7ms, application-code: 73ms)
+ GET /workspace/devsync-sample/docs/cmwai3q630050tok3j8eprbg5 200 in 90ms (next.js: 6ms, proxy.ts: 4ms, application-code: 80ms)
+ GET /workspace/devsync-sample/docs/cmwai3q630050tok3j8eprbg5 200 in 145ms (next.js: 75ms, proxy.ts: 6ms, application-code: 64ms)
+  ✓  2 testing/browser/recovery.spec.ts:386:5 › confirmed purge stops both current tabs and a reload cannot repopulate the saved draft (15.8s)
+ GET /workspace/devsync-sample/docs/cmwai42b8009xtok3d1nebrh3 200 in 116ms (next.js: 66ms, proxy.ts: 6ms, application-code: 44ms)
+  ✓  3 testing/browser/recovery.spec.ts:482:5 › injected browser quota abort preserves memory for an actual recovery download (2.5s)
+ GET /workspace/cmwai44bh00bhtok3807qua1x/docs/cmwai44ch00bztok3fbvt0ctk 200 in 145ms (next.js: 64ms, proxy.ts: 5ms, application-code: 77ms)
+[onAuthenticate] ForbiddenError: Access denied
+    at authorizeWorkspace (/home/kevin/devsync/backend/src/security/workspace-policy.ts:48:11)
+    at async Object.onAuthenticate (/home/kevin/devsync/backend/src/services/collaboration-server.ts:152:22)
+    at async ClientConnection.ClientConnection.handleQueueingMessage (/home/kevin/devsync/backend/node_modules/@hocuspocus/server/src/ClientConnection.ts:531:5) {
+  statusCode: 403,
+  isOperational: true
+}
+  ✓  4 testing/browser/recovery.spec.ts:549:5 › membership removed while offline cannot upload a persisted local draft on reconnect (3.7s)
+
+  4 passed (56.5s)
+[?25h

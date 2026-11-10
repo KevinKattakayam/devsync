@@ -1,0 +1,967 @@
+{
+  "count": 125,
+  "alreadyCommittedLines": 0,
+  "fileCounts": {
+    "docs/audit-evidence/runtime/backend/.env": 4,
+    "docs/audit-evidence/runtime/frontend/.next/cache/.previewinfo": 2,
+    "docs/audit-evidence/runtime/frontend/.next/dev/cache/.rscinfo": 1,
+    "docs/audit-evidence/runtime/frontend/.env.local": 2,
+    "docs/audit-evidence/runtime/frontend/.next/cache/.rscinfo": 1,
+    "docs/audit-evidence/runtime/frontend/.next/dev/prerender-manifest.json": 2,
+    "docs/audit-evidence/runtime/frontend/.next/dev/server/server-reference-manifest.json": 1,
+    "docs/audit-evidence/runtime/frontend/.next/dev/static/chunks/src_0gyw480._.js": 2,
+    "docs/audit-evidence/runtime/frontend/.next/prerender-manifest.json": 2,
+    "docs/audit-evidence/runtime/frontend/.next/dev/server/chunks/ssr/node_modules_02pzx9f._.js": 3,
+    "docs/audit-evidence/runtime/frontend/.next/dev/trace": 2,
+    "docs/audit-evidence/runtime/frontend/.next/server/app/_not-found.segments/_full.segment.rsc": 1,
+    "docs/audit-evidence/runtime/frontend/.next/server/app/_not-found.segments/_index.segment.rsc": 1,
+    "docs/audit-evidence/runtime/frontend/.next/server/app/_not-found.rsc": 1,
+    "docs/audit-evidence/runtime/frontend/.next/server/app/dashboard.segments/_index.segment.rsc": 1,
+    "docs/audit-evidence/runtime/frontend/.next/server/app/dashboard.segments/_full.segment.rsc": 1,
+    "docs/audit-evidence/runtime/frontend/.next/server/app/_not-found.html": 1,
+    "docs/audit-evidence/runtime/frontend/.next/server/app/dashboard.rsc": 1,
+    "docs/audit-evidence/runtime/frontend/.next/server/app/index.rsc": 1,
+    "docs/audit-evidence/runtime/frontend/.next/server/app/index.segments/_index.segment.rsc": 1,
+    "docs/audit-evidence/runtime/frontend/.next/server/app/index.segments/_full.segment.rsc": 1,
+    "docs/audit-evidence/runtime/frontend/.next/server/app/settings/billing.segments/_index.segment.rsc": 1,
+    "docs/audit-evidence/runtime/frontend/.next/server/app/settings/billing.rsc": 1,
+    "docs/audit-evidence/runtime/frontend/.next/server/app/settings/billing.segments/_full.segment.rsc": 1,
+    "docs/audit-evidence/runtime/frontend/.next/server/app/dashboard.html": 1,
+    "docs/audit-evidence/runtime/frontend/.next/server/app/settings/billing.html": 1,
+    "docs/audit-evidence/runtime/frontend/.next/server/app/index.html": 1,
+    "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_0.35awp._.js": 2,
+    "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_0.ge6yv._.js": 2,
+    "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_01_ifc6._.js": 2,
+    "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_04_mu60._.js": 2,
+    "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_03s1du0._.js": 2,
+    "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_07a6-jx._.js": 2,
+    "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_08_gy.-._.js": 2,
+    "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_0_yempe._.js": 2,
+    "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_0dis6xu._.js": 2,
+    "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_0f9dug2._.js": 2,
+    "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_0jrl45y._.js": 2,
+    "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_0tsjq1y._.js": 2,
+    "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_0tskokc._.js": 2,
+    "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_0z1dwyu._.js": 2,
+    "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_0ykkbl.._.js": 1,
+    "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_10vkqsk._.js": 2,
+    "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_0kmtk3l._.js": 1,
+    "docs/audit-evidence/runtime/frontend/.next/standalone/.next/prerender-manifest.json": 2,
+    "docs/audit-evidence/runtime/frontend/.next/server/server-reference-manifest.json": 1,
+    "docs/audit-evidence/runtime/frontend/.next/server/pages/404.html": 1,
+    "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/app/dashboard.rsc": 1,
+    "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/app/_not-found.segments/_full.segment.rsc": 1,
+    "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/app/dashboard.segments/_index.segment.rsc": 1,
+    "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/app/_not-found.rsc": 1,
+    "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/app/index.segments/_index.segment.rsc": 1,
+    "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/app/_not-found.segments/_index.segment.rsc": 1,
+    "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/app/dashboard.segments/_full.segment.rsc": 1,
+    "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/app/dashboard.html": 1,
+    "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/app/_not-found.html": 1,
+    "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/app/index.segments/_full.segment.rsc": 1,
+    "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/app/index.rsc": 1,
+    "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/app/settings/billing.segments/_index.segment.rsc": 1,
+    "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/app/settings/billing.segments/_full.segment.rsc": 1,
+    "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/app/settings/billing.rsc": 1,
+    "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/app/settings/billing.html": 1,
+    "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_0.35awp._.js": 2,
+    "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_0.ge6yv._.js": 2,
+    "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_01_ifc6._.js": 2,
+    "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_03s1du0._.js": 2,
+    "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_07a6-jx._.js": 2,
+    "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_08_gy.-._.js": 2,
+    "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_0_yempe._.js": 2,
+    "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_0dis6xu._.js": 2,
+    "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_0f9dug2._.js": 2,
+    "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_04_mu60._.js": 2,
+    "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_0jrl45y._.js": 2,
+    "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_0tskokc._.js": 2,
+    "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_0z1dwyu._.js": 2,
+    "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/app/index.html": 1,
+    "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_10vkqsk._.js": 2,
+    "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_0tsjq1y._.js": 2,
+    "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_0ykkbl.._.js": 1,
+    "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/server-reference-manifest.json": 1,
+    "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/pages/404.html": 1,
+    "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_0kmtk3l._.js": 1,
+    "docs/audit-evidence/runtime/frontend/.next/static/chunks/0~hyw4j0n5yvr.js": 1
+  },
+  "findings": [
+    {
+      "file": "docs/audit-evidence/runtime/backend/.env",
+      "line": 20,
+      "rule": "stripe-access-token",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/backend/.env",
+      "line": 9,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/backend/.env",
+      "line": 19,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/backend/.env",
+      "line": 21,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/cache/.previewinfo",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/cache/.previewinfo",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/dev/cache/.rscinfo",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.env.local",
+      "line": 5,
+      "rule": "stripe-access-token",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.env.local",
+      "line": 4,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/cache/.rscinfo",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/dev/prerender-manifest.json",
+      "line": 8,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/dev/prerender-manifest.json",
+      "line": 9,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/dev/server/server-reference-manifest.json",
+      "line": 149,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/dev/static/chunks/src_0gyw480._.js",
+      "line": 263,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/dev/static/chunks/src_0gyw480._.js",
+      "line": 275,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/prerender-manifest.json",
+      "line": 159,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/prerender-manifest.json",
+      "line": 160,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/dev/server/chunks/ssr/node_modules_02pzx9f._.js",
+      "line": 22829,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/dev/server/chunks/ssr/node_modules_02pzx9f._.js",
+      "line": 22830,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/dev/server/chunks/ssr/node_modules_02pzx9f._.js",
+      "line": 22831,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/dev/trace",
+      "line": 5,
+      "rule": "jwt",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/dev/trace",
+      "line": 12,
+      "rule": "jwt",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/app/_not-found.segments/_full.segment.rsc",
+      "line": 20,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/app/_not-found.segments/_index.segment.rsc",
+      "line": 12,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/app/_not-found.rsc",
+      "line": 20,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/app/dashboard.segments/_index.segment.rsc",
+      "line": 12,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/app/dashboard.segments/_full.segment.rsc",
+      "line": 27,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/app/_not-found.html",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/app/dashboard.rsc",
+      "line": 27,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/app/index.rsc",
+      "line": 22,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/app/index.segments/_index.segment.rsc",
+      "line": 12,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/app/index.segments/_full.segment.rsc",
+      "line": 22,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/app/settings/billing.segments/_index.segment.rsc",
+      "line": 12,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/app/settings/billing.rsc",
+      "line": 27,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/app/settings/billing.segments/_full.segment.rsc",
+      "line": 27,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/app/dashboard.html",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/app/settings/billing.html",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/app/index.html",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_0.35awp._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_0.35awp._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_0.ge6yv._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_0.ge6yv._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_01_ifc6._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_01_ifc6._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_04_mu60._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_04_mu60._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_03s1du0._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_03s1du0._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_07a6-jx._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_07a6-jx._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_08_gy.-._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_08_gy.-._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_0_yempe._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_0_yempe._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_0dis6xu._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_0dis6xu._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_0f9dug2._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_0f9dug2._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_0jrl45y._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_0jrl45y._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_0tsjq1y._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_0tsjq1y._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_0tskokc._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_0tskokc._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_0z1dwyu._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_0z1dwyu._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_0ykkbl.._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_10vkqsk._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_10vkqsk._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/chunks/ssr/_0kmtk3l._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/prerender-manifest.json",
+      "line": 159,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/prerender-manifest.json",
+      "line": 160,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/server-reference-manifest.json",
+      "line": 389,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/server/pages/404.html",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/app/dashboard.rsc",
+      "line": 27,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/app/_not-found.segments/_full.segment.rsc",
+      "line": 20,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/app/dashboard.segments/_index.segment.rsc",
+      "line": 12,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/app/_not-found.rsc",
+      "line": 20,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/app/index.segments/_index.segment.rsc",
+      "line": 12,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/app/_not-found.segments/_index.segment.rsc",
+      "line": 12,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/app/dashboard.segments/_full.segment.rsc",
+      "line": 27,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/app/dashboard.html",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/app/_not-found.html",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/app/index.segments/_full.segment.rsc",
+      "line": 22,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/app/index.rsc",
+      "line": 22,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/app/settings/billing.segments/_index.segment.rsc",
+      "line": 12,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/app/settings/billing.segments/_full.segment.rsc",
+      "line": 27,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/app/settings/billing.rsc",
+      "line": 27,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/app/settings/billing.html",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_0.35awp._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_0.35awp._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_0.ge6yv._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_0.ge6yv._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_01_ifc6._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_01_ifc6._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_03s1du0._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_03s1du0._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_07a6-jx._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_07a6-jx._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_08_gy.-._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_08_gy.-._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_0_yempe._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_0_yempe._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_0dis6xu._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_0dis6xu._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_0f9dug2._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_0f9dug2._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_04_mu60._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_04_mu60._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_0jrl45y._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_0jrl45y._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_0tskokc._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_0tskokc._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_0z1dwyu._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_0z1dwyu._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/app/index.html",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_10vkqsk._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_10vkqsk._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_0tsjq1y._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_0tsjq1y._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_0ykkbl.._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/server-reference-manifest.json",
+      "line": 389,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/pages/404.html",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/standalone/.next/server/chunks/ssr/_0kmtk3l._.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    },
+    {
+      "file": "docs/audit-evidence/runtime/frontend/.next/static/chunks/0~hyw4j0n5yvr.js",
+      "line": 1,
+      "rule": "generic-api-key",
+      "unchangedLineAlreadyCommitted": false,
+      "gitIgnored": true
+    }
+  ],
+  "interpretation": "All remaining matches are in Git-ignored local runtime .env files and generated Next artifacts, outside this phase and never staged. No secret values copied or changed; classification is by path, not credential validity."
+}

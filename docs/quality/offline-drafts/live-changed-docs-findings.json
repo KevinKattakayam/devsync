@@ -1,0 +1,22 @@
+[
+ {
+  "RuleID": "generic-api-key",
+  "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+  "StartLine": 79,
+  "EndLine": 79,
+  "StartColumn": 151,
+  "EndColumn": 188,
+  "Match": "OpenAPI consistency, REDACTED ",
+  "Secret": "REDACTED",
+  "File": "/scan/docs/PROGRESS.md",
+  "SymlinkFile": "",
+  "Commit": "",
+  "Entropy": 3.7028196,
+  "Author": "",
+  "Email": "",
+  "Date": "",
+  "Message": "",
+  "Tags": [],
+  "Fingerprint": "/scan/docs/PROGRESS.md:generic-api-key:79"
+ }
+]

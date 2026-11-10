@@ -237,3 +237,7 @@ The timeline inherits `FEATURE_DECISION_RECEIPTS` and active workspace policy. O
 | GitHub event admission | Signed webhook pathway | No direct user submission | Connected repository, verified webhook signature and existing delivery proof; live provider access not established |
 
 Worker executions recheck current approver, submitting writer and source; a removed or archived source cannot expose its derivative activity. CI status update fails closed.
+
+## Phase 12 local drafts
+
+Local storage and recovery metadata confer no server authority. The live adapter retains account/room isolation; transport startup waits for successful hydration and still uses current bearer/role checks. Native rejected updates stop editing, and revoked offline users are rejected on reconnect before queued edits can enter the canonical document. Local purge is confined to the current account/room and cannot delete server data. Export is explicit and unencrypted; live recovery import remains disabled. Fixture browser revocation and viewer-negative-ack evidence is in [offline drafts](quality/offline-drafts/README.md); this does not prove real provider session revocation.

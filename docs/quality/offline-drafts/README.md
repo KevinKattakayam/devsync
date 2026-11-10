@@ -1,3 +1,29 @@
+# Live editor integration — verified bounded delivery
+
+`draft-persistence.ts` is now the sole live IndexedDB writer through `local-first-yjs.ts`. It retains the compatible `updates`/`custom` schema, checks the per-replica purge tombstone in the same transaction as reads/writes, merges Yjs state and compacts atomically. One in-flight snapshot and a dirty bit replace unbounded per-edit scheduling. Status `persisted` is emitted only after the corresponding transaction commits and no newer generation is pending. This acknowledges browser transaction completion, not physical storage, browser eviction immunity or a remote journal acknowledgement.
+
+Limits are 8 MiB merged update, 1024 legacy records and 16 MiB aggregate legacy input. They bound individual drafts and reads, not the total origin. Existing over-limit/corrupt data is retained. Quota/unavailable/failed storage is explicit; startup failure prevents transport, subsequent failure stops edits/transport and retains memory for export. Common same-origin links and beforeunload warn on unconfirmed edits; programmatic/history navigation and forced termination remain limitations. No administrative operation queue was introduced.
+
+Confirmed purge clears persisted draft content and writes a tombstone atomically. BroadcastChannel disconnects current-version peers; pending peer writes also check the tombstone transactionally. Unsupported coordination refuses purge. Close older application tabs first because old builds ignore the marker. Tombstone/account-room identifiers remain; memory remains until tabs close. Server content and downloaded files are unchanged. Reload refuses the purged replica. Rolling back to the previous adapter ignores tombstones, so do not mix builds during purge. No production database/API/WebSocket migration is involved.
+
+Recovery export remains explicitly unencrypted and bounded. A real browser download was decoded to prove it retained a memory-only edit after an injected quota exception. Live restoration stays disabled: file account/room fields are not cryptographic authorization, arbitrary Yjs maps may contain pending actions, and a safe fresh-replica reset needs authorized generation fencing against stale tabs. Detached validation does not authorize upload.
+
+## Final verification
+
+- `python3 tools/quality/gates.py frontend docs/quality/offline-drafts/live-frontend-accepted`: exit 0; lint, formatting, strict types, 33 files / 145 component tests plus Node tests, build.
+- `python3 tools/quality/gates.py backend docs/quality/offline-drafts/live-backend`: exit 0; lint, formatting, strict types, 39 suites / 372 tests including disposable PostgreSQL integration, build. Final backend types/lint/format/OpenAPI checks also exit 0 (`live-backend-final-checks.json`).
+- Frontend coverage comparison against `storage-primitive-verified/frontend-coverage/coverage-summary.json`: exit 0; statements 54.52%, branches 47.99%, functions 50.08%, lines 55.77%. Backend official baseline comparison: exit 0. Thresholds unchanged.
+- `E2E_CHROMIUM_PATH=/opt/google/chrome/chrome node tools/ci/browser.mjs recovery`: final output `live-browser-final.txt`; four actual Chrome tests with local services and fixture identities. Concurrent clients/high latency, offline reload, repeated edits/compaction, SIGKILL/restart, viewer native rejection, multi-tab shared snapshot/reconnect/purge, injected quota/download and offline membership revocation are covered. Real Clerk and multiple physical devices are not verified.
+- Pinned Semgrep and Gitleaks source/test scans: `live-security-accepted.json`. Final documentation/evidence secret scan is recorded separately. Dependency audits at high severity exit 0; backend retains 29 moderate/2 low and frontend 8 moderate findings. Dependencies were not changed or scans disabled.
+
+Source and Markdown whitespace checks pass. A full raw-log whitespace check exits 2 because terminal tables and command outputs contain trailing whitespace; those raw logs are retained verbatim. Intermediate raw gate/security/browser outputs are retained rather than discarded. An expanded browser attempt timed out at readiness while builds were competing; sequential acceptance passed. Test-first failures exposed missing purge coordination and quota-error misclassification; fixes preserve previous snapshots on rollback. Quota is injected in fake IndexedDB and actual Chrome, not measured by filling device storage. These results do not establish universal offline durability, provider success, production migration or hosted CI. No push, deploy or Phase 13.
+
+Additional documentation scanning: the initial broad scan exited 1 with 126 matches. One was a historical sentence naming the source scanners; rewording that prose made the changed-Markdown scan pass without changing scanner configuration. The remaining 125 matches are exclusively Git-ignored local runtime `.env` copies and generated Next artifacts under `docs/audit-evidence/runtime`; all were verified ignored and never staged. Their values were neither printed nor copied. The broad scan remains exit 1, not a passing command; metadata-only classification is in `live-historical-docs-triage.json`. Phase source, tests, changed Markdown and new verification records pass their pinned scans. No claim is made that ignored private runtime files are secret-free.
+
+---
+
+## Historical increments (superseded where noted above)
+
 # Offline drafts — initial correctness increment, incomplete phase
 
 Existing Yjs/IndexedDB persistence, native journal acknowledgements and recovery/revocation controls were inspected and retained. `localReady` reports hydration, not a per-edit disk transaction guarantee. The y-indexeddb dependency does not expose a per-edit acknowledged write result in its current integration. No new sync engine, queued admin action or provider claim was added.

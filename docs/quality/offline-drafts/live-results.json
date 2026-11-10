@@ -1,0 +1,73 @@
+{
+  "scope": "Phase 12 bounded live Yjs persistence and coordinated purge; not full offline-first",
+  "branch": "upgrade/enterprise",
+  "commands": [
+    {
+      "command": "python3 tools/quality/gates.py frontend docs/quality/offline-drafts/live-frontend-accepted",
+      "exitCode": 0,
+      "details": "lint, format, types, 145 component tests plus Node tests, build"
+    },
+    {
+      "command": "python3 tools/quality/gates.py backend docs/quality/offline-drafts/live-backend",
+      "exitCode": 0,
+      "details": "lint, format, types, 372 tests including PostgreSQL integration, build"
+    },
+    {
+      "command": "E2E_CHROMIUM_PATH=/opt/google/chrome/chrome node tools/ci/browser.mjs recovery",
+      "exitCode": 0,
+      "details": "4 Chrome fixture tests; live-browser-final.txt"
+    },
+    {
+      "command": "node tools/ci/coverage.mjs frontend docs/quality/offline-drafts/live-frontend-accepted/frontend-coverage/coverage-summary.json docs/quality/offline-drafts/storage-primitive-verified/frontend-coverage/coverage-summary.json",
+      "exitCode": 0
+    },
+    {
+      "command": "node tools/ci/coverage.mjs backend backend/coverage/coverage-summary.json tools/ci/coverage-baseline.json",
+      "exitCode": 0
+    },
+    {
+      "command": "npm run openapi:check",
+      "cwd": "backend",
+      "exitCode": 0
+    },
+    {
+      "command": "npm audit --json --audit-level=high",
+      "cwd": "backend",
+      "exitCode": 0
+    },
+    {
+      "command": "npm audit --json --audit-level=high",
+      "cwd": "frontend",
+      "exitCode": 0
+    }
+  ],
+  "security": "live-security-accepted.json contains exact pinned commands and exit statuses; documentation scan live-docs-secret-scan.json",
+  "capture": "../realtime-recovery/browser/recovered-fixture.png visually inspected; synthetic content",
+  "limitations": [
+    "Live recovery import/reset disabled pending authorized generation fencing",
+    "Injected quota only; no physical storage capacity or fsync guarantee",
+    "Per-draft bounds, no aggregate origin quota or automatic eviction",
+    "Close older-build tabs before purge; old adapters ignore tombstones",
+    "Programmatic/history navigation and forced termination not comprehensively fenced",
+    "Fixture identities; no real Clerk or physical multi-device acceptance",
+    "No push, deployment, production migration or Phase 13"
+  ],
+  "whitespace": {
+    "sourceAndMarkdownExitCode": 0,
+    "fullRawArtifactDiffExitCode": 2,
+    "reason": "Preserved verbatim terminal output contains trailing whitespace and final blank lines."
+  },
+  "historicalDocsInitialScan": {
+    "exitCode": 1,
+    "matches": 126,
+    "note": "Additional all-history documentation scan; scoped new evidence and changed documents pass. Redacted path investigation retained separately."
+  },
+  "historicalDocsFinalScan": {
+    "scannerExitCode": 1,
+    "matches": 125,
+    "allGitIgnoredRuntime": true,
+    "newCredentialValuesCopied": false,
+    "evidence": "live-historical-docs-triage.json"
+  },
+  "changedDocsFinalScan": "live-changed-docs-secret-scan-final.json"
+}

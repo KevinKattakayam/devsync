@@ -192,3 +192,7 @@ The optional grounded preview endpoint reuses the existing completion gateway/qu
 ## Phase 10 automation boundary
 
 When enabled, workspace rules and event/audit/lease records use forced tenant RLS. Owner approval precedes a worker claim; membership, rule version and source are rechecked at execution. The Redis job carries an opaque execution ID and encrypted tenant locator, while transactional idempotency and leases keep local activities single-effect under retry. Human task assertions and signed GitHub webhook observations retain distinct provenance. No external write or AI action is performed by the new automation worker. CI linked-status mutation is unavailable until independent verification and the linked-work graph exist. See [verification and rollout](quality/automation/README.md).
+
+## Phase 12 local replica lifecycle
+
+The live Yjs hook uses the compatible atomic snapshot adapter (`draft-storage.ts` / `draft-persistence.ts`) instead of a simultaneous y-indexeddb writer. Local transaction receipts, remote journal acknowledgement and native rejection remain distinct. Per-replica bounds, terminal storage errors and transactional purge tombstones protect retained data. BroadcastChannel coordinates current-version tabs; old adapters require closure. Live import/reset is disabled pending authorized generation fencing. See [offline draft verification](quality/offline-drafts/README.md) for limits and rollback behavior.

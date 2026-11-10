@@ -1,0 +1,4 @@
+
+> devsync-backend@1.0.0 openapi:check
+> NODE_ENV=test tsx src/scripts/openapi.ts --check
+
