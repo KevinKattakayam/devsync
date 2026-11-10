@@ -278,6 +278,11 @@ noContent('DELETE', `${base}/workspaces/{id}/invitations/{invitationId}`);
 add('GET', `${base}/workspaces/{id}/documents`, documentList);
 add('POST', `${base}/workspaces/{id}/documents`, documentWrite, '201');
 add('POST', `${base}/workspaces/{id}/documents/import-markdown`, documentWrite, '201');
+add('GET', `${base}/documents/{id}/export-markdown`, z.string(), '200', {
+  responses: { '200': { schema: z.string(), mime: 'text/markdown' } },
+  description:
+    'Exports committed CRDT content in the restricted Markdown import subset; unsupported content is rejected.',
+});
 add('GET', `${base}/documents/{id}`, documentRead);
 add('PATCH', `${base}/documents/{id}`, documentWrite);
 add('PUT', `${base}/documents/{id}/content`, documentWrite);

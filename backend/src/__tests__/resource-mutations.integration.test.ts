@@ -198,6 +198,7 @@ app.post('/ai/complete', meteredAiRequest, aiComplete);
 app.get('/workspaces/:id/search', workspaceSearch);
 app.use(createIngestionRouter((_req, _res, next) => next()));
 app.get('/documents/:id', documents.getDocument);
+app.get('/documents/:id/export-markdown', documents.exportMarkdown);
 app.post('/workspaces/:id/documents', documents.createDocument);
 app.post('/workspaces/:id/documents/import-markdown', documents.importMarkdown);
 app.post('/api/workspaces/:id/documents', documents.createDocument);
@@ -3825,4 +3826,73 @@ test('Markdown import route requires authentication', async () => {
     .post('/workspaces/nonexistent/documents/import-markdown')
     .send({ markdown: 'Hello' });
   expect(response.status).toBe(401);
+});
+
+test('Markdown export reads committed journal, enforces access, and round trips', async () => {
+  const { a } = await fixture();
+  const original = '# Title\n\nOriginal';
+  const created = await request(app)
+    .post(`/workspaces/${a}/documents/import-markdown`)
+    .set('x-fixture-actor', 'editor')
+    .send({ markdown: original });
+  expect(created.status).toBe(201);
+  const id: string = created.body.id;
+  const room = { workspaceId: a, documentId: id };
+  const journal = new CrdtJournal(db);
+  const replica = new Y.Doc();
+  Y.applyUpdate(replica, await journal.load(room));
+  const vector = Y.encodeStateVector(replica);
+  const paragraph = replica.getXmlFragment('default').get(1) as Y.XmlElement;
+  const textNode = paragraph.get(0) as Y.XmlText;
+  textNode.insert(textNode.length, ' updated');
+  await journal.append(room, Y.encodeStateAsUpdate(replica, vector), 'editor');
+  replica.destroy();
+  await admin.document.update({
+    where: { id },
+    data: { content: { type: 'doc', content: [{ type: 'paragraph' }] } },
+  });
+  const url = `/documents/${id}/export-markdown`;
+  const exported = await request(app).get(url).set('x-fixture-actor', 'viewer');
+  expect(exported.status).toBe(200);
+  expect(exported.headers['content-type']).toMatch(/^text\/markdown/);
+  expect(exported.text).toBe('# Title\n\nOriginal updated');
+  const imported = await request(app)
+    .post(`/workspaces/${a}/documents/import-markdown`)
+    .set('x-fixture-actor', 'editor')
+    .send({ markdown: exported.text });
+  expect(imported.status).toBe(201);
+  expect(
+    (
+      await request(app)
+        .get(`/documents/${imported.body.id}/export-markdown`)
+        .set('x-fixture-actor', 'editor')
+    ).text,
+  ).toBe(exported.text);
+  expect((await request(app).get(url).set('x-fixture-actor', 'foreign')).status).toBe(403);
+  await admin.workspaceMember.delete({
+    where: { userId_workspaceId: { userId: 'viewer', workspaceId: a } },
+  });
+  expect((await request(app).get(url).set('x-fixture-actor', 'viewer')).status).toBe(403);
+  await admin.document.update({ where: { id }, data: { isArchived: true } });
+  expect((await request(app).get(url).set('x-fixture-actor', 'editor')).status).toBe(403);
+});
+
+test('Markdown export explicitly rejects unsupported document formatting', async () => {
+  const { a } = await fixture();
+  const id = `doc-${a}`;
+  const rich = {
+    type: 'doc',
+    content: [
+      { type: 'paragraph', content: [{ type: 'text', text: 'bold', marks: [{ type: 'bold' }] }] },
+    ],
+  };
+  const update = await request(app)
+    .put(`/documents/${id}/content`)
+    .set('x-fixture-actor', 'editor')
+    .send({ content: rich, crdtRevision: 0 });
+  expect(update.status).toBe(200);
+  expect(
+    (await request(app).get(`/documents/${id}/export-markdown`).set('x-fixture-actor', 'editor'))
+      .status,
+  ).toBe(400);
 });

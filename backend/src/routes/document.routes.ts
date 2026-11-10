@@ -3,6 +3,7 @@ import { authMiddleware } from '../middleware/auth.middleware';
 import { validate } from '../middleware/validate.middleware';
 import {
   getDocument,
+  exportMarkdown,
   updateDocument,
   deleteDocument,
   updateDocumentSchema,
@@ -13,6 +14,7 @@ const router = Router();
 
 router.use(authMiddleware);
 
+router.get('/:id/export-markdown', exportMarkdown);
 router.get('/:id', getDocument);
 router.patch('/:id', validate(updateDocumentSchema), updateDocument);
 router.put('/:id/content', validate(replaceDocumentContentSchema), updateDocument);

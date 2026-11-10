@@ -1,3 +1,7 @@
+# Phase 13 Markdown export increment
+
+Authenticated workspace members can export committed Yjs journal content as Markdown. Export rechecks current membership and archived status under tenant authorization and rejects rich-text structures outside the restricted import subset rather than losing content. Focused tests cover a stale projection, import/export round-trip, revoked and foreign members, archived documents and unsupported formatting. The full backend gate passed 41 suites / 387 tests, lint, formatting, strict types and build; OpenAPI and the existing coverage baseline passed. See [verification](quality/markdown-export/README.md). Other Phase 13 portability features remain incomplete.
+
 # Phase 13 restricted Markdown import — verified increment
 
 Authenticated owners and editors can import bounded Markdown as a new workspace document. The supported subset is single-line paragraphs and ATX headings separated by blank lines; unsupported Markdown and HTML are rejected. The existing tenant transaction creates the Yjs snapshot, activity, indexing request and optional idempotency receipt. No existing document is overwritten. OpenAPI describes the new route.

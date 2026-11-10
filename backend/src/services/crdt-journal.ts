@@ -55,6 +55,15 @@ export class CrdtJournal {
       throw error;
     }
   }
+  /** Caller authorizes within the same tenant transaction before reading. */
+  async project(tx: TenantTransaction, room: DocumentRoom): Promise<Prisma.InputJsonValue> {
+    const { document } = await this.locked(tx, room);
+    try {
+      return projectDocument(document);
+    } finally {
+      document.destroy();
+    }
+  }
   async load(room: DocumentRoom): Promise<Uint8Array> {
     return this.db.withTenantTransaction(room.workspaceId, async (tx) => {
       const { document } = await this.locked(tx, room);
