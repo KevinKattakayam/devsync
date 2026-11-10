@@ -1,3 +1,9 @@
+# Phase 12 atomic storage primitive — integration pending
+
+Added an independently tested IndexedDB snapshot primitive using the existing y-indexeddb store format. A successful promise resolves only after transaction completion. Concurrent database connections merge their persisted Yjs state before atomic compaction; rejected writes preserve the previous snapshot. The primitive bounds merged state to 8 MiB and legacy reads to 1024 records / 16 MiB, with explicit limit, quota, failure and corruption error codes. Tests use fake-indexeddb; quota failure is injected and is not a real browser quota measurement.
+
+Focused storage tests (5), full frontend gates (129 component tests), coverage comparison and source security scans pass. This primitive is not wired into the live editor. Existing persistence and indicators are unchanged. Hook integration, bounded live write scheduling, real browser quota tests, coordinated purge and authorized restoration remain incomplete. No new upload path or administrative queue was introduced.
+
 # Phase 12 local draft export — incomplete
 
 Added a user-confirmed unencrypted Yjs draft export, bounded to 8 MiB of encoded state, with exact account/room metadata and detached inspection support. It makes no server mutation and does not reapply files to the live replica. Download status says requested, not saved. The document UI explicitly states that per-edit local storage confirmation is unavailable. The existing remote journal acknowledgement and access-denial behavior remains intact.
