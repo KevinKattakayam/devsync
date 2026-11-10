@@ -1,3 +1,17 @@
+# Phase 13 restricted Markdown import — verified increment
+
+Authenticated owners and editors can import bounded Markdown as a new workspace document. The supported subset is single-line paragraphs and ATX headings separated by blank lines; unsupported Markdown and HTML are rejected. The existing tenant transaction creates the Yjs snapshot, activity, indexing request and optional idempotency receipt. No existing document is overwritten. OpenAPI describes the new route.
+
+Focused validation and disposable PostgreSQL authorization/persistence tests pass (11 tests, coverage disabled for that run). The complete backend gate passes lint, formatting, strict types, 40 suites / 383 tests and build; the unchanged coverage baseline, OpenAPI consistency and pinned source/test scans also pass. See [verification](quality/markdown-import/README.md). Markdown export, rich text, CSV, workspace archives and the rest of Phase 13 remain incomplete.
+
+# Phase 13 Markdown increment — incomplete
+
+The existing validator tests pass (3 tests, focused run with coverage disabled). Backend strict types and existing OpenAPI consistency checks exit 0; an initial sandboxed OpenAPI check failed because tsx could not create its local IPC socket, and an authorized retry passed. The requested import/export endpoints and authorization tests have not been implemented. A registry lookup timed out in the restricted environment; no dependency was installed. No commit was created.
+
+# Phase 13 Markdown validation — incomplete
+
+Added an unconnected Markdown input validator with a 256 KiB UTF-8 bound and rejection of control characters and malformed Unicode. Focused tests pass with coverage disabled; this is not a full coverage gate. No import/export endpoints, authorization, OpenAPI changes or browser flows have been implemented. Phase 13 remains incomplete.
+
 # Phase 12 live editor persistence and coordinated local purge
 
 The atomic adapter is now the live Yjs persistence writer, retaining the existing IndexedDB schema and account/room scoping. It serializes one snapshot plus a dirty bit, merges concurrent snapshots atomically and reports local persistence only after transaction completion. Pending local edits, local storage errors, native server rejection, journal acknowledgement and connection reconciliation have separate indicators. Storage failure stops editing and transport while retaining the in-memory document for explicit export; startup storage failure prevents network admission.

@@ -277,6 +277,7 @@ add('POST', `${base}/workspaces/invitations/{invitationId}/accept`, member);
 noContent('DELETE', `${base}/workspaces/{id}/invitations/{invitationId}`);
 add('GET', `${base}/workspaces/{id}/documents`, documentList);
 add('POST', `${base}/workspaces/{id}/documents`, documentWrite, '201');
+add('POST', `${base}/workspaces/{id}/documents/import-markdown`, documentWrite, '201');
 add('GET', `${base}/documents/{id}`, documentRead);
 add('PATCH', `${base}/documents/{id}`, documentWrite);
 add('PUT', `${base}/documents/{id}/content`, documentWrite);

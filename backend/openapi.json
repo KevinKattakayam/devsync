@@ -8336,6 +8336,312 @@
         "x-legacy-alias": "/api/workspaces/{id}/documents"
       }
     },
+    "/api/v1/workspaces/{id}/documents/import-markdown": {
+      "post": {
+        "operationId": "post__api_v1_workspaces__id__documents_import_markdown",
+        "security": [
+          {
+            "ClerkSession": []
+          },
+          {
+            "ClerkCookie": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 191
+            }
+          },
+          {
+            "name": "trace_id",
+            "in": "header",
+            "required": false,
+            "description": "Optional legacy trace ID; invalid values are ignored.",
+            "schema": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "type": "string",
+              "pattern": "^[a-fA-F0-9]{32}$"
+            }
+          },
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "type": "string",
+              "pattern": "^[\\x21-\\x7e]{1,128}$"
+            },
+            "description": "Optional atomic create receipt; same authority and logical scope, 24-hour window. Different payload with the same key returns409. Authorization is rechecked on replay."
+          }
+        ],
+        "x-validation-complete": false,
+        "x-contract-complete": true,
+        "responses": {
+          "201": {
+            "description": "Documented response DTO",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "content": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/components/schemas/Response_post__api_v1_workspaces__id__documents_import_markdown_201/$defs/__schema0"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "yjsState": {
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "const": "Buffer"
+                            },
+                            "data": {
+                              "type": "array",
+                              "items": {
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 255
+                              }
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "data"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "crdtRevision": {
+                      "type": "integer",
+                      "minimum": -9007199254740991,
+                      "maximum": 9007199254740991
+                    },
+                    "embeddingHash": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "icon": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "isPublished": {
+                      "type": "boolean"
+                    },
+                    "isArchived": {
+                      "type": "boolean"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                    },
+                    "authorId": {
+                      "type": "string"
+                    },
+                    "workspaceId": {
+                      "type": "string"
+                    },
+                    "parentId": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "author": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "avatar": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "name",
+                        "avatar"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "title",
+                    "content",
+                    "yjsState",
+                    "crdtRevision",
+                    "embeddingHash",
+                    "icon",
+                    "isPublished",
+                    "isArchived",
+                    "createdAt",
+                    "updatedAt",
+                    "authorId",
+                    "workspaceId",
+                    "parentId",
+                    "author"
+                  ],
+                  "additionalProperties": false,
+                  "$defs": {
+                    "__schema0": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "type": "boolean"
+                        },
+                        {
+                          "type": "null"
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Response_post__api_v1_workspaces__id__documents_import_markdown_201/$defs/__schema0"
+                          }
+                        },
+                        {
+                          "type": "object",
+                          "propertyNames": {
+                            "type": "string"
+                          },
+                          "additionalProperties": {
+                            "$ref": "#/components/schemas/Response_post__api_v1_workspaces__id__documents_import_markdown_201/$defs/__schema0"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "X-Request-ID": {
+                "description": "Fresh server-generated request UUID.",
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                }
+              },
+              "trace_id": {
+                "description": "Present when a trace is available.",
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "string",
+                  "pattern": "^[a-fA-F0-9]{32}$"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error envelope; frontend handlers can also return a plain error field.",
+            "headers": {
+              "X-Request-ID": {
+                "description": "Fresh server-generated request UUID.",
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                }
+              },
+              "trace_id": {
+                "description": "Present when a trace is available.",
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "string",
+                  "pattern": "^[a-fA-F0-9]{32}$"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "maxLength": 200
+                  },
+                  "markdown": {
+                    "type": "string",
+                    "maxLength": 262144
+                  }
+                },
+                "required": [
+                  "markdown"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "x-legacy-alias": "/api/workspaces/{id}/documents/import-markdown"
+      }
+    },
     "/api/v1/workspaces/{id}/documents/ingest": {
       "post": {
         "operationId": "post__api_v1_workspaces__id__documents_ingest",
@@ -24439,6 +24745,230 @@
             "maxLength": 10
           }
         }
+      },
+      "Path_post__api_v1_workspaces__id__documents_import_markdown_id": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 191
+      },
+      "Query_post__api_v1_workspaces__id__documents_import_markdown": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "Correlation_post__api_v1_workspaces__id__documents_import_markdown": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "string",
+        "format": "uuid",
+        "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+      },
+      "Trace_post__api_v1_workspaces__id__documents_import_markdown": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "string",
+        "pattern": "^[a-fA-F0-9]{32}$"
+      },
+      "RequestTrace_post__api_v1_workspaces__id__documents_import_markdown": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "string",
+        "pattern": "^[a-fA-F0-9]{32}$"
+      },
+      "Idempotency_post__api_v1_workspaces__id__documents_import_markdown": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "string",
+        "pattern": "^[\\x21-\\x7e]{1,128}$"
+      },
+      "Response_post__api_v1_workspaces__id__documents_import_markdown_201": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "content": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Response_post__api_v1_workspaces__id__documents_import_markdown_201/$defs/__schema0"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "yjsState": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "Buffer"
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 255
+                    }
+                  }
+                },
+                "required": [
+                  "type",
+                  "data"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "crdtRevision": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991
+          },
+          "embeddingHash": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "icon": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "isPublished": {
+            "type": "boolean"
+          },
+          "isArchived": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          },
+          "authorId": {
+            "type": "string"
+          },
+          "workspaceId": {
+            "type": "string"
+          },
+          "parentId": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "author": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "avatar": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "avatar"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "content",
+          "yjsState",
+          "crdtRevision",
+          "embeddingHash",
+          "icon",
+          "isPublished",
+          "isArchived",
+          "createdAt",
+          "updatedAt",
+          "authorId",
+          "workspaceId",
+          "parentId",
+          "author"
+        ],
+        "additionalProperties": false,
+        "$defs": {
+          "__schema0": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Response_post__api_v1_workspaces__id__documents_import_markdown_201/$defs/__schema0"
+                }
+              },
+              {
+                "type": "object",
+                "propertyNames": {
+                  "type": "string"
+                },
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/Response_post__api_v1_workspaces__id__documents_import_markdown_201/$defs/__schema0"
+                }
+              }
+            ]
+          }
+        }
+      },
+      "Request_post__api_v1_workspaces__id__documents_import_markdown": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "markdown": {
+            "type": "string",
+            "maxLength": 262144
+          }
+        },
+        "required": [
+          "markdown"
+        ],
+        "additionalProperties": false
       },
       "Path_get__api_v1_workspaces__id__boards_id": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",

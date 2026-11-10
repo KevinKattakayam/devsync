@@ -61,6 +61,7 @@ import * as repositories from '../controllers/github-repository.controller';
 import { aiComplete } from '../controllers/ai.controller';
 import { meteredAiRequest } from '../middleware/billing.middleware';
 import { createIngestionRouter } from '../routes/ingestion.routes';
+import workspaceRouter from '../routes/workspace.routes';
 import { ingestDocument } from '../services/ingestion.service';
 import { workspaceSearch } from '../controllers/search.controller';
 import { reconcileOfflineAiActions } from '../services/crdt-sync.service';
@@ -198,6 +199,7 @@ app.get('/workspaces/:id/search', workspaceSearch);
 app.use(createIngestionRouter((_req, _res, next) => next()));
 app.get('/documents/:id', documents.getDocument);
 app.post('/workspaces/:id/documents', documents.createDocument);
+app.post('/workspaces/:id/documents/import-markdown', documents.importMarkdown);
 app.post('/api/workspaces/:id/documents', documents.createDocument);
 app.post('/api/v1/workspaces/:id/documents', documents.createDocument);
 app.patch('/documents/:id', documents.updateDocument);
@@ -3767,4 +3769,60 @@ it('owner previews recorded GitHub evidence without forging an automation event'
     if (previous === undefined) delete process.env.FEATURE_AUTOMATION;
     else process.env.FEATURE_AUTOMATION = previous;
   }
+});
+
+test('Markdown import persists authorized content and rejects unsafe or foreign requests', async () => {
+  const { a, b } = await fixture();
+  const url = `/workspaces/${a}/documents/import-markdown`;
+  const payload = { title: 'Imported', markdown: '# Title\n\nSafe content.' };
+  const created = await request(app).post(url).set('x-fixture-actor', 'editor').send(payload);
+  expect(created.status).toBe(201);
+  const persisted = await admin.document.findUniqueOrThrow({ where: { id: created.body.id } });
+  expect(persisted.workspaceId).toBe(a);
+  expect(persisted.yjsState).toBeTruthy();
+  const state = new Y.Doc();
+  Y.applyUpdate(state, persisted.yjsState!);
+  expect(JSON.stringify(projectDocument(state))).toContain('Safe content.');
+  state.destroy();
+  expect((await request(app).post(url).set('x-fixture-actor', 'viewer').send(payload)).status).toBe(
+    403,
+  );
+  expect(
+    (await request(app).post(url).set('x-fixture-actor', 'foreign').send(payload)).status,
+  ).toBe(403);
+  expect(
+    (
+      await request(app)
+        .post(`/workspaces/${b}/documents/import-markdown`)
+        .set('x-fixture-actor', 'owner')
+        .send(payload)
+    ).status,
+  ).toBe(403);
+  expect(
+    (
+      await request(app)
+        .post(url)
+        .set('x-fixture-actor', 'editor')
+        .send({ markdown: '<script>alert(1)</script>' })
+    ).status,
+  ).toBe(400);
+  expect(
+    (
+      await request(app)
+        .post(url)
+        .set('x-fixture-actor', 'editor')
+        .send({ markdown: '**unsupported**' })
+    ).status,
+  ).toBe(400);
+});
+
+test('Markdown import route requires authentication', async () => {
+  const unauthenticated = express();
+  unauthenticated.use(express.json());
+  unauthenticated.use('/workspaces', workspaceRouter);
+  unauthenticated.use(errorMiddleware);
+  const response = await request(unauthenticated)
+    .post('/workspaces/nonexistent/documents/import-markdown')
+    .send({ markdown: 'Hello' });
+  expect(response.status).toBe(401);
 });

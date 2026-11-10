@@ -25,6 +25,8 @@ import {
   updateDocument,
   deleteDocument,
   createDocumentSchema,
+  importMarkdown,
+  importMarkdownSchema,
 } from '../controllers/document.controller';
 import {
   getBoards,
@@ -130,6 +132,14 @@ router.post(
   idempotencyKeyHeader,
   validate(createDocumentSchema),
   createDocument,
+);
+
+router.post(
+  '/:id/documents/import-markdown',
+  requireEditor(),
+  idempotencyKeyHeader,
+  validate(importMarkdownSchema),
+  importMarkdown,
 );
 
 // Boards & Tasks

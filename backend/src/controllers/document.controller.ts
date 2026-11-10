@@ -15,12 +15,16 @@ import {
 import { richTextSchema } from '../security/rich-text';
 import { legacyDocument, projectDocument } from '../services/crdt-schema';
 import { CrdtJournal } from '../services/crdt-journal';
+import { markdownToDocument } from '../services/markdown-import';
 
 export const createDocumentSchema = z.object({
   title: z.string().max(200).optional(),
   parentId: z.string().min(1).max(191).optional(),
   icon: z.string().max(10).optional(),
 });
+export const importMarkdownSchema = z
+  .object({ title: z.string().max(200).optional(), markdown: z.string().max(256 * 1024) })
+  .strict();
 export const updateDocumentSchema = z.object({
   title: z.string().max(200).optional(),
   content: richTextSchema.optional(),
@@ -92,9 +96,28 @@ export async function getDocument(req: Request, res: Response, next: NextFunctio
   }
 }
 export async function createDocument(req: Request, res: Response, next: NextFunction) {
+  return createDocumentInternal(req, res, next, false);
+}
+export async function importMarkdown(req: Request, res: Response, next: NextFunction) {
+  return createDocumentInternal(req, res, next, true);
+}
+async function createDocumentInternal(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+  importing: boolean,
+) {
   try {
     const workspaceId = String(req.params.workspaceId || req.params.id);
-    const { title, parentId, icon } = createDocumentSchema.parse(req.body);
+    const parsed = importing
+      ? importMarkdownSchema.parse(req.body)
+      : createDocumentSchema.parse(req.body);
+    const { title } = parsed;
+    const parentId = 'parentId' in parsed ? parsed.parentId : undefined;
+    const icon = 'icon' in parsed ? parsed.icon : undefined;
+    const content = 'markdown' in parsed ? markdownToDocument(parsed.markdown) : null;
+    if (content && !richTextSchema.safeParse(content).success)
+      throw new BadRequestError('Markdown exceeds document limits');
     const document = await withWorkspaceAccess(
       req.user!.userId,
       workspaceId,
@@ -103,9 +126,9 @@ export async function createDocument(req: Request, res: Response, next: NextFunc
         idempotentCreate(
           tx,
           req.user!.userId,
-          ['document.create', workspaceId],
+          [importing ? 'document.markdown-import' : 'document.create', workspaceId],
           req.header('idempotency-key'),
-          { title, parentId, icon },
+          { title, parentId, icon, ...(importing ? { content } : {}) },
           async () => {
             if (parentId) {
               const parent = await tx.document.findUnique({
@@ -115,7 +138,7 @@ export async function createDocument(req: Request, res: Response, next: NextFunc
               if (!parent || parent.workspaceId !== workspaceId || parent.isArchived)
                 throw new ForbiddenError('Access denied');
             }
-            const state = legacyDocument(null);
+            const state = legacyDocument(content);
             try {
               const result = await tx.document.create({
                 data: {
