@@ -1,3 +1,9 @@
+# Phase 13 atomic task CSV import
+
+Authenticated workspace owners and editors can import version 1 task CSV through one tenant transaction. The codec validates the whole bounded file, then the controller checks every target column and active assignee before creation. Task creation reuses existing activity, assignment and embedding behavior. An Idempotency-Key is required; the existing receipt prevents same-key retries for 24 hours. A per-process IP limiter allows 20 requests per minute. Viewers, revoked members and suspended workspaces are denied.
+
+Focused PostgreSQL tests passed (2 tests; coverage disabled for that focused run), including invalid relationships, idempotency, cross-workspace isolation and an injected post-create failure that rolled the transaction back. The full backend gate passed 42 suites / 394 tests, lint, formatting, strict types and build. OpenAPI, the existing coverage baseline and pinned source/test scans passed. See [verification](quality/task-csv-import/README.md). Workspace archive export, PDF, broader rich text and remaining Phase 13 portability work are incomplete.
+
 # Phase 13 workspace task CSV export
 
 Authenticated current workspace members can export the existing version 1 task CSV schema. The tenant transaction limits results to the requested workspace, rechecks membership and blocks suspended workspaces. The existing codec protects spreadsheet cells; exports exceeding 1,000 tasks or 1 MiB fail instead of truncating. Task keys, labels and other fields outside the codec are not included. Task, column and board models do not currently have an archived state; deleted tasks are absent.

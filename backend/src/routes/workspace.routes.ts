@@ -1,5 +1,6 @@
 import { idempotencyKeyHeader } from '../lib/create-idempotency';
 import { Router } from 'express';
+import rateLimit from 'express-rate-limit';
 import { authMiddleware } from '../middleware/auth.middleware';
 import { requireOwner, requireEditor, requireWorkspaceMember } from '../middleware/rbac.middleware';
 import { validate } from '../middleware/validate.middleware';
@@ -31,6 +32,8 @@ import {
 import {
   getBoards,
   exportTasksCsv,
+  importTasksCsv,
+  taskCsvImportSchema,
   createBoard,
   createColumn,
   updateColumn,
@@ -145,6 +148,19 @@ router.post(
 
 // Boards & Tasks
 router.get('/:id/tasks/export-csv', requireWorkspaceMember(), exportTasksCsv);
+const taskCsvImportLimiter = rateLimit({
+  windowMs: 60_000,
+  max: 20,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+router.post(
+  '/:id/tasks/import-csv',
+  requireEditor(),
+  taskCsvImportLimiter,
+  validate(taskCsvImportSchema),
+  importTasksCsv,
+);
 router.get('/:id/boards', requireWorkspaceMember(), getBoards);
 router.post(
   '/:id/boards',

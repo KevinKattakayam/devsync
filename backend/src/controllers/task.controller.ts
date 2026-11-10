@@ -4,7 +4,7 @@ import { Request, Response, NextFunction } from 'express';
 import { z } from 'zod';
 import { prisma } from '../lib/prisma';
 import type { TenantTransaction } from '../lib/tenant-prisma';
-import { ForbiddenError, NotFoundError } from '../utils/errors';
+import { BadRequestError, ForbiddenError, NotFoundError } from '../utils/errors';
 import {
   READ_ROLES,
   WRITE_ROLES,
@@ -15,7 +15,7 @@ import { queueEmbedding } from '../services/embedding.service';
 import { isRedisAvailable } from '../lib/redis';
 import { getQueue, QueueNames } from '../lib/queue';
 import { emitWorkspace } from '../socket';
-import { serializeTaskCsv } from '../services/task-csv';
+import { parseTaskCsv, serializeTaskCsv } from '../services/task-csv';
 
 const taskInclude = { assignee: { select: { id: true, name: true, avatar: true } }, labels: true };
 async function withColumnAccess<T>(
@@ -124,6 +124,63 @@ export const moveTaskSchema = z.object({
   position: z.number().int().min(0),
 });
 
+export const taskCsvImportSchema = z.object({ csv: z.string().max(1024 * 1024) }).strict();
+export async function importTasksCsv(req: Request, res: Response, next: NextFunction) {
+  try {
+    const workspaceId = String(req.params.workspaceId || req.params.id);
+    if (req.rawBody) {
+      try {
+        new TextDecoder('utf-8', { fatal: true }).decode(req.rawBody);
+      } catch {
+        throw new BadRequestError('Invalid UTF-8 request');
+      }
+    }
+    const { csv } = taskCsvImportSchema.parse(req.body);
+    const key = req.header('idempotency-key');
+    if (!key) throw new BadRequestError('Idempotency-Key is required');
+    const bytes = Buffer.from(csv, 'utf8');
+    if (bytes.toString('utf8') !== csv) throw new BadRequestError('Invalid task CSV');
+    const rows = parseTaskCsv(bytes);
+    const result = await withWorkspaceAccess(req.user!.userId, workspaceId, WRITE_ROLES, (tx) =>
+      idempotentCreate(
+        tx,
+        req.user!.userId,
+        ['task.csv-import', workspaceId],
+        key,
+        { csv },
+        async () => {
+          // Validate every relationship before creating any task. The workspace lock
+          // also serializes moves, membership changes and concurrent imports.
+          for (const row of rows) {
+            await requireColumn(tx, row.columnId, workspaceId);
+            await requireAssignee(tx, workspaceId, row.assigneeId || undefined);
+          }
+          const ids: string[] = [];
+          for (const row of rows) {
+            const task = await createTaskInTransaction(
+              tx,
+              workspaceId,
+              req.user!.userId,
+              row.columnId,
+              {
+                title: row.title,
+                description: row.description || undefined,
+                priority: row.priority,
+                assigneeId: row.assigneeId || undefined,
+                dueDate: row.dueDate || undefined,
+              },
+            );
+            ids.push(task.id);
+          }
+          return { imported: ids.length, taskIds: ids };
+        },
+      ),
+    );
+    res.status(201).json(result);
+  } catch (error) {
+    next(error);
+  }
+}
 export async function exportTasksCsv(req: Request, res: Response, next: NextFunction) {
   try {
     const workspaceId = String(req.params.workspaceId || req.params.id);
@@ -275,6 +332,54 @@ export async function deleteColumn(req: Request, res: Response, next: NextFuncti
     next(error);
   }
 }
+async function createTaskInTransaction(
+  tx: TenantTransaction,
+  workspaceId: string,
+  actorId: string,
+  columnId: string,
+  input: z.infer<typeof createTaskSchema>,
+) {
+  const { dueDate, ...data } = input;
+  await requireAssignee(tx, workspaceId, data.assigneeId);
+  const max = await tx.task.findFirst({
+    where: { columnId },
+    orderBy: { position: 'desc' },
+  });
+  const result = await tx.task.create({
+    data: {
+      ...data,
+      columnId,
+      position: (max?.position ?? -1) + 1,
+      dueDate: dueDate ? new Date(dueDate) : undefined,
+    },
+    include: taskInclude,
+  });
+  await tx.activity.create({
+    data: {
+      type: 'task_created',
+      metadata: digestSource('task', result.id, result.updatedAt.toISOString()),
+      message: `created task "${result.title}"`,
+      userId: actorId,
+      workspaceId,
+    },
+  });
+  if (result.assigneeId)
+    await tx.activity.create({
+      data: {
+        type: 'task_assigned',
+        message: 'A task was assigned to you.',
+        metadata: {
+          ...digestSource('task', result.id, result.updatedAt.toISOString()),
+          recipientId: result.assigneeId,
+        },
+        userId: actorId,
+        workspaceId,
+      },
+    });
+  await queueEmbedding('task', result.id, tx, workspaceId, actorId);
+  return result;
+}
+
 export async function createTask(req: Request, res: Response, next: NextFunction) {
   try {
     const columnId = String(req.params.columnId);
@@ -286,46 +391,11 @@ export async function createTask(req: Request, res: Response, next: NextFunction
         ['task.create', workspaceId, columnId],
         req.header('idempotency-key'),
         { ...data, dueDate },
-        async () => {
-          await requireAssignee(tx, workspaceId, data.assigneeId);
-          const max = await tx.task.findFirst({
-            where: { columnId },
-            orderBy: { position: 'desc' },
-          });
-          const result = await tx.task.create({
-            data: {
-              ...data,
-              columnId,
-              position: (max?.position ?? -1) + 1,
-              dueDate: dueDate ? new Date(dueDate) : undefined,
-            },
-            include: taskInclude,
-          });
-          await tx.activity.create({
-            data: {
-              type: 'task_created',
-              metadata: digestSource('task', result.id, result.updatedAt.toISOString()),
-              message: `created task "${result.title}"`,
-              userId: req.user!.userId,
-              workspaceId,
-            },
-          });
-          if (result.assigneeId)
-            await tx.activity.create({
-              data: {
-                type: 'task_assigned',
-                message: 'A task was assigned to you.',
-                metadata: {
-                  ...digestSource('task', result.id, result.updatedAt.toISOString()),
-                  recipientId: result.assigneeId,
-                },
-                userId: req.user!.userId,
-                workspaceId,
-              },
-            });
-          await queueEmbedding('task', result.id, tx, workspaceId, req.user!.userId);
-          return result;
-        },
+        () =>
+          createTaskInTransaction(tx, workspaceId, req.user!.userId, columnId, {
+            ...data,
+            dueDate,
+          }),
       ),
     );
     res.status(201).json(task);

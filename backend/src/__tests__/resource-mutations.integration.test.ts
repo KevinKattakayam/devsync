@@ -62,7 +62,8 @@ import { aiComplete } from '../controllers/ai.controller';
 import { meteredAiRequest } from '../middleware/billing.middleware';
 import { createIngestionRouter } from '../routes/ingestion.routes';
 import workspaceRouter from '../routes/workspace.routes';
-import { parseTaskCsv } from '../services/task-csv';
+import { parseTaskCsv, serializeTaskCsv } from '../services/task-csv';
+import * as embeddingService from '../services/embedding.service';
 import { ingestDocument } from '../services/ingestion.service';
 import { workspaceSearch } from '../controllers/search.controller';
 import { reconcileOfflineAiActions } from '../services/crdt-sync.service';
@@ -213,6 +214,7 @@ app.patch('/snippets/:snippetId', snippets.updateSnippet);
 app.delete('/snippets/:snippetId', snippets.deleteSnippet);
 app.get('/workspaces/:id/boards', tasks.getBoards);
 app.get('/workspaces/:id/tasks/export-csv', tasks.exportTasksCsv);
+app.post('/workspaces/:id/tasks/import-csv', tasks.importTasksCsv);
 app.post('/workspaces/:id/boards', tasks.createBoard);
 app.post('/boards/:boardId/columns', tasks.createColumn);
 app.patch('/columns/:columnId', tasks.updateColumn);
@@ -3940,4 +3942,91 @@ test('task CSV export route requires authentication', async () => {
   expect((await request(unauthenticated).get('/workspaces/unknown/tasks/export-csv')).status).toBe(
     401,
   );
+});
+
+test('task CSV import validates and commits atomically with idempotency and tenant roles', async () => {
+  const { a, b } = await fixture();
+  const url = `/workspaces/${a}/tasks/import-csv`;
+  const row = {
+    columnId: `column-${a}`,
+    title: 'Imported task',
+    description: 'details',
+    priority: 'HIGH' as const,
+    assigneeId: 'editor',
+    dueDate: '',
+  };
+  const csv = serializeTaskCsv([row]);
+  const send = (actor: string, key: string, data: string) =>
+    request(app)
+      .post(url)
+      .set('x-fixture-actor', actor)
+      .set('Idempotency-Key', key)
+      .send({ csv: data });
+  expect((await send('viewer', 'v', csv)).status).toBe(403);
+  expect((await send('foreign', 'f', csv)).status).toBe(403);
+  expect((await send('editor', 'bad', 'invalid')).status).toBe(400);
+  const invalid = serializeTaskCsv([row, { ...row, columnId: `column-${b}` }]);
+  expect((await send('editor', 'invalid', invalid)).status).toBe(403);
+  expect(
+    await admin.task.count({ where: { title: 'Imported task', columnId: row.columnId } }),
+  ).toBe(0);
+  expect(
+    (
+      await send(
+        'editor',
+        'bad-assignee',
+        serializeTaskCsv([row, { ...row, assigneeId: 'foreign' }]),
+      )
+    ).status,
+  ).toBe(403);
+  const failure = jest
+    .spyOn(embeddingService, 'queueEmbedding')
+    .mockRejectedValueOnce(new Error('injected transaction failure'));
+  try {
+    expect((await send('editor', 'rollback', csv)).status).toBe(500);
+  } finally {
+    failure.mockRestore();
+  }
+  expect(
+    await admin.task.count({ where: { title: 'Imported task', columnId: row.columnId } }),
+  ).toBe(0);
+  expect((await request(app).post(url).set('x-fixture-actor', 'editor').send({ csv })).status).toBe(
+    400,
+  );
+  const first = await send('editor', 'retry', csv);
+  expect(first.status).toBe(201);
+  const second = await send('editor', 'retry', csv);
+  expect(second.status).toBe(201);
+  expect(second.body).toEqual(first.body);
+  expect(
+    (await send('editor', 'retry', serializeTaskCsv([{ ...row, title: 'Different' }]))).status,
+  ).toBe(409);
+  expect(
+    await admin.task.count({ where: { title: 'Imported task', columnId: row.columnId } }),
+  ).toBe(1);
+  const exported = await request(app)
+    .get(`/workspaces/${a}/tasks/export-csv`)
+    .set('x-fixture-actor', 'owner');
+  expect(parseTaskCsv(Buffer.from(exported.text))).toContainEqual(row);
+  await admin.workspaceMember.delete({
+    where: { userId_workspaceId: { workspaceId: a, userId: 'editor' } },
+  });
+  expect((await send('editor', 'after-removal', csv)).status).toBe(403);
+  await admin.workspace.update({ where: { id: a }, data: { suspendedAt: new Date() } });
+  expect((await send('owner', 'suspended', csv)).status).toBe(403);
+});
+
+test('task CSV import route requires authentication', async () => {
+  const unauthenticated = express();
+  unauthenticated.use(express.json());
+  unauthenticated.use('/workspaces', workspaceRouter);
+  unauthenticated.use(errorMiddleware);
+  expect(
+    (
+      await request(unauthenticated)
+        .post('/workspaces/unknown/tasks/import-csv')
+        .set('Idempotency-Key', 'key')
+        .send({ csv: '' })
+    ).status,
+  ).toBe(401);
 });

@@ -317,6 +317,16 @@ add(
   `${base}/workspaces/{id}/boards`,
   z.array(board.extend({ columns: z.array(column.extend({ tasks: z.array(task) })) })),
 );
+add(
+  'POST',
+  `${base}/workspaces/{id}/tasks/import-csv`,
+  z.object({ imported: z.number().int(), taskIds: z.array(z.string()) }).strict(),
+  '201',
+  {
+    description: 'Import a version 1 task CSV atomically; Idempotency-Key is required.',
+    headers: { 'Idempotency-Key': { schema: z.string().min(1).max(128), required: true } },
+  },
+);
 add('GET', `${base}/workspaces/{id}/tasks/export-csv`, z.string(), '200', {
   responses: { '200': { schema: z.string(), mime: 'text/csv' } },
   description:
