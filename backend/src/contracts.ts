@@ -332,6 +332,10 @@ add(
     headers: { 'Idempotency-Key': { schema: z.string().min(1).max(128), required: true } },
   },
 );
+add('GET', `${base}/workspaces/{id}/archive.zip`, z.string(), '200', {
+  responses: { '200': { schema: z.string(), mime: 'application/zip' } },
+  description: 'Bounded workspace-scoped documents and task CSV export, not an account backup.',
+});
 add('GET', `${base}/workspaces/{id}/tasks/export-csv`, z.string(), '200', {
   responses: { '200': { schema: z.string(), mime: 'text/csv' } },
   description:

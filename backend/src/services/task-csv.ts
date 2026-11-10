@@ -1,6 +1,7 @@
 import { TextDecoder } from 'util';
 import { z } from 'zod';
 import { BadRequestError } from '../utils/errors';
+import type { TenantTransaction } from '../lib/tenant-prisma';
 
 // Version 1 intentionally covers scalar task fields only; labels and task keys are excluded.
 const headers = [
@@ -134,4 +135,32 @@ export function parseTaskCsv(bytes: Uint8Array): CsvTask[] {
     if (version !== '1') return invalid();
     return validTask({ columnId, title, description, priority, assigneeId, dueDate });
   });
+}
+
+/** Caller must authorize the workspace in this transaction. */
+export async function exportWorkspaceTasksCsv(
+  tx: TenantTransaction,
+  workspaceId: string,
+): Promise<string> {
+  const tasks = await tx.task.findMany({
+    where: { column: { board: { workspaceId } } },
+    select: {
+      columnId: true,
+      title: true,
+      description: true,
+      priority: true,
+      assigneeId: true,
+      dueDate: true,
+    },
+    orderBy: [{ columnId: 'asc' }, { position: 'asc' }, { id: 'asc' }],
+    take: 1001,
+  });
+  return serializeTaskCsv(
+    tasks.map((task) => ({
+      ...task,
+      description: task.description ?? '',
+      assigneeId: task.assigneeId ?? '',
+      dueDate: task.dueDate?.toISOString() ?? '',
+    })),
+  );
 }

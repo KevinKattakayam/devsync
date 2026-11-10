@@ -15,7 +15,7 @@ import { queueEmbedding } from '../services/embedding.service';
 import { isRedisAvailable } from '../lib/redis';
 import { getQueue, QueueNames } from '../lib/queue';
 import { emitWorkspace } from '../socket';
-import { parseTaskCsv, serializeTaskCsv } from '../services/task-csv';
+import { parseTaskCsv, exportWorkspaceTasksCsv } from '../services/task-csv';
 
 const taskInclude = { assignee: { select: { id: true, name: true, avatar: true } }, labels: true };
 async function withColumnAccess<T>(
@@ -184,29 +184,9 @@ export async function importTasksCsv(req: Request, res: Response, next: NextFunc
 export async function exportTasksCsv(req: Request, res: Response, next: NextFunction) {
   try {
     const workspaceId = String(req.params.workspaceId || req.params.id);
-    const csv = await withWorkspaceAccess(req.user!.userId, workspaceId, READ_ROLES, async (tx) => {
-      const tasks = await tx.task.findMany({
-        where: { column: { board: { workspaceId } } },
-        select: {
-          columnId: true,
-          title: true,
-          description: true,
-          priority: true,
-          assigneeId: true,
-          dueDate: true,
-        },
-        orderBy: [{ columnId: 'asc' }, { position: 'asc' }, { id: 'asc' }],
-        take: 1001,
-      });
-      return serializeTaskCsv(
-        tasks.map((task) => ({
-          ...task,
-          description: task.description ?? '',
-          assigneeId: task.assigneeId ?? '',
-          dueDate: task.dueDate?.toISOString() ?? '',
-        })),
-      );
-    });
+    const csv = await withWorkspaceAccess(req.user!.userId, workspaceId, READ_ROLES, (tx) =>
+      exportWorkspaceTasksCsv(tx, workspaceId),
+    );
     res.setHeader('Cache-Control', 'no-store');
     res.setHeader('X-Content-Type-Options', 'nosniff');
     res.setHeader('Content-Disposition', 'attachment; filename="tasks.csv"');

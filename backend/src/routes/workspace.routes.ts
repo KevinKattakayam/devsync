@@ -60,6 +60,7 @@ import {
   updateRepositorySchema,
 } from '../controllers/github-repository.controller';
 import { workspaceSearch } from '../controllers/search.controller';
+import { exportWorkspaceArchive } from '../controllers/workspace-archive.controller';
 import {
   createInvitation,
   acceptPendingInvitation,
@@ -147,6 +148,7 @@ router.post(
 );
 
 // Boards & Tasks
+router.get('/:id/archive.zip', requireWorkspaceMember(), exportWorkspaceArchive);
 router.get('/:id/tasks/export-csv', requireWorkspaceMember(), exportTasksCsv);
 const taskCsvImportLimiter = rateLimit({
   windowMs: 60_000,

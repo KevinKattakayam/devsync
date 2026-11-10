@@ -71,6 +71,7 @@
     "ws": "^8.21.1",
     "y-protocols": "^1.0.7",
     "y-websocket": "^1.5.4",
+    "yazl": "3.3.1",
     "yjs": "^13.6.31",
     "zod": "^4.6.7"
   },
@@ -88,6 +89,7 @@
     "@types/pdf-parse": "^1.1.5",
     "@types/pg": "^8.21.0",
     "@types/supertest": "^7.2.1",
+    "@types/yazl": "3.3.1",
     "eslint": "^9.39.5",
     "jest": "^30.4.2",
     "jest-mock-extended": "^4.0.1",

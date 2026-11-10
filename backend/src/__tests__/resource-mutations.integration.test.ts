@@ -39,6 +39,14 @@ import { Client } from 'pg';
 import { randomBytes, createHash, createHmac } from 'crypto';
 import Stripe from 'stripe';
 import { spawnSync } from 'child_process';
+import { mkdtempSync, rmSync, writeFileSync } from 'fs';
+import { join } from 'path';
+import { tmpdir } from 'os';
+import { exportWorkspaceArchive } from '../controllers/workspace-archive.controller';
+import {
+  snapshotWorkspaceArchive,
+  recheckWorkspaceArchive,
+} from '../services/workspace-archive-snapshot';
 import { createServer } from 'http';
 import WebSocket from 'ws';
 import { HocuspocusProvider, HocuspocusProviderWebsocket } from '@hocuspocus/provider';
@@ -216,6 +224,7 @@ app.patch('/snippets/:snippetId', snippets.updateSnippet);
 app.delete('/snippets/:snippetId', snippets.deleteSnippet);
 app.get('/workspaces/:id/boards', tasks.getBoards);
 app.get('/workspaces/:id/tasks/export-csv', tasks.exportTasksCsv);
+app.get('/workspaces/:id/archive.zip', exportWorkspaceArchive);
 app.post('/workspaces/:id/tasks/import-csv', tasks.importTasksCsv);
 app.post('/workspaces/:id/boards', tasks.createBoard);
 app.post('/boards/:boardId/columns', tasks.createColumn);
@@ -4082,4 +4091,109 @@ test('PDF export rejects unsupported stored rich text and requires authenticatio
   unauthenticated.use('/documents', documentRouter);
   unauthenticated.use(errorMiddleware);
   expect((await request(unauthenticated).get('/documents/unknown/export.pdf')).status).toBe(401);
+});
+
+test('workspace archive uses authorized sources and safe paths with current membership', async () => {
+  const { a, b } = await fixture();
+  await admin.document.update({ where: { id: `doc-${a}` }, data: { title: '../../sensitive' } });
+  await admin.document.create({
+    data: {
+      id: `archived-${a}`,
+      title: 'archived private',
+      workspaceId: a,
+      authorId: 'owner',
+      isArchived: true,
+    },
+  });
+  await admin.task.update({ where: { id: `task-${b}` }, data: { title: 'foreign private task' } });
+  const url = `/workspaces/${a}/archive.zip`;
+  for (const actor of ['owner', 'editor', 'viewer']) {
+    const res = await request(app)
+      .get(url)
+      .set('x-fixture-actor', actor)
+      .buffer(true)
+      .parse((response, callback) => {
+        const chunks: Buffer[] = [];
+        response.on('data', (chunk: Buffer) => chunks.push(chunk));
+        response.on('end', () => callback(null, Buffer.concat(chunks)));
+      });
+    expect(res.status).toBe(200);
+    expect(res.headers['content-type']).toMatch(/^application\/zip/);
+    expect(res.headers['cache-control']).toBe('no-store');
+    const directory = mkdtempSync(join(tmpdir(), 'workspace-archive-fixture-'));
+    try {
+      const path = join(directory, 'archive.zip');
+      writeFileSync(path, res.body);
+      const inspect = spawnSync(
+        'python3',
+        [
+          '-c',
+          'import zipfile,json,sys; z=zipfile.ZipFile(sys.argv[1]); print(json.dumps({"names":z.namelist(),"tasks":z.read("tasks/tasks.csv").decode(),"manifest":json.loads(z.read("manifest.json"))}))',
+          path,
+        ],
+        { encoding: 'utf8', timeout: 5000 },
+      );
+      expect(inspect.status).toBe(0);
+      const result = JSON.parse(inspect.stdout);
+      expect(result.names).toEqual(['manifest.json', 'documents/000001.md', 'tasks/tasks.csv']);
+      expect(result.tasks).not.toContain('foreign private task');
+      expect(JSON.stringify(result.manifest)).not.toContain('../../sensitive');
+      expect(JSON.stringify(result.manifest)).not.toContain('archived private');
+    } finally {
+      rmSync(directory, { recursive: true, force: true });
+    }
+  }
+  expect((await request(app).get(url).set('x-fixture-actor', 'foreign')).status).toBe(403);
+  await admin.workspaceMember.delete({
+    where: { userId_workspaceId: { userId: 'viewer', workspaceId: a } },
+  });
+  expect((await request(app).get(url).set('x-fixture-actor', 'viewer')).status).toBe(403);
+  await admin.workspace.update({ where: { id: a }, data: { suspendedAt: new Date() } });
+  expect((await request(app).get(url).set('x-fixture-actor', 'owner')).status).toBe(403);
+});
+
+test('workspace archive rejects unsupported documents without returning a ZIP', async () => {
+  const { a } = await fixture();
+  const rich = {
+    type: 'doc',
+    content: [
+      { type: 'paragraph', content: [{ type: 'text', text: 'bold', marks: [{ type: 'bold' }] }] },
+    ],
+  };
+  expect(
+    (
+      await request(app)
+        .put(`/documents/doc-${a}/content`)
+        .set('x-fixture-actor', 'editor')
+        .send({ content: rich, crdtRevision: 0 })
+    ).status,
+  ).toBe(200);
+  const res = await request(app)
+    .get(`/workspaces/${a}/archive.zip`)
+    .set('x-fixture-actor', 'owner');
+  expect(res.status).toBe(400);
+  expect(res.headers['content-type']).not.toMatch(/^application\/zip/);
+});
+
+test('workspace archive rechecks resource visibility and membership after snapshot', async () => {
+  const { a } = await fixture();
+  const first = await withDatabase(db, () => snapshotWorkspaceArchive('viewer', a));
+  await admin.document.update({ where: { id: `doc-${a}` }, data: { isArchived: true } });
+  await expect(
+    withDatabase(db, () => recheckWorkspaceArchive('viewer', a, first.fingerprint)),
+  ).rejects.toThrow('Workspace changed');
+  const second = await withDatabase(db, () => snapshotWorkspaceArchive('viewer', a));
+  await admin.workspaceMember.delete({
+    where: { userId_workspaceId: { userId: 'viewer', workspaceId: a } },
+  });
+  await expect(
+    withDatabase(db, () => recheckWorkspaceArchive('viewer', a, second.fingerprint)),
+  ).rejects.toThrow();
+});
+
+test('workspace archive route requires authentication', async () => {
+  const unauthenticated = express();
+  unauthenticated.use('/workspaces', workspaceRouter);
+  unauthenticated.use(errorMiddleware);
+  expect((await request(unauthenticated).get('/workspaces/unknown/archive.zip')).status).toBe(401);
 });
