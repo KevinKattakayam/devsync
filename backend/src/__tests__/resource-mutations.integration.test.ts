@@ -62,6 +62,7 @@ import { aiComplete } from '../controllers/ai.controller';
 import { meteredAiRequest } from '../middleware/billing.middleware';
 import { createIngestionRouter } from '../routes/ingestion.routes';
 import workspaceRouter from '../routes/workspace.routes';
+import documentRouter from '../routes/document.routes';
 import { parseTaskCsv, serializeTaskCsv } from '../services/task-csv';
 import * as embeddingService from '../services/embedding.service';
 import { ingestDocument } from '../services/ingestion.service';
@@ -201,6 +202,7 @@ app.get('/workspaces/:id/search', workspaceSearch);
 app.use(createIngestionRouter((_req, _res, next) => next()));
 app.get('/documents/:id', documents.getDocument);
 app.get('/documents/:id/export-markdown', documents.exportMarkdown);
+app.get('/documents/:id/export.pdf', documents.exportDocumentPdf);
 app.post('/workspaces/:id/documents', documents.createDocument);
 app.post('/workspaces/:id/documents/import-markdown', documents.importMarkdown);
 app.post('/api/workspaces/:id/documents', documents.createDocument);
@@ -4029,4 +4031,55 @@ test('task CSV import route requires authentication', async () => {
         .send({ csv: '' })
     ).status,
   ).toBe(401);
+});
+
+test('PDF export uses committed content and denies revoked, archived, suspended and foreign access', async () => {
+  const { a } = await fixture();
+  const created = await request(app)
+    .post(`/workspaces/${a}/documents/import-markdown`)
+    .set('x-fixture-actor', 'editor')
+    .send({ markdown: '# PDF heading\n\nPDF paragraph' });
+  const id = created.body.id as string;
+  const url = `/documents/${id}/export.pdf`;
+  const allowed = await request(app).get(url).set('x-fixture-actor', 'viewer');
+  expect(allowed.status).toBe(200);
+  expect(allowed.headers['content-type']).toMatch(/^application\/pdf/);
+  expect(allowed.headers['cache-control']).toBe('no-store');
+  expect(allowed.headers['content-disposition']).toContain('attachment');
+  expect(allowed.body.subarray(0, 5).toString()).toBe('%PDF-');
+  expect((await request(app).get(url).set('x-fixture-actor', 'foreign')).status).toBe(403);
+  await admin.workspaceMember.delete({
+    where: { userId_workspaceId: { userId: 'viewer', workspaceId: a } },
+  });
+  expect((await request(app).get(url).set('x-fixture-actor', 'viewer')).status).toBe(403);
+  await admin.document.update({ where: { id }, data: { isArchived: true } });
+  expect((await request(app).get(url).set('x-fixture-actor', 'editor')).status).toBe(403);
+  await admin.workspace.update({ where: { id: a }, data: { suspendedAt: new Date() } });
+  expect((await request(app).get(url).set('x-fixture-actor', 'owner')).status).toBe(403);
+});
+
+test('PDF export rejects unsupported stored rich text and requires authentication', async () => {
+  const { a } = await fixture();
+  const id = `doc-${a}`;
+  const rich = {
+    type: 'doc',
+    content: [
+      { type: 'paragraph', content: [{ type: 'text', text: 'bold', marks: [{ type: 'bold' }] }] },
+    ],
+  };
+  expect(
+    (
+      await request(app)
+        .put(`/documents/${id}/content`)
+        .set('x-fixture-actor', 'editor')
+        .send({ content: rich, crdtRevision: 0 })
+    ).status,
+  ).toBe(200);
+  expect(
+    (await request(app).get(`/documents/${id}/export.pdf`).set('x-fixture-actor', 'editor')).status,
+  ).toBe(400);
+  const unauthenticated = express();
+  unauthenticated.use('/documents', documentRouter);
+  unauthenticated.use(errorMiddleware);
+  expect((await request(unauthenticated).get('/documents/unknown/export.pdf')).status).toBe(401);
 });

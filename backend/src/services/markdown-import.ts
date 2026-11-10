@@ -11,12 +11,19 @@ export function validateMarkdownImport(markdown: string): string {
   return markdown;
 }
 
+export type MarkdownDocument = {
+  type: 'doc';
+  content: Array<
+    | { type: 'paragraph'; content?: Array<{ type: 'text'; text: string }> }
+    | { type: 'heading'; attrs: { level: number }; content: Array<{ type: 'text'; text: string }> }
+  >;
+};
 /** Restricted subset: single-line paragraphs and ATX headings, separated by blank lines. */
-export function markdownToDocument(input: string) {
+export function markdownToDocument(input: string): MarkdownDocument {
   const source = validateMarkdownImport(input).replace(/\r\n/g, '\n').replace(/\n$/, '');
   if (source.includes('\r')) throw new BadRequestError('Unsupported Markdown line ending');
   const blocks = source.split(/\n{2,}/);
-  const content = blocks
+  const content: MarkdownDocument['content'] = blocks
     .filter((block) => block.length > 0)
     .map((block) => {
       if (block.includes('\n') || /^[ \t]/.test(block) || /[ \t]$/.test(block))

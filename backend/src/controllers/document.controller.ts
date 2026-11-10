@@ -17,6 +17,7 @@ import { legacyDocument, projectDocument } from '../services/crdt-schema';
 import { CrdtJournal } from '../services/crdt-journal';
 import { markdownToDocument } from '../services/markdown-import';
 import { documentToMarkdown } from '../services/markdown-export';
+import { renderDocumentPdf } from '../services/document-pdf';
 
 export const createDocumentSchema = z.object({
   title: z.string().max(200).optional(),
@@ -92,6 +93,27 @@ export async function getDocument(req: Request, res: Response, next: NextFunctio
     );
     if (!document) throw new NotFoundError('Document not found');
     res.json(document);
+  } catch (error) {
+    next(error);
+  }
+}
+export async function exportDocumentPdf(req: Request, res: Response, next: NextFunction) {
+  try {
+    const id = String(req.params.docId || req.params.id);
+    const pdf = await withResourceAccess(
+      req.user!.userId,
+      'document',
+      id,
+      READ_ROLES,
+      async (tx, workspaceId) => {
+        const current = await new CrdtJournal(prisma).project(tx, { workspaceId, documentId: id });
+        return renderDocumentPdf(documentToMarkdown(current));
+      },
+    );
+    res.setHeader('Cache-Control', 'no-store');
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    res.setHeader('Content-Disposition', 'attachment; filename="document.pdf"');
+    res.type('application/pdf').send(Buffer.from(pdf));
   } catch (error) {
     next(error);
   }

@@ -1,3 +1,9 @@
+# Phase 13 bounded document PDF export
+
+Added authenticated PDF export from the currently authorized committed CRDT projection. The in-process `pdf-lib` renderer uses built-in fonts, does not parse HTML or fetch external resources, supports the restricted heading and paragraph format, and rejects unsupported structures and unrenderable characters. Bounds are 256 KiB Markdown input, 40 pages and 2 MiB output.
+
+The full backend gate passed 43 suites / 399 tests, lint, formatting, strict types and build. Focused PDF parsing, access and limit tests, OpenAPI, coverage baseline and pinned security scans passed. `pdf-lib` 1.17.1 is MIT licensed. Installation's bundled npm audit reported 31 low/moderate findings and no high/critical findings; a later standalone audit could not reach the registry. Details: [PDF verification](quality/document-pdf/README.md). Remaining Phase 13 work includes browser portability controls and other archive/retention features.
+
 # Phase 13 atomic task CSV import
 
 Authenticated workspace owners and editors can import version 1 task CSV through one tenant transaction. The codec validates the whole bounded file, then the controller checks every target column and active assignee before creation. Task creation reuses existing activity, assignment and embedding behavior. An Idempotency-Key is required; the existing receipt prevents same-key retries for 24 hours. A per-process IP limiter allows 20 requests per minute. Viewers, revoked members and suspended workspaces are denied.

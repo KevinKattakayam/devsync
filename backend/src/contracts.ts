@@ -278,6 +278,11 @@ noContent('DELETE', `${base}/workspaces/{id}/invitations/{invitationId}`);
 add('GET', `${base}/workspaces/{id}/documents`, documentList);
 add('POST', `${base}/workspaces/{id}/documents`, documentWrite, '201');
 add('POST', `${base}/workspaces/{id}/documents/import-markdown`, documentWrite, '201');
+add('GET', `${base}/documents/{id}/export.pdf`, z.string(), '200', {
+  responses: { '200': { schema: z.string(), mime: 'application/pdf' } },
+  description:
+    'Exports bounded PDF from committed document content; only headings and paragraphs are supported.',
+});
 add('GET', `${base}/documents/{id}/export-markdown`, z.string(), '200', {
   responses: { '200': { schema: z.string(), mime: 'text/markdown' } },
   description:
