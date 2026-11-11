@@ -5,7 +5,12 @@ import { resolve } from 'node:path';
 import { login } from './identities';
 const api = 'http://127.0.0.1:5501/api';
 const workspace = 'devsync-sample';
-const pass = process.env.E2E_SETTINGS_PASS === 'final' ? 'final' : 'initial';
+const pass =
+  process.env.E2E_SETTINGS_PASS === 'final'
+    ? 'final'
+    : process.env.E2E_SETTINGS_PASS === 'phase14-ui'
+      ? 'phase14-ui'
+      : 'initial';
 const output = resolve(__dirname, '../../../docs/ui/after/settings', pass);
 async function capture(page: Page, theme: string, width: number, state: string) {
   await mkdir(output, { recursive: true });
@@ -86,7 +91,15 @@ for (const theme of ['dark', 'light'] as const)
         release();
         await context.unrouteAll({ behavior: 'wait' });
         await expect(page.getByRole('heading', { name: 'Members & roles' })).toBeVisible();
+        await expect(page.getByRole('region', { name: 'Usage & automation' })).toBeVisible();
+        await expect(page.getByRole('region', { name: 'Connections & lifecycle' })).toBeVisible();
         await capture(page, theme, width, 'ready');
+        await page.getByRole('textbox', { name: 'Search settings' }).fill('GitHub');
+        await expect(page.getByText('No settings match', { exact: true })).toHaveCount(0);
+        await expect(page.getByText('GitHub execution trail', { exact: true })).toBeVisible();
+        await page.getByRole('link', { name: 'Connections & lifecycle' }).click();
+        await expect(page.locator('#connections')).toBeInViewport();
+        await page.getByRole('textbox', { name: 'Search settings' }).fill('');
         await page
           .getByRole('heading', { name: 'Links created in this view' })
           .scrollIntoViewIfNeeded();
