@@ -6,6 +6,11 @@ Added accessible authenticated controls for Markdown import, document Markdown/P
 
 Final acceptance review passed the original Phase 13 definition of done based on committed Markdown, PDF, task CSV and workspace ZIP workflows and their recorded backend/frontend tests. Deliberately restricted rich text, archive restore/import, archive encryption/redaction and account-wide export/erasure remain documented non-blocking limitations. The browser journey used fixture identities, not real Clerk accounts, and confirms download initiation only. See [acceptance matrix](docs/quality/phase13-acceptance/README.md). No Phase 14 work, push or deployment occurred.
 
+# Phase 14 — dashboard and workspace navigation
+
+- Promoted existing authorized workspace links to a responsive dashboard section with accessible membership-role labels and visible keyboard focus. The section follows the current workspace filter; backend contracts and role-gated actions are unchanged.
+- Added dashboard component and desktop/mobile fixture-browser verification with new dark/light screenshots and axe reports. Frontend gates, coverage comparison, build and pinned Semgrep pass. Phase 14 remains in progress; see `docs/quality/phase14-dashboard/README.md`.
+
 # Phase 14 — document editor UI
 
 - Reorganized the existing editor title, export actions, synchronization metadata and writing controls into a responsive header and single grouped toolbar. Aligned mobile editor content with the title and bounded desktop prose width; added missing group semantics for selection formatting and document exports.

@@ -1,3 +1,11 @@
+# Phase 14 — dashboard and workspace navigation increment (verified)
+
+Moved existing workspace destinations from the end of dashboard activity to a responsive section directly below the dashboard controls. Cards retain the authorized workspace links, show the current member role and keyboard-focus outline, and follow the existing workspace scope filter. No API, authentication, route, role check or write behavior changed. Existing viewer restrictions and owner/editor document creation controls remain unchanged.
+
+Dashboard browser journey passes 6/6 on disposable local services with fixture identities. It covers both themes at 1440/390, keyboard navigation into a workspace and active workspace context in desktop sidebar/mobile drawer, plus filtering, dialog, error, retry, viewer and empty-account states. Twenty-two new screenshots and axe reports are stored under [dashboard navigation evidence](ui/after/dashboard/phase14-navigation/); accepted screenshot baselines were left intact. Axe reported zero violations; 12 `aria-hidden-focus` and 14 `color-contrast` findings remain automated-incomplete and require manual review.
+
+Frontend gates pass: lint, format, strict types, 9 Node tests, 34 component files / 159 tests, coverage comparison and production build in the permitted subprocess context. Pinned Semgrep passes with zero findings across 280 targets; it recorded five partial-parsing warnings in unrelated existing files. See [verification](quality/phase14-dashboard/README.md). Phase 14 remains in progress; connected-work detail, inbox, settings and manual accessibility review remain. No Phase 15 work started.
+
 # Phase 14 — Premium document editor UI increment (verified)
 
 Refined the existing document editor header and toolbar without changing Yjs/CRDT, persistence, auth, presence, cursor or command protocols. The editable title and Markdown/PDF exports now share a responsive document header; sync/local-draft/author/collaborator state is grouped with a divider; the content aligns with its heading and uses a readable 72ch maximum width; the AI action is an accessible icon control in the existing grouped toolbar, which now fits on one row at390px. The selection-formatting floating controls and export controls now have meaningful group roles. The loading, error, empty and read-only state behavior remains unchanged.

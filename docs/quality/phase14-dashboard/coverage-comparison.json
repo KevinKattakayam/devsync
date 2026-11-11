@@ -1,0 +1,11 @@
+{
+  "service": "frontend",
+  "status": "passed",
+  "baseline": "tools/ci/coverage-baseline.json",
+  "metrics": {
+    "statements": 56.44,
+    "branches": 49.56,
+    "functions": 51.12,
+    "lines": 57.8
+  }
+}
