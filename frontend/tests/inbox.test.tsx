@@ -51,15 +51,42 @@ afterEach(() => {
 it('shows recorded assignments and toggles individual read state', async () => {
   render(<Inbox workspaceId="one" />);
   expect(await screen.findByText(event.message)).toBeTruthy();
+  expect(screen.getByRole('article', { name: `Assigned task: ${event.message}` })).toBeTruthy();
+  expect(screen.getByRole('heading', { name: 'Your activity' })).toBeTruthy();
+  expect(screen.getByRole('time').getAttribute('dateTime')).toBe(event.recordedAt);
   expect(screen.getByText('Unread')).toBeTruthy();
   expect(screen.getByRole('link', { name: /Open task board/ }).getAttribute('href')).toBe(
     '/workspace/one/kanban',
   );
   mocks.setRead.mockResolvedValue({ read: true });
   mocks.inbox.mockResolvedValue({ ...page, items: [{ ...event, read: true }] });
-  await userEvent.click(screen.getByRole('button', { name: /Mark read/ }));
+  const markRead = screen.getByRole('button', { name: /Mark read/ });
+  markRead.focus();
+  await userEvent.keyboard('{Enter}');
   expect(mocks.setRead).toHaveBeenCalledWith('one', 'event', true);
   expect(await screen.findByText('Read')).toBeTruthy();
+});
+it('explains a disabled digest and provides a route to its existing settings', async () => {
+  mocks.preference.mockResolvedValue({ enabled: false, revision: 4 });
+  render(<Inbox workspaceId="one" />);
+  expect(await screen.findByRole('heading', { name: 'Your inbox is paused' })).toBeTruthy();
+  expect(screen.getByRole('link', { name: 'Open digest settings' }).getAttribute('href')).toBe(
+    '/workspace/one/digest',
+  );
+});
+it('shows a useful caught-up state when all visible event sources are empty', async () => {
+  mocks.inbox.mockResolvedValue({ ...page, items: [] });
+  render(<Inbox workspaceId="one" />);
+  expect(await screen.findByRole('heading', { name: 'You’re all caught up' })).toBeTruthy();
+  expect(screen.queryByRole('list', { name: 'Inbox events' })).toBeNull();
+});
+it('offers an explicit retry after an inbox request fails', async () => {
+  mocks.preference.mockRejectedValueOnce(new Error('temporary network failure'));
+  render(<Inbox workspaceId="one" />);
+  expect(await screen.findByRole('alert')).toBeTruthy();
+  mocks.preference.mockResolvedValue({ enabled: true, revision: 1 });
+  await userEvent.click(screen.getByRole('button', { name: 'Retry inbox' }));
+  expect(await screen.findByText(event.message)).toBeTruthy();
 });
 it('hides cached activity on reconnection and denies stale responses when access is removed', async () => {
   render(<Inbox workspaceId="one" />);

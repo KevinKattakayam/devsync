@@ -2,6 +2,7 @@
 import { useEffect, useState, type FormEvent } from 'react';
 import { isAxiosError } from 'axios';
 import { digestApi, type InboxDeliveryPreference } from '@/lib/async-digest';
+import { Button, Input } from '@/components/ui';
 
 const timeText = (value: number | null) =>
   value === null
@@ -18,7 +19,7 @@ export function InboxPreferences({
 }) {
   const [value, setValue] = useState<InboxDeliveryPreference>();
   const [status, setStatus] = useState('');
-  const [busy, setBusy] = useState(false);
+  const [busy, setBusy] = useState<'save' | 'preview' | null>(null);
   const [preview, setPreview] = useState<{
     batches: { activityIds: string[]; eligibleAt: string }[];
     nextCursor: string | null;
@@ -47,7 +48,7 @@ export function InboxPreferences({
   async function save(event: FormEvent) {
     event.preventDefault();
     if (!value) return;
-    setBusy(true);
+    setBusy('save');
     setStatus('');
     try {
       await digestApi.saveNotificationPreferences(workspaceId, value);
@@ -58,11 +59,11 @@ export function InboxPreferences({
         onAccessLost();
       setStatus('Could not save preferences. Check your timezone, quiet hours and access.');
     } finally {
-      setBusy(false);
+      setBusy(null);
     }
   }
   async function previewBatches() {
-    setBusy(true);
+    setBusy('preview');
     setStatus('');
     try {
       setPreview(await digestApi.batchPreview(workspaceId));
@@ -72,95 +73,117 @@ export function InboxPreferences({
       setPreview(undefined);
       setStatus('Could not preview batches. Check current access and retry.');
     } finally {
-      setBusy(false);
+      setBusy(null);
     }
   }
   return (
-    <details className="space-y-3">
-      <summary className="cursor-pointer">Notification scheduling preferences</summary>
-      <p className="text-sm">
+    <details className="rounded-lg border border-border bg-card p-4 sm:p-5">
+      <summary className="w-fit cursor-pointer rounded-sm text-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring">
+        Notification scheduling preferences
+      </summary>
+      <p className="mt-3 max-w-3xl text-sm leading-6 text-muted-foreground">
         These settings are saved for future delivery. No email, push, or scheduled delivery is
         active.
       </p>
       {value && (
-        <form onSubmit={save} className="space-y-3">
-          <label className="block">
-            Time zone{' '}
-            <input
-              className="border"
-              value={value.timezone}
-              maxLength={100}
-              required
-              onChange={(event) => setValue({ ...value, timezone: event.target.value })}
-            />
-          </label>
-          <label className="block">
-            Quiet hours start{' '}
-            <input
-              type="time"
-              className="border"
-              value={timeText(value.quietStart)}
-              onChange={(event) => setValue({ ...value, quietStart: minutes(event.target.value) })}
-            />
-          </label>
-          <label className="block">
-            Quiet hours end{' '}
-            <input
-              type="time"
-              className="border"
-              value={timeText(value.quietEnd)}
-              onChange={(event) => setValue({ ...value, quietEnd: minutes(event.target.value) })}
-            />
-          </label>
-          <label className="block">
-            Batch interval{' '}
-            <select
-              className="border"
-              value={value.batchMinutes}
-              onChange={(event) => {
-                const interval = Number(event.target.value);
-                if (interval === 15 || interval === 60 || interval === 1440)
-                  setValue({ ...value, batchMinutes: interval });
-              }}
-            >
-              <option value={15}>15 minutes</option>
-              <option value={60}>1 hour</option>
-              <option value={1440}>1 day</option>
-            </select>
-          </label>
-          <button type="submit" disabled={busy} className="underline">
+        <form onSubmit={save} className="mt-4 space-y-4">
+          <fieldset disabled={busy !== null} className="grid gap-4 sm:grid-cols-2">
+            <legend className="sr-only">Notification scheduling preferences</legend>
+            <label className="block space-y-2 text-sm font-medium">
+              Time zone
+              <Input
+                className="font-normal"
+                value={value.timezone}
+                maxLength={100}
+                required
+                onChange={(event) => setValue({ ...value, timezone: event.target.value })}
+              />
+            </label>
+            <label className="block space-y-2 text-sm font-medium">
+              Quiet hours start
+              <Input
+                type="time"
+                className="font-normal"
+                value={timeText(value.quietStart)}
+                onChange={(event) =>
+                  setValue({ ...value, quietStart: minutes(event.target.value) })
+                }
+              />
+            </label>
+            <label className="block space-y-2 text-sm font-medium">
+              Quiet hours end
+              <Input
+                type="time"
+                className="font-normal"
+                value={timeText(value.quietEnd)}
+                onChange={(event) => setValue({ ...value, quietEnd: minutes(event.target.value) })}
+              />
+            </label>
+            <label className="block space-y-2 text-sm font-medium">
+              Batch interval
+              <select
+                className="ui-input font-normal"
+                value={value.batchMinutes}
+                onChange={(event) => {
+                  const interval = Number(event.target.value);
+                  if (interval === 15 || interval === 60 || interval === 1440)
+                    setValue({ ...value, batchMinutes: interval });
+                }}
+              >
+                <option value={15}>15 minutes</option>
+                <option value={60}>1 hour</option>
+                <option value={1440}>1 day</option>
+              </select>
+            </label>
+          </fieldset>
+          <Button type="submit" pending={busy === 'save'} disabled={busy !== null}>
             Save preferences
-          </button>
+          </Button>
         </form>
       )}
+      {!value && !status && (
+        <p role="status" className="mt-4 text-sm">
+          Loading preferences…
+        </p>
+      )}
       {value && (
-        <button
+        <Button
           type="button"
-          disabled={busy}
+          variant="secondary"
+          pending={busy === 'preview'}
+          disabled={busy !== null}
+          className="mt-3"
           onClick={() => void previewBatches()}
-          className="underline"
         >
           Preview batch windows
-        </button>
+        </Button>
       )}
       {preview && (
-        <div>
-          <p>
+        <div role="status" aria-live="polite" className="mt-4 rounded-md bg-secondary p-4">
+          <p className="text-sm leading-6">
             Preview only, based on saved preferences and the first page of unread activity.
             Automation failures are not included; no delivery is scheduled.
           </p>
-          <ol>
-            {preview.batches.map((batch, index) => (
-              <li key={`${batch.eligibleAt}:${index}`}>
-                {batch.activityIds.length} events eligible at{' '}
-                <time dateTime={batch.eligibleAt}>{batch.eligibleAt}</time>
-              </li>
-            ))}
-          </ol>
+          {!preview.batches.length ? (
+            <p className="mt-2 text-sm text-muted-foreground">No activity batches are eligible.</p>
+          ) : (
+            <ol className="mt-3 space-y-2 text-sm">
+              {preview.batches.map((batch, index) => (
+                <li key={`${batch.eligibleAt}:${index}`} className="flex flex-wrap gap-x-1">
+                  <span>{batch.activityIds.length} events eligible at</span>{' '}
+                  <time dateTime={batch.eligibleAt}>{batch.eligibleAt}</time>
+                </li>
+              ))}
+            </ol>
+          )}
           {preview.nextCursor && <p>More events are available in later pages.</p>}
         </div>
       )}
-      {status && <p role="status">{status}</p>}
+      {status && (
+        <p role="status" aria-live="polite" className="mt-3 text-sm">
+          {status}
+        </p>
+      )}
     </details>
   );
 }
