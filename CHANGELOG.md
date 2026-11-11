@@ -6,6 +6,11 @@ Added accessible authenticated controls for Markdown import, document Markdown/P
 
 Final acceptance review passed the original Phase 13 definition of done based on committed Markdown, PDF, task CSV and workspace ZIP workflows and their recorded backend/frontend tests. Deliberately restricted rich text, archive restore/import, archive encryption/redaction and account-wide export/erasure remain documented non-blocking limitations. The browser journey used fixture identities, not real Clerk accounts, and confirms download initiation only. See [acceptance matrix](docs/quality/phase13-acceptance/README.md). No Phase 14 work, push or deployment occurred.
 
+# Phase 14 — inbox and notification UI
+
+- Reworked existing inbox hierarchy, notification cards, read/unread labels, timestamps, preference controls and loading/empty/error states. Kept the digest-backed API and delivery semantics unchanged; did not add priority or delivery claims absent from the event contract.
+- Added component/browser regression coverage and 14 dark/light responsive screenshots/axe reports. Frontend gates, coverage baseline, backend lint/type checks and pinned Semgrep pass. Manual screen-reader/contrast review remains; see `docs/quality/phase14-inbox/README.md`.
+
 # Phase 14 — connected-work detail UI
 
 - Improved decision receipt source context and execution evidence cards, including relationship type, timestamps and provenance. Kept human assertions distinct from signed webhook records, with explicit no-deployment-inference wording.
