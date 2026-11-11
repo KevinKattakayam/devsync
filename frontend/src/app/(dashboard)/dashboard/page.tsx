@@ -44,6 +44,49 @@ function Panel({
     </section>
   );
 }
+function WorkspaceNavigation({ workspaces }: { workspaces: WorkspaceOverview[] }) {
+  if (workspaces.length === 0) return null;
+  return (
+    <section className="mb-8" aria-labelledby="dashboard-workspaces-title">
+      <div className="mb-3 flex flex-wrap items-baseline justify-between gap-2">
+        <h2 id="dashboard-workspaces-title" className="text-sm font-semibold">
+          Your workspaces
+        </h2>
+        <p className="text-xs text-muted-foreground">
+          {workspaces.length} {workspaces.length === 1 ? 'workspace' : 'workspaces'} in this view
+        </p>
+      </div>
+      <nav aria-label="Your workspaces">
+        <ul className="grid min-w-0 gap-2 sm:grid-cols-2">
+          {workspaces.map(({ workspace }) => (
+            <li key={workspace.id} className="min-w-0">
+              <Link
+                href={`/workspace/${workspace.id}`}
+                aria-label={`Open ${workspace.name}, ${workspace.role?.toLowerCase() || 'member'}`}
+                className="group flex min-h-16 min-w-0 items-center gap-3 rounded-lg bg-card px-4 py-3 hover:bg-secondary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+              >
+                <Folder
+                  aria-hidden="true"
+                  className="size-4 shrink-0 text-muted-foreground group-hover:text-foreground"
+                />
+                <span className="min-w-0 flex-1 truncate text-sm font-medium">
+                  {workspace.name}
+                </span>
+                <Badge className="shrink-0" tone="neutral">
+                  {workspace.role?.toLowerCase() || 'member'}
+                </Badge>
+                <ArrowUpRight
+                  aria-hidden="true"
+                  className="size-4 shrink-0 text-muted-foreground group-hover:text-foreground"
+                />
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </section>
+  );
+}
 interface Draft {
   receipt: string;
   workspace: WorkspaceOverview['workspace'];
@@ -257,6 +300,7 @@ function Dashboard() {
           Document creation is available in workspaces where you are an owner or editor.
         </p>
       )}
+      <WorkspaceNavigation workspaces={visible} />
       {failures.length > 0 && (
         <div className="mb-8">
           <DashboardError
@@ -456,31 +500,6 @@ function Dashboard() {
                     ))}
                   </ol>
                 )}
-              </Panel>
-              <Panel title="Workspaces">
-                <ul className="space-y-1">
-                  {data.workspaces.map(({ workspace }) => (
-                    <li key={workspace.id}>
-                      <Link
-                        href={`/workspace/${workspace.id}`}
-                        className="flex min-w-0 items-center gap-3 rounded-lg px-3 py-3 hover:bg-secondary"
-                      >
-                        <Folder
-                          aria-hidden="true"
-                          className="size-4 shrink-0 text-muted-foreground"
-                        />
-                        <span className="min-w-0 flex-1 truncate text-sm">{workspace.name}</span>
-                        <span className="text-xs capitalize text-muted-foreground">
-                          {workspace.role?.toLowerCase()}
-                        </span>
-                        <ArrowUpRight
-                          aria-hidden="true"
-                          className="size-3.5 shrink-0 text-muted-foreground"
-                        />
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
               </Panel>
             </aside>
           </div>

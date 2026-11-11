@@ -11,7 +11,9 @@ declare global {
 }
 const api = 'http://127.0.0.1:5501/api';
 const workspace = 'devsync-sample';
-const pass = process.env.E2E_DASHBOARD_PASS === 'final' ? 'final' : 'initial';
+const requestedPass = process.env.E2E_DASHBOARD_PASS;
+const pass =
+  requestedPass && /^[a-z0-9][a-z0-9-]*$/i.test(requestedPass) ? requestedPass : 'initial';
 const output = resolve(__dirname, '../../../docs/ui/after/dashboard', pass);
 
 test.beforeAll(async ({ browser }) => {
@@ -119,7 +121,22 @@ for (const theme of ['dark', 'light'] as const)
         await expect(
           page.getByRole('link', { name: /Review workspace permissions/ }),
         ).toBeVisible();
+        const workspaceLink = page
+          .getByRole('navigation', { name: 'Your workspaces' })
+          .getByRole('link', { name: /^Open Sample workspace,/ });
+        await expect(workspaceLink).toHaveAttribute('href', `/workspace/${workspace}`);
         await capture(page, theme, width, 'ready');
+        await workspaceLink.focus();
+        await expect(workspaceLink).toBeFocused();
+        await page.keyboard.press('Enter');
+        await expect(page).toHaveURL(new RegExp(`/workspace/${workspace}$`));
+        if (width < 768) await page.getByRole('button', { name: 'Open navigation' }).click();
+        await expect(
+          page.getByRole('button', { name: 'Switch workspace: Sample workspace' }),
+        ).toBeVisible();
+        if (width < 768) await page.keyboard.press('Escape');
+        await page.goto('/dashboard');
+        await expect(page.getByRole('link', { name: /Release checklist/ })).toBeVisible();
         await page.getByRole('combobox', { name: 'Dashboard workspace' }).click();
         await page.getByRole('option', { name: 'Sample workspace', exact: true }).click();
         await expect(
