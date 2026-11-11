@@ -1,3 +1,8 @@
+# Phase 14 — acceptance review
+
+- Reviewed the recorded UI evidence and incomplete axe checks; Phase 14 remains open pending manual accessibility review and resolution of large-list virtualization.
+- Changed workspace activity text to semantic foreground tokens after a light-theme contrast finding; a dedicated browser contrast recheck remains outstanding.
+
 # Phase 14 — workspace settings UI
 
 - Grouped existing workspace settings by usage/automation, member access/invitations, and owner-only connections/lifecycle; clarified role boundaries and added searchable owner panels with keyboard-visible navigation. Preserved APIs, role checks and feature gates.

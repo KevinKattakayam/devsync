@@ -1,3 +1,7 @@
+# Phase 14 — acceptance review (incomplete)
+
+Reviewed the recorded UI journeys and representative incomplete axe results. Phase 14 remains open: manual screen-reader and contrast review, a dedicated browser recheck of the workspace activity contrast correction, and the original large-list virtualization requirement remain outstanding. The fixture evidence does not establish live Clerk/provider acceptance. Workspace activity author and message colors now use semantic foreground tokens. Full frontend gates, coverage comparison and pinned Semgrep passed; see [acceptance matrix](quality/phase14-acceptance/README.md). No Phase 15 work started.
+
 # Phase 14 — workspace settings UI increment (verified)
 
 Grouped existing workspace settings by purpose (usage/feature-flagged automation, members/invitations, owner-only GitHub evidence/lifecycle), clarified role and invitation behavior, added owner-only integration/lifecycle search and keyboard-visible anchor navigation, and fixed the matching-feature empty state when automation is enabled. Existing API calls, permission gates, validation, confirmation flows, feature flags and persistence were retained; account-level settings and backend behavior were not changed.
