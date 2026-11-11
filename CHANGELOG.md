@@ -1,3 +1,8 @@
+# Phase 14 — workspace settings UI
+
+- Grouped existing workspace settings by usage/automation, member access/invitations, and owner-only connections/lifecycle; clarified role boundaries and added searchable owner panels with keyboard-visible navigation. Preserved APIs, role checks and feature gates.
+- Added component and fixture-browser coverage plus 40 responsive/theme screenshots and axe reports. Frontend gates, coverage comparison and pinned Semgrep passed. Twenty axe checks remain incomplete for manual review; see `docs/quality/phase14-settings-ui/README.md`.
+
 # Phase 14 — AI assistant UI
 
 - Refined the feature-flagged grounded preview with clearer citation and source presentation, explicit uncertainty and unsaved-draft states, accessible loading/errors, retry and viewer-denial messaging. Preserved source reauthorization, backend contracts and write guardrails.

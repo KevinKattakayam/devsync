@@ -1,0 +1,414 @@
+{
+  "reports": [
+    {
+      "file": "dark-1440-error-injected.json",
+      "violations": 0,
+      "incomplete": [],
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "mainWidth": 1200,
+      "mainScrollWidth": 1200
+    },
+    {
+      "file": "dark-1440-invitations-empty.json",
+      "violations": 0,
+      "incomplete": [
+        "color-contrast"
+      ],
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "mainWidth": 1200,
+      "mainScrollWidth": 1200
+    },
+    {
+      "file": "dark-1440-invite-created.json",
+      "violations": 0,
+      "incomplete": [
+        "color-contrast"
+      ],
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "mainWidth": 1200,
+      "mainScrollWidth": 1200
+    },
+    {
+      "file": "dark-1440-loading.json",
+      "violations": 0,
+      "incomplete": [],
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "mainWidth": 1200,
+      "mainScrollWidth": 1200
+    },
+    {
+      "file": "dark-1440-ready.json",
+      "violations": 0,
+      "incomplete": [],
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "mainWidth": 1200,
+      "mainScrollWidth": 1200
+    },
+    {
+      "file": "dark-1440-remove-dialog.json",
+      "violations": 0,
+      "incomplete": [
+        "aria-hidden-focus"
+      ],
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "mainWidth": 1200,
+      "mainScrollWidth": 1200
+    },
+    {
+      "file": "dark-1440-revoke-dialog.json",
+      "violations": 0,
+      "incomplete": [
+        "aria-hidden-focus"
+      ],
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "mainWidth": 1200,
+      "mainScrollWidth": 1200
+    },
+    {
+      "file": "dark-1440-role-dialog.json",
+      "violations": 0,
+      "incomplete": [
+        "aria-hidden-focus"
+      ],
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "mainWidth": 1200,
+      "mainScrollWidth": 1200
+    },
+    {
+      "file": "dark-1440-search-empty.json",
+      "violations": 0,
+      "incomplete": [],
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "mainWidth": 1200,
+      "mainScrollWidth": 1200
+    },
+    {
+      "file": "dark-360-editor-read-only.json",
+      "violations": 0,
+      "incomplete": [],
+      "viewport": 360,
+      "pageWidth": 360,
+      "mainWidth": 360,
+      "mainScrollWidth": 360
+    },
+    {
+      "file": "dark-360-viewer-read-only.json",
+      "violations": 0,
+      "incomplete": [],
+      "viewport": 360,
+      "pageWidth": 360,
+      "mainWidth": 360,
+      "mainScrollWidth": 360
+    },
+    {
+      "file": "dark-390-error-injected.json",
+      "violations": 0,
+      "incomplete": [],
+      "viewport": 390,
+      "pageWidth": 390,
+      "mainWidth": 390,
+      "mainScrollWidth": 390
+    },
+    {
+      "file": "dark-390-invitations-empty.json",
+      "violations": 0,
+      "incomplete": [
+        "color-contrast"
+      ],
+      "viewport": 390,
+      "pageWidth": 390,
+      "mainWidth": 390,
+      "mainScrollWidth": 390
+    },
+    {
+      "file": "dark-390-invite-created.json",
+      "violations": 0,
+      "incomplete": [
+        "color-contrast"
+      ],
+      "viewport": 390,
+      "pageWidth": 390,
+      "mainWidth": 390,
+      "mainScrollWidth": 390
+    },
+    {
+      "file": "dark-390-loading.json",
+      "violations": 0,
+      "incomplete": [],
+      "viewport": 390,
+      "pageWidth": 390,
+      "mainWidth": 390,
+      "mainScrollWidth": 390
+    },
+    {
+      "file": "dark-390-ready.json",
+      "violations": 0,
+      "incomplete": [],
+      "viewport": 390,
+      "pageWidth": 390,
+      "mainWidth": 390,
+      "mainScrollWidth": 390
+    },
+    {
+      "file": "dark-390-remove-dialog.json",
+      "violations": 0,
+      "incomplete": [
+        "aria-hidden-focus"
+      ],
+      "viewport": 390,
+      "pageWidth": 390,
+      "mainWidth": 390,
+      "mainScrollWidth": 390
+    },
+    {
+      "file": "dark-390-revoke-dialog.json",
+      "violations": 0,
+      "incomplete": [
+        "aria-hidden-focus"
+      ],
+      "viewport": 390,
+      "pageWidth": 390,
+      "mainWidth": 390,
+      "mainScrollWidth": 390
+    },
+    {
+      "file": "dark-390-role-dialog.json",
+      "violations": 0,
+      "incomplete": [
+        "aria-hidden-focus"
+      ],
+      "viewport": 390,
+      "pageWidth": 390,
+      "mainWidth": 390,
+      "mainScrollWidth": 390
+    },
+    {
+      "file": "dark-390-search-empty.json",
+      "violations": 0,
+      "incomplete": [],
+      "viewport": 390,
+      "pageWidth": 390,
+      "mainWidth": 390,
+      "mainScrollWidth": 390
+    },
+    {
+      "file": "light-1440-error-injected.json",
+      "violations": 0,
+      "incomplete": [],
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "mainWidth": 1200,
+      "mainScrollWidth": 1200
+    },
+    {
+      "file": "light-1440-invitations-empty.json",
+      "violations": 0,
+      "incomplete": [
+        "color-contrast"
+      ],
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "mainWidth": 1200,
+      "mainScrollWidth": 1200
+    },
+    {
+      "file": "light-1440-invite-created.json",
+      "violations": 0,
+      "incomplete": [
+        "color-contrast"
+      ],
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "mainWidth": 1200,
+      "mainScrollWidth": 1200
+    },
+    {
+      "file": "light-1440-loading.json",
+      "violations": 0,
+      "incomplete": [],
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "mainWidth": 1200,
+      "mainScrollWidth": 1200
+    },
+    {
+      "file": "light-1440-ready.json",
+      "violations": 0,
+      "incomplete": [],
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "mainWidth": 1200,
+      "mainScrollWidth": 1200
+    },
+    {
+      "file": "light-1440-remove-dialog.json",
+      "violations": 0,
+      "incomplete": [
+        "aria-hidden-focus"
+      ],
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "mainWidth": 1200,
+      "mainScrollWidth": 1200
+    },
+    {
+      "file": "light-1440-revoke-dialog.json",
+      "violations": 0,
+      "incomplete": [
+        "aria-hidden-focus"
+      ],
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "mainWidth": 1200,
+      "mainScrollWidth": 1200
+    },
+    {
+      "file": "light-1440-role-dialog.json",
+      "violations": 0,
+      "incomplete": [
+        "aria-hidden-focus"
+      ],
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "mainWidth": 1200,
+      "mainScrollWidth": 1200
+    },
+    {
+      "file": "light-1440-search-empty.json",
+      "violations": 0,
+      "incomplete": [],
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "mainWidth": 1200,
+      "mainScrollWidth": 1200
+    },
+    {
+      "file": "light-360-editor-read-only.json",
+      "violations": 0,
+      "incomplete": [],
+      "viewport": 360,
+      "pageWidth": 360,
+      "mainWidth": 360,
+      "mainScrollWidth": 360
+    },
+    {
+      "file": "light-360-viewer-read-only.json",
+      "violations": 0,
+      "incomplete": [],
+      "viewport": 360,
+      "pageWidth": 360,
+      "mainWidth": 360,
+      "mainScrollWidth": 360
+    },
+    {
+      "file": "light-390-error-injected.json",
+      "violations": 0,
+      "incomplete": [],
+      "viewport": 390,
+      "pageWidth": 390,
+      "mainWidth": 390,
+      "mainScrollWidth": 390
+    },
+    {
+      "file": "light-390-invitations-empty.json",
+      "violations": 0,
+      "incomplete": [
+        "color-contrast"
+      ],
+      "viewport": 390,
+      "pageWidth": 390,
+      "mainWidth": 390,
+      "mainScrollWidth": 390
+    },
+    {
+      "file": "light-390-invite-created.json",
+      "violations": 0,
+      "incomplete": [
+        "color-contrast"
+      ],
+      "viewport": 390,
+      "pageWidth": 390,
+      "mainWidth": 390,
+      "mainScrollWidth": 390
+    },
+    {
+      "file": "light-390-loading.json",
+      "violations": 0,
+      "incomplete": [],
+      "viewport": 390,
+      "pageWidth": 390,
+      "mainWidth": 390,
+      "mainScrollWidth": 390
+    },
+    {
+      "file": "light-390-ready.json",
+      "violations": 0,
+      "incomplete": [],
+      "viewport": 390,
+      "pageWidth": 390,
+      "mainWidth": 390,
+      "mainScrollWidth": 390
+    },
+    {
+      "file": "light-390-remove-dialog.json",
+      "violations": 0,
+      "incomplete": [
+        "aria-hidden-focus"
+      ],
+      "viewport": 390,
+      "pageWidth": 390,
+      "mainWidth": 390,
+      "mainScrollWidth": 390
+    },
+    {
+      "file": "light-390-revoke-dialog.json",
+      "violations": 0,
+      "incomplete": [
+        "aria-hidden-focus"
+      ],
+      "viewport": 390,
+      "pageWidth": 390,
+      "mainWidth": 390,
+      "mainScrollWidth": 390
+    },
+    {
+      "file": "light-390-role-dialog.json",
+      "violations": 0,
+      "incomplete": [
+        "aria-hidden-focus"
+      ],
+      "viewport": 390,
+      "pageWidth": 390,
+      "mainWidth": 390,
+      "mainScrollWidth": 390
+    },
+    {
+      "file": "light-390-search-empty.json",
+      "violations": 0,
+      "incomplete": [],
+      "viewport": 390,
+      "pageWidth": 390,
+      "mainWidth": 390,
+      "mainScrollWidth": 390
+    }
+  ],
+  "reportCount": 40,
+  "screenshotCount": 40,
+  "violations": 0,
+  "incompleteCount": 20,
+  "incompleteRuleCounts": {
+    "color-contrast": 8,
+    "aria-hidden-focus": 12
+  },
+  "pageOverflowReports": 0,
+  "mainOverflowReports": 0
+}
