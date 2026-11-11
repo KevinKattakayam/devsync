@@ -1,0 +1,65 @@
+{
+  "scope": "AI assistant dialog only; full-page screenshots and horizontal overflow checks are also retained",
+  "reports": [
+    {
+      "file": "dark-1440-preview-fixture.json",
+      "viewport": 1440,
+      "scrollWidth": 1440,
+      "violations": 0,
+      "incomplete": 0
+    },
+    {
+      "file": "dark-1440-unavailable-fixture.json",
+      "viewport": 1440,
+      "scrollWidth": 1440,
+      "violations": 0,
+      "incomplete": 1
+    },
+    {
+      "file": "dark-390-preview-fixture.json",
+      "viewport": 390,
+      "scrollWidth": 390,
+      "violations": 0,
+      "incomplete": 0
+    },
+    {
+      "file": "dark-390-unavailable-fixture.json",
+      "viewport": 390,
+      "scrollWidth": 390,
+      "violations": 0,
+      "incomplete": 0
+    },
+    {
+      "file": "light-1440-preview-fixture.json",
+      "viewport": 1440,
+      "scrollWidth": 1440,
+      "violations": 0,
+      "incomplete": 0
+    },
+    {
+      "file": "light-1440-unavailable-fixture.json",
+      "viewport": 1440,
+      "scrollWidth": 1440,
+      "violations": 0,
+      "incomplete": 0
+    },
+    {
+      "file": "light-390-preview-fixture.json",
+      "viewport": 390,
+      "scrollWidth": 390,
+      "violations": 0,
+      "incomplete": 0
+    },
+    {
+      "file": "light-390-unavailable-fixture.json",
+      "viewport": 390,
+      "scrollWidth": 390,
+      "violations": 0,
+      "incomplete": 0
+    }
+  ],
+  "reportCount": 8,
+  "violations": 0,
+  "incomplete": 1,
+  "horizontalOverflowReports": 0
+}

@@ -1,3 +1,8 @@
+# Phase 14 — AI assistant UI
+
+- Refined the feature-flagged grounded preview with clearer citation and source presentation, explicit uncertainty and unsaved-draft states, accessible loading/errors, retry and viewer-denial messaging. Preserved source reauthorization, backend contracts and write guardrails.
+- Added component/browser tests, fixture screenshots and axe evidence in both themes and desktop/mobile widths. Frontend gates, coverage comparison and pinned Semgrep passed. One dialog color-contrast assessment and manual accessibility/provider acceptance remain; see `docs/quality/phase14-ai-assistant/README.md`.
+
 # Phase 13 frontend import/export controls
 
 Added accessible authenticated controls for Markdown import, document Markdown/PDF downloads, task CSV import/export and workspace archive download using the existing API client. Current workspace role controls visibility; task and Markdown imports require owner/editor, exports follow existing member/source access, and the archive requires an explicit privacy confirmation. Added bounded UTF-8 file reads, stable request idempotency for selected imports, loading/error feedback and explicit download-initiated wording. Verification passed: 34 component files / 156 tests, 9 Node tests, frontend lint/format/types/build, coverage comparison, OpenAPI, pinned scoped scans and one Chrome fixture journey. Details: [verification](docs/quality/import-export-controls/README.md). No backend API or dependency changed.
