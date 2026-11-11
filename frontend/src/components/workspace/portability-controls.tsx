@@ -244,7 +244,7 @@ export function DocumentExportControls({
   }
 
   return (
-    <div className="space-y-2" aria-label="Document exports">
+    <div className="space-y-2" role="group" aria-label="Document exports">
       <div className="flex flex-wrap gap-2">
         <Button
           variant="secondary"

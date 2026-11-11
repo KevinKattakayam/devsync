@@ -11,11 +11,22 @@ import {
   Plus,
   ChevronDown,
   Copy,
+  Sparkles,
 } from 'lucide-react';
 import { Button, IconButton, DropdownMenu, Select, toast } from '@/components/ui';
 import { blockCommands, matchingBlocks, slashAtSelection } from './commands';
 
-export function EditorTools({ editor, canWrite }: { editor: Editor; canWrite: boolean }) {
+export function EditorTools({
+  editor,
+  canWrite,
+  onOpenAssistant,
+  assistantBusy,
+}: {
+  editor: Editor;
+  canWrite: boolean;
+  onOpenAssistant: () => void;
+  assistantBusy: boolean;
+}) {
   const listId = useId();
   const [active, setActive] = useState(0);
   const [dismissed, setDismissed] = useState('');
@@ -160,7 +171,8 @@ export function EditorTools({ editor, canWrite }: { editor: Editor; canWrite: bo
     <div ref={anchor} className="relative min-w-0" data-editor-tools>
       {canWrite && (
         <div
-          className="mb-6 flex flex-wrap items-center justify-between gap-2"
+          data-editor-toolbar
+          className="mb-5 flex min-w-0 flex-wrap items-center gap-1 rounded-lg border border-border bg-card p-1.5"
           role="group"
           aria-label="Document tools"
         >
@@ -185,7 +197,16 @@ export function EditorTools({ editor, canWrite }: { editor: Editor; canWrite: bo
             <summary className="cursor-pointer rounded-md px-3 py-2 text-sm">Formatting</summary>
             <div className="ui-floating absolute right-0 z-20 p-1">{format}</div>
           </details>
-          <div className="ml-auto flex gap-1">
+          <div className="ml-auto flex items-center gap-1">
+            <IconButton
+              label="AI Assistant"
+              title="AI Assistant"
+              pending={assistantBusy}
+              disabled={assistantBusy}
+              onClick={onOpenAssistant}
+            >
+              <Sparkles className="size-4" />
+            </IconButton>
             <IconButton
               label="Undo document change"
               title="Undo"
@@ -292,6 +313,7 @@ export function EditorTools({ editor, canWrite }: { editor: Editor; canWrite: bo
         <div
           className="ui-floating absolute z-20 max-w-full p-1"
           style={position}
+          role="group"
           aria-label="Selection formatting"
         >
           {format}

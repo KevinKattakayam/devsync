@@ -27,7 +27,7 @@ import { CollaborationCursor } from '@/lib/tiptap-collaboration-cursor';
 import { useLocalFirstYDoc } from '@/lib/local-first-yjs';
 import { useCRDTGarbageCollector } from '@/hooks/use-crdt-garbage-collector';
 import { markdownToHtml } from '@/lib/markdown';
-import { Users, Sparkles } from 'lucide-react';
+import { Users } from 'lucide-react';
 import { Button, Dialog, DialogContent, Input, Skeleton } from '@/components/ui';
 import { EditorTools } from '@/components/editor/tools';
 import { toast } from 'sonner';
@@ -310,14 +310,13 @@ function EditorInner({
 
   return (
     <>
-      {editor && <EditorTools editor={editor} canWrite={canWrite} />}
-      {canWrite && (
-        <div className="mb-4 flex justify-end">
-          <Button variant="ghost" disabled={aiLoading} onClick={() => setShowAiMenu(true)}>
-            <Sparkles aria-hidden="true" className="size-4" />
-            {aiLoading ? 'Generating…' : 'AI Assistant'}
-          </Button>
-        </div>
+      {editor && (
+        <EditorTools
+          editor={editor}
+          canWrite={canWrite}
+          onOpenAssistant={() => setShowAiMenu(true)}
+          assistantBusy={aiLoading}
+        />
       )}
       <Dialog open={showAiMenu && canWrite} onOpenChange={setShowAiMenu}>
         <DialogContent
@@ -585,24 +584,35 @@ function DocumentEditor({ workspaceId, docId }: { workspaceId: string; docId: st
           </Button>
         </div>
       )}
-      {/* Title */}
-      <input
-        aria-label="Document title"
-        readOnly={!canWrite || titleSaving || !doc}
-        type="text"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        onBlur={saveTitle}
-        className="block w-full min-w-0 text-[28px] leading-9 font-semibold text-foreground bg-transparent mb-2 placeholder:text-muted-foreground"
-        placeholder={loadError ? 'Document title unavailable' : 'Untitled'}
-        maxLength={200}
-      />
-      {doc && (
-        <div className="mb-4">
-          <DocumentExportControls documentId={docId} archived={doc.isArchived} />
+      <header className="mb-4 flex min-w-0 flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+        <div className="min-w-0 flex-1">
+          <label htmlFor="editor-document-title" className="sr-only">
+            Document title
+          </label>
+          <input
+            id="editor-document-title"
+            aria-label="Document title"
+            readOnly={!canWrite || titleSaving || !doc}
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            onBlur={saveTitle}
+            className="block w-full min-w-0 rounded-md border border-transparent bg-transparent px-0 py-1 text-2xl leading-tight font-semibold text-foreground placeholder:text-muted-foreground hover:border-border focus-visible:border-input sm:text-[28px]"
+            placeholder={loadError ? 'Document title unavailable' : 'Untitled'}
+            maxLength={200}
+          />
         </div>
-      )}
-      <div className="flex flex-wrap items-center gap-3 mb-6 text-xs text-muted-foreground">
+        {doc && (
+          <div className="shrink-0">
+            <DocumentExportControls documentId={docId} archived={doc.isArchived} />
+          </div>
+        )}
+      </header>
+      <div
+        role="group"
+        aria-label="Document status and collaborators"
+        className="mb-5 flex min-w-0 flex-wrap items-center gap-x-3 gap-y-2 border-b border-border pb-4 text-xs text-muted-foreground"
+      >
         <DocumentSyncStatus
           status={syncStatus}
           pending={pending || !localReady}
@@ -636,6 +646,7 @@ function DocumentEditor({ workspaceId, docId }: { workspaceId: string; docId: st
           </span>
         )}
         <span
+          aria-hidden="true"
           className={`w-1.5 h-1.5 rounded-full ml-1 ${
             connectionStatus === 'connected'
               ? 'bg-success'
