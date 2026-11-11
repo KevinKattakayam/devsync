@@ -34,6 +34,13 @@ The workspace Activity Stream filter buttons changed the visible filter but did 
 
 ## Verification
 
+### Browser runtime availability follow-up — 2026-11-12
+
+- `/usr/bin/docker` is installed and the active Docker context is `default`, targeting `unix:///var/run/docker.sock`.
+- `docker info --format 'server={{.ServerVersion}} os={{.OperatingSystem}}'` exited 1 with `permission denied while trying to connect to the Docker API at unix:///var/run/docker.sock`. The socket is `srw-rw----`, owned by `nobody:nogroup`; no permission or system configuration was changed.
+- `podman` and `nerdctl` are unavailable. The existing `backend/testing/run-browser.ts` starts PostgreSQL and Redis through Testcontainers, so the focused browser journey is not runnable in this environment without container API access.
+- No browser journey or axe scan was run in this follow-up; no new screenshot/report is claimed. The prior Playwright attempt stopped before browser startup with `Could not find a working container runtime strategy`.
+
 - Before-fix regression: `cd frontend && npm run test:components -- --run tests/activity-feed.test.tsx` — exit 1; the named filter group was absent.
 - After-fix focused ESLint, Prettier and component test — exit 0; 1 test passed.
 - `cd frontend && npm run lint` — exit 0.

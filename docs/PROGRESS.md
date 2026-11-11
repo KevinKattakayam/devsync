@@ -1,3 +1,7 @@
+# Phase 14 — browser accessibility environment check (blocked)
+
+Verified the local browser-test runtime without changing system configuration. `/usr/bin/docker` exists, but its default context points to `unix:///var/run/docker.sock` and `docker info` exits 1 with permission denied. The socket is `srw-rw----`, owned by `nobody:nogroup`; Podman and nerdctl are unavailable. The repository browser harness requires Testcontainers PostgreSQL and Redis, so the focused activity-filter browser journey and fresh axe scan remain blocked. No browser pass or screenshot is claimed. Full evidence and the exact diagnostic are in [Phase 14 accessibility review](quality/phase14-accessibility-review/README.md).
+
 # Phase 14 — final accessibility review (partial)
 
 Reviewed the Phase 14 dashboard, Kanban, document editor, connected-work, inbox, grounded assistant and settings evidence. Fixed one confirmed semantics gap in the production workspace activity feed: its mutually exclusive filter buttons had visual selection only. They now form a named filter group and expose the selected filter with `aria-pressed`. Added a component test for selection state, keyboard Enter activation and focus retention. The test first failed because the named group was absent; after the fix it passed.

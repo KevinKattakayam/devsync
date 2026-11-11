@@ -1,3 +1,8 @@
+# Phase 14 — browser accessibility runtime availability
+
+- Confirmed Docker CLI is installed but inaccessible: `docker info` is denied at `/var/run/docker.sock`; socket is `srw-rw----` owned by `nobody:nogroup`. Podman and nerdctl are unavailable. No privileges, services or system configuration were changed.
+- Testcontainers browser verification remains blocked; no new browser/axe results are claimed. Phase 14 remains incomplete.
+
 # Phase 14 — accessibility review: workspace activity filters
 
 - Added an accessible name to the workspace activity filter group and exposed the selected filter with `aria-pressed`; preserved native button keyboard behavior and filtering.
