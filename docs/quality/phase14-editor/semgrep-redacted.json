@@ -1,0 +1,85 @@
+{
+  "version": "1.145.0",
+  "results": [],
+  "errors": [],
+  "paths": {
+    "scanned": [
+      "frontend/src/app/(dashboard)/workspace/[id]/docs/[docId]/page.tsx",
+      "frontend/src/components/editor/tools.tsx",
+      "frontend/src/components/workspace/portability-controls.tsx"
+    ]
+  },
+  "time": {
+    "rules": [],
+    "rules_parse_time": 0.25353002548217773,
+    "profiling_times": {
+      "config_time": 1.4050681591033936,
+      "core_time": 1.3590452671051025,
+      "ignores_time": 0.00021219253540039062,
+      "total_time": 2.7647595405578613
+    },
+    "parsing_time": {
+      "total_time": 0,
+      "per_file_time": {
+        "mean": 0,
+        "std_dev": 0
+      },
+      "very_slow_stats": {
+        "time_ratio": 0,
+        "count_ratio": 0
+      },
+      "very_slow_files": []
+    },
+    "scanning_time": {
+      "total_time": 1.1021528244018555,
+      "per_file_time": {
+        "mean": 0.36738427480061847,
+        "std_dev": 0.003610269707009037
+      },
+      "very_slow_stats": {
+        "time_ratio": 0,
+        "count_ratio": 0
+      },
+      "very_slow_files": []
+    },
+    "matching_time": {
+      "total_time": 0,
+      "per_file_and_rule_time": {
+        "mean": 0,
+        "std_dev": 0
+      },
+      "very_slow_stats": {
+        "time_ratio": 0,
+        "count_ratio": 0
+      },
+      "very_slow_rules_on_files": []
+    },
+    "tainting_time": {
+      "total_time": 0,
+      "per_def_and_rule_time": {
+        "mean": 0,
+        "std_dev": 0
+      },
+      "very_slow_stats": {
+        "time_ratio": 0,
+        "count_ratio": 0
+      },
+      "very_slow_rules_on_defs": []
+    },
+    "fixpoint_timeouts": [],
+    "prefiltering": {
+      "project_level_time": 0,
+      "file_level_time": 0,
+      "rules_with_project_prefilters_ratio": 0,
+      "rules_with_file_prefilters_ratio": 1,
+      "rules_selected_ratio": 0.07657657657657657,
+      "rules_matched_ratio": 0.07657657657657657
+    },
+    "targets": [],
+    "total_bytes": 0,
+    "max_memory_bytes": 354248832
+  },
+  "engine_requested": "OSS",
+  "skipped_rules": [],
+  "profiling_results": []
+}

@@ -6,6 +6,11 @@ Added accessible authenticated controls for Markdown import, document Markdown/P
 
 Final acceptance review passed the original Phase 13 definition of done based on committed Markdown, PDF, task CSV and workspace ZIP workflows and their recorded backend/frontend tests. Deliberately restricted rich text, archive restore/import, archive encryption/redaction and account-wide export/erasure remain documented non-blocking limitations. The browser journey used fixture identities, not real Clerk accounts, and confirms download initiation only. See [acceptance matrix](docs/quality/phase13-acceptance/README.md). No Phase 14 work, push or deployment occurred.
 
+# Phase 14 — document editor UI
+
+- Reorganized the existing editor title, export actions, synchronization metadata and writing controls into a responsive header and single grouped toolbar. Aligned mobile editor content with the title and bounded desktop prose width; added missing group semantics for selection formatting and document exports.
+- Added component and browser coverage for keyboard toolbar access, focus visibility, responsive layout, existing editor commands and viewer restrictions. Captured new dark/light screenshots and axe reports without changing existing screenshot baselines. Full frontend gates and coverage comparison pass; Phase 14 remains in progress. See `docs/quality/phase14-editor/README.md`.
+
 # Phase 14 build diagnosis
 
 - Traced the Next `tsc --showConfig` parse error to restricted sandbox child-process spawning (`EPERM` with empty captured stdout). The unchanged frontend production build and full frontend gates pass when run in the permitted CI-equivalent process context; no dependency or application configuration change was needed.

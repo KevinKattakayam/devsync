@@ -1,0 +1,10 @@
+{
+  "reports": 40,
+  "violations": {},
+  "incompleteOccurrences": {
+    "aria-hidden-focus": 4,
+    "color-contrast": 21,
+    "link-in-text-block": 18
+  },
+  "manualReviewRequired": true
+}
