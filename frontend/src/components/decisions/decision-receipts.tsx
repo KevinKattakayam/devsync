@@ -231,25 +231,36 @@ export function Receipts({ workspaceId }: { workspaceId: string }) {
               <blockquote className="whitespace-pre-wrap border-l-2 border-input pl-4 text-sm leading-6">
                 {item.excerpt}
               </blockquote>
-              <div className="space-y-1 text-xs text-muted-foreground">
-                <p>
-                  Source:{' '}
-                  <Link
-                    className="text-primary underline underline-offset-4"
-                    href={`/workspace/${workspaceId}/${item.sourceKind === 'document' ? `docs/${item.sourceId}` : 'kanban'}`}
-                  >
-                    {item.sourceTitle}
-                  </Link>{' '}
-                  · {item.sourceKind}
-                </p>
-                <p className="break-all">Pinned source revision: {item.sourceRevision}</p>
-                <p>
-                  Proposed by {displayName(item.createdBy)}
-                  {item.acceptedAt
-                    ? ` · Accepted by ${displayName(item.acceptedBy)} on ${new Date(item.acceptedAt).toLocaleString()}`
-                    : ' · Awaiting owner acceptance'}
-                </p>
-              </div>
+              <section aria-label="Linked source" className="min-w-0 rounded-lg bg-secondary p-4">
+                <div className="flex flex-wrap items-center gap-2">
+                  <Badge>
+                    {item.sourceKind === 'document' ? 'Source document' : 'Source task'}
+                  </Badge>
+                  <span className="text-xs text-muted-foreground">
+                    Evidence attached to this decision
+                  </span>
+                </div>
+                <Link
+                  className="mt-2 inline-block max-w-full break-words text-sm font-medium text-primary underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+                  href={`/workspace/${encodeURIComponent(workspaceId)}/${item.sourceKind === 'document' ? `docs/${encodeURIComponent(item.sourceId)}` : 'kanban'}`}
+                  aria-label={
+                    item.sourceKind === 'document'
+                      ? `Open source document: ${item.sourceTitle}`
+                      : `Open task board for source: ${item.sourceTitle}`
+                  }
+                >
+                  {item.sourceTitle}
+                </Link>
+                <div className="mt-3 space-y-2 text-xs text-muted-foreground">
+                  <p className="break-all">Pinned source revision: {item.sourceRevision}</p>
+                  <p>
+                    Proposed by {displayName(item.createdBy)}
+                    {item.acceptedAt
+                      ? ` · Accepted by ${displayName(item.acceptedBy)} on ${new Date(item.acceptedAt).toLocaleString()}`
+                      : ' · Awaiting owner acceptance'}
+                  </p>
+                </div>
+              </section>
               {item.status !== 'DRAFT' && (
                 <ExecutionTimeline
                   workspaceId={workspaceId}

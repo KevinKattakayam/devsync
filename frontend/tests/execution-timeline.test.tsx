@@ -24,6 +24,9 @@ it('labels signed webhook evidence and only offers PR linking to owners', async 
         createdBy: 'owner',
         taskTitle: null,
         pullState: 'merged',
+        repositoryOwner: 'fixture',
+        repositoryName: 'repository',
+        pullNumber: 7,
         pullProviderAt: '2026-11-08T10:00:00Z',
         pullObservedAt: '2026-11-08T10:01:00Z',
         githubEvidence: [
@@ -43,9 +46,16 @@ it('labels signed webhook evidence and only offers PR linking to owners', async 
   render(<ExecutionTimeline workspaceId="w" receiptId="r" canWrite owner />);
   fireEvent.click(screen.getByRole('button', { name: 'Load execution timeline' }));
   expect(await screen.findByText(/Signed webhook record: PR merged/)).toBeTruthy();
-  expect(screen.getByText(/check_run completed success · ID 99/)).toBeTruthy();
+  expect(screen.getByText(/Signed webhook record: check_run completed success/)).toBeTruthy();
+  expect(screen.getByText('Provider record ID 99')).toBeTruthy();
   expect(screen.getByRole('option', { name: 'Linked pull request' })).toBeTruthy();
   expect(screen.queryByText(/deployment verified/i)).toBeNull();
+  expect(screen.getByRole('region', { name: 'Verified GitHub webhook evidence' })).toBeTruthy();
+  expect(
+    screen
+      .getByRole('link', { name: 'Open fixture/repository pull request 7 on GitHub' })
+      .getAttribute('href'),
+  ).toBe('https://github.com/fixture/repository/pull/7');
 });
 it('does not offer PR linking to editors', async () => {
   mock.get.mockResolvedValue({ data: [] });
@@ -91,6 +101,71 @@ it('clears stale evidence if access fails', async () => {
   fireEvent.click(screen.getByRole('button', { name: 'Load execution timeline' }));
   expect((await screen.findByRole('alert')).textContent).toBe('Timeline unavailable.');
   expect(screen.queryByText('private detail')).toBeNull();
+});
+it('separates human assertions from task links and exposes event timestamps and provenance', async () => {
+  mock.get.mockResolvedValue({
+    data: [
+      {
+        id: 'human',
+        kind: 'human_assertion',
+        evidence: 'The release owner confirms readiness.',
+        occurredAt: '2026-11-08T10:00:00Z',
+        recordedAt: '2026-11-08T10:01:00Z',
+        createdBy: 'owner-id',
+        taskId: null,
+        taskTitle: null,
+        taskUpdatedAt: null,
+        repositoryOwner: null,
+        repositoryName: null,
+        pullNumber: null,
+        pullState: null,
+        pullProviderAt: null,
+        pullObservedAt: null,
+        githubEvidence: [],
+      },
+      {
+        id: 'task',
+        kind: 'linked_task',
+        evidence: 'Track the rollout.',
+        occurredAt: '2026-11-08T10:02:00Z',
+        recordedAt: '2026-11-08T10:03:00Z',
+        createdBy: 'owner-id',
+        taskId: 'task-id',
+        taskTitle: 'Rollout checklist',
+        taskUpdatedAt: '2026-11-08T10:02:00Z',
+        repositoryOwner: null,
+        repositoryName: null,
+        pullNumber: null,
+        pullState: null,
+        pullProviderAt: null,
+        pullObservedAt: null,
+        githubEvidence: [],
+      },
+    ],
+  });
+  render(<ExecutionTimeline workspaceId="w" receiptId="r" canWrite={false} owner={false} />);
+  fireEvent.click(screen.getByRole('button', { name: 'Load execution timeline' }));
+  expect(await screen.findByRole('list', { name: 'Execution evidence and links' })).toBeTruthy();
+  expect(
+    screen.getByText('Human-recorded evidence; this is not provider verification.'),
+  ).toBeTruthy();
+  expect(screen.getByText('Linked task')).toBeTruthy();
+  expect(
+    screen
+      .getByRole('link', { name: 'Open task board for Rollout checklist' })
+      .getAttribute('href'),
+  ).toBe('/workspace/w/kanban');
+  expect(screen.getAllByRole('time')).toHaveLength(5);
+  expect(screen.getAllByText('Recorded by member ID owner-id')).toHaveLength(2);
+  expect(screen.queryByRole('button', { name: 'Record evidence' })).toBeNull();
+});
+it('shows an explicit empty timeline after loading no recorded events', async () => {
+  mock.get.mockResolvedValue({ data: [] });
+  render(<ExecutionTimeline workspaceId="w" receiptId="r" canWrite={false} owner={false} />);
+  fireEvent.click(screen.getByRole('button', { name: 'Load execution timeline' }));
+  expect(
+    await screen.findByText('No execution evidence has been recorded for this decision yet.'),
+  ).toBeTruthy();
 });
 it('links an owner-selected repository and PR number', async () => {
   mock.get.mockResolvedValue({ data: [] });

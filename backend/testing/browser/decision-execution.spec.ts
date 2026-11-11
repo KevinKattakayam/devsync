@@ -70,8 +70,10 @@ test('links task and signed local PR fixture with owner/viewer visibility', asyn
     await card.getByRole('button', { name: 'Load execution timeline' }).click();
     await card.getByLabel('Evidence description').fill('Reviewed fixture delivery');
     await card.getByRole('button', { name: 'Record evidence' }).click();
-    await expect(card.getByText(/human assertion: Reviewed fixture delivery/)).toBeVisible();
-    await expect(card.getByText(/Recorded/)).toBeVisible();
+    const evidenceList = card.getByRole('list', { name: 'Execution evidence and links' });
+    await expect(evidenceList.getByText('Human assertion', { exact: true })).toBeVisible();
+    await expect(evidenceList.getByText('Reviewed fixture delivery', { exact: true })).toBeVisible();
+    await expect(evidenceList.getByText(/Occurred/)).toBeVisible();
     await card.getByLabel('Evidence type').selectOption('linked_task');
     await expect(card.getByRole('option', { name: 'Review workspace permissions' })).toBeAttached();
     await card
@@ -79,7 +81,8 @@ test('links task and signed local PR fixture with owner/viewer visibility', asyn
       .selectOption({ label: 'Review workspace permissions' });
     await card.getByLabel('Evidence description').fill('Tracked local task');
     await card.getByRole('button', { name: 'Record evidence' }).click();
-    await expect(card.getByText(/linked task: Tracked local task/)).toBeVisible();
+    await expect(evidenceList.getByText('Linked task', { exact: true })).toBeVisible();
+    await expect(evidenceList.getByText('Tracked local task', { exact: true })).toBeVisible();
     await card.getByLabel('Evidence type').selectOption('linked_pull_request');
     await expect(card.getByRole('option', { name: 'fixture/timeline' })).toBeAttached();
     await card
@@ -89,7 +92,7 @@ test('links task and signed local PR fixture with owner/viewer visibility', asyn
     await card.getByLabel('Evidence description').fill('Fixture PR reference');
     await card.getByRole('button', { name: 'Record evidence' }).click();
     await expect(card.getByText(/Signed webhook record: PR merged/)).toBeVisible();
-    await expect(card.getByText(/No verified deployment evidence/)).toBeVisible();
+    await expect(card.getByText(/No deployment is inferred or verified here/)).toBeVisible();
     const viewer = await browser.newContext();
     try {
       await login(viewer, 'viewer');

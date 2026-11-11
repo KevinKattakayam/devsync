@@ -80,6 +80,30 @@ it('keeps viewer UI read only and shows source revision evidence', async () => {
   expect(screen.getByText(/Pinned source revision/).textContent).toContain(receipt.sourceRevision);
   expect(screen.getByText(receipt.excerpt)).toBeTruthy();
 });
+it('presents the authorized source as a distinct relationship with a clear destination', async () => {
+  render(<Receipts workspaceId="one" />);
+  const source = await screen.findByRole('region', { name: 'Linked source' });
+  expect(within(source).getByText('Source document')).toBeTruthy();
+  expect(
+    within(source)
+      .getByRole('link', { name: 'Open source document: Design doc' })
+      .getAttribute('href'),
+  ).toBe('/workspace/one/docs/doc');
+  expect(within(source).getByText(/Pinned source revision/).textContent).toContain(
+    receipt.sourceRevision,
+  );
+});
+it('labels task-source links as board navigation rather than a task-detail route', async () => {
+  mocks.list.mockResolvedValue([{ ...receipt, sourceKind: 'task', sourceId: 'task-1' }]);
+  render(<Receipts workspaceId="one" />);
+  const source = await screen.findByRole('region', { name: 'Linked source' });
+  expect(within(source).getByText('Source task')).toBeTruthy();
+  expect(
+    within(source)
+      .getByRole('link', { name: 'Open task board for source: Design doc' })
+      .getAttribute('href'),
+  ).toBe('/workspace/one/kanban');
+});
 it('edits a draft with its expected revision and source fingerprint', async () => {
   render(<Receipts workspaceId="one" />);
   await userEvent.click(await screen.findByRole('button', { name: 'Edit draft' }));

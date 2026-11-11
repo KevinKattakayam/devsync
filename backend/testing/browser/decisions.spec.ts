@@ -6,11 +6,10 @@ import { login } from './identities';
 test.setTimeout(180000);
 const api = 'http://127.0.0.1:5501/api';
 const workspace = 'devsync-sample';
-const output = resolve(
-  __dirname,
-  '../../../docs/ui/after/decision-receipts',
-  process.env.E2E_DECISIONS_PASS || 'initial',
-);
+const requestedPass = process.env.E2E_DECISIONS_PASS;
+const pass =
+  requestedPass && /^[a-z0-9][a-z0-9-]*$/i.test(requestedPass) ? requestedPass : 'initial';
+const output = resolve(__dirname, '../../../docs/ui/after/decision-receipts', pass);
 async function capture(page: Page, name: string) {
   await mkdir(output, { recursive: true });
   await page.evaluate(async () => {
@@ -192,6 +191,47 @@ for (const theme of ['dark', 'light'] as const)
         await capture(page, `${label}-accept-confirmation`);
         await page.getByRole('dialog').getByRole('button', { name: 'Confirm acceptance' }).click();
         await expect(article.getByText('Accepted', { exact: true })).toBeVisible();
+        const linkedSource = article.getByRole('region', { name: 'Linked source' });
+        await expect(
+          linkedSource.getByRole('link', {
+            name: `Open source document: ${sourceTitle}`,
+          }),
+        ).toHaveAttribute('href', `/workspace/${workspace}/docs/${document.id}`);
+        await article.getByRole('button', { name: 'Load execution timeline' }).click();
+        await article.getByLabel('Evidence type').selectOption('linked_task');
+        await expect(
+          article.getByRole('option', { name: 'Review workspace permissions' }),
+        ).toBeAttached();
+        await article
+          .getByRole('combobox', { name: 'Task', exact: true })
+          .selectOption({ label: 'Review workspace permissions' });
+        await article.getByLabel('Evidence description').fill(`Task link ${label}`);
+        await article.getByRole('button', { name: 'Record evidence' }).click();
+        await expect(article.getByText(`Task link ${label}`, { exact: true })).toBeVisible();
+        await expect(
+          article.getByRole('link', { name: 'Open task board for Review workspace permissions' }),
+        ).toHaveAttribute('href', `/workspace/${workspace}/kanban`);
+        await capture(page, `${label}-connected-work`);
+        const taskLink = article.getByRole('link', {
+          name: 'Open task board for Review workspace permissions',
+        });
+        await taskLink.focus();
+        await expect(taskLink).toBeFocused();
+        await page.keyboard.press('Enter');
+        await expect(page).toHaveURL(new RegExp(`/workspace/${workspace}/kanban$`));
+        await page.goto(`/workspace/${workspace}/decisions`);
+        article = page.getByRole('article', { name: title, exact: true });
+        await viewerPage.goto(`/workspace/${workspace}/decisions`);
+        const viewerCard = viewerPage.getByRole('article', { name: title, exact: true });
+        await viewerCard.getByRole('button', { name: 'Load execution timeline' }).click();
+        await expect(viewerCard.getByText(`Task link ${label}`, { exact: true })).toBeVisible();
+        await expect(
+          viewerCard.getByRole('link', {
+            name: 'Open task board for Review workspace permissions',
+          }),
+        ).toBeVisible();
+        await expect(viewerCard.getByRole('button', { name: 'Record evidence' })).toHaveCount(0);
+        await capture(viewerPage, `${label}-connected-viewer`);
         const replacementTitle = `Replacement ${label}`;
         const replacement = await createReceipt(replacementTitle);
         await replacement.getByRole('button', { name: 'Accept decision' }).click();
