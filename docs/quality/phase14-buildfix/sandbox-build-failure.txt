@@ -1,0 +1,18 @@
+Command: npm run build -- --webpack
+Context: restricted workspace execution
+Exit: 1
+
+> frontend@0.1.0 build
+> next build --webpack
+
+▲ Next.js 16.4.3 (webpack)
+- Environments: .env.local
+✓ Running next.config.ts took 27ms
+
+  Creating an optimized production build ...
+
+> Build error occurred
+Error: Could not parse output from TypeScript's --showConfig.
+    at ignore-listed frames {
+  type: 'Error'
+}

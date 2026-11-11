@@ -1,0 +1,15 @@
+{
+  "restricted": {
+    "exitStatus": 0,
+    "spawnError": "EPERM",
+    "stdoutBytes": 0,
+    "stderrBytes": 0,
+    "jsonParsed": false
+  },
+  "processCreationPermitted": {
+    "exitStatus": 0,
+    "spawnError": null,
+    "stdoutBytes": 8926,
+    "jsonParsed": true
+  }
+}

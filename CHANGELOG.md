@@ -6,6 +6,12 @@ Added accessible authenticated controls for Markdown import, document Markdown/P
 
 Final acceptance review passed the original Phase 13 definition of done based on committed Markdown, PDF, task CSV and workspace ZIP workflows and their recorded backend/frontend tests. Deliberately restricted rich text, archive restore/import, archive encryption/redaction and account-wide export/erasure remain documented non-blocking limitations. The browser journey used fixture identities, not real Clerk accounts, and confirms download initiation only. See [acceptance matrix](docs/quality/phase13-acceptance/README.md). No Phase 14 work, push or deployment occurred.
 
+# Phase 14 build diagnosis
+
+- Traced the Next `tsc --showConfig` parse error to restricted sandbox child-process spawning (`EPERM` with empty captured stdout). The unchanged frontend production build and full frontend gates pass when run in the permitted CI-equivalent process context; no dependency or application configuration change was needed.
+- Triaged the single historical Gitleaks match as ordinary prose (false positive); retained only a redacted report and documented the narrow follow-up recommendation. No scanner exception, credential rotation, or history rewrite was made.
+- Phase 14 remains in progress; broader premium UI journeys are not complete. See `docs/quality/phase14-buildfix/README.md`.
+
 # Unreleased — Premium UI increment
 
 - Refined the existing Kanban task-details drawer for narrow and desktop layouts, added explicit form labels/shared input styles, and restored keyboard focus to its opener after closing.
