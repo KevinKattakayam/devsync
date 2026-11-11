@@ -6,6 +6,11 @@ Added accessible authenticated controls for Markdown import, document Markdown/P
 
 Final acceptance review passed the original Phase 13 definition of done based on committed Markdown, PDF, task CSV and workspace ZIP workflows and their recorded backend/frontend tests. Deliberately restricted rich text, archive restore/import, archive encryption/redaction and account-wide export/erasure remain documented non-blocking limitations. The browser journey used fixture identities, not real Clerk accounts, and confirms download initiation only. See [acceptance matrix](docs/quality/phase13-acceptance/README.md). No Phase 14 work, push or deployment occurred.
 
+# Unreleased — Premium UI increment
+
+- Refined the existing Kanban task-details drawer for narrow and desktop layouts, added explicit form labels/shared input styles, and restored keyboard focus to its opener after closing.
+- Added browser regressions for drawer layout, focus restoration and existing viewer restrictions. Verification is partial: focused fixture-browser, lint, format, type and frontend test gates pass; the production build and some CI-only scans/comparisons remain unresolved. See `docs/ui/phase-premium/README.md`.
+
 # Phase 13 workspace archive export
 
 Authenticated active workspace members can download a bounded workspace-scoped ZIP containing supported document Markdown and task CSV v1. The versioned manifest uses generated paths and SHA-256 hashes, identifies excluded resources and warns that content is not redacted. Current membership and a fresh source fingerprint are checked after compression; unsupported documents or changes reject the request before delivery. Document titles, task keys, labels and other resources are excluded. This is not a complete account backup.
