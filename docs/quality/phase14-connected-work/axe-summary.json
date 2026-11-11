@@ -1,0 +1,13 @@
+{
+  "screenshotsAndReports": 48,
+  "viewportWidths": [390, 1440],
+  "themes": ["dark", "light"],
+  "violations": 0,
+  "reportsWithIncompleteChecks": 32,
+  "incompleteRuleOccurrences": 38,
+  "incompleteNodeOccurrencesByRule": {
+    "aria-hidden-focus": 48,
+    "color-contrast": 34
+  },
+  "manualReviewRequired": true
+}

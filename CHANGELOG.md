@@ -6,6 +6,11 @@ Added accessible authenticated controls for Markdown import, document Markdown/P
 
 Final acceptance review passed the original Phase 13 definition of done based on committed Markdown, PDF, task CSV and workspace ZIP workflows and their recorded backend/frontend tests. Deliberately restricted rich text, archive restore/import, archive encryption/redaction and account-wide export/erasure remain documented non-blocking limitations. The browser journey used fixture identities, not real Clerk accounts, and confirms download initiation only. See [acceptance matrix](docs/quality/phase13-acceptance/README.md). No Phase 14 work, push or deployment occurred.
 
+# Phase 14 — connected-work detail UI
+
+- Improved decision receipt source context and execution evidence cards, including relationship type, timestamps and provenance. Kept human assertions distinct from signed webhook records, with explicit no-deployment-inference wording.
+- Added responsive and keyboard navigation coverage, viewer checks, light/dark screenshots and axe reports. Frontend/backend checks, coverage comparison, production build and pinned Semgrep pass; automated accessibility checks still include manual-review items. See `docs/quality/phase14-connected-work/README.md`. Phase 14 remains in progress.
+
 # Phase 14 — dashboard and workspace navigation
 
 - Promoted existing authorized workspace links to a responsive dashboard section with accessible membership-role labels and visible keyboard focus. The section follows the current workspace filter; backend contracts and role-gated actions are unchanged.
