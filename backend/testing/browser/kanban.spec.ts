@@ -77,9 +77,30 @@ for (const theme of ['dark', 'light'] as const)
         await page
           .getByRole('button', { name: 'Review workspace permissions', exact: true })
           .click();
-        await expect(page.getByRole('dialog', { name: 'Task details' })).toBeVisible();
+        const drawer = page.getByRole('dialog', { name: 'Task details' });
+        await expect(drawer).toBeVisible();
+        const drawerBounds = await drawer.boundingBox();
+        expect(drawerBounds).not.toBeNull();
+        if (drawerBounds) {
+          if (width <= 390) expect(drawerBounds.width).toBeGreaterThanOrEqual(width - 40);
+          else expect(drawerBounds.width).toBeGreaterThanOrEqual(470);
+        }
+        const priority = await page.getByLabel('Task priority').boundingBox();
+        const dueDate = await page.getByLabel('Task due date').boundingBox();
+        expect(priority).not.toBeNull();
+        expect(dueDate).not.toBeNull();
+        if (priority && dueDate) {
+          if (width <= 390) {
+            expect(dueDate.y).toBeGreaterThan(priority.y + priority.height);
+          } else {
+            expect(dueDate.y).toBe(priority.y);
+          }
+        }
         await capture('drawer');
         await page.keyboard.press('Escape');
+        await expect(
+          page.getByRole('button', { name: 'Review workspace permissions', exact: true }),
+        ).toBeFocused();
       } finally {
         await context.close();
       }

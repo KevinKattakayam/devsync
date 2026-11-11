@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useCallback, useMemo } from 'react';
+import { useEffect, useState, useCallback, useMemo, useRef } from 'react';
 import { useParams } from 'next/navigation';
 import { boardApi, taskApi } from '@/lib/api';
 import { Board, Task } from '@/types';
@@ -49,6 +49,8 @@ export default function KanbanPage() {
   const [showTaskModal, setShowTaskModal] = useState(false);
   const [showAnalytics, setShowAnalytics] = useState(false);
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+  const taskTrigger = useRef<HTMLButtonElement | null>(null);
+  const boardHeading = useRef<HTMLHeadingElement | null>(null);
   const [newTaskTitle, setNewTaskTitle] = useState('');
   const [addingToColumn, setAddingToColumn] = useState<string | null>(null);
   const [draggedTask, setDraggedTask] = useState<Task | null>(null);
@@ -275,7 +277,9 @@ export default function KanbanPage() {
     <div className="h-[calc(100vh-4rem)] flex flex-col">
       <div className="p-4 pb-4 flex flex-wrap gap-4 items-center justify-between">
         <div>
-          <h1 className="text-xl font-bold">{board.name}</h1>
+          <h1 ref={boardHeading} tabIndex={-1} className="text-xl font-bold">
+            {board.name}
+          </h1>
           <p className="text-sm text-muted-foreground">
             {board.columns.reduce((s, c) => s + c.tasks.length, 0)} tasks ·{' '}
             {canWrite ? 'Drag cards, or use Move for keyboard access.' : 'Read only'}
@@ -386,7 +390,8 @@ export default function KanbanPage() {
                       >
                         <button
                           className="text-left text-sm font-medium break-words"
-                          onClick={() => {
+                          onClick={(event) => {
+                            taskTrigger.current = event.currentTarget;
                             setSelectedTask(task);
                             setShowTaskModal(true);
                           }}
@@ -442,41 +447,52 @@ export default function KanbanPage() {
         <DrawerContent
           title="Task details"
           description="Changes save when you leave a field. Workspace permissions apply."
+          className="w-[min(30rem,calc(100vw-2rem))]"
+          onCloseAutoFocus={(event) => {
+            event.preventDefault();
+            requestAnimationFrame(() => {
+              if (taskTrigger.current?.isConnected) taskTrigger.current.focus();
+              else boardHeading.current?.focus();
+            });
+          }}
         >
           {selectedTask && (
             <fieldset disabled={!canWrite || busy} className="min-w-0">
-              <label className="block text-sm">
+              <label htmlFor="task-title" className="block text-sm font-medium">
                 Title
                 <input
+                  id="task-title"
                   aria-label="Task title"
                   defaultValue={selectedTask.title}
-                  className="ui-input my-3"
+                  className="ui-input mt-2"
                   onBlur={(e) => {
                     if (e.target.value !== selectedTask.title)
                       void updateTask(selectedTask.id, { title: e.target.value });
                   }}
                 />
               </label>
-              <div className="space-y-4">
-                <div>
-                  <label className="text-xs font-medium text-muted-foreground mb-1 block">
+              <div className="mt-5 space-y-5">
+                <div className="space-y-2">
+                  <label htmlFor="task-description" className="text-sm font-medium">
                     Description
                   </label>
                   <textarea
+                    id="task-description"
                     aria-label="Task description"
                     defaultValue={selectedTask.description || ''}
-                    className="w-full px-3 py-2 rounded-lg bg-muted/50 border border-border text-sm resize-none outline-none"
-                    rows={3}
+                    className="ui-input min-h-28 resize-y"
+                    rows={4}
                     placeholder="Add description..."
                     onBlur={(e) => updateTask(selectedTask.id, { description: e.target.value })}
                   />
                 </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-xs font-medium text-muted-foreground mb-1 block">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <div className="min-w-0 space-y-2">
+                    <label htmlFor="task-priority" className="text-sm font-medium">
                       Priority
                     </label>
                     <select
+                      id="task-priority"
                       aria-label="Task priority"
                       defaultValue={selectedTask.priority}
                       onChange={(e) =>
@@ -484,7 +500,7 @@ export default function KanbanPage() {
                           priority: e.target.value as Task['priority'],
                         })
                       }
-                      className="w-full px-3 py-2 rounded-lg bg-muted/50 border border-border text-sm outline-none"
+                      className="ui-input"
                     >
                       <option value="LOW">Low</option>
                       <option value="MEDIUM">Medium</option>
@@ -492,11 +508,12 @@ export default function KanbanPage() {
                       <option value="URGENT">Urgent</option>
                     </select>
                   </div>
-                  <div>
-                    <label className="text-xs font-medium text-muted-foreground mb-1 block">
-                      Due Date
+                  <div className="min-w-0 space-y-2">
+                    <label htmlFor="task-due-date" className="text-sm font-medium">
+                      Due date
                     </label>
                     <input
+                      id="task-due-date"
                       aria-label="Task due date"
                       type="date"
                       defaultValue={
@@ -509,18 +526,20 @@ export default function KanbanPage() {
                           dueDate: e.target.value ? new Date(e.target.value).toISOString() : null,
                         })
                       }
-                      className="w-full px-3 py-2 rounded-lg bg-muted/50 border border-border text-sm outline-none"
+                      className="ui-input"
                     />
                   </div>
                 </div>
-                <div className="pt-3 border-t border-border flex justify-end">
-                  <button
+                <div className="flex justify-end border-t border-border pt-4">
+                  <Button
+                    type="button"
+                    variant="destructive"
+                    size="compact"
                     onClick={() => deleteTask(selectedTask.id)}
-                    className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-destructive hover:bg-destructive/10"
                   >
-                    <Trash2 className="w-4 h-4" />
+                    <Trash2 aria-hidden="true" className="size-4" />
                     Delete
-                  </button>
+                  </Button>
                 </div>
               </div>
             </fieldset>
