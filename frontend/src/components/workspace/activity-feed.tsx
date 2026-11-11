@@ -89,7 +89,11 @@ export function ActivityFeed({ workspaceId, initialActivities = [] }: ActivityFe
       </div>
 
       {/* Filter Tabs */}
-      <div className="flex items-center gap-1 mb-4 overflow-x-auto pb-1 scrollbar-none">
+      <div
+        role="group"
+        aria-label="Filter activity events"
+        className="flex items-center gap-1 mb-4 overflow-x-auto pb-1 scrollbar-none"
+      >
         {[
           { id: 'all', label: 'All Events' },
           { id: 'docs', label: 'Docs' },
@@ -99,6 +103,8 @@ export function ActivityFeed({ workspaceId, initialActivities = [] }: ActivityFe
         ].map((tab) => (
           <button
             key={tab.id}
+            type="button"
+            aria-pressed={filter === tab.id}
             onClick={() => setFilter(tab.id)}
             className={`px-2.5 py-1 rounded-md text-xs font-medium transition-all ${
               filter === tab.id

@@ -179,6 +179,50 @@ for (const theme of ['dark', 'light'] as const)
     });
   }
 
+for (const theme of ['dark', 'light'] as const)
+  for (const width of [1440, 390]) {
+    test(`${theme} ${width} workspace activity filters expose selection to keyboard users`, async ({
+      browser,
+    }) => {
+      const context = await browser.newContext({
+        viewport: { width, height: 1000 },
+        colorScheme: theme,
+        reducedMotion: 'reduce',
+      });
+      try {
+        await context.addInitScript((theme) => localStorage.setItem('theme', theme), theme);
+        await login(context, 'owner');
+        const page = await context.newPage();
+        await page.goto(`/workspace/${workspace}`);
+        await expect(page.getByRole('heading', { name: 'Activity Stream' })).toBeVisible();
+
+        const filters = page.getByRole('group', { name: 'Filter activity events' });
+        const allEvents = filters.getByRole('button', { name: 'All Events' });
+        const docs = filters.getByRole('button', { name: 'Docs' });
+        const tasks = filters.getByRole('button', { name: 'Tasks' });
+        await expect(allEvents).toHaveAttribute('aria-pressed', 'true');
+        await expect(tasks).toHaveAttribute('aria-pressed', 'false');
+
+        await allEvents.focus();
+        await page.keyboard.press('Tab');
+        await expect(docs).toBeFocused();
+        await page.keyboard.press('Shift+Tab');
+        await expect(allEvents).toBeFocused();
+        await page.keyboard.press('Tab');
+        await page.keyboard.press('Tab');
+        await expect(tasks).toBeFocused();
+        await page.keyboard.press('Enter');
+        await expect(tasks).toHaveAttribute('aria-pressed', 'true');
+        await expect(allEvents).toHaveAttribute('aria-pressed', 'false');
+        await expect(tasks).toBeFocused();
+
+        await capture(page, theme, width, 'workspace-activity-filter');
+      } finally {
+        await context.close();
+      }
+    });
+  }
+
 test('main flow creates a document, undoes via archival, and creates a persisted workspace', async ({
   page,
   context,

@@ -1,3 +1,9 @@
+# Phase 14 — accessibility review: workspace activity filters
+
+- Added an accessible name to the workspace activity filter group and exposed the selected filter with `aria-pressed`; preserved native button keyboard behavior and filtering.
+- Added component regression coverage and a desktop/mobile light/dark browser journey. The component test and full frontend checks pass. The browser journey could not run in this environment because Testcontainers found no working container runtime; no fresh browser or axe result is claimed.
+- Prior Phase 14 axe reports contain zero confirmed violations in the reviewed workflows. Incomplete `aria-hidden-focus`, `color-contrast`, and editor link checks remain inconclusive (focus guards/overlapping content); manual screen-reader and contrast review was not performed. Large-list virtualization remains unresolved and Phase 14 stays open.
+
 # Phase 14 — isolated Kanban Radix move proof corrected
 
 - Fixed the fixture's removed-row range callback so it no longer resets the active task to an ID absent from the list; the move chooses a valid adjacent task and returns focus to the persistent host.
