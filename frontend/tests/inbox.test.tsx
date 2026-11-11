@@ -122,7 +122,9 @@ it('clears displayed events when preference access is revoked', async () => {
 it('saves timezone and quiet hours without claiming delivery', async () => {
   render(<Inbox workspaceId="one" />);
   await screen.findByText(event.message);
-  await userEvent.click(screen.getByText('Notification scheduling preferences'));
+  await userEvent.click(
+    screen.getByText('Notification scheduling preferences', { selector: 'summary' }),
+  );
   const zone = await screen.findByLabelText('Time zone');
   await userEvent.clear(zone);
   await userEvent.type(zone, 'America/New_York');

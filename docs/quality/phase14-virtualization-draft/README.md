@@ -1,0 +1,16 @@
+# Phase 14 Kanban virtualization prototype — incomplete
+
+The workspace activity stream renders at most 20 items (`activity-feed.tsx`); inbox queries limit a page to 26 (`backend/src/services/async-digest.ts`). Kanban renders every task in each column and is the selected large-list target. The prototype uses exact `@tanstack/react-virtual` 3.14.26 (MIT) with variable-height measurement and retains focused, dragged and open task IDs in the rendered range. It adds previous/next controls and list position metadata. Existing board APIs, role checks and move handlers are unchanged.
+
+**Do not treat this prototype as complete or commit-ready.** `python3 tools/quality/gates.py frontend docs/quality/phase14-virtualization-draft` exited 1 at lint: `react-hooks/incompatible-library` warns that `useVirtualizer()` returns functions that cannot be safely memoized by React Compiler; the repository treats warnings as failures. The same issue is tracked upstream at https://github.com/TanStack/virtual/issues/1119. A component-level `use no memo` directive did not clear the lint warning and was removed. No rule was disabled. A compatible approach that retains focused/dragged items and passes the unchanged compiler/lint policy is needed.
+
+## Fixture evidence
+
+- Focused component test: exit 0; a 1,000-task fixture rendered fewer than 30 rows with simulated viewport measurements, including an explicitly pinned item.
+- Isolated browser command `E2E_CHROMIUM_PATH=/opt/google/chrome/chrome E2E_KANBAN_PASS=phase14-virtual-draft node tools/ci/browser.mjs kanban`: exit 0, 6 tests. A synthetic 1,000-task fixture rendered 8 initial / 9 end rows at 1440px (349 total page nodes; 5,129ms navigation-to-first-row) and 8 / 8 at 390px (307 page nodes; 1,642ms). These single local observations are not a benchmark or production speed claim. The fixture exercised a next-window keyboard control, scrolling to the final row, existing keyboard move/drawer flows and viewer restrictions. Screenshots are under `docs/ui/after/kanban/phase14-virtual-draft/`.
+- Independent frontend formatting, strict types, full tests and production build exited 0: 9 Node tests, 35 component files / 176 tests. Coverage comparison against `docs/quality/phase14-acceptance/frontend-coverage/coverage-summary.json` exited 0: statements 57.09%, branches 51.65%, functions 51.76%, lines 58.39%.
+- Pinned Semgrep scan exited 0 with zero findings across 281 targets; the sanitized report is retained here. `npm audit --audit-level=moderate` exited 1 with eight moderate toolchain findings. An audit of the committed baseline lockfile returned the same eight affected packages and severity counts; no TanStack package was listed.
+
+## Remaining work
+
+Resolve the lint/compiler incompatibility without disabling a rule; verify sequential keyboard and assistive-technology traversal across window boundaries, focus restoration after card removal/reorder, drag across offscreen positions, resize and variable-height stability, and re-run all quality gates and security checks. The browser fixture is synthetic and does not establish production performance. Manual screen-reader review remains outstanding. Other potentially large lists, including search and decision results, still require assessment. Phase 14 remains open.

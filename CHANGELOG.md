@@ -1,3 +1,22 @@
+# Phase 14 — isolated Kanban Radix move proof corrected
+
+- Fixed the fixture's removed-row range callback so it no longer resets the active task to an ID absent from the list; the move chooses a valid adjacent task and returns focus to the persistent host.
+- Synchronized the browser test on Radix's highlighted “Done” option before Enter, resolving the desktop test-sequence race. The 1,000-task scenario passed twice at 1440px and 390px with bounded rows, valid announcements, preserved order, and zero axe findings. Production Kanban remains unchanged; integration risks remain documented.
+
+# Phase 14 — isolated Kanban accessibility integration proof (failed)
+
+- Added a non-production 1,000-task Virtuoso fixture using the shared Radix Move and Drawer components plus the inline task-title control behavior. Desktop/mobile browser checks preserved host focus on offscreen row unmount and passed ordinary Tab traversal, Drawer restoration/fallback and simulated viewer/revocation states. Initial axe checks reported zero violations/incomplete items.
+- The keyboard Radix move was inconsistent: at 1440px it did not move the row; at 390px it moved the row but left a stale active-task announcement. Production Kanban was not changed; virtualization integration remains blocked. See `docs/quality/phase14-virtualization-draft/interaction-fixture/RESULTS.md`.
+
+# Phase 14 — Kanban virtualization prototype (incomplete)
+
+- Documented the board interaction mapping, unresolved focus/drag integration risks, next isolated proof and proposed flag rollback. No production Kanban change was made in this review.
+- Added an isolated Virtuoso focus-host experiment and browser evidence. The host retains DOM focus, but offscreen announcement and equivalence with the board's per-card controls remain unverified; no integration was made.
+- Added isolated Virtuoso/native-drag and dnd-kit overlay interaction evidence. Offscreen focused-row unmount loses focus; the overlay handles fixture drop/cancel but does not resolve that accessibility blocker. The existing application prototype remains unchanged and uncommitted.
+- Confirmed the original Phase 14 requirement explicitly specifies virtualized large lists. The prototype remains preserved; pagination was not substituted for that requirement.
+- Investigated a direct core adapter and React Virtuoso as alternatives. The core probe failed the React Hooks refs rule; the Virtuoso lint/type/build probe passed under current Next configuration, but compiler and active-item retention guarantees remain unverified. Added focused prototype tests for scroll/resize and reorder focus retention. No replacement or lint bypass was applied.
+- Added a measured Kanban task-window prototype and fixture coverage. The strict lint gate flags the virtualizer as React Compiler incompatible; the work remains uncommitted pending a safe compatible solution and further accessibility verification.
+
 # Phase 14 — acceptance review
 
 - Reviewed the recorded UI evidence and incomplete axe checks; Phase 14 remains open pending manual accessibility review and resolution of large-list virtualization.
@@ -484,3 +503,17 @@ Historical Phase 0 audit: see docs/CHANGELOG.md. No production deployment or key
 - B03/B04/G10: tenant-scoped PostgreSQL CRDT journal committed before acknowledgement, row-locked compaction, Redis fanout, resource limits and durable legacy conversion with guarded rollback.
 - C01/D02/D07: per-message document policy checks, passive member/role/expiry eviction, read-only protocol enforcement and bounded WebSocket admission.
 - H02/I04: account/room-scoped offline replicas, fresh reconnect tokens, editor read-only/status handling, real PostgreSQL/Redis/Yjs collaboration tests and frontend editor/lifecycle component tests. Phase 1b is still in progress; remaining scope is tracked in docs/PROGRESS.md.
+
+# Phase 14 — controlled Kanban integration blocked
+
+- Reviewed the existing uncommitted Kanban prototype against the Virtuoso focus-host proof. Native drag source retention and cancellation remain unverified for Virtuoso, so no production integration or feature flag was added.
+
+# Phase 14 — Kanban virtualization safety boundary
+
+- Restored the committed Kanban page and browser spec as the normal path. Relocated the uncommitted TanStack component and its tests/spec into the Phase 14 draft directory, outside frontend app compilation/lint discovery. The direct dependency change and all experiment evidence remain preserved; production has no import or flag that can enable the experiment.
+- Default Kanban verification passed: frontend lint/types and 34 component files / 175 tests; local browser suite passed 5/5 for moves, drawer, viewer denial and cross-workspace rejection. No production feature flag was added.
+
+# Phase 14 — isolated virtualization checkpoint verified
+
+- Removed experimental `@tanstack/react-virtual@3.14.26` from frontend production manifests; prototype source and setup/version evidence remain isolated under the Phase 14 draft directory. Default Kanban page/spec match HEAD and production has no experimental imports.
+- Frontend lint, format, strict types, 34 test files / 175 tests, default Kanban browser 5/5, and webpack production build passed. This is an incomplete research checkpoint; virtualization and Phase 14 remain open.
