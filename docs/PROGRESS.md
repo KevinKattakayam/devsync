@@ -1247,3 +1247,7 @@ Added a synthetic two-column Virtuoso fixture with one shared dnd-kit context, r
 # Phase 15 — grounded connected-source isolation regression pending
 
 Traced the grounded preview through workspace authorization, tenant-scoped lexical retrieval and post-provider source revalidation. Added a database integration regression for foreign GitHub metadata, viewer access and disconnection during provider I/O. The model response is mocked; database and authorization code are real. User-run Docker/PostgreSQL verification passed the targeted case (1 passed, 153 skipped); Jest reported coverage thresholds unmet for this focused run. This does not establish a full coverage-gate pass or live provider access. Focused lint, formatting, strict types and three grounded AI unit tests passed. See [verification record](quality/phase15-ai-isolation/README.md). Phase 15 remains open.
+
+# Load and restore phase — preflight only
+
+Reviewed the existing local REST k6 workload, metrics, runbook and realtime recovery evidence. k6 and Artillery are unavailable in this environment; Docker socket access was denied. No load, outage or restore drill was executed, and no SLO or provider success is claimed. The existing synthetic browser recovery journey covers an application-server kill, not database/Redis loss or backup restoration. See [preflight record](quality/phase16-load-restore/README.md). This phase remains incomplete.
