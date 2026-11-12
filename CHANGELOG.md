@@ -536,3 +536,7 @@ Historical Phase 0 audit: see docs/CHANGELOG.md. No production deployment or key
 # Phase 14 — Kanban virtualization architecture decision
 
 - Documented a candidate isolated Virtuoso and dnd-kit overlay proof, alternatives, dependency prerequisite and explicit acceptance tests. No production Kanban or dependency changes; virtualization remains incomplete.
+
+# Phase 14 — isolated combined virtualized drag fixture
+
+- Added a synthetic Virtuoso and dnd-kit overlay proof with the existing shared Radix Move and Drawer controls. Focused checks cover bounded rendering, pointer drop/cancel, simulated rejection, access changes and keyboard interactions; real API, concurrency, assistive technology and production integration remain unverified.
