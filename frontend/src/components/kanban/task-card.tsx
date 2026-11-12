@@ -1,6 +1,7 @@
 'use client';
 
 import type { DragEvent } from 'react';
+import { useState } from 'react';
 import type { Task } from '@/types';
 import { generateColor, getInitials } from '@/lib/utils';
 import { Select } from '@/components/ui';
@@ -17,30 +18,38 @@ export function KanbanTaskCard({
   columns,
   canWrite,
   busy,
-  dragging,
   onOpen,
   onDragStart,
+  onDragEnd,
   onMove,
 }: {
   task: Task;
   columns: { id: string; name: string }[];
   canWrite: boolean;
   busy: boolean;
-  dragging: boolean;
   onOpen: (trigger?: HTMLButtonElement) => void;
   onDragStart: (event: DragEvent<HTMLDivElement>) => void;
+  onDragEnd: (event: DragEvent<HTMLDivElement>) => void;
   onMove: (columnId: string) => void;
 }) {
+  const [isDragging, setIsDragging] = useState(false);
   const priority = priorityConfig[task.priority?.toUpperCase()] || priorityConfig.MEDIUM;
   return (
     <div className="rounded-lg bg-card p-3">
       <div
         draggable={canWrite && !busy}
-        onDragStart={onDragStart}
+        onDragStart={(event) => {
+          onDragStart(event);
+          if (!event.defaultPrevented) setIsDragging(true);
+        }}
+        onDragEnd={(event) => {
+          setIsDragging(false);
+          onDragEnd(event);
+        }}
         role="group"
         aria-label={task.title}
         onDoubleClick={() => onOpen()}
-        className={`transition-opacity group ${dragging ? 'opacity-50' : ''}`}
+        className={`transition-opacity group ${isDragging && canWrite && !busy ? 'opacity-50' : ''}`}
       >
         <button
           className="text-left text-sm font-medium break-words"

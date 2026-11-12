@@ -28,11 +28,11 @@ const initial: Board[] = [
 function Fixture() {
   const [boards, setBoards] = useState(initial);
   const [canWrite, setCanWrite] = useState(true);
-  const [dragged, setDragged] = useState<string | null>(null);
   const [message, setMessage] = useState('idle');
   const [selected, setSelected] = useState<Task | null>(null);
   const trigger = useRef<HTMLButtonElement | null>(null);
   const heading = useRef<HTMLHeadingElement>(null);
+  const nativeDragActive = useRef(false);
 
   useEffect(() => {
     const change = (event: Event) => {
@@ -100,8 +100,9 @@ function Fixture() {
             onDragOver={(event) => event.preventDefault()}
             onDrop={(event) => {
               event.preventDefault();
-              if (dragged) move(dragged, column.id);
-              setDragged(null);
+              const taskId = event.dataTransfer.getData('text/plain');
+              if (taskId) move(taskId, column.id);
+              nativeDragActive.current = false;
             }}
           >
             <h2>{column.name}</h2>
@@ -112,16 +113,19 @@ function Fixture() {
                 columns={boards[0].columns}
                 canWrite={canWrite}
                 busy={false}
-                dragging={dragged === task.id}
                 onDragStart={(event) => {
                   if (!canWrite) {
                     event.preventDefault();
                     return;
                   }
-                  setDragged(task.id);
+                  nativeDragActive.current = true;
                   event.dataTransfer.effectAllowed = 'move';
                   event.dataTransfer.setData('text/plain', task.id);
                   setMessage('dragstart');
+                }}
+                onDragEnd={() => {
+                  if (nativeDragActive.current) setMessage('cancelled');
+                  nativeDragActive.current = false;
                 }}
                 onOpen={(element) => {
                   if (element) trigger.current = element;

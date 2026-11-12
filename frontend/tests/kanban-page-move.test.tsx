@@ -53,6 +53,8 @@ const boards = [
     ],
   },
 ];
+const dropTask = (column: Element) =>
+  fireEvent.drop(column, { dataTransfer: { getData: () => 't' } });
 beforeEach(() => {
   mocks.canWrite = true;
   mocks.list.mockReset();
@@ -70,7 +72,7 @@ it('shows a load error if a rejected move is followed by a failed refetch', asyn
   render(<KanbanPage />);
   const task = await screen.findByRole('group', { name: 'Task' });
   fireEvent.dragStart(task, { dataTransfer: { effectAllowed: '', setData: vi.fn() } });
-  fireEvent.drop(screen.getByRole('heading', { name: 'Done' }).closest('[class*="w-72"]')!);
+  dropTask(screen.getByRole('heading', { name: 'Done' }).closest('[class*="w-72"]')!);
   await waitFor(() => expect(mocks.move).toHaveBeenCalledWith('t', { columnId: 'b', position: 0 }));
   expect((await screen.findByRole('alert')).textContent).toContain('Board could not load');
 });
@@ -81,8 +83,9 @@ it('does not send a move if write permission is revoked after drag starts', asyn
   fireEvent.dragStart(task, { dataTransfer: { effectAllowed: '', setData: vi.fn() } });
   mocks.canWrite = false;
   view.rerender(<KanbanPage />);
-  fireEvent.drop(screen.getByRole('heading', { name: 'Done' }).closest('[class*="w-72"]')!);
+  dropTask(screen.getByRole('heading', { name: 'Done' }).closest('[class*="w-72"]')!);
   expect(mocks.move).not.toHaveBeenCalled();
+  await waitFor(() => expect(task.className).not.toContain('opacity-50'));
 });
 
 it('does not move a task deleted from the board after drag starts', async () => {
@@ -94,8 +97,37 @@ it('does not move a task deleted from the board after drag starts', async () => 
       { ...boards[0], columns: boards[0].columns.map((column) => ({ ...column, tasks: [] })) },
     ]),
   );
-  fireEvent.drop(screen.getByRole('heading', { name: 'Done' }).closest('[class*="w-72"]')!);
+  dropTask(screen.getByRole('heading', { name: 'Done' }).closest('[class*="w-72"]')!);
   expect(mocks.move).not.toHaveBeenCalled();
+  await waitFor(() => expect(screen.queryByRole('group', { name: 'Task' })).toBeNull());
+});
+
+it('clears native drag state after Escape cancellation and allows a later drop', async () => {
+  render(<KanbanPage />);
+  const task = await screen.findByRole('group', { name: 'Task' });
+  fireEvent.dragStart(task, { dataTransfer: { effectAllowed: '', setData: vi.fn() } });
+  expect(task.className).toContain('opacity-50');
+  fireEvent.dragEnd(task);
+  expect(task.className).not.toContain('opacity-50');
+  expect(mocks.move).not.toHaveBeenCalled();
+
+  fireEvent.dragStart(task, { dataTransfer: { effectAllowed: '', setData: vi.fn() } });
+  dropTask(screen.getByRole('heading', { name: 'Done' }).closest('[class*="w-72"]')!);
+  fireEvent.dragEnd(task);
+  await waitFor(() => expect(mocks.move).toHaveBeenCalledWith('t', { columnId: 'b', position: 0 }));
+  await waitFor(() =>
+    expect(screen.getByRole('group', { name: 'Task' }).className).not.toContain('opacity-50'),
+  );
+});
+
+it('clears native drag state after an invalid same-column drop', async () => {
+  render(<KanbanPage />);
+  const task = await screen.findByRole('group', { name: 'Task' });
+  fireEvent.dragStart(task, { dataTransfer: { effectAllowed: '', setData: vi.fn() } });
+  dropTask(screen.getByRole('heading', { name: 'Todo' }).closest('[class*="w-72"]')!);
+  fireEvent.dragEnd(task);
+  expect(mocks.move).not.toHaveBeenCalled();
+  expect(task.className).not.toContain('opacity-50');
 });
 
 it('restores focus to the task trigger after closing the drawer', async () => {

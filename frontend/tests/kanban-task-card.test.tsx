@@ -11,6 +11,7 @@ afterEach(() => {
 it('preserves task activation, native drag and the accessible Move control', () => {
   const onOpen = vi.fn();
   const onDragStart = vi.fn();
+  const onDragEnd = vi.fn();
   render(
     <KanbanTaskCard
       task={{
@@ -27,9 +28,9 @@ it('preserves task activation, native drag and the accessible Move control', () 
       ]}
       canWrite
       busy={false}
-      dragging={false}
       onOpen={onOpen}
       onDragStart={onDragStart}
+      onDragEnd={onDragEnd}
       onMove={vi.fn()}
     />,
   );
@@ -39,7 +40,11 @@ it('preserves task activation, native drag and the accessible Move control', () 
   const group = screen.getByRole('group', { name: 'A task' });
   expect(group.getAttribute('draggable')).toBe('true');
   fireEvent.dragStart(group);
+  expect(group.className).toContain('opacity-50');
+  fireEvent.dragEnd(group);
+  expect(group.className).not.toContain('opacity-50');
   expect(onDragStart).toHaveBeenCalledOnce();
+  expect(onDragEnd).toHaveBeenCalledOnce();
   expect(screen.getByRole('combobox', { name: 'Move A task' })).toBeTruthy();
 });
 
@@ -57,9 +62,9 @@ it('hides the Move control and disables dragging for a viewer', () => {
       columns={[{ id: 'c', name: 'Todo' }]}
       canWrite={false}
       busy={false}
-      dragging={false}
       onOpen={vi.fn()}
       onDragStart={vi.fn()}
+      onDragEnd={vi.fn()}
       onMove={vi.fn()}
     />,
   );
@@ -90,9 +95,9 @@ it('moves through the Radix control using the keyboard', async () => {
       ]}
       canWrite
       busy={false}
-      dragging={false}
       onOpen={vi.fn()}
       onDragStart={vi.fn()}
+      onDragEnd={vi.fn()}
       onMove={onMove}
     />,
   );

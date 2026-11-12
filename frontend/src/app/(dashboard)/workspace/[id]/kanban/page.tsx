@@ -47,7 +47,6 @@ export default function KanbanPage() {
   const boardHeading = useRef<HTMLHeadingElement | null>(null);
   const [newTaskTitle, setNewTaskTitle] = useState('');
   const [addingToColumn, setAddingToColumn] = useState<string | null>(null);
-  const [draggedTask, setDraggedTask] = useState<Task | null>(null);
   const [dragOverColumn, setDragOverColumn] = useState<string | null>(null);
 
   useEffect(() => {
@@ -175,7 +174,6 @@ export default function KanbanPage() {
       e.preventDefault();
       return;
     }
-    setDraggedTask(task);
     e.dataTransfer.effectAllowed = 'move';
     e.dataTransfer.setData('text/plain', task.id);
   };
@@ -183,8 +181,11 @@ export default function KanbanPage() {
     e.preventDefault();
     setDragOverColumn(columnId);
   };
-  const moveTask = async (candidate: Task, columnId: string, undo = false) => {
-    const task = findMoveTarget(boards, candidate.id, columnId, canWrite, busy);
+  const handleDragEnd = () => {
+    setDragOverColumn(null);
+  };
+  const moveTask = async (taskId: string, columnId: string, undo = false) => {
+    const task = findMoveTarget(boards, taskId, columnId, canWrite, busy);
     if (!task) return;
     setBusy(true);
     const moved = { ...task, columnId, position: 0 };
@@ -223,13 +224,13 @@ export default function KanbanPage() {
       retry();
     } finally {
       setBusy(false);
-      setDraggedTask(null);
     }
   };
   const handleDrop = (e: React.DragEvent, columnId: string) => {
     e.preventDefault();
     setDragOverColumn(null);
-    if (draggedTask) void moveTask(draggedTask, columnId);
+    const taskId = e.dataTransfer.getData('text/plain');
+    if (taskId) void moveTask(taskId, columnId);
   };
   if (localBoards.error)
     return (
@@ -374,15 +375,15 @@ export default function KanbanPage() {
                     columns={board.columns}
                     canWrite={canWrite}
                     busy={busy}
-                    dragging={draggedTask?.id === task.id}
                     onOpen={(trigger) => {
                       if (trigger) taskTrigger.current = trigger;
                       setSelectedTask(task);
                       setShowTaskModal(true);
                     }}
                     onDragStart={(event) => handleDragStart(event, task)}
+                    onDragEnd={handleDragEnd}
                     onMove={(columnId) => {
-                      void moveTask(task, columnId);
+                      void moveTask(task.id, columnId);
                     }}
                   />
                 ))}

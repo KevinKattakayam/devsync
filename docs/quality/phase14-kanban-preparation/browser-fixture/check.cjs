@@ -85,9 +85,17 @@ async function change(page, action) {
         await page.keyboard.press('Escape');
         await page.mouse.up();
         await page.waitForTimeout(300);
+        await page.locator('[data-status="cancelled"]').waitFor();
         result.escapeStatus = await page.locator('[role=status]').getAttribute('data-status');
         result.escapeDoneTasks = await page.locator('[data-column=done] [role=group]').count();
+        assert.equal(result.escapeStatus, 'cancelled');
         assert.equal(result.escapeDoneTasks, 0);
+        await start(page);
+        await drop(page);
+        result.dragAfterCancellation = await page
+          .locator('[role=status]')
+          .getAttribute('data-status');
+        assert.equal(result.dragAfterCancellation, 'moved:Fixture task:0');
         for (const action of ['delete', 'revoke', 'update']) {
           await page.reload();
           await start(page);
