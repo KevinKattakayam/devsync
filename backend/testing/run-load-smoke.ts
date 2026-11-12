@@ -237,7 +237,7 @@ export function createFixtureServerEnvironment(fixture: ProvisionedLoadFixture):
   const database = new URL(fixture.environment.DATABASE_URL || '');
   const redis = new URL(fixture.environment.REDIS_URL || '');
   if (
-    database.protocol !== 'postgresql:' ||
+    !['postgres:', 'postgresql:'].includes(database.protocol) ||
     database.username !== 'browser_runtime' ||
     !/^\/devsync_e2e_[a-z0-9_]+$/.test(database.pathname) ||
     !['localhost', '127.0.0.1', '::1'].includes(database.hostname) ||

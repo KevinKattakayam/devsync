@@ -602,3 +602,7 @@ Historical Phase 0 audit: see docs/CHANGELOG.md. No production deployment or key
 # Phase 16 — fixture setup diagnostics
 
 - Added sanitized stage codes for disposable PostgreSQL/Redis startup, migrations, seeding, runtime-role setup, fixture validation, readiness, capability verification and synthetic owner authentication. Added a preflight-only runner mode that verifies and cleans up the disposable fixture without starting k6. The earlier `fixture_setup_failed` result remains unattributed until the stage is observed in the Docker-enabled local environment.
+
+# Phase 16 — fixture PostgreSQL URI compatibility
+
+- Accept the `postgres:` scheme emitted by Testcontainers alongside `postgresql:` in the disposable load fixture guards, retaining local host, database and runtime role validation. Real preflight verification remains pending.

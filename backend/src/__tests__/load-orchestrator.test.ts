@@ -60,6 +60,33 @@ const success: SmokeResult = { status: 0, error: null, metrics: null };
 
 beforeEach(() => jest.clearAllMocks());
 
+it('accepts the postgres URI scheme produced by Testcontainers for the restricted local role', async () => {
+  const postgresFixture = {
+    ...fixture,
+    environment: {
+      ...fixture.environment,
+      DATABASE_URL: 'postgres://browser_runtime@127.0.0.1:5432/devsync_e2e_load',
+    },
+  };
+  const deps = dependencies({ provision: jest.fn().mockResolvedValue(postgresFixture) });
+  expect((await runFixtureLoadSmoke(deps, undefined, { preflightOnly: true })).outcome).toBe(
+    'preflight_complete',
+  );
+  expect(() => createFixtureServerEnvironment(postgresFixture)).not.toThrow();
+  const remote = {
+    ...postgresFixture,
+    environment: {
+      ...postgresFixture.environment,
+      DATABASE_URL: 'postgres://browser_runtime@remote.example:5432/devsync_e2e_load',
+    },
+  };
+  expect(
+    (await runFixtureLoadSmoke(dependencies({ provision: jest.fn().mockResolvedValue(remote) })))
+      .outcome,
+  ).toBe('fixture_setup_failed');
+  expect(() => createFixtureServerEnvironment(remote)).toThrow();
+});
+
 it('starts an isolated fixture, authenticates its synthetic owner, launches k6, and cleans up', async () => {
   const deps = dependencies();
   expect(await runFixtureLoadSmoke(deps)).toEqual({

@@ -72,7 +72,7 @@ function validDisposableFixture(fixture: ProvisionedLoadFixture): boolean {
       origin.username === '' &&
       origin.password === '' &&
       fixture.apiBaseUrl === `${origin.origin}/api` &&
-      database.protocol === 'postgresql:' &&
+      ['postgres:', 'postgresql:'].includes(database.protocol) &&
       database.username === 'browser_runtime' &&
       ['localhost', '127.0.0.1', '::1'].includes(database.hostname) &&
       database.port !== '' &&
