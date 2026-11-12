@@ -1259,3 +1259,7 @@ Added a fixture-only, read-only capability-protected preflight endpoint with a v
 # Phase 16 — k6 fixture safety gate
 
 The existing bounded REST workload now validates a strict loopback target and the fixture-only capability endpoint in setup, and rechecks its versioned marker and run ID before each iteration's reads. It aborts on invalid proof and disables redirects. Node validation and mocked k6 wiring tests cover rejection and sequencing; these do not validate the k6 runtime or constitute a load run. One extra preflight request per iteration affects aggregate HTTP metrics. See [verification](quality/phase16-load-restore/README.md). Phase 16 remains open.
+
+# Phase 16 — isolated k6 child launcher
+
+Added a fixture-only k6 child launcher with an explicit environment allowlist, a fixed two-VU/15-second smoke entry point and cancellation handling. It does not provision a fixture or retain a performance report. Focused mocked-child and mocked-k6 tests passed; actual k6 and disposable-service integration remain unverified. SIGKILL and host/runtime failures cannot guarantee synchronous cleanup. See [verification](quality/phase16-load-restore/README.md). Phase 16 remains open.

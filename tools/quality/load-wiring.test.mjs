@@ -14,7 +14,7 @@ const env = {
   K6_WORKSPACE_ID: 'workspace',
   K6_DOCUMENT_ID: 'doc',
 };
-async function harness(statuses) {
+async function harness(statuses, smoke = false) {
   const calls = [];
   const context = vm.createContext({
     __ENV: env,
@@ -64,7 +64,13 @@ async function harness(statuses) {
     await readFile(new URL('./load.js', import.meta.url), 'utf8'),
     { context },
   );
-  await load.link((specifier) => {
+  const entry = smoke
+    ? new vm.SourceTextModule(await readFile(new URL('./load-smoke.js', import.meta.url), 'utf8'), {
+        context,
+      })
+    : load;
+  await entry.link((specifier) => {
+    if (specifier === './load.js') return load;
     if (specifier === './load-safety.mjs') return safety;
     const values = mocks[specifier];
     assert.ok(values, `Unexpected import: ${specifier}`);
@@ -76,8 +82,8 @@ async function harness(statuses) {
       { context },
     );
   });
-  await load.evaluate();
-  return { calls, module: load.namespace };
+  await entry.evaluate();
+  return { calls, module: entry.namespace };
 }
 test('setup rejection sends no workload requests', async () => {
   const h = await harness([403]);
@@ -100,4 +106,12 @@ test('validated iteration keeps the four bounded reads without redirects', async
   assert.equal(h.calls.length, 6);
   assert.ok(h.calls.slice(2).every((call) => call.options.redirects === 0));
   assert.ok(h.calls.slice(2).every((call) => call.url.startsWith(env.K6_BASE_URL)));
+});
+test('smoke entry fixes the VU and duration bounds and retains the fixture gate', async () => {
+  const h = await harness([403], true);
+  assert.equal(h.module.options.scenarios.reads.vus, 2);
+  assert.equal(h.module.options.scenarios.reads.duration, '15s');
+  assert.equal(h.module.options.scenarios.reads.gracefulStop, '0s');
+  assert.throws(() => h.module.setup(), /preflight rejected/);
+  assert.equal(h.calls.length, 1);
 });

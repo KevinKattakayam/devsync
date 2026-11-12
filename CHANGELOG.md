@@ -588,3 +588,7 @@ Historical Phase 0 audit: see docs/CHANGELOG.md. No production deployment or key
 # Phase 16 — k6 fixture safety gate
 
 - Connected the existing REST workload to fixture preflight verification in setup and each iteration; local Node tests cover fail-closed request sequencing. k6 runtime and load execution remain pending.
+
+# Phase 16 — isolated k6 child launcher
+
+- Added a bounded fixture k6 child launcher with restricted environment and cancellation handling. Actual k6 and fixture orchestration remain unverified.
