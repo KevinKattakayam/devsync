@@ -556,3 +556,7 @@ Historical Phase 0 audit: see docs/CHANGELOG.md. No production deployment or key
 # Phase 14 — native Kanban drag cleanup
 
 - Keep only transient visual drag state in the TaskCard, clear it on native `dragend`, and discard it when the card unmounts. Read the task ID from native `DataTransfer` and re-resolve current task/permission on every drop through the existing move guard. Preserve Yjs/API move semantics. Focused component tests and a standalone real-TaskCard Chrome fixture pass at desktop/mobile sizes, including Escape and a subsequent drag. The fixture is not backend/Yjs acceptance; virtualization and Phase 14 remain incomplete.
+
+# Phase 14 — optional task-card drag adapter
+
+- Added an optional dnd-kit handle and callback-ref adapter to the existing task card. Native drag remains the default; adapter handles respect current write and busy state. Component checks and an isolated real-card/dnd-kit browser fixture pass. Active-drag revocation, server-backed authorization and virtualization still require integration verification.

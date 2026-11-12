@@ -15,6 +15,10 @@ export default defineConfig({
       { find: /^react$/, replacement: `${frontend}/node_modules/react/index.js` },
       { find: /^react-dom\/client$/, replacement: `${frontend}/node_modules/react-dom/client.js` },
       { find: /^react-dom$/, replacement: `${frontend}/node_modules/react-dom/index.js` },
+      {
+        find: /^@dnd-kit\/core$/,
+        replacement: `${frontend}/node_modules/@dnd-kit/core/dist/core.esm.js`,
+      },
       { find: '@', replacement: `${frontend}/src` },
     ],
   },

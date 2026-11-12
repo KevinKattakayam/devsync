@@ -5,6 +5,12 @@ import { useState } from 'react';
 import type { Task } from '@/types';
 import { generateColor, getInitials } from '@/lib/utils';
 import { Select } from '@/components/ui';
+import type { DraggableAttributes, DraggableSyntheticListeners } from '@dnd-kit/core';
+
+export type KanbanDragAdapter = {
+  attributes: DraggableAttributes;
+  listeners: DraggableSyntheticListeners;
+};
 
 const priorityConfig: Record<string, { color: string; bg: string; label: string }> = {
   LOW: { color: 'text-foreground', bg: 'bg-secondary', label: 'Low' },
@@ -18,6 +24,9 @@ export function KanbanTaskCard({
   columns,
   canWrite,
   busy,
+  dragAdapter,
+  dragNodeRef,
+  dragHandleRef,
   onOpen,
   onDragStart,
   onDragEnd,
@@ -27,6 +36,9 @@ export function KanbanTaskCard({
   columns: { id: string; name: string }[];
   canWrite: boolean;
   busy: boolean;
+  dragAdapter?: KanbanDragAdapter;
+  dragNodeRef?: (element: HTMLElement | null) => void;
+  dragHandleRef?: (element: HTMLElement | null) => void;
   onOpen: (trigger?: HTMLButtonElement) => void;
   onDragStart: (event: DragEvent<HTMLDivElement>) => void;
   onDragEnd: (event: DragEvent<HTMLDivElement>) => void;
@@ -35,10 +47,14 @@ export function KanbanTaskCard({
   const [isDragging, setIsDragging] = useState(false);
   const priority = priorityConfig[task.priority?.toUpperCase()] || priorityConfig.MEDIUM;
   return (
-    <div className="rounded-lg bg-card p-3">
+    <div ref={dragNodeRef} className="rounded-lg bg-card p-3">
       <div
-        draggable={canWrite && !busy}
+        draggable={!dragAdapter && canWrite && !busy}
         onDragStart={(event) => {
+          if (dragAdapter || !canWrite || busy) {
+            event.preventDefault();
+            return;
+          }
           onDragStart(event);
           if (!event.defaultPrevented) setIsDragging(true);
         }}
@@ -76,6 +92,22 @@ export function KanbanTaskCard({
           )}
         </div>
       </div>
+      {dragAdapter && canWrite && (
+        <button
+          type="button"
+          {...dragAdapter.attributes}
+          {...(!busy && !dragAdapter.attributes['aria-disabled']
+            ? dragAdapter.listeners
+            : undefined)}
+          ref={dragHandleRef}
+          disabled={busy || dragAdapter.attributes['aria-disabled']}
+          aria-disabled={busy || dragAdapter.attributes['aria-disabled']}
+          aria-label={`Drag ${task.title}`}
+          className="mt-2 rounded px-2 py-1 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary disabled:opacity-50"
+        >
+          Drag
+        </button>
+      )}
       {canWrite && (
         <div className="mt-3">
           <Select
