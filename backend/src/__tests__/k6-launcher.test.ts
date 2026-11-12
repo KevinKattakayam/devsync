@@ -1,6 +1,5 @@
 import { EventEmitter } from 'events';
-import { existsSync } from 'fs';
-import { writeFile } from 'fs/promises';
+import { PassThrough } from 'stream';
 import { spawn, type ChildProcess } from 'child_process';
 import { launchFixtureSmoke, type FixtureLoadConnection } from '../../testing/k6-launcher';
 
@@ -18,7 +17,9 @@ const connection: FixtureLoadConnection = {
 function child() {
   const events = new EventEmitter();
   const kill = jest.fn(() => true);
-  return Object.assign(events, { kill }) as unknown as ChildProcess & { kill: jest.Mock };
+  return Object.assign(events, { kill, stdout: new PassThrough() }) as unknown as ChildProcess & {
+    kill: jest.Mock;
+  };
 }
 const mockedSpawn = jest.mocked(spawn);
 
@@ -37,7 +38,7 @@ it('launches only the fixed smoke script with a restricted environment', async (
     expect(args).toEqual(['run', expect.stringMatching(/load-smoke\.js$/)]);
     expect(options).toMatchObject({
       shell: false,
-      stdio: 'ignore',
+      stdio: ['ignore', 'pipe', 'ignore'],
       env: { K6_FIXTURE_CAPABILITY: connection.capability },
     });
     expect(options?.env).not.toHaveProperty('K6_VUS');
@@ -55,7 +56,6 @@ it('launches only the fixed smoke script with a restricted environment', async (
         'PATH',
       ].sort(),
     );
-    expect(existsSync(String(options?.cwd))).toBe(false);
   } finally {
     delete process.env.K6_VUS;
     delete process.env.AWS_SECRET_ACCESS_KEY;
@@ -85,11 +85,9 @@ it('returns a sanitized startup error after child close', async () => {
   mockedSpawn.mockReturnValue(processFixture);
   const pending = launchFixtureSmoke(connection);
   while (!mockedSpawn.mock.calls.length) await new Promise((resolve) => setImmediate(resolve));
-  const options = mockedSpawn.mock.calls[0][2];
   processFixture.emit('error', new Error(connection.capability));
   processFixture.emit('close', null, null);
   expect(await pending).toEqual({ status: null, error: 'startup_failed', metrics: null });
-  expect(existsSync(String(options?.cwd))).toBe(false);
 });
 it('cancellation sends SIGTERM and waits for child close', async () => {
   const processFixture = child();
@@ -113,10 +111,8 @@ it('returns the actual nonzero exit status and removes the temporary directory',
   mockedSpawn.mockReturnValue(processFixture);
   const pending = launchFixtureSmoke(connection);
   while (!mockedSpawn.mock.calls.length) await new Promise((resolve) => setImmediate(resolve));
-  const options = mockedSpawn.mock.calls[0][2];
   processFixture.emit('close', 17, null);
   expect(await pending).toEqual({ status: 17, error: null, metrics: null });
-  expect(existsSync(String(options?.cwd))).toBe(false);
 });
 
 it('handles SIGTERM and escalates to SIGKILL after the grace period', async () => {
@@ -146,14 +142,15 @@ it('returns only an allowlisted numeric performance summary', async () => {
   mockedSpawn.mockReturnValue(processFixture);
   const pending = launchFixtureSmoke(connection);
   while (!mockedSpawn.mock.calls.length) await new Promise((resolve) => setImmediate(resolve));
-  const options = mockedSpawn.mock.calls[0][2];
-  await writeFile(
-    `${String(options?.cwd)}/k6-results.json`,
+  (processFixture.stdout as PassThrough).write(
     JSON.stringify({
       metrics: {
         http_req_duration: { values: { med: 4, 'p(95)': 8, 'p(99)': 10 } },
         http_reqs: { values: { count: 12, rate: 2 } },
         http_req_failed: { values: { rate: 0 } },
+        application_latency_ms: { values: { med: 3, 'p(95)': 6, 'p(99)': 8 } },
+        application_requests: { values: { count: 8, rate: 1.5 } },
+        application_failures: { values: { rate: 0.125 } },
         document_latency_ms: { values: { med: 5, 'p(95)': 7, 'p(99)': 9 } },
         untrusted_metric: { values: { secret: connection.capability } },
       },
@@ -166,6 +163,11 @@ it('returns only an allowlisted numeric performance summary', async () => {
     requestDurationMs: { median: 4, p95: 8, p99: 10 },
     requests: { count: 12, perSecond: 2 },
     failedRequestRate: 0,
+    application: {
+      requestDurationMs: { median: 3, p95: 6, p99: 8 },
+      requests: { count: 8, perSecond: 1.5 },
+      failedRequestRate: 0.125,
+    },
     endpoints: {
       health: { median: null, p95: null, p99: null },
       profile: { median: null, p95: null, p99: null },
@@ -175,5 +177,14 @@ it('returns only an allowlisted numeric performance summary', async () => {
   });
   expect(JSON.stringify(result)).not.toContain(connection.capability);
   expect(JSON.stringify(result)).not.toContain(connection.accessToken);
-  expect(existsSync(String(options?.cwd))).toBe(false);
+});
+
+it('rejects oversized summary output without returning its contents', async () => {
+  const processFixture = child();
+  mockedSpawn.mockReturnValue(processFixture);
+  const pending = launchFixtureSmoke(connection);
+  while (!mockedSpawn.mock.calls.length) await new Promise((resolve) => setImmediate(resolve));
+  (processFixture.stdout as PassThrough).write('x'.repeat(128 * 1024 + 1));
+  processFixture.emit('close', 0, null);
+  expect(await pending).toEqual({ status: 0, error: null, metrics: null });
 });

@@ -1,8 +1,6 @@
 // Test tooling only; no production application imports this launcher.
 import { spawn } from 'child_process';
-import { mkdtemp, readFile, rm, stat } from 'fs/promises';
-import { tmpdir } from 'os';
-import { join, resolve } from 'path';
+import { resolve } from 'path';
 
 export interface FixtureLoadConnection {
   baseUrl: string;
@@ -26,6 +24,11 @@ export interface SanitizedSmokeMetrics {
   requestDurationMs: { median: number | null; p95: number | null; p99: number | null };
   requests: { count: number | null; perSecond: number | null };
   failedRequestRate: number | null;
+  application: {
+    requestDurationMs: { median: number | null; p95: number | null; p99: number | null };
+    requests: { count: number | null; perSecond: number | null };
+    failedRequestRate: number | null;
+  };
   endpoints: Record<string, { median: number | null; p95: number | null; p99: number | null }>;
 }
 
@@ -37,11 +40,9 @@ function numericValue(source: unknown, name: string): number | null {
   return typeof value === 'number' && Number.isFinite(value) ? value : null;
 }
 
-async function readSanitizedMetrics(directory: string): Promise<SanitizedSmokeMetrics | null> {
+function readSanitizedMetrics(raw: string): SanitizedSmokeMetrics | null {
   try {
-    const summaryPath = join(directory, 'k6-results.json');
-    if ((await stat(summaryPath)).size > 128 * 1024) return null;
-    const raw = await readFile(summaryPath, 'utf8');
+    if (Buffer.byteLength(raw) > 128 * 1024) return null;
     const parsed: unknown = JSON.parse(raw);
     const metrics =
       parsed && typeof parsed === 'object' ? (parsed as { metrics?: unknown }).metrics : undefined;
@@ -64,6 +65,20 @@ async function readSanitizedMetrics(directory: string): Promise<SanitizedSmokeMe
         perSecond: numericValue((metrics as Record<string, unknown>).http_reqs, 'rate'),
       },
       failedRequestRate: numericValue((metrics as Record<string, unknown>).http_req_failed, 'rate'),
+      application: {
+        requestDurationMs: durations('application_latency_ms'),
+        requests: {
+          count: numericValue((metrics as Record<string, unknown>).application_requests, 'count'),
+          perSecond: numericValue(
+            (metrics as Record<string, unknown>).application_requests,
+            'rate',
+          ),
+        },
+        failedRequestRate: numericValue(
+          (metrics as Record<string, unknown>).application_failures,
+          'rate',
+        ),
+      },
       endpoints,
     };
   } catch {
@@ -105,26 +120,11 @@ export async function launchFixtureSmoke(
   if (signal !== undefined && !(signal instanceof AbortSignal))
     return { status: null, error: 'invalid_configuration', metrics: null };
   if (signal?.aborted) return { status: null, error: 'cancelled', metrics: null };
-  let directory: string;
-  try {
-    directory = await mkdtemp(join(tmpdir(), 'devsync-k6-smoke-'));
-  } catch {
-    return { status: null, error: 'startup_failed', metrics: null };
-  }
-  if (signal?.aborted) {
-    try {
-      await rm(directory, { recursive: true, force: true });
-      return { status: null, error: 'cancelled', metrics: null };
-    } catch {
-      return { status: null, error: 'cleanup_failed', metrics: null };
-    }
-  }
   let result: SmokeResult = { status: null, error: 'startup_failed', metrics: null };
   try {
     const child = spawn('k6', ['run', resolve(__dirname, '../../tools/quality/load-smoke.js')], {
-      cwd: directory,
       shell: false,
-      stdio: 'ignore',
+      stdio: ['ignore', 'pipe', 'ignore'],
       env: {
         PATH: process.env.PATH || '/usr/bin:/bin',
         K6_NO_USAGE_REPORT: 'true',
@@ -134,6 +134,15 @@ export async function launchFixtureSmoke(
         K6_WORKSPACE_ID: input.workspaceId,
         K6_DOCUMENT_ID: input.documentId,
       },
+    });
+    let summary = '';
+    let tooLarge = false;
+    child.stdout?.on('data', (chunk: Buffer) => {
+      if (tooLarge) return;
+      if (Buffer.byteLength(summary) + chunk.length > 128 * 1024) {
+        summary = '';
+        tooLarge = true;
+      } else summary += chunk.toString('utf8');
     });
     result = await new Promise<SmokeResult>((done) => {
       let cancelled = false;
@@ -171,20 +180,10 @@ export async function launchFixtureSmoke(
       });
       if (signal?.aborted) cancel();
     });
+    if (!tooLarge && result.status !== null && result.error === null)
+      result.metrics = readSanitizedMetrics(summary);
   } catch {
     result = { status: null, error: 'startup_failed', metrics: null };
-  } finally {
-    try {
-      if (
-        result.status !== null &&
-        result.error !== 'startup_failed' &&
-        result.error !== 'cancelled'
-      )
-        result.metrics = await readSanitizedMetrics(directory);
-      await rm(directory, { recursive: true, force: true });
-    } catch {
-      result = { status: null, error: 'cleanup_failed', metrics: null };
-    }
   }
   return result;
 }

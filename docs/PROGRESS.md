@@ -1277,3 +1277,7 @@ The user's real smoke runner previously returned `fixture_setup_failed`, which t
 # Phase 16 — fixture database URI compatibility
 
 The installed Testcontainers PostgreSQL implementation emits `postgres:` while the load runner guards accepted only `postgresql:`. A failing regression reproduced this mismatch; both guards now accept either scheme with their existing local host, disposable database and runtime role checks. Focused tests passed 25/25, and backend lint, targeted formatting, typecheck and build passed. The user's actual connection URI was not inspected and the corrected disposable preflight still requires a local Docker run. No k6 load was run. See [verification](quality/phase16-load-restore/README.md); Phase 16 remains incomplete.
+
+# Phase 16 — k6 summary and cancellation follow-up
+
+User-run disposable preflight passed; a later cancellation reported cleanup failure and a completed run lacked a readable summary. Changed the k6 summary handoff to bounded stdout carrying only allowlisted numeric aggregates, with separate application-only metrics. Isolated the fixture server from terminal Ctrl+C on Unix while retaining bounded explicit shutdown. Mocked backend tests passed 27/27, mocked k6 wiring, lint, formatting, strict types and build passed. The precise causes of the user's two failures remain unconfirmed; k6 snap cannot launch in this sandbox, and real runtime and cancellation verification remain pending. See [verification](quality/phase16-load-restore/README.md). Phase 16 remains incomplete.

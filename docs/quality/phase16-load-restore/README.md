@@ -54,6 +54,19 @@ RUN_ISOLATED_K6_SMOKE=1 LOAD_SMOKE_PREFLIGHT_ONLY=1 npm run test:load-smoke
 
 This creates only fresh disposable Testcontainers PostgreSQL/Redis services and a fixture database, performs migrations and synthetic seeding, starts the fixture server, authenticates the seeded fixture owner, then cleans up. It does not launch k6 or target an application/production server. Share only the printed outcome and fixed failure-stage code; do not share environment output or secret-bearing logs. Phase 16 remains incomplete.
 
+## Summary and cancellation follow-up
+
+The user reported a successful disposable preflight, a cancelled run with `cleanup_failed`, and a completed k6 2.3.0 run whose summary could not be read. The old launcher discarded k6 stderr and searched for a relative file in its temporary working directory; its test wrote the file itself and did not verify the real handoff. The exact reason the user's summary file was unavailable is not established. The new `handleSummary` sends only allowlisted numeric metric aggregates over stdout, which the launcher reads with a 128 KiB bound and sanitizes again. No temporary summary file or raw response is retained. Overall HTTP totals include fixture preflight; separately instrumented application-only latency, request count/rate and non-200 rate exclude preflight. Endpoint latency trends remain available.
+
+The fixture server previously shared the terminal process group, so Ctrl+C could terminate it before logout; this is a plausible cause, not a confirmed explanation of the reported cleanup failure. On Unix the fixture server is now started in a separate process group and is still explicitly stopped with the existing bounded termination sequence. The launcher waits for k6 close before the orchestrator attempts logout, server stop and container cleanup; failures remain reported as `cleanup_failed` separately from the child cancellation. SIGKILL or host/runtime failure can still interrupt cleanup.
+
+Focused mocked backend tests passed 27/27 with coverage disabled; the mocked k6 wiring test, backend lint, targeted formatting, typecheck and build passed. The local k6 executable is a snap that could not start in this sandbox (`snap-confine` refusal), so the stdout summary contract has not been verified with the user's real k6 2.3.0. No Docker or load was run in this session. In a normal local terminal, rerun the existing opt-in command below once to verify the real summary; a separate run interrupted with Ctrl+C is needed to verify cancellation and cleanup. Never report fixture measurements as production performance.
+
+```sh
+cd backend
+RUN_ISOLATED_K6_SMOKE=1 npm run test:load-smoke
+```
+
 ## PostgreSQL URI scheme mismatch
 
 The installed PostgreSQL Testcontainers package constructs a `postgres:` connection URI. The fixture lifecycle preserves its scheme when changing to the restricted runtime role, while both the orchestrator and fixture-server environment validation previously required `postgresql:`. The new regression reproduced that mismatch before the fix. Both guards now accept these PostgreSQL schemes while retaining the existing local-host, disposable database and runtime-role restrictions. This establishes a concrete mismatch consistent with the reported `fixture_validation` failure; the actual user's URI was not observed, so the local failure is not independently proven to have had only this cause. A remote host remains rejected in the regression. Focused orchestration and launcher tests passed 25/25 with coverage disabled; backend lint, targeted formatting, typecheck and build passed. No Docker or k6 execution occurred in this session. Run the preflight-only command above to confirm the fix and discover any further local issue.

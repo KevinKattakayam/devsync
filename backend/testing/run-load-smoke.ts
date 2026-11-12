@@ -372,6 +372,7 @@ function createDependencies(): LoadOrchestratorDependencies {
         cwd: backend,
         env: environment,
         shell: false,
+        detached: process.platform !== 'win32',
         stdio: 'ignore',
       });
       await new Promise<void>((resolvePromise, reject) => {
@@ -417,6 +418,8 @@ async function main() {
       preflightOnly,
     });
     console.log(`Isolated k6 smoke outcome: ${result.outcome}`);
+    if (controller.signal.aborted || result.smoke?.error === 'cancelled')
+      console.log('Cancellation was requested');
     if (result.failureStage) console.error(`Sanitized failure stage: ${result.failureStage}`);
     if (result.cleanupFailed) console.error('One or more disposable cleanup steps failed');
     if (result.outcome === 'preflight_complete') {

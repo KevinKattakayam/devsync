@@ -203,6 +203,36 @@ it('cleans the session, fixture server and containers after load cancellation', 
   expect(fixtureCleanup).toHaveBeenCalledTimes(1);
 });
 
+it('waits for the cancelled child before cleanup and reports a cleanup failure separately', async () => {
+  let finish!: (result: SmokeResult) => void;
+  const controller = new AbortController();
+  const deps = dependencies({
+    launch: jest.fn().mockImplementation(
+      () =>
+        new Promise<SmokeResult>((resolve) => {
+          finish = resolve;
+        }),
+    ),
+    stopServer: jest.fn().mockRejectedValue(new Error('private fixture detail')),
+  });
+  const pending = runFixtureLoadSmoke(deps, controller.signal);
+  while (!finish) await new Promise((resolve) => setImmediate(resolve));
+  controller.abort();
+  expect(authentication.logout).not.toHaveBeenCalled();
+  expect(fixtureCleanup).not.toHaveBeenCalled();
+  finish({ status: null, error: 'cancelled', metrics: null });
+  const result = await pending;
+  expect(result).toMatchObject({
+    outcome: 'cleanup_failed',
+    cleanupFailed: true,
+    smoke: { error: 'cancelled' },
+  });
+  expect(authentication.logout).toHaveBeenCalledTimes(1);
+  expect(deps.stopServer).toHaveBeenCalledTimes(1);
+  expect(fixtureCleanup).toHaveBeenCalledTimes(1);
+  expect(JSON.stringify(result)).not.toContain('private fixture detail');
+});
+
 it('attempts every cleanup action and reports cleanup failure without details', async () => {
   const deps = dependencies({
     stopServer: jest.fn().mockRejectedValue(new Error(connection.capability)),

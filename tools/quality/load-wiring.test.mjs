@@ -45,6 +45,12 @@ async function harness(statuses, smoke = false) {
       Trend: class {
         add() {}
       },
+      Counter: class {
+        add() {}
+      },
+      Rate: class {
+        add() {}
+      },
     },
     'k6/execution': {
       default: {
@@ -115,4 +121,21 @@ test('smoke entry fixes the VU and duration bounds and retains the fixture gate'
   assert.ok(h.module.options.summaryTrendStats.includes('p(99)'));
   assert.throws(() => h.module.setup(), /preflight rejected/);
   assert.equal(h.calls.length, 1);
+});
+test('summary emits only allowlisted numeric metrics on stdout', async () => {
+  const h = await harness([], true);
+  const result = h.module.handleSummary({
+    metrics: {
+      application_requests: { values: { count: 4, rate: 2, secret: 'private' } },
+      application_latency_ms: { values: { med: 1, 'p(95)': 2, 'p(99)': 3 } },
+      unexpected: { values: { count: 9 } },
+    },
+    secret: 'private',
+  });
+  assert.deepEqual(Object.keys(result), ['stdout']);
+  const parsed = JSON.parse(result.stdout);
+  assert.equal(parsed.metrics.application_requests.values.count, 4);
+  assert.equal(parsed.metrics.application_latency_ms.values['p(99)'], 3);
+  assert.ok(!result.stdout.includes('private'));
+  assert.equal(parsed.metrics.unexpected, undefined);
 });
