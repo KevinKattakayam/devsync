@@ -568,3 +568,7 @@ Historical Phase 0 audit: see docs/CHANGELOG.md. No production deployment or key
 # Phase 14 — isolated interruption research
 
 - Added a real-card fixture proposing a nested dnd-kit context reset under a persistent Virtuoso host. Focused static and mocked component checks pass; sandbox restrictions blocked Chrome and localhost verification, so the interruption behavior remains unverified and no production virtualization is delivered.
+
+# Phase 14 — isolated two-column fixture
+
+- Added an experimental two-column fixture using the real task card and move guard. Browser drag behavior remains unverified; production Kanban is unchanged.
