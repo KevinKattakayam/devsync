@@ -560,3 +560,11 @@ Historical Phase 0 audit: see docs/CHANGELOG.md. No production deployment or key
 # Phase 14 — optional task-card drag adapter
 
 - Added an optional dnd-kit handle and callback-ref adapter to the existing task card. Native drag remains the default; adapter handles respect current write and busy state. Component checks and an isolated real-card/dnd-kit browser fixture pass. Active-drag revocation, server-backed authorization and virtualization still require integration verification.
+
+# Phase 14 — virtualized column follow-up
+
+- Reviewed the real-card adapter against the isolated virtualized drag proof. Focus and scroll preservation across a dnd-kit context reset after deletion or permission revocation remain unverified; no virtualized column or dependency change is delivered.
+
+# Phase 14 — isolated interruption research
+
+- Added a real-card fixture proposing a nested dnd-kit context reset under a persistent Virtuoso host. Focused static and mocked component checks pass; sandbox restrictions blocked Chrome and localhost verification, so the interruption behavior remains unverified and no production virtualization is delivered.
