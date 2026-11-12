@@ -572,3 +572,7 @@ Historical Phase 0 audit: see docs/CHANGELOG.md. No production deployment or key
 # Phase 14 — isolated two-column fixture
 
 - Added an experimental two-column fixture using the real task card and move guard. Browser drag behavior remains unverified; production Kanban is unchanged.
+
+# Phase 15 — grounded AI isolation regression (pending)
+
+- Added a database integration regression for workspace-scoped GitHub evidence and disconnection during grounded AI generation. User-run disposable PostgreSQL test passed (1 passed, 153 skipped); the focused run reported coverage thresholds unmet. No production behavior changed.

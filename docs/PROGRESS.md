@@ -1243,3 +1243,7 @@ Added an isolated 1,000-task real-card fixture that proposes resetting only a ne
 # Phase 14 — isolated two-column fixture
 
 Added a synthetic two-column Virtuoso fixture with one shared dnd-kit context, real task cards and the existing move guard. The focused component test uses mocked Virtuoso measurements; browser cross-column drag, focus and scroll behavior remain unverified. No production Kanban, dependency manifest or backend changes were made. See [fixture notes](quality/phase14-virtualization-draft/combined-fixture/TWO_COLUMN.md). Phase 14 remains open.
+
+# Phase 15 — grounded connected-source isolation regression pending
+
+Traced the grounded preview through workspace authorization, tenant-scoped lexical retrieval and post-provider source revalidation. Added a database integration regression for foreign GitHub metadata, viewer access and disconnection during provider I/O. The model response is mocked; database and authorization code are real. User-run Docker/PostgreSQL verification passed the targeted case (1 passed, 153 skipped); Jest reported coverage thresholds unmet for this focused run. This does not establish a full coverage-gate pass or live provider access. Focused lint, formatting, strict types and three grounded AI unit tests passed. See [verification record](quality/phase15-ai-isolation/README.md). Phase 15 remains open.

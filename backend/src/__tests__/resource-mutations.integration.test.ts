@@ -2811,6 +2811,69 @@ it('grounded previews reject foreign authority, viewer drafts, fabricated citati
   );
 });
 
+it('grounded PR evidence rechecks repository disconnection and excludes foreign workspace metadata', async () => {
+  const { a, b } = await fixture();
+  const repositories = await Promise.all(
+    [a, b].map((workspaceId) =>
+      admin.gitHubRepository.create({
+        data: {
+          workspaceId,
+          repositoryId: `grounded-${workspaceId}`,
+          installationId: '456',
+          owner: workspaceId === a ? 'localfixture' : 'foreignfixture',
+          name: 'isolationquartz',
+          webhookSecret: 'fixture-not-a-secret',
+        },
+      }),
+    ),
+  );
+  for (const repo of repositories)
+    await admin.gitHubExecutionState.create({
+      data: {
+        repositoryId: repo.id,
+        workspaceId: repo.workspaceId,
+        kind: 'pull_request',
+        subject: '7',
+        state: 'open',
+        headSha: 'a'.repeat(40),
+        providerAt: new Date(),
+        rank: 1,
+        pullNumber: 7,
+      },
+    });
+  const generate = jest.mocked(completeWithFallback);
+  const response = {
+    provider: 'groq' as const,
+    content: JSON.stringify({
+      claims: [{ text: 'Fixture claim', references: [1] }],
+      proposals: [],
+    }),
+  };
+  generate.mockClear().mockResolvedValue(response);
+  const input = { workspaceId: a, prompt: 'isolationquartz', purpose: 'pr_brief' };
+  const result = await withDatabase(db, () => groundedPreview('owner', input));
+  expect(result.sources).toEqual([expect.objectContaining({ id: `${repositories[0].id}:7` })]);
+  expect(JSON.stringify(result)).not.toContain('foreignfixture');
+  expect(JSON.stringify(generate.mock.calls)).not.toContain('foreignfixture');
+  generate.mockClear();
+  expect(await withDatabase(db, () => groundedPreview('viewer', input))).toMatchObject({
+    status: 'insufficient_evidence',
+    sources: [],
+  });
+  await expect(withDatabase(db, () => groundedPreview('foreign', input))).rejects.toThrow();
+  expect(generate).not.toHaveBeenCalled();
+  generate.mockImplementation(async () => {
+    await admin.gitHubRepository.update({
+      where: { id: repositories[0].id },
+      data: { providerDisconnectedAt: new Date() },
+    });
+    return response;
+  });
+  await expect(withDatabase(db, () => groundedPreview('owner', input))).rejects.toThrow(
+    'Source unavailable',
+  );
+});
+
 it('grounded previews cite current local sources without writing tasks or accepting receipts', async () => {
   const { a } = await fixture();
   jest.mocked(completeWithFallback).mockResolvedValue({
