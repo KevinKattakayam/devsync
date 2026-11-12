@@ -4,6 +4,7 @@ import { resolve } from 'path';
 import { Client } from 'pg';
 import { PostgreSqlContainer } from '@testcontainers/postgresql';
 import { GenericContainer } from 'testcontainers';
+import { FixtureSetupError, type LoadFailureStage } from './load-diagnostics';
 
 const root = resolve(__dirname, '../..');
 
@@ -42,11 +43,16 @@ export async function provisionDisposableFixture({
     port < 1 ||
     port > 65535
   )
-    throw new Error('Disposable fixture configuration rejected');
+    throw new FixtureSetupError('fixture_configuration');
 
-  const postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16')
-    .withDatabase(databaseName)
-    .start();
+  let postgres: Awaited<ReturnType<PostgreSqlContainer['start']>>;
+  try {
+    postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16')
+      .withDatabase(databaseName)
+      .start();
+  } catch {
+    throw new FixtureSetupError('postgres_start');
+  }
   let redis: Awaited<ReturnType<GenericContainer['start']>> | undefined;
   let cleaned = false;
   const cleanup = async () => {
@@ -68,6 +74,7 @@ export async function provisionDisposableFixture({
     if (failed) throw new Error('Disposable fixture cleanup failed');
   };
 
+  let stage: LoadFailureStage = 'redis_start';
   try {
     redis = await new GenericContainer('redis:7-alpine').withExposedPorts(6379).start();
     const env: NodeJS.ProcessEnv = {
@@ -115,18 +122,21 @@ export async function provisionDisposableFixture({
       SEED_EDITOR_CLERK_ID: 'user_fixture_editor',
       SEED_VIEWER_CLERK_ID: 'user_fixture_viewer',
     };
+    stage = 'migration';
     await run(
       ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
       resolve(root, 'backend'),
       env,
       quiet,
     );
+    stage = 'seed';
     await run(
       ['node_modules/tsx/dist/cli.mjs', 'prisma/seed.ts'],
       resolve(root, 'backend'),
       env,
       quiet,
     );
+    stage = 'runtime_role';
     const connection = new Client({ connectionString: env.DATABASE_URL });
     await connection.connect();
     try {
@@ -144,11 +154,14 @@ export async function provisionDisposableFixture({
     }
     return { environment: env, cleanup };
   } catch (error) {
+    let cleanupFailed = false;
     try {
       await cleanup();
     } catch {
-      /* Preserve the setup failure; cleanup remains best-effort. */
+      cleanupFailed = true;
     }
-    throw error;
+    if (error instanceof FixtureSetupError)
+      throw new FixtureSetupError(error.stage, cleanupFailed || error.cleanupFailed);
+    throw new FixtureSetupError(stage, cleanupFailed);
   }
 }

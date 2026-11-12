@@ -1,6 +1,7 @@
 import type { ChildProcess } from 'child_process';
 import type { FixtureLoadConnection, SmokeResult } from './k6-launcher';
 import { launchFixtureSmoke } from './k6-launcher';
+import { FixtureSetupError, type LoadFailureStage } from './load-diagnostics';
 
 export interface ProvisionedLoadFixture {
   environment: NodeJS.ProcessEnv;
@@ -19,6 +20,7 @@ export interface LoadFixtureAuthentication {
 
 export type LoadOutcome =
   | 'completed'
+  | 'preflight_complete'
   | 'fixture_setup_failed'
   | 'server_start_failed'
   | 'fixture_verification_failed'
@@ -31,6 +33,12 @@ export interface LoadOrchestrationResult {
   exitCode: number;
   outcome: LoadOutcome;
   smoke: SmokeResult | null;
+  failureStage: LoadFailureStage | null;
+  cleanupFailed: boolean;
+}
+
+export interface LoadOrchestrationOptions {
+  preflightOnly?: boolean;
 }
 
 export interface LoadOrchestratorDependencies {
@@ -88,6 +96,7 @@ function validDisposableFixture(fixture: ProvisionedLoadFixture): boolean {
 export async function runFixtureLoadSmoke(
   dependencies: LoadOrchestratorDependencies,
   signal?: AbortSignal,
+  options: LoadOrchestrationOptions = {},
 ): Promise<LoadOrchestrationResult> {
   let fixture: ProvisionedLoadFixture | undefined;
   let server: ChildProcess | undefined;
@@ -95,44 +104,63 @@ export async function runFixtureLoadSmoke(
   let outcome: LoadOutcome = 'fixture_setup_failed';
   let smoke: SmokeResult | null = null;
   let cleanupFailed = false;
+  let failureStage: LoadFailureStage | null = null;
+  let currentStage: LoadFailureStage = 'fixture_setup';
 
   try {
-    if (cancelled(signal)) outcome = 'cancelled';
-    else {
+    if (cancelled(signal)) {
+      outcome = 'cancelled';
+      failureStage = 'cancelled';
+    } else {
       fixture = await dependencies.provision();
       outcome = 'fixture_setup_failed';
+      currentStage = 'fixture_validation';
       if (!validDisposableFixture(fixture)) throw new Error('Disposable fixture validation failed');
       outcome = 'server_start_failed';
       if (cancelled(signal)) outcome = 'cancelled';
       else {
+        currentStage = 'fixture_server_start';
         server = await dependencies.startServer(fixture);
+        currentStage = 'fixture_server_readiness';
         await dependencies.waitUntilReady(server, fixture.origin, signal);
         outcome = 'fixture_verification_failed';
+        currentStage = 'fixture_preflight';
         await dependencies.verifyPreflight(fixture, signal);
         outcome = 'authentication_failed';
         if (cancelled(signal)) outcome = 'cancelled';
         else {
+          currentStage = 'owner_authentication';
           authentication = await dependencies.authenticateOwner(fixture, signal);
-          outcome = 'load_failed';
-          const connection: FixtureLoadConnection = {
-            baseUrl: fixture.apiBaseUrl,
-            capability: fixture.capability,
-            accessToken: authentication.accessToken,
-            workspaceId: fixture.workspaceId,
-            documentId: fixture.documentId,
-          };
-          smoke = await dependencies.launch(connection, signal);
-          outcome =
-            smoke.error === 'cancelled' || cancelled(signal)
-              ? 'cancelled'
-              : smoke.error === null && smoke.status === 0
-                ? 'completed'
-                : 'load_failed';
+          if (options.preflightOnly) outcome = 'preflight_complete';
+          else {
+            outcome = 'load_failed';
+            currentStage = 'k6_launch';
+            const connection: FixtureLoadConnection = {
+              baseUrl: fixture.apiBaseUrl,
+              capability: fixture.capability,
+              accessToken: authentication.accessToken,
+              workspaceId: fixture.workspaceId,
+              documentId: fixture.documentId,
+            };
+            smoke = await dependencies.launch(connection, signal);
+            outcome =
+              smoke.error === 'cancelled' || cancelled(signal)
+                ? 'cancelled'
+                : smoke.error === null && smoke.status === 0
+                  ? 'completed'
+                  : 'load_failed';
+          }
         }
       }
     }
-  } catch {
-    if (cancelled(signal)) outcome = 'cancelled';
+  } catch (error) {
+    if (cancelled(signal)) {
+      outcome = 'cancelled';
+      failureStage = 'cancelled';
+    } else {
+      failureStage = error instanceof FixtureSetupError ? error.stage : currentStage;
+      cleanupFailed = error instanceof FixtureSetupError && error.cleanupFailed;
+    }
     // Deliberately omit exception details: setup errors can contain connection strings or tokens.
   } finally {
     if (authentication) {
@@ -158,6 +186,10 @@ export async function runFixtureLoadSmoke(
     }
   }
 
-  if (cleanupFailed) outcome = 'cleanup_failed';
-  return { exitCode: outcome === 'completed' ? 0 : 1, outcome, smoke };
+  if (cleanupFailed) {
+    outcome = 'cleanup_failed';
+    failureStage ??= 'cleanup';
+  }
+  const succeeded = outcome === 'completed' || outcome === 'preflight_complete';
+  return { exitCode: succeeded ? 0 : 1, outcome, smoke, failureStage, cleanupFailed };
 }

@@ -6,6 +6,7 @@ import {
   type ProvisionedLoadFixture,
 } from '../../testing/load-orchestrator';
 import type { FixtureLoadConnection, SmokeResult } from '../../testing/k6-launcher';
+import { FixtureSetupError } from '../../testing/load-diagnostics';
 import {
   createFixtureServerEnvironment,
   validateLocalContainerRuntime,
@@ -65,6 +66,8 @@ it('starts an isolated fixture, authenticates its synthetic owner, launches k6, 
     exitCode: 0,
     outcome: 'completed',
     smoke: success,
+    failureStage: null,
+    cleanupFailed: false,
   });
   expect(deps.provision).toHaveBeenCalledTimes(1);
   expect(deps.authenticateOwner).toHaveBeenCalledWith(fixture, undefined);
@@ -82,7 +85,13 @@ it('does not continue after disposable fixture provisioning fails', async () => 
     provision: jest.fn().mockRejectedValue(new Error(connection.accessToken)),
   });
   const result = await runFixtureLoadSmoke(deps);
-  expect(result).toEqual({ exitCode: 1, outcome: 'fixture_setup_failed', smoke: null });
+  expect(result).toEqual({
+    exitCode: 1,
+    outcome: 'fixture_setup_failed',
+    smoke: null,
+    failureStage: 'fixture_setup',
+    cleanupFailed: false,
+  });
   expect(JSON.stringify(result)).not.toContain(connection.accessToken);
   expect(deps.startServer).not.toHaveBeenCalled();
   expect(deps.authenticateOwner).not.toHaveBeenCalled();
@@ -95,6 +104,7 @@ it('cleans disposable resources after fixture-server startup failure', async () 
   expect(await runFixtureLoadSmoke(deps)).toMatchObject({
     exitCode: 1,
     outcome: 'server_start_failed',
+    failureStage: 'fixture_server_start',
   });
   expect(deps.authenticateOwner).not.toHaveBeenCalled();
   expect(deps.stopServer).not.toHaveBeenCalled();
@@ -108,6 +118,8 @@ it('rejects remote or non-runtime fixture configuration before server startup', 
     exitCode: 1,
     outcome: 'fixture_setup_failed',
     smoke: null,
+    failureStage: 'fixture_validation',
+    cleanupFailed: false,
   });
   expect(deps.startServer).not.toHaveBeenCalled();
   expect(fixtureCleanup).toHaveBeenCalledTimes(1);
@@ -118,7 +130,13 @@ it('stops the server and containers after fixture authentication failure', async
     authenticateOwner: jest.fn().mockRejectedValue(new Error(connection.capability)),
   });
   const result = await runFixtureLoadSmoke(deps);
-  expect(result).toEqual({ exitCode: 1, outcome: 'authentication_failed', smoke: null });
+  expect(result).toEqual({
+    exitCode: 1,
+    outcome: 'authentication_failed',
+    smoke: null,
+    failureStage: 'owner_authentication',
+    cleanupFailed: false,
+  });
   expect(JSON.stringify(result)).not.toContain(connection.capability);
   expect(deps.stopServer).toHaveBeenCalledTimes(1);
   expect(fixtureCleanup).toHaveBeenCalledTimes(1);
@@ -132,6 +150,8 @@ it('does not authenticate or launch when the live fixture preflight fails', asyn
     exitCode: 1,
     outcome: 'fixture_verification_failed',
     smoke: null,
+    failureStage: 'fixture_preflight',
+    cleanupFailed: false,
   });
   expect(deps.authenticateOwner).not.toHaveBeenCalled();
   expect(deps.launch).not.toHaveBeenCalled();
@@ -163,9 +183,65 @@ it('attempts every cleanup action and reports cleanup failure without details', 
   authentication.logout.mockRejectedValueOnce(new Error(connection.accessToken));
   fixtureCleanup.mockRejectedValueOnce(new Error(connection.capability));
   const result = await runFixtureLoadSmoke(deps);
-  expect(result).toEqual({ exitCode: 1, outcome: 'cleanup_failed', smoke: success });
+  expect(result).toEqual({
+    exitCode: 1,
+    outcome: 'cleanup_failed',
+    smoke: success,
+    failureStage: 'cleanup',
+    cleanupFailed: true,
+  });
   expect(JSON.stringify(result)).not.toContain(connection.capability);
   expect(JSON.stringify(result)).not.toContain(connection.accessToken);
+  expect(deps.stopServer).toHaveBeenCalledTimes(1);
+  expect(fixtureCleanup).toHaveBeenCalledTimes(1);
+});
+
+it('reports a sanitized fixture lifecycle stage without exposing the setup exception', async () => {
+  const privateDetail = 'postgresql://user:secret@host/db';
+  const deps = dependencies({
+    provision: jest.fn().mockRejectedValue(new FixtureSetupError('migration')),
+  });
+  const result = await runFixtureLoadSmoke(deps);
+  expect(result).toMatchObject({
+    exitCode: 1,
+    outcome: 'fixture_setup_failed',
+    failureStage: 'migration',
+  });
+  expect(JSON.stringify(result)).not.toContain(privateDetail);
+  expect(JSON.stringify(result)).not.toContain(connection.capability);
+  expect(deps.startServer).not.toHaveBeenCalled();
+});
+
+it.each(['postgres_start', 'redis_start', 'migration', 'seed', 'runtime_role'] as const)(
+  'preserves the fixed %s setup stage and does not include private exception data',
+  async (stage) => {
+    const privateDetail = 'postgresql://fixture-user:private-password@localhost/db';
+    const deps = dependencies({
+      provision: jest.fn().mockRejectedValue(new FixtureSetupError(stage)),
+    });
+    const result = await runFixtureLoadSmoke(deps);
+    expect(result.failureStage).toBe(stage);
+    expect(result.outcome).toBe('fixture_setup_failed');
+    expect(JSON.stringify(result)).not.toContain(privateDetail);
+    expect(JSON.stringify(result)).not.toContain(connection.capability);
+    expect(deps.startServer).not.toHaveBeenCalled();
+    expect(deps.launch).not.toHaveBeenCalled();
+  },
+);
+
+it('completes fixture verification without launching k6 in preflight-only mode', async () => {
+  const deps = dependencies();
+  expect(await runFixtureLoadSmoke(deps, undefined, { preflightOnly: true })).toEqual({
+    exitCode: 0,
+    outcome: 'preflight_complete',
+    smoke: null,
+    failureStage: null,
+    cleanupFailed: false,
+  });
+  expect(deps.verifyPreflight).toHaveBeenCalledWith(fixture, undefined);
+  expect(deps.authenticateOwner).toHaveBeenCalledWith(fixture, undefined);
+  expect(deps.launch).not.toHaveBeenCalled();
+  expect(authentication.logout).toHaveBeenCalledTimes(1);
   expect(deps.stopServer).toHaveBeenCalledTimes(1);
   expect(fixtureCleanup).toHaveBeenCalledTimes(1);
 });

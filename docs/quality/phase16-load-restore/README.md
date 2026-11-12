@@ -38,3 +38,18 @@ RUN_ISOLATED_K6_SMOKE=1 npm run test:load-smoke
 The runner starts only its own disposable Testcontainers services and cleans up the fixture session, server, Redis and PostgreSQL on normal completion, setup/authentication errors and catchable SIGINT/SIGTERM. k6 receives SIGTERM on cancellation and is escalated after three seconds; the fixture server is given ten seconds before escalation. SIGKILL of the parent, host/container-runtime failure, or a runtime that cannot complete termination can still prevent synchronous cleanup. Do not run this command against a production database, endpoint or provider; the command accepts no target URL or externally supplied fixture identity.
 
 Verification in this checkpoint: orchestration and launcher unit tests use injected/mocked process dependencies only (17 focused tests passed). Backend lint, strict TypeScript and build passed; focused Prettier passed. The repository-wide backend format check exited 1 on the unchanged `testing/browser.config.ts` and `testing/browser/decision-execution.spec.ts`; no unrelated formatting was changed. No Docker, PostgreSQL, Redis, fixture HTTP server or k6 process was started. Therefore no real fixture startup, runtime identity, container cleanup, k6 version/runtime compatibility, load measurements or performance acceptance is claimed. A permitted normal-terminal run remains required. The existing browser fixture path was typechecked after extraction but not executed; its behavior is intended to remain the same, and browser acceptance is still separate.
+
+## Phase 16 — fixture setup diagnostics (stage verification pending)
+
+The user's first real runner invocation returned only `fixture_setup_failed`; the old orchestrator intentionally discarded all exception details and did not retain a stage. That result cannot establish whether PostgreSQL, Redis, migration, seed, `browser_runtime` role setup, fixture validation, server startup/readiness, capability preflight or synthetic owner authentication failed. No root cause or application defect is confirmed.
+
+The runner now reports only fixed stage codes from `backend/testing/load-diagnostics.ts`. The disposable lifecycle assigns stages at PostgreSQL start, Redis start, migration, seed and runtime-role setup, and reports cleanup failure without including exception text, connection strings or credentials. The orchestrator separately reports fixture validation, server start/readiness, preflight, owner authentication and k6 launch. `LOAD_SMOKE_PREFLIGHT_ONLY=1` runs provisioning, fixture health/capability checks and synthetic owner identity verification, then logs out and cleans up without checking for or starting k6. It still requires explicit opt-in and a local Docker runtime; it is not a load run.
+
+Mocked orchestration tests cover sanitized stage propagation and that preflight-only mode cleans up without invoking k6. They do not identify the stage from the earlier local failure or prove real container startup. Codex cannot access Docker here, so real stage identification remains pending. From a normal local Linux terminal, run this single bounded diagnostic command:
+
+```sh
+cd backend
+RUN_ISOLATED_K6_SMOKE=1 LOAD_SMOKE_PREFLIGHT_ONLY=1 npm run test:load-smoke
+```
+
+This creates only fresh disposable Testcontainers PostgreSQL/Redis services and a fixture database, performs migrations and synthetic seeding, starts the fixture server, authenticates the seeded fixture owner, then cleans up. It does not launch k6 or target an application/production server. Share only the printed outcome and fixed failure-stage code; do not share environment output or secret-bearing logs. Phase 16 remains incomplete.

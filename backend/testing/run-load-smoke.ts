@@ -389,18 +389,43 @@ function createDependencies(): LoadOrchestratorDependencies {
 }
 
 async function main() {
-  if (process.env.RUN_ISOLATED_K6_SMOKE !== '1')
-    throw new Error('Set RUN_ISOLATED_K6_SMOKE=1 to opt in to the bounded isolated load smoke');
-  validateLocalContainerRuntime(process.env);
-  if (!(await hasK6Executable(process.env.PATH || '/usr/local/bin:/usr/bin:/bin')))
-    throw new Error('k6 executable is unavailable; disposable fixture was not started');
+  const preflightOnly = process.env.LOAD_SMOKE_PREFLIGHT_ONLY === '1';
+  let startupStage: 'fixture_configuration' | 'k6_runtime' | 'fixture_setup' =
+    'fixture_configuration';
+  try {
+    if (process.env.RUN_ISOLATED_K6_SMOKE !== '1') throw new Error('Load smoke opt-in is required');
+    if (process.env.LOAD_SMOKE_PREFLIGHT_ONLY && !preflightOnly)
+      throw new Error('Preflight-only mode must be explicitly set to 1');
+    validateLocalContainerRuntime(process.env);
+    if (!preflightOnly) {
+      startupStage = 'k6_runtime';
+      if (!(await hasK6Executable(process.env.PATH || '/usr/local/bin:/usr/bin:/bin')))
+        throw new Error('k6 executable is unavailable');
+    }
+    startupStage = 'fixture_setup';
+  } catch {
+    console.error(`Isolated k6 smoke could not start; failure stage: ${startupStage}`);
+    process.exitCode = 1;
+    return;
+  }
   const controller = new AbortController();
   const interrupt = () => controller.abort();
   process.on('SIGINT', interrupt);
   process.on('SIGTERM', interrupt);
   try {
-    const result = await runFixtureLoadSmoke(createDependencies(), controller.signal);
+    const result = await runFixtureLoadSmoke(createDependencies(), controller.signal, {
+      preflightOnly,
+    });
     console.log(`Isolated k6 smoke outcome: ${result.outcome}`);
+    if (result.failureStage) console.error(`Sanitized failure stage: ${result.failureStage}`);
+    if (result.cleanupFailed) console.error('One or more disposable cleanup steps failed');
+    if (result.outcome === 'preflight_complete') {
+      console.log(
+        'Disposable fixture startup, readiness, capability preflight and owner authentication passed; k6 was not launched',
+      );
+      process.exitCode = 0;
+      return;
+    }
     if (result.smoke?.metrics) {
       const measuredAt = new Date().toISOString();
       const fileName = `smoke-${measuredAt.replace(/[:.]/g, '-')}-${randomUUID()}.json`;
