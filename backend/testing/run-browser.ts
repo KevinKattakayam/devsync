@@ -1,11 +1,9 @@
-import { PostgreSqlContainer } from '@testcontainers/postgresql';
-import { GenericContainer } from 'testcontainers';
-import { Client } from 'pg';
-import { randomBytes, randomUUID } from 'crypto';
+import { randomUUID } from 'crypto';
 import { spawn, ChildProcess } from 'child_process';
 import { resolve } from 'path';
 import { rename, cp, readFile, writeFile, symlink } from 'fs/promises';
 import { parse } from 'dotenv';
+import { provisionDisposableFixture } from './fixture-lifecycle';
 
 const root = resolve(__dirname, '../..');
 async function run(args: string[], cwd: string, env: NodeJS.ProcessEnv) {
@@ -32,79 +30,14 @@ async function ready(url: string, child: ChildProcess) {
 }
 async function main() {
   if (process.env.NODE_ENV !== 'test') throw new Error('Browser orchestration requires test mode');
-  const postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16')
-    .withDatabase('devsync_e2e_browser')
-    .start();
+  const fixture = await provisionDisposableFixture({
+    baseEnvironment: process.env,
+    databaseName: 'devsync_e2e_browser',
+    port: 5501,
+  });
   const children: ChildProcess[] = [];
-  let redis: Awaited<ReturnType<GenericContainer['start']>> | undefined;
+  const env = fixture.environment;
   try {
-    redis = await new GenericContainer('redis:7-alpine').withExposedPorts(6379).start();
-    const env = {
-      ...process.env,
-      NODE_ENV: 'test',
-      AUTH_TRUSTED_ORIGIN: 'http://127.0.0.1:3001',
-      FEATURE_AUTOMATION: process.env.E2E_AUTOMATION ? 'true' : 'false',
-      NEXT_PUBLIC_FEATURE_AUTOMATION: process.env.E2E_AUTOMATION ? 'true' : 'false',
-      FEATURE_GROUNDED_AI: process.env.E2E_GROUNDED ? 'true' : 'false',
-      NEXT_PUBLIC_FEATURE_GROUNDED_AI: process.env.E2E_GROUNDED ? 'true' : 'false',
-      AI_QUOTA_USER_DAILY: process.env.E2E_AI_COST ? '1' : process.env.AI_QUOTA_USER_DAILY,
-      FEATURE_ASYNC_DIGEST: process.env.E2E_ASYNC_DIGEST
-        ? 'true'
-        : process.env.FEATURE_ASYNC_DIGEST,
-      FEATURE_SNIPPET_SAFETY: process.env.E2E_SNIPPET_SAFETY
-        ? 'true'
-        : process.env.FEATURE_SNIPPET_SAFETY,
-      FEATURE_DECISION_RECEIPTS:
-        process.env.E2E_DECISIONS || process.env.E2E_DECISION_EXECUTION
-          ? 'true'
-          : process.env.FEATURE_DECISION_RECEIPTS,
-      E2E_UI_CAPTURE: process.env.E2E_UI_CAPTURE,
-      E2E_RECOVERY: process.env.E2E_RECOVERY,
-      DATABASE_URL: postgres.getConnectionUri(),
-      E2E_ADMIN_DATABASE_URL: postgres.getConnectionUri(),
-      REDIS_URL: `redis://${redis.getHost()}:${redis.getMappedPort(6379)}`,
-      GITHUB_APP_ID: process.env.E2E_GITHUB_TRAIL ? '123' : '',
-      GITHUB_APP_WEBHOOK_SECRET: process.env.E2E_GITHUB_TRAIL
-        ? randomBytes(32).toString('hex')
-        : '',
-      GITHUB_APP_PRIVATE_KEY: '',
-      CLERK_SECRET_KEY: '',
-      CLERK_PUBLISHABLE_KEY: '',
-      GROQ_API_KEY: '',
-      OPENAI_API_KEY: '',
-      FRONTEND_URL: 'http://127.0.0.1:3001',
-      PORT: '5501',
-      E2E_RUN_SECRET: randomBytes(32).toString('hex'),
-      ENCRYPTION_KEY: randomBytes(32).toString('hex'),
-      SUPERADMIN_SERVICE_TOKEN: randomBytes(32).toString('hex'),
-      STRIPE_SECRET_KEY: `sk_test_${randomBytes(24).toString('hex')}`,
-      STRIPE_WEBHOOK_SECRET: randomBytes(32).toString('hex'),
-      SEED_ALLOW_WRITE: 'true',
-      SEED_OWNER_CLERK_ID: 'user_fixture_owner',
-      SEED_EDITOR_CLERK_ID: 'user_fixture_editor',
-      SEED_VIEWER_CLERK_ID: 'user_fixture_viewer',
-    };
-    await run(
-      ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
-      resolve(root, 'backend'),
-      env,
-    );
-    await run(['node_modules/tsx/dist/cli.mjs', 'prisma/seed.ts'], resolve(root, 'backend'), env);
-    const connection = new Client({ connectionString: env.DATABASE_URL });
-    await connection.connect();
-    try {
-      const password = randomBytes(24).toString('hex');
-      await connection.query(`CREATE ROLE browser_runtime LOGIN PASSWORD '${password}' NOSUPERUSER NOBYPASSRLS;
-        GRANT USAGE ON SCHEMA public TO browser_runtime;
-        GRANT SELECT,INSERT,UPDATE,DELETE ON ALL TABLES IN SCHEMA public TO browser_runtime;
-        GRANT USAGE,SELECT ON ALL SEQUENCES IN SCHEMA public TO browser_runtime`);
-      const url = new URL(env.DATABASE_URL);
-      url.username = 'browser_runtime';
-      url.password = password;
-      env.DATABASE_URL = url.toString();
-    } finally {
-      await connection.end();
-    }
     let target = resolve(root, '.worktrees/frontend-fixture');
     try {
       await rename(target, `/tmp/devsync-fixture-${randomUUID()}`);
@@ -228,8 +161,7 @@ async function main() {
         ),
       ]);
     }
-    await redis?.stop();
-    await postgres.stop();
+    await fixture.cleanup();
   }
 }
 void main().catch((error: unknown) => {

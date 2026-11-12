@@ -112,6 +112,7 @@ test('smoke entry fixes the VU and duration bounds and retains the fixture gate'
   assert.equal(h.module.options.scenarios.reads.vus, 2);
   assert.equal(h.module.options.scenarios.reads.duration, '15s');
   assert.equal(h.module.options.scenarios.reads.gracefulStop, '0s');
+  assert.ok(h.module.options.summaryTrendStats.includes('p(99)'));
   assert.throws(() => h.module.setup(), /preflight rejected/);
   assert.equal(h.calls.length, 1);
 });

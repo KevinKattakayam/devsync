@@ -10,6 +10,7 @@
     "worker": "tsx src/worker.ts",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand",
     "test:e2e": "playwright test -c playwright.config.ts",
+    "test:load-smoke": "NODE_ENV=test tsx testing/run-load-smoke.ts",
     "postinstall": "prisma generate",
     "db:migrate": "prisma migrate deploy",
     "db:seed": "tsx prisma/seed.ts",

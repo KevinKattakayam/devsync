@@ -1,3 +1,9 @@
+# Phase 16 — isolated k6 fixture orchestration
+
+- Extracted disposable PostgreSQL/Redis provisioning, migration/seed and `NOBYPASSRLS` runtime-role setup into a shared test-only lifecycle used by the browser runner and new load runner. Existing browser fixture inputs and execution path are retained.
+- Added an opt-in, local-only k6 smoke orchestration command. It provisions a fresh uniquely named database, starts only the isolated fixture server with an explicit environment allowlist, validates the capability-protected fixture marker, obtains and verifies a short-lived token for the seeded synthetic owner, then launches the fixed two-VU/15-second smoke workload.
+- Added orchestration failure/cancellation/cleanup tests and a numeric-only summary allowlist. Only sanitized measurements can be saved to ignored, mode-0600 result files. No containers, server or k6 workload were started in this session; runtime measurements remain pending.
+
 # Phase 14 — browser accessibility runtime availability
 
 - Confirmed Docker CLI is installed but inaccessible: `docker info` is denied at `/var/run/docker.sock`; socket is `srw-rw----` owned by `nobody:nogroup`. Podman and nerdctl are unavailable. No privileges, services or system configuration were changed.
