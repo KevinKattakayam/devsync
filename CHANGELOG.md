@@ -540,3 +540,15 @@ Historical Phase 0 audit: see docs/CHANGELOG.md. No production deployment or key
 # Phase 14 — isolated combined virtualized drag fixture
 
 - Added a synthetic Virtuoso and dnd-kit overlay proof with the existing shared Radix Move and Drawer controls. Focused checks cover bounded rendering, pointer drop/cancel, simulated rejection, access changes and keyboard interactions; real API, concurrency, assistive technology and production integration remain unverified.
+
+# Phase 14 — controlled virtualized board integration review
+
+- Mapped the isolated overlay fixture against the real Yjs-backed board, authorization and move failure paths. Integration remains blocked on a shared card/current-state move adapter and actual permission, rejection and focus/scroll regression coverage. No production behavior or dependency was changed.
+
+# Phase 14 — Kanban card preparation (unverified in browser)
+
+- Extracted existing task-card controls and added a current-rendered-state move guard while retaining the existing Yjs/API/refetch path. Focused and frontend gates pass; real browser drag/focus verification is blocked by Testcontainers access. The changes remain uncommitted and virtualization remains incomplete.
+
+# Phase 14 — Kanban preparation browser fixture
+
+- Verified the actual extracted card and move guard in a standalone Chrome fixture at desktop/mobile widths. Native Escape prevents a drop but leaves the existing drag state set; no Yjs, API or server-authorization acceptance is claimed.

@@ -1,5 +1,21 @@
 # Virtualization compatibility investigation — incomplete
 
+## Kanban card preparation — standalone browser follow-up
+
+The actual extracted task card and move guard were mounted in a controlled standalone Chrome fixture. Desktop/mobile pointer drop, keyboard Move, Drawer focus restoration and simulated deletion, write revocation and stale task data passed; initial axe reported zero violations/incomplete checks. Escape prevented a native drop but left the existing production-style drag state set because the current page has no drag-end cleanup. The fixture does not exercise actual Yjs, API calls or server authorization; the Testcontainers integration remains outstanding. See [preparation evidence](../phase14-kanban-preparation/README.md). No virtualization was added.
+
+## Kanban card preparation — browser verification pending
+
+An uncommitted preparation extracts the existing card presentation and controls and resolves move requests against the latest rendered board, current write/busy state and destination before using the existing Yjs/API/refetch path. Focused and full frontend checks pass, including jsdom keyboard, Drawer, revocation, deletion and failure tests. The actual Kanban browser run was blocked before startup by unavailable Testcontainers, so real pointer drag/drop and browser focus behavior after extraction remain unverified. See [preparation record](../phase14-kanban-preparation/README.md). No virtualization, feature flag or dependency was added; Phase 14 remains open.
+
+## Controlled production integration step — blocked pending mutation and access proof
+
+The default Kanban uses the board Yjs record as its local task state, `boardSync.canWrite` and `busy` to gate mutations, and the same `moveTask` function for native drop and the per-card Radix Move control. A move changes the Yjs board optimistically, calls `taskApi.move`, and triggers a board refetch after failure; its existing failure path is not the fixture's timed restoration of one task's column. The task cards and their title/Move handlers are inline in the page, while the shared Drawer returns focus to a connected task trigger or the board heading.
+
+The combined fixture does not exercise that Yjs/API path, current server permission changes, 409 responses or a failed refetch. It models revocation/deletion through synthetic window events and remounts `DndContext` and the list, which can reset scroll state. Its copied title button is not the production task card. A production overlay that captured a `Task` at drag start would also need to resolve its ID against the current authorized board before dispatching the existing move, because the task or write permission may change during the drag. Those boundaries have not been verified with the actual board.
+
+No flag, production component or dependency was added in this step: wiring the fixture directly would change native drag and substitute unverified authorization and recovery behavior. The next safe increment is to extract a shared card and a current-state move adapter with test-first cases for revocation/deletion during drag, rejected move and failed refetch, and focus/scroll restoration. Then implement the default-off isolated path and verify both flag states against the actual board. Existing browser integration currently also depends on container access documented in `docs/quality/phase14-accessibility-review/README.md`. This is an unfinished engineering blocker, not a claim that the architecture is impossible; Phase 14 remains open.
+
 ## Architecture decision — 2026-11-12
 
 **Recommended next proof: React Virtuoso with dnd-kit DragOverlay and the existing per-card Move control, in an isolated fixture.** This is a candidate, not an approved production integration. `@dnd-kit/core` and `@dnd-kit/sortable` resolve from the frontend installation. Neither `react-virtuoso`, `@tanstack/react-virtual` nor `@tanstack/virtual-core` resolves there. A reproducible isolated installation of a reviewed virtualization dependency is a prerequisite; no production dependency was added and no new interaction test was run for this decision.
