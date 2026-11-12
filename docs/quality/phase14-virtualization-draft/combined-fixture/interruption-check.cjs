@@ -2,9 +2,14 @@ const assert = require('node:assert/strict');
 const { chromium } = require('/home/kevin/devsync/backend/node_modules/@playwright/test');
 
 async function begin(page) {
-  const handle = page.getByRole('button', { name: /^Drag Task/ }).nth(3);
-  await handle.scrollIntoViewIfNeeded();
-  const id = await handle.locator('xpath=ancestor::*[@data-row][1]').getAttribute('data-row');
+  const handle = page.getByRole('button', { name: /^Drag Task/ }).first();
+
+  await handle.waitFor({ state: 'visible' });
+
+  const id = await handle
+    .locator('xpath=ancestor::*[@data-row][1]')
+    .getAttribute('data-row');
+
   const box = await handle.boundingBox();
   assert.ok(id && box);
   await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
@@ -104,8 +109,14 @@ async function begin(page) {
           const move = page.getByRole('combobox', { name: /^Move Task/ }).first();
           await move.focus();
           await page.keyboard.press('Space');
-          await page.getByRole('option', { name: 'Done' }).waitFor();
+          const done = page.getByRole('option', { name: 'Done' });
+          await done.waitFor({ state: 'visible' });
           await page.keyboard.press('ArrowDown');
+          await page.waitForFunction(() => {
+            const option = [...document.querySelectorAll('[role="option"]')]
+              .find((node) => node.textContent?.trim() === 'Done');
+            return option?.hasAttribute('data-highlighted') === true;
+          });
           await page.keyboard.press('Enter');
           await page.locator('main[data-moves="1"]').waitFor();
           console.log(
