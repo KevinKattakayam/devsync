@@ -528,3 +528,11 @@ Historical Phase 0 audit: see docs/CHANGELOG.md. No production deployment or key
 
 - Removed experimental `@tanstack/react-virtual@3.14.26` from frontend production manifests; prototype source and setup/version evidence remain isolated under the Phase 14 draft directory. Default Kanban page/spec match HEAD and production has no experimental imports.
 - Frontend lint, format, strict types, 34 test files / 175 tests, default Kanban browser 5/5, and webpack production build passed. This is an incomplete research checkpoint; virtualization and Phase 14 remain open.
+
+# Phase 14 — native drag compatibility follow-up
+
+- Reviewed existing source-unmount and cancellation evidence; no lint-compatible retained native drag source is established. Offline fixture dependency preparation failed with `ENOTCACHED`; no new browser verification is claimed. Production Kanban remains unchanged.
+
+# Phase 14 — Kanban virtualization architecture decision
+
+- Documented a candidate isolated Virtuoso and dnd-kit overlay proof, alternatives, dependency prerequisite and explicit acceptance tests. No production Kanban or dependency changes; virtualization remains incomplete.
