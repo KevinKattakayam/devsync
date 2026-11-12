@@ -1251,3 +1251,7 @@ Traced the grounded preview through workspace authorization, tenant-scoped lexic
 # Load and restore phase — preflight only
 
 Reviewed the existing local REST k6 workload, metrics, runbook and realtime recovery evidence. k6 and Artillery are unavailable in this environment; Docker socket access was denied. No load, outage or restore drill was executed, and no SLO or provider success is claimed. The existing synthetic browser recovery journey covers an application-server kill, not database/Redis loss or backup restoration. See [preflight record](quality/phase16-load-restore/README.md). This phase remains incomplete.
+
+# Phase 16 — fixture load preflight endpoint
+
+Added a fixture-only, read-only capability-protected preflight endpoint with a versioned marker and non-secret process run ID. Focused tests passed 2/2 in the permitted subprocess after sandbox socket binding failed with EPERM; focused lint, formatting and typecheck passed. The k6 workload does not yet call the endpoint, and no load or restore measurements are claimed. See [verification](quality/phase16-load-restore/README.md). Phase 16 remains open.

@@ -1,5 +1,6 @@
 import { validateFixtureConfiguration } from './fixture-auth';
 import { createRecoveryControls } from './recovery-controls';
+import { createLoadPreflight } from './load-preflight';
 async function main() {
   const { secret } = validateFixtureConfiguration(process.env);
   const [
@@ -30,6 +31,7 @@ async function main() {
   outer.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
   // Product routes own parsing, including their signed-webhook raw-byte capture.
   outer.use('/__test', express.json(), fixtures.router);
+  outer.use('/__fixture', createLoadPreflight(process.env));
   outer.use((_req, _res, next) => withAuthentication(fixtures.strategy, next));
   const http = createServer(outer),
     socket = createSocketServer(http, {

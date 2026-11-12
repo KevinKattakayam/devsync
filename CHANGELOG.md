@@ -580,3 +580,7 @@ Historical Phase 0 audit: see docs/CHANGELOG.md. No production deployment or key
 # Load and restore phase — preflight only
 
 - Documented existing metrics and recovery evidence, unavailable local load tools and the container access blocker. No new load or restore results are claimed.
+
+# Phase 16 — fixture load preflight endpoint
+
+- Added a fixture-only capability-protected preflight endpoint for a future load safety gate. The existing workload is not yet connected to it.
