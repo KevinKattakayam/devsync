@@ -584,3 +584,7 @@ Historical Phase 0 audit: see docs/CHANGELOG.md. No production deployment or key
 # Phase 16 — fixture load preflight endpoint
 
 - Added a fixture-only capability-protected preflight endpoint for a future load safety gate. The existing workload is not yet connected to it.
+
+# Phase 16 — k6 fixture safety gate
+
+- Connected the existing REST workload to fixture preflight verification in setup and each iteration; local Node tests cover fail-closed request sequencing. k6 runtime and load execution remain pending.

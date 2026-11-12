@@ -2,6 +2,8 @@
 import http from 'k6/http';
 import { check, sleep } from 'k6';
 import { Trend } from 'k6/metrics';
+import exec from 'k6/execution';
+import { validateLoadConfig, validateFixtureResponse } from './load-safety.mjs';
 const health = new Trend('health_latency_ms', true);
 const profile = new Trend('profile_latency_ms', true);
 const documents = new Trend('documents_latency_ms', true);
@@ -11,25 +13,30 @@ export const options = {
   summaryTrendStats: ['med', 'p(95)', 'avg', 'min', 'max', 'count'],
   thresholds: { checks: ['rate==1'], http_req_failed: ['rate==0'] },
 };
-export function setup() {
-  if (
-    !__ENV.K6_BASE_URL ||
-    !__ENV.K6_ACCESS_TOKEN ||
-    !__ENV.K6_WORKSPACE_ID ||
-    !__ENV.K6_DOCUMENT_ID
-  )
-    throw new Error(
-      'Provide an isolated fixture URL, token, workspace and document via private environment variables',
-    );
-  if (
-    !/^https?:\/\/(localhost|127\.0\.0\.1|host\.docker\.internal)(:\d+)?(?:\/|$)/.test(
-      __ENV.K6_BASE_URL,
-    )
-  )
-    throw new Error('This bounded local workload refuses nonlocal targets');
+function preflight(config, expectedRunId) {
+  const response = http.get(`${config.origin}/__fixture/load-preflight`, {
+    headers: { 'x-e2e-run-secret': __ENV.K6_FIXTURE_CAPABILITY },
+    redirects: 0,
+    timeout: '5s',
+    tags: { name: 'fixture_preflight' },
+  });
+  return validateFixtureResponse(response.status, response.body, expectedRunId);
 }
-export default function () {
-  const base = __ENV.K6_BASE_URL.replace(/\/$/, '');
+export function setup() {
+  const config = validateLoadConfig(__ENV);
+  return { runId: preflight(config) };
+}
+export default function runReadWorkload(setupData) {
+  let config;
+  try {
+    config = validateLoadConfig(__ENV);
+    if (!setupData || !setupData.runId) throw new Error('Missing fixture setup proof');
+    preflight(config, setupData.runId);
+  } catch {
+    exec.test.abort('Fixture preflight failed; workload stopped');
+    return;
+  }
+  const base = config.base;
   const headers = { Authorization: `Bearer ${__ENV.K6_ACCESS_TOKEN}` };
   const paths = [
     ['/health', health, false],
@@ -41,6 +48,7 @@ export default function () {
     const response = http.get(`${base}${path}`, {
       headers: protectedRoute ? headers : {},
       timeout: '5s',
+      redirects: 0,
       responseType: 'none',
     });
     metric.add(response.timings.duration);

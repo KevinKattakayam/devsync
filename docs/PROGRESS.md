@@ -1255,3 +1255,7 @@ Reviewed the existing local REST k6 workload, metrics, runbook and realtime reco
 # Phase 16 — fixture load preflight endpoint
 
 Added a fixture-only, read-only capability-protected preflight endpoint with a versioned marker and non-secret process run ID. Focused tests passed 2/2 in the permitted subprocess after sandbox socket binding failed with EPERM; focused lint, formatting and typecheck passed. The k6 workload does not yet call the endpoint, and no load or restore measurements are claimed. See [verification](quality/phase16-load-restore/README.md). Phase 16 remains open.
+
+# Phase 16 — k6 fixture safety gate
+
+The existing bounded REST workload now validates a strict loopback target and the fixture-only capability endpoint in setup, and rechecks its versioned marker and run ID before each iteration's reads. It aborts on invalid proof and disables redirects. Node validation and mocked k6 wiring tests cover rejection and sequencing; these do not validate the k6 runtime or constitute a load run. One extra preflight request per iteration affects aggregate HTTP metrics. See [verification](quality/phase16-load-restore/README.md). Phase 16 remains open.
