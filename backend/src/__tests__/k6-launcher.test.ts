@@ -154,23 +154,28 @@ it('returns only an allowlisted numeric performance summary', async () => {
   mockedSpawn.mockReturnValue(processFixture);
   const pending = launchFixtureSmoke(connection);
   while (!mockedSpawn.mock.calls.length) await new Promise((resolve) => setImmediate(resolve));
+  const record = JSON.stringify({
+    version: 1,
+    metrics: {
+      http_req_duration: { values: { med: 4, 'p(95)': 8, 'p(99)': 10 } },
+      http_reqs: { values: { count: 12, rate: 2 } },
+      http_req_failed: { values: { rate: 0 } },
+      application_latency_ms: { values: { med: 3, 'p(95)': 6, 'p(99)': 8 } },
+      application_requests: { values: { count: 8, rate: 1.5 } },
+      application_failures: { values: { rate: 0.125 } },
+      health_latency_ms: { values: { med: 1, 'p(95)': 2, 'p(99)': 3 } },
+      profile_latency_ms: { values: { med: 1, 'p(95)': 2, 'p(99)': 3 } },
+      documents_latency_ms: { values: { med: 1, 'p(95)': 2, 'p(99)': 3 } },
+      document_latency_ms: { values: { med: 5, 'p(95)': 7, 'p(99)': 9 } },
+    },
+  });
   (processFixture.stdout as PassThrough).write(
-    JSON.stringify({
-      metrics: {
-        http_req_duration: { values: { med: 4, 'p(95)': 8, 'p(99)': 10 } },
-        http_reqs: { values: { count: 12, rate: 2 } },
-        http_req_failed: { values: { rate: 0 } },
-        application_latency_ms: { values: { med: 3, 'p(95)': 6, 'p(99)': 8 } },
-        application_requests: { values: { count: 8, rate: 1.5 } },
-        application_failures: { values: { rate: 0.125 } },
-        document_latency_ms: { values: { med: 5, 'p(95)': 7, 'p(99)': 9 } },
-        untrusted_metric: { values: { secret: connection.capability } },
-      },
-      tags: { accessToken: connection.accessToken },
-    }),
+    `unrelated ${connection.accessToken}\nDEVSYNC_K6_SUMMARY_V1:${record.slice(0, 40)}`,
   );
+  (processFixture.stdout as PassThrough).write(`${record.slice(40)}\nother output\n`);
   processFixture.emit('close', 0, null);
   const result = await pending;
+  expect(result.summaryChunks).toBe('multiple');
   expect(result.metrics).toEqual({
     requestDurationMs: { median: 4, p95: 8, p99: 10 },
     requests: { count: 12, perSecond: 2 },
@@ -181,9 +186,9 @@ it('returns only an allowlisted numeric performance summary', async () => {
       failedRequestRate: 0.125,
     },
     endpoints: {
-      health: { median: null, p95: null, p99: null },
-      profile: { median: null, p95: null, p99: null },
-      documents: { median: null, p95: null, p99: null },
+      health: { median: 1, p95: 2, p99: 3 },
+      profile: { median: 1, p95: 2, p99: 3 },
+      documents: { median: 1, p95: 2, p99: 3 },
       document: { median: 5, p95: 7, p99: 9 },
     },
   });
@@ -208,8 +213,15 @@ it('rejects oversized summary output without returning its contents', async () =
 });
 
 it.each([
-  ['ordinary console output', 'summary_invalid_json'],
-  ['{"metrics":{}}', 'summary_schema_mismatch'],
+  ['ordinary console output', 'summary_missing'],
+  ['DEVSYNC_K6_SUMMARY_V1:{broken', 'summary_invalid_json'],
+  ['DEVSYNC_K6_SUMMARY_V1:{"version":1,"metrics":{}}', 'summary_schema_mismatch'],
+  [
+    'DEVSYNC_K6_SUMMARY_V1:{"version":1,"metrics":{},"secret":"private"}',
+    'summary_schema_mismatch',
+  ],
+  ['DEVSYNC_K6_SUMMARY_V1:{}\nDEVSYNC_K6_SUMMARY_V1:{}', 'summary_duplicate'],
+  ['DEVSYNC_K6_SUMMARY_V1:{}{}', 'summary_invalid_json'],
 ] as const)('classifies unusable stdout without revealing it', async (output, category) => {
   const processFixture = child();
   mockedSpawn.mockReturnValue(processFixture);

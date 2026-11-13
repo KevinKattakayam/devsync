@@ -1285,3 +1285,7 @@ User-run disposable preflight passed; a later cancellation reported cleanup fail
 # Phase 16 — real k6 summary diagnostics
 
 The user reported another completed k6 2.3.0 fixture run without a readable summary. Its discarded stdout does not establish the cause. Added fixed diagnostic categories and stdout chunk counts without logging stream data; empty or incomplete numeric summaries are now rejected. The 10 focused launcher assertions passed but the focused Jest command exited 1 on repository-wide coverage thresholds. Backend lint, formatting, strict types and build passed. k6 snap cannot start here; real runtime diagnosis remains pending. See [verification](quality/phase16-load-restore/README.md). Phase 16 remains incomplete.
+
+# Phase 16 — versioned k6 summary framing
+
+The user observed invalid JSON and multiple stdout chunks; chunks were already concatenated, so the combined content caused the parse failure, but the discarded stream leaves its exact contents unknown. Added a versioned line record and strict numeric schema verification with rejection of duplicates and malformed output. Mocked wiring and focused launcher assertions cover stream boundaries and invalid records; the focused Jest command still exits 1 on repository-wide coverage thresholds. Lint, targeted formatting, strict types and build pass. Real k6 verification and performance measurements remain pending; see [verification](quality/phase16-load-restore/README.md). Phase 16 remains incomplete.

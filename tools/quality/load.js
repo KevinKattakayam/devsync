@@ -87,5 +87,5 @@ export function handleSummary(data) {
     }
     metrics[name] = { values };
   }
-  return { stdout: JSON.stringify({ metrics }) };
+  return { stdout: `\nDEVSYNC_K6_SUMMARY_V1:${JSON.stringify({ version: 1, metrics })}\n` };
 }

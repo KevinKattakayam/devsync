@@ -614,3 +614,7 @@ Historical Phase 0 audit: see docs/CHANGELOG.md. No production deployment or key
 # Phase 16 — k6 summary diagnostics
 
 - Report fixed summary parsing categories and stdout chunk counts without exposing output, and reject incomplete numeric summaries. Real k6 verification remains pending.
+
+# Phase 16 — versioned k6 summary framing
+
+- Frame the allowlisted numeric summary with a versioned line marker and validate a single complete record; real k6 verification remains pending.

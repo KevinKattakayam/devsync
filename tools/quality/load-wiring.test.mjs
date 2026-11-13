@@ -133,7 +133,9 @@ test('summary emits only allowlisted numeric metrics on stdout', async () => {
     secret: 'private',
   });
   assert.deepEqual(Object.keys(result), ['stdout']);
-  const parsed = JSON.parse(result.stdout);
+  assert.ok(result.stdout.startsWith('\nDEVSYNC_K6_SUMMARY_V1:'));
+  const parsed = JSON.parse(result.stdout.trim().slice('DEVSYNC_K6_SUMMARY_V1:'.length));
+  assert.equal(parsed.version, 1);
   assert.equal(parsed.metrics.application_requests.values.count, 4);
   assert.equal(parsed.metrics.application_latency_ms.values['p(99)'], 3);
   assert.ok(!result.stdout.includes('private'));

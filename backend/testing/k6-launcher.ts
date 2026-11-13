@@ -20,7 +20,11 @@ export interface SmokeResult {
     | null;
   metrics: SanitizedSmokeMetrics | null;
   summaryDiagnostic?:
-    'summary_missing' | 'summary_invalid_json' | 'summary_schema_mismatch' | 'summary_oversized';
+    | 'summary_missing'
+    | 'summary_invalid_json'
+    | 'summary_schema_mismatch'
+    | 'summary_oversized'
+    | 'summary_duplicate';
   summaryChunks?: 'none' | 'single' | 'multiple';
 }
 export interface SanitizedSmokeMetrics {
@@ -47,18 +51,65 @@ function readSanitizedMetrics(raw: string): {
   metrics: SanitizedSmokeMetrics | null;
   diagnostic?: NonNullable<SmokeResult['summaryDiagnostic']>;
 } {
-  if (!raw.trim()) return { metrics: null, diagnostic: 'summary_missing' };
+  const prefix = 'DEVSYNC_K6_SUMMARY_V1:';
+  const lines = raw.split(/\r?\n/).filter((line) => line.startsWith(prefix));
+  if (lines.length === 0) return { metrics: null, diagnostic: 'summary_missing' };
+  if (lines.length !== 1) return { metrics: null, diagnostic: 'summary_duplicate' };
   let parsed: unknown;
   try {
-    parsed = JSON.parse(raw);
+    parsed = JSON.parse(lines[0].slice(prefix.length));
   } catch {
     return { metrics: null, diagnostic: 'summary_invalid_json' };
   }
   try {
+    if (
+      !parsed ||
+      typeof parsed !== 'object' ||
+      Array.isArray(parsed) ||
+      Object.keys(parsed).sort().join(',') !== 'metrics,version' ||
+      (parsed as { version?: unknown }).version !== 1
+    )
+      return { metrics: null, diagnostic: 'summary_schema_mismatch' };
     const metrics =
       parsed && typeof parsed === 'object' ? (parsed as { metrics?: unknown }).metrics : undefined;
     if (!metrics || typeof metrics !== 'object' || Array.isArray(metrics))
       return { metrics: null, diagnostic: 'summary_schema_mismatch' };
+    const expected = [
+      'http_req_duration',
+      'http_reqs',
+      'http_req_failed',
+      'health_latency_ms',
+      'profile_latency_ms',
+      'documents_latency_ms',
+      'document_latency_ms',
+      'application_latency_ms',
+      'application_requests',
+      'application_failures',
+    ];
+    if (Object.keys(metrics).sort().join(',') !== expected.sort().join(','))
+      return { metrics: null, diagnostic: 'summary_schema_mismatch' };
+    for (const metric of Object.values(metrics)) {
+      if (
+        !metric ||
+        typeof metric !== 'object' ||
+        Array.isArray(metric) ||
+        Object.keys(metric).join(',') !== 'values'
+      )
+        return { metrics: null, diagnostic: 'summary_schema_mismatch' };
+      const values = (metric as { values?: unknown }).values;
+      if (
+        !values ||
+        typeof values !== 'object' ||
+        Array.isArray(values) ||
+        Object.entries(values).some(
+          ([key, value]) =>
+            !['med', 'p(95)', 'p(99)', 'count', 'rate'].includes(key) ||
+            typeof value !== 'number' ||
+            !Number.isFinite(value),
+        )
+      )
+        return { metrics: null, diagnostic: 'summary_schema_mismatch' };
+    }
     const durations = (name: string) => ({
       median: numericValue((metrics as Record<string, unknown>)[name], 'med'),
       p95: numericValue((metrics as Record<string, unknown>)[name], 'p(95)'),
@@ -106,6 +157,7 @@ function readSanitizedMetrics(raw: string): {
       result.application.requests.count,
       result.application.requests.perSecond,
       result.application.failedRequestRate,
+      ...Object.values(endpoints).flatMap((entry) => [entry.median, entry.p95, entry.p99]),
     ];
     if (required.some((value) => value === null))
       return { metrics: null, diagnostic: 'summary_schema_mismatch' };
