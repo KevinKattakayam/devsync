@@ -1,3 +1,9 @@
+# Independent audit and portfolio evidence — incomplete
+
+Created a source-linked feature matrix, fixture-provenance notes, local benchmark table, negative-test map and open risk register in [independent audit](quality/independent-audit/README.md). Updated the README to remove an outdated fixed vulnerability count and acknowledge existing bounded portability features. No provider integration, production readiness, complete CVE list or final score is claimed.
+
+Backend full tests passed 48 suites / 445 tests; frontend passed 9 Node and 188 component tests; coverage comparisons, both builds, lint, types and OpenAPI passed. System Chrome passed the 12-case core fixture journey after the bundled browser launch failed. Backend formatting still fails on two existing browser-test files. The pinned historical secret scan exits 1 on two documented false positives; Semgrep rerun has four partial-parse warnings. Full-tree npm audit reports lower-severity findings but no high/critical; fresh backend runner, extractor and local-mode frontend image scans report zero high/critical. Complete CVE inventory and real provider acceptance remain open. See the audit record for exact scope and limitations.
+
 # Phase 17 — free hosting comparison (no-go)
 
 Reviewed the actual API, WebSocket, worker, Redis and extraction topology against Render Free. Render's free web service sleeps; its free tier does not offer continuously running background workers or persistent Key Value, so it cannot retain the current queue and availability guarantees. Oracle Always Free with separate supervised processes and persistent private Redis is the conditional better fit, subject to free capacity, idle reclamation, backups, ARM and Neon compatibility, and verified costs. No cloud resources were changed. Details and provider sources: [cloud options](quality/phase17-staging-readiness/CLOUD_OPTIONS.md). Phase 17 remains incomplete.

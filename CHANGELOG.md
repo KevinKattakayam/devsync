@@ -1,3 +1,8 @@
+# Independent product evidence audit
+
+- Added a source-linked feature matrix, local benchmark, screenshot provenance, negative-test evidence and open risk register. Corrected stale README vulnerability and portability statements.
+- Recorded full local test results, fixture-only Chrome evidence, incomplete source/secret scans, lower-severity development dependency advisories and high/critical local image scans. Complete image CVEs and real provider acceptance remain unverified.
+
 # Phase 17 — free hosting comparison
 
 - Documented Render Free's worker, sleep and volatile Redis limitations against the existing DevSync topology, and the Oracle Always Free candidate's reliability and verification constraints. No cloud changes or deployment were made.

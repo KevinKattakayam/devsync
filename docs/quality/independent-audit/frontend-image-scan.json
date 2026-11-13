@@ -1,0 +1,8 @@
+{
+  "scanner": "Trivy (repository-pinned image)",
+  "scope": "locally built frontend, local deployment mode",
+  "severityFilter": ["HIGH", "CRITICAL"],
+  "artifactType": "container_image",
+  "targetsScanned": 2,
+  "findings": 0
+}
