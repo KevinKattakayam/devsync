@@ -626,3 +626,7 @@ Historical Phase 0 audit: see docs/CHANGELOG.md. No production deployment or key
 # Phase 17 — staging readiness checkpoint
 
 - Require production NODE_ENV when DEPLOYMENT_MODE is production, and document the unverified staging provider, deployment, role-ownership and release prerequisites. No staging deployment was performed.
+
+# Phase 17 — staging promotion and runtime role safety
+
+- Block preview promotion until staging topology and release identity can be verified, and add a fail-closed, read-only runtime database privilege check with disposable PostgreSQL regression coverage. Staging deployment remains unimplemented and unverified.

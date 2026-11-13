@@ -57,6 +57,12 @@ jobs:
         working-directory: backend
         env:
           OTEL_SDK_DISABLED: 'true'
+      - name: Staging and runtime role safety regressions
+        if: matrix.service == 'backend'
+        run: |
+          node --test tools/ci/tests/staging-safety.test.mjs
+          cd backend
+          node --test testing/runtime-role-guard.test.mjs
       - name: Frontend tests and coverage
         if: matrix.service == 'frontend'
         run: npm test
