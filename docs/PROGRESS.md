@@ -1,3 +1,9 @@
+# Phase 18 — local audit follow-up (incomplete)
+
+Formatted the existing backend browser tests, eliminated four pinned Semgrep parser warnings without changing rendered ampersands, and corrected an unsupported snippet-execution claim. Updated development-only `tsx` to 4.23.15, removing the low-severity esbuild advisory; no major dependency upgrade or scanner suppression was applied. A synthetic PostgreSQL dump/restore drill passed against disposable data and decoded Yjs content.
+
+The local recovery browser suite failed once on concurrent-edit convergence (3/4 passed), then passed all four cases in an isolated rerun. This intermittent failure remains unexplained. A new keyboard/axe run found three low-contrast light/mobile labels; a semantic-token correction passed the four-case rerun with one incomplete contrast check per case. Production Kanban virtualization, a complete application backup/restore and Redis outage drill, lower-severity dependency assessment, manual screen-reader review, and real-provider acceptance remain open. The existing promotion gate stays closed. Detailed commands, evidence and limitations: [independent audit](quality/independent-audit/README.md).
+
 # Independent audit and portfolio evidence — incomplete
 
 Created a source-linked feature matrix, fixture-provenance notes, local benchmark table, negative-test map and open risk register in [independent audit](quality/independent-audit/README.md). Updated the README to remove an outdated fixed vulnerability count and acknowledge existing bounded portability features. No provider integration, production readiness, complete CVE list or final score is claimed.

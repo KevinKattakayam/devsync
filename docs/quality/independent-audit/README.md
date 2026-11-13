@@ -2,6 +2,30 @@
 
 This record distinguishes implementation and local tests from hosted-provider acceptance. It does not certify production readiness, factual correctness of AI output, legal compliance, or novelty. Screenshots and browser journeys cited below use seeded/fixture identities unless explicitly stated otherwise.
 
+## Phase 18 local follow-up, 2026-11-14
+
+The backend formatting failures were corrected without changing test assertions. Four literal JSX ampersands were encoded equivalently, and the snippet-page description was corrected because the product does not provide an interactive execution playground. Together these changes eliminated the four partial-parse warnings in the pinned Semgrep scan: exit 0, 285 targets, zero findings and zero parser errors.
+
+The development-only `tsx` dependency was pinned to 4.23.15, bringing esbuild to 0.28.2 and removing the previously reported low-severity esbuild advisory. Backend full-tree `npm audit --audit-level=high --json` exited 0 with 1 low and 29 moderate affected packages, and zero high/critical. npm's suggested fixes for the remaining direct advisory chains involve major changes or downgrades; they were not applied without a validated compatibility plan. Prior runtime-only npm and HIGH/CRITICAL image scans remain historical evidence, not a current complete CVE inventory. No scanner was disabled and no dependency threshold was changed.
+
+The two historical Gitleaks matches were reviewed without displaying matched values: the earlier progress-file result is documented prose; the load-workload result refers to a fixture capability header and environment variable rather than a hardcoded credential. The pinned historical scan still exits 1; no exclusions were added. A security owner should review any proposed precise exception and its regression protection before changing that gate.
+
+`node --test testing/audit-restore.test.mjs` provisions a fresh PostgreSQL 16 container, creates synthetic Yjs journal data, takes a `pg_dump` archive, restores it into a separate database inside that disposable container, checks the row count and decodes the Yjs content. It exited 0 (1/1). It does not restore the application schema or a real backup, use a separate host, exercise tenant RLS after restore, or establish production recovery objectives. The fixed synthetic source and target cannot be pointed at hosted databases.
+
+The existing actual Chrome recovery suite can write evidence to a fresh directory without replacing older baselines:
+
+```sh
+E2E_CHROMIUM_PATH=/usr/bin/google-chrome E2E_RECOVERY_OUTPUT_DIR=/tmp/devsync-recovery-NEW node tools/ci/browser.mjs recovery
+```
+
+This uses Testcontainers, disposable PostgreSQL/Redis and synthetic identities. Its first run exited 1 (3/4): the concurrent-edit convergence assertion failed while other tests were running. A separate rerun exited 0 (4/4) and included fixture-server SIGKILL/restart, offline recovery and revoked membership. The failure remains an unresolved intermittent risk; no cause is asserted. The [rerun results](recovery-fixture-results.json) and [screenshot](recovery-fixture.png) depict only synthetic browser data. A Redis outage/retry drill, complete application backup/restore and multi-device provider-backed acceptance remain open.
+
+An additional keyboard/axe dashboard browser check at 1440px and 390px in both themes initially exited 1: light/mobile reported three low-contrast workspace-stat labels. The labels were changed to the existing semantic foreground token. A separate rerun exited 0 (4/4), with zero axe violations and one incomplete `color-contrast` check per case. The original failing evidence is retained under `docs/ui/after/dashboard/phase18-audit-20261114/`, and the rerun under `docs/ui/after/dashboard/phase18-audit-fixed-20261114/`. These are local synthetic-fixture screenshots and reports; incomplete checks and manual screen-reader review remain open.
+
+Production Kanban virtualization was not implemented in this follow-up. The existing two-column fixture remains synthetic and lacks verified production Yjs mutation, complete drag/permission lifecycle and drawer behavior. The production path remains unchanged. Phase 18 remains incomplete; do not infer full accessibility, reliability or provider acceptance from the local tests.
+
+Final local checks: backend `npm test` exit 0 (48 suites / 445 tests); frontend `QUALITY_COVERAGE=1 ... npm test` exit 0 (9 Node and 188 component tests); both existing coverage comparisons exit 0. Backend and frontend lint, format checks, strict type checks, builds and backend OpenAPI check exit 0. One concurrent frontend lint attempt exited 143; a later standalone rerun exited 0. The pinned Semgrep rerun exited 0 with zero findings and zero errors. The separate restore test exited 0. No hosted resources, provider credentials or production data were used.
+
 ## README feature evidence matrix
 
 | Claim                                  | Implementation and local evidence                                                                                                                                                   | Limits                                                                                                                               |

@@ -55,7 +55,7 @@ export class AuthErrorBoundary extends Component<Props, State> {
               type="submit"
               className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl gradient-primary text-white text-xs font-semibold shadow-lg shadow-primary/25 hover:opacity-90 transition-all"
             >
-              <RefreshCw className="w-4 h-4" /> Reset & Open Clean Sign In
+              <RefreshCw className="w-4 h-4" /> Reset &amp; Open Clean Sign In
             </button>
           </form>
         </div>

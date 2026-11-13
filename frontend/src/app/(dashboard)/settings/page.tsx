@@ -68,7 +68,7 @@ function Account() {
   return (
     <main className="mx-auto max-w-4xl space-y-8 p-4 md:p-8">
       <header>
-        <h1 className="text-2xl font-semibold">Account & sessions</h1>
+        <h1 className="text-2xl font-semibold">Account &amp; sessions</h1>
         <p className="mt-2 text-sm text-muted-foreground">{user?.email}</p>
       </header>
       <section className="space-y-4" aria-labelledby="session-heading">

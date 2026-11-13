@@ -286,7 +286,7 @@ export default function WorkspacePage() {
               </p>
             )}
             <p className="text-xs text-muted-foreground mb-4">
-              Grant access to documents, boards & code snippets.
+              Grant access to documents, boards &amp; code snippets.
             </p>
 
             <form onSubmit={handleInvite} className="space-y-4">
@@ -314,7 +314,7 @@ export default function WorkspacePage() {
                   onChange={(e) => setInviteRole(e.target.value)}
                   className="w-full px-3.5 py-2.5 rounded-xl bg-secondary/50 border border-border focus:border-primary outline-none text-xs text-foreground transition-all"
                 >
-                  <option value="EDITOR">Editor (Can create & edit items)</option>
+                  <option value="EDITOR">Editor (Can create &amp; edit items)</option>
                   <option value="VIEWER">Viewer (Read-only access)</option>
                 </select>
               </div>

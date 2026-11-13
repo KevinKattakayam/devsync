@@ -291,7 +291,7 @@ Description: <1-sentence description>
               </span>
             </div>
             <p className="text-xs text-muted-foreground mt-0.5">
-              Interactive execution playground, semantic AI context store & team boilerplate.
+              Organize and reuse code snippets for your workspace.
             </p>
           </div>
         </div>

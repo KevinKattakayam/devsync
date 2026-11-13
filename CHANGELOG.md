@@ -1,3 +1,9 @@
+# Phase 18 — local audit follow-up
+
+- Corrected backend test formatting and JSX parser compatibility, and replaced an unsupported snippet-execution description. Pinned the development `tsx` runner to a version using patched esbuild.
+- Added a bounded synthetic PostgreSQL/Yjs restore test and isolated recovery-browser evidence output. The recovery journey passed on rerun after an earlier convergence failure, which remains an open risk. Production virtualization and provider acceptance remain incomplete.
+- Corrected three workspace-stat labels that failed light/mobile contrast in an axe fixture. The four-case keyboard/axe rerun passed with incomplete checks recorded separately.
+
 # Independent product evidence audit
 
 - Added a source-linked feature matrix, local benchmark, screenshot provenance, negative-test evidence and open risk register. Corrected stale README vulnerability and portability statements.
