@@ -72,7 +72,9 @@ test('links task and signed local PR fixture with owner/viewer visibility', asyn
     await card.getByRole('button', { name: 'Record evidence' }).click();
     const evidenceList = card.getByRole('list', { name: 'Execution evidence and links' });
     await expect(evidenceList.getByText('Human assertion', { exact: true })).toBeVisible();
-    await expect(evidenceList.getByText('Reviewed fixture delivery', { exact: true })).toBeVisible();
+    await expect(
+      evidenceList.getByText('Reviewed fixture delivery', { exact: true }),
+    ).toBeVisible();
     await expect(evidenceList.getByText(/Occurred/)).toBeVisible();
     await card.getByLabel('Evidence type').selectOption('linked_task');
     await expect(card.getByRole('option', { name: 'Review workspace permissions' })).toBeAttached();

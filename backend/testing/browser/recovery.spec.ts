@@ -14,7 +14,9 @@ import { login } from './identities';
 
 const origin = 'http://127.0.0.1:5501',
   api = `${origin}/api/v1`;
-const output = resolve(__dirname, '../../../docs/quality/realtime-recovery/browser');
+const output = process.env.E2E_RECOVERY_OUTPUT_DIR
+  ? resolve(process.env.E2E_RECOVERY_OUTPUT_DIR)
+  : resolve(__dirname, '../../../docs/quality/realtime-recovery/browser');
 async function control(action: string, data?: object) {
   const secret = process.env.E2E_RUN_SECRET;
   if (!secret) throw new Error('Missing isolated fixture capability');
