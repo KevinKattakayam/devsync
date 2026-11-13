@@ -634,3 +634,7 @@ Historical Phase 0 audit: see docs/CHANGELOG.md. No production deployment or key
 # Phase 17 — staging configuration foundation
 
 - Add a locally tested validator for proposed staging targets, credentials and reviewed SHA. It is not wired into deployment; staging promotion remains blocked.
+
+# Phase 17 — cloud inventory and source preparation
+
+- Record read-only Vercel/Railway inventory and conditional free-tier options, and add an isolated reviewed-commit source archive/hash primitive. It is not a built-image attestation or deployment; staging promotion remains blocked.

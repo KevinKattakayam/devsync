@@ -1,5 +1,7 @@
 # Phase 17 staging readiness — no-go
 
+Current provider inventory, conditional free-tier proposal and outstanding approval requirements are in [cloud options](CLOUD_OPTIONS.md). No deployment is approved or completed.
+
 This is a repository configuration review, not evidence of a hosted deployment. Branch `upgrade/enterprise` was 107 commits ahead of the locally recorded `origin/upgrade/enterprise` ref at inspection; no remote fetch or push was performed. The actual remote state and successful hosted Quality run for the eventual deployment SHA must be verified separately.
 
 | Requirement                   | Status                               | Evidence and remaining work                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |

@@ -62,6 +62,7 @@ jobs:
         run: |
           node --test tools/ci/tests/staging-safety.test.mjs
           node --test tools/ci/tests/staging-config.test.mjs
+          node --test tools/ci/tests/release-source.test.mjs
           cd backend
           node --test testing/runtime-role-guard.test.mjs
       - name: Frontend tests and coverage
