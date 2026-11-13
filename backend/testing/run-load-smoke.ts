@@ -452,6 +452,8 @@ async function main() {
       console.log(`Sanitized measurements saved under docs/quality/phase16-load-restore/results`);
     } else if (result.outcome === 'completed') {
       console.error('k6 completed without a readable sanitized summary');
+      console.error(`Summary category: ${result.smoke?.summaryDiagnostic ?? 'summary_missing'}`);
+      console.error(`Stdout chunks: ${result.smoke?.summaryChunks ?? 'none'}`);
       process.exitCode = 1;
       return;
     }

@@ -32,7 +32,13 @@ it('launches only the fixed smoke script with a restricted environment', async (
     const pending = launchFixtureSmoke(connection);
     while (!mockedSpawn.mock.calls.length) await new Promise((resolve) => setImmediate(resolve));
     processFixture.emit('close', 0, null);
-    expect(await pending).toEqual({ status: 0, error: null, metrics: null });
+    expect(await pending).toEqual({
+      status: 0,
+      error: null,
+      metrics: null,
+      summaryDiagnostic: 'summary_missing',
+      summaryChunks: 'none',
+    });
     const [command, args, options] = mockedSpawn.mock.calls[0];
     expect(command).toBe('k6');
     expect(args).toEqual(['run', expect.stringMatching(/load-smoke\.js$/)]);
@@ -112,7 +118,13 @@ it('returns the actual nonzero exit status and removes the temporary directory',
   const pending = launchFixtureSmoke(connection);
   while (!mockedSpawn.mock.calls.length) await new Promise((resolve) => setImmediate(resolve));
   processFixture.emit('close', 17, null);
-  expect(await pending).toEqual({ status: 17, error: null, metrics: null });
+  expect(await pending).toEqual({
+    status: 17,
+    error: null,
+    metrics: null,
+    summaryDiagnostic: 'summary_missing',
+    summaryChunks: 'none',
+  });
 });
 
 it('handles SIGTERM and escalates to SIGKILL after the grace period', async () => {
@@ -186,5 +198,28 @@ it('rejects oversized summary output without returning its contents', async () =
   while (!mockedSpawn.mock.calls.length) await new Promise((resolve) => setImmediate(resolve));
   (processFixture.stdout as PassThrough).write('x'.repeat(128 * 1024 + 1));
   processFixture.emit('close', 0, null);
-  expect(await pending).toEqual({ status: 0, error: null, metrics: null });
+  expect(await pending).toEqual({
+    status: 0,
+    error: null,
+    metrics: null,
+    summaryDiagnostic: 'summary_oversized',
+    summaryChunks: 'single',
+  });
+});
+
+it.each([
+  ['ordinary console output', 'summary_invalid_json'],
+  ['{"metrics":{}}', 'summary_schema_mismatch'],
+] as const)('classifies unusable stdout without revealing it', async (output, category) => {
+  const processFixture = child();
+  mockedSpawn.mockReturnValue(processFixture);
+  const pending = launchFixtureSmoke(connection);
+  while (!mockedSpawn.mock.calls.length) await new Promise((resolve) => setImmediate(resolve));
+  (processFixture.stdout as PassThrough).write(output);
+  processFixture.emit('close', 0, null);
+  const result = await pending;
+  expect(result.summaryDiagnostic).toBe(category);
+  expect(result.summaryChunks).toBe('single');
+  expect(result.metrics).toBeNull();
+  expect(JSON.stringify(result)).not.toContain(output);
 });

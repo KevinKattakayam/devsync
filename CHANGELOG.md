@@ -610,3 +610,7 @@ Historical Phase 0 audit: see docs/CHANGELOG.md. No production deployment or key
 # Phase 16 — k6 summary and cancellation follow-up
 
 - Transfer allowlisted numeric k6 summaries through bounded stdout, report application-only metrics separately, and isolate the fixture server from terminal Ctrl+C on Unix. Real k6 summary and cancellation verification remain pending.
+
+# Phase 16 — k6 summary diagnostics
+
+- Report fixed summary parsing categories and stdout chunk counts without exposing output, and reject incomplete numeric summaries. Real k6 verification remains pending.

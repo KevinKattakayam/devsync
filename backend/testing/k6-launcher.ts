@@ -19,6 +19,9 @@ export interface SmokeResult {
     | 'cleanup_failed'
     | null;
   metrics: SanitizedSmokeMetrics | null;
+  summaryDiagnostic?:
+    'summary_missing' | 'summary_invalid_json' | 'summary_schema_mismatch' | 'summary_oversized';
+  summaryChunks?: 'none' | 'single' | 'multiple';
 }
 export interface SanitizedSmokeMetrics {
   requestDurationMs: { median: number | null; p95: number | null; p99: number | null };
@@ -40,13 +43,22 @@ function numericValue(source: unknown, name: string): number | null {
   return typeof value === 'number' && Number.isFinite(value) ? value : null;
 }
 
-function readSanitizedMetrics(raw: string): SanitizedSmokeMetrics | null {
+function readSanitizedMetrics(raw: string): {
+  metrics: SanitizedSmokeMetrics | null;
+  diagnostic?: NonNullable<SmokeResult['summaryDiagnostic']>;
+} {
+  if (!raw.trim()) return { metrics: null, diagnostic: 'summary_missing' };
+  let parsed: unknown;
   try {
-    if (Buffer.byteLength(raw) > 128 * 1024) return null;
-    const parsed: unknown = JSON.parse(raw);
+    parsed = JSON.parse(raw);
+  } catch {
+    return { metrics: null, diagnostic: 'summary_invalid_json' };
+  }
+  try {
     const metrics =
       parsed && typeof parsed === 'object' ? (parsed as { metrics?: unknown }).metrics : undefined;
-    if (!metrics || typeof metrics !== 'object') return null;
+    if (!metrics || typeof metrics !== 'object' || Array.isArray(metrics))
+      return { metrics: null, diagnostic: 'summary_schema_mismatch' };
     const durations = (name: string) => ({
       median: numericValue((metrics as Record<string, unknown>)[name], 'med'),
       p95: numericValue((metrics as Record<string, unknown>)[name], 'p(95)'),
@@ -58,7 +70,7 @@ function readSanitizedMetrics(raw: string): SanitizedSmokeMetrics | null {
       documents: durations('documents_latency_ms'),
       document: durations('document_latency_ms'),
     };
-    return {
+    const result: SanitizedSmokeMetrics = {
       requestDurationMs: durations('http_req_duration'),
       requests: {
         count: numericValue((metrics as Record<string, unknown>).http_reqs, 'count'),
@@ -81,8 +93,25 @@ function readSanitizedMetrics(raw: string): SanitizedSmokeMetrics | null {
       },
       endpoints,
     };
+    const required = [
+      result.requestDurationMs.median,
+      result.requestDurationMs.p95,
+      result.requestDurationMs.p99,
+      result.requests.count,
+      result.requests.perSecond,
+      result.failedRequestRate,
+      result.application.requestDurationMs.median,
+      result.application.requestDurationMs.p95,
+      result.application.requestDurationMs.p99,
+      result.application.requests.count,
+      result.application.requests.perSecond,
+      result.application.failedRequestRate,
+    ];
+    if (required.some((value) => value === null))
+      return { metrics: null, diagnostic: 'summary_schema_mismatch' };
+    return { metrics: result };
   } catch {
-    return null;
+    return { metrics: null, diagnostic: 'summary_schema_mismatch' };
   }
 }
 
@@ -137,7 +166,9 @@ export async function launchFixtureSmoke(
     });
     let summary = '';
     let tooLarge = false;
+    let chunks = 0;
     child.stdout?.on('data', (chunk: Buffer) => {
+      chunks++;
       if (tooLarge) return;
       if (Buffer.byteLength(summary) + chunk.length > 128 * 1024) {
         summary = '';
@@ -180,8 +211,14 @@ export async function launchFixtureSmoke(
       });
       if (signal?.aborted) cancel();
     });
-    if (!tooLarge && result.status !== null && result.error === null)
-      result.metrics = readSanitizedMetrics(summary);
+    if (result.status !== null && result.error === null) {
+      const parsed = tooLarge
+        ? { metrics: null, diagnostic: 'summary_oversized' as const }
+        : readSanitizedMetrics(summary);
+      result.metrics = parsed.metrics;
+      if (parsed.diagnostic) result.summaryDiagnostic = parsed.diagnostic;
+      result.summaryChunks = chunks === 0 ? 'none' : chunks === 1 ? 'single' : 'multiple';
+    }
   } catch {
     result = { status: null, error: 'startup_failed', metrics: null };
   }

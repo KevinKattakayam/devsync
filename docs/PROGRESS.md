@@ -1281,3 +1281,7 @@ The installed Testcontainers PostgreSQL implementation emits `postgres:` while t
 # Phase 16 — k6 summary and cancellation follow-up
 
 User-run disposable preflight passed; a later cancellation reported cleanup failure and a completed run lacked a readable summary. Changed the k6 summary handoff to bounded stdout carrying only allowlisted numeric aggregates, with separate application-only metrics. Isolated the fixture server from terminal Ctrl+C on Unix while retaining bounded explicit shutdown. Mocked backend tests passed 27/27, mocked k6 wiring, lint, formatting, strict types and build passed. The precise causes of the user's two failures remain unconfirmed; k6 snap cannot launch in this sandbox, and real runtime and cancellation verification remain pending. See [verification](quality/phase16-load-restore/README.md). Phase 16 remains incomplete.
+
+# Phase 16 — real k6 summary diagnostics
+
+The user reported another completed k6 2.3.0 fixture run without a readable summary. Its discarded stdout does not establish the cause. Added fixed diagnostic categories and stdout chunk counts without logging stream data; empty or incomplete numeric summaries are now rejected. The 10 focused launcher assertions passed but the focused Jest command exited 1 on repository-wide coverage thresholds. Backend lint, formatting, strict types and build passed. k6 snap cannot start here; real runtime diagnosis remains pending. See [verification](quality/phase16-load-restore/README.md). Phase 16 remains incomplete.
