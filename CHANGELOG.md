@@ -1,3 +1,8 @@
+# Phase 17 — zero-budget staging inventory
+
+- Recorded that read-only Railway build-log queries returned no records and do not establish the cause or cost of fixing its failed services.
+- Documented conditional free-tier architecture, idle-reclamation and production-isolation risks, local verification and unresolved promotion prerequisites. No cloud resources changed; staging remains NO-GO.
+
 # Phase 16 — isolated k6 fixture orchestration
 
 - Extracted disposable PostgreSQL/Redis provisioning, migration/seed and `NOBYPASSRLS` runtime-role setup into a shared test-only lifecycle used by the browser runner and new load runner. Existing browser fixture inputs and execution path are retained.

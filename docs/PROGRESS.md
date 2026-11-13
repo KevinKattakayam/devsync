@@ -1,3 +1,9 @@
+# Phase 17 — zero-budget staging inventory (no-go)
+
+Read-only Railway build logs for both existing failed services returned zero records, so their failure cause and repair cost remain unknown. Existing Vercel and Railway metadata is not endpoint-health evidence; the reported Neon production branch was not accessed. A Vercel Hobby / Oracle Always Free VM / isolated Neon staging candidate is conditional on verified account quotas, no-overage controls, safe recovery and explicit approval. Oracle idle reclamation is a material low-traffic risk. No cloud resource was changed.
+
+Local release tests, disposable PostgreSQL runtime-role tests, backend/frontend lint, types and builds, backend full tests and coverage (48 suites / 445 tests), frontend tests and formatting, OpenAPI and runtime dependency audits passed; backend full formatting failed on two existing unrelated browser-test files. Initial sandboxed IPC/subprocess failures passed in the permitted context. Real provider checks and hosted artifact identity remain unverified. Exact commands and blockers: [cloud options](quality/phase17-staging-readiness/CLOUD_OPTIONS.md). Staging remains NO-GO; Phase 17 is incomplete.
+
 # Phase 14 — browser accessibility environment check (blocked)
 
 Verified the local browser-test runtime without changing system configuration. `/usr/bin/docker` exists, but its default context points to `unix:///var/run/docker.sock` and `docker info` exits 1 with permission denied. The socket is `srw-rw----`, owned by `nobody:nogroup`; Podman and nerdctl are unavailable. The repository browser harness requires Testcontainers PostgreSQL and Redis, so the focused activity-filter browser journey and fresh axe scan remain blocked. No browser pass or screenshot is claimed. Full evidence and the exact diagnostic are in [Phase 14 accessibility review](quality/phase14-accessibility-review/README.md).
