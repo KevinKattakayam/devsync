@@ -7,6 +7,8 @@ export class ConfigurationError extends Error {
 }
 export function validateEnvironment(env: NodeJS.ProcessEnv) {
   const invalid: string[] = [];
+  if (env.DEPLOYMENT_MODE === 'production' && env.NODE_ENV !== 'production')
+    invalid.push('NODE_ENV');
   const local =
     env.DEPLOYMENT_MODE === 'local' ||
     (env.DEPLOYMENT_MODE === undefined && env.NODE_ENV !== 'production');

@@ -622,3 +622,7 @@ Historical Phase 0 audit: see docs/CHANGELOG.md. No production deployment or key
 # Phase 16 — verified local REST smoke
 
 - Record one successful 2-VU, 15-second k6 2.3.0 run against disposable local services, with application-only metrics separated from preflight-inclusive HTTP totals. This is a local smoke baseline, not production capacity or SLO evidence.
+
+# Phase 17 — staging readiness checkpoint
+
+- Require production NODE_ENV when DEPLOYMENT_MODE is production, and document the unverified staging provider, deployment, role-ownership and release prerequisites. No staging deployment was performed.
