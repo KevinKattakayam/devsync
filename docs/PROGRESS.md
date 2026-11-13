@@ -1,3 +1,7 @@
+# Phase 17 — free hosting comparison (no-go)
+
+Reviewed the actual API, WebSocket, worker, Redis and extraction topology against Render Free. Render's free web service sleeps; its free tier does not offer continuously running background workers or persistent Key Value, so it cannot retain the current queue and availability guarantees. Oracle Always Free with separate supervised processes and persistent private Redis is the conditional better fit, subject to free capacity, idle reclamation, backups, ARM and Neon compatibility, and verified costs. No cloud resources were changed. Details and provider sources: [cloud options](quality/phase17-staging-readiness/CLOUD_OPTIONS.md). Phase 17 remains incomplete.
+
 # Phase 17 — zero-budget staging inventory (no-go)
 
 Read-only Railway build logs for both existing failed services returned zero records, so their failure cause and repair cost remain unknown. Existing Vercel and Railway metadata is not endpoint-health evidence; the reported Neon production branch was not accessed. A Vercel Hobby / Oracle Always Free VM / isolated Neon staging candidate is conditional on verified account quotas, no-overage controls, safe recovery and explicit approval. Oracle idle reclamation is a material low-traffic risk. No cloud resource was changed.

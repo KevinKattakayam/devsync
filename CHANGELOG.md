@@ -1,3 +1,7 @@
+# Phase 17 — free hosting comparison
+
+- Documented Render Free's worker, sleep and volatile Redis limitations against the existing DevSync topology, and the Oracle Always Free candidate's reliability and verification constraints. No cloud changes or deployment were made.
+
 # Phase 17 — zero-budget staging inventory
 
 - Recorded that read-only Railway build-log queries returned no records and do not establish the cause or cost of fixing its failed services.
