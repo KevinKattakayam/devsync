@@ -638,3 +638,4 @@ Historical Phase 0 audit: see docs/CHANGELOG.md. No production deployment or key
 # Phase 17 — cloud inventory and source preparation
 
 - Record read-only Vercel/Railway inventory and conditional free-tier options, and add an isolated reviewed-commit source archive/hash primitive. It is not a built-image attestation or deployment; staging promotion remains blocked.
+- Record the user's $0 budget and protect the existing Neon production branch when evaluating staging options.
