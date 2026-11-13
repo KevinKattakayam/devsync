@@ -630,3 +630,7 @@ Historical Phase 0 audit: see docs/CHANGELOG.md. No production deployment or key
 # Phase 17 — staging promotion and runtime role safety
 
 - Block preview promotion until staging topology and release identity can be verified, and add a fail-closed, read-only runtime database privilege check with disposable PostgreSQL regression coverage. Staging deployment remains unimplemented and unverified.
+
+# Phase 17 — staging configuration foundation
+
+- Add a locally tested validator for proposed staging targets, credentials and reviewed SHA. It is not wired into deployment; staging promotion remains blocked.

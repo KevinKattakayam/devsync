@@ -61,6 +61,7 @@ jobs:
         if: matrix.service == 'backend'
         run: |
           node --test tools/ci/tests/staging-safety.test.mjs
+          node --test tools/ci/tests/staging-config.test.mjs
           cd backend
           node --test testing/runtime-role-guard.test.mjs
       - name: Frontend tests and coverage
