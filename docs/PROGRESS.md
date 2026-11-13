@@ -1289,3 +1289,7 @@ The user reported another completed k6 2.3.0 fixture run without a readable summ
 # Phase 16 — versioned k6 summary framing
 
 The user observed invalid JSON and multiple stdout chunks; chunks were already concatenated, so the combined content caused the parse failure, but the discarded stream leaves its exact contents unknown. Added a versioned line record and strict numeric schema verification with rejection of duplicates and malformed output. Mocked wiring and focused launcher assertions cover stream boundaries and invalid records; the focused Jest command still exits 1 on repository-wide coverage thresholds. Lint, targeted formatting, strict types and build pass. Real k6 verification and performance measurements remain pending; see [verification](quality/phase16-load-restore/README.md). Phase 16 remains incomplete.
+
+# Phase 16 — verified local REST smoke baseline
+
+User executed the isolated k6 workload on 2026-11-13 with Docker 29.9.3, k6 2.3.0, Node.js 22.23.2, a disposable PostgreSQL/Redis fixture, 2 VUs and 15 seconds. Real k6 exit status was 0. Application reads: 120 requests, 7.99495956 req/s, p50/p95/p99 8.53803/17.5275811/23.68147059 ms, failed rate 0. Preflight-inclusive totals: 151 requests, 10.06032412 req/s, p50/p95/p99 7.732204/16.4551745/21.8163745 ms, failed rate 0. Sanitized artifact and limitations are recorded in [Phase 16 evidence](quality/phase16-load-restore/README.md). This single local smoke is not production scalability or SLO evidence; restore and failure drills remain outstanding. Phase 16 remains incomplete.

@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "measuredAt": "2026-11-13T04:36:12.703Z",
+  "nodeVersion": "v22.23.2",
+  "outcome": "completed",
+  "k6ExitStatus": 0,
+  "metrics": {
+    "requestDurationMs": {
+      "median": 7.732204,
+      "p95": 16.4551745,
+      "p99": 21.816374500000002
+    },
+    "requests": {
+      "count": 151,
+      "perSecond": 10.060324117218382
+    },
+    "failedRequestRate": 0,
+    "application": {
+      "requestDurationMs": {
+        "median": 8.53803,
+        "p95": 17.527581100000003,
+        "p99": 23.681470590000014
+      },
+      "requests": {
+        "count": 120,
+        "perSecond": 7.994959563352357
+      },
+      "failedRequestRate": 0
+    },
+    "endpoints": {
+      "health": {
+        "median": 1.555763,
+        "p95": 3.995939999999998,
+        "p99": 4.750929960000001
+      },
+      "profile": {
+        "median": 11.3616165,
+        "p95": 18.68041215,
+        "p99": 23.518635800000006
+      },
+      "documents": {
+        "median": 8.9406165,
+        "p95": 17.40176979999999,
+        "p99": 23.059760430000004
+      },
+      "document": {
+        "median": 8.621895,
+        "p95": 14.867438749999998,
+        "p99": 16.46366814
+      }
+    }
+  }
+}

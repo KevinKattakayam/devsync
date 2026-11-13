@@ -618,3 +618,7 @@ Historical Phase 0 audit: see docs/CHANGELOG.md. No production deployment or key
 # Phase 16 — versioned k6 summary framing
 
 - Frame the allowlisted numeric summary with a versioned line marker and validate a single complete record; real k6 verification remains pending.
+
+# Phase 16 — verified local REST smoke
+
+- Record one successful 2-VU, 15-second k6 2.3.0 run against disposable local services, with application-only metrics separated from preflight-inclusive HTTP totals. This is a local smoke baseline, not production capacity or SLO evidence.
