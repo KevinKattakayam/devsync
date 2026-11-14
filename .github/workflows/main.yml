@@ -150,7 +150,7 @@ jobs:
         if: always()
         run: |
           status=0
-          docker run --rm --user "$(id -u):$(id -g)" -v "$PWD:/repo:ro" -v "$PWD/security:/reports" -w /repo semgrep/semgrep@sha256:b68f9b68483955b85042dac7b4533757779625a02dcf91e470da4c2df1b430be semgrep scan --config p/typescript --no-git-ignore --metrics=off --disable-version-check --error --json --output /reports/semgrep.json backend/src frontend/src || status=$?
+          docker run --rm --user "$(id -u):$(id -g)" -e HOME=/tmp -e SEMGREP_USER_HOME=/tmp/semgrep -v "$PWD:/repo:ro" -v "$PWD/security:/reports" -w /repo semgrep/semgrep@sha256:b68f9b68483955b85042dac7b4533757779625a02dcf91e470da4c2df1b430be semgrep scan --config p/typescript --no-git-ignore --metrics=off --disable-version-check --error --json --output /reports/semgrep.json backend/src frontend/src || status=$?
           node tools/ci/redact-report.mjs semgrep security/semgrep.json security/semgrep-redacted.json
           exit "$status"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02

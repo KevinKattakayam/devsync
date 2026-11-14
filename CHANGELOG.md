@@ -1,3 +1,8 @@
+# CI follow-up — source-security Semgrep permission fix
+
+- Updated the `source-security` Semgrep Docker invocation to run with writable scanner homes (`HOME=/tmp` and `SEMGREP_USER_HOME=/tmp/semgrep`) while still executing as the host UID/GID.
+- This fixes the GitHub Actions failure `PermissionError: [Errno 13] Permission denied: '/.semgrep'` and keeps existing scanner scope, severity policy, and redacted artifact behavior unchanged.
+
 # Phase 18 — production Kanban virtualization and Yjs recovery assertion
 
 - Host-verification follow-up (user-reported, 2026-11-15): Kanban browser suite 5/5 passed across light/dark and desktop/mobile, collaboration/recovery suite 4/4 passed, disposable PostgreSQL/Redis drills 2/2 passed, and Gitleaks regression/history checks passed. The prior 1/5 Kanban axe failure is retained as historical evidence; saved post-fix axe reports show zero violations with the incomplete checks recorded separately. Codex did not independently rerun Docker-backed suites because its Docker socket access is denied.
