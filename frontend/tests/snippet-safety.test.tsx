@@ -77,3 +77,22 @@ it('shows failed preflight without claiming a save and allows retry', async () =
   await user.click(screen.getByRole('button', { name: 'Review preflight' }));
   expect(await screen.findByRole('button', { name: 'Save redacted snippet' })).toBeTruthy();
 });
+it('focuses the mounted review after keyboard activation and stops doing so after editing', async () => {
+  const frame = vi.spyOn(window, 'requestAnimationFrame').mockImplementation(() => 1);
+  try {
+    render(<Safety workspaceId="one" />);
+    const user = userEvent.setup();
+    await user.type(await screen.findByRole('textbox', { name: 'Snippet title' }), 'Fixture');
+    await user.type(screen.getByRole('textbox', { name: 'Code' }), 'const value = 42;');
+    const trigger = screen.getByRole('button', { name: 'Review preflight' });
+    trigger.focus();
+    await user.keyboard('{Enter}');
+    const heading = await screen.findByRole('heading', { name: 'Review the redacted result' });
+    expect(document.activeElement).toBe(heading);
+    await user.click(screen.getByRole('button', { name: 'Edit masked draft' }));
+    expect(screen.queryByRole('heading', { name: 'Review the redacted result' })).toBeNull();
+    expect(document.activeElement).not.toBe(heading);
+  } finally {
+    frame.mockRestore();
+  }
+});

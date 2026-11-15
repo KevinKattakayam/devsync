@@ -193,6 +193,9 @@ function Composer({
   const requestKey = useRef(crypto.randomUUID());
   const resultHeading = useRef<HTMLHeadingElement>(null);
   useEffect(() => {
+    if (review) resultHeading.current?.focus();
+  }, [review]);
+  useEffect(() => {
     const raw = pending;
     return () => {
       raw.current = null;
@@ -229,7 +232,6 @@ function Composer({
       const result = await snippetSafetyApi.preflight(workspaceId, pending.current);
       setReview(result);
       setForm(result.content);
-      requestAnimationFrame(() => resultHeading.current?.focus());
     } catch {
       pending.current = null;
       setError('Preflight unavailable. Nothing was saved. Check access and try again.');
