@@ -1,0 +1,184 @@
+
+> devsync-backend@1.0.0 test
+> jest --runInBand --runTestsByPath src/__tests__/auth-sync.test.ts --coverage=false
+
+{"level":50,"time":1794106452650,"service":"devsync-api","req":{"id":"4606047b-1f96-49a0-8b60-b973a4a03da2","method":"POST"},"requestId":"4606047b-1f96-49a0-8b60-b973a4a03da2","msg":"Unexpected server error"}
+{"level":30,"time":1794106452652,"service":"devsync-api","req":{"id":"4606047b-1f96-49a0-8b60-b973a4a03da2","method":"POST"},"requestId":"4606047b-1f96-49a0-8b60-b973a4a03da2","res":{"statusCode":500},"err":{"type":"HttpError"},"responseTime":3,"msg":"request errored"}
+{"level":50,"time":1794106452665,"service":"devsync-api","req":{"id":"dc088481-265a-46ec-8628-7047c29ce895","method":"POST"},"requestId":"dc088481-265a-46ec-8628-7047c29ce895","msg":"Unexpected server error"}
+{"level":30,"time":1794106452665,"service":"devsync-api","req":{"id":"dc088481-265a-46ec-8628-7047c29ce895","method":"POST"},"requestId":"dc088481-265a-46ec-8628-7047c29ce895","res":{"statusCode":500},"err":{"type":"HttpError"},"responseTime":0,"msg":"request errored"}
+{"level":50,"time":1794106452668,"service":"devsync-api","req":{"id":"769d43d0-e535-4a94-9728-f3180529c28c","method":"POST"},"requestId":"769d43d0-e535-4a94-9728-f3180529c28c","msg":"Unexpected server error"}
+{"level":30,"time":1794106452668,"service":"devsync-api","req":{"id":"769d43d0-e535-4a94-9728-f3180529c28c","method":"POST"},"requestId":"769d43d0-e535-4a94-9728-f3180529c28c","res":{"statusCode":500},"err":{"type":"HttpError"},"responseTime":0,"msg":"request errored"}
+{"level":50,"time":1794106452696,"service":"devsync-api","req":{"id":"2152138c-7ba5-4834-92af-4ed47e0764d5","method":"POST"},"requestId":"2152138c-7ba5-4834-92af-4ed47e0764d5","msg":"Unexpected server error"}
+{"level":30,"time":1794106452697,"service":"devsync-api","req":{"id":"2152138c-7ba5-4834-92af-4ed47e0764d5","method":"POST"},"requestId":"2152138c-7ba5-4834-92af-4ed47e0764d5","res":{"statusCode":500},"err":{"type":"HttpError"},"responseTime":1,"msg":"request errored"}
+{"level":50,"time":1794106452700,"service":"devsync-api","req":{"id":"06f009c4-4ece-4a01-90a9-5bbb9033f301","method":"POST"},"requestId":"06f009c4-4ece-4a01-90a9-5bbb9033f301","msg":"Unexpected server error"}
+{"level":30,"time":1794106452700,"service":"devsync-api","req":{"id":"06f009c4-4ece-4a01-90a9-5bbb9033f301","method":"POST"},"requestId":"06f009c4-4ece-4a01-90a9-5bbb9033f301","res":{"statusCode":500},"err":{"type":"HttpError"},"responseTime":1,"msg":"request errored"}
+{"level":50,"time":1794106452703,"service":"devsync-api","req":{"id":"5dda721a-b222-4611-94d8-93861e813049","method":"POST"},"requestId":"5dda721a-b222-4611-94d8-93861e813049","msg":"Unexpected server error"}
+{"level":30,"time":1794106452703,"service":"devsync-api","req":{"id":"5dda721a-b222-4611-94d8-93861e813049","method":"POST"},"requestId":"5dda721a-b222-4611-94d8-93861e813049","res":{"statusCode":500},"err":{"type":"HttpError"},"responseTime":0,"msg":"request errored"}
+{"level":30,"time":1794106452706,"service":"devsync-api","req":{"id":"30c57fae-f94c-42b4-95c2-f37fe2984acf","method":"POST"},"requestId":"30c57fae-f94c-42b4-95c2-f37fe2984acf","res":{"statusCode":401},"responseTime":0,"msg":"request completed"}
+{"level":50,"time":1794106452708,"service":"devsync-api","req":{"id":"4d40b7ac-cc12-44b8-820f-faded67426d2","method":"POST"},"requestId":"4d40b7ac-cc12-44b8-820f-faded67426d2","msg":"Unexpected server error"}
+{"level":30,"time":1794106452709,"service":"devsync-api","req":{"id":"4d40b7ac-cc12-44b8-820f-faded67426d2","method":"POST"},"requestId":"4d40b7ac-cc12-44b8-820f-faded67426d2","res":{"statusCode":500},"err":{"type":"HttpError"},"responseTime":1,"msg":"request errored"}
+{"level":50,"time":1794106452712,"service":"devsync-api","req":{"id":"3b313dc3-6e1f-45a8-879e-63cbddf984c5","method":"POST"},"requestId":"3b313dc3-6e1f-45a8-879e-63cbddf984c5","msg":"Unexpected server error"}
+{"level":30,"time":1794106452712,"service":"devsync-api","req":{"id":"3b313dc3-6e1f-45a8-879e-63cbddf984c5","method":"POST"},"requestId":"3b313dc3-6e1f-45a8-879e-63cbddf984c5","res":{"statusCode":500},"err":{"type":"HttpError"},"responseTime":1,"msg":"request errored"}
+{"level":50,"time":1794106452715,"service":"devsync-api","req":{"id":"2156dc29-839a-4d43-87d4-2fc49f9cd525","method":"POST"},"requestId":"2156dc29-839a-4d43-87d4-2fc49f9cd525","msg":"Unexpected server error"}
+{"level":30,"time":1794106452715,"service":"devsync-api","req":{"id":"2156dc29-839a-4d43-87d4-2fc49f9cd525","method":"POST"},"requestId":"2156dc29-839a-4d43-87d4-2fc49f9cd525","res":{"statusCode":500},"err":{"type":"HttpError"},"responseTime":0,"msg":"request errored"}
+{"level":50,"time":1794106452717,"service":"devsync-api","req":{"id":"0689a0ae-65f9-4a84-a27b-3393a7c94be8","method":"POST"},"requestId":"0689a0ae-65f9-4a84-a27b-3393a7c94be8","msg":"Unexpected server error"}
+{"level":30,"time":1794106452717,"service":"devsync-api","req":{"id":"0689a0ae-65f9-4a84-a27b-3393a7c94be8","method":"POST"},"requestId":"0689a0ae-65f9-4a84-a27b-3393a7c94be8","res":{"statusCode":500},"err":{"type":"HttpError"},"responseTime":0,"msg":"request errored"}
+FAIL src/__tests__/auth-sync.test.ts
+  ● denies token-expired without sync or SDK error disclosure
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 401
+    Received: 500
+
+      29 |   jest.mocked(verifyToken).mockRejectedValue(new TokenVerificationError({ reason, message: 'PRIVATE_SDK_DETAIL' }));
+      30 |   const response = await request(app).post('/sync').set('Authorization', 'Bearer fixture-token');
+    > 31 |   expect(response.status).toBe(401);
+         |                           ^
+      32 |   expect(response.body.code).toBe('UNAUTHENTICATED');
+      33 |   expect(JSON.stringify(response.body)).not.toContain('PRIVATE_SDK_DETAIL');
+      34 |   expect(syncClerkUser).not.toHaveBeenCalled();
+
+      at src/__tests__/auth-sync.test.ts:31:27
+
+  ● denies token-not-active-yet without sync or SDK error disclosure
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 401
+    Received: 500
+
+      29 |   jest.mocked(verifyToken).mockRejectedValue(new TokenVerificationError({ reason, message: 'PRIVATE_SDK_DETAIL' }));
+      30 |   const response = await request(app).post('/sync').set('Authorization', 'Bearer fixture-token');
+    > 31 |   expect(response.status).toBe(401);
+         |                           ^
+      32 |   expect(response.body.code).toBe('UNAUTHENTICATED');
+      33 |   expect(JSON.stringify(response.body)).not.toContain('PRIVATE_SDK_DETAIL');
+      34 |   expect(syncClerkUser).not.toHaveBeenCalled();
+
+      at src/__tests__/auth-sync.test.ts:31:27
+
+  ● denies token-iat-in-the-future without sync or SDK error disclosure
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 401
+    Received: 500
+
+      29 |   jest.mocked(verifyToken).mockRejectedValue(new TokenVerificationError({ reason, message: 'PRIVATE_SDK_DETAIL' }));
+      30 |   const response = await request(app).post('/sync').set('Authorization', 'Bearer fixture-token');
+    > 31 |   expect(response.status).toBe(401);
+         |                           ^
+      32 |   expect(response.body.code).toBe('UNAUTHENTICATED');
+      33 |   expect(JSON.stringify(response.body)).not.toContain('PRIVATE_SDK_DETAIL');
+      34 |   expect(syncClerkUser).not.toHaveBeenCalled();
+
+      at src/__tests__/auth-sync.test.ts:31:27
+
+  ● denies token-invalid-signature without sync or SDK error disclosure
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 401
+    Received: 500
+
+      29 |   jest.mocked(verifyToken).mockRejectedValue(new TokenVerificationError({ reason, message: 'PRIVATE_SDK_DETAIL' }));
+      30 |   const response = await request(app).post('/sync').set('Authorization', 'Bearer fixture-token');
+    > 31 |   expect(response.status).toBe(401);
+         |                           ^
+      32 |   expect(response.body.code).toBe('UNAUTHENTICATED');
+      33 |   expect(JSON.stringify(response.body)).not.toContain('PRIVATE_SDK_DETAIL');
+      34 |   expect(syncClerkUser).not.toHaveBeenCalled();
+
+      at src/__tests__/auth-sync.test.ts:31:27
+
+  ● denies token-invalid without sync or SDK error disclosure
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 401
+    Received: 500
+
+      29 |   jest.mocked(verifyToken).mockRejectedValue(new TokenVerificationError({ reason, message: 'PRIVATE_SDK_DETAIL' }));
+      30 |   const response = await request(app).post('/sync').set('Authorization', 'Bearer fixture-token');
+    > 31 |   expect(response.status).toBe(401);
+         |                           ^
+      32 |   expect(response.body.code).toBe('UNAUTHENTICATED');
+      33 |   expect(JSON.stringify(response.body)).not.toContain('PRIVATE_SDK_DETAIL');
+      34 |   expect(syncClerkUser).not.toHaveBeenCalled();
+
+      at src/__tests__/auth-sync.test.ts:31:27
+
+  ● fails closed as unavailable for key resolution failures
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 503
+    Received: 500
+
+      37 |   jest.mocked(verifyToken).mockRejectedValue(new TokenVerificationError({ reason: TokenVerificationErrorReason.RemoteJWKFailedToLoad, message: 'PRIVATE_SDK_DETAIL' }));
+      38 |   const response = await request(app).post('/sync').set('Authorization', 'Bearer fixture-token');
+    > 39 |   expect(response.status).toBe(503);
+         |                           ^
+      40 |   expect(response.body.code).toBe('UNAVAILABLE');
+      41 |   expect(JSON.stringify(response.body)).not.toContain('PRIVATE_SDK_DETAIL');
+      42 |   expect(syncClerkUser).not.toHaveBeenCalled();
+
+      at Object.<anonymous> (src/__tests__/auth-sync.test.ts:39:27)
+
+  ● rejects malformed authorization Basic fixture before verification
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 401
+    Received: 500
+
+      45 |   let pending = request(app).post('/sync');
+      46 |   if (authorization) pending = pending.set('Authorization', authorization);
+    > 47 |   expect((await pending).status).toBe(401);
+         |                                  ^
+      48 |   expect(verifyToken).not.toHaveBeenCalled();
+      49 |   expect(syncClerkUser).not.toHaveBeenCalled();
+      50 | });
+
+      at src/__tests__/auth-sync.test.ts:47:34
+
+  ● rejects malformed authorization Bearer before verification
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 401
+    Received: 500
+
+      45 |   let pending = request(app).post('/sync');
+      46 |   if (authorization) pending = pending.set('Authorization', authorization);
+    > 47 |   expect((await pending).status).toBe(401);
+         |                                  ^
+      48 |   expect(verifyToken).not.toHaveBeenCalled();
+      49 |   expect(syncClerkUser).not.toHaveBeenCalled();
+      50 | });
+
+      at src/__tests__/auth-sync.test.ts:47:34
+
+  ● rejects malformed authorization Bearer one two before verification
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 401
+    Received: 500
+
+      45 |   let pending = request(app).post('/sync');
+      46 |   if (authorization) pending = pending.set('Authorization', authorization);
+    > 47 |   expect((await pending).status).toBe(401);
+         |                                  ^
+      48 |   expect(verifyToken).not.toHaveBeenCalled();
+      49 |   expect(syncClerkUser).not.toHaveBeenCalled();
+      50 | });
+
+      at src/__tests__/auth-sync.test.ts:47:34
+
+Test Suites: 1 failed, 1 total
+Tests:       9 failed, 2 passed, 11 total
+Snapshots:   0 total
+Time:        3.186 s
+Ran all test suites within paths "src/__tests__/auth-sync.test.ts".

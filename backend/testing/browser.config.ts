@@ -1,32 +1,57 @@
 import { defineConfig } from '@playwright/test';
 export default defineConfig({
   testDir: './browser',
-  testMatch: process.env.E2E_QUALITY
-    ? ['journeys.spec.ts', 'contracts.spec.ts', 'shell.spec.ts', 'quality.spec.ts']
-    : process.env.E2E_AI_COST
-      ? 'ai-cost.spec.ts'
-      : process.env.E2E_ASYNC_DIGEST
-        ? 'async-digest.spec.ts'
-        : process.env.E2E_SNIPPET_SAFETY
-          ? 'snippet-safety.spec.ts'
-          : process.env.E2E_DECISIONS
-            ? 'decisions.spec.ts'
-            : process.env.E2E_AI
-              ? 'ai.spec.ts'
-              : process.env.E2E_KANBAN
-                ? 'kanban.spec.ts'
-                : process.env.E2E_EDITOR
-                  ? 'editor.spec.ts'
-                  : process.env.E2E_SETTINGS
-                    ? 'settings.spec.ts'
-                    : process.env.E2E_DASHBOARD
-                      ? 'dashboard.spec.ts'
-                      : process.env.E2E_SHELL
-                        ? 'shell.spec.ts'
-                        : process.env.E2E_UI_CAPTURE
-                          ? 'capture.spec.ts'
-                          : ['journeys.spec.ts', 'contracts.spec.ts'],
+  testMatch: process.env.E2E_PORTABILITY
+    ? 'portability.spec.ts'
+    : process.env.E2E_INBOX
+      ? 'inbox.spec.ts'
+      : process.env.E2E_AUTOMATION
+        ? 'automation.spec.ts'
+        : process.env.E2E_GROUNDED
+          ? 'grounded-ai.spec.ts'
+          : process.env.E2E_DECISION_EXECUTION
+            ? 'decision-execution.spec.ts'
+            : process.env.E2E_SEARCH
+              ? 'search.spec.ts'
+              : process.env.E2E_GITHUB_TRAIL
+                ? 'github-trail.spec.ts'
+                : process.env.E2E_RECOVERY
+                  ? 'recovery.spec.ts'
+                  : process.env.E2E_IDENTITY
+                    ? 'identity-lifecycle.spec.ts'
+                    : process.env.E2E_QUALITY
+                      ? [
+                          'journeys.spec.ts',
+                          'contracts.spec.ts',
+                          'shell.spec.ts',
+                          'quality.spec.ts',
+                        ]
+                      : process.env.E2E_AI_COST
+                        ? 'ai-cost.spec.ts'
+                        : process.env.E2E_ASYNC_DIGEST
+                          ? 'async-digest.spec.ts'
+                          : process.env.E2E_SNIPPET_SAFETY
+                            ? 'snippet-safety.spec.ts'
+                            : process.env.E2E_DECISIONS
+                              ? 'decisions.spec.ts'
+                              : process.env.E2E_AI
+                                ? 'ai.spec.ts'
+                                : process.env.E2E_KANBAN
+                                  ? 'kanban.spec.ts'
+                                  : process.env.E2E_EDITOR
+                                    ? 'editor.spec.ts'
+                                    : process.env.E2E_SETTINGS
+                                      ? 'settings.spec.ts'
+                                      : process.env.E2E_DASHBOARD
+                                        ? 'dashboard.spec.ts'
+                                        : process.env.E2E_SHELL
+                                          ? 'shell.spec.ts'
+                                          : process.env.E2E_UI_CAPTURE
+                                            ? 'capture.spec.ts'
+                                            : ['journeys.spec.ts', 'contracts.spec.ts'],
   timeout:
+    process.env.E2E_PORTABILITY ||
+    process.env.E2E_RECOVERY ||
     process.env.E2E_QUALITY ||
     process.env.E2E_SHELL ||
     process.env.E2E_SETTINGS ||

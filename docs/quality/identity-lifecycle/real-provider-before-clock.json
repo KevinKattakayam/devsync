@@ -1,0 +1,10 @@
+{
+  "status": "blocked_before_signin_clock_correction_requested",
+  "realProvider": true,
+  "credentialsOrTokensRecorded": false,
+  "screenshots": false,
+  "traces": false,
+  "checks": [],
+  "failure": "A bounded login or status assertion did not complete; no provider exception details, credentials or payloads recorded.",
+  "userReported": "Clerk rejected sign-in or MFA; user subsequently reported clock correction"
+}

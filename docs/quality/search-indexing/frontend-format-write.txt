@@ -1,0 +1,4 @@
+src/components/search/knowledge-search.tsx 138ms
+src/components/shell/app-shell.tsx 114ms (unchanged)
+src/app/(dashboard)/workspace/[id]/search/page.tsx 4ms
+tests/knowledge-search.test.tsx 16ms

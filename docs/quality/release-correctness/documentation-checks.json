@@ -1,0 +1,49 @@
+{
+  "exit": 0,
+  "localLinks": [
+    {
+      "file": "CHANGELOG.md",
+      "localLinkTargets": "exist"
+    },
+    {
+      "file": "VULNERABILITIES.md",
+      "localLinkTargets": "exist"
+    },
+    {
+      "file": "docs/API.md",
+      "localLinkTargets": "exist"
+    },
+    {
+      "file": "docs/ARCHITECTURE.md",
+      "localLinkTargets": "exist"
+    },
+    {
+      "file": "docs/AUTHZ_MATRIX.md",
+      "localLinkTargets": "exist"
+    },
+    {
+      "file": "docs/FINAL_REPORT.md",
+      "localLinkTargets": "exist"
+    },
+    {
+      "file": "docs/PRIVACY.md",
+      "localLinkTargets": "exist"
+    },
+    {
+      "file": "docs/RUNBOOK.md",
+      "localLinkTargets": "exist"
+    },
+    {
+      "file": "docs/PROGRESS.md",
+      "localLinkTargets": "exist"
+    },
+    {
+      "file": "docs/quality/release-correctness/README.md",
+      "localLinkTargets": "exist"
+    }
+  ],
+  "evidenceJson": "valid; Compose services.json is newline-delimited JSON",
+  "pythonSyntax": "valid",
+  "workflowYaml": "parsed",
+  "externalLinks": "not checked"
+}

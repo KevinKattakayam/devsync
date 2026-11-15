@@ -1,0 +1,124 @@
+{
+  "violations": [],
+  "incomplete": [
+    {
+      "id": "aria-required-children",
+      "impact": "critical",
+      "tags": [
+        "cat.aria",
+        "wcag2a",
+        "wcag131",
+        "EN-301-549",
+        "EN-9.1.3.1",
+        "RGAAv4",
+        "RGAA-9.3.1"
+      ],
+      "description": "Ensure elements with an ARIA role that require child roles contain them",
+      "help": "Certain ARIA roles must contain particular children",
+      "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/aria-required-children?application=axeAPI",
+      "nodes": [
+        {
+          "any": [
+            {
+              "id": "aria-required-children",
+              "data": [
+                "listitem"
+              ],
+              "relatedNodes": [],
+              "impact": "critical",
+              "message": "Expecting ARIA child role to be added: listitem"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "critical",
+          "html": "<div role=\"list\" aria-label=\"To Do task list\" style=\"height: 0px; position: relative;\"></div>",
+          "target": [
+            "div[aria-label=\"To Do task list\"]"
+          ],
+          "failureSummary": "Fix any of the following:\n  Expecting ARIA child role to be added: listitem"
+        },
+        {
+          "any": [
+            {
+              "id": "aria-required-children",
+              "data": [
+                "listitem"
+              ],
+              "relatedNodes": [],
+              "impact": "critical",
+              "message": "Expecting ARIA child role to be added: listitem"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "critical",
+          "html": "<div role=\"list\" aria-label=\"Keyboard target dark 390 task list\" style=\"height: 0px; position: relative;\"></div>",
+          "target": [
+            "div[aria-label=\"Keyboard target dark 390 tasks\"] > div[role=\"list\"]"
+          ],
+          "failureSummary": "Fix any of the following:\n  Expecting ARIA child role to be added: listitem"
+        }
+      ]
+    },
+    {
+      "id": "color-contrast",
+      "impact": "serious",
+      "tags": [
+        "cat.color",
+        "wcag2aa",
+        "wcag143",
+        "TTv5",
+        "TT13.c",
+        "EN-301-549",
+        "EN-9.1.4.3",
+        "ACT",
+        "RGAAv4",
+        "RGAA-3.2.1"
+      ],
+      "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+      "help": "Elements must meet minimum color contrast ratio thresholds",
+      "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/color-contrast?application=axeAPI",
+      "nodes": [
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "contrastRatio": 0,
+                "fontSize": "10.5pt (14px)",
+                "fontWeight": "normal",
+                "messageKey": "elmPartiallyObscured",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<div class=\"w-72 flex flex-col rounded-xl bg-muted/30\">",
+                  "target": [
+                    ".w-72.bg-muted\\/30.rounded-xl:nth-child(3)"
+                  ]
+                },
+                {
+                  "html": "<div class=\"app-shell\">",
+                  "target": [
+                    ".app-shell"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element's background color could not be determined because it's partially obscured by another element"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<h2 class=\"text-sm font-semibold\">Keyboard target dark 390</h2>",
+          "target": [
+            ".w-72.bg-muted\\/30.rounded-xl:nth-child(3) > .p-3.justify-between.items-center > .gap-2.items-center.flex > h2"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+        }
+      ]
+    }
+  ]
+}

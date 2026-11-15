@@ -1,0 +1,145 @@
+{
+  "phase": "Phase 18 production Kanban virtualization and Yjs recovery assertion",
+  "date": "2026-11-15",
+  "branch": "upgrade/enterprise",
+  "status": "host_browser_and_recovery_acceptance_user_reported; security_and_manual_accessibility_open",
+  "productionKanban": {
+    "component": "frontend/src/components/kanban/virtualized-board.tsx",
+    "route": "frontend/src/app/(dashboard)/workspace/[id]/kanban/page.tsx",
+    "library": {
+      "name": "react-virtuoso",
+      "version": "4.18.21",
+      "license": "MIT"
+    },
+    "behavior": [
+      "Measured virtual rows in each column with a shared dnd-kit context and DragOverlay",
+      "Reuses the existing KanbanTaskCard, Radix Move control, task Drawer trigger, and current-state move guard",
+      "Routes accepted moves through the existing Yjs board-record optimistic update and taskApi.move; rejected requests retain the existing refetch behavior",
+      "Adds a persistent named keyboard focus host, task-focus recovery after virtual row unmount, arrow-key navigation, and live status announcements",
+      "Read-only, busy, and optimistic local task states cannot start drag; server authorization remains authoritative"
+    ]
+  },
+  "tests": {
+    "latestCodexSession": {
+      "focusedCommand": "cd frontend && npx vitest run tests/kanban-page-move.test.tsx tests/virtualized-kanban.test.tsx --reporter=dot",
+      "focusedExitCode": 0,
+      "focusedTests": 12,
+      "lintCommand": "cd frontend && npm run lint",
+      "lintExitCode": 0,
+      "formatCommand": "cd frontend && npm run format:check",
+      "formatExitCode": 0,
+      "typesCommand": "cd frontend && npm run typecheck",
+      "typesExitCode": 0,
+      "note": "The first format check identified only virtualized-board.tsx; Prettier was applied to that file, then focused tests, lint, format and types were rerun successfully."
+    },
+    "focusedCommand": "cd frontend && npx vitest run tests/kanban-page-move.test.tsx tests/virtualized-kanban.test.tsx --reporter=dot",
+    "focusedExitCode": 0,
+    "focusedFiles": 2,
+    "focusedTests": 12,
+    "focusedCoverage": [
+      "1000-task bounded rendered row count",
+      "Actual Kanban page and TaskCard controls",
+      "Actual Y.Doc record optimistic move and existing task API call",
+      "API rejection followed by failed refetch",
+      "Viewer controls and task deletion",
+      "Active drag deletion and Escape cancellation",
+      "Drawer close focus restoration",
+      "Stable focus host navigation and post-cancel Radix Move"
+    ],
+    "fullFrontend": {
+      "command": "python3 tools/quality/gates.py frontend docs/quality/phase18-kanban-virtualization",
+      "lintExitCode": 0,
+      "formatExitCode": 0,
+      "typesExitCode": 0,
+      "testExitCode": 0,
+      "nodeTests": 4,
+      "componentFiles": 39,
+      "componentTests": 194,
+      "coverage": {
+        "statementsPercent": 60.83,
+        "branchesPercent": 54.86,
+        "functionsPercent": 55.42,
+        "linesPercent": 62.24
+      },
+      "coverageThresholdsWeakened": false
+    },
+    "frontendBuild": {
+      "command": "npm run build -- --webpack",
+      "restrictedSandboxAttemptExitCode": 1,
+      "restrictedSandboxResult": "Next could not parse TypeScript --showConfig output",
+      "permittedSubprocessRerun": "completed successfully; optimized build, TypeScript, static generation, tracing, and route manifest completed",
+      "effectiveExitCode": 0
+    },
+    "backendStatic": {
+      "lint": 0,
+      "format": 0,
+      "types": 0,
+      "build": 0
+    },
+    "containerIntegration": {
+      "codexSession": "blocked",
+      "codexReason": "Docker API socket permission denied; no retry or permission change attempted",
+      "userReportedHostResults": {
+        "source": "User-confirmed normal Ubuntu terminal execution; terminal transcript was not supplied to this session",
+        "kanbanBrowser": {
+          "status": "passed",
+          "passed": 5,
+          "total": 5,
+          "themes": ["dark", "light"],
+          "viewports": ["desktop", "mobile"]
+        },
+        "collaborationRecoveryBrowser": { "status": "passed", "passed": 4, "total": 4 },
+        "postgresRedisRecovery": {
+          "status": "passed",
+          "passed": 2,
+          "total": 2,
+          "disposableInfrastructure": true
+        },
+        "gitleaksRegressionAndHistoricalDetection": "passed",
+        "axeReports": "Saved post-fix reports under docs/ui/after/kanban/phase18-aria-fixed/ show zero violations; dialog/overlay aria-hidden-focus and color-contrast checks remain incomplete in some states"
+      }
+    },
+    "dependencyAudit": {
+      "command": "cd frontend && npm audit --audit-level=high",
+      "exitCode": 1,
+      "reason": "Registry unavailable (EAI_AGAIN); no current advisory result obtained",
+      "review": {
+        "lastSavedAudit": "docs/quality/realtime-recovery/frontend-audit.json",
+        "reportedModerateAffectedRecords": 8,
+        "distinctReviewedAdvisory": "GHSA-g3hv-75wg-m249 (minimatch globparts amplification)",
+        "installedPath": "@typescript-eslint/typescript-estree@8.72.1 -> minimatch@10.2.6 (parent range ^10.2.2)",
+        "patchedVersion": "11.0.1",
+        "safeCompatibleUpdate": "not established; patched major is outside the installed parent range and registry is unavailable",
+        "action": "No override, forced update or downgrade applied"
+      }
+    }
+  },
+  "yjsConvergenceInvestigation": {
+    "confirmedApplicationDataLoss": false,
+    "confirmedRootCause": "The historical failing assertion queried rendered editor DOM with Playwright toContainText. The rendered text included a collaborator cursor label between concurrent marker characters, so a contiguous substring assertion failed even though the Yjs document text was not shown to be divergent.",
+    "correction": "The recovery browser test reads TipTap editor.getText() for document content and retains replica equality and all-marker assertions. Existing successful browser evidence records concurrentConvergence=true.",
+    "separateHarnessFailure": "A later retry failed after SIGKILL at fixture restart/generation with EADDRINUSE; that failure occurred after convergence checks and is not evidence of Yjs data loss.",
+    "runtimeJournalChanged": false,
+    "freshDockerBrowserRerun": false
+  },
+  "evidencePaths": [
+    "docs/quality/independent-audit/README.md",
+    "docs/quality/realtime-recovery/browser-first.txt",
+    "docs/quality/realtime-recovery/browser-retry.txt",
+    "docs/quality/realtime-recovery/browser/RESULTS.json",
+    "backend/testing/browser/recovery.spec.ts"
+  ],
+  "limitations": [
+    "User reports a host Testcontainers Kanban run passed 5/5, collaboration/recovery browser run passed 4/4, PostgreSQL/Redis drills passed 2/2, and Gitleaks regression/history checks passed; Codex did not independently execute those host commands.",
+    "The component tests use an actual Y.Doc and local-first record hook, but fixture auth transport and writable permission state; they do not prove server authorization or tenant isolation.",
+    "The user-reported fixture-backed browser and recovery results do not establish real Clerk/provider behavior or hosted acceptance; production cross-column and revocation guarantees are limited to the tested fixture and server-authoritative move path.",
+    "Manual screen-reader review remains unperformed; some axe dialog/overlay aria-hidden-focus and color-contrast checks are incomplete.",
+    "The current full frontend npm audit remains unavailable; the historical eight moderate records trace to the unresolved minimatch advisory in the typescript-eslint toolchain. Current all-layer CVE inventory is incomplete.",
+    "Full account backup/restore, Redis outage acceptance, security audit closure, and provider/real-account acceptance remain outstanding."
+  ],
+  "deployment": false,
+  "productionDataChanged": false,
+  "phaseComplete": false,
+  "commit": null,
+  "gitStatus": "verification and implementation changes are uncommitted; repository .git index is read-only in this environment"
+}

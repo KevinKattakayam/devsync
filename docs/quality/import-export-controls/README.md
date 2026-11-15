@@ -1,0 +1,27 @@
+# Phase 13 frontend import/export controls
+
+The document hub now exposes owner/editor Markdown import with a bounded 256 KiB UTF-8 read, a new-document confirmation and explicit supported-format guidance (paragraphs and ATX headings only). The server remains responsible for final content validation; malformed/unsupported content fails without creating a document. The existing OCR upload is unchanged.
+
+Document pages offer Markdown and PDF downloads for current authorized, non-archived sources. The board exposes task CSV v1 import to current owners/editors and CSV export to current workspace members. CSV import asks for confirmation, applies the existing 1 MiB client bound, retains one idempotency key for retries of the selected request, and explains that the server validates the entire batch atomically. Workspace archive download is available to current members after a warning that it is unencrypted, unredacted and incomplete, with the principal inclusions/exclusions and sensitive-content warning stated before the request.
+
+The UI resolves current workspace membership through the existing `loadWorkspaceAccess` client and keys resolved roles by workspace ID to avoid stale cross-workspace controls. It hides writes from viewers and hides portability controls if current access cannot be confirmed. API requests still use the existing authenticated Axios client and the backend remains authoritative for membership, role, suspension, source visibility, archive rules and tenant isolation. Expired session, denied/unavailable access, rate limit, oversize and invalid/unsupported input states are announced accessibly. Progress is announced while requests are in flight. A successful response followed by an anchor click is reported only as **download initiated**; browser file storage is not confirmed.
+
+No portability feature flag existed on the called endpoints; none was added or bypassed. No backend endpoint, contract, feature flag, dependency or production data was changed.
+
+## Verification
+
+- Focused component suite: `cd frontend && npx vitest run tests/portability-controls.test.tsx` — exit 0, 11 tests (authorization presentation, Markdown bounds/encoding/format feedback, task CSV confirmation/idempotent retry and size bound, downloads, archive warning and API failures).
+- Final frontend gate: `python3 tools/quality/gates.py frontend docs/quality/import-export-controls/accepted` — exit 0. Lint, format, strict types, 9 Node tests, 34 Vitest files / 156 component tests, coverage and Webpack production build all passed. Raw logs and `frontend-gates.json` are in `accepted/`.
+- Coverage comparison against `docs/quality/offline-drafts/live-frontend-accepted/frontend-coverage/coverage-summary.json` — exit 0. Statements 55.52%, branches 48.70%, functions 50.20%, lines 56.84%; thresholds were not changed.
+- `E2E_CHROMIUM_PATH=/opt/google/chrome/chrome node tools/ci/browser.mjs portability` — exit 0, one actual Chrome journey against disposable PostgreSQL/Redis and fixture identities. It verifies Markdown import and both document downloads, unsupported Markdown feedback, archive warning and ZIP download, valid task CSV import, viewer import denial and viewer task export. The browser observed download events/filenames; it did not verify that a user saved files. No screenshot was captured. Fixture login is not real Clerk/provider acceptance. See `accepted/browser-accepted.txt`.
+- `cd backend && npm run openapi:check` — exit 0 on the approved local-IPC retry. No OpenAPI contract changed.
+- Pinned Semgrep over the changed source/test files — exit 0, 0 findings (`accepted/semgrep-changed.json`). Pinned Gitleaks over `frontend/src`, `frontend/tests`, `backend/testing/browser` and this phase's verification documentation — each exit 0, no leaks.
+- An initial broader Semgrep scan exited 1 on its existing finding in `backend/testing/browser/identities.ts`, which uses HTTP for the isolated loopback fixture login; Semgrep also reported existing JSX partial-parse warnings. The scoped changed-file scan passed. The fixture file was not changed and the scan was not suppressed.
+
+## Retained non-passing attempts
+
+The first frontend gate's build exited 1 in the sandbox while Next parsed TypeScript configuration; a default Turbopack retry then showed the sandbox-denied worker port bind (`EPERM`). The full Webpack frontend gate passed when run with the needed local worker/IPC permission. The first browser attempt could not find Playwright's bundled Chromium; a system-Chrome run then exposed and fixed a missing API base variable in the new test. The final system-Chrome flow passed. A default-sandbox OpenAPI check hit tsx's `/tmp` IPC `EPERM`; the approved retry passed. A formatting check including the entire historical `docs/PROGRESS.md` failed on pre-existing formatting outside this phase; phase Markdown and `CHANGELOG.md` passed formatting. No failures were hidden or requirements lowered.
+
+## Remaining Phase 13 limitations
+
+This UI does not add archive restore/import, account-wide export/erasure, archive encryption or content redaction. The archive's backend schema intentionally excludes titles/metadata and other resource types; included content itself can contain sensitive data. Markdown import/export and PDF remain limited by the existing backend-supported subset. The browser cannot confirm file storage, and real Clerk identity acceptance was not part of this fixture journey. No push, deployment or Phase 14 work occurred.

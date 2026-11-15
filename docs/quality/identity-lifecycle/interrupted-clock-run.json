@@ -1,0 +1,5 @@
+{
+  "reason": "Run overlapped host clock correction and used the earlier duplicate-inactive fixture; retained as failed/interrupted. Re-run unchanged assertions against stable current clock.",
+  "taskProcessesInterrupted": 0,
+  "otherServicesUntouched": true
+}

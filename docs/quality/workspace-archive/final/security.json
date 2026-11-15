@@ -1,0 +1,94 @@
+[
+  {
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "-v",
+      "/home/kevin/devsync:/repo:ro",
+      "-v",
+      "/home/kevin/devsync/docs/quality/workspace-archive/final:/reports",
+      "-w",
+      "/repo",
+      "semgrep/semgrep@sha256:b68f9b68483955b85042dac7b4533757779625a02dcf91e470da4c2df1b430be",
+      "semgrep",
+      "scan",
+      "--config",
+      "p/typescript",
+      "--no-git-ignore",
+      "--metrics=off",
+      "--disable-version-check",
+      "--error",
+      "--json",
+      "--output",
+      "/reports/semgrep.json",
+      "backend/src",
+      "frontend/src"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "-v",
+      "/home/kevin/devsync:/repo:ro",
+      "zricethezav/gitleaks@sha256:691af3c7c5a48b16f187ce3446d5f194838f91238f27270ed36eef6359a574d9",
+      "dir",
+      "/repo/backend/src",
+      "--config=/repo/.gitleaks.toml",
+      "--redact=100",
+      "--no-banner"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "-v",
+      "/home/kevin/devsync:/repo:ro",
+      "zricethezav/gitleaks@sha256:691af3c7c5a48b16f187ce3446d5f194838f91238f27270ed36eef6359a574d9",
+      "dir",
+      "/repo/frontend/src",
+      "--config=/repo/.gitleaks.toml",
+      "--redact=100",
+      "--no-banner"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "-v",
+      "/home/kevin/devsync:/repo:ro",
+      "zricethezav/gitleaks@sha256:691af3c7c5a48b16f187ce3446d5f194838f91238f27270ed36eef6359a574d9",
+      "dir",
+      "/repo/backend/testing",
+      "--config=/repo/.gitleaks.toml",
+      "--redact=100",
+      "--no-banner"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "-v",
+      "/home/kevin/devsync:/repo:ro",
+      "zricethezav/gitleaks@sha256:691af3c7c5a48b16f187ce3446d5f194838f91238f27270ed36eef6359a574d9",
+      "dir",
+      "/repo/frontend/tests",
+      "--config=/repo/.gitleaks.toml",
+      "--redact=100",
+      "--no-banner"
+    ],
+    "exitCode": 0
+  }
+]

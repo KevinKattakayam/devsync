@@ -1,0 +1,111 @@
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": PostgreSQL database "devsync_e2e_browser", schema "public" at "localhost:33207"
+
+18 migrations found in prisma/migrations
+
+Applying migration `20260729000000_baseline`
+Applying migration `20260729180000_enterprise_platform`
+Applying migration `20260815000000_phase_3_tenant_rls`
+Applying migration `20260815001000_scim_provisioning`
+Applying migration `20260815002000_commercial_billing`
+Applying migration `20261031000000_tenant_indexes`
+Applying migration `20261031010000_crdt_journal`
+Applying migration `202611010001_canonical_revision`
+Applying migration `202611010002_embedding_authority`
+Applying migration `202611010003_atomic_create_idempotency`
+Applying migration `202611010004_workspace_invitations`
+Applying migration `202611020001_decision_receipts`
+Applying migration `202611020002_snippet_safety`
+Applying migration `202611020003_async_digest`
+Applying migration `202611080001_export_requests`
+Applying migration `202611080002_github_execution_state`
+Applying migration `202611080003_search_text`
+Applying migration `202611080004_receipt_timeline`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20260729000000_baseline/
+    └─ migration.sql
+  └─ 20260729180000_enterprise_platform/
+    └─ migration.sql
+  └─ 20260815000000_phase_3_tenant_rls/
+    └─ migration.sql
+  └─ 20260815001000_scim_provisioning/
+    └─ migration.sql
+  └─ 20260815002000_commercial_billing/
+    └─ migration.sql
+  └─ 20261031000000_tenant_indexes/
+    └─ migration.sql
+  └─ 20261031010000_crdt_journal/
+    └─ migration.sql
+  └─ 202611010001_canonical_revision/
+    └─ migration.sql
+  └─ 202611010002_embedding_authority/
+    └─ migration.sql
+  └─ 202611010003_atomic_create_idempotency/
+    └─ migration.sql
+  └─ 202611010004_workspace_invitations/
+    └─ migration.sql
+  └─ 202611020001_decision_receipts/
+    └─ migration.sql
+  └─ 202611020002_snippet_safety/
+    └─ migration.sql
+  └─ 202611020003_async_digest/
+    └─ migration.sql
+  └─ 202611080001_export_requests/
+    └─ migration.sql
+  └─ 202611080002_github_execution_state/
+    └─ migration.sql
+  └─ 202611080003_search_text/
+    └─ migration.sql
+  └─ 202611080004_receipt_timeline/
+    └─ migration.sql
+      
+All migrations have been successfully applied.
+Sample workspace seeded. Sign in with the supplied Clerk test identities.
+/home/kevin/devsync/.worktrees/frontend-fixture
+Isolated fixture server ready
+▲ Next.js 16.4.3 (webpack)
+- Local:         http://127.0.0.1:3001
+- Network:       http://127.0.0.1:3001
+✓ Ready in 463ms
+✓ Running next.config.ts took 36ms
+
+✓ Generated AGENTS.md for AI agents. Set `agentRules: false` in next.config to disable.
+○ Compiling /(auth)/login/[[...rest]]/page ...
+ GET /login 200 in 1686ms (next.js: 1169ms, proxy.ts: 84ms, application-code: 433ms)
+
+Running 1 test using 1 worker
+
+(node:728026) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ GET /workspace/devsync-sample/decisions 200 in 3.7s (next.js: 3.4s, proxy.ts: 13ms, application-code: 298ms)
+  ✘  1 testing/browser/decision-execution.spec.ts:4:5 › links task and signed local PR fixture with owner/viewer visibility (1.5m)
+
+
+  1) testing/browser/decision-execution.spec.ts:4:5 › links task and signed local PR fixture with owner/viewer visibility 
+
+    Test timeout of 90000ms exceeded.
+
+    Error: locator.selectOption: Test ended.
+    Call log:
+      - waiting for getByRole('article', { name: 'Execution browser fixture' }).getByLabel('Task', { exact: true })
+
+
+      77 |     await card
+      78 |       .getByLabel('Task', { exact: true })
+    > 79 |       .selectOption({ label: 'Review workspace permissions' });
+         |        ^
+      80 |     await card.getByLabel('Evidence description').fill('Tracked local task');
+      81 |     await card.getByRole('button', { name: 'Record evidence' }).click();
+      82 |     await expect(card.getByText(/linked task: Tracked local task/)).toBeVisible();
+        at /home/kevin/devsync/backend/testing/browser/decision-execution.spec.ts:79:8
+
+    Error Context: test-results/decision-execution-links-t-fdffb-ith-owner-viewer-visibility/error-context.md
+
+  1 failed
+    testing/browser/decision-execution.spec.ts:4:5 › links task and signed local PR fixture with owner/viewer visibility 
+[?25h
+Browser orchestration command exited 1

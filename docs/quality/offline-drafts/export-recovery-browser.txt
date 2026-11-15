@@ -1,0 +1,114 @@
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": PostgreSQL database "devsync_e2e_browser", schema "public" at "localhost:32819"
+
+23 migrations found in prisma/migrations
+
+Applying migration `20260729000000_baseline`
+Applying migration `20260729180000_enterprise_platform`
+Applying migration `20260815000000_phase_3_tenant_rls`
+Applying migration `20260815001000_scim_provisioning`
+Applying migration `20260815002000_commercial_billing`
+Applying migration `20261031000000_tenant_indexes`
+Applying migration `20261031010000_crdt_journal`
+Applying migration `202611010001_canonical_revision`
+Applying migration `202611010002_embedding_authority`
+Applying migration `202611010003_atomic_create_idempotency`
+Applying migration `202611010004_workspace_invitations`
+Applying migration `202611020001_decision_receipts`
+Applying migration `202611020002_snippet_safety`
+Applying migration `202611020003_async_digest`
+Applying migration `202611080001_export_requests`
+Applying migration `202611080002_github_execution_state`
+Applying migration `202611080003_search_text`
+Applying migration `202611080004_receipt_timeline`
+Applying migration `202611090001_automation_rules`
+Applying migration `202611090002_automation_executions`
+Applying migration `202611100001_inbox_read_state`
+Applying migration `202611100002_inbox_delivery_preferences`
+Applying migration `202611100003_inbox_automation_read_state`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20260729000000_baseline/
+    └─ migration.sql
+  └─ 20260729180000_enterprise_platform/
+    └─ migration.sql
+  └─ 20260815000000_phase_3_tenant_rls/
+    └─ migration.sql
+  └─ 20260815001000_scim_provisioning/
+    └─ migration.sql
+  └─ 20260815002000_commercial_billing/
+    └─ migration.sql
+  └─ 20261031000000_tenant_indexes/
+    └─ migration.sql
+  └─ 20261031010000_crdt_journal/
+    └─ migration.sql
+  └─ 202611010001_canonical_revision/
+    └─ migration.sql
+  └─ 202611010002_embedding_authority/
+    └─ migration.sql
+  └─ 202611010003_atomic_create_idempotency/
+    └─ migration.sql
+  └─ 202611010004_workspace_invitations/
+    └─ migration.sql
+  └─ 202611020001_decision_receipts/
+    └─ migration.sql
+  └─ 202611020002_snippet_safety/
+    └─ migration.sql
+  └─ 202611020003_async_digest/
+    └─ migration.sql
+  └─ 202611080001_export_requests/
+    └─ migration.sql
+  └─ 202611080002_github_execution_state/
+    └─ migration.sql
+  └─ 202611080003_search_text/
+    └─ migration.sql
+  └─ 202611080004_receipt_timeline/
+    └─ migration.sql
+  └─ 202611090001_automation_rules/
+    └─ migration.sql
+  └─ 202611090002_automation_executions/
+    └─ migration.sql
+  └─ 202611100001_inbox_read_state/
+    └─ migration.sql
+  └─ 202611100002_inbox_delivery_preferences/
+    └─ migration.sql
+  └─ 202611100003_inbox_automation_read_state/
+    └─ migration.sql
+      
+All migrations have been successfully applied.
+Sample workspace seeded. Sign in with the supplied Clerk test identities.
+/home/kevin/devsync/.worktrees/frontend-fixture
+Isolated fixture server ready
+▲ Next.js 16.4.3 (webpack)
+- Local:         http://127.0.0.1:3001
+- Network:       http://127.0.0.1:3001
+✓ Ready in 425ms
+✓ Running next.config.ts took 34ms
+○ Compiling /instrumentation ...
+
+✓ Generated AGENTS.md for AI agents. Set `agentRules: false` in next.config to disable.
+○ Compiling /(auth)/login/[[...rest]]/page ...
+ GET /login 200 in 759ms (proxy.ts: 132ms)
+ GET /login 200 in 1468ms (next.js: 862ms, proxy.ts: 9ms, application-code: 597ms)
+
+Running 1 test using 1 worker
+
+(node:80021) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+○ Compiling /(dashboard)/workspace/[id]/docs/[docId]/page ...
+ GET /workspace/cmw9koj1q00043k6rylrzro18/docs/cmw9koj4m000r3k6rpnng8wxb 200 in 7.4s (next.js: 6.7s, proxy.ts: 24ms, application-code: 678ms)
+ GET /workspace/cmw9koj1q00043k6rylrzro18/docs/cmw9koj4m000r3k6rpnng8wxb 200 in 7.4s (next.js: 6.7s, proxy.ts: 15ms, application-code: 681ms)
+ GET /workspace/cmw9koj1q00043k6rylrzro18/docs/cmw9koj4m000r3k6rpnng8wxb 200 in 7.4s (next.js: 6.7s, proxy.ts: 22ms, application-code: 685ms)
+ GET /workspace/cmw9koj1q00043k6rylrzro18/docs/cmw9koj4m000r3k6rpnng8wxb 200 in 108ms (next.js: 50ms, proxy.ts: 5ms, application-code: 52ms)
+Isolated fixture server ready
+ GET /workspace/cmw9koj1q00043k6rylrzro18/docs/cmw9koj4m000r3k6rpnng8wxb 200 in 201ms (next.js: 77ms, proxy.ts: 11ms, application-code: 113ms)
+ GET /workspace/cmw9koj1q00043k6rylrzro18/docs/cmw9koj4m000r3k6rpnng8wxb 200 in 248ms (next.js: 51ms, proxy.ts: 8ms, application-code: 189ms)
+ GET /workspace/cmw9koj1q00043k6rylrzro18/docs/cmw9koj4m000r3k6rpnng8wxb 200 in 264ms (next.js: 93ms, proxy.ts: 9ms, application-code: 162ms)
+ GET /workspace/cmw9koj1q00043k6rylrzro18/docs/cmw9koj4m000r3k6rpnng8wxb 200 in 296ms (next.js: 150ms, proxy.ts: 6ms, application-code: 139ms)
+  ✓  1 testing/browser/recovery.spec.ts:80:5 › actual browser replicas recover journal and snapshots across latency, offline reload, SIGKILL and revocation (fixture identities) (35.4s)
+
+  1 passed (37.9s)
+[?25h

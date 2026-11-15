@@ -1,7 +1,7 @@
 import { idempotentCreate } from '../lib/create-idempotency';
 import { notifyCollaborationAclChange } from '../services/collaboration-acl';
 import { Request, Response, NextFunction } from 'express';
-import { Role } from '@prisma/client';
+import { Prisma, Role } from '@prisma/client';
 import { z } from 'zod';
 import { BadRequestError, NotFoundError, ForbiddenError } from '../utils/errors';
 import {
@@ -324,13 +324,37 @@ export async function removeMember(req: Request, res: Response, next: NextFuncti
 export async function getActivities(req: Request, res: Response, next: NextFunction) {
   try {
     const workspaceId = String(req.params.id);
-    const activities = await withWorkspaceAccess(req.user!.userId, workspaceId, READ_ROLES, (tx) =>
-      tx.activity.findMany({
-        where: { workspaceId },
-        take: 20,
-        orderBy: { createdAt: 'desc' },
-        include: { user: { select: { id: true, name: true, avatar: true } } },
-      }),
+    const activities = await withWorkspaceAccess(
+      req.user!.userId,
+      workspaceId,
+      READ_ROLES,
+      async (tx) => {
+        const items = await tx.activity.findMany({
+          where: { workspaceId },
+          take: 20,
+          orderBy: { createdAt: 'desc' },
+          include: { user: { select: { id: true, name: true, avatar: true } } },
+        });
+        const automationTypes = new Set(['automation_notification', 'automation_escalation']);
+        const sourceIds = items
+          .filter((item) => automationTypes.has(item.type))
+          .flatMap((item) => {
+            const result = z
+              .object({ automationExecutionId: z.string().min(1).max(191) })
+              .safeParse(item.metadata);
+            return result.success ? [result.data.automationExecutionId] : [];
+          });
+        if (!sourceIds.length) return items.filter((item) => !automationTypes.has(item.type));
+        const visible = await tx.$queryRaw<
+          { id: string }[]
+        >`SELECT x.id FROM "AutomationExecution" x JOIN "AutomationEvent" e ON e.id=x."eventId" AND e."workspaceId"=x."workspaceId" JOIN "Task" t ON t.id=e."taskId" JOIN "Column" c ON c.id=t."columnId" JOIN "Board" b ON b.id=c."boardId" WHERE x."workspaceId"=${workspaceId} AND x.id IN (${Prisma.join(sourceIds)}) AND x.status='completed' AND e.origin='human_assertion' AND b."workspaceId"=${workspaceId}`;
+        const allowed = new Set(visible.map((row) => row.id));
+        return items.filter((item) => {
+          if (!automationTypes.has(item.type)) return true;
+          const result = z.object({ automationExecutionId: z.string() }).safeParse(item.metadata);
+          return result.success && allowed.has(result.data.automationExecutionId);
+        });
+      },
     );
     res.json(activities);
   } catch (error) {

@@ -1,0 +1,5 @@
+{
+  "exit": 0,
+  "scope": "isolated local backend only; monotonic session cache update",
+  "privateOutputDiscarded": true
+}

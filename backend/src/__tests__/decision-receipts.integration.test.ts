@@ -7,6 +7,7 @@ import { randomBytes } from 'crypto';
 import { spawnSync } from 'child_process';
 import { z } from 'zod';
 import router from '../routes/decision-receipts.routes';
+import { deleteWorkspace } from '../controllers/workspace.controller';
 import { createTenantPrismaClient, TenantPrismaClient } from '../lib/tenant-prisma';
 import { withDatabase } from '../lib/prisma';
 import { errorMiddleware } from '../middleware/error.middleware';
@@ -30,6 +31,7 @@ app.use((req, _res, next) =>
   }),
 );
 app.use('/workspaces/:workspaceId/decisions', router);
+app.delete('/workspaces/:id', deleteWorkspace);
 app.use(errorMiddleware);
 beforeAll(async () => {
   container = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
@@ -145,6 +147,8 @@ it('is disabled by default, even for authenticated owners', async () => {
   delete process.env.FEATURE_DECISION_RECEIPTS;
   await request(app).get('/workspaces/a/decisions').expect(404);
   await request(app).post('/workspaces/a/decisions').send({}).expect(404);
+  await request(app).get('/workspaces/a/decisions/receipt/timeline').expect(404);
+  await request(app).post('/workspaces/a/decisions/receipt/timeline').send({}).expect(404);
 });
 it('supports editor draft CRUD, exact quotes and optimistic revision conflicts', async () => {
   const f = await fixture(),
@@ -398,4 +402,249 @@ it('rejects an actual accepted replacement in another workspace, including for a
       expect(JSON.stringify(r.body)).not.toContain(other.id);
       expect(JSON.stringify(r.body)).not.toContain('Private foreign source');
     });
+});
+it('requires current receipt source and writer authority for execution evidence', async () => {
+  const f = await fixture();
+  const receipt = await f.create();
+  const timeline = `${f.path}/${receipt.id}/timeline`;
+  const assertion = {
+    kind: 'human_assertion',
+    evidence: 'Reviewed delivery plan',
+    occurredAt: '2026-11-08T10:00:00Z',
+  };
+  await request(app).post(timeline).send(assertion).expect(409);
+  await request(app).get(`${f.path}/missing/timeline`).expect(404);
+  await request(app).post(`${f.path}/${receipt.id}/accept`).send({ revision: 0 }).expect(200);
+  await request(app)
+    .post(timeline)
+    .send({ ...assertion, occurredAt: 'invalid' })
+    .expect(400);
+  await request(app)
+    .post(timeline)
+    .send({ ...assertion, kind: 'outcome_confirmed' })
+    .expect(201);
+  await request(app).post(timeline).set('x-test-actor', 'viewer').send(assertion).expect(403);
+  await request(app).post(timeline).set('x-test-actor', 'editor').send(assertion).expect(201);
+  await request(app)
+    .post(timeline)
+    .set('x-test-actor', 'editor')
+    .send({ ...assertion, evidence: '' })
+    .expect(400);
+  await request(app).get(timeline).set('x-test-actor', 'viewer').expect(200);
+  await admin.document.update({ where: { id: f.doc.id }, data: { isArchived: true } });
+  await request(app).get(timeline).expect(404);
+  await request(app).post(timeline).send(assertion).expect(404);
+});
+it('restricts linked PR evidence to owners and hides it after disconnect', async () => {
+  const f = await fixture(),
+    receipt = await f.create();
+  await request(app).post(`${f.path}/${receipt.id}/accept`).send({ revision: 0 }).expect(200);
+  const repo = await admin.gitHubRepository.create({
+    data: {
+      workspaceId: f.a,
+      repositoryId: `fixture-${f.a}`,
+      owner: 'fixture',
+      name: 'repo',
+      webhookSecret: 'fixture-only-placeholder',
+    },
+  });
+  await admin.gitHubExecutionState.create({
+    data: {
+      repositoryId: repo.id,
+      workspaceId: f.a,
+      kind: 'pull_request',
+      subject: '7',
+      state: 'merged',
+      pullNumber: 7,
+      headSha: 'a'.repeat(40),
+      providerAt: new Date(),
+      rank: 3,
+    },
+  });
+  await admin.gitHubExecutionState.createMany({
+    data: [
+      {
+        repositoryId: repo.id,
+        workspaceId: f.a,
+        kind: 'check_run',
+        subject: '99',
+        state: 'completed',
+        conclusion: 'success',
+        headSha: 'a'.repeat(40),
+        providerAt: new Date('2026-11-08T10:01:00Z'),
+        rank: 3,
+      },
+      {
+        repositoryId: repo.id,
+        workspaceId: f.a,
+        kind: 'review',
+        subject: '100',
+        state: 'approved',
+        pullNumber: 7,
+        headSha: 'a'.repeat(40),
+        providerAt: new Date('2026-11-08T10:02:00Z'),
+        rank: 1,
+      },
+    ],
+  });
+  await admin.gitHubExecutionState.createMany({
+    data: Array.from({ length: 101 }, (_, i) => ({
+      repositoryId: repo.id,
+      workspaceId: f.a,
+      kind: 'check_run',
+      subject: `older-${i}`,
+      state: 'completed',
+      conclusion: 'success',
+      headSha: 'a'.repeat(40),
+      providerAt: new Date('2026-01-01T00:00:00Z'),
+      rank: 3,
+    })),
+  });
+  const path = `${f.path}/${receipt.id}/timeline`;
+  const body = {
+    kind: 'linked_pull_request',
+    repositoryId: repo.id,
+    pullNumber: 7,
+    evidence: 'PR evidence',
+    occurredAt: '2026-11-08T10:00:00Z',
+  };
+  const foreignRepo = await admin.gitHubRepository.create({
+    data: {
+      workspaceId: f.b,
+      repositoryId: `foreign-${f.b}`,
+      owner: 'fixture',
+      name: 'other',
+      webhookSecret: 'fixture-only-placeholder',
+    },
+  });
+  await request(app)
+    .post(path)
+    .send({ ...body, repositoryId: foreignRepo.id })
+    .expect(404);
+  await request(app).post(path).set('x-test-actor', 'editor').send(body).expect(403);
+  await request(app).post(path).send(body).expect(201);
+  expect(
+    JSON.stringify((await request(app).get(path).set('x-test-actor', 'editor').expect(200)).body),
+  ).not.toContain('PR evidence');
+  const viewer = await request(app).get(path).set('x-test-actor', 'viewer').expect(200);
+  expect(JSON.stringify(viewer.body)).not.toContain('PR evidence');
+  const owner = await request(app).get(path).expect(200);
+  expect(owner.body).toEqual(
+    expect.arrayContaining([expect.objectContaining({ pullState: 'merged' })]),
+  );
+  expect(owner.body[0].githubEvidence).toHaveLength(100);
+  expect(owner.body[0].githubEvidence).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        kind: 'check_run',
+        conclusion: 'success',
+        providerAt: '2026-11-08T10:01:00.000Z',
+      }),
+      expect.objectContaining({
+        kind: 'review',
+        state: 'approved',
+        providerAt: '2026-11-08T10:02:00.000Z',
+      }),
+    ]),
+  );
+  expect(JSON.stringify(owner.body)).not.toContain('deployment_verified');
+  await request(app)
+    .post(path)
+    .send({ ...body, kind: 'deployment_verified' })
+    .expect(400);
+  await admin.gitHubRepository.update({
+    where: { id: repo.id },
+    data: { providerDisconnectedAt: new Date() },
+  });
+  expect((await request(app).get(path).expect(200)).body).toEqual([]);
+  await request(app).post(path).send(body).expect(404);
+  await admin.gitHubRepository.delete({ where: { id: repo.id } });
+  expect((await request(app).get(path).expect(200)).body).toEqual([]);
+});
+it('links only same-workspace tasks and keeps accepted receipt and event immutable', async () => {
+  const f = await fixture(),
+    receipt = await f.create();
+  await request(app).post(`${f.path}/${receipt.id}/accept`).send({ revision: 0 }).expect(200);
+  async function task(workspaceId: string) {
+    const board = await admin.board.create({
+      data: {
+        workspaceId,
+        name: 'Execution tasks',
+        columns: { create: { name: 'Todo', position: 0 } },
+      },
+      include: { columns: true },
+    });
+    return admin.task.create({
+      data: { title: 'Delivery task', columnId: board.columns[0].id, position: 0 },
+    });
+  }
+  const local = await task(f.a),
+    foreign = await task(f.b),
+    path = `${f.path}/${receipt.id}/timeline`;
+  const body = {
+    kind: 'linked_task',
+    taskId: local.id,
+    evidence: 'Tracked work',
+    occurredAt: '2026-11-08T10:00:00Z',
+  };
+  await request(app)
+    .post(path)
+    .send({ ...body, taskId: foreign.id })
+    .expect(404);
+  const created = await request(app)
+    .post(path)
+    .set('x-test-actor', 'editor')
+    .send(body)
+    .expect(201);
+  await request(app).get(`/workspaces/${f.b}/decisions/${receipt.id}/timeline`).expect(404);
+  const foreignRows = await db.withTenantTransaction(
+    f.b,
+    (tx) => tx.$queryRaw`SELECT id FROM "DecisionExecutionEvent" WHERE id=${created.body.id}`,
+  );
+  expect(foreignRows).toEqual([]);
+  await admin.task.update({ where: { id: local.id }, data: { title: 'Updated delivery' } });
+  expect((await request(app).get(path).set('x-test-actor', 'viewer').expect(200)).body).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({ taskTitle: 'Updated delivery', createdBy: 'editor' }),
+    ]),
+  );
+  expect(
+    await db.withTenantTransaction(
+      f.a,
+      (tx) =>
+        tx.$executeRaw`UPDATE "DecisionExecutionEvent" SET evidence='rewritten' WHERE id=${created.body.id}`,
+    ),
+  ).toBe(0);
+  expect(
+    await db.withTenantTransaction(
+      f.a,
+      (tx) => tx.$executeRaw`DELETE FROM "DecisionExecutionEvent" WHERE id=${created.body.id}`,
+    ),
+  ).toBe(0);
+  await request(app)
+    .patch(`${f.path}/${receipt.id}`)
+    .send({ ...f.input, revision: 1 })
+    .expect(409);
+  await request(app).delete(`${f.path}/${receipt.id}`).send({ revision: 1 }).expect(409);
+  await admin.task.delete({ where: { id: local.id } });
+  expect((await request(app).get(path).expect(200)).body).toEqual([]);
+});
+it('preserves existing workspace deletion with timeline evidence', async () => {
+  const f = await fixture(),
+    receipt = await f.create();
+  await request(app).post(`${f.path}/${receipt.id}/accept`).send({ revision: 0 }).expect(200);
+  await request(app)
+    .post(`${f.path}/${receipt.id}/timeline`)
+    .send({
+      kind: 'human_assertion',
+      evidence: 'Workspace evidence',
+      occurredAt: '2026-11-08T10:00:00Z',
+    })
+    .expect(201);
+  await request(app).delete(`/workspaces/${f.a}`).set('x-test-actor', 'viewer').expect(403);
+  await request(app).delete(`/workspaces/${f.a}`).expect(200);
+  const rows = await admin.$queryRaw<
+    { count: bigint }[]
+  >`SELECT count(*)::bigint AS count FROM "DecisionExecutionEvent" WHERE "workspaceId"=${f.a}`;
+  expect(rows[0].count).toBe(0n);
 });

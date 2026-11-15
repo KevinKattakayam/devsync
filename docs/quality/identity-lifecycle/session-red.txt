@@ -1,0 +1,27 @@
+
+> devsync-backend@1.0.0 test
+> node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand --runTestsByPath src/__tests__/provider-session.test.ts --coverage=false
+
+FAIL src/__tests__/provider-session.test.ts (6.584 s)
+  ● rejects a provider-revoked session even while its verified JWT is unexpired
+
+    expect(received).rejects.toThrow()
+
+    Received promise resolved instead of rejected
+    Resolved to value: "user_fixture"
+
+       6 |   jest.mocked(getAuth).mockReturnValue({ userId: 'user_fixture', sessionId: 'sess_revoked' } as ReturnType<typeof getAuth>);
+       7 |   jest.mocked(clerkClient.sessions.getSession).mockResolvedValue({ id: 'sess_revoked', userId: 'user_fixture', status: 'revoked', expireAt: Date.now()+60000 } as Awaited<ReturnType<typeof clerkClient.sessions.getSession>>);
+    >  8 |   await expect(requestSubject({} as Request)).rejects.toThrow();
+         |         ^
+       9 | });
+      10 |
+
+      at expect (node_modules/expect/build/index.js:2116:15)
+      at Object.<anonymous> (src/__tests__/provider-session.test.ts:8:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 1 total
+Snapshots:   0 total
+Time:        6.872 s
+Ran all test suites within paths "src/__tests__/provider-session.test.ts".

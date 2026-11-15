@@ -10,11 +10,14 @@ const isPublicRoute = createRouteMatcher([
   '/api/auth/reset(.*)',
 ]);
 
-const authenticatedProxy = clerkMiddleware(async (auth, request) => {
-  if (!isPublicRoute(request)) {
-    await auth.protect();
-  }
-});
+const authenticatedProxy = clerkMiddleware(
+  async (auth, request) => {
+    if (!isPublicRoute(request)) {
+      await auth.protect();
+    }
+  },
+  { signInUrl: '/sign-in', signUpUrl: '/sign-up' },
+);
 
 export default function proxy(request: NextRequest, event: NextFetchEvent) {
   if (request.nextUrl.pathname === '/healthz') return NextResponse.next();

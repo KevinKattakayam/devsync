@@ -1,0 +1,478 @@
+ Image devsync_phase5b_1fdc4b0337-extractor Building 
+ Image devsync_phase5b_1fdc4b0337-initialize Building 
+ Image devsync_phase5b_1fdc4b0337-bootstrap Building 
+ Image devsync_phase5b_1fdc4b0337-backend Building 
+ Image devsync_phase5b_1fdc4b0337-frontend Building 
+ Image devsync_phase5b_1fdc4b0337-worker Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 3.57kB done
+#1 DONE 0.0s
+
+#2 [frontend base 1/3] FROM docker.io/library/node:22-alpine@sha256:fe4f6d74e20370acb04ad889077d14d0f64a9c8ea6a42bc60cddf1e844699914
+#2 DONE 0.0s
+
+#3 [frontend base 2/3] WORKDIR /app
+#3 CACHED
+
+#4 [frontend base 3/3] RUN apk add --no-cache zlib=1.4-r0
+#4 1.551 (1/1) Upgrading zlib (1.3.2-r1 -> 1.4-r0)
+#4 1.656 OK: 10.9 MiB in 19 packages
+#4 DONE 1.7s
+
+#5 [frontend runner 1/6] RUN rm -rf /usr/local/lib/node_modules/npm /opt/yarn-* /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/yarn /usr/local/bin/yarnpkg /usr/bin/mount /usr/bin/umount /usr/bin/nsenter /usr/bin/infocmp
+#5 DONE 0.9s
+
+#6 [extractor internal] load build definition from Dockerfile
+#6 transferring dockerfile: 2.44kB done
+#6 DONE 0.0s
+
+#7 [frontend internal] load build definition from Dockerfile
+#7 transferring dockerfile: 2.20kB done
+#7 DONE 0.0s
+
+#8 [bootstrap internal] load .dockerignore
+#8 transferring context: 177B done
+#8 DONE 0.0s
+
+#9 [frontend internal] load metadata for docker.io/library/node:22-alpine@sha256:fe4f6d74e20370acb04ad889077d14d0f64a9c8ea6a42bc60cddf1e844699914
+#9 DONE 0.0s
+
+#10 [frontend internal] load .dockerignore
+#10 transferring context: 157B done
+#10 DONE 0.0s
+
+#11 [worker internal] load build context
+#11 transferring context: 2.14MB 0.1s done
+#11 DONE 0.1s
+
+#12 [worker base 3/3] RUN apk add --no-cache openssl ca-certificates zlib=1.4-r0
+#12 CACHED
+
+#13 [worker dependencies 1/3] COPY package.json package-lock.json ./
+#13 ...
+
+#14 [frontend dependencies 1/2] COPY package.json package-lock.json ./
+#14 DONE 0.1s
+
+#15 [frontend dependencies 2/2] RUN npm ci
+#15 4.841 npm warn deprecated eslint@9.39.5: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+#15 10.11 npm warn deprecated @opentelemetry/sdk-trace-node@2.10.0: Use @opentelemetry/sdk-trace package
+#15 10.12 npm warn deprecated @opentelemetry/sdk-trace-base@2.10.0: Use @opentelemetry/sdk-trace package
+#15 10.45 npm warn deprecated @opentelemetry/propagator-jaeger@2.10.0: Package no longer supported. See https://github.com/open-telemetry/opentelemetry-js/pull/7077
+#15 43.06 
+#15 43.06 added 721 packages, and audited 722 packages in 43s
+#15 43.06 
+#15 43.06 229 packages are looking for funding
+#15 43.06   run `npm fund` for details
+#15 43.21 
+#15 43.21 8 moderate severity vulnerabilities
+#15 43.21 
+#15 43.21 To address issues that do not require attention, run:
+#15 43.21   npm audit fix
+#15 43.21 
+#15 43.21 To address all issues (including breaking changes), run:
+#15 43.21   npm audit fix --force
+#15 43.21 
+#15 43.21 Run `npm audit` for details.
+#15 43.21 npm notice
+#15 43.21 npm notice New major version of npm available! 10.9.9 -> 12.2.2
+#15 43.21 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+#15 43.21 npm notice To update run: npm install -g npm@12.2.2
+#15 43.21 npm notice
+#15 DONE 43.7s
+
+#16 [frontend internal] load build context
+#16 transferring context: 1.04MB 0.0s done
+#16 DONE 0.2s
+
+#17 [frontend dependencies 2/2] RUN npm ci
+#17 CACHED
+
+#18 [frontend dependencies 1/2] COPY package.json package-lock.json ./
+#18 CACHED
+
+#19 [frontend build 1/3] COPY . .
+#19 DONE 0.2s
+
+#13 [worker dependencies 1/3] COPY package.json package-lock.json ./
+#13 DONE 0.3s
+
+#20 [initialize dependencies 2/3] COPY prisma/schema.prisma ./prisma/schema.prisma
+#20 DONE 0.0s
+
+#21 [worker dependencies 3/3] RUN npm ci
+#21 5.573 npm warn deprecated node-domexception@1.0.0: Use your platform's native DOMException instead
+#21 6.174 npm warn deprecated levelup@4.4.0: Superseded by abstract-level (https://github.com/Level/community#faq)
+#21 6.193 npm warn deprecated level-errors@2.0.1: Superseded by abstract-level (https://github.com/Level/community#faq)
+#21 6.196 npm warn deprecated level-concat-iterator@2.0.1: Superseded by abstract-level (https://github.com/Level/community#faq)
+#21 6.220 npm warn deprecated level-js@5.0.2: Superseded by browser-level (https://github.com/Level/community#faq)
+#21 6.231 npm warn deprecated level-packager@5.1.1: Superseded by abstract-level (https://github.com/Level/community#faq)
+#21 6.275 npm warn deprecated level-codec@9.0.2: Superseded by level-transcoder (https://github.com/Level/community#faq)
+#21 7.500 npm warn deprecated encoding-down@6.3.0: Superseded by abstract-level (https://github.com/Level/community#faq)
+#21 7.648 npm warn deprecated deferred-leveldown@5.3.0: Superseded by abstract-level (https://github.com/Level/community#faq)
+#21 8.067 npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+#21 8.429 npm warn deprecated abstract-leveldown@6.2.3: Superseded by abstract-level (https://github.com/Level/community#faq)
+#21 9.487 npm warn deprecated leveldown@5.6.0: Superseded by classic-level (https://github.com/Level/community#faq)
+#21 10.05 npm warn deprecated eslint@9.39.5: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+#21 ...
+
+#22 [frontend build 2/3] RUN npm run build -- --webpack
+#22 0.378 
+#22 0.378 > frontend@0.1.0 build
+#22 0.378 > next build --webpack
+#22 0.378 
+#22 1.015 ▲ Next.js 16.4.3 (webpack)
+#22 1.073 ✓ Running next.config.ts took 56ms
+#22 1.090 
+#22 1.132   Creating an optimized production build ...
+#22 37.24 ✓ Compiled successfully in 32.2s
+#22 37.24   Running TypeScript ...
+#22 56.87   Finished TypeScript in 19.6s ...
+#22 56.88   Collecting page data using 7 workers ...
+#22 64.90   Generating static pages using 7 workers (0/8) ...
+#22 67.29   Generating static pages using 7 workers (2/8) 
+#22 67.29   Generating static pages using 7 workers (4/8) 
+#22 67.29   Generating static pages using 7 workers (6/8) 
+#22 67.29 ✓ Generating static pages using 7 workers (8/8) in 2.4s
+#22 69.08   Finalizing page optimization ...
+#22 69.08   Collecting build traces ...
+#22 ...
+
+#21 [worker dependencies 3/3] RUN npm ci
+#21 82.20 
+#21 82.20 > devsync-backend@1.0.0 postinstall
+#21 82.20 > prisma generate
+#21 82.20 
+#21 83.17 Prisma schema loaded from prisma/schema.prisma
+#21 86.65 
+#21 86.65 ✔ Generated Prisma Client (v5.22.0) to ./node_modules/@prisma/client in 1.83s
+#21 86.65 
+#21 86.65 Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
+#21 86.65 
+#21 86.65 Tip: Want to react to database changes in your app as they happen? Discover how with Pulse: https://pris.ly/tip-1-pulse
+#21 86.65 
+#21 86.85 
+#21 86.85 added 1016 packages, and audited 1017 packages in 1m
+#21 86.85 
+#21 86.85 173 packages are looking for funding
+#21 86.85   run `npm fund` for details
+#21 87.15 
+#21 87.15 31 vulnerabilities (2 low, 29 moderate)
+#21 87.15 
+#21 87.15 To address issues that do not require attention, run:
+#21 87.15   npm audit fix
+#21 87.15 
+#21 87.15 To address all issues (including breaking changes), run:
+#21 87.15   npm audit fix --force
+#21 87.15 
+#21 87.15 Run `npm audit` for details.
+#21 87.15 npm notice
+#21 87.15 npm notice New major version of npm available! 10.9.9 -> 12.2.2
+#21 87.15 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+#21 87.15 npm notice To update run: npm install -g npm@12.2.2
+#21 87.15 npm notice
+#21 ...
+
+#22 [frontend build 2/3] RUN npm run build -- --webpack
+#22 113.9 
+#22 113.9 Route (app)
+#22 113.9 ┌ ○ /
+#22 113.9 ├ ○ /_not-found
+#22 113.9 ├ ƒ /api/auth/reset
+#22 113.9 ├ ƒ /api/superadmin/workspaces/[workspaceId]/kill-switch
+#22 113.9 ├ ƒ /dashboard
+#22 113.9 ├ ○ /design-system
+#22 113.9 ├ ƒ /healthz
+#22 113.9 ├ ƒ /invitations/[id]
+#22 113.9 ├ ƒ /login/[[...rest]]
+#22 113.9 ├ ƒ /settings/billing
+#22 113.9 ├ ƒ /sign-in/[[...rest]]
+#22 113.9 ├ ƒ /sign-up/[[...rest]]
+#22 113.9 ├ ƒ /signup/[[...rest]]
+#22 113.9 ├ ƒ /superadmin
+#22 113.9 ├ ƒ /workspace/[id]
+#22 113.9 ├ ƒ /workspace/[id]/decisions
+#22 113.9 ├ ƒ /workspace/[id]/digest
+#22 113.9 ├ ƒ /workspace/[id]/digest/activity/[activityId]
+#22 113.9 ├ ƒ /workspace/[id]/docs
+#22 113.9 ├ ƒ /workspace/[id]/docs/[docId]
+#22 113.9 ├ ƒ /workspace/[id]/kanban
+#22 113.9 ├ ƒ /workspace/[id]/settings
+#22 113.9 ├ ƒ /workspace/[id]/snippets
+#22 113.9 └ ƒ /workspace/[id]/snippets/safety
+#22 113.9 
+#22 113.9 
+#22 113.9 ƒ Proxy (Middleware)
+#22 113.9 
+#22 113.9 ○  (Static)   prerendered as static content
+#22 113.9 ƒ  (Dynamic)  server-rendered on demand
+#22 113.9 
+#22 ...
+
+#21 [worker dependencies 3/3] RUN npm ci
+#21 DONE 113.9s
+
+#22 [frontend build 2/3] RUN npm run build -- --webpack
+#22 DONE 114.4s
+
+#23 [worker build 1/3] COPY . .
+#23 DONE 1.4s
+
+#24 [bootstrap build 2/3] RUN npm run build && npx tsc -p tsconfig.seed-build.json
+#24 ...
+
+#25 [frontend build 3/3] RUN node -e "require('fs').writeFileSync('build-settings.json', JSON.stringify({mode:process.env.DEPLOYMENT_MODE,clerk:process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || ''}))"
+#25 DONE 1.5s
+
+#26 [worker production-dependencies 1/1] RUN npm prune --omit=dev --ignore-scripts
+#26 ...
+
+#24 [bootstrap build 2/3] RUN npm run build && npx tsc -p tsconfig.seed-build.json
+#24 1.116 
+#24 1.116 > devsync-backend@1.0.0 build
+#24 1.116 > prisma generate && tsc
+#24 1.116 
+#24 1.545 Prisma schema loaded from prisma/schema.prisma
+#24 5.731 
+#24 5.731 ✔ Generated Prisma Client (v5.22.0) to ./node_modules/@prisma/client in 3.73s
+#24 5.731 
+#24 5.731 Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
+#24 5.731 
+#24 5.731 Tip: Want real-time updates to your database without manual polling? Discover how with Pulse: https://pris.ly/tip-0-pulse
+#24 5.731 
+#24 ...
+
+#27 [frontend runner 2/6] COPY --from=build --chown=node:node /app/public ./public
+#27 DONE 0.1s
+
+#28 [frontend runner 3/6] COPY --from=build --chown=node:node /app/.next/standalone ./
+#28 DONE 0.5s
+
+#24 [bootstrap build 2/3] RUN npm run build && npx tsc -p tsconfig.seed-build.json
+#24 ...
+
+#29 [frontend runner 4/6] COPY --from=build --chown=node:node /app/.next/static ./.next/static
+#29 DONE 0.1s
+
+#30 [frontend runner 5/6] COPY --from=build --chown=node:node /app/docker ./docker
+#30 DONE 0.1s
+
+#24 [bootstrap build 2/3] RUN npm run build && npx tsc -p tsconfig.seed-build.json
+#24 ...
+
+#31 [frontend runner 6/6] COPY --from=build --chown=node:node /app/build-settings.json ./build-settings.json
+#31 DONE 0.1s
+
+#32 [frontend] exporting to image
+#32 exporting layers
+#32 exporting layers 0.4s done
+#32 writing image sha256:d58bb3b148266eac5a91b1d424b1583d7662f25a843d4ff4912a989154cf27a1 done
+#32 naming to docker.io/library/devsync_phase5b_1fdc4b0337-frontend done
+#32 DONE 0.5s
+
+#33 [frontend] resolving provenance for metadata file
+#33 DONE 0.1s
+
+#24 [bootstrap build 2/3] RUN npm run build && npx tsc -p tsconfig.seed-build.json
+#24 ...
+
+#26 [worker production-dependencies 1/1] RUN npm prune --omit=dev --ignore-scripts
+#26 27.45 
+#26 27.45 up to date, audited 492 packages in 25s
+#26 27.45 
+#26 27.45 84 packages are looking for funding
+#26 27.45   run `npm fund` for details
+#26 27.45 
+#26 27.45 found 0 vulnerabilities
+#26 DONE 27.6s
+
+#24 [bootstrap build 2/3] RUN npm run build && npx tsc -p tsconfig.seed-build.json
+#24 DONE 41.6s
+
+#34 [backend build 3/3] RUN mkdir -p /state/admin /state/runtime && chown -R node:node /state
+#34 DONE 0.4s
+
+#35 [initialize] exporting to image
+#35 exporting layers
+#35 ...
+
+#36 [backend runner 1/7] RUN rm -rf /usr/local/lib/node_modules/npm /opt/yarn-* /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/yarn /usr/local/bin/yarnpkg /usr/bin/mount /usr/bin/umount /usr/bin/nsenter /usr/bin/infocmp
+#36 CACHED
+
+#37 [backend runner 2/7] COPY --from=production-dependencies --chown=node:node /app/node_modules ./node_modules
+#37 CACHED
+
+#38 [backend runner 3/7] COPY --from=build --chown=node:node /app/dist ./dist
+#38 CACHED
+
+#39 [backend runner 4/7] COPY --from=build --chown=node:node /app/prisma/schema.prisma ./prisma/schema.prisma
+#39 ...
+
+#36 [worker runner 1/7] RUN rm -rf /usr/local/lib/node_modules/npm /opt/yarn-* /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/yarn /usr/local/bin/yarnpkg /usr/bin/mount /usr/bin/umount /usr/bin/nsenter /usr/bin/infocmp
+#36 CACHED
+
+#37 [worker runner 2/7] COPY --from=production-dependencies --chown=node:node /app/node_modules ./node_modules
+#37 CACHED
+
+#38 [worker runner 3/7] COPY --from=build --chown=node:node /app/dist ./dist
+#38 CACHED
+
+#39 [worker runner 4/7] COPY --from=build --chown=node:node /app/prisma/schema.prisma ./prisma/schema.prisma
+#39 DONE 0.4s
+
+#40 [backend runner 5/7] COPY --from=build --chown=node:node /app/prisma/migrations ./prisma/migrations
+#40 DONE 0.2s
+
+#41 [worker runner 6/7] COPY --from=build --chown=node:node /app/docker ./docker
+#41 DONE 0.2s
+
+#42 [extractor runner 7/7] COPY --from=build --chown=node:node /app/package.json ./package.json
+#42 DONE 0.2s
+
+#43 [backend] exporting to image
+#43 exporting layers
+#43 ...
+
+#44 [extractor extractor 1/1] COPY --from=build --chown=node:node /app/node_modules/@tesseract.js-data/eng/4.0.0_best_int/eng.traineddata.gz /app/ocr-data/eng.traineddata.gz
+#44 DONE 0.4s
+
+#43 [backend] exporting to image
+#43 exporting layers 0.4s done
+#43 writing image sha256:9279910dd17f2d642fd3b381cdefd3ae3613066093d93631a5215d783e0fb732 done
+#43 naming to docker.io/library/devsync_phase5b_1fdc4b0337-backend 0.0s done
+#43 DONE 0.6s
+
+#45 [worker] exporting to image
+#45 exporting layers 0.4s done
+#45 writing image sha256:1990db66183048714a5f9b24fecf59bdf4a47df18f80620b8751fe2795be2686 done
+#45 naming to docker.io/library/devsync_phase5b_1fdc4b0337-worker 0.0s done
+#45 DONE 0.5s
+
+#46 [extractor] exporting to image
+#46 exporting layers 0.1s done
+#46 writing image sha256:bbf2b68a8923676a645af51fd5fa1eb1ba65d26ad6dd47c91f3deca5a52d5644 done
+#46 naming to docker.io/library/devsync_phase5b_1fdc4b0337-extractor 0.0s done
+#46 DONE 0.2s
+
+#47 [bootstrap] exporting to image
+#47 ...
+
+#48 [worker] resolving provenance for metadata file
+#48 DONE 0.1s
+
+#49 [backend] resolving provenance for metadata file
+#49 DONE 0.0s
+
+#50 [extractor] resolving provenance for metadata file
+#50 DONE 0.0s
+
+#47 [bootstrap] exporting to image
+#47 ...
+
+#35 [initialize] exporting to image
+#35 exporting layers 18.1s done
+#35 writing image sha256:454efdbbe9955765128963719ed60f44b5e7880b9b7b5ceb02827eaff1218fe3 done
+#35 naming to docker.io/library/devsync_phase5b_1fdc4b0337-initialize 0.0s done
+#35 DONE 18.1s
+
+#47 [bootstrap] exporting to image
+#47 exporting layers 18.1s done
+#47 writing image sha256:a57af8b8d871f702046481794233933b6f9251c96d69663922cd785397aeae76 done
+#47 naming to docker.io/library/devsync_phase5b_1fdc4b0337-bootstrap 0.0s done
+#47 DONE 18.1s
+
+#51 [bootstrap] resolving provenance for metadata file
+#51 DONE 0.0s
+
+#52 [initialize] resolving provenance for metadata file
+#52 DONE 0.0s
+ Image devsync_phase5b_1fdc4b0337-bootstrap Built 
+ Image devsync_phase5b_1fdc4b0337-initialize Built 
+ Image devsync_phase5b_1fdc4b0337-extractor Built 
+ Image devsync_phase5b_1fdc4b0337-backend Built 
+ Image devsync_phase5b_1fdc4b0337-worker Built 
+ Image devsync_phase5b_1fdc4b0337-frontend Built 
+ Volume devsync_phase5b_1fdc4b0337_admin_credentials Creating 
+ Volume devsync_phase5b_1fdc4b0337_redis_data Creating 
+ Volume devsync_phase5b_1fdc4b0337_redis_data Creating 
+ Volume devsync_phase5b_1fdc4b0337_runtime_credentials Creating 
+ Volume devsync_phase5b_1fdc4b0337_runtime_credentials Creating 
+ Network devsync_phase5b_1fdc4b0337_default Creating 
+ Network devsync_phase5b_1fdc4b0337_default Creating 
+ Volume devsync_phase5b_1fdc4b0337_admin_credentials Creating 
+ Volume devsync_phase5b_1fdc4b0337_postgres_data Creating 
+ Volume devsync_phase5b_1fdc4b0337_postgres_data Creating 
+ Network devsync_phase5b_1fdc4b0337_extraction Creating 
+ Network devsync_phase5b_1fdc4b0337_extraction Creating 
+ Volume devsync_phase5b_1fdc4b0337_redis_data Created 
+ Volume devsync_phase5b_1fdc4b0337_redis_data Created 
+ Volume devsync_phase5b_1fdc4b0337_admin_credentials Created 
+ Volume devsync_phase5b_1fdc4b0337_admin_credentials Created 
+ Volume devsync_phase5b_1fdc4b0337_runtime_credentials Created 
+ Volume devsync_phase5b_1fdc4b0337_runtime_credentials Created 
+ Volume devsync_phase5b_1fdc4b0337_postgres_data Created 
+ Volume devsync_phase5b_1fdc4b0337_postgres_data Created 
+ Network devsync_phase5b_1fdc4b0337_default Created 
+ Network devsync_phase5b_1fdc4b0337_default Created 
+ Container devsync_phase5b_1fdc4b0337-redis-1 Creating 
+ Container devsync_phase5b_1fdc4b0337-bootstrap-1 Creating 
+ Network devsync_phase5b_1fdc4b0337_extraction Created 
+ Network devsync_phase5b_1fdc4b0337_extraction Created 
+ Container devsync_phase5b_1fdc4b0337-extractor-1 Creating 
+ Container devsync_phase5b_1fdc4b0337-extractor-1 Created 
+ Container devsync_phase5b_1fdc4b0337-redis-1 Created 
+ Container devsync_phase5b_1fdc4b0337-bootstrap-1 Created 
+ Container devsync_phase5b_1fdc4b0337-postgres-1 Creating 
+ Container devsync_phase5b_1fdc4b0337-postgres-1 Created 
+ Container devsync_phase5b_1fdc4b0337-initialize-1 Creating 
+ Container devsync_phase5b_1fdc4b0337-initialize-1 Created 
+ Container devsync_phase5b_1fdc4b0337-backend-1 Creating 
+ Container devsync_phase5b_1fdc4b0337-backend-1 Created 
+ Container devsync_phase5b_1fdc4b0337-worker-1 Creating 
+ Container devsync_phase5b_1fdc4b0337-frontend-1 Creating 
+ Container devsync_phase5b_1fdc4b0337-frontend-1 Created 
+ Container devsync_phase5b_1fdc4b0337-worker-1 Created 
+ Container devsync_phase5b_1fdc4b0337-redis-1 Starting 
+ Container devsync_phase5b_1fdc4b0337-extractor-1 Starting 
+ Container devsync_phase5b_1fdc4b0337-bootstrap-1 Starting 
+ Container devsync_phase5b_1fdc4b0337-redis-1 Started 
+ Container devsync_phase5b_1fdc4b0337-redis-1 Waiting 
+ Container devsync_phase5b_1fdc4b0337-extractor-1 Started 
+ Container devsync_phase5b_1fdc4b0337-extractor-1 Waiting 
+ Container devsync_phase5b_1fdc4b0337-bootstrap-1 Started 
+ Container devsync_phase5b_1fdc4b0337-bootstrap-1 Waiting 
+ Container devsync_phase5b_1fdc4b0337-bootstrap-1 Exited 
+ Container devsync_phase5b_1fdc4b0337-postgres-1 Starting 
+ Container devsync_phase5b_1fdc4b0337-postgres-1 Started 
+ Container devsync_phase5b_1fdc4b0337-postgres-1 Waiting 
+ Container devsync_phase5b_1fdc4b0337-redis-1 Healthy 
+ Container devsync_phase5b_1fdc4b0337-extractor-1 Healthy 
+ Container devsync_phase5b_1fdc4b0337-postgres-1 Healthy 
+ Container devsync_phase5b_1fdc4b0337-initialize-1 Starting 
+ Container devsync_phase5b_1fdc4b0337-initialize-1 Started 
+ Container devsync_phase5b_1fdc4b0337-initialize-1 Waiting 
+ Container devsync_phase5b_1fdc4b0337-initialize-1 Exited 
+ Container devsync_phase5b_1fdc4b0337-backend-1 Starting 
+ Container devsync_phase5b_1fdc4b0337-backend-1 Started 
+ Container devsync_phase5b_1fdc4b0337-backend-1 Waiting 
+ Container devsync_phase5b_1fdc4b0337-backend-1 Healthy 
+ Container devsync_phase5b_1fdc4b0337-worker-1 Starting 
+ Container devsync_phase5b_1fdc4b0337-frontend-1 Starting 
+ Container devsync_phase5b_1fdc4b0337-worker-1 Started 
+ Container devsync_phase5b_1fdc4b0337-frontend-1 Started 
+ Container devsync_phase5b_1fdc4b0337-postgres-1 Waiting 
+ Container devsync_phase5b_1fdc4b0337-bootstrap-1 Waiting 
+ Container devsync_phase5b_1fdc4b0337-backend-1 Waiting 
+ Container devsync_phase5b_1fdc4b0337-frontend-1 Waiting 
+ Container devsync_phase5b_1fdc4b0337-redis-1 Waiting 
+ Container devsync_phase5b_1fdc4b0337-worker-1 Waiting 
+ Container devsync_phase5b_1fdc4b0337-extractor-1 Waiting 
+ Container devsync_phase5b_1fdc4b0337-initialize-1 Waiting 
+ Container devsync_phase5b_1fdc4b0337-bootstrap-1 Exited 
+ Container devsync_phase5b_1fdc4b0337-initialize-1 Exited 
+ Container devsync_phase5b_1fdc4b0337-redis-1 Healthy 
+ Container devsync_phase5b_1fdc4b0337-backend-1 Healthy 
+ Container devsync_phase5b_1fdc4b0337-extractor-1 Healthy 
+ Container devsync_phase5b_1fdc4b0337-postgres-1 Healthy 
+ Container devsync_phase5b_1fdc4b0337-worker-1 Healthy 
+ Container devsync_phase5b_1fdc4b0337-frontend-1 Healthy 

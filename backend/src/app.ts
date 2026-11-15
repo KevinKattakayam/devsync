@@ -1,4 +1,11 @@
+import { knowledgeSearchRouter } from './routes/knowledge-search.routes';
+import { createAutomationRouter } from './routes/automation.routes';
+import { githubInstallationRouter } from './routes/github-installation.routes';
 import express from 'express';
+import {
+  createAccountLifecycleRouter,
+  createWorkspaceLifecycleRouter,
+} from './routes/lifecycle.routes';
 import { clerkMiddleware } from '@clerk/express';
 import cors from 'cors';
 import helmet from 'helmet';
@@ -17,6 +24,7 @@ import aiV3Routes from './routes/ai-v3.routes';
 import asyncDigestRoutes from './routes/async-digest.routes';
 import snippetSafetyRoutes from './routes/snippet-safety.routes';
 import decisionReceiptRoutes from './routes/decision-receipts.routes';
+import { githubExecutionRouter } from './routes/github-execution.routes';
 import githubWebhookRoutes from './routes/github-webhook.routes';
 import ingestionRoutes from './routes/ingestion.routes';
 import scimRoutes from './routes/scim.routes';
@@ -81,7 +89,32 @@ app.use('/api/v2/workspaces/:workspaceId/digest', asyncDigestRoutes);
 mounts.push({ prefix: '/api/v2/workspaces/:workspaceId/digest', router: asyncDigestRoutes });
 app.use('/api/v2/workspaces/:workspaceId/decisions', decisionReceiptRoutes);
 mounts.push({ prefix: '/api/v2/workspaces/:workspaceId/decisions', router: decisionReceiptRoutes });
+const accountLifecycle = createAccountLifecycleRouter(),
+  workspaceLifecycle = createWorkspaceLifecycleRouter();
+const automation = createAutomationRouter();
+app.use('/api/v2/workspaces/:workspaceId/automation', automation);
+mounts.push({ prefix: '/api/v2/workspaces/:workspaceId/automation', router: automation });
+app.use(
+  '/api/v2/workspaces/:workspaceId/github-repositories/:repositoryId/execution',
+  githubExecutionRouter,
+);
+mounts.push({
+  prefix: '/api/v2/workspaces/:workspaceId/github-repositories/:repositoryId/execution',
+  router: githubExecutionRouter,
+});
+app.use('/api/v2/workspaces/:workspaceId/search', knowledgeSearchRouter);
+mounts.push({ prefix: '/api/v2/workspaces/:workspaceId/search', router: knowledgeSearchRouter });
+app.use('/api/v2/account', accountLifecycle);
+mounts.push({ prefix: '/api/v2/account', router: accountLifecycle });
+app.use('/api/v2/workspaces/:workspaceId/lifecycle', workspaceLifecycle);
+mounts.push({ prefix: '/api/v2/workspaces/:workspaceId/lifecycle', router: workspaceLifecycle });
 app.get('/api/v2/ai/usage', authMiddleware, aiUsage);
+app.use('/api/v2/webhooks/github-installation', githubInstallationRouter);
+mounts.push({
+  prefix: '/api/v2/webhooks/github-installation',
+  router: githubInstallationRouter,
+  security: [{ GithubSignature: [] }],
+});
 mountApi('/webhooks/github', githubWebhookRoutes, [{ GithubSignature: [] }]);
 mountApi('/webhooks/stripe', stripeWebhookRoutes, [{ StripeSignature: [] }]);
 mountApi('/superadmin', superadminRoutes, [{ ClerkSession: [] }, { SuperadminService: [] }]);

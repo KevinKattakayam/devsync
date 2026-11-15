@@ -1,0 +1,262 @@
+{
+  "status": "local_scope_verified_external_actions_required",
+  "sourceCommit": "c7803b3fb70a49ac684f55f7875c2d0c7cd27505",
+  "releaseApproved": false,
+  "pushed": false,
+  "deployed": false,
+  "schemaMigrationsAdded": false,
+  "tests": {
+    "backend": {
+      "suites": 30,
+      "tests": 287
+    },
+    "frontend": {
+      "componentFiles": 19,
+      "componentTests": 83,
+      "nodeTests": 9
+    }
+  },
+  "coverage": {
+    "backend": {
+      "statements": 81.67,
+      "branches": 72.6,
+      "functions": 75.14,
+      "lines": 84.01
+    },
+    "frontend": {
+      "statements": 42.46,
+      "branches": 39.28,
+      "functions": 40.41,
+      "lines": 42.95
+    }
+  },
+  "sourceGates": [
+    {
+      "service": "backend",
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exit": 0,
+      "output": "final-authorization-gates/backend-lint.txt"
+    },
+    {
+      "service": "backend",
+      "command": [
+        "npm",
+        "run",
+        "format:check"
+      ],
+      "exit": 0,
+      "output": "final-authorization-gates/backend-format.txt"
+    },
+    {
+      "service": "backend",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exit": 0,
+      "output": "final-authorization-gates/backend-types.txt"
+    },
+    {
+      "service": "backend",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "exit": 0,
+      "output": "final-authorization-gates/backend-tests.txt"
+    },
+    {
+      "service": "backend",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit": 0,
+      "output": "final-authorization-gates/backend-build.txt"
+    },
+    {
+      "service": "frontend",
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exit": 0,
+      "output": "accepted-gates/frontend-lint.txt"
+    },
+    {
+      "service": "frontend",
+      "command": [
+        "npm",
+        "run",
+        "format:check"
+      ],
+      "exit": 0,
+      "output": "accepted-gates/frontend-format.txt"
+    },
+    {
+      "service": "frontend",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exit": 0,
+      "output": "accepted-gates/frontend-types.txt"
+    },
+    {
+      "service": "frontend",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "exit": 0,
+      "output": "accepted-gates/frontend-tests.txt"
+    },
+    {
+      "service": "frontend",
+      "command": [
+        "npm",
+        "run",
+        "build",
+        "--",
+        "--webpack"
+      ],
+      "exit": 0,
+      "output": "accepted-gates/frontend-build.txt"
+    }
+  ],
+  "images": [
+    {
+      "artifact": "backend",
+      "imageId": "sha256:58ee78d5eb7bfec5835a8cc23c125a11e63b472547fc307e0ae005fe30c585f8",
+      "reportedFindings": 0,
+      "scanExit": 0,
+      "scan": "backend-trivy-accepted.json",
+      "sbom": "backend-sbom.json"
+    },
+    {
+      "artifact": "extractor",
+      "imageId": "sha256:77fe998fc6a350a5af30ab6eb604172c7c079de5e182f8f01ba972b52e218a23",
+      "reportedFindings": 0,
+      "scanExit": 0,
+      "scan": "extractor-trivy-accepted.json",
+      "sbom": "extractor-sbom.json"
+    },
+    {
+      "artifact": "frontend",
+      "imageId": "sha256:0f89adb488d7105910d02b4e7400c57675c2e6a60b602ea8eebe3b8ca24b8fc5",
+      "reportedFindings": 0,
+      "scanExit": 0,
+      "scan": "frontend-trivy-accepted.json",
+      "sbom": "frontend-sbom.json"
+    }
+  ],
+  "browser": {
+    "preservedCore": {
+      "command": "E2E_CHROMIUM_PATH=/usr/bin/google-chrome node tools/ci/browser.mjs core",
+      "exit": 0,
+      "passed": 12,
+      "log": "browser-core-accepted.txt",
+      "note": "Final combined suite includes the new reset/CSRF journey; earlier 11-test retry is retained separately."
+    },
+    "csrf": {
+      "command": "E2E_CHROMIUM_PATH=/usr/bin/google-chrome E2E_QUALITY_FILTER=stale-session node tools/ci/browser.mjs core",
+      "exit": 0,
+      "passed": 1,
+      "log": "browser-reset-proxy.txt"
+    },
+    "screenshotsCaptured": false,
+    "realClerkVerified": false
+  },
+  "security": {
+    "npmBackendFull": {
+      "critical": 0,
+      "high": 0,
+      "moderate": 29,
+      "low": 2,
+      "exit": 0
+    },
+    "npmBackendProduction": {
+      "total": 0,
+      "exit": 0
+    },
+    "npmFrontendFull": {
+      "critical": 0,
+      "high": 0,
+      "moderate": 8,
+      "low": 0,
+      "exit": 0
+    },
+    "semgrep": {
+      "rules": 74,
+      "targets": 223,
+      "findings": 0,
+      "exit": 0,
+      "log": "semgrep-final.txt"
+    },
+    "gitleaks": {
+      "historyExit": 0,
+      "sourceExit": 0,
+      "regressionCases": 7,
+      "regressionExit": 0,
+      "note": "Exact-value and exact-generator-path public sentinel classification; initial two history findings retained.",
+      "historyLog": "gitleaks-source-commit.txt",
+      "evidenceScanExit": 0,
+      "evidenceLog": "gitleaks-evidence.txt"
+    }
+  },
+  "cleanClone": {
+    "command": "python3 tools/deployment/verify-compose.py docs/quality/release-correctness/clean-clone",
+    "exit": 0,
+    "log": "clean-clone/result.json",
+    "testedCommit": "5fe61cb98299668f637a5c72ceee10fa664f56fd",
+    "laterSourceDifference": "Only additional extraction authorization tests and handoff documentation; application/runtime code unchanged."
+  },
+  "extractor": {
+    "command": "python3 tools/quality/verify-extractor.py",
+    "exit": 0,
+    "log": "extractor-runtime.json",
+    "syntheticFixturesOnly": true
+  },
+  "contracts": {
+    "command": "npm --prefix backend run openapi:check",
+    "exit": 0,
+    "log": "openapi-accepted.txt"
+  },
+  "hostingConfig": {
+    "command": "npm --prefix .railway run typecheck",
+    "exit": 0,
+    "log": "hosting-types.txt"
+  },
+  "coveragePolicy": {
+    "command": "node --test tools/ci/coverage.test.mjs",
+    "exit": 0,
+    "log": "coverage-policy-tests.txt",
+    "firstAdoptionComparisons": "backend-coverage-comparison.json and frontend-coverage-comparison.json",
+    "hostedBaseArtifactComparison": "not executed; requires hosted first-adoption PR/base artifact"
+  },
+  "externalActions": [
+    "Actual Clerk login and session/member revocation with verified account mapping and synchronized clocks",
+    "Actual signed GitHub delivery/redelivery on disposable configured repository",
+    "Authorized publication and hosted Quality on the reviewed SHA; first-adoption PR then successful base coverage artifacts",
+    "Production extractor isolation/private routing and frontend canonical origin",
+    "Live embedding provider/worker completion; hosting/restore/cutover verification"
+  ],
+  "remainingEngineeringLimits": [
+    "GitHub summary post-commit enqueue lacks durable delivery outbox",
+    "Stripe event replay/order ledger",
+    "Cross-system privacy rights/retention/erasure and account-wide session administration",
+    "Full offline PWA, manual accessibility, capacity and recovery/PITR evidence"
+  ],
+  "documentationChecks": {
+    "exit": 0,
+    "log": "documentation-checks.json"
+  }
+}

@@ -122,14 +122,23 @@ test('owner moves a Kanban card and saves a snippet', async ({ page, context }) 
       response.url().endsWith('/tasks/devsync-sample-task/move') &&
       response.request().method() === 'PATCH',
   );
-  await page
-    .locator('[draggable="true"]')
-    .filter({ hasText: 'Review workspace permissions' })
-    .dragTo(
-      page
-        .locator('div.w-72')
-        .filter({ has: page.getByRole('heading', { name: 'Browser target', exact: true }) }),
-    );
+  const dragHandle = page.getByRole('button', { name: 'Drag Review workspace permissions' });
+  const targetColumn = page.locator(`[data-kanban-column="${target.id}"]`);
+  await expect(dragHandle).toBeVisible();
+  await expect(targetColumn).toBeVisible();
+  const sourceBounds = await dragHandle.boundingBox();
+  const targetBounds = await targetColumn.boundingBox();
+  if (!sourceBounds || !targetBounds)
+    throw new Error('Kanban drag source or target is unavailable');
+  await page.mouse.move(
+    sourceBounds.x + sourceBounds.width / 2,
+    sourceBounds.y + sourceBounds.height / 2,
+  );
+  await page.mouse.down();
+  await page.mouse.move(targetBounds.x + targetBounds.width / 2, targetBounds.y + 48, {
+    steps: 8,
+  });
+  await page.mouse.up();
   expect((await moved).ok()).toBe(true);
   const boards = z
     .array(

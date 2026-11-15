@@ -1,0 +1,28 @@
+
+> devsync-backend@1.0.0 test
+> jest --runInBand --runTestsByPath src/__tests__/resource-mutations.integration.test.ts --testNamePattern=fails closed for binary extraction --coverage=false
+
+{"level":50,"time":1794106858519,"service":"devsync-api","msg":"Unexpected server error"}
+FAIL src/__tests__/resource-mutations.integration.test.ts (11.478 s)
+  ● fails closed for binary extraction without an isolated worker and creates no document
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 503
+    Received: 500
+
+      1892 |     const count = await admin.document.count({ where: { workspaceId: a } });
+      1893 |     const result = await request(app).post(`/workspaces/${a}/documents/ingest`).set('x-fixture-actor', 'editor').attach('file', Buffer.from('%PDF-untrusted'), { filename: 'untrusted.pdf', contentType: 'application/pdf' });
+    > 1894 |     expect(result.status).toBe(503);
+           |                           ^
+      1895 |     expect(await admin.document.count({ where: { workspaceId: a } })).toBe(count);
+      1896 |   } finally {
+      1897 |     if (previous === undefined) delete process.env.INGESTION_EXTRACTOR_URL;
+
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:1894:27)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 98 skipped, 99 total
+Snapshots:   0 total
+Time:        11.67 s, estimated 23 s
+Ran all test suites within paths "src/__tests__/resource-mutations.integration.test.ts".

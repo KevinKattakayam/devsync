@@ -1,0 +1,28 @@
+{
+  "parsed": [
+    "main.yml",
+    "deploy.yml",
+    "preview.yml"
+  ],
+  "containerMatrix": [
+    {
+      "service": "backend",
+      "artifact": "backend",
+      "target": "runner",
+      "image": "devsync-api"
+    },
+    {
+      "service": "frontend",
+      "artifact": "frontend",
+      "target": "runner",
+      "image": "devsync-web"
+    },
+    {
+      "service": "backend",
+      "artifact": "extractor",
+      "target": "extractor",
+      "image": "devsync-extractor"
+    }
+  ],
+  "extractorScanRequired": true
+}

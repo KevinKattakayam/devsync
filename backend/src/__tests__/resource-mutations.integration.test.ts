@@ -1,4 +1,37 @@
+import { searchKnowledge } from '../services/knowledge-search';
+import {
+  automationJob,
+  automationJobId,
+  processAutomationJob,
+} from '../services/automation-worker';
+import { GenericContainer } from 'testcontainers';
+import { Queue, Worker } from 'bullmq';
+import { createAutomationRouter } from '../routes/automation.routes';
+import {
+  submitAutomationEvent,
+  approveAutomationExecution,
+  listAutomationExecutions,
+  executeAutomationExecution,
+  claimAutomationExecution,
+  failAutomationClaim,
+} from '../services/automation-execution';
+import {
+  createAutomationRule,
+  setAutomationEnabled,
+  listAutomationRules,
+} from '../services/automation-store';
+import { groundedPreview } from '../services/grounded-ai';
+import aiV3Router from '../routes/ai-v3.routes';
+import { evaluateGroundedCases } from '../../testing/ai-eval/grounded';
+import { createKnowledgeSearchRouter } from '../routes/knowledge-search.routes';
+import { createGitHubExecutionRouter } from '../routes/github-execution.routes';
+import { githubInstallationRouter } from '../routes/github-installation.routes';
+import { providerSessions } from '../security/provider-sessions';
 import express from 'express';
+import {
+  createAccountLifecycleRouter,
+  createWorkspaceLifecycleRouter,
+} from '../routes/lifecycle.routes';
 import request from 'supertest';
 import { PostgreSqlContainer, StartedPostgreSqlContainer } from '@testcontainers/postgresql';
 import { Prisma, PrismaClient } from '@prisma/client';
@@ -6,6 +39,14 @@ import { Client } from 'pg';
 import { randomBytes, createHash, createHmac } from 'crypto';
 import Stripe from 'stripe';
 import { spawnSync } from 'child_process';
+import { mkdtempSync, rmSync, writeFileSync } from 'fs';
+import { join } from 'path';
+import { tmpdir } from 'os';
+import { exportWorkspaceArchive } from '../controllers/workspace-archive.controller';
+import {
+  snapshotWorkspaceArchive,
+  recheckWorkspaceArchive,
+} from '../services/workspace-archive-snapshot';
 import { createServer } from 'http';
 import WebSocket from 'ws';
 import { HocuspocusProvider, HocuspocusProviderWebsocket } from '@hocuspocus/provider';
@@ -28,6 +69,10 @@ import * as repositories from '../controllers/github-repository.controller';
 import { aiComplete } from '../controllers/ai.controller';
 import { meteredAiRequest } from '../middleware/billing.middleware';
 import { createIngestionRouter } from '../routes/ingestion.routes';
+import workspaceRouter from '../routes/workspace.routes';
+import documentRouter from '../routes/document.routes';
+import { parseTaskCsv, serializeTaskCsv } from '../services/task-csv';
+import * as embeddingService from '../services/embedding.service';
 import { ingestDocument } from '../services/ingestion.service';
 import { workspaceSearch } from '../controllers/search.controller';
 import { reconcileOfflineAiActions } from '../services/crdt-sync.service';
@@ -48,6 +93,7 @@ import { startEmbeddingPolling } from '../services/embedding-runner';
 import { getMe, updateMe } from '../controllers/auth.controller';
 import { withIdentityProfileAccess } from '../security/service-policy';
 import {
+  semanticWorkspaceContext,
   queueEmbedding,
   refreshEmbedding,
   claimEmbeddingJobs,
@@ -56,7 +102,10 @@ import {
 } from '../services/embedding.service';
 jest.mock('@clerk/express', () => ({
   ...jest.requireActual<typeof import('@clerk/express')>('@clerk/express'),
-  getAuth: (req: express.Request) => ({ userId: req.header('x-verified-clerk-fixture') || null }),
+  getAuth: (req: express.Request) => ({
+    userId: req.header('x-verified-clerk-fixture') || null,
+    sessionId: 'sess_fixture_superadmin',
+  }),
 }));
 jest.mock('../lib/queue', () => ({
   QueueNames: { PR_SUMMARY: 'fixture-pr', TASK_COMPLETION: 'fixture-task' },
@@ -93,6 +142,7 @@ let postgres: StartedPostgreSqlContainer;
 let admin: PrismaClient;
 let db: TenantPrismaClient;
 let sequence = 0;
+let runtimeDatabaseUrl: string;
 const app = express();
 app.use(
   express.json({
@@ -113,10 +163,32 @@ app.use((req, _res, next) =>
     next();
   }),
 );
+app.use(
+  '/api/v2/account',
+  createAccountLifecycleRouter((_req, _res, next) => next()),
+);
+app.use(
+  '/api/v2/workspaces/:workspaceId/lifecycle',
+  createWorkspaceLifecycleRouter((_req, _res, next) => next()),
+);
+app.use(
+  '/workspaces/:workspaceId/repos/:repositoryId/execution',
+  createGitHubExecutionRouter((_req, _res, next) => next()),
+);
+app.use(
+  '/workspaces/:workspaceId/knowledge',
+  createKnowledgeSearchRouter((_req, _res, next) => next()),
+);
 app.use('/scim/v2', scimRouter);
+app.use(
+  '/automation/:workspaceId',
+  createAutomationRouter((_req, _res, next) => next()),
+);
+app.use('/ai-v3', aiV3Router);
 app.get('/auth/me', getMe);
 app.patch('/auth/me', updateMe);
 app.use('/github', githubRouter);
+app.use('/github-installation', githubInstallationRouter);
 app.use('/stripe', stripeRouter);
 app.use('/superadmin', superadminRouter);
 app.post('/workspaces', workspaces.createWorkspace);
@@ -137,7 +209,10 @@ app.post('/ai/complete', meteredAiRequest, aiComplete);
 app.get('/workspaces/:id/search', workspaceSearch);
 app.use(createIngestionRouter((_req, _res, next) => next()));
 app.get('/documents/:id', documents.getDocument);
+app.get('/documents/:id/export-markdown', documents.exportMarkdown);
+app.get('/documents/:id/export.pdf', documents.exportDocumentPdf);
 app.post('/workspaces/:id/documents', documents.createDocument);
+app.post('/workspaces/:id/documents/import-markdown', documents.importMarkdown);
 app.post('/api/workspaces/:id/documents', documents.createDocument);
 app.post('/api/v1/workspaces/:id/documents', documents.createDocument);
 app.patch('/documents/:id', documents.updateDocument);
@@ -148,6 +223,9 @@ app.post('/workspaces/:id/snippets', snippets.createSnippet);
 app.patch('/snippets/:snippetId', snippets.updateSnippet);
 app.delete('/snippets/:snippetId', snippets.deleteSnippet);
 app.get('/workspaces/:id/boards', tasks.getBoards);
+app.get('/workspaces/:id/tasks/export-csv', tasks.exportTasksCsv);
+app.get('/workspaces/:id/archive.zip', exportWorkspaceArchive);
+app.post('/workspaces/:id/tasks/import-csv', tasks.importTasksCsv);
 app.post('/workspaces/:id/boards', tasks.createBoard);
 app.post('/boards/:boardId/columns', tasks.createColumn);
 app.patch('/columns/:columnId', tasks.updateColumn);
@@ -157,6 +235,14 @@ app.patch('/tasks/:taskId', tasks.updateTask);
 app.patch('/tasks/:taskId/move', tasks.moveTask);
 app.delete('/tasks/:taskId', tasks.deleteTask);
 app.use(errorMiddleware);
+// The provider status is an explicit active-session fixture; DB/role assertions stay unchanged.
+const providerStatusFixture = jest
+  .spyOn(providerSessions, 'assertActive')
+  .mockImplementation(async (sessionId, userId) => {
+    if (sessionId !== 'sess_fixture_superadmin' || !userId)
+      throw new Error('Invalid provider fixture');
+  });
+afterAll(() => providerStatusFixture.mockRestore());
 beforeAll(async () => {
   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
   const migration = spawnSync(
@@ -176,7 +262,8 @@ beforeAll(async () => {
   const url = new URL(postgres.getConnectionUri());
   url.username = 'resource_runtime';
   url.password = password;
-  db = createTenantPrismaClient(new PrismaClient({ datasourceUrl: url.toString() }));
+  runtimeDatabaseUrl = url.toString();
+  db = createTenantPrismaClient(new PrismaClient({ datasourceUrl: runtimeDatabaseUrl }));
   for (const id of ['owner', 'editor', 'viewer', 'foreign', 'inactive', 'superadmin'])
     await admin.user.create({
       data: {
@@ -1882,4 +1969,2294 @@ it('I02 fixture configuration cannot start in production or target an ordinary d
       E2E_RUN_SECRET: secret,
     }),
   ).toEqual({ secret });
+});
+
+it('fails closed for binary extraction without an isolated worker and creates no document', async () => {
+  const { a } = await fixture();
+  const previous = process.env.INGESTION_EXTRACTOR_URL;
+  delete process.env.INGESTION_EXTRACTOR_URL;
+  try {
+    const count = await admin.document.count({ where: { workspaceId: a } });
+    const result = await request(app)
+      .post(`/workspaces/${a}/documents/ingest`)
+      .set('x-fixture-actor', 'editor')
+      .attach('file', Buffer.from('%PDF-untrusted'), {
+        filename: 'untrusted.pdf',
+        contentType: 'application/pdf',
+      });
+    expect(result.status).toBe(503);
+    expect(await admin.document.count({ where: { workspaceId: a } })).toBe(count);
+  } finally {
+    if (previous === undefined) delete process.env.INGESTION_EXTRACTOR_URL;
+    else process.env.INGESTION_EXTRACTOR_URL = previous;
+  }
+});
+
+it.each([false, true])(
+  'rechecks writer authority after isolated extraction completes (revoked=%s)',
+  async (revoked) => {
+    const { a } = await fixture();
+    const before = await admin.document.count({ where: { workspaceId: a } });
+    let received = 0;
+    const extractor = createServer((req, res) => {
+      req.resume();
+      received++;
+      void (async () => {
+        if (revoked)
+          await admin.workspaceMember.delete({
+            where: { userId_workspaceId: { userId: 'editor', workspaceId: a } },
+          });
+        // Deliberate service-boundary fixture, not an actual PDF/provider result.
+        res
+          .writeHead(200, { 'Content-Type': 'application/json' })
+          .end(JSON.stringify({ text: 'Synthetic extraction boundary fixture' }));
+      })().catch(() => res.writeHead(500).end());
+    });
+    await new Promise<void>((done) => extractor.listen(0, '127.0.0.1', done));
+    const address = extractor.address();
+    if (!address || typeof address === 'string') throw new Error('No extractor listener');
+    const previous = process.env.INGESTION_EXTRACTOR_URL;
+    process.env.INGESTION_EXTRACTOR_URL = `http://127.0.0.1:${address.port}/extract`;
+    try {
+      const result = await request(app)
+        .post(`/workspaces/${a}/documents/ingest`)
+        .set('x-fixture-actor', 'editor')
+        .attach('file', Buffer.from('%PDF-synthetic-boundary-fixture'), {
+          filename: 'synthetic.pdf',
+          contentType: 'application/pdf',
+        });
+      expect(received).toBe(1);
+      expect(result.status).toBe(revoked ? 403 : 201);
+      expect(await admin.document.count({ where: { workspaceId: a } })).toBe(
+        before + (revoked ? 0 : 1),
+      );
+      if (!revoked) {
+        const document = await admin.document.findUniqueOrThrow({
+          where: { id: result.body.documentId as string },
+        });
+        expect(document.yjsState).not.toBeNull();
+        expect(
+          await admin.embeddingJob.count({ where: { resourceId: document.id, workspaceId: a } }),
+        ).toBe(1);
+      }
+    } finally {
+      if (previous === undefined) delete process.env.INGESTION_EXTRACTOR_URL;
+      else process.env.INGESTION_EXTRACTOR_URL = previous;
+      extractor.closeAllConnections();
+      await new Promise<void>((done) => extractor.close(() => done()));
+    }
+  },
+);
+
+it('lifecycle: scopes plans and export requests to current owners without exporting content', async () => {
+  const { a, b } = await fixture();
+  const base = `/api/v2/workspaces/${a}/lifecycle`;
+  expect((await request(app).get(base).set('x-fixture-actor', 'viewer')).status).toBe(403);
+  expect((await request(app).get(`/api/v2/workspaces/${b}/lifecycle`)).status).toBe(403);
+  const plan = await request(app).get(base);
+  expect(plan.status).toBe(200);
+  expect(plan.body.workspaceName).toBe(a);
+  const denied = await request(app)
+    .post(`${base}/export-requests`)
+    .set('x-fixture-actor', 'viewer')
+    .send({ confirmName: a });
+  expect(denied.status).toBe(403);
+  const first = await request(app).post(`${base}/export-requests`).send({ confirmName: a });
+  expect(first.status).toBe(201);
+  expect(first.body.status).toBe('REVIEW_REQUIRED');
+  expect(first.body).not.toHaveProperty('content');
+  const again = await request(app).post(`${base}/export-requests`).send({ confirmName: a });
+  expect(again.body.id).toBe(first.body.id);
+  expect(
+    (await request(app).post(`${base}/export-requests`).send({ confirmName: a, userId: 'foreign' }))
+      .status,
+  ).toBe(400);
+});
+it('lifecycle: ownership transfer is atomic, same-tenant and requires explicit confirmation', async () => {
+  const { a, b } = await fixture();
+  const target = await admin.workspaceMember.findUniqueOrThrow({
+    where: { userId_workspaceId: { userId: 'editor', workspaceId: a } },
+  });
+  const foreign = await admin.workspaceMember.findFirstOrThrow({ where: { workspaceId: b } });
+  const path = `/api/v2/workspaces/${a}/lifecycle/transfer`;
+  expect(
+    (await request(app).post(path).send({ confirmName: a, newOwnerMemberId: foreign.id })).status,
+  ).toBe(404);
+  expect(
+    (await request(app).post(path).send({ confirmName: 'wrong', newOwnerMemberId: target.id }))
+      .status,
+  ).toBe(409);
+  expect(
+    (
+      await request(app)
+        .post(path)
+        .set('x-fixture-actor', 'viewer')
+        .send({ confirmName: a, newOwnerMemberId: target.id })
+    ).status,
+  ).toBe(403);
+  expect(
+    (await request(app).post(path).send({ confirmName: a, newOwnerMemberId: target.id })).status,
+  ).toBe(200);
+  expect((await admin.workspaceMember.findUniqueOrThrow({ where: { id: target.id } })).role).toBe(
+    'OWNER',
+  );
+  expect(
+    (
+      await admin.workspaceMember.findUniqueOrThrow({
+        where: { userId_workspaceId: { userId: 'owner', workspaceId: a } },
+      })
+    ).role,
+  ).toBe('EDITOR');
+  expect((await request(app).get(`/api/v2/workspaces/${a}/lifecycle`)).status).toBe(403);
+});
+it('lifecycle: account deletion planning never deletes an identity and flags sole ownership', async () => {
+  const { a } = await fixture();
+  const plan = await request(app).get('/api/v2/account/deletion-plan');
+  expect(plan.status).toBe(200);
+  expect(plan.body.deletionAvailable).toBe(false);
+  expect(plan.body.ownedWorkspaces.find((w: { id: string }) => w.id === a).requiresTransfer).toBe(
+    true,
+  );
+  expect(
+    (await request(app).get('/api/v2/account/deletion-plan').set('x-fixture-actor', 'inactive'))
+      .status,
+  ).toBe(403);
+  expect(await admin.user.findUnique({ where: { id: 'owner' } })).not.toBeNull();
+});
+
+it('lifecycle: export metadata has forced tenant RLS and mismatched confirmation fails closed', async () => {
+  const { a, b } = await fixture();
+  const path = `/api/v2/workspaces/${a}/lifecycle/export-requests`;
+  expect((await request(app).post(path).send({ confirmName: 'wrong name' })).status).toBe(409);
+  const created = await request(app).post(path).send({ confirmName: a });
+  expect(created.status).toBe(201);
+  expect(
+    await db.withTenantTransaction(b, (tx) =>
+      tx.workspaceExportRequest.findMany({ where: { id: created.body.id as string } }),
+    ),
+  ).toEqual([]);
+  await expect(
+    db.withTenantTransaction(b, (tx) =>
+      tx.workspaceExportRequest.create({ data: { workspaceId: a, requestedBy: 'owner' } }),
+    ),
+  ).rejects.toThrow(/row-level security/);
+});
+it('lifecycle: refuses self and inactive ownership targets without demoting the actor', async () => {
+  const { a } = await fixture();
+  const path = `/api/v2/workspaces/${a}/lifecycle/transfer`;
+  const own = await admin.workspaceMember.findUniqueOrThrow({
+    where: { userId_workspaceId: { userId: 'owner', workspaceId: a } },
+  });
+  const inactive = await admin.workspaceMember.findUniqueOrThrow({
+    where: { userId_workspaceId: { workspaceId: a, userId: 'inactive' } },
+  });
+  expect(
+    (await request(app).post(path).send({ confirmName: a, newOwnerMemberId: own.id })).status,
+  ).toBe(400);
+  expect(
+    (await request(app).post(path).send({ confirmName: a, newOwnerMemberId: inactive.id })).status,
+  ).toBe(403);
+  expect((await admin.workspaceMember.findUniqueOrThrow({ where: { id: own.id } })).role).toBe(
+    'OWNER',
+  );
+});
+it('lifecycle: deletion planning recognizes another active owner without disclosing their identity', async () => {
+  const { a } = await fixture();
+  await admin.workspaceMember.update({
+    where: { userId_workspaceId: { workspaceId: a, userId: 'editor' } },
+    data: { role: 'OWNER' },
+  });
+  const result = await request(app).get('/api/v2/account/deletion-plan');
+  expect(result.body.ownedWorkspaces.find((w: { id: string }) => w.id === a)).toMatchObject({
+    activeOwners: 2,
+    requiresTransfer: false,
+  });
+  expect(JSON.stringify(result.body)).not.toContain('editor@example.test');
+});
+it('lifecycle: provider session routes bind the current principal and reject injected actor fields', async () => {
+  const list = jest
+    .spyOn(providerSessions, 'list')
+    .mockResolvedValue({ items: [], hasMore: false });
+  const revoke = jest.spyOn(providerSessions, 'revoke').mockResolvedValue(undefined);
+  try {
+    expect((await request(app).get('/api/v2/account/sessions')).status).toBe(200);
+    expect(list).toHaveBeenCalledWith('fixture', undefined);
+    expect(
+      (
+        await request(app)
+          .post('/api/v2/account/sessions/sess_fixture/revoke')
+          .send({ userId: 'foreign' })
+      ).status,
+    ).toBe(400);
+    expect(revoke).not.toHaveBeenCalled();
+    expect(
+      (await request(app).post('/api/v2/account/sessions/sess_fixture/revoke').send({})).status,
+    ).toBe(204);
+    expect(revoke).toHaveBeenCalledWith('sess_fixture', 'fixture');
+  } finally {
+    list.mockRestore();
+    revoke.mockRestore();
+  }
+});
+
+it('GitHub rejects an older PR open event after merge without reversing the task', async () => {
+  const { a } = await fixture(),
+    repository = await repositoryFixture(a);
+  await admin.gitHubRepository.update({
+    where: { id: repository.id },
+    data: { prOpenedColumnId: `column-${a}`, prMergedColumnId: `target-${a}` },
+  });
+  const key = `ORDER-${sequence}`;
+  await admin.task.update({ where: { id: `task-${a}` }, data: { taskKey: key } });
+  const merged = {
+    action: 'closed',
+    pull_request: {
+      number: 71,
+      merged: true,
+      title: `Fixes ${key}`,
+      updated_at: '2026-11-08T12:00:00Z',
+    },
+  };
+  expect(
+    (await githubEvent(repository.repositoryId, repository.webhookSecret, merged)).status,
+  ).toBe(200);
+  const stale = await githubEvent(repository.repositoryId, repository.webhookSecret, {
+    action: 'opened',
+    pull_request: { number: 71, title: `Fixes ${key}`, updated_at: '2026-11-08T11:00:00Z' },
+  });
+  expect(stale.status).toBe(202);
+  expect((await admin.task.findUniqueOrThrow({ where: { id: `task-${a}` } })).columnId).toBe(
+    `target-${a}`,
+  );
+});
+
+it('GitHub check evidence is ordered, tenant isolated and owner-only without deployment inference', async () => {
+  const { a, b } = await fixture(),
+    repository = await repositoryFixture(a),
+    sha = 'a'.repeat(40);
+  const payload = {
+    action: 'completed',
+    check_run: {
+      id: 91,
+      status: 'completed',
+      conclusion: 'success',
+      head_sha: sha,
+      started_at: '2026-11-08T10:00:00Z',
+      completed_at: '2026-11-08T10:05:00Z',
+    },
+  };
+  expect(
+    (await githubEvent(repository.repositoryId, 'incorrect', payload, undefined, 'check_run'))
+      .status,
+  ).toBe(401);
+  expect(
+    (
+      await githubEvent(
+        repository.repositoryId,
+        repository.webhookSecret,
+        payload,
+        undefined,
+        'check_run',
+      )
+    ).status,
+  ).toBe(200);
+  expect(
+    (
+      await githubEvent(
+        repository.repositoryId,
+        repository.webhookSecret,
+        {
+          action: 'created',
+          check_run: {
+            id: 91,
+            status: 'in_progress',
+            head_sha: sha,
+            started_at: '2026-11-08T10:00:00Z',
+          },
+        },
+        undefined,
+        'check_run',
+      )
+    ).status,
+  ).toBe(202);
+  const url = `/workspaces/${a}/repos/${repository.id}/execution`;
+  const result = await request(app).get(url);
+  expect(result.status).toBe(200);
+  expect(result.body.items[0]).toMatchObject({
+    kind: 'check_run',
+    state: 'completed',
+    conclusion: 'success',
+    providerAt: '2026-11-08T10:05:00.000Z',
+  });
+  expect(result.body.deployment).toBe('unknown');
+  expect(result.body.liveAccess).toBe('not_verified');
+  expect((await request(app).get(url).set('x-fixture-actor', 'viewer')).status).toBe(403);
+  expect((await request(app).get(`/workspaces/${b}/repos/${repository.id}/execution`)).status).toBe(
+    403,
+  );
+  expect((await db.$queryRaw<unknown[]>`SELECT * FROM "GitHubExecutionState"`).length).toBe(0);
+  await admin.gitHubRepository.delete({ where: { id: repository.id } });
+  expect((await request(app).get(url)).status).toBe(404);
+});
+
+it('signed App withdrawal is idempotent, installation-bound and denies future repository work', async () => {
+  const { a, b } = await fixture(),
+    first = await repositoryFixture(a),
+    other = await repositoryFixture(b);
+  await admin.gitHubRepository.update({ where: { id: first.id }, data: { installationId: '456' } });
+  await admin.gitHubRepository.update({ where: { id: other.id }, data: { installationId: '999' } });
+  const oldId = process.env.GITHUB_APP_ID,
+    oldSecret = process.env.GITHUB_APP_WEBHOOK_SECRET,
+    secret = randomBytes(32).toString('hex');
+  process.env.GITHUB_APP_ID = '123';
+  process.env.GITHUB_APP_WEBHOOK_SECRET = secret;
+  const body = JSON.stringify({ action: 'deleted', installation: { id: 456, app_id: 123 } });
+  const deliver = (signature: string) =>
+    request(app)
+      .post('/github-installation')
+      .set('Content-Type', 'application/json')
+      .set('x-github-event', 'installation')
+      .set('x-hub-signature-256', signature)
+      .send(body);
+  try {
+    expect((await deliver('invalid')).status).toBe(401);
+    expect(
+      (await admin.gitHubRepository.findUniqueOrThrow({ where: { id: first.id } }))
+        .providerDisconnectedAt,
+    ).toBeNull();
+    const signature = `sha256=${createHmac('sha256', secret).update(body).digest('hex')}`;
+    expect((await deliver(signature)).status).toBe(200);
+    const disconnected = (
+      await admin.gitHubRepository.findUniqueOrThrow({ where: { id: first.id } })
+    ).providerDisconnectedAt;
+    expect(disconnected).not.toBeNull();
+    expect((await deliver(signature)).status).toBe(200);
+    expect(
+      (await admin.gitHubRepository.findUniqueOrThrow({ where: { id: first.id } }))
+        .providerDisconnectedAt,
+    ).toEqual(disconnected);
+    expect(
+      (await admin.gitHubRepository.findUniqueOrThrow({ where: { id: other.id } }))
+        .providerDisconnectedAt,
+    ).toBeNull();
+    expect(
+      (
+        await githubEvent(first.repositoryId, first.webhookSecret, {
+          action: 'opened',
+          pull_request: { title: 'Fixes TEST-123' },
+        })
+      ).status,
+    ).toBe(403);
+    const trail = await request(app).get(`/workspaces/${a}/repos/${first.id}/execution`);
+    expect(trail.body).toMatchObject({
+      items: [],
+      liveAccess: 'disconnected',
+      deployment: 'unknown',
+    });
+  } finally {
+    if (oldId === undefined) delete process.env.GITHUB_APP_ID;
+    else process.env.GITHUB_APP_ID = oldId;
+    if (oldSecret === undefined) delete process.env.GITHUB_APP_WEBHOOK_SECRET;
+    else process.env.GITHUB_APP_WEBHOOK_SECRET = oldSecret;
+  }
+});
+
+it('GitHub rejects identical signed payload replay under a different delivery ID', async () => {
+  const { a } = await fixture(),
+    repository = await repositoryFixture(a);
+  const payload = { ref: 'refs/heads/main', commits: [], pusher: { name: 'fixture' } };
+  expect(
+    (
+      await githubEvent(
+        repository.repositoryId,
+        repository.webhookSecret,
+        payload,
+        'proof-first',
+        'push',
+      )
+    ).status,
+  ).toBe(200);
+  expect(
+    (
+      await githubEvent(
+        repository.repositoryId,
+        repository.webhookSecret,
+        payload,
+        'proof-second',
+        'push',
+      )
+    ).status,
+  ).toBe(202);
+  expect(await admin.activity.count({ where: { workspaceId: a, type: 'github_push' } })).toBe(1);
+});
+
+it('GitHub review dismissal and PR renaming retain stable provider identities', async () => {
+  const { a } = await fixture(),
+    repository = await repositoryFixture(a),
+    sha = 'a'.repeat(40);
+  const pr = {
+    number: 84,
+    state: 'open',
+    head: { sha },
+    updated_at: '2026-11-08T10:00:00Z',
+    title: 'Before rename',
+  };
+  expect(
+    (
+      await githubEvent(repository.repositoryId, repository.webhookSecret, {
+        action: 'opened',
+        pull_request: pr,
+      })
+    ).status,
+  ).toBe(202);
+  expect(
+    (
+      await githubEvent(repository.repositoryId, repository.webhookSecret, {
+        action: 'edited',
+        pull_request: { ...pr, title: 'After rename', updated_at: '2026-11-08T10:01:00Z' },
+      })
+    ).status,
+  ).toBe(202);
+  const review = {
+    id: 98,
+    state: 'approved',
+    commit_id: sha,
+    submitted_at: '2026-11-08T10:02:00Z',
+  };
+  expect(
+    (
+      await githubEvent(
+        repository.repositoryId,
+        repository.webhookSecret,
+        { action: 'submitted', pull_request: pr, review },
+        undefined,
+        'pull_request_review',
+      )
+    ).status,
+  ).toBe(200);
+  expect(
+    (
+      await githubEvent(
+        repository.repositoryId,
+        repository.webhookSecret,
+        { action: 'dismissed', pull_request: pr, review: { ...review, state: 'dismissed' } },
+        undefined,
+        'pull_request_review',
+      )
+    ).status,
+  ).toBe(200);
+  expect(
+    (
+      await githubEvent(
+        repository.repositoryId,
+        repository.webhookSecret,
+        { action: 'submitted', pull_request: pr, review },
+        undefined,
+        'pull_request_review',
+      )
+    ).status,
+  ).toBe(202);
+  const trail = await request(app).get(`/workspaces/${a}/repos/${repository.id}/execution`);
+  expect(trail.body.items.filter((r: { kind: string }) => r.kind === 'pull_request')).toHaveLength(
+    1,
+  );
+  expect(trail.body.items.find((r: { kind: string }) => r.kind === 'review')).toMatchObject({
+    state: 'dismissed',
+    pullNumber: 84,
+    headSha: sha,
+  });
+  expect(JSON.stringify(trail.body)).not.toContain('Before rename');
+});
+
+it('search returns projected TipTap body edits without an embedding provider', async () => {
+  const { a } = await fixture();
+  const id = `doc-${a}`;
+  const journal = new CrdtJournal(db);
+  const doc = new Y.Doc();
+  try {
+    Y.applyUpdate(doc, await journal.load({ workspaceId: a, documentId: id }));
+    const paragraph = new Y.XmlElement('paragraph');
+    const text = new Y.XmlText();
+    text.insert(0, 'freshbodyquartz');
+    paragraph.insert(0, [text]);
+    doc.getXmlFragment('default').insert(0, [paragraph]);
+    await journal.append({ workspaceId: a, documentId: id }, Y.encodeStateAsUpdate(doc), 'editor');
+    const result = await request(app)
+      .get(`/workspaces/${a}/search?q=freshbodyquartz`)
+      .set('x-fixture-actor', 'viewer');
+    expect(result.status).toBe(200);
+    expect(result.body.results).toEqual(expect.arrayContaining([expect.objectContaining({ id })]));
+  } finally {
+    doc.destroy();
+  }
+});
+
+it('knowledge search scopes source types, dates, assignees and fresh CRDT projections for every reader', async () => {
+  const { a, b } = await fixture();
+  await admin.task.update({
+    where: { id: `task-${a}` },
+    data: { assigneeId: 'editor', description: 'quartz searchable task' },
+  });
+  await admin.document.update({
+    where: { id: `doc-${a}` },
+    data: {
+      content: {
+        type: 'doc',
+        content: [
+          { type: 'paragraph', content: [{ type: 'text', text: 'quartz knowledge body' }] },
+        ],
+      },
+    },
+  });
+  for (const actor of ['owner', 'editor', 'viewer']) {
+    const r = await request(app)
+      .get(`/workspaces/${a}/knowledge?q=quartz`)
+      .set('x-fixture-actor', actor);
+    expect(r.status).toBe(200);
+    expect(r.headers['cache-control']).toBe('no-store');
+    expect(r.body.results).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: `doc-${a}`,
+          freshness: 'current_projection',
+          method: 'lexical',
+        }),
+        expect.objectContaining({ id: `task-${a}` }),
+      ]),
+    );
+    expect(JSON.stringify(r.body)).not.toContain(b);
+  }
+  const filtered = await request(app).get(`/workspaces/${a}/knowledge?q=quartz&assigneeId=editor`);
+  expect(filtered.body.results.map((v: { id: string }) => v.id)).toEqual([`task-${a}`]);
+  expect(
+    (await request(app).get(`/workspaces/${a}/knowledge?q=quartz&type=snippet`)).body.results,
+  ).toEqual([]);
+  expect(
+    (await request(app).get(`/workspaces/${a}/knowledge?q=quartz&after=2099-01-01T00:00:00Z`)).body
+      .results,
+  ).toEqual([]);
+  expect(
+    (await request(app).get(`/workspaces/${a}/knowledge?q=quartz&before=2000-01-01T00:00:00Z`)).body
+      .results,
+  ).toEqual([]);
+  expect(
+    (
+      await request(app).get(
+        `/workspaces/${a}/knowledge?q=quartz&before=2000-01-01T00:00:00Z&after=2099-01-01T00:00:00Z`,
+      )
+    ).status,
+  ).toBe(400);
+  expect((await request(app).get(`/workspaces/${b}/knowledge?q=quartz`)).status).toBe(403);
+  expect(
+    (await request(app).get(`/workspaces/${a}/knowledge/source?type=document&id=doc-${b}`)).status,
+  ).toBe(404);
+  expect(
+    (await request(app).get(`/workspaces/${a}/knowledge/source?type=document&id=doc-${a}`)).status,
+  ).toBe(200);
+  await admin.document.update({ where: { id: `doc-${a}` }, data: { isArchived: true } });
+  expect(
+    (await request(app).get(`/workspaces/${a}/knowledge/source?type=document&id=doc-${a}`)).status,
+  ).toBe(404);
+  expect(
+    (await request(app).get(`/workspaces/${a}/knowledge?q=quartz&type=document`)).body.results,
+  ).toEqual([]);
+  await admin.workspaceMember.delete({
+    where: { userId_workspaceId: { userId: 'viewer', workspaceId: a } },
+  });
+  expect(
+    (
+      await request(app)
+        .get(`/workspaces/${a}/knowledge/source?type=task&id=task-${a}`)
+        .set('x-fixture-actor', 'viewer')
+    ).status,
+  ).toBe(403);
+  expect(
+    (
+      await request(app)
+        .get(`/workspaces/${a}/knowledge?q=quartz`)
+        .set('x-fixture-actor', 'inactive')
+    ).status,
+  ).toBe(403);
+});
+it('knowledge receipt derivatives and GitHub metadata retain source and owner authority', async () => {
+  const { a, b } = await fixture();
+  const oldFlag = process.env.FEATURE_DECISION_RECEIPTS;
+  try {
+    process.env.FEATURE_DECISION_RECEIPTS = 'true';
+    const receipt = await admin.decisionReceipt.create({
+      data: {
+        workspaceId: a,
+        sourceKind: 'document',
+        sourceId: `doc-${a}`,
+        sourceRevision: 'a'.repeat(64),
+        excerpt: 'quartz proof',
+        title: 'quartz decision',
+        rationale: 'bounded evidence',
+        createdBy: 'owner',
+      },
+    });
+    const foreign = await admin.decisionReceipt.create({
+      data: {
+        workspaceId: a,
+        sourceKind: 'document',
+        sourceId: `doc-${b}`,
+        sourceRevision: 'a'.repeat(64),
+        excerpt: 'quartz foreign',
+        title: 'hiddenquartz',
+        rationale: 'never disclose',
+        createdBy: 'owner',
+      },
+    });
+    const repo = await admin.gitHubRepository.create({
+      data: {
+        workspaceId: a,
+        repositoryId: `repo-${a}`,
+        installationId: '456',
+        owner: 'fixture',
+        name: 'quartz',
+        webhookSecret: 'fixture-not-a-secret',
+      },
+    });
+    await admin.gitHubExecutionState.create({
+      data: {
+        repositoryId: repo.id,
+        workspaceId: a,
+        kind: 'pull_request',
+        subject: '7',
+        state: 'open',
+        headSha: 'a'.repeat(40),
+        providerAt: new Date(),
+        rank: 1,
+        pullNumber: 7,
+      },
+    });
+    const owner = await request(app).get(`/workspaces/${a}/knowledge?q=quartz`);
+    expect(owner.body.results).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ id: receipt.id }),
+        expect.objectContaining({
+          id: `${repo.id}:7`,
+          href: 'https://github.com/fixture/quartz/pull/7',
+        }),
+      ]),
+    );
+    expect(JSON.stringify(owner.body)).not.toContain(foreign.id);
+    const viewer = await request(app)
+      .get(`/workspaces/${a}/knowledge?q=quartz`)
+      .set('x-fixture-actor', 'viewer');
+    expect(viewer.body.results.some((v: { type: string }) => v.type === 'pull_request')).toBe(
+      false,
+    );
+    expect(
+      (
+        await request(app)
+          .get(`/workspaces/${a}/knowledge/source?type=pull_request&id=${repo.id}:7`)
+          .set('x-fixture-actor', 'editor')
+      ).status,
+    ).toBe(404);
+    await admin.gitHubRepository.update({
+      where: { id: repo.id },
+      data: { providerDisconnectedAt: new Date() },
+    });
+    expect(
+      (
+        await request(app).get(
+          `/workspaces/${a}/knowledge/source?type=pull_request&id=${repo.id}:7`,
+        )
+      ).status,
+    ).toBe(404);
+    await admin.document.update({ where: { id: `doc-${a}` }, data: { isArchived: true } });
+    expect(
+      (await request(app).get(`/workspaces/${a}/knowledge/source?type=decision&id=${receipt.id}`))
+        .status,
+    ).toBe(404);
+    process.env.FEATURE_DECISION_RECEIPTS = 'false';
+    expect(
+      (await request(app).get(`/workspaces/${a}/knowledge?q=quartz&type=decision`)).body.results,
+    ).toEqual([]);
+  } finally {
+    if (oldFlag === undefined) delete process.env.FEATURE_DECISION_RECEIPTS;
+    else process.env.FEATURE_DECISION_RECEIPTS = oldFlag;
+  }
+});
+it('semantic retrieval excludes invalidated vectors and embedding uses only TipTap text', async () => {
+  const { a } = await fixture();
+  const id = `doc-${a}`;
+  await admin.document.update({
+    where: { id },
+    data: {
+      content: {
+        type: 'doc',
+        content: [
+          {
+            type: 'paragraph',
+            attrs: { privateAttribute: 'notbodymarker' },
+            content: [{ type: 'text', text: 'semanticquartz' }],
+          },
+        ],
+      },
+    },
+  });
+  await withDatabase(db, () =>
+    db.withTenantTransaction(a, (tx) => queueEmbedding('document', id, tx, a, 'editor')),
+  );
+  const provider = jest.fn(async (text: string) => {
+    expect(text).toContain('semanticquartz');
+    expect(text).not.toContain('notbodymarker');
+    return Array<number>(1536).fill(0.01);
+  });
+  await withDatabase(db, () => refreshEmbedding('document', id, a, provider));
+  const queryProvider = async () => Array<number>(1536).fill(0.01);
+  expect(
+    (
+      await withDatabase(db, () =>
+        semanticWorkspaceContext(a, 'semanticquartz', 20, 'viewer', queryProvider),
+      )
+    ).some((v) => v.type === 'document'),
+  ).toBe(true);
+  await admin.document.update({ where: { id }, data: { embeddingHash: null } });
+  expect(
+    (
+      await withDatabase(db, () =>
+        semanticWorkspaceContext(a, 'semanticquartz', 20, 'viewer', queryProvider),
+      )
+    ).some((v) => v.type === 'document'),
+  ).toBe(false);
+});
+it('embedding preserves legacy string document bodies while excluding TipTap attributes', async () => {
+  const { a } = await fixture();
+  const id = `doc-${a}`;
+  await admin.document.update({ where: { id }, data: { content: 'legacyquartzbody' } });
+  await withDatabase(db, () =>
+    db.withTenantTransaction(a, (tx) => queueEmbedding('document', id, tx, a, 'editor')),
+  );
+  await withDatabase(db, () =>
+    refreshEmbedding('document', id, a, async (text) => {
+      expect(text).toContain('legacyquartzbody');
+      return Array<number>(1536).fill(0.01);
+    }),
+  );
+});
+
+it('knowledge timestamps and inclusive filters use UTC under a non-UTC database session', async () => {
+  const { a } = await fixture();
+  const instant = '2026-11-08T10:00:00.000Z';
+  await admin.document.update({
+    where: { id: `doc-${a}` },
+    data: { title: 'regionalquartz', updatedAt: new Date(instant) },
+  });
+  await admin.$executeRawUnsafe("ALTER ROLE resource_runtime SET timezone TO 'Asia/Kolkata'");
+  const regional = createTenantPrismaClient(
+    new PrismaClient({ datasourceUrl: runtimeDatabaseUrl }),
+  );
+  try {
+    const result = await withDatabase(regional, () =>
+      searchKnowledge('viewer', a, {
+        q: 'regionalquartz',
+        limit: 20,
+        after: instant,
+        before: instant,
+      }),
+    );
+    expect(result.results).toEqual(
+      expect.arrayContaining([expect.objectContaining({ id: `doc-${a}`, updatedAt: instant })]),
+    );
+  } finally {
+    await regional.$disconnect();
+    await admin.$executeRawUnsafe("ALTER ROLE resource_runtime SET timezone TO 'UTC'");
+  }
+});
+
+it('grounded previews reject foreign authority, viewer drafts, fabricated citations and source withdrawal', async () => {
+  const { a, b } = await fixture();
+  const generate = jest.mocked(completeWithFallback);
+  generate.mockClear();
+  const input = { workspaceId: a, prompt: 'Document', purpose: 'qa' };
+  await expect(withDatabase(db, () => groundedPreview('foreign', input))).rejects.toThrow();
+  await expect(
+    withDatabase(db, () => groundedPreview('viewer', { ...input, purpose: 'meeting_tasks' })),
+  ).rejects.toThrow();
+  expect(generate).not.toHaveBeenCalled();
+  generate.mockResolvedValue({
+    provider: 'groq',
+    content: JSON.stringify({
+      claims: [{ text: 'Fixture claim', references: [999] }],
+      proposals: [],
+    }),
+  });
+  await expect(withDatabase(db, () => groundedPreview('viewer', input))).rejects.toThrow(
+    'invalid structure or citations',
+  );
+  generate.mockImplementation(async () => {
+    await admin.document.update({ where: { id: `doc-${a}` }, data: { isArchived: true } });
+    return {
+      provider: 'groq',
+      content: JSON.stringify({
+        claims: [{ text: 'Fixture claim', references: [1] }],
+        proposals: [],
+      }),
+    };
+  });
+  await expect(withDatabase(db, () => groundedPreview('viewer', input))).rejects.toThrow(
+    'Source unavailable',
+  );
+  generate.mockClear();
+  expect(await withDatabase(db, () => groundedPreview('viewer', input))).toMatchObject({
+    status: 'insufficient_evidence',
+    sources: [],
+  });
+  expect(generate).not.toHaveBeenCalled();
+  expect((await admin.document.findUniqueOrThrow({ where: { id: `doc-${b}` } })).isArchived).toBe(
+    false,
+  );
+});
+
+it('grounded PR evidence rechecks repository disconnection and excludes foreign workspace metadata', async () => {
+  const { a, b } = await fixture();
+  const repositories = await Promise.all(
+    [a, b].map((workspaceId) =>
+      admin.gitHubRepository.create({
+        data: {
+          workspaceId,
+          repositoryId: `grounded-${workspaceId}`,
+          installationId: '456',
+          owner: workspaceId === a ? 'localfixture' : 'foreignfixture',
+          name: 'isolationquartz',
+          webhookSecret: 'fixture-not-a-secret',
+        },
+      }),
+    ),
+  );
+  for (const repo of repositories)
+    await admin.gitHubExecutionState.create({
+      data: {
+        repositoryId: repo.id,
+        workspaceId: repo.workspaceId,
+        kind: 'pull_request',
+        subject: '7',
+        state: 'open',
+        headSha: 'a'.repeat(40),
+        providerAt: new Date(),
+        rank: 1,
+        pullNumber: 7,
+      },
+    });
+  const generate = jest.mocked(completeWithFallback);
+  const response = {
+    provider: 'groq' as const,
+    content: JSON.stringify({
+      claims: [{ text: 'Fixture claim', references: [1] }],
+      proposals: [],
+    }),
+  };
+  generate.mockClear().mockResolvedValue(response);
+  const input = { workspaceId: a, prompt: 'isolationquartz', purpose: 'pr_brief' };
+  const result = await withDatabase(db, () => groundedPreview('owner', input));
+  expect(result.sources).toEqual([expect.objectContaining({ id: `${repositories[0].id}:7` })]);
+  expect(JSON.stringify(result)).not.toContain('foreignfixture');
+  expect(JSON.stringify(generate.mock.calls)).not.toContain('foreignfixture');
+  generate.mockClear();
+  expect(await withDatabase(db, () => groundedPreview('viewer', input))).toMatchObject({
+    status: 'insufficient_evidence',
+    sources: [],
+  });
+  await expect(withDatabase(db, () => groundedPreview('foreign', input))).rejects.toThrow();
+  expect(generate).not.toHaveBeenCalled();
+  generate.mockImplementation(async () => {
+    await admin.gitHubRepository.update({
+      where: { id: repositories[0].id },
+      data: { providerDisconnectedAt: new Date() },
+    });
+    return response;
+  });
+  await expect(withDatabase(db, () => groundedPreview('owner', input))).rejects.toThrow(
+    'Source unavailable',
+  );
+});
+
+it('grounded previews cite current local sources without writing tasks or accepting receipts', async () => {
+  const { a } = await fixture();
+  jest.mocked(completeWithFallback).mockResolvedValue({
+    provider: 'groq',
+    content: JSON.stringify({
+      claims: [{ text: 'Fixture summary', references: [1] }],
+      proposals: [
+        {
+          kind: 'task',
+          title: 'Review document',
+          description: 'Human review required',
+          references: [1],
+        },
+      ],
+    }),
+  });
+  const before = await admin.task.count();
+  const result = await withDatabase(db, () =>
+    groundedPreview('editor', { workspaceId: a, prompt: 'Document', purpose: 'meeting_tasks' }),
+  );
+  expect(result).toMatchObject({
+    status: 'preview',
+    cost: 'unavailable',
+    sources: [{ id: `doc-${a}` }],
+    proposals: [{ kind: 'task' }],
+  });
+  expect(await admin.task.count()).toBe(before);
+  jest.mocked(completeWithFallback).mockResolvedValue({
+    provider: 'groq',
+    content: JSON.stringify({
+      claims: [{ text: 'Synthetic fixture summary', references: [1] }],
+      proposals: [],
+    }),
+  });
+  const evaluation = await withDatabase(db, () =>
+    evaluateGroundedCases([
+      {
+        id: 'synthetic-structural-only',
+        actorId: 'editor',
+        workspaceId: a,
+        prompt: 'Document',
+        reviewedBy: 'unit-test-fixture-not-model-evaluation',
+        reviewedAt: '2026-11-09T00:00:00Z',
+        expectedSourceIds: [`doc-${a}`],
+        expectedStatements: ['Synthetic fixture summary'],
+      },
+    ]),
+  );
+  expect(evaluation).toMatchObject({
+    reports: [
+      {
+        status: 'preview',
+        expectedCitationsPresent: true,
+        expectedStatementsPresent: true,
+        costUsd: null,
+        humanSemanticReviewRequired: true,
+      },
+    ],
+    factualTruthVerified: false,
+  });
+  jest.mocked(completeWithFallback).mockRejectedValue(new Error('private provider detail'));
+  await expect(
+    withDatabase(db, () =>
+      groundedPreview('editor', { workspaceId: a, prompt: 'Document', purpose: 'qa' }),
+    ),
+  ).rejects.toThrow('AI provider unavailable');
+});
+
+it('grounded API flag denies disabled access and enabled empty retrieval never calls a model', async () => {
+  const { a } = await fixture();
+  const old = process.env.FEATURE_GROUNDED_AI;
+  const generate = jest.mocked(completeWithFallback);
+  generate.mockClear();
+  try {
+    process.env.FEATURE_GROUNDED_AI = 'false';
+    expect(
+      (
+        await request(app)
+          .post('/ai-v3/grounded')
+          .set('x-verified-clerk-fixture', 'fixture_owner')
+          .send({ workspaceId: a, prompt: 'Document', purpose: 'qa' })
+      ).status,
+    ).toBe(404);
+    process.env.FEATURE_GROUNDED_AI = 'true';
+    expect(
+      (
+        await request(app)
+          .post('/ai-v3/grounded')
+          .set('x-verified-clerk-fixture', 'fixture_owner')
+          .send({})
+      ).status,
+    ).toBe(400);
+    const result = await request(app)
+      .post('/ai-v3/grounded')
+      .set('x-verified-clerk-fixture', 'fixture_owner')
+      .send({ workspaceId: a, prompt: 'unfindablegroundingfixture', purpose: 'qa' });
+    expect(result.status).toBe(200);
+    expect(result.headers['cache-control']).toBe('no-store');
+    expect(result.body).toMatchObject({
+      status: 'insufficient_evidence',
+      sources: [],
+      proposals: [],
+    });
+    expect(generate).not.toHaveBeenCalled();
+  } finally {
+    if (old === undefined) delete process.env.FEATURE_GROUNDED_AI;
+    else process.env.FEATURE_GROUNDED_AI = old;
+  }
+});
+
+it('automation rules default disabled and only current owners may enable them in their own workspace', async () => {
+  const { a, b } = await fixture();
+  const input = {
+    title: 'Review notification',
+    trigger: 'task_review',
+    action: 'notify',
+    debounceSeconds: 30,
+    condition: 'always',
+  };
+  const create = (actor: string, workspaceId: string) =>
+    withDatabase(db, () => createAutomationRule(actor, workspaceId, input));
+  await expect(create('viewer', a)).rejects.toThrow();
+  await expect(create('editor', a)).rejects.toThrow();
+  await expect(create('owner', b)).rejects.toThrow();
+  const rule = await create('owner', a);
+  expect(rule.enabled).toBe(false);
+  await admin.workspaceMember.create({ data: { workspaceId: b, userId: 'owner', role: 'OWNER' } });
+  await expect(
+    withDatabase(db, () => setAutomationEnabled('editor', a, rule.id, true)),
+  ).rejects.toThrow();
+  await expect(
+    withDatabase(db, () => setAutomationEnabled('owner', b, rule.id, true)),
+  ).rejects.toThrow('Rule unavailable');
+  expect(
+    await db.withTenantTransaction(
+      b,
+      (tx) => tx.$queryRaw`SELECT id FROM "AutomationRule" WHERE id=${rule.id}`,
+    ),
+  ).toEqual([]);
+  const enabled = await withDatabase(db, () => setAutomationEnabled('owner', a, rule.id, true));
+  expect(enabled.enabled).toBe(true);
+  expect(
+    (await withDatabase(db, () => setAutomationEnabled('owner', a, rule.id, true))).version,
+  ).toBe(enabled.version);
+  expect(await withDatabase(db, () => listAutomationRules('viewer', a))).toEqual(
+    expect.arrayContaining([expect.objectContaining({ id: rule.id, enabled: true })]),
+  );
+  await admin.workspaceMember.delete({
+    where: { userId_workspaceId: { userId: 'viewer', workspaceId: a } },
+  });
+  await expect(withDatabase(db, () => listAutomationRules('viewer', a))).rejects.toThrow();
+});
+
+it('automation rule API is flagged, validates input and enforces owner and viewer roles', async () => {
+  const { a } = await fixture();
+  const before = process.env.FEATURE_AUTOMATION;
+  const input = {
+    title: 'Review notice',
+    trigger: 'task_review',
+    action: 'notify',
+    condition: 'always',
+    debounceSeconds: 30,
+  };
+  try {
+    process.env.FEATURE_AUTOMATION = 'false';
+    expect((await request(app).get(`/automation/${a}`)).status).toBe(404);
+    process.env.FEATURE_AUTOMATION = 'true';
+    expect(
+      (await request(app).post(`/automation/${a}`).set('x-fixture-actor', 'viewer').send(input))
+        .status,
+    ).toBe(403);
+    expect(
+      (
+        await request(app)
+          .post(`/automation/${a}`)
+          .send({ ...input, action: 'update_linked_status' })
+      ).status,
+    ).toBe(400);
+    const created = await request(app).post(`/automation/${a}`).send(input);
+    expect(created.status).toBe(201);
+    expect(created.body.enabled).toBe(false);
+    expect(
+      (
+        await request(app)
+          .patch(`/automation/${a}/${created.body.id}/enabled`)
+          .set('x-fixture-actor', 'editor')
+          .send({ enabled: true })
+      ).status,
+    ).toBe(403);
+    expect(
+      (
+        await request(app)
+          .patch(`/automation/${a}/${created.body.id}/enabled`)
+          .send({ enabled: true })
+      ).status,
+    ).toBe(200);
+    const list = await request(app).get(`/automation/${a}`).set('x-fixture-actor', 'viewer');
+    expect(list.status).toBe(200);
+    expect(list.headers['cache-control']).toBe('no-store');
+    expect(list.body).toEqual(
+      expect.arrayContaining([expect.objectContaining({ id: created.body.id, enabled: true })]),
+    );
+  } finally {
+    if (before === undefined) delete process.env.FEATURE_AUTOMATION;
+    else process.env.FEATURE_AUTOMATION = before;
+  }
+});
+
+it('automation rule creation binds idempotency to current owner authority and payload', async () => {
+  const { a } = await fixture();
+  const previous = process.env.FEATURE_AUTOMATION;
+  const data = {
+    title: 'Retry-safe rule',
+    trigger: 'task_review',
+    action: 'notify',
+    condition: 'always',
+    debounceSeconds: 30,
+  };
+  try {
+    process.env.FEATURE_AUTOMATION = 'true';
+    const create = (payload: object) =>
+      request(app)
+        .post(`/automation/${a}`)
+        .set('Idempotency-Key', 'rule-fixture-key')
+        .send(payload);
+    const [first, second] = await Promise.all([create(data), create(data)]);
+    expect([first.status, second.status]).toEqual([201, 201]);
+    expect(first.body.id).toBe(second.body.id);
+    expect((await create({ ...data, title: 'Different' })).status).toBe(409);
+    await admin.workspaceMember.delete({
+      where: { userId_workspaceId: { userId: 'owner', workspaceId: a } },
+    });
+    expect((await create(data)).status).toBe(403);
+  } finally {
+    if (previous === undefined) delete process.env.FEATURE_AUTOMATION;
+    else process.env.FEATURE_AUTOMATION = previous;
+  }
+});
+
+it('automation requires current owner approval, deduplicates events, debounces and rechecks tenant source', async () => {
+  const { a, b } = await fixture();
+  await admin.workspaceMember.create({ data: { workspaceId: b, userId: 'owner', role: 'OWNER' } });
+  const rule = await withDatabase(db, () =>
+    createAutomationRule('owner', a, {
+      title: 'Review notice',
+      trigger: 'task_review',
+      action: 'notify',
+      condition: 'always',
+      debounceSeconds: 60,
+    }),
+  );
+  const input = { trigger: 'task_review', taskId: `task-${a}` };
+  const submit = (actor: string, payload: object, key: string) =>
+    withDatabase(db, () => submitAutomationEvent(actor, a, payload, key));
+  expect((await submit('editor', input, 'off')).executions).toHaveLength(0);
+  await withDatabase(db, () => setAutomationEnabled('owner', a, rule.id, true));
+  await expect(submit('viewer', input, 'viewer')).rejects.toThrow();
+  await expect(submit('owner', { ...input, taskId: `task-${b}` }, 'foreign')).rejects.toThrow();
+  const [first, retry] = await Promise.all([
+    submit('editor', input, 'same-event'),
+    submit('editor', input, 'same-event'),
+  ]);
+  expect(first.eventId).toBe(retry.eventId);
+  expect(first.executions).toHaveLength(1);
+  expect(retry.executions[0].id).toBe(first.executions[0].id);
+  await expect(
+    submit('editor', { trigger: 'blocker', taskId: `task-${a}` }, 'same-event'),
+  ).rejects.toThrow();
+  expect((await submit('editor', input, 'debounced')).executions).toHaveLength(0);
+  const executionId = first.executions[0].id;
+  await expect(
+    withDatabase(db, () => approveAutomationExecution('owner', b, executionId)),
+  ).rejects.toThrow('Execution unavailable');
+  await expect(submit('editor', { ...input, depth: 1 }, 'forged-chain')).rejects.toThrow();
+  await expect(
+    withDatabase(db, () => executeAutomationExecution(a, executionId, 'unapproved')),
+  ).rejects.toThrow();
+  await expect(
+    withDatabase(db, () => approveAutomationExecution('editor', a, executionId)),
+  ).rejects.toThrow();
+  expect(
+    (await withDatabase(db, () => approveAutomationExecution('owner', a, executionId))).status,
+  ).toBe('approved');
+  const before = await admin.activity.count({
+    where: { workspaceId: a, type: 'automation_notification' },
+  });
+  const claims = await Promise.all([
+    withDatabase(db, () => claimAutomationExecution(a, executionId)),
+    withDatabase(db, () => claimAutomationExecution(a, executionId)),
+  ]);
+  expect(claims.filter(Boolean)).toHaveLength(1);
+  const token = claims.find(Boolean)!.token;
+  const [one, two] = await Promise.all([
+    withDatabase(db, () => executeAutomationExecution(a, executionId, token)),
+    withDatabase(db, () => executeAutomationExecution(a, executionId, token)),
+  ]);
+  expect(one.status).toBe('completed');
+  expect(two.status).toBe('completed');
+  expect(
+    await admin.activity.count({ where: { workspaceId: a, type: 'automation_notification' } }),
+  ).toBe(before + 1);
+  const timeline = await withDatabase(db, () => listAutomationExecutions('owner', a));
+  expect(timeline).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        id: executionId,
+        status: 'completed',
+        errorCode: null,
+      }),
+    ]),
+  );
+  expect(JSON.stringify(timeline)).not.toContain('private-fixture-error');
+  await expect(withDatabase(db, () => listAutomationExecutions('viewer', a))).rejects.toThrow();
+  const visible = await request(app)
+    .get(`/workspaces/${a}/activities`)
+    .set('x-fixture-actor', 'viewer');
+  expect(
+    visible.body.some((item: { type: string }) => item.type === 'automation_notification'),
+  ).toBe(true);
+  await admin.task.delete({ where: { id: `task-${a}` } });
+  const afterDeletion = await request(app)
+    .get(`/workspaces/${a}/activities`)
+    .set('x-fixture-actor', 'viewer');
+  expect(
+    afterDeletion.body.some((item: { type: string }) => item.type === 'automation_notification'),
+  ).toBe(false);
+});
+
+it('automation preview is read-only and event approval is separately authorized', async () => {
+  const { a, b } = await fixture();
+  const previous = process.env.FEATURE_AUTOMATION;
+  try {
+    process.env.FEATURE_AUTOMATION = 'true';
+    const rule = await withDatabase(db, () =>
+      createAutomationRule('owner', a, {
+        title: 'Preview rule',
+        trigger: 'task_review',
+        action: 'notify',
+        condition: 'always',
+        debounceSeconds: 30,
+      }),
+    );
+    const preview = { ruleId: rule.id, trigger: 'task_review', taskId: `task-${a}` };
+    const path = `/automation/${a}`;
+    expect((await request(app).post(`${path}/preview`).send(preview)).body).toMatchObject({
+      eligible: false,
+      reason: 'disabled',
+      requiresApproval: true,
+    });
+    await withDatabase(db, () => setAutomationEnabled('owner', a, rule.id, true));
+    expect(
+      (
+        await request(app)
+          .post(`${path}/preview`)
+          .send({ ...preview, ruleId: 'missing-rule' })
+      ).status,
+    ).toBe(404);
+    expect(
+      (
+        await request(app)
+          .post(`${path}/preview`)
+          .send({ ...preview, trigger: 'blocker' })
+      ).body,
+    ).toMatchObject({ eligible: false, reason: 'wrong_trigger' });
+    const priorityRule = await withDatabase(db, () =>
+      createAutomationRule('owner', a, {
+        title: 'Urgent review',
+        trigger: 'task_review',
+        action: 'notify',
+        condition: 'high_priority',
+        debounceSeconds: 30,
+      }),
+    );
+    await withDatabase(db, () => setAutomationEnabled('owner', a, priorityRule.id, true));
+    await admin.task.update({ where: { id: `task-${a}` }, data: { priority: 'LOW' } });
+    expect(
+      (
+        await request(app)
+          .post(`${path}/preview`)
+          .send({ ...preview, ruleId: priorityRule.id })
+      ).body,
+    ).toMatchObject({ eligible: false, reason: 'condition_failed' });
+    expect(
+      (await request(app).post(`${path}/preview`).set('x-fixture-actor', 'viewer').send(preview))
+        .status,
+    ).toBe(403);
+    expect(
+      (
+        await request(app)
+          .post(`${path}/preview`)
+          .send({ ...preview, taskId: `task-${b}` })
+      ).status,
+    ).toBe(404);
+    expect((await request(app).post(`${path}/preview`).send(preview)).body).toMatchObject({
+      eligible: true,
+      reason: 'eligible',
+      requiresApproval: true,
+    });
+    expect((await request(app).get(`${path}/executions`)).body).toEqual([]);
+    const event = await request(app)
+      .post(`${path}/events`)
+      .set('Idempotency-Key', 'event-preview-fixture')
+      .send({ trigger: 'task_review', taskId: `task-${a}` });
+    expect(event.status).toBe(201);
+    const id = event.body.executions[0].id as string;
+    expect((await request(app).post(`${path}/preview`).send(preview)).body).toMatchObject({
+      eligible: false,
+      reason: 'debounced',
+    });
+    expect(
+      (
+        await request(app)
+          .post(`${path}/executions/${id}/approve`)
+          .set('x-fixture-actor', 'editor')
+          .send({})
+      ).status,
+    ).toBe(403);
+    expect((await request(app).post(`${path}/executions/${id}/approve`).send({})).body.status).toBe(
+      'approved',
+    );
+    expect(
+      (await request(app).get(`${path}/executions`).set('x-fixture-actor', 'viewer')).status,
+    ).toBe(403);
+    expect((await request(app).get(`${path}/executions`)).body).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id,
+          status: 'approved',
+          current: true,
+          origin: 'human_assertion',
+        }),
+      ]),
+    );
+  } finally {
+    if (previous === undefined) delete process.env.FEATURE_AUTOMATION;
+    else process.env.FEATURE_AUTOMATION = previous;
+  }
+});
+
+it('automation leases serialize attempts and fail closed after three redacted failures', async () => {
+  const { a } = await fixture();
+  const rule = await withDatabase(db, () =>
+    createAutomationRule('owner', a, {
+      title: 'Bounded retries',
+      trigger: 'task_review',
+      action: 'notify',
+      condition: 'always',
+      debounceSeconds: 1,
+    }),
+  );
+  await withDatabase(db, () => setAutomationEnabled('owner', a, rule.id, true));
+  const event = await withDatabase(db, () =>
+    submitAutomationEvent(
+      'editor',
+      a,
+      { trigger: 'task_review', taskId: `task-${a}` },
+      'lease-fixture',
+    ),
+  );
+  const id = event.executions[0].id;
+  await withDatabase(db, () => approveAutomationExecution('owner', a, id));
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    const claim = await withDatabase(db, () => claimAutomationExecution(a, id));
+    expect(claim?.attempt).toBe(attempt);
+    expect(await withDatabase(db, () => claimAutomationExecution(a, id))).toBeNull();
+    const result = await withDatabase(db, () => failAutomationClaim(a, id, claim!.token));
+    expect(result.status).toBe(attempt === 3 ? 'failed' : 'approved');
+  }
+  const timeline = await withDatabase(db, () => listAutomationExecutions('owner', a));
+  expect(timeline).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({ id, status: 'failed', errorCode: 'worker_failed' }),
+    ]),
+  );
+  expect(
+    await admin.activity.count({ where: { workspaceId: a, type: 'automation_notification' } }),
+  ).toBe(0);
+});
+
+it('automation cancels approved work when its initiating member loses write access', async () => {
+  const { a } = await fixture();
+  const rule = await withDatabase(db, () =>
+    createAutomationRule('owner', a, {
+      title: 'Revocation',
+      trigger: 'task_review',
+      action: 'notify',
+      condition: 'always',
+      debounceSeconds: 1,
+    }),
+  );
+  await withDatabase(db, () => setAutomationEnabled('owner', a, rule.id, true));
+  const event = await withDatabase(db, () =>
+    submitAutomationEvent(
+      'editor',
+      a,
+      { trigger: 'task_review', taskId: `task-${a}` },
+      'revocation-fixture',
+    ),
+  );
+  const id = event.executions[0].id;
+  await withDatabase(db, () => approveAutomationExecution('owner', a, id));
+  await admin.workspaceMember.delete({
+    where: { userId_workspaceId: { userId: 'editor', workspaceId: a } },
+  });
+  const claim = await withDatabase(db, () => claimAutomationExecution(a, id));
+  expect(
+    (await withDatabase(db, () => executeAutomationExecution(a, id, claim!.token))).status,
+  ).toBe('cancelled');
+  expect(
+    await admin.activity.count({ where: { workspaceId: a, type: 'automation_notification' } }),
+  ).toBe(0);
+  expect(
+    await db.withTenantTransaction(
+      a,
+      (tx) => tx.$executeRaw`UPDATE "AutomationAudit" SET kind='failed' WHERE "executionId"=${id}`,
+    ),
+  ).toBe(0);
+  expect(
+    await db.withTenantTransaction(
+      a,
+      (tx) => tx.$executeRaw`DELETE FROM "AutomationAudit" WHERE "executionId"=${id}`,
+    ),
+  ).toBe(0);
+});
+
+it('duplicate opaque BullMQ jobs produce exactly one approved local activity', async () => {
+  const { a } = await fixture();
+  const redisContainer = await new GenericContainer('redis:7-alpine')
+    .withExposedPorts(6379)
+    .start();
+  const connection = {
+    host: redisContainer.getHost(),
+    port: redisContainer.getMappedPort(6379),
+    maxRetriesPerRequest: null,
+  };
+  const name = `automation-fixture-${randomBytes(8).toString('hex')}`;
+  const queue = new Queue(name, { connection });
+  let worker: Worker | undefined;
+  const previousFlag = process.env.FEATURE_AUTOMATION,
+    previousKey = process.env.ENCRYPTION_KEY;
+  try {
+    process.env.FEATURE_AUTOMATION = 'true';
+    process.env.ENCRYPTION_KEY = randomBytes(32).toString('hex');
+    const rule = await withDatabase(db, () =>
+      createAutomationRule('owner', a, {
+        title: 'Queue once',
+        trigger: 'task_review',
+        action: 'notify',
+        condition: 'always',
+        debounceSeconds: 1,
+      }),
+    );
+    await withDatabase(db, () => setAutomationEnabled('owner', a, rule.id, true));
+    const event = await withDatabase(db, () =>
+      submitAutomationEvent(
+        'editor',
+        a,
+        { trigger: 'task_review', taskId: `task-${a}` },
+        'queue-once',
+      ),
+    );
+    const executionId = event.executions[0].id;
+    await withDatabase(db, () => approveAutomationExecution('owner', a, executionId));
+    const data = automationJob(a, executionId),
+      jobId = automationJobId(executionId);
+    expect(JSON.stringify(data)).not.toContain(a);
+    await Promise.all([
+      queue.add('execute', data, { jobId }),
+      queue.add('execute', data, { jobId }),
+    ]);
+    worker = new Worker(
+      name,
+      async (job) => withDatabase(db, () => processAutomationJob(job.data)),
+      { connection, concurrency: 2 },
+    );
+    const deadline = Date.now() + 15000;
+    while (
+      Date.now() < deadline &&
+      (await admin.automationExecution.findUniqueOrThrow({ where: { id: executionId } })).status !==
+        'completed'
+    )
+      await new Promise((resolve) => setTimeout(resolve, 30));
+    expect(
+      (await admin.automationExecution.findUniqueOrThrow({ where: { id: executionId } })).status,
+    ).toBe('completed');
+    await withDatabase(db, () => processAutomationJob(data));
+    expect(
+      await admin.activity.count({ where: { workspaceId: a, type: 'automation_notification' } }),
+    ).toBe(1);
+    expect(
+      await admin.automationAudit.count({
+        where: { workspaceId: a, executionId, kind: 'completed' },
+      }),
+    ).toBe(1);
+  } finally {
+    await worker?.close();
+    await queue.close();
+    await redisContainer.stop();
+    if (previousFlag === undefined) delete process.env.FEATURE_AUTOMATION;
+    else process.env.FEATURE_AUTOMATION = previousFlag;
+    if (previousKey === undefined) delete process.env.ENCRYPTION_KEY;
+    else process.env.ENCRYPTION_KEY = previousKey;
+  }
+});
+
+it('signed PR redelivery creates one owner-only approval and only a locally recorded report', async () => {
+  const { a } = await fixture(),
+    repository = await repositoryFixture(a);
+  const previous = process.env.FEATURE_AUTOMATION;
+  try {
+    process.env.FEATURE_AUTOMATION = 'true';
+    const rule = await withDatabase(db, () =>
+      createAutomationRule('owner', a, {
+        title: 'PR report',
+        trigger: 'pr_merged',
+        action: 'prepare_report',
+        condition: 'always',
+        debounceSeconds: 30,
+      }),
+    );
+    await withDatabase(db, () => setAutomationEnabled('owner', a, rule.id, true));
+    const payload = {
+      action: 'closed',
+      pull_request: {
+        number: 83,
+        merged: true,
+        updated_at: '2026-11-09T10:00:00Z',
+        head: { sha: 'a'.repeat(40) },
+      },
+    };
+    expect(
+      (await githubEvent(repository.repositoryId, 'incorrect-fixture-secret', payload)).status,
+    ).toBe(401);
+    expect(await withDatabase(db, () => listAutomationExecutions('owner', a))).toHaveLength(0);
+    expect(
+      (await githubEvent(repository.repositoryId, repository.webhookSecret, payload)).status,
+    ).toBe(202);
+    expect(
+      (await githubEvent(repository.repositoryId, repository.webhookSecret, payload)).status,
+    ).toBe(202);
+    const pending = await withDatabase(db, () => listAutomationExecutions('owner', a));
+    expect(pending).toHaveLength(1);
+    expect(pending[0]).toMatchObject({ status: 'pending_approval', origin: 'signed_webhook' });
+    expect(pending[0]).toMatchObject({
+      source: {
+        kind: 'github',
+        repository: `fixture/${a}`,
+        subject: '83',
+        liveAccess: 'not_verified',
+      },
+      action: 'prepare_report',
+    });
+    await expect(withDatabase(db, () => listAutomationExecutions('viewer', a))).rejects.toThrow();
+    const id = pending[0].id;
+    await withDatabase(db, () => approveAutomationExecution('owner', a, id));
+    const claim = await withDatabase(db, () => claimAutomationExecution(a, id));
+    expect(
+      (await withDatabase(db, () => executeAutomationExecution(a, id, claim!.token))).status,
+    ).toBe('completed');
+    expect(await withDatabase(db, () => claimAutomationExecution(a, id))).toBeNull();
+    expect(
+      (await withDatabase(db, () => executeAutomationExecution(a, id, claim!.token))).status,
+    ).toBe('completed');
+    expect((await withDatabase(db, () => listAutomationExecutions('owner', a)))[0]).toMatchObject({
+      report: { kind: 'signed_webhook_record', pullNumber: 83, liveAccess: 'not_verified' },
+    });
+    expect(
+      await admin.automationAudit.count({
+        where: { workspaceId: a, executionId: id, kind: 'completed' },
+      }),
+    ).toBe(1);
+    await admin.gitHubRepository.update({
+      where: { id: repository.id },
+      data: { providerDisconnectedAt: new Date() },
+    });
+    expect(await withDatabase(db, () => listAutomationExecutions('owner', a))).toEqual([]);
+  } finally {
+    if (previous === undefined) delete process.env.FEATURE_AUTOMATION;
+    else process.env.FEATURE_AUTOMATION = previous;
+  }
+});
+
+it('a signed CI fixture cannot update linked status or establish verified CI', async () => {
+  const { a } = await fixture(),
+    repository = await repositoryFixture(a);
+  const previous = process.env.FEATURE_AUTOMATION;
+  try {
+    process.env.FEATURE_AUTOMATION = 'true';
+    const rule = await withDatabase(db, () =>
+      createAutomationRule('owner', a, {
+        title: 'CI update',
+        trigger: 'ci_passed',
+        action: 'update_linked_status',
+        condition: 'always',
+        debounceSeconds: 30,
+      }),
+    );
+    await withDatabase(db, () => setAutomationEnabled('owner', a, rule.id, true));
+    const taskBefore = await admin.task.findUniqueOrThrow({ where: { id: `task-${a}` } });
+    const payload = {
+      action: 'completed',
+      check_run: {
+        id: 331,
+        status: 'completed',
+        conclusion: 'success',
+        head_sha: 'b'.repeat(40),
+        completed_at: '2026-11-09T10:05:00Z',
+      },
+    };
+    expect(
+      (
+        await githubEvent(
+          repository.repositoryId,
+          repository.webhookSecret,
+          payload,
+          undefined,
+          'check_run',
+        )
+      ).status,
+    ).toBe(200);
+    const pending = await withDatabase(db, () => listAutomationExecutions('owner', a));
+    expect(pending).toHaveLength(1);
+    const id = pending[0].id;
+    await withDatabase(db, () => approveAutomationExecution('owner', a, id));
+    const claim = await withDatabase(db, () => claimAutomationExecution(a, id));
+    expect(
+      await withDatabase(db, () => executeAutomationExecution(a, id, claim!.token)),
+    ).toMatchObject({ status: 'unavailable', errorCode: 'ci_verification_unavailable' });
+    expect(await admin.task.findUniqueOrThrow({ where: { id: `task-${a}` } })).toEqual(taskBefore);
+    expect(
+      JSON.stringify(await withDatabase(db, () => listAutomationExecutions('owner', a))),
+    ).not.toContain('deployment_verified');
+  } finally {
+    if (previous === undefined) delete process.env.FEATURE_AUTOMATION;
+    else process.env.FEATURE_AUTOMATION = previous;
+  }
+});
+
+it('GitHub automation rule configuration is visible only to owners', async () => {
+  const { a } = await fixture();
+  const rule = await withDatabase(db, () =>
+    createAutomationRule('owner', a, {
+      title: 'Private repository workflow',
+      trigger: 'pr_merged',
+      action: 'prepare_report',
+      condition: 'always',
+      debounceSeconds: 30,
+    }),
+  );
+  await expect(
+    admin.$executeRaw`UPDATE "AutomationRule" SET action='notify' WHERE id=${rule.id}`,
+  ).rejects.toThrow();
+  expect(await withDatabase(db, () => listAutomationRules('owner', a))).toEqual(
+    expect.arrayContaining([expect.objectContaining({ id: rule.id })]),
+  );
+  expect(await withDatabase(db, () => listAutomationRules('editor', a))).not.toEqual(
+    expect.arrayContaining([expect.objectContaining({ id: rule.id })]),
+  );
+  expect(await withDatabase(db, () => listAutomationRules('viewer', a))).not.toEqual(
+    expect.arrayContaining([expect.objectContaining({ id: rule.id })]),
+  );
+  const previous = process.env.FEATURE_AUTOMATION;
+  try {
+    process.env.FEATURE_AUTOMATION = 'true';
+    const preview = await request(app)
+      .post(`/automation/${a}/preview`)
+      .set('x-fixture-actor', 'editor')
+      .send({ ruleId: rule.id, trigger: 'task_review', taskId: `task-${a}` });
+    expect(preview.status).toBe(404);
+  } finally {
+    if (previous === undefined) delete process.env.FEATURE_AUTOMATION;
+    else process.env.FEATURE_AUTOMATION = previous;
+  }
+});
+
+it('rule quota does not prevent a previously authorized idempotent retry', async () => {
+  const { a } = await fixture();
+  const input = {
+    title: 'Original',
+    trigger: 'task_review',
+    action: 'notify',
+    condition: 'always',
+    debounceSeconds: 30,
+  };
+  const original = await withDatabase(db, () =>
+    createAutomationRule('owner', a, input, 'limit-replay'),
+  );
+  await admin.$executeRaw`INSERT INTO "AutomationRule" (id,"workspaceId","createdBy",title,trigger,action,condition,"debounceSeconds") SELECT ${'limit-' + a + '-'} || n,${a},'owner','Fixture','task_review','notify','always',30 FROM generate_series(1,99) n`;
+  expect(
+    (await withDatabase(db, () => createAutomationRule('owner', a, input, 'limit-replay'))).id,
+  ).toBe(original.id);
+  await expect(
+    withDatabase(db, () => createAutomationRule('owner', a, input, 'new-key')),
+  ).rejects.toThrow('Rule limit reached');
+});
+
+it('automation rule updates reject stale versions without invalidating idempotent retries', async () => {
+  const { a } = await fixture();
+  const previous = process.env.FEATURE_AUTOMATION;
+  try {
+    process.env.FEATURE_AUTOMATION = 'true';
+    const rule = await withDatabase(db, () =>
+      createAutomationRule('owner', a, {
+        title: 'Version',
+        trigger: 'task_review',
+        action: 'notify',
+        condition: 'always',
+        debounceSeconds: 30,
+      }),
+    );
+    const path = `/automation/${a}/${rule.id}/enabled`;
+    const enable = await request(app)
+      .patch(path)
+      .send({ enabled: true, expectedVersion: rule.version });
+    expect(enable.status).toBe(200);
+    const replay = await request(app)
+      .patch(path)
+      .send({ enabled: true, expectedVersion: rule.version });
+    expect(replay.status).toBe(200);
+    expect(replay.body.version).toBe(enable.body.version);
+    expect(
+      (await request(app).patch(path).send({ enabled: false, expectedVersion: rule.version }))
+        .status,
+    ).toBe(409);
+    expect((await request(app).get(`/automation/${a}`)).body[0].enabled).toBe(true);
+  } finally {
+    if (previous === undefined) delete process.env.FEATURE_AUTOMATION;
+    else process.env.FEATURE_AUTOMATION = previous;
+  }
+});
+
+it('disabling a rule after approval cancels the action before it writes', async () => {
+  const { a } = await fixture();
+  const rule = await withDatabase(db, () =>
+    createAutomationRule('owner', a, {
+      title: 'Disable before execution',
+      trigger: 'task_review',
+      action: 'notify',
+      condition: 'always',
+      debounceSeconds: 1,
+    }),
+  );
+  await withDatabase(db, () => setAutomationEnabled('owner', a, rule.id, true));
+  const event = await withDatabase(db, () =>
+    submitAutomationEvent(
+      'editor',
+      a,
+      { trigger: 'task_review', taskId: `task-${a}` },
+      'disabled-fixture',
+    ),
+  );
+  const id = event.executions[0].id;
+  await withDatabase(db, () => approveAutomationExecution('owner', a, id));
+  await withDatabase(db, () => setAutomationEnabled('owner', a, rule.id, false));
+  const lease = await withDatabase(db, () => claimAutomationExecution(a, id));
+  expect(
+    await withDatabase(db, () => executeAutomationExecution(a, id, lease!.token)),
+  ).toMatchObject({ status: 'cancelled', errorCode: 'rule_disabled' });
+  expect(
+    await admin.activity.count({ where: { workspaceId: a, type: 'automation_notification' } }),
+  ).toBe(0);
+});
+
+it('deleted task sources hide automation derivatives and cannot be approved', async () => {
+  const { a } = await fixture();
+  const rule = await withDatabase(db, () =>
+    createAutomationRule('owner', a, {
+      title: 'Deleted source',
+      trigger: 'task_review',
+      action: 'notify',
+      condition: 'always',
+      debounceSeconds: 1,
+    }),
+  );
+  await withDatabase(db, () => setAutomationEnabled('owner', a, rule.id, true));
+  const event = await withDatabase(db, () =>
+    submitAutomationEvent(
+      'editor',
+      a,
+      { trigger: 'task_review', taskId: `task-${a}` },
+      'source-delete-fixture',
+    ),
+  );
+  await admin.task.delete({ where: { id: `task-${a}` } });
+  expect(await withDatabase(db, () => listAutomationExecutions('owner', a))).toEqual([]);
+  await expect(
+    withDatabase(db, () => approveAutomationExecution('owner', a, event.executions[0].id)),
+  ).rejects.toThrow('Source unavailable');
+});
+
+it('expired automation leases cannot complete or clear a newer claim', async () => {
+  const { a } = await fixture();
+  const rule = await withDatabase(db, () =>
+    createAutomationRule('owner', a, {
+      title: 'Lease recovery',
+      trigger: 'task_review',
+      action: 'notify',
+      condition: 'always',
+      debounceSeconds: 1,
+    }),
+  );
+  await withDatabase(db, () => setAutomationEnabled('owner', a, rule.id, true));
+  const event = await withDatabase(db, () =>
+    submitAutomationEvent(
+      'editor',
+      a,
+      { trigger: 'task_review', taskId: `task-${a}` },
+      'lease-recovery-fixture',
+    ),
+  );
+  const id = event.executions[0].id;
+  await withDatabase(db, () => approveAutomationExecution('owner', a, id));
+  const first = await withDatabase(db, () => claimAutomationExecution(a, id));
+  await admin.automationLease.update({
+    where: { executionId: id },
+    data: { leaseUntil: new Date(Date.now() - 1000) },
+  });
+  const next = await withDatabase(db, () => claimAutomationExecution(a, id));
+  expect(next?.attempt).toBe(2);
+  await expect(
+    withDatabase(db, () => executeAutomationExecution(a, id, first!.token)),
+  ).rejects.toThrow('Execution lease unavailable');
+  await expect(withDatabase(db, () => failAutomationClaim(a, id, first!.token))).rejects.toThrow(
+    'Execution lease unavailable',
+  );
+  expect(
+    (await withDatabase(db, () => executeAutomationExecution(a, id, next!.token))).status,
+  ).toBe('completed');
+  expect(
+    await admin.activity.count({ where: { workspaceId: a, type: 'automation_notification' } }),
+  ).toBe(1);
+});
+
+it('owner previews recorded GitHub evidence without forging an automation event', async () => {
+  const { a } = await fixture(),
+    repo = await repositoryFixture(a);
+  const previous = process.env.FEATURE_AUTOMATION;
+  try {
+    process.env.FEATURE_AUTOMATION = 'true';
+    const rule = await withDatabase(db, () =>
+      createAutomationRule('owner', a, {
+        title: 'PR preview',
+        trigger: 'pr_merged',
+        action: 'prepare_report',
+        condition: 'always',
+        debounceSeconds: 30,
+      }),
+    );
+    const payload = {
+      action: 'closed',
+      pull_request: { number: 17, merged: true, updated_at: '2026-11-09T11:00:00Z' },
+    };
+    expect((await githubEvent(repo.repositoryId, repo.webhookSecret, payload)).status).toBe(202);
+    await withDatabase(db, () => setAutomationEnabled('owner', a, rule.id, true));
+    const path = `/automation/${a}/preview`;
+    const input = { ruleId: rule.id, trigger: 'pr_merged', repositoryId: repo.id, subject: '17' };
+    expect(
+      (await request(app).post(path).set('x-fixture-actor', 'editor').send(input)).status,
+    ).toBe(404);
+    expect((await request(app).post(path).send(input)).body).toMatchObject({
+      eligible: true,
+      requiresApproval: true,
+      reason: 'eligible',
+    });
+    expect(await withDatabase(db, () => listAutomationExecutions('owner', a))).toEqual([]);
+    await admin.gitHubRepository.update({
+      where: { id: repo.id },
+      data: { providerDisconnectedAt: new Date() },
+    });
+    expect((await request(app).post(path).send(input)).status).toBe(404);
+  } finally {
+    if (previous === undefined) delete process.env.FEATURE_AUTOMATION;
+    else process.env.FEATURE_AUTOMATION = previous;
+  }
+});
+
+test('Markdown import persists authorized content and rejects unsafe or foreign requests', async () => {
+  const { a, b } = await fixture();
+  const url = `/workspaces/${a}/documents/import-markdown`;
+  const payload = { title: 'Imported', markdown: '# Title\n\nSafe content.' };
+  const created = await request(app).post(url).set('x-fixture-actor', 'editor').send(payload);
+  expect(created.status).toBe(201);
+  const persisted = await admin.document.findUniqueOrThrow({ where: { id: created.body.id } });
+  expect(persisted.workspaceId).toBe(a);
+  expect(persisted.yjsState).toBeTruthy();
+  const state = new Y.Doc();
+  Y.applyUpdate(state, persisted.yjsState!);
+  expect(JSON.stringify(projectDocument(state))).toContain('Safe content.');
+  state.destroy();
+  expect((await request(app).post(url).set('x-fixture-actor', 'viewer').send(payload)).status).toBe(
+    403,
+  );
+  expect(
+    (await request(app).post(url).set('x-fixture-actor', 'foreign').send(payload)).status,
+  ).toBe(403);
+  expect(
+    (
+      await request(app)
+        .post(`/workspaces/${b}/documents/import-markdown`)
+        .set('x-fixture-actor', 'owner')
+        .send(payload)
+    ).status,
+  ).toBe(403);
+  expect(
+    (
+      await request(app)
+        .post(url)
+        .set('x-fixture-actor', 'editor')
+        .send({ markdown: '<script>alert(1)</script>' })
+    ).status,
+  ).toBe(400);
+  expect(
+    (
+      await request(app)
+        .post(url)
+        .set('x-fixture-actor', 'editor')
+        .send({ markdown: '**unsupported**' })
+    ).status,
+  ).toBe(400);
+});
+
+test('Markdown import route requires authentication', async () => {
+  const unauthenticated = express();
+  unauthenticated.use(express.json());
+  unauthenticated.use('/workspaces', workspaceRouter);
+  unauthenticated.use(errorMiddleware);
+  const response = await request(unauthenticated)
+    .post('/workspaces/nonexistent/documents/import-markdown')
+    .send({ markdown: 'Hello' });
+  expect(response.status).toBe(401);
+});
+
+test('Markdown export reads committed journal, enforces access, and round trips', async () => {
+  const { a } = await fixture();
+  const original = '# Title\n\nOriginal';
+  const created = await request(app)
+    .post(`/workspaces/${a}/documents/import-markdown`)
+    .set('x-fixture-actor', 'editor')
+    .send({ markdown: original });
+  expect(created.status).toBe(201);
+  const id: string = created.body.id;
+  const room = { workspaceId: a, documentId: id };
+  const journal = new CrdtJournal(db);
+  const replica = new Y.Doc();
+  Y.applyUpdate(replica, await journal.load(room));
+  const vector = Y.encodeStateVector(replica);
+  const paragraph = replica.getXmlFragment('default').get(1) as Y.XmlElement;
+  const textNode = paragraph.get(0) as Y.XmlText;
+  textNode.insert(textNode.length, ' updated');
+  await journal.append(room, Y.encodeStateAsUpdate(replica, vector), 'editor');
+  replica.destroy();
+  await admin.document.update({
+    where: { id },
+    data: { content: { type: 'doc', content: [{ type: 'paragraph' }] } },
+  });
+  const url = `/documents/${id}/export-markdown`;
+  const exported = await request(app).get(url).set('x-fixture-actor', 'viewer');
+  expect(exported.status).toBe(200);
+  expect(exported.headers['content-type']).toMatch(/^text\/markdown/);
+  expect(exported.text).toBe('# Title\n\nOriginal updated');
+  const imported = await request(app)
+    .post(`/workspaces/${a}/documents/import-markdown`)
+    .set('x-fixture-actor', 'editor')
+    .send({ markdown: exported.text });
+  expect(imported.status).toBe(201);
+  expect(
+    (
+      await request(app)
+        .get(`/documents/${imported.body.id}/export-markdown`)
+        .set('x-fixture-actor', 'editor')
+    ).text,
+  ).toBe(exported.text);
+  expect((await request(app).get(url).set('x-fixture-actor', 'foreign')).status).toBe(403);
+  await admin.workspaceMember.delete({
+    where: { userId_workspaceId: { userId: 'viewer', workspaceId: a } },
+  });
+  expect((await request(app).get(url).set('x-fixture-actor', 'viewer')).status).toBe(403);
+  await admin.document.update({ where: { id }, data: { isArchived: true } });
+  expect((await request(app).get(url).set('x-fixture-actor', 'editor')).status).toBe(403);
+});
+
+test('Markdown export explicitly rejects unsupported document formatting', async () => {
+  const { a } = await fixture();
+  const id = `doc-${a}`;
+  const rich = {
+    type: 'doc',
+    content: [
+      { type: 'paragraph', content: [{ type: 'text', text: 'bold', marks: [{ type: 'bold' }] }] },
+    ],
+  };
+  const update = await request(app)
+    .put(`/documents/${id}/content`)
+    .set('x-fixture-actor', 'editor')
+    .send({ content: rich, crdtRevision: 0 });
+  expect(update.status).toBe(200);
+  expect(
+    (await request(app).get(`/documents/${id}/export-markdown`).set('x-fixture-actor', 'editor'))
+      .status,
+  ).toBe(400);
+});
+
+test('task CSV export enforces membership and workspace isolation with safe formula cells', async () => {
+  const { a, b } = await fixture();
+  await admin.task.update({
+    where: { id: `task-${a}` },
+    data: { title: '=SUM(1,2)', description: 'local only' },
+  });
+  await admin.task.update({ where: { id: `task-${b}` }, data: { title: 'foreign private' } });
+  const url = `/workspaces/${a}/tasks/export-csv`;
+  for (const actor of ['owner', 'editor', 'viewer']) {
+    const result = await request(app).get(url).set('x-fixture-actor', actor);
+    expect(result.status).toBe(200);
+    expect(result.headers['content-type']).toMatch(/^text\/csv/);
+    expect(result.headers['cache-control']).toBe('no-store');
+    expect(result.headers['content-disposition']).toContain('attachment');
+    expect(result.text).toContain("'=SUM(1,2)");
+    expect(result.text).toContain('local only');
+    expect(result.text).not.toContain('foreign private');
+    expect(parseTaskCsv(Buffer.from(result.text))).toMatchObject([
+      { title: '=SUM(1,2)', description: 'local only' },
+    ]);
+  }
+  expect((await request(app).get(url).set('x-fixture-actor', 'foreign')).status).toBe(403);
+  await admin.workspaceMember.delete({
+    where: { userId_workspaceId: { userId: 'viewer', workspaceId: a } },
+  });
+  expect((await request(app).get(url).set('x-fixture-actor', 'viewer')).status).toBe(403);
+  await admin.task.delete({ where: { id: `task-${a}` } });
+  expect((await request(app).get(url).set('x-fixture-actor', 'editor')).text).not.toContain(
+    'local only',
+  );
+  await admin.workspace.update({ where: { id: a }, data: { suspendedAt: new Date() } });
+  expect((await request(app).get(url).set('x-fixture-actor', 'owner')).status).toBe(403);
+});
+
+test('task CSV export route requires authentication', async () => {
+  const unauthenticated = express();
+  unauthenticated.use('/workspaces', workspaceRouter);
+  unauthenticated.use(errorMiddleware);
+  expect((await request(unauthenticated).get('/workspaces/unknown/tasks/export-csv')).status).toBe(
+    401,
+  );
+});
+
+test('task CSV import validates and commits atomically with idempotency and tenant roles', async () => {
+  const { a, b } = await fixture();
+  const url = `/workspaces/${a}/tasks/import-csv`;
+  const row = {
+    columnId: `column-${a}`,
+    title: 'Imported task',
+    description: 'details',
+    priority: 'HIGH' as const,
+    assigneeId: 'editor',
+    dueDate: '',
+  };
+  const csv = serializeTaskCsv([row]);
+  const send = (actor: string, key: string, data: string) =>
+    request(app)
+      .post(url)
+      .set('x-fixture-actor', actor)
+      .set('Idempotency-Key', key)
+      .send({ csv: data });
+  expect((await send('viewer', 'v', csv)).status).toBe(403);
+  expect((await send('foreign', 'f', csv)).status).toBe(403);
+  expect((await send('editor', 'bad', 'invalid')).status).toBe(400);
+  const invalid = serializeTaskCsv([row, { ...row, columnId: `column-${b}` }]);
+  expect((await send('editor', 'invalid', invalid)).status).toBe(403);
+  expect(
+    await admin.task.count({ where: { title: 'Imported task', columnId: row.columnId } }),
+  ).toBe(0);
+  expect(
+    (
+      await send(
+        'editor',
+        'bad-assignee',
+        serializeTaskCsv([row, { ...row, assigneeId: 'foreign' }]),
+      )
+    ).status,
+  ).toBe(403);
+  const failure = jest
+    .spyOn(embeddingService, 'queueEmbedding')
+    .mockRejectedValueOnce(new Error('injected transaction failure'));
+  try {
+    expect((await send('editor', 'rollback', csv)).status).toBe(500);
+  } finally {
+    failure.mockRestore();
+  }
+  expect(
+    await admin.task.count({ where: { title: 'Imported task', columnId: row.columnId } }),
+  ).toBe(0);
+  expect((await request(app).post(url).set('x-fixture-actor', 'editor').send({ csv })).status).toBe(
+    400,
+  );
+  const first = await send('editor', 'retry', csv);
+  expect(first.status).toBe(201);
+  const second = await send('editor', 'retry', csv);
+  expect(second.status).toBe(201);
+  expect(second.body).toEqual(first.body);
+  expect(
+    (await send('editor', 'retry', serializeTaskCsv([{ ...row, title: 'Different' }]))).status,
+  ).toBe(409);
+  expect(
+    await admin.task.count({ where: { title: 'Imported task', columnId: row.columnId } }),
+  ).toBe(1);
+  const exported = await request(app)
+    .get(`/workspaces/${a}/tasks/export-csv`)
+    .set('x-fixture-actor', 'owner');
+  expect(parseTaskCsv(Buffer.from(exported.text))).toContainEqual(row);
+  await admin.workspaceMember.delete({
+    where: { userId_workspaceId: { workspaceId: a, userId: 'editor' } },
+  });
+  expect((await send('editor', 'after-removal', csv)).status).toBe(403);
+  await admin.workspace.update({ where: { id: a }, data: { suspendedAt: new Date() } });
+  expect((await send('owner', 'suspended', csv)).status).toBe(403);
+});
+
+test('task CSV import route requires authentication', async () => {
+  const unauthenticated = express();
+  unauthenticated.use(express.json());
+  unauthenticated.use('/workspaces', workspaceRouter);
+  unauthenticated.use(errorMiddleware);
+  expect(
+    (
+      await request(unauthenticated)
+        .post('/workspaces/unknown/tasks/import-csv')
+        .set('Idempotency-Key', 'key')
+        .send({ csv: '' })
+    ).status,
+  ).toBe(401);
+});
+
+test('PDF export uses committed content and denies revoked, archived, suspended and foreign access', async () => {
+  const { a } = await fixture();
+  const created = await request(app)
+    .post(`/workspaces/${a}/documents/import-markdown`)
+    .set('x-fixture-actor', 'editor')
+    .send({ markdown: '# PDF heading\n\nPDF paragraph' });
+  const id = created.body.id as string;
+  const url = `/documents/${id}/export.pdf`;
+  const allowed = await request(app).get(url).set('x-fixture-actor', 'viewer');
+  expect(allowed.status).toBe(200);
+  expect(allowed.headers['content-type']).toMatch(/^application\/pdf/);
+  expect(allowed.headers['cache-control']).toBe('no-store');
+  expect(allowed.headers['content-disposition']).toContain('attachment');
+  expect(allowed.body.subarray(0, 5).toString()).toBe('%PDF-');
+  expect((await request(app).get(url).set('x-fixture-actor', 'foreign')).status).toBe(403);
+  await admin.workspaceMember.delete({
+    where: { userId_workspaceId: { userId: 'viewer', workspaceId: a } },
+  });
+  expect((await request(app).get(url).set('x-fixture-actor', 'viewer')).status).toBe(403);
+  await admin.document.update({ where: { id }, data: { isArchived: true } });
+  expect((await request(app).get(url).set('x-fixture-actor', 'editor')).status).toBe(403);
+  await admin.workspace.update({ where: { id: a }, data: { suspendedAt: new Date() } });
+  expect((await request(app).get(url).set('x-fixture-actor', 'owner')).status).toBe(403);
+});
+
+test('PDF export rejects unsupported stored rich text and requires authentication', async () => {
+  const { a } = await fixture();
+  const id = `doc-${a}`;
+  const rich = {
+    type: 'doc',
+    content: [
+      { type: 'paragraph', content: [{ type: 'text', text: 'bold', marks: [{ type: 'bold' }] }] },
+    ],
+  };
+  expect(
+    (
+      await request(app)
+        .put(`/documents/${id}/content`)
+        .set('x-fixture-actor', 'editor')
+        .send({ content: rich, crdtRevision: 0 })
+    ).status,
+  ).toBe(200);
+  expect(
+    (await request(app).get(`/documents/${id}/export.pdf`).set('x-fixture-actor', 'editor')).status,
+  ).toBe(400);
+  const unauthenticated = express();
+  unauthenticated.use('/documents', documentRouter);
+  unauthenticated.use(errorMiddleware);
+  expect((await request(unauthenticated).get('/documents/unknown/export.pdf')).status).toBe(401);
+});
+
+test('workspace archive uses authorized sources and safe paths with current membership', async () => {
+  const { a, b } = await fixture();
+  await admin.document.update({ where: { id: `doc-${a}` }, data: { title: '../../sensitive' } });
+  await admin.document.create({
+    data: {
+      id: `archived-${a}`,
+      title: 'archived private',
+      workspaceId: a,
+      authorId: 'owner',
+      isArchived: true,
+    },
+  });
+  await admin.task.update({ where: { id: `task-${b}` }, data: { title: 'foreign private task' } });
+  const url = `/workspaces/${a}/archive.zip`;
+  for (const actor of ['owner', 'editor', 'viewer']) {
+    const res = await request(app)
+      .get(url)
+      .set('x-fixture-actor', actor)
+      .buffer(true)
+      .parse((response, callback) => {
+        const chunks: Buffer[] = [];
+        response.on('data', (chunk: Buffer) => chunks.push(chunk));
+        response.on('end', () => callback(null, Buffer.concat(chunks)));
+      });
+    expect(res.status).toBe(200);
+    expect(res.headers['content-type']).toMatch(/^application\/zip/);
+    expect(res.headers['cache-control']).toBe('no-store');
+    const directory = mkdtempSync(join(tmpdir(), 'workspace-archive-fixture-'));
+    try {
+      const path = join(directory, 'archive.zip');
+      writeFileSync(path, res.body);
+      const inspect = spawnSync(
+        'python3',
+        [
+          '-c',
+          'import zipfile,json,sys; z=zipfile.ZipFile(sys.argv[1]); print(json.dumps({"names":z.namelist(),"tasks":z.read("tasks/tasks.csv").decode(),"manifest":json.loads(z.read("manifest.json"))}))',
+          path,
+        ],
+        { encoding: 'utf8', timeout: 5000 },
+      );
+      expect(inspect.status).toBe(0);
+      const result = JSON.parse(inspect.stdout);
+      expect(result.names).toEqual(['manifest.json', 'documents/000001.md', 'tasks/tasks.csv']);
+      expect(result.tasks).not.toContain('foreign private task');
+      expect(JSON.stringify(result.manifest)).not.toContain('../../sensitive');
+      expect(JSON.stringify(result.manifest)).not.toContain('archived private');
+    } finally {
+      rmSync(directory, { recursive: true, force: true });
+    }
+  }
+  expect((await request(app).get(url).set('x-fixture-actor', 'foreign')).status).toBe(403);
+  await admin.workspaceMember.delete({
+    where: { userId_workspaceId: { userId: 'viewer', workspaceId: a } },
+  });
+  expect((await request(app).get(url).set('x-fixture-actor', 'viewer')).status).toBe(403);
+  await admin.workspace.update({ where: { id: a }, data: { suspendedAt: new Date() } });
+  expect((await request(app).get(url).set('x-fixture-actor', 'owner')).status).toBe(403);
+});
+
+test('workspace archive rejects unsupported documents without returning a ZIP', async () => {
+  const { a } = await fixture();
+  const rich = {
+    type: 'doc',
+    content: [
+      { type: 'paragraph', content: [{ type: 'text', text: 'bold', marks: [{ type: 'bold' }] }] },
+    ],
+  };
+  expect(
+    (
+      await request(app)
+        .put(`/documents/doc-${a}/content`)
+        .set('x-fixture-actor', 'editor')
+        .send({ content: rich, crdtRevision: 0 })
+    ).status,
+  ).toBe(200);
+  const res = await request(app)
+    .get(`/workspaces/${a}/archive.zip`)
+    .set('x-fixture-actor', 'owner');
+  expect(res.status).toBe(400);
+  expect(res.headers['content-type']).not.toMatch(/^application\/zip/);
+});
+
+test('workspace archive rechecks resource visibility and membership after snapshot', async () => {
+  const { a } = await fixture();
+  const first = await withDatabase(db, () => snapshotWorkspaceArchive('viewer', a));
+  await admin.document.update({ where: { id: `doc-${a}` }, data: { isArchived: true } });
+  await expect(
+    withDatabase(db, () => recheckWorkspaceArchive('viewer', a, first.fingerprint)),
+  ).rejects.toThrow('Workspace changed');
+  const second = await withDatabase(db, () => snapshotWorkspaceArchive('viewer', a));
+  await admin.workspaceMember.delete({
+    where: { userId_workspaceId: { userId: 'viewer', workspaceId: a } },
+  });
+  await expect(
+    withDatabase(db, () => recheckWorkspaceArchive('viewer', a, second.fingerprint)),
+  ).rejects.toThrow();
+});
+
+test('workspace archive route requires authentication', async () => {
+  const unauthenticated = express();
+  unauthenticated.use('/workspaces', workspaceRouter);
+  unauthenticated.use(errorMiddleware);
+  expect((await request(unauthenticated).get('/workspaces/unknown/archive.zip')).status).toBe(401);
 });

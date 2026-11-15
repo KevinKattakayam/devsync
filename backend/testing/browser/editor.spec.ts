@@ -5,7 +5,7 @@ import {
   type BrowserContext,
   type WebSocketRoute,
 } from '@playwright/test';
-import axe from '../../../frontend/node_modules/axe-core';
+import axe from 'axe-core';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { login } from './identities';
@@ -15,10 +15,11 @@ import * as decoding from 'lib0/decoding';
 import * as Y from 'yjs';
 const api = 'http://127.0.0.1:5501/api';
 const workspace = 'devsync-sample';
+const passName = process.env.E2E_EDITOR_PASS;
 const output = resolve(
   __dirname,
   '../../../docs/ui/after/editor',
-  process.env.E2E_EDITOR_PASS === 'final' ? 'final' : 'initial',
+  passName && /^[a-z0-9][a-z0-9-]*$/i.test(passName) ? passName : 'initial',
 );
 async function createDocument(context: BrowserContext, title: string, populated = true) {
   const created = await context.request.post(`${api}/workspaces/${workspace}/documents`, {
@@ -140,7 +141,33 @@ for (const theme of ['dark', 'light'] as const)
         await context.unrouteAll({ behavior: 'wait' });
         const editor = page.getByRole('textbox', { name: 'Document content', exact: true });
         await expect(editor).toHaveAttribute('contenteditable', 'true');
+        const title = page.getByRole('textbox', { name: 'Document title', exact: true });
+        const editorBounds = await editor.boundingBox();
+        const titleBounds = await title.boundingBox();
+        expect(editorBounds).not.toBeNull();
+        expect(titleBounds).not.toBeNull();
+        if (editorBounds && titleBounds)
+          expect(Math.abs(editorBounds.x - titleBounds.x)).toBeLessThanOrEqual(1);
+        const toolbar = page.getByRole('group', { name: 'Document tools' });
+        const insertButton = toolbar.getByRole('button', { name: 'Insert block', exact: true });
+        const assistantButton = toolbar.getByRole('button', { name: 'AI Assistant', exact: true });
+        await expect(assistantButton).toBeEnabled();
+        if (width <= 390) {
+          const insertBounds = await insertButton.boundingBox();
+          const assistantBounds = await assistantButton.boundingBox();
+          expect(insertBounds).not.toBeNull();
+          expect(assistantBounds).not.toBeNull();
+          if (insertBounds && assistantBounds)
+            expect(Math.abs(assistantBounds.y - insertBounds.y)).toBeLessThanOrEqual(2);
+        }
         await capture(page, theme, width, 'ready');
+        await insertButton.focus();
+        await page.keyboard.press('Tab');
+        const formattingSummary = toolbar.locator('summary');
+        await expect(formattingSummary).toBeFocused();
+        expect(
+          await formattingSummary.evaluate((element) => element.matches(':focus-visible')),
+        ).toBe(true);
         await editor.click();
         await page.keyboard.press('Control+End');
         await page.keyboard.type('/code');
@@ -169,7 +196,9 @@ for (const theme of ['dark', 'light'] as const)
         await checkbox.check();
         await expect(checkbox).toBeChecked();
         await capture(page, theme, width, 'tasks');
-        await page.getByRole('button', { name: 'Insert block', exact: true }).click();
+        await insertButton.focus();
+        await page.keyboard.press('Enter');
+        await expect(page.getByRole('menuitem', { name: 'Text', exact: true })).toBeVisible();
         await page.getByRole('menuitem', { name: 'Table', exact: true }).click();
         await expect(page.getByRole('group', { name: 'Table controls' })).toBeVisible();
         await page.getByRole('button', { name: 'Add row', exact: true }).click();
@@ -181,7 +210,8 @@ for (const theme of ['dark', 'light'] as const)
         const bubble = page.locator('[aria-label="Selection formatting"]');
         await expect(bubble).toBeVisible();
         await capture(page, theme, width, 'selection');
-        await bubble.getByRole('button', { name: 'Bold', exact: true }).click();
+        await bubble.getByRole('button', { name: 'Bold', exact: true }).focus();
+        await page.keyboard.press('Enter');
         await expect(editor.locator('h2 strong')).not.toBeEmpty();
         await page.getByRole('button', { name: 'AI Assistant', exact: true }).click();
         await expect(page.getByRole('dialog', { name: 'AI Assistant' })).toBeVisible();

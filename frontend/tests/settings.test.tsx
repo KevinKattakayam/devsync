@@ -31,6 +31,7 @@ vi.mock('sonner', () => ({
     dismiss: mocks.dismiss,
   },
 }));
+vi.mock('@/components/settings/automation-rules', () => ({ AutomationRules: () => null }));
 const members = [
   {
     id: 'owner-member',
@@ -82,6 +83,7 @@ beforeEach(() => {
 });
 afterEach(() => {
   cleanup();
+  vi.unstubAllEnvs();
   vi.resetAllMocks();
   HTMLElement.prototype.scrollIntoView = originalScroll;
 });
@@ -111,7 +113,35 @@ for (const actor of ['editor-user', 'viewer-user'])
     expect(screen.queryByRole('button', { name: 'Create invitation' })).toBeNull();
     expect(screen.queryByRole('button', { name: /Remove / })).toBeNull();
     expect(screen.getByText('Invitations are managed by owners')).toBeTruthy();
+    expect(screen.queryByRole('region', { name: 'Connections & lifecycle' })).toBeNull();
   });
+it('groups settings by purpose and keeps owner-only connections searchable', async () => {
+  const user = userEvent.setup();
+  render(<SettingsPage />);
+  await ready();
+  expect(screen.getByRole('region', { name: 'Usage & automation' })).toBeTruthy();
+  expect(screen.getByRole('region', { name: 'Connections & lifecycle' })).toBeTruthy();
+  const search = screen.getByRole('textbox', { name: 'Search settings' });
+  await user.clear(search);
+  await user.type(search, 'github');
+  expect(screen.queryByText('No settings match')).toBeNull();
+  expect(screen.getByRole('region', { name: 'Connections & lifecycle' })).toBeTruthy();
+  expect(screen.queryByRole('heading', { name: 'Members & roles' })).toBeNull();
+  await user.click(screen.getByRole('link', { name: 'Connections & lifecycle' }));
+  expect((search as HTMLInputElement).value).toBe('');
+  expect(screen.getByRole('heading', { name: 'Members & roles' })).toBeTruthy();
+});
+it('shows the flagged automation search result without a conflicting empty state', async () => {
+  vi.stubEnv('NEXT_PUBLIC_FEATURE_AUTOMATION', 'true');
+  const user = userEvent.setup();
+  render(<SettingsPage />);
+  await ready();
+  const search = screen.getByRole('textbox', { name: 'Search settings' });
+  await user.clear(search);
+  await user.type(search, 'automation');
+  expect(screen.getByRole('region', { name: 'Usage & automation' })).toBeTruthy();
+  expect(screen.queryByText('No settings match')).toBeNull();
+});
 it('retries a load failure without pretending the workspace is empty', async () => {
   mocks.get.mockRejectedValueOnce(new Error('Unavailable'));
   const user = userEvent.setup();

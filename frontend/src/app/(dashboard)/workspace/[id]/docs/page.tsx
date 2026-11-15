@@ -18,7 +18,11 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { toast } from 'sonner';
-import { useAuth } from '@/providers/auth-provider';
+import { loadWorkspaceAccess } from '@/lib/workspace-access';
+import {
+  MarkdownImportControl,
+  WorkspaceArchiveControl,
+} from '@/components/workspace/portability-controls';
 
 const TEMPLATES = [
   {
@@ -173,11 +177,14 @@ const TEMPLATES = [
 export default function DocsPage() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
-  const { getToken } = useAuth();
   const [docs, setDocs] = useState<Document[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [isUploading, setIsUploading] = useState(false);
+  const [access, setAccess] = useState<{ workspaceId: string; role: string } | null>(null);
+  const [accessErrorWorkspace, setAccessErrorWorkspace] = useState<string | null>(null);
+  const role = access?.workspaceId === id ? access.role : '';
+  const accessState = role ? 'ready' : accessErrorWorkspace === id ? 'unavailable' : 'loading';
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const loadDocs = async () => {
@@ -209,6 +216,24 @@ export default function DocsPage() {
     };
   }, [id]);
 
+  useEffect(() => {
+    let disposed = false;
+    void loadWorkspaceAccess(id)
+      .then(({ role: currentRole }) => {
+        if (!disposed) {
+          setAccess({ workspaceId: id, role: currentRole });
+        }
+      })
+      .catch(() => {
+        if (!disposed) {
+          setAccessErrorWorkspace(id);
+        }
+      });
+    return () => {
+      disposed = true;
+    };
+  }, [id]);
+
   const createDoc = async () => {
     try {
       const { data } = await documentApi.create(id);
@@ -234,29 +259,14 @@ export default function DocsPage() {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const formData = new FormData();
-    formData.append('file', file);
-
     setIsUploading(true);
     const toastId = toast.loading(`Ingesting "${file.name}" with OCR AI...`);
 
     try {
-      const token = await getToken();
-      const res = await fetch(`http://localhost:5000/api/workspaces/${id}/documents/ingest`, {
-        method: 'POST',
-        headers: token ? { Authorization: `Bearer ${token}` } : {},
-        body: formData,
-      });
-
-      if (!res.ok) {
-        const errorData = await res.json().catch(() => ({}));
-        throw new Error(errorData.error || 'OCR Document ingestion failed');
-      }
-
-      const result = await res.json();
+      const { data: result } = await documentApi.ingest(id, file);
       toast.success('Document ingested and converted to rich text!', { id: toastId });
       loadDocs();
-      const docId = result.documentId || result.id;
+      const docId = result.documentId;
       if (docId) {
         router.push(`/workspace/${id}/docs/${docId}`);
       }
@@ -304,6 +314,11 @@ export default function DocsPage() {
         </div>
 
         <div className="flex flex-wrap items-center gap-2.5">
+          <MarkdownImportControl
+            workspaceId={id}
+            canEdit={role === 'OWNER' || role === 'EDITOR'}
+            onImported={(documentId) => router.push(`/workspace/${id}/docs/${documentId}`)}
+          />
           <input
             type="file"
             ref={fileInputRef}
@@ -330,6 +345,21 @@ export default function DocsPage() {
             <Plus className="w-4 h-4" /> New Document
           </button>
         </div>
+        {role && (
+          <div className="basis-full border-t border-border pt-4">
+            <WorkspaceArchiveControl workspaceId={id} />
+          </div>
+        )}
+        {accessState === 'loading' && (
+          <p role="status" className="basis-full text-xs text-muted-foreground">
+            Checking current workspace permissions…
+          </p>
+        )}
+        {accessState === 'unavailable' && (
+          <p role="alert" className="basis-full text-xs text-destructive">
+            Current workspace access could not be verified. Import and archive controls are hidden.
+          </p>
+        )}
       </div>
 
       {/* Quick Template Gallery */}

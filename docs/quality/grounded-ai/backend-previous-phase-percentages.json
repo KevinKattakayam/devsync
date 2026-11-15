@@ -1,0 +1,17 @@
+{
+  "derivedFrom": "docs/quality/decision-execution/backend-coverage-comparison.json",
+  "total": {
+    "statements": {
+      "pct": 83.39
+    },
+    "branches": {
+      "pct": 74.58
+    },
+    "functions": {
+      "pct": 76.98
+    },
+    "lines": {
+      "pct": 85.61
+    }
+  }
+}

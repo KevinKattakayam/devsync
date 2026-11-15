@@ -15,6 +15,7 @@ import { z } from 'zod';
 import { startEmbeddingPolling } from './services/embedding-runner';
 import { drainResources } from './lib/lifecycle';
 import { logger } from './observability/logger';
+import { startAutomationPolling, startAutomationWorker } from './services/automation-worker';
 
 // ── Embedding Worker (replaces setInterval polling) ─────────
 
@@ -56,10 +57,13 @@ function start() {
 
   workers.push(startPRSummaryWorker());
   console.log('[Worker] PR summary agent started');
+  if (process.env.FEATURE_AUTOMATION === 'true') workers.push(startAutomationWorker());
 }
 
 start();
 const embeddingPoller = startEmbeddingPolling();
+const automationPoller =
+  process.env.FEATURE_AUTOMATION === 'true' ? startAutomationPolling() : undefined;
 
 // ── Graceful shutdown ────────────────────────────────────────
 
@@ -68,7 +72,10 @@ function shutdown(signal: string): Promise<void> {
   if (shutdownPromise) return shutdownPromise;
   logger.info({ signal }, 'Worker draining');
   shutdownPromise = drainResources({
-    stopAccepting: () => embeddingPoller.stop(),
+    stopAccepting: async () => {
+      await embeddingPoller.stop();
+      await automationPoller?.stop();
+    },
     collaboration: async () => {
       const outcomes = await Promise.allSettled(workers.map((worker) => worker.close()));
       if (outcomes.some((outcome) => outcome.status === 'rejected'))

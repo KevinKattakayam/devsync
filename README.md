@@ -1,6 +1,6 @@
 # DevSync
 
-A workspace for collaborative documents, tasks and code snippets. DevSync uses Clerk identities, server-side workspace roles and PostgreSQL row-level security. This upgrade has open release gates: **4 Medium findings in the backend runtime** (frontend runtime: zero findings), and missing production/performance verification. See the [final report](docs/FINAL_REPORT.md) for measured results and limits.
+A workspace for collaborative documents, tasks and code snippets. DevSync uses Clerk identities, server-side workspace roles and PostgreSQL row-level security. Production deployment, provider acceptance, recovery drills and parts of accessibility verification remain open. See the [independent evidence matrix](docs/quality/independent-audit/README.md) and [final report](docs/FINAL_REPORT.md) for results and limits.
 
 ![Actual seeded editor, dark theme at 1440px](docs/quality/phase5a-3/accepted-final/dark-1440-default.png)
 
@@ -14,6 +14,8 @@ Prerequisites: Git and Docker with Compose. Clone the upgrade branch:
 git clone --branch upgrade/enterprise https://github.com/Kevinbastin/devsync.git
 cd devsync
 ```
+
+The remote branch can lag locally verified commits. Check the cloned revision and its accompanying evidence before assuming it contains every feature described here; unpublished local changes are not included in a clone.
 
 Start the local stack with one command:
 
@@ -39,7 +41,7 @@ Open http://localhost:3000. Compose initializes local credentials, migrates and 
 | Snippet safety       | Optional heuristic preflight and confirmed redacted save; `FEATURE_SNIPPET_SAFETY=true`, default off. No guarantee of secret-free content. [Design and limits](docs/features/snippet-safety-preflight.md).                                                                |
 | Async digest         | Optional evidence-only in-app digest of eligible recorded creation events; `FEATURE_ASYNC_DIGEST=true`, default off. No AI or scheduled messaging. [Design and limits](docs/features/async-digest.md).                                                                    |
 
-Feature flags must be configured consistently as described in their feature docs. Advanced editor/board features, complete import/export, i18n, billing UI and PWA remain deferred. No end-to-end document encryption, unlimited scale, legal compliance, support SLA or production readiness is claimed. The server can read workspace content; repository-secret encryption is a separate control.
+Feature flags must be configured consistently as described in their feature docs. Restricted Markdown import/export, PDF export, task CSV import/export and workspace ZIP export exist; archive restoration and broader format support remain incomplete. Advanced editor/board features, i18n, billing UI and PWA remain deferred. No end-to-end document encryption, unlimited scale, legal compliance, support SLA or production readiness is claimed. The server can read workspace content; repository-secret encryption is a separate control.
 
 ## Stack and structure
 

@@ -1,7 +1,16 @@
+import { knowledgeQuery, knowledgeSourceQuery, knowledgePage } from './services/knowledge-search';
+import { createAutomationRuleInput } from './services/automation-store';
+import { automationEnabledInput } from './routes/automation.routes';
+import { automationHumanEventInput, automationPreviewInput } from './services/automation-execution';
+import { installationInput } from './routes/github-installation.routes';
+import { githubExecutionSchema } from './services/github-execution';
+import { exportRequestInput, transferInput, revokeSessionInput } from './routes/lifecycle.routes';
 import { aiCompleteSchema } from './services/ai-schema';
+import { groundedInput, groundedOutput } from './services/grounded-ai';
 import { aiUsageV3Query } from './services/ai-schema';
 import { Prisma } from '@prisma/client';
 import { z } from 'zod';
+import { inboxDeliveryPreferenceSchema } from './services/inbox-preferences';
 import {
   receiptContentSchema,
   receiptEditSchema,
@@ -9,7 +18,11 @@ import {
   supersedeSchema,
   sourceKindSchema,
 } from './services/decision-receipts';
-import { decisionSourcesQuery, decisionSourceQuery } from './routes/decision-receipts.routes';
+import {
+  timelineInput,
+  decisionSourcesQuery,
+  decisionSourceQuery,
+} from './routes/decision-receipts.routes';
 import {
   safetyInputSchema,
   safetySaveSchema,
@@ -264,6 +277,17 @@ add('POST', `${base}/workspaces/invitations/{invitationId}/accept`, member);
 noContent('DELETE', `${base}/workspaces/{id}/invitations/{invitationId}`);
 add('GET', `${base}/workspaces/{id}/documents`, documentList);
 add('POST', `${base}/workspaces/{id}/documents`, documentWrite, '201');
+add('POST', `${base}/workspaces/{id}/documents/import-markdown`, documentWrite, '201');
+add('GET', `${base}/documents/{id}/export.pdf`, z.string(), '200', {
+  responses: { '200': { schema: z.string(), mime: 'application/pdf' } },
+  description:
+    'Exports bounded PDF from committed document content; only headings and paragraphs are supported.',
+});
+add('GET', `${base}/documents/{id}/export-markdown`, z.string(), '200', {
+  responses: { '200': { schema: z.string(), mime: 'text/markdown' } },
+  description:
+    'Exports committed CRDT content in the restricted Markdown import subset; unsupported content is rejected.',
+});
 add('GET', `${base}/documents/{id}`, documentRead);
 add('PATCH', `${base}/documents/{id}`, documentWrite);
 add('PUT', `${base}/documents/{id}/content`, documentWrite);
@@ -298,6 +322,25 @@ add(
   `${base}/workspaces/{id}/boards`,
   z.array(board.extend({ columns: z.array(column.extend({ tasks: z.array(task) })) })),
 );
+add(
+  'POST',
+  `${base}/workspaces/{id}/tasks/import-csv`,
+  z.object({ imported: z.number().int(), taskIds: z.array(z.string()) }).strict(),
+  '201',
+  {
+    description: 'Import a version 1 task CSV atomically; Idempotency-Key is required.',
+    headers: { 'Idempotency-Key': { schema: z.string().min(1).max(128), required: true } },
+  },
+);
+add('GET', `${base}/workspaces/{id}/archive.zip`, z.string(), '200', {
+  responses: { '200': { schema: z.string(), mime: 'application/zip' } },
+  description: 'Bounded workspace-scoped documents and task CSV export, not an account backup.',
+});
+add('GET', `${base}/workspaces/{id}/tasks/export-csv`, z.string(), '200', {
+  responses: { '200': { schema: z.string(), mime: 'text/csv' } },
+  description:
+    'Exports at most 1000 workspace tasks using the version 1 formula-protected CSV schema.',
+});
 add('POST', `${base}/workspaces/{id}/boards`, board.extend({ columns: z.array(column) }), '201');
 add('POST', `${base}/tasks/boards/{boardId}/columns`, column, '201');
 add('PATCH', `${base}/tasks/columns/{columnId}`, column);
@@ -323,7 +366,10 @@ add('POST', `${base}/snippets/execute`, apiErrorSchema, '503', {
   description: 'Execution remains disabled. The request body is ignored; no code is executed.',
 });
 add('GET', `${base}/workspaces/{id}/github-repositories`, z.array(repository));
-const repositoryWrite = model('GitHubRepository').omit({ webhookSecret: true });
+const repositoryWrite = model('GitHubRepository').omit({
+  webhookSecret: true,
+  providerDisconnectedAt: true,
+});
 add('POST', `${base}/workspaces/{id}/github-repositories`, repositoryWrite, '201');
 add('PATCH', `${base}/workspaces/{id}/github-repositories/{repositoryId}`, repositoryWrite);
 noContent('DELETE', `${base}/workspaces/{id}/github-repositories/{repositoryId}`);
@@ -397,12 +443,81 @@ add('PATCH', '/scim/v2/Users/{externalId}', scim);
 noContent('DELETE', '/scim/v2/Users/{externalId}');
 
 const digestBase = '/api/v2/workspaces/{workspaceId}/digest';
+add('GET', `${digestBase}/notification-preferences`, inboxDeliveryPreferenceSchema);
+add('PUT', `${digestBase}/notification-preferences`, inboxDeliveryPreferenceSchema, '200', {
+  body: inboxDeliveryPreferenceSchema,
+});
 add('GET', `${digestBase}/preferences`, digestPreferenceSchema);
 add('GET', `${digestBase}/events/{activityId}`, digestItemSchema);
 add('PUT', `${digestBase}/preferences`, digestPreferenceSchema, '200', {
   body: digestPreferenceWrite,
 });
 add('GET', `${digestBase}/items`, digestPageSchema, '200', { query: digestQuerySchema });
+add(
+  'GET',
+  `${digestBase}/inbox/batch-preview`,
+  z
+    .object({
+      delivery: z.literal('not_scheduled'),
+      batches: z.array(
+        z
+          .object({ activityIds: z.array(z.string()).max(25), eligibleAt: z.iso.datetime() })
+          .strict(),
+      ),
+      nextCursor: z.string().nullable(),
+    })
+    .strict(),
+  '200',
+  { query: digestQuerySchema },
+);
+add(
+  'GET',
+  `${digestBase}/inbox`,
+  digestPageSchema.extend({
+    items: z.array(
+      digestItemSchema.extend({
+        eventType: z.enum(['doc_created', 'snippet_created', 'task_created', 'task_assigned']),
+        category: z.enum(['activity', 'assigned_task']),
+        read: z.boolean(),
+      }),
+    ),
+  }),
+  '200',
+  { query: digestQuerySchema },
+);
+add(
+  'GET',
+  `${digestBase}/inbox/automation-failures`,
+  z
+    .object({
+      items: z.array(
+        z
+          .object({
+            executionId: z.string(),
+            category: z.literal('failed_automation'),
+            recordedAt: z.iso.datetime(),
+            sourceKind: z.enum(['task', 'github']),
+            read: z.boolean(),
+          })
+          .strict(),
+      ),
+    })
+    .strict(),
+);
+add(
+  'PUT',
+  `${digestBase}/inbox/automation-failures/{executionId}/read`,
+  z.object({ read: z.boolean() }).strict(),
+  '200',
+  { body: z.object({ read: z.boolean() }).strict() },
+);
+add(
+  'PUT',
+  `${digestBase}/inbox/{activityId}/read`,
+  z.object({ read: z.boolean() }).strict(),
+  '200',
+  { body: z.object({ read: z.boolean() }).strict() },
+);
 add('POST', `${digestBase}/acknowledge`, digestPreferenceSchema, '200', { body: digestAckSchema });
 
 const safetyBase = '/api/v2/workspaces/{workspaceId}/snippet-safety';
@@ -430,6 +545,131 @@ add(
 );
 
 const decisionsBase = '/api/v2/workspaces/{workspaceId}/decisions';
+const automationBase = '/api/v2/workspaces/{workspaceId}/automation';
+const automationRuleDto = z
+  .object({
+    id: z.string(),
+    workspaceId: z.string(),
+    createdBy: z.string(),
+    title: z.string(),
+    trigger: z.enum(['task_review', 'blocker', 'pr_merged', 'ci_passed']),
+    action: z.enum(['notify', 'escalate', 'prepare_report', 'update_linked_status']),
+    condition: z.enum(['always', 'high_priority']),
+    debounceSeconds: z.number().int(),
+    enabled: z.boolean(),
+    version: z.number().int(),
+    createdAt: z.iso.datetime(),
+    updatedAt: z.iso.datetime(),
+  })
+  .strict();
+add('GET', automationBase, z.array(automationRuleDto));
+add('POST', automationBase, automationRuleDto, '201', {
+  body: createAutomationRuleInput,
+});
+add('PATCH', `${automationBase}/{ruleId}/enabled`, automationRuleDto, '200', {
+  body: automationEnabledInput,
+});
+const automationExecutionDto = z
+  .object({
+    id: z.string(),
+    workspaceId: z.string(),
+    ruleId: z.string(),
+    eventId: z.string(),
+    ruleVersion: z.number().int(),
+    status: z.enum([
+      'pending_approval',
+      'approved',
+      'completed',
+      'unavailable',
+      'cancelled',
+      'failed',
+    ]),
+    approvedBy: z.string().nullable(),
+    errorCode: z.string().nullable(),
+    createdAt: z.iso.datetime(),
+    updatedAt: z.iso.datetime(),
+  })
+  .strict();
+add(
+  'POST',
+  `${automationBase}/preview`,
+  z
+    .object({
+      eligible: z.boolean(),
+      requiresApproval: z.literal(true),
+      reason: z.enum([
+        'eligible',
+        'disabled',
+        'wrong_trigger',
+        'condition_failed',
+        'debounced',
+        'verification_unavailable',
+      ]),
+    })
+    .strict(),
+  '200',
+  { body: automationPreviewInput },
+);
+add(
+  'POST',
+  `${automationBase}/events`,
+  z.object({ eventId: z.string(), executions: z.array(automationExecutionDto) }).strict(),
+  '201',
+  {
+    body: automationHumanEventInput,
+    headers: { 'Idempotency-Key': { schema: z.string().min(1).max(128), required: true } },
+  },
+);
+add(
+  'GET',
+  `${automationBase}/executions`,
+  z.array(
+    automationExecutionDto.extend({
+      origin: z.enum(['human_assertion', 'signed_webhook']),
+      trigger: z.enum(['task_review', 'blocker', 'pr_merged', 'ci_passed']),
+      taskId: z.string().nullable(),
+      current: z.boolean(),
+      action: z.enum(['notify', 'escalate', 'prepare_report', 'update_linked_status']),
+      source: z.discriminatedUnion('kind', [
+        z.object({ kind: z.literal('task'), title: z.string(), actorId: z.string() }).strict(),
+        z
+          .object({
+            kind: z.literal('github'),
+            repository: z.string(),
+            subject: z.string(),
+            providerAt: z.iso.datetime(),
+            observedAt: z.iso.datetime(),
+            liveAccess: z.literal('not_verified'),
+          })
+          .strict(),
+      ]),
+      report: z
+        .object({
+          kind: z.literal('signed_webhook_record'),
+          repository: z.string(),
+          pullNumber: z.number().int(),
+          providerAt: z.iso.datetime(),
+          observedAt: z.iso.datetime(),
+          liveAccess: z.literal('not_verified'),
+        })
+        .strict()
+        .nullable(),
+      audit: z.array(
+        z
+          .object({
+            executionId: z.string(),
+            kind: z.string(),
+            actorId: z.string().nullable(),
+            createdAt: z.iso.datetime(),
+          })
+          .strict(),
+      ),
+    }),
+  ),
+);
+add('POST', `${automationBase}/executions/{executionId}/approve`, automationExecutionDto, '200', {
+  body: z.object({}).strict(),
+});
 const receiptDto = model('DecisionReceipt');
 add(
   'GET',
@@ -458,6 +698,42 @@ add(
   '200',
   { query: decisionSourceQuery },
 );
+const timelineEvidence = z
+  .object({
+    kind: z.string(),
+    subject: z.string(),
+    state: z.string(),
+    conclusion: z.string().nullable(),
+    providerAt: z.iso.datetime(),
+    observedAt: z.iso.datetime(),
+    headSha: z.string().nullable(),
+  })
+  .strict();
+const timelineEvent = z
+  .object({
+    id: z.string(),
+    kind: z.string(),
+    evidence: z.string(),
+    occurredAt: z.iso.datetime(),
+    recordedAt: z.iso.datetime(),
+    createdBy: z.string(),
+    taskId: z.string().nullable(),
+    repositoryId: z.string().nullable(),
+    pullNumber: z.number().int().nullable(),
+    taskTitle: z.string().nullable(),
+    taskUpdatedAt: z.iso.datetime().nullable(),
+    repositoryOwner: z.string().nullable(),
+    repositoryName: z.string().nullable(),
+    pullState: z.string().nullable(),
+    pullProviderAt: z.iso.datetime().nullable(),
+    pullObservedAt: z.iso.datetime().nullable(),
+    githubEvidence: z.array(timelineEvidence),
+  })
+  .strict();
+add('GET', `${decisionsBase}/{receiptId}/timeline`, z.array(timelineEvent));
+add('POST', `${decisionsBase}/{receiptId}/timeline`, z.object({ id: z.string() }).strict(), '201', {
+  body: timelineInput,
+});
 add('POST', decisionsBase, receiptDto, '201', { body: receiptContentSchema });
 add('PATCH', `${decisionsBase}/{receiptId}`, receiptDto, '200', { body: receiptEditSchema });
 noContent('DELETE', `${decisionsBase}/{receiptId}`);
@@ -507,6 +783,22 @@ add(
     .strict(),
   '200',
   { query: aiUsageV3Query },
+);
+add(
+  'POST',
+  '/api/v3/ai/grounded',
+  groundedOutput.extend({
+    status: z.enum(['preview', 'insufficient_evidence']),
+    sources: z.array(
+      z.object({ reference: z.number().int(), ...knowledgePage.shape.results.element.shape }),
+    ),
+    notice: z.string(),
+    provider: z.enum(['groq', 'openai']).optional(),
+    latencyMs: z.number().optional(),
+    cost: z.literal('unavailable').optional(),
+  }),
+  '200',
+  { body: groundedInput },
 );
 add('POST', '/api/v3/ai/complete', aiEventSchema, '200', {
   body: aiCompleteSchema,
@@ -563,11 +855,25 @@ add('GET', '/api/auth/reset', z.never(), '307', {
   responses: {
     '307': {
       noContent: true,
-      headers: { Location: z.string(), 'Set-Cookie': z.array(z.string()) },
+      headers: { Location: z.string() },
     },
   },
   description:
-    'Frontend cookie reset. Redirect destinations are constrained to same-origin root-relative paths; invalid destinations fall back to /login. Legacy GET cookie-clearing remains supported.',
+    'Safe legacy redirect only; GET never clears cookies. Use same-origin POST for stale identity cookie reset.',
+});
+add('POST', '/api/auth/reset', z.never(), '303', {
+  surface: 'frontend',
+  bodyPolicy: 'ignored',
+  query: z.object({ redirect: z.string().optional() }).strict(),
+  responses: {
+    '303': {
+      noContent: true,
+      headers: { Location: z.string(), 'Set-Cookie': z.array(z.string()) },
+    },
+    '403': { schema: plainError },
+  },
+  description:
+    'Requires exact same-origin Origin. Clears only Clerk identity cookies; redirects to a safe local destination. Does not revoke provider sessions.',
 });
 add('POST', '/api/superadmin/workspaces/{workspaceId}/kill-switch', killResponse, '200', {
   surface: 'frontend',
@@ -578,9 +884,121 @@ add('POST', '/api/superadmin/workspaces/{workspaceId}/kill-switch', killResponse
     '403': { schema: z.union([plainError, apiErrorSchema]) },
   },
 });
+
+const exportRequestResponse = z
+  .object({
+    id: z.string(),
+    workspaceId: z.string(),
+    requestedBy: z.string(),
+    status: z.literal('REVIEW_REQUIRED'),
+    createdAt: z.iso.datetime(),
+  })
+  .strict();
+add(
+  'GET',
+  '/api/v2/account/deletion-plan',
+  z
+    .object({
+      deletionAvailable: z.literal(false),
+      providerManaged: z.literal(true),
+      ownedWorkspaces: z.array(
+        z
+          .object({
+            id: z.string(),
+            name: z.string(),
+            activeOwners: z.number().int(),
+            requiresTransfer: z.boolean(),
+          })
+          .strict(),
+      ),
+      steps: z.array(z.string()),
+    })
+    .strict(),
+);
+add(
+  'GET',
+  '/api/v2/account/sessions',
+  z
+    .object({
+      items: z.array(
+        z
+          .object({
+            id: z.string(),
+            current: z.boolean(),
+            createdAt: z.number(),
+            lastActiveAt: z.number(),
+          })
+          .strict(),
+      ),
+      hasMore: z.boolean(),
+    })
+    .strict(),
+);
+add('POST', '/api/v2/account/sessions/{sessionId}/revoke', z.never(), '204', {
+  body: revokeSessionInput,
+  responses: { '204': { noContent: true } },
+});
+add(
+  'GET',
+  '/api/v2/workspaces/{workspaceId}/lifecycle',
+  z
+    .object({
+      workspaceName: z.string(),
+      retainedCrdtBackups: z.number().int(),
+      requests: z.array(exportRequestResponse),
+      deletionRequiresReview: z.literal(true),
+    })
+    .strict(),
+);
+add(
+  'POST',
+  '/api/v2/workspaces/{workspaceId}/lifecycle/export-requests',
+  exportRequestResponse,
+  '201',
+  { body: exportRequestInput },
+);
+add(
+  'POST',
+  '/api/v2/workspaces/{workspaceId}/lifecycle/transfer',
+  z.object({ newOwnerUserId: z.string(), previousOwnerRole: z.literal('EDITOR') }).strict(),
+  '200',
+  { body: transferInput },
+);
 export const routeContracts: ReadonlyMap<string, RouteContract> = contracts;
 export function requireRouteContract(method: string, path: string) {
   const contract = routeContracts.get(`${method.toUpperCase()} ${path}`);
   if (!contract) throw new Error(`Route has no Zod contract: ${method.toUpperCase()} ${path}`);
   return contract;
 }
+
+add(
+  'GET',
+  '/api/v2/workspaces/{workspaceId}/github-repositories/{repositoryId}/execution',
+  z
+    .object({
+      items: z.array(
+        githubExecutionSchema.extend({
+          providerAt: z.iso.datetime(),
+          observedAt: z.iso.datetime(),
+        }),
+      ),
+      liveAccess: z.enum(['not_verified', 'disconnected']),
+      deployment: z.literal('unknown'),
+    })
+    .strict(),
+);
+
+add(
+  'POST',
+  '/api/v2/webhooks/github-installation',
+  z.object({ processed: z.string().optional(), ignored: z.string().optional() }),
+  '200',
+  { body: installationInput },
+);
+
+add('GET', '/api/v2/workspaces/{workspaceId}/search', knowledgePage, '200', {
+  query: knowledgeQuery,
+});
+add('GET', '/api/v2/workspaces/{workspaceId}/search/source', knowledgePage, '200', {
+  query: knowledgeSourceQuery,
+});

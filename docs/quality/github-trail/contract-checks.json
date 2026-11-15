@@ -1,0 +1,24 @@
+[
+  {
+    "command": [
+      "npm",
+      "run",
+      "openapi:check"
+    ],
+    "cwd": "backend",
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "node",
+      "--check",
+      "tools/ci/browser.mjs"
+    ],
+    "cwd": ".",
+    "exitCode": 0
+  },
+  {
+    "check": "workflow YAML parse",
+    "exitCode": 0
+  }
+]

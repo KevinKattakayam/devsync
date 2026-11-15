@@ -1,0 +1,2085 @@
+
+> devsync-backend@1.0.0 test
+> node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand --runTestsByPath src/__tests__/resource-mutations.integration.test.ts --testNamePattern=search returns projected
+
+FAIL src/__tests__/resource-mutations.integration.test.ts (9.449 s)
+  ● D07/G01 denies foreign, viewer and inactive post /workspaces/TEAM/documents without writes
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● D07/G01 denies foreign, viewer and inactive patch /documents/doc-TEAM without writes
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● D07/G01 denies foreign, viewer and inactive delete /documents/doc-TEAM without writes
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● D07/G01 denies foreign, viewer and inactive post /workspaces/TEAM/snippets without writes
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● D07/G01 denies foreign, viewer and inactive patch /snippets/snippet-TEAM without writes
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● D07/G01 denies foreign, viewer and inactive delete /snippets/snippet-TEAM without writes
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● D07/G01 denies foreign, viewer and inactive post /workspaces/TEAM/boards without writes
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● D07/G01 denies foreign, viewer and inactive post /boards/board-TEAM/columns without writes
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● D07/G01 denies foreign, viewer and inactive patch /columns/column-TEAM without writes
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● D07/G01 denies foreign, viewer and inactive delete /columns/column-TEAM without writes
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● D07/G01 denies foreign, viewer and inactive post /columns/column-TEAM/tasks without writes
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● D07/G01 denies foreign, viewer and inactive patch /tasks/task-TEAM without writes
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● D07/G01 denies foreign, viewer and inactive patch /tasks/task-TEAM/move without writes
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● D07/G01 denies foreign, viewer and inactive delete /tasks/task-TEAM without writes
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G01 permits tenant editor post /workspaces/TEAM/documents under forced RLS
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G01 permits tenant editor patch /documents/doc-TEAM under forced RLS
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G01 permits tenant editor delete /documents/doc-TEAM under forced RLS
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G01 permits tenant editor post /workspaces/TEAM/snippets under forced RLS
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G01 permits tenant editor patch /snippets/snippet-TEAM under forced RLS
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G01 permits tenant editor delete /snippets/snippet-TEAM under forced RLS
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G01 permits tenant editor post /workspaces/TEAM/boards under forced RLS
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G01 permits tenant editor post /boards/board-TEAM/columns under forced RLS
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G01 permits tenant editor patch /columns/column-TEAM under forced RLS
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G01 permits tenant editor delete /columns/column-TEAM under forced RLS
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G01 permits tenant editor post /columns/column-TEAM/tasks under forced RLS
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G01 permits tenant editor patch /tasks/task-TEAM under forced RLS
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G01 permits tenant editor patch /tasks/task-TEAM/move under forced RLS
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G01 permits tenant editor delete /tasks/task-TEAM under forced RLS
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G01 read policy protects /workspaces/TEAM/documents while allowing viewers
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G01 read policy protects /workspaces/TEAM/snippets while allowing viewers
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G01 read policy protects /workspaces/TEAM/boards while allowing viewers
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G01 read policy protects /documents/doc-TEAM while allowing viewers
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● D09 rejects foreign assignees and columns through create, patch and move
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G01 locks membership through commit and rejects the removed editor afterward
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G06 rejects stale replacement and unsafe URLs, and stores accepted content as CRDT state
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G06 sends canonical REST and authorized agent changes to live rooms on two instances
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● D05/D10 central workspace policy denies foreign/editor/viewer/inactive patch /workspaces/TEAM
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● D05/D10 central workspace policy denies foreign/editor/viewer/inactive delete /workspaces/TEAM
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● D05/D10 central workspace policy denies foreign/editor/viewer/inactive post /workspaces/TEAM/invite
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● D05/D10 central workspace policy denies foreign/editor/viewer/inactive patch /workspaces/TEAM/members/MEMBER
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● D05/D10 central workspace policy denies foreign/editor/viewer/inactive delete /workspaces/TEAM/members/MEMBER
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● D05/D10 central workspace policy denies foreign/editor/viewer/inactive post /workspaces/TEAM/repositories
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● D05/D10 central workspace policy denies foreign/editor/viewer/inactive patch /workspaces/TEAM/repositories/repo-TEAM
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● D05/D10 central workspace policy denies foreign/editor/viewer/inactive delete /workspaces/TEAM/repositories/repo-TEAM
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● D05/D10 central workspace policy permits owner patch /workspaces/TEAM
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● D05/D10 central workspace policy permits owner delete /workspaces/TEAM
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● D05/D10 central workspace policy permits owner post /workspaces/TEAM/invite
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● D05/D10 central workspace policy permits owner patch /workspaces/TEAM/members/MEMBER
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● D05/D10 central workspace policy permits owner delete /workspaces/TEAM/members/MEMBER
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● D05/D10 central workspace policy permits owner post /workspaces/TEAM/repositories
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● D05/D10 central workspace policy permits owner patch /workspaces/TEAM/repositories/repo-TEAM
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● D05/D10 central workspace policy permits owner delete /workspaces/TEAM/repositories/repo-TEAM
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● D05 binds member and repository IDs even when the caller owns the URL workspace
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● D10 parallel demotions preserve at least one owner and recheck policy at commit
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G01 workspace creation authorizes the active principal and assigns only that principal ownership
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G01 central workspace read policy protects /workspaces/TEAM
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G01 central workspace read policy protects /workspaces/TEAM/activities
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G01 central workspace read policy protects /workspaces/TEAM/repositories
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G01/E03 ingestion rejects foreign/viewer/inactive before buffering and commits canonical state for an editor
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G01 search is tenant-scoped under forced RLS and retains viewer access
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● F01/G01 AI membership precedes balance/provider access and viewers can request bounded read-only output
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● F01 central usage/offline-action policy rejects foreign and revoked actors, with workspace-bound replay keys
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● C04/D07 SCIM changes only its tenant membership and cannot rebind global identity or grant OWNER
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● D07 SCIM post cannot affect a foreign identity, owner or revoked token scope
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● D07 SCIM patch cannot affect a foreign identity, owner or revoked token scope
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● D07 SCIM delete cannot affect a foreign identity, owner or revoked token scope
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G08/D07 signed GitHub scope is repository-bound, transactionally retryable and duplicate-safe
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● D07 GitHub push activities require the bound unsuspended repository authority
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● D07 GitHub issues activities require the bound unsuspended repository authority
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● D07 repository jobs reject foreign/deleted/suspended scope before provider work and recheck after it
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● D07 signed billing events bind customers and subscriptions and cannot clear admin suspension
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● D07 checkout associates only its signed workspace and customer
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● D07 superadmin requires active verified global role or a strong configured service credential
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● D01/C01 central self-profile and identity policies reject inactive principals without privilege assignment
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G01 embedding document producer and consumer bind tenant/resource authority
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G01 embedding snippet producer and consumer bind tenant/resource authority
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G01 embedding task producer and consumer bind tenant/resource authority
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G01/G04 embedding rejects stale provider results and preserves newly queued work
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G04 parallel embedding claims have unique leases, expired leases recover and stale acknowledgements cannot delete new work
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G04 failed embedding deliveries remain retryable instead of deleting pending work
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G04/G10 the shared poller stops admission and waits for the real in-flight database batch
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● D01/G07 concurrent self-profile mutations serialize without lock upgrade deadlocks
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G09 parallel duplicate creates are atomic for /workspaces/TEAM/documents
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G09 parallel duplicate creates are atomic for /workspaces/TEAM/snippets
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G09 parallel duplicate creates are atomic for /workspaces/TEAM/boards
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G09 parallel duplicate creates are atomic for /boards/board-TEAM/columns
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G09 parallel duplicate creates are atomic for /columns/column-TEAM/tasks
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G09 parallel duplicate creates are atomic for /workspaces/TEAM/invite
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G09 parallel duplicate creates are atomic for /workspaces/TEAM/repositories
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G09 workspace creation has one atomic receipt under parallel requests without an existing tenant lock
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G09 legacy/v1 aliases share a receipt, malformed keys reject, and receipt copies remain RLS-protected
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● D07/G09 replay cannot bypass changed role, principal or workspace scope
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G09 a receipt-write failure rolls back resource, activity and outbox; the same key can retry
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G09 ingestion and SCIM create receipts survive concurrent duplicates and reject changed payloads
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G09 expired receipts can be reused within the documented window semantics
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● G09 JSON null is a completed receipt, and a thrown create leaves no receipt behind
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● I02 isolated fixture login authenticates only seeded identities and revokes its session on logout
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● I02 fixture configuration cannot start in production or target an ordinary database
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● fails closed for binary extraction without an isolated worker and creates no document
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● rechecks writer authority after isolated extraction completes (revoked=false)
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● rechecks writer authority after isolated extraction completes (revoked=true)
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● lifecycle: scopes plans and export requests to current owners without exporting content
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● lifecycle: ownership transfer is atomic, same-tenant and requires explicit confirmation
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● lifecycle: account deletion planning never deletes an identity and flags sole ownership
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● lifecycle: export metadata has forced tenant RLS and mismatched confirmation fails closed
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● lifecycle: refuses self and inactive ownership targets without demoting the actor
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● lifecycle: deletion planning recognizes another active owner without disclosing their identity
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● lifecycle: provider session routes bind the current principal and reject injected actor fields
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● GitHub rejects an older PR open event after merge without reversing the task
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● GitHub check evidence is ordered, tenant isolated and owner-only without deployment inference
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● signed App withdrawal is idempotent, installation-bound and denies future repository work
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● GitHub rejects identical signed payload replay under a different delivery ID
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● GitHub review dismissal and PR renaming retain stable provider identities
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+  ● search returns projected TipTap body edits without an embedding provider
+
+    Could not find a working container runtime strategy
+
+      190 | afterAll(() => providerStatusFixture.mockRestore());
+      191 | beforeAll(async () => {
+    > 192 |   postgres = await new PostgreSqlContainer('pgvector/pgvector:pg16').start();
+          |              ^
+      193 |   const migration = spawnSync(
+      194 |     process.execPath,
+      195 |     ['node_modules/prisma/build/index.js', 'migrate', 'deploy'],
+
+      at getContainerRuntimeClient (node_modules/testcontainers/build/container-runtime/clients/client.js:67:11)
+      at PostgreSqlContainer.start (node_modules/testcontainers/build/generic-container/generic-container.js:67:24)
+      at PostgreSqlContainer.start (node_modules/@testcontainers/postgresql/build/postgresql-container.js:119:47)
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:192:14)
+
+----------------------------------|---------|----------|---------|---------|-------------------------------------------------------------------------------
+File                              | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s                                                             
+----------------------------------|---------|----------|---------|---------|-------------------------------------------------------------------------------
+All files                         |   12.73 |     0.74 |    1.38 |   13.54 |                                                                               
+ src                              |       0 |        0 |       0 |       0 |                                                                               
+  app.ts                          |       0 |        0 |       0 |       0 | 1-126                                                                         
+  config-environment.ts           |       0 |        0 |       0 |       0 | 2-45                                                                          
+  contracts.ts                    |       0 |        0 |       0 |       0 | 1-705                                                                         
+  openapi.ts                      |       0 |        0 |       0 |       0 | 1-239                                                                         
+  server.ts                       |       0 |        0 |       0 |       0 | 1-99                                                                          
+  worker.ts                       |       0 |        0 |       0 |       0 | 1-103                                                                         
+ src/agents                       |   22.22 |        0 |       0 |   24.13 |                                                                               
+  pr-summary.agent.ts             |   22.72 |        0 |       0 |      25 | 21-58,80                                                                      
+  task-completion.agent.ts        |   21.95 |        0 |       0 |   23.68 | 23-100,118                                                                    
+ src/controllers                  |   20.19 |     0.93 |       0 |   20.56 |                                                                               
+  ai.controller.ts                |   22.22 |     4.34 |       0 |   22.41 | 28-150                                                                        
+  auth.controller.ts              |   29.16 |        0 |       0 |   31.11 | 31-58,63-83,88-103                                                            
+  document.controller.ts          |   23.52 |        0 |       0 |    23.8 | 40-64,68-91,95-151,155-211,215-222                                            
+  github-repository.controller.ts |   21.81 |        0 |       0 |   22.64 | 27-45,59-67,71-97,101-124,128-137                                             
+  invitation.controller.ts        |       0 |        0 |       0 |       0 | 2-71                                                                          
+  search.controller.ts            |   28.57 |        0 |       0 |   26.31 | 11-61                                                                         
+  snippet.controller.ts           |   24.56 |        0 |       0 |      25 | 8-9,39-57,62-99,104-134,139-146,152                                           
+  task.controller.ts              |   18.18 |        0 |       0 |   18.84 | 25-79,127-143,147-176,180-218,222-231,235-240,244-285,289-319,323-334,338-387 
+  workspace.controller.ts         |   16.81 |        0 |       0 |   16.96 | 36,47-112,117-145,150-175,180-195,200-207,212-265,270-298,302-320,325-337     
+ src/extraction                   |       0 |        0 |       0 |       0 |                                                                               
+  extract-child.ts                |       0 |        0 |       0 |       0 | 2-57                                                                          
+  server.ts                       |       0 |        0 |       0 |       0 | 1-112                                                                         
+ src/lib                          |   10.64 |     4.16 |       2 |   11.61 |                                                                               
+  cache.ts                        |       0 |        0 |       0 |       0 | 1-67                                                                          
+  create-idempotency.ts           |   16.32 |        0 |       0 |    18.6 | 9-19,24-27,39-62                                                              
+  idempotency.ts                  |       0 |        0 |       0 |       0 | 1-27                                                                          
+  lifecycle.ts                    |       0 |        0 |       0 |       0 | 1-56                                                                          
+  prisma.ts                       |   68.75 |       40 |       0 |   68.75 | 24,28-30,36                                                                   
+  queue.ts                        |       0 |        0 |       0 |       0 | 1-124                                                                         
+  redis.ts                        |       0 |        0 |       0 |       0 | 1-64                                                                          
+  tenant-prisma.ts                |   26.66 |        0 |      20 |   26.66 | 18-19,31-52                                                                   
+ src/middleware                   |   11.94 |        0 |    2.94 |   11.76 |                                                                               
+  ai-quota.middleware.ts          |       0 |        0 |       0 |       0 | 2-56                                                                          
+  auth.middleware.ts              |   21.21 |        0 |       0 |   23.33 | 22-35,45-56,62-66                                                             
+  billing.middleware.ts           |   23.52 |        0 |       0 |   23.52 | 20-40                                                                         
+  error.middleware.ts             |      16 |        0 |       0 |   12.76 | 16-33,36-79                                                                   
+  rate-limit.middleware.ts        |       0 |        0 |       0 |       0 | 1-23                                                                          
+  rbac.middleware.ts              |       0 |        0 |       0 |       0 | 2-34                                                                          
+  request-context.middleware.ts   |       0 |        0 |       0 |       0 | 1-32                                                                          
+  tracing.middleware.ts           |       0 |        0 |       0 |       0 | 2-16                                                                          
+  validate.middleware.ts          |   38.46 |        0 |   33.33 |   41.66 | 7-15                                                                          
+ src/observability                |      31 |     8.57 |       4 |   30.52 |                                                                               
+  ai.ts                           |   27.27 |      100 |       0 |   27.27 | 7-18                                                                          
+  logger.ts                       |   85.71 |       50 |      50 |   85.71 | 6                                                                             
+  metrics.ts                      |   39.47 |        0 |       0 |   37.14 | 32,39,47,51-60,63-77                                                          
+  reporting.ts                    |   26.31 |        0 |       0 |   29.41 | 4-27,30-31,34-35                                                              
+  request-scope.ts                |     100 |      100 |     100 |     100 |                                                                               
+  telemetry.ts                    |       0 |        0 |       0 |       0 | 1-83                                                                          
+ src/routes                       |   13.04 |     0.64 |     3.8 |   13.48 |                                                                               
+  ai-v3.routes.ts                 |       0 |        0 |       0 |       0 | 1-47                                                                          
+  ai.routes.ts                    |       0 |      100 |     100 |       0 | 1-23                                                                          
+  async-digest.routes.ts          |       0 |        0 |       0 |       0 | 1-106                                                                         
+  auth.routes.ts                  |       0 |      100 |     100 |       0 | 1-14                                                                          
+  decision-receipts.routes.ts     |       0 |        0 |       0 |       0 | 1-297                                                                         
+  document.routes.ts              |       0 |      100 |     100 |       0 | 1-21                                                                          
+  github-execution.routes.ts      |    42.3 |       20 |      25 |      44 | 12-40                                                                         
+  github-installation.routes.ts   |   21.62 |        0 |       0 |   22.22 | 21-70                                                                         
+  github-webhook.routes.ts        |   18.98 |        0 |       0 |   19.73 | 52-55,68-238                                                                  
+  health.routes.ts                |       0 |        0 |       0 |       0 | 1-65                                                                          
+  ingestion.routes.ts             |   46.66 |       20 |      25 |   46.66 | 27-30,52-86                                                                   
+  lifecycle.routes.ts             |   28.88 |        0 |   11.76 |   29.88 | 18-24,27-28,34-62,66-73,77-84,93-121,125-148,152-193                          
+  scim.routes.ts                  |   18.66 |        0 |       0 |      20 | 26-45,48-106,110-149,153-168                                                  
+  snippet-safety.routes.ts        |       0 |        0 |       0 |       0 | 1-159                                                                         
+  snippet.routes.ts               |       0 |      100 |     100 |       0 | 1-19                                                                          
+  stripe.webhook.ts               |   41.66 |        0 |       0 |   41.66 | 5-12                                                                          
+  superadmin.routes.ts            |    42.3 |        0 |       0 |    42.3 | 9-30,38-51                                                                    
+  task.routes.ts                  |       0 |      100 |     100 |       0 | 1-45                                                                          
+  workspace.routes.ts             |       0 |      100 |     100 |       0 | 1-155                                                                         
+ src/schemas                      |     100 |      100 |     100 |     100 |                                                                               
+  search.schema.ts                |     100 |      100 |     100 |     100 |                                                                               
+ src/scripts                      |       0 |        0 |       0 |       0 |                                                                               
+  openapi.ts                      |       0 |        0 |       0 |       0 | 1-24                                                                          
+ src/security                     |   14.02 |     0.64 |    1.47 |   15.96 |                                                                               
+  authentication.ts               |   27.27 |        0 |       0 |   32.14 | 21,24-30,33-38,46-50                                                          
+  invitation-policy.ts            |       0 |        0 |       0 |       0 | 1-54                                                                          
+  policy-deadline.ts              |   14.28 |        0 |       0 |      20 | 4-12                                                                          
+  provider-sessions.ts            |   15.51 |     4.87 |    6.25 |   18.75 | 26-89,93-102                                                                  
+  realtime-identity.ts            |   21.73 |        0 |       0 |    23.8 | 15-29,40-41                                                                   
+  rich-text.ts                    |    9.09 |        0 |       0 |   13.33 | 5-22                                                                          
+  service-policy.ts               |   10.48 |        0 |       0 |   11.81 | 12-17,23-43,55-71,82-93,100-130,134-186,208-232,241-246                       
+  snippet-preflight.ts            |   11.36 |        0 |       0 |   10.81 | 24-70,73-85                                                                   
+  workspace-policy.ts             |      20 |        0 |       0 |   21.73 | 17-23,34-50,61-70,84-108                                                      
+ src/services                     |   12.29 |     0.51 |       0 |   13.53 |                                                                               
+  ai-gateway.service.ts           |       0 |        0 |       0 |       0 | 1-100                                                                         
+  ai-prompt.ts                    |      50 |      100 |       0 |      50 | 6-8                                                                           
+  ai-provider.ts                  |   16.66 |        0 |       0 |      18 | 3,6,12-25,33-55,67-87                                                         
+  ai-quota.ts                     |   15.71 |        0 |       0 |   16.66 | 22-32,35,49-61,67-75,105-208                                                  
+  ai-schema.ts                    |     100 |      100 |     100 |     100 |                                                                               
+  async-digest.ts                 |   26.31 |        0 |       0 |   28.57 | 20,33,36-40,88-96,125-126,134-174,199-219,229-234                             
+  billing.service.ts              |   25.71 |     2.85 |       0 |   26.47 | 10-11,15-36,47-73                                                             
+  cloudinary.service.ts           |       0 |      100 |       0 |       0 | 1-32                                                                          
+  collaboration-acl.ts            |      75 |      100 |       0 |      75 | 5                                                                             
+  collaboration-server.ts         |    4.66 |        0 |       0 |     5.3 | 46-56,60-443                                                                  
+  crdt-journal.ts                 |   12.32 |        0 |       0 |   13.63 | 17-157                                                                        
+  crdt-migration.ts               |       0 |        0 |       0 |       0 | 1-75                                                                          
+  crdt-schema.ts                  |   83.33 |        0 |       0 |   83.33 | 13,20                                                                         
+  crdt-sync.service.ts            |   17.85 |        0 |       0 |   19.23 | 18-33,47-80                                                                   
+  decision-receipts.ts            |       0 |        0 |       0 |       0 | 1-84                                                                          
+  embedding-runner.ts             |   18.75 |        0 |       0 |      20 | 9-27                                                                          
+  embedding.service.ts            |   20.75 |     4.41 |       0 |   23.15 | 26-49,59-74,87-88,93-103,121-162,173-194,203-240                              
+  extraction-client.ts            |    7.89 |        0 |       0 |    8.82 | 5-61                                                                          
+  github-execution.ts             |    10.2 |        0 |       0 |   11.11 | 42-100                                                                        
+  github-work-source.ts           |       0 |        0 |       0 |       0 | 1-119                                                                         
+  ingestion.service.ts            |   11.11 |        0 |       0 |   11.57 | 23-148,171-269                                                                
+  secret.service.ts               |   18.51 |        0 |       0 |   19.23 | 7-10,14-17,22-36                                                              
+  yjs.service.ts                  |       0 |        0 |       0 |       0 | 2-25                                                                          
+ src/socket                       |   15.66 |        0 |    3.27 |   16.87 |                                                                               
+  index.ts                        |      50 |      100 |       0 |      50 | 8,11-17,20-22                                                                 
+  kanban.handler.ts               |   28.12 |        0 |       0 |   28.12 | 33-83,95                                                                      
+  presence-store.ts               |      20 |        0 |   11.11 |   23.07 | 22-71                                                                         
+  presence.handler.ts             |   15.06 |        0 |       0 |   15.71 | 41-125                                                                        
+  rate-limiter.ts                 |      20 |        0 |   33.33 |      20 | 38-75                                                                         
+  server.ts                       |    9.14 |        0 |       0 |   10.13 | 47-271                                                                        
+ src/utils                        |      40 |        0 |       0 |      40 |                                                                               
+  errors.ts                       |      40 |        0 |       0 |      40 | 6-9,15,21,27,33,39                                                            
+----------------------------------|---------|----------|---------|---------|-------------------------------------------------------------------------------
+Jest: Coverage for statements (13.36%) does not meet "global" threshold (40%)
+Jest: Coverage for branches (0.84%) does not meet "global" threshold (21%)
+Jest: Coverage for lines (14.14%) does not meet "global" threshold (42%)
+Jest: Coverage for functions (1.48%) does not meet "global" threshold (30%)
+Jest: Coverage for statements (4.66%) does not meet "./src/services/collaboration-server.ts" threshold (70%)
+Jest: Coverage for branches (0%) does not meet "./src/services/collaboration-server.ts" threshold (60%)
+Jest: Coverage for lines (5.3%) does not meet "./src/services/collaboration-server.ts" threshold (80%)
+Jest: Coverage for functions (0%) does not meet "./src/services/collaboration-server.ts" threshold (80%)
+Jest: Coverage for statements (12.32%) does not meet "./src/services/crdt-journal.ts" threshold (85%)
+Jest: Coverage for branches (0%) does not meet "./src/services/crdt-journal.ts" threshold (60%)
+Jest: Coverage for lines (13.63%) does not meet "./src/services/crdt-journal.ts" threshold (90%)
+Jest: Coverage for functions (0%) does not meet "./src/services/crdt-journal.ts" threshold (100%)
+Jest: Coverage for statements (0%) does not meet "./src/services/crdt-migration.ts" threshold (85%)
+Jest: Coverage for branches (0%) does not meet "./src/services/crdt-migration.ts" threshold (70%)
+Jest: Coverage for lines (0%) does not meet "./src/services/crdt-migration.ts" threshold (95%)
+Jest: Coverage for functions (0%) does not meet "./src/services/crdt-migration.ts" threshold (100%)
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 113 skipped, 114 total
+Snapshots:   0 total
+Time:        14.226 s, estimated 19 s
+Ran all test suites within paths "src/__tests__/resource-mutations.integration.test.ts".

@@ -1,0 +1,68 @@
+
+ RUN  v5.0.5 /home/kevin/devsync/frontend
+
+ ❯ tests/identity-recovery.test.tsx (2 tests | 2 failed) 1041ms
+   × withholds protected children after failed local identity sync and permits explicit recovery 33ms
+   × does not report successful sign-out when the provider rejects it 1006ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/identity-recovery.test.tsx > withholds protected children after failed local identity sync and permits explicit recovery
+AssertionError: expected <p></p> to be null
+
+- Expected:
+null
+
++ Received:
+<p>
+  Protected workspace
+</p>
+
+ ❯ tests/identity-recovery.test.tsx:12:52
+     10|  mocks.post.mockRejectedValueOnce(new Error('PRIVATE_PROVIDER_DETAIL')…
+     11|  render(<AuthProvider><p>Protected workspace</p></AuthProvider>);
+     12|  expect(screen.queryByText('Protected workspace')).toBeNull();
+       |                                                    ^
+     13|  await screen.findByText('Workspace session unavailable');
+     14|  expect(screen.queryByText(/PRIVATE_PROVIDER_DETAIL/)).toBeNull();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/identity-recovery.test.tsx > does not report successful sign-out when the provider rejects it
+TestingLibraryElementError: Unable to find role="button" and name "Sign out"
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<p>[39m
+      [0mProtected workspace[0m
+    [36m</p>[39m
+  [36m</div>[39m
+[36m</body>[39m
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<p>[39m
+      [0mProtected workspace[0m
+    [36m</p>[39m
+  [36m</div>[39m
+[36m</body>[39m
+ ❯ waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ tests/identity-recovery.test.tsx:22:31
+     20|  mocks.post.mockRejectedValue(new Error('sync unavailable'));mocks.sig…
+     21|  render(<AuthProvider><p>Protected workspace</p></AuthProvider>);
+     22|  fireEvent.click(await screen.findByRole('button',{name:'Sign out'}));
+       |                               ^
+     23|  await screen.findByText('Sign-out was not confirmed. Retry or use Cle…
+     24|  await waitFor(()=>expect(mocks.getter).toHaveBeenCalledWith(null));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  13:18:29
+   Duration  2.49s (tests 45%, environment 43%, import 9%, transform 3%)
+

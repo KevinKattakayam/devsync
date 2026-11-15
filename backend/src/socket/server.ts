@@ -19,6 +19,7 @@ import { SocketRateLimiter } from './rate-limiter';
 export interface SocketServerOptions {
   db: TenantPrismaClient;
   identify(token: string): Promise<RealtimeIdentity>;
+  verifySession?(identity: RealtimeIdentity): Promise<void>;
   redisUrl?: string;
   acl?: EventEmitter;
   sweepMs?: number;
@@ -98,6 +99,7 @@ export function createSocketServer(http: HttpServer, options: SocketServerOption
   async function active(session: Session) {
     if (!Number.isFinite(session.identity.expiresAt) || session.identity.expiresAt <= Date.now())
       throw new Error('Session expired');
+    await options.verifySession?.(session.identity);
     const user = await options.db.user.findUnique({
       where: { id: session.identity.id },
       select: { isActive: true },

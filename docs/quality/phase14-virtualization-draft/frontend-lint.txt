@@ -1,0 +1,22 @@
+
+> frontend@0.1.0 lint
+> eslint --max-warnings=0
+
+
+/home/kevin/devsync/frontend/src/components/workspace/virtual-task-list.tsx
+  22:23  warning  Compilation Skipped: Use of incompatible library
+
+This API returns functions which cannot be memoized without leading to stale UI. To prevent this, by default React Compiler will skip memoizing this component/hook. However, you may see issues if values from this API are passed to other components/hooks that are memoized.
+
+/home/kevin/devsync/frontend/src/components/workspace/virtual-task-list.tsx:22:23
+  20 |   const [focusedId, setFocusedId] = useState<string | null>(null);
+  21 |   const getItemKey = useCallback((index: number) => tasks[index].id, [tasks]);
+> 22 |   const virtualizer = useVirtualizer({
+     |                       ^^^^^^^^^^^^^^ TanStack Virtual's `useVirtualizer()` API returns functions that cannot be memoized safely
+  23 |     count: tasks.length,
+  24 |     getScrollElement: () => scroll.current,
+  25 |     getItemKey,  react-hooks/incompatible-library
+
+✖ 1 problem (0 errors, 1 warning)
+
+ESLint found too many warnings (maximum: 0).

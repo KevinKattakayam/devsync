@@ -9,6 +9,12 @@ datasource db {
 }
 
 model User {
+  automationRules AutomationRule[]
+  automationEvents AutomationEvent[] @relation("AutomationEventActor")
+  automationApprovals AutomationExecution[] @relation("AutomationApprover")
+  automationAuditEntries AutomationAudit[] @relation("AutomationAuditActor")
+  decisionExecutionEvents DecisionExecutionEvent[]
+  exportRequests WorkspaceExportRequest[]
   id           String            @id @default(cuid())
   clerkId      String            @unique
   email        String            @unique
@@ -28,6 +34,9 @@ model User {
 }
 
 model Workspace {
+  automationRules AutomationRule[]
+  automationEvents AutomationEvent[]
+  exportRequests WorkspaceExportRequest[]
   id          String            @id @default(cuid())
   name        String
   slug        String            @unique
@@ -229,6 +238,7 @@ model GitHubRepository {
   id              String    @id @default(cuid())
   workspaceId     String
   installationId  String?
+  providerDisconnectedAt DateTime? @db.Timestamptz
   repositoryId    String    @unique
   owner           String
   name            String
@@ -238,8 +248,27 @@ model GitHubRepository {
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
   workspace       Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  executionStates GitHubExecutionState[]
+  webhookProofs GitHubWebhookProof[]
 
   @@unique([workspaceId, owner, name])
+  @@unique([id, workspaceId])
+}
+
+model GitHubExecutionState {
+  repositoryId String
+  workspaceId String
+  kind String
+  subject String
+  state String
+  conclusion String?
+  headSha String?
+  pullNumber Int?
+  providerAt DateTime @db.Timestamptz
+  observedAt DateTime @default(now()) @db.Timestamptz
+  rank Int
+  repository GitHubRepository @relation(fields: [repositoryId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  @@id([repositoryId, kind, subject])
 }
 
 model GitHubWebhookDelivery {
@@ -338,6 +367,7 @@ model DocumentCrdtBackup {
 }
 
 model DecisionReceipt {
+  executionEvents DecisionExecutionEvent[]
   id String @id @default(cuid())
   workspaceId String
   sourceKind String
@@ -361,6 +391,23 @@ model DecisionReceipt {
   @@index([workspaceId, createdAt])
 }
 
+model DecisionExecutionEvent {
+  id String @id
+  workspaceId String
+  receiptId String
+  kind String
+  evidence String
+  occurredAt DateTime @db.Timestamptz(6)
+  recordedAt DateTime @default(now()) @db.Timestamptz(6)
+  createdBy String
+  taskId String?
+  repositoryId String?
+  pullNumber Int?
+  receipt DecisionReceipt @relation(fields: [receiptId, workspaceId], references: [id, workspaceId], onDelete: Cascade, onUpdate: NoAction)
+  creator User @relation(fields: [createdBy], references: [id], onDelete: Restrict, onUpdate: NoAction)
+  @@index([workspaceId, receiptId, recordedAt, id], map: "DecisionExecutionEvent_receipt_timeline_idx")
+}
+
 model SnippetSafetyFinding {
   id String @id @default(cuid())
   workspaceId String
@@ -382,4 +429,108 @@ model AsyncDigestPreference {
   workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
   @@id([workspaceId, userId])
+}
+
+model WorkspaceExportRequest {
+  id          String    @id @default(cuid())
+  workspaceId String
+  requestedBy String
+  status      String    @default("REVIEW_REQUIRED")
+  createdAt   DateTime  @default(now())
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  requester   User      @relation(fields: [requestedBy], references: [id], onDelete: Restrict)
+
+  @@unique([workspaceId, requestedBy])
+}
+
+model AutomationRule {
+  id String @id
+  workspaceId String
+  createdBy String
+  title String
+  trigger String
+  action String
+  condition String
+  debounceSeconds Int
+  enabled Boolean @default(false)
+  version Int @default(1)
+  createdAt DateTime @default(now()) @db.Timestamptz
+  updatedAt DateTime @default(now()) @db.Timestamptz
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  creator User @relation(fields: [createdBy], references: [id], onDelete: Restrict)
+  executions AutomationExecution[]
+  @@unique([id, workspaceId])
+  @@index([workspaceId, createdAt, id], map: "AutomationRule_workspace_idx")
+}
+
+model AutomationEvent {
+  id String @id
+  workspaceId String
+  trigger String
+  origin String
+  taskId String?
+  repositoryId String?
+  sourceId String
+  sourceRevision String
+  actorId String?
+  dedupeKey String
+  requestHash String
+  createdAt DateTime @default(now()) @db.Timestamptz
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  actor User? @relation("AutomationEventActor", fields: [actorId], references: [id], onDelete: Restrict)
+  executions AutomationExecution[]
+  @@unique([id, workspaceId])
+  @@unique([workspaceId, dedupeKey])
+}
+
+model AutomationExecution {
+  id String @id
+  workspaceId String
+  ruleId String
+  eventId String
+  ruleVersion Int
+  status String
+  approvedBy String?
+  errorCode String?
+  createdAt DateTime @default(now()) @db.Timestamptz
+  updatedAt DateTime @default(now()) @db.Timestamptz
+  rule AutomationRule @relation(fields: [ruleId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  event AutomationEvent @relation(fields: [eventId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  approver User? @relation("AutomationApprover", fields: [approvedBy], references: [id], onDelete: Restrict)
+  audit AutomationAudit[]
+  lease AutomationLease?
+  @@unique([id, workspaceId])
+  @@unique([workspaceId, ruleId, eventId])
+  @@index([workspaceId, ruleId, createdAt(sort: Desc)], map: "AutomationExecution_debounce_idx")
+}
+
+model AutomationLease {
+  executionId String @id
+  workspaceId String
+  attempts Int @default(0)
+  token String?
+  leaseUntil DateTime? @db.Timestamptz
+  execution AutomationExecution @relation(fields: [executionId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  @@unique([executionId, workspaceId])
+}
+
+model AutomationAudit {
+  id String @id
+  workspaceId String
+  executionId String
+  kind String
+  actorId String?
+  createdAt DateTime @default(now()) @db.Timestamptz
+  execution AutomationExecution @relation(fields: [executionId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+  actor User? @relation("AutomationAuditActor", fields: [actorId], references: [id], onDelete: Restrict)
+  @@index([workspaceId, executionId, createdAt, id], map: "AutomationAudit_timeline_idx")
+}
+
+model GitHubWebhookProof {
+ repositoryId String
+ workspaceId String
+ digest String
+ observedAt DateTime @default(now()) @db.Timestamptz
+ repository GitHubRepository @relation(fields: [repositoryId, workspaceId], references: [id, workspaceId], onDelete: Cascade)
+ @@id([repositoryId, digest])
 }

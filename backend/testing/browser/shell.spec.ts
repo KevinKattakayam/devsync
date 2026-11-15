@@ -1,8 +1,9 @@
 import { test, expect, type Page } from '@playwright/test';
-import axe from '../../../frontend/node_modules/axe-core';
+import axe from 'axe-core';
 import { mkdir, writeFile, readFile, readdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { login } from './identities';
+import { collectShellRendererDiagnostics } from './shell-renderer-diagnostics';
 
 declare global {
   interface Window {
@@ -26,6 +27,8 @@ const reports: {
   incomplete: axe.Result[];
 }[] = [];
 const measurements: Record<string, unknown>[] = [];
+// Hide dynamic route contents before compositing, so portalled shell overlays remain visible.
+const shellCaptureStyle = resolve(__dirname, 'shell-capture.css');
 
 test.beforeAll(async ({ browser }) => {
   await mkdir(output, { recursive: true });
@@ -106,6 +109,14 @@ for (const theme of ['dark', 'light'] as const)
     test(`${theme} ${width} shell states, keyboard access and visual baseline`, async ({
       browser,
     }) => {
+      expect(
+        browser.version(),
+        'Shell baselines use the Chromium version pinned by backend Playwright.',
+      ).toBe('151.0.7922.34');
+      expect(
+        process.env.E2E_CHROMIUM_PATH,
+        'Use Playwright bundled Chromium for shell snapshots.',
+      ).toBeUndefined();
       const context = await browser.newContext({
         viewport: { width, height: 1000 },
         colorScheme: theme,
@@ -170,7 +181,58 @@ for (const theme of ['dark', 'light'] as const)
           }),
         ).toBeAttached();
         await page.addScriptTag({ content: axe.source });
+        await mkdir(test.info().outputDir, { recursive: true });
+        const rendererDiagnostics = await collectShellRendererDiagnostics(
+          browser.version(),
+          !!process.env.E2E_CHROMIUM_PATH,
+          () =>
+            page.evaluate(() => {
+              function readField<T>(read: () => T) {
+                try {
+                  return { value: read() } as const;
+                } catch {
+                  return { error: 'unavailable' } as const;
+                }
+              }
+
+              return {
+                userAgent: readField(() => navigator.userAgent),
+                deviceScaleFactor: readField(() => devicePixelRatio),
+                viewport: readField(() => ({ width: innerWidth, height: innerHeight })),
+                colorScheme: readField(() =>
+                  matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light',
+                ),
+                theme: readField(() => document.documentElement.className),
+                bodyFont: readField(() => getComputedStyle(document.body).fontFamily),
+                fontStatus: readField(() => document.fonts.status),
+                fontFaces: readField(() => {
+                  const faces: { family: string; weight: string; status: string }[] = [];
+                  document.fonts.forEach((font) => {
+                    faces.push({ family: font.family, weight: font.weight, status: font.status });
+                  });
+                  return faces;
+                }),
+              };
+            }),
+        );
+        await writeFile(
+          test.info().outputPath('renderer.json'),
+          JSON.stringify(rendererDiagnostics, null, 2),
+        );
         async function capture(state: string) {
+          if (['commands', 'commands-empty', 'help'].includes(state))
+            await expect(page.locator('.ui-dialog:visible')).toBeVisible();
+          if (state === 'user-menu')
+            await expect(
+              page.getByRole('menu', { name: 'Sample owner', exact: true }),
+            ).toBeVisible();
+          if (state === 'workspace-menu')
+            await expect(
+              page.getByRole('menu', { name: 'Switch workspace: Sample workspace', exact: true }),
+            ).toBeVisible();
+          if (state === 'mobile-navigation')
+            await expect(page.locator('.ui-drawer:visible')).toBeVisible();
+          if (state === 'copilot') await expect(page.locator('.ui-drawer:visible')).toBeVisible();
           await recordState(`${state}-before-settle`);
           await settle(page);
           await recordState(`${state}-before-axe`);
@@ -227,8 +289,7 @@ for (const theme of ['dark', 'light'] as const)
             // Keep failures fatal to the test, but collect every state for image-by-image review.
             await expect.soft(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
               animations: 'disabled',
-              mask: [page.locator('#route-content')],
-              maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+              stylePath: shellCaptureStyle,
               maxDiffPixelRatio: 0.002,
             });
         }
@@ -300,6 +361,52 @@ for (const theme of ['dark', 'light'] as const)
       }
     });
   }
+
+test('shell capture hides changing route content without obscuring a portal', async ({ page }) => {
+  const style = await readFile(shellCaptureStyle, 'utf8');
+  await page.setContent(`
+    <style>body { margin: 0; background: white } #portal, #nested-portal, #inline-float { position: fixed; top: 20px; left: 20px; color: black; background: white }</style>
+    <div id="route-content" style="height: 200px; background: red">
+      <div id="route-copy">Dynamic content</div>
+      <div id="inline-float" class="ui-floating" style="visibility: visible">Route-local editor toolbar</div>
+    </div>
+    <div id="portal-root">
+      <div class="ui-overlay"></div>
+      <div id="portal" class="ui-dialog" role="dialog">First overlay</div>
+      <div data-radix-popper-content-wrapper><div id="nested-portal" class="ui-floating" role="menu">Nested overlay</div></div>
+    </div>
+  `);
+  const first = await page.screenshot({ style, animations: 'disabled' });
+  await page.locator('#route-copy').evaluate((element) => {
+    element.textContent = 'Changed content';
+  });
+  const changedRoute = await page.screenshot({ style, animations: 'disabled' });
+  expect(changedRoute.equals(first)).toBe(true);
+  await page.locator('#route-content').evaluate((element) => {
+    element.style.height = '400px';
+  });
+  const resizedRoute = await page.screenshot({ style, animations: 'disabled' });
+  expect(resizedRoute.equals(first)).toBe(true);
+  await page.locator('#inline-float').evaluate((element) => {
+    element.textContent = 'Changed route-local toolbar';
+  });
+  const changedRouteFloat = await page.screenshot({ style, animations: 'disabled' });
+  expect(changedRouteFloat.equals(first)).toBe(true);
+  await page.locator('#portal').evaluate((element) => {
+    element.textContent = 'Changed overlay';
+  });
+  const changedPortalledOverlay = await page.screenshot({
+    style,
+    animations: 'disabled',
+  });
+  expect(changedPortalledOverlay.equals(first)).toBe(false);
+  await page.locator('#nested-portal').evaluate((element) => {
+    element.textContent = 'Changed nested overlay';
+  });
+  const changedNestedOverlay = await page.screenshot({ style, animations: 'disabled' });
+  expect(changedNestedOverlay.equals(changedPortalledOverlay)).toBe(false);
+  await expect(page.locator('#route-content')).toBeVisible();
+});
 
 test('360px route coverage and viewer commands retain read-only authority', async ({ browser }) => {
   const context = await browser.newContext({

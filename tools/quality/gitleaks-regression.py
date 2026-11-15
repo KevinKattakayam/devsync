@@ -8,6 +8,7 @@ import os
 from pathlib import Path
 import secrets
 import subprocess
+import sys
 import tempfile
 
 root = Path(__file__).resolve().parents[2]
@@ -19,7 +20,11 @@ with tempfile.TemporaryDirectory(prefix='devsync-scanner-regression-') as direct
         'known-fixture': (test_path, "webhookSecret: 'fixture-secret-123'", False),
         'new-value-in-example': ('backend/.env.example', 'CLERK_SECRET_KEY="' + secrets.token_hex(32) + '"', True),
         'new-value-in-test': (test_path, "webhookSecret: '" + secrets.token_hex(32) + "'", True),
+        'known-sentinel-in-generator': ('tools/quality/gitleaks-regression.py', "webhookSecret: 'fixture-secret-123'", False),
+        'new-value-in-generator': ('tools/quality/gitleaks-regression.py', "webhookSecret: '" + secrets.token_hex(32) + "'", True),
         'known-value-elsewhere': ('backend/src/other.ts', "webhookSecret: 'fixture-secret-123'", True),
+        'new-value-in-historical-doc-path': ('docs/PROGRESS.md', "webhookSecret: '" + secrets.token_hex(32) + "'", True),
+        'new-value-in-historical-load-path': ('tools/quality/load.js', "webhookSecret: '" + secrets.token_hex(32) + "'", True),
     }
     for name, (path, content, _) in cases.items():
         target = fixtures / name / path
@@ -43,7 +48,9 @@ with tempfile.TemporaryDirectory(prefix='devsync-scanner-regression-') as direct
         detected = any(f'/fixtures/{name}/' in item['File'] for item in findings)
         rows.append({'case': name, 'expectedDetection': expected, 'detected': detected})
     report = {'passed': all(row['expectedDetection'] == row['detected'] for row in rows), 'cases': rows}
-    (root / 'docs/quality/phase5a-2/gitleaks-regression.json').write_text(json.dumps(report, indent=2) + '\n')
+    report_path = root / (sys.argv[1] if len(sys.argv) > 1 else 'docs/quality/phase5a-2/gitleaks-regression.json')
+    report_path.resolve().relative_to(root)
+    report_path.write_text(json.dumps(report, indent=2) + '\n')
     print(json.dumps(report, indent=2))
     if not report['passed']:
         raise SystemExit(1)

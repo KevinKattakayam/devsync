@@ -1,4 +1,4 @@
-import { act, cleanup, render, screen, waitFor } from '@testing-library/react';
+import { act, cleanup, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
 import DashboardPage from '../src/app/(dashboard)/dashboard/page';
@@ -86,6 +86,25 @@ it('shows real projections and matches assigned tasks to the local principal, no
   );
   expect(screen.queryByText('Someone else task')).toBeNull();
   expect(screen.getByText('A document was updated')).toBeTruthy();
+});
+it('surfaces workspace destinations with an accessible name and current membership role', async () => {
+  const original = mocks.get.getMockImplementation();
+  mocks.get.mockImplementation((path: string) =>
+    path === '/workspaces'
+      ? Promise.resolve({
+          data: [workspace, { ...workspace, id: 'two', name: 'Research', role: 'VIEWER' }],
+        })
+      : path.startsWith('/workspaces/two/')
+        ? Promise.resolve({ data: [] })
+        : original?.(path),
+  );
+  render(<DashboardPage />);
+  await screen.findByRole('link', { name: 'Open Engineering, owner' });
+  const destinations = screen.getByRole('navigation', { name: 'Your workspaces' });
+  expect(
+    within(destinations).getByRole('link', { name: 'Open Research, viewer' }).getAttribute('href'),
+  ).toBe('/workspace/two');
+  expect(within(destinations).getAllByRole('link')).toHaveLength(2);
 });
 it('offers a retry for a total failure and recovers without turning errors into an empty state', async () => {
   mocks.get.mockRejectedValueOnce(new Error('Unavailable'));

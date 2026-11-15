@@ -1,0 +1,1 @@
+{ "extends": "./tsconfig.json", "include": ["two-column.tsx", "two-column.test.tsx"] }

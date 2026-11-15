@@ -1,16 +1,25 @@
 import { test, expect, type Page } from '@playwright/test';
-import axe from '../../../frontend/node_modules/axe-core';
+import axe from 'axe-core';
 import { mkdir, writeFile } from 'fs/promises';
 import { resolve } from 'path';
 import { login } from './identities';
 test.setTimeout(180000);
 const api = 'http://127.0.0.1:5501/api';
 const workspace = 'devsync-sample';
-const output = resolve(
-  __dirname,
-  '../../../docs/ui/after/decision-receipts',
-  process.env.E2E_DECISIONS_PASS || 'initial',
-);
+const requestedPass = process.env.E2E_DECISIONS_PASS;
+const pass =
+  requestedPass && /^[a-z0-9][a-z0-9-]*$/i.test(requestedPass) ? requestedPass : 'initial';
+const output = resolve(__dirname, '../../../docs/ui/after/decision-receipts', pass);
+async function setFixtureTheme(context: import('@playwright/test').BrowserContext, theme: string) {
+  await context.addInitScript((requestedTheme) => {
+    // The context can also create opaque or third-party documents; only initialize the app origin.
+    if (location.origin !== 'http://127.0.0.1:3001') return;
+    localStorage.setItem('theme', requestedTheme);
+  }, theme);
+}
+async function expectFixtureTheme(page: Page, theme: string) {
+  await expect(page.locator('html')).toHaveClass(new RegExp(`(?:^|\\s)${theme}(?:\\s|$)`));
+}
 async function capture(page: Page, name: string) {
   await mkdir(output, { recursive: true });
   await page.evaluate(async () => {
@@ -66,8 +75,8 @@ for (const theme of ['dark', 'light'] as const)
       try {
         await login(context, 'owner');
         await login(viewer, 'viewer');
-        await context.addInitScript((theme) => localStorage.setItem('theme', theme), theme);
-        await viewer.addInitScript((theme) => localStorage.setItem('theme', theme), theme);
+        await setFixtureTheme(context, theme);
+        await setFixtureTheme(viewer, theme);
         const sourceTitle = `Receipt source ${label}`;
         const created = await context.request.post(`${api}/workspaces/${workspace}/documents`, {
           data: { title: sourceTitle },
@@ -85,6 +94,7 @@ for (const theme of ['dark', 'light'] as const)
           await route.continue();
         });
         await page.goto(`/workspace/${workspace}/decisions`);
+        await expectFixtureTheme(page, theme);
         await expect(page.getByRole('status', { name: 'Loading decision receipts' })).toBeVisible();
         await capture(page, `${label}-loading`);
         release();
@@ -143,7 +153,10 @@ for (const theme of ['dark', 'light'] as const)
         ).toBeVisible();
         await capture(page, `${label}-draft`);
         const viewerPage = await viewer.newPage();
-        await viewerPage.goto(`/workspace/${workspace}/decisions`);
+        await viewerPage.goto(`/workspace/${workspace}/decisions`, {
+          waitUntil: 'domcontentloaded',
+        });
+        await expectFixtureTheme(viewerPage, theme);
         await expect(viewerPage.getByRole('heading', { name: title, exact: true })).toBeVisible();
         await expect(viewerPage.getByRole('button', { name: 'New receipt' })).toHaveCount(0);
         await expect(viewerPage.getByRole('button', { name: 'Edit draft' })).toHaveCount(0);
@@ -192,6 +205,49 @@ for (const theme of ['dark', 'light'] as const)
         await capture(page, `${label}-accept-confirmation`);
         await page.getByRole('dialog').getByRole('button', { name: 'Confirm acceptance' }).click();
         await expect(article.getByText('Accepted', { exact: true })).toBeVisible();
+        const linkedSource = article.getByRole('region', { name: 'Linked source' });
+        await expect(
+          linkedSource.getByRole('link', {
+            name: `Open source document: ${sourceTitle}`,
+          }),
+        ).toHaveAttribute('href', `/workspace/${workspace}/docs/${document.id}`);
+        await article.getByRole('button', { name: 'Load execution timeline' }).click();
+        await article.getByLabel('Evidence type').selectOption('linked_task');
+        await expect(
+          article.getByRole('option', { name: 'Review workspace permissions' }),
+        ).toBeAttached();
+        await article
+          .getByRole('combobox', { name: 'Task', exact: true })
+          .selectOption({ label: 'Review workspace permissions' });
+        await article.getByLabel('Evidence description').fill(`Task link ${label}`);
+        await article.getByRole('button', { name: 'Record evidence' }).click();
+        await expect(article.getByText(`Task link ${label}`, { exact: true })).toBeVisible();
+        await expect(
+          article.getByRole('link', { name: 'Open task board for Review workspace permissions' }),
+        ).toHaveAttribute('href', `/workspace/${workspace}/kanban`);
+        await capture(page, `${label}-connected-work`);
+        const taskLink = article.getByRole('link', {
+          name: 'Open task board for Review workspace permissions',
+        });
+        await taskLink.focus();
+        await expect(taskLink).toBeFocused();
+        await page.keyboard.press('Enter');
+        await expect(page).toHaveURL(new RegExp(`/workspace/${workspace}/kanban$`));
+        await page.goto(`/workspace/${workspace}/decisions`);
+        article = page.getByRole('article', { name: title, exact: true });
+        // The viewer is already on this route; refresh its data without a second document navigation.
+        await expect(viewerPage).toHaveURL(new RegExp(`/workspace/${workspace}/decisions$`));
+        await viewerPage.getByRole('button', { name: 'Refresh receipts', exact: true }).click();
+        const viewerCard = viewerPage.getByRole('article', { name: title, exact: true });
+        await viewerCard.getByRole('button', { name: 'Load execution timeline' }).click();
+        await expect(viewerCard.getByText(`Task link ${label}`, { exact: true })).toBeVisible();
+        await expect(
+          viewerCard.getByRole('link', {
+            name: 'Open task board for Review workspace permissions',
+          }),
+        ).toBeVisible();
+        await expect(viewerCard.getByRole('button', { name: 'Record evidence' })).toHaveCount(0);
+        await capture(viewerPage, `${label}-connected-viewer`);
         const replacementTitle = `Replacement ${label}`;
         const replacement = await createReceipt(replacementTitle);
         await replacement.getByRole('button', { name: 'Accept decision' }).click();
@@ -214,15 +270,24 @@ for (const theme of ['dark', 'light'] as const)
         const removable = await createReceipt(`Disposable ${label}`);
         await removable.getByRole('button', { name: 'Delete draft' }).click();
         await capture(page, `${label}-delete-confirmation`);
-        await page
-          .getByRole('dialog')
-          .getByRole('button', { name: 'Delete draft', exact: true })
-          .click();
-        await expect(removable).toHaveCount(0);
-        await context.request.delete(`${api}/documents/${document.id}`);
-        await page.getByRole('button', { name: 'Refresh receipts' }).click();
-        await expect(article).toHaveCount(0);
-        await expect(page.getByRole('button', { name: 'Refresh receipts' })).toBeVisible();
+        await test.step('confirm draft deletion and observe the deleted row', async () => {
+          await page
+            .getByRole('dialog')
+            .getByRole('button', { name: 'Delete draft', exact: true })
+            .click({ timeout: 15000 });
+          await expect(removable).toHaveCount(0);
+        });
+        await test.step('delete the now-unreferenced source document', async () => {
+          const response = await context.request.delete(`${api}/documents/${document.id}`, {
+            timeout: 15000,
+          });
+          expect(response.ok()).toBe(true);
+        });
+        await test.step('refresh and observe the missing-source decision', async () => {
+          await page.getByRole('button', { name: 'Refresh receipts' }).click({ timeout: 15000 });
+          await expect(article).toHaveCount(0);
+          await expect(page.getByRole('button', { name: 'Refresh receipts' })).toBeVisible();
+        });
         // Honest unavailable state: explicit test-only network failure, no fabricated business data.
         await context.route(`**/api/v2/workspaces/${workspace}/decisions`, (route) =>
           route.abort(),

@@ -1,0 +1,2 @@
+src/controllers/search.controller.ts 88ms (unchanged)
+src/services/knowledge-search.ts 54ms (unchanged)

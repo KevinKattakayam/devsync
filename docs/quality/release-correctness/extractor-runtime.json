@@ -1,0 +1,109 @@
+{
+  "status": "passed",
+  "commands": [
+    {
+      "command": [
+        "docker",
+        "image",
+        "inspect",
+        "--format",
+        "{{.Id}}",
+        "devsync-extractor:release-correctness"
+      ],
+      "exit": 0
+    },
+    {
+      "command": [
+        "docker",
+        "run",
+        "--detach",
+        "--name",
+        "devsync-extractor-check-23e8241fb5d9",
+        "--network",
+        "none",
+        "--read-only",
+        "--cap-drop",
+        "ALL",
+        "--security-opt",
+        "no-new-privileges:true",
+        "--memory",
+        "512m",
+        "--cpus",
+        "1",
+        "--pids-limit",
+        "64",
+        "--tmpfs",
+        "/tmp:rw,noexec,nosuid,size=64m",
+        "--init",
+        "-v",
+        "/home/kevin/devsync/backend/src/__tests__/fixtures/extraction:/fixtures:ro",
+        "devsync-extractor:release-correctness"
+      ],
+      "exit": 0
+    },
+    {
+      "command": [
+        "docker",
+        "exec",
+        "devsync-extractor-check-23e8241fb5d9",
+        "node",
+        "-e",
+        "(async()=>{for(let n=0;n<100;n++){try{if((await fetch('http://127.0.0.1:5001/healthz')).ok)return;}catch{} await new Promise(r=>setTimeout(r,100));}process.exitCode=1;})()"
+      ],
+      "exit": 0
+    },
+    {
+      "command": [
+        "docker",
+        "exec",
+        "devsync-extractor-check-23e8241fb5d9",
+        "node",
+        "-e",
+        "\nconst fs = require('fs');\n(async()=>{\n const cases = [['synthetic.pdf','application/pdf',200,'SYNTHETIC PDF TEST'],\n ['synthetic-text.png','image/png',200,'SYNTHETIC TEST'],\n ['over-page-limit.pdf','application/pdf',422,'']];\n const results=[];\n for(const [file,mime,status,text] of cases){\n  const response=await fetch('http://127.0.0.1:5001/extract',{method:'POST',headers:{'Content-Type':mime},body:fs.readFileSync('/fixtures/'+file),signal:AbortSignal.timeout(35000)});\n  const body=await response.text();\n  if(response.status!==status || (text && !JSON.parse(body).text.includes(text))) throw Error('Synthetic case failed: '+file);\n  results.push({fixture:file,status:response.status,syntheticTextVerified:!!text});\n }\n console.log(JSON.stringify({uid:process.getuid(),applicationCredentialsPresent:['DATABASE_URL','REDIS_URL','CLERK_SECRET_KEY','OPENAI_API_KEY','GROQ_API_KEY'].some(k=>!!process.env[k]),results}));\n})().catch(()=>process.exitCode=1);\n"
+      ],
+      "exit": 0
+    },
+    {
+      "command": [
+        "docker",
+        "inspect",
+        "--format",
+        "{{.HostConfig.NetworkMode}} {{.HostConfig.ReadonlyRootfs}} {{.HostConfig.Memory}} {{.HostConfig.NanoCpus}} {{.HostConfig.PidsLimit}}",
+        "devsync-extractor-check-23e8241fb5d9"
+      ],
+      "exit": 0
+    },
+    {
+      "command": [
+        "docker",
+        "rm",
+        "--force",
+        "devsync-extractor-check-23e8241fb5d9"
+      ],
+      "exit": 0
+    }
+  ],
+  "imageId": "sha256:77fe998fc6a350a5af30ab6eb604172c7c079de5e182f8f01ba972b52e218a23",
+  "checks": {
+    "uid": 1000,
+    "applicationCredentialsPresent": false,
+    "results": [
+      {
+        "fixture": "synthetic.pdf",
+        "status": 200,
+        "syntheticTextVerified": true
+      },
+      {
+        "fixture": "synthetic-text.png",
+        "status": 200,
+        "syntheticTextVerified": true
+      },
+      {
+        "fixture": "over-page-limit.pdf",
+        "status": 422,
+        "syntheticTextVerified": false
+      }
+    ]
+  },
+  "isolation": "none true 536870912 1000000000 64"
+}

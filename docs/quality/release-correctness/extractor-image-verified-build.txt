@@ -1,0 +1,76 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 2.43kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/node:22-alpine@sha256:fe4f6d74e20370acb04ad889077d14d0f64a9c8ea6a42bc60cddf1e844699914
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 177B done
+#3 DONE 0.0s
+
+#4 [base 1/3] FROM docker.io/library/node:22-alpine@sha256:fe4f6d74e20370acb04ad889077d14d0f64a9c8ea6a42bc60cddf1e844699914
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 10.64kB 0.0s done
+#5 DONE 0.0s
+
+#6 [base 3/3] RUN apk add --no-cache openssl ca-certificates
+#6 CACHED
+
+#7 [dependencies 3/3] RUN npm ci
+#7 CACHED
+
+#8 [base 2/3] WORKDIR /app
+#8 CACHED
+
+#9 [dependencies 2/3] COPY prisma/schema.prisma ./prisma/schema.prisma
+#9 CACHED
+
+#10 [dependencies 1/3] COPY package.json package-lock.json ./
+#10 CACHED
+
+#11 [build 2/3] RUN npm run build && npx tsc -p tsconfig.seed-build.json
+#11 CACHED
+
+#12 [build 1/3] COPY . .
+#12 CACHED
+
+#13 [runner 3/7] COPY --from=build --chown=node:node /app/dist ./dist
+#13 CACHED
+
+#14 [runner 6/7] COPY --from=build --chown=node:node /app/docker ./docker
+#14 CACHED
+
+#15 [runner 2/7] COPY --from=production-dependencies --chown=node:node /app/node_modules ./node_modules
+#15 CACHED
+
+#16 [production-dependencies 1/1] RUN npm prune --omit=dev --ignore-scripts
+#16 CACHED
+
+#17 [runner 1/7] RUN rm -rf /usr/local/lib/node_modules/npm /opt/yarn-* /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/yarn /usr/local/bin/yarnpkg /usr/bin/mount /usr/bin/umount /usr/bin/nsenter /usr/bin/infocmp
+#17 CACHED
+
+#18 [runner 4/7] COPY --from=build --chown=node:node /app/prisma/schema.prisma ./prisma/schema.prisma
+#18 CACHED
+
+#19 [runner 5/7] COPY --from=build --chown=node:node /app/prisma/migrations ./prisma/migrations
+#19 CACHED
+
+#20 [build 3/3] RUN mkdir -p /state/admin /state/runtime && chown -R node:node /state
+#20 CACHED
+
+#21 [runner 7/7] COPY --from=build --chown=node:node /app/package.json ./package.json
+#21 CACHED
+
+#22 [extractor 1/1] COPY --from=build --chown=node:node /app/node_modules/@tesseract.js-data/eng/4.0.0_best_int/eng.traineddata.gz /app/ocr-data/eng.traineddata.gz
+#22 DONE 0.1s
+
+#23 exporting to image
+#23 exporting layers 0.0s done
+#23 writing image sha256:ed4a9f276aebf813cf4af5a97079805363c7fd2baa1b61b2c834d6adedf3e61b done
+#23 naming to docker.io/library/devsync-extractor:release-correctness done
+#23 DONE 0.0s

@@ -1,0 +1,71 @@
+
+ RUN  v5.0.5 /home/kevin/devsync/frontend
+
+ ❯ tests/auth-reset.test.tsx (5 tests | 5 failed) 14ms
+   × keeps legacy GET redirect without clearing any cookie 9ms
+   × rejects POST origin undefined before reading cookies 2ms
+   × rejects POST origin null before reading cookies 1ms
+   × rejects POST origin https://foreign.invalid before reading cookies 1ms
+   × clears only identity cookies on same-origin POST and redirects with GET semantics 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/auth-reset.test.tsx > keeps legacy GET redirect without clearing any cookie
+AssertionError: expected '__session=; Path=/; Expires=Thu, 01 J…' to be null
+
+- Expected:
+null
+
++ Received:
+"__session=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Max-Age=0, theme=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Max-Age=0, __client_uat=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Max-Age=0, __clerk_db_jwt=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Max-Age=0, __clerk_handshake=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Max-Age=0, __clerk_auth_status=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Max-Age=0, __clerk_auth_reason=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Max-Age=0"
+
+ ❯ tests/auth-reset.test.tsx:14:46
+     12|   expect(response.status).toBe(307);
+     13|   expect(response.headers.get('location')).toBe('/dashboard');
+     14|   expect(response.headers.get('set-cookie')).toBeNull();
+       |                                              ^
+     15|   expect(readCookies).not.toHaveBeenCalled();
+     16| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  tests/auth-reset.test.tsx > rejects POST origin undefined before reading cookies
+ FAIL  tests/auth-reset.test.tsx > rejects POST origin null before reading cookies
+ FAIL  tests/auth-reset.test.tsx > rejects POST origin https://foreign.invalid before reading cookies
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ tests/auth-reset.test.tsx:19:16
+     17| it.each([undefined, 'null', 'https://foreign.invalid'])('rejects POST …
+     18|   const post = Reflect.get(route, 'POST') as ((request: Request) => Pr…
+     19|   expect(post).toBeTypeOf('function');
+       |                ^
+     20|   const response = await post!(new Request(url, { method: 'POST', head…
+     21|   expect(response.status).toBe(403);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  tests/auth-reset.test.tsx > clears only identity cookies on same-origin POST and redirects with GET semantics
+AssertionError: expected undefined to be type of 'function'
+
+Expected: "function"
+Received: "undefined"
+
+ ❯ tests/auth-reset.test.tsx:27:16
+     25| it('clears only identity cookies on same-origin POST and redirects wit…
+     26|   const post = Reflect.get(route, 'POST') as ((request: Request) => Pr…
+     27|   expect(post).toBeTypeOf('function');
+       |                ^
+     28|   const response = await post!(new Request(url, { method: 'POST', head…
+     29|   expect(response.status).toBe(303);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  5 failed (5)
+   Start at  08:24:11
+   Duration  1.04s (environment 89%, transform 6%, import 3%, tests 2%)
+

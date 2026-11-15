@@ -1,0 +1,9 @@
+
+ RUN  v5.0.5 /home/kevin/devsync/frontend
+
+
+ Test Files  2 passed (2)
+      Tests  6 passed (6)
+   Start at  08:35:43
+   Duration  813ms (environment 86%, import 7%, transform 4%, tests 1%, worker 1%)
+

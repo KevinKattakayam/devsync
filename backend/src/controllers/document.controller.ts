@@ -15,12 +15,18 @@ import {
 import { richTextSchema } from '../security/rich-text';
 import { legacyDocument, projectDocument } from '../services/crdt-schema';
 import { CrdtJournal } from '../services/crdt-journal';
+import { markdownToDocument } from '../services/markdown-import';
+import { documentToMarkdown } from '../services/markdown-export';
+import { renderDocumentPdf } from '../services/document-pdf';
 
 export const createDocumentSchema = z.object({
   title: z.string().max(200).optional(),
   parentId: z.string().min(1).max(191).optional(),
   icon: z.string().max(10).optional(),
 });
+export const importMarkdownSchema = z
+  .object({ title: z.string().max(200).optional(), markdown: z.string().max(256 * 1024) })
+  .strict();
 export const updateDocumentSchema = z.object({
   title: z.string().max(200).optional(),
   content: richTextSchema.optional(),
@@ -91,10 +97,70 @@ export async function getDocument(req: Request, res: Response, next: NextFunctio
     next(error);
   }
 }
+export async function exportDocumentPdf(req: Request, res: Response, next: NextFunction) {
+  try {
+    const id = String(req.params.docId || req.params.id);
+    const pdf = await withResourceAccess(
+      req.user!.userId,
+      'document',
+      id,
+      READ_ROLES,
+      async (tx, workspaceId) => {
+        const current = await new CrdtJournal(prisma).project(tx, { workspaceId, documentId: id });
+        return renderDocumentPdf(documentToMarkdown(current));
+      },
+    );
+    res.setHeader('Cache-Control', 'no-store');
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    res.setHeader('Content-Disposition', 'attachment; filename="document.pdf"');
+    res.type('application/pdf').send(Buffer.from(pdf));
+  } catch (error) {
+    next(error);
+  }
+}
+export async function exportMarkdown(req: Request, res: Response, next: NextFunction) {
+  try {
+    const id = String(req.params.docId || req.params.id);
+    const markdown = await withResourceAccess(
+      req.user!.userId,
+      'document',
+      id,
+      READ_ROLES,
+      async (tx, workspaceId) => {
+        const current = await new CrdtJournal(prisma).project(tx, { workspaceId, documentId: id });
+        return documentToMarkdown(current);
+      },
+    );
+    res.setHeader('Cache-Control', 'no-store');
+    res.setHeader('Content-Disposition', 'attachment; filename="document.md"');
+    res.type('text/markdown').send(markdown);
+  } catch (error) {
+    next(error);
+  }
+}
 export async function createDocument(req: Request, res: Response, next: NextFunction) {
+  return createDocumentInternal(req, res, next, false);
+}
+export async function importMarkdown(req: Request, res: Response, next: NextFunction) {
+  return createDocumentInternal(req, res, next, true);
+}
+async function createDocumentInternal(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+  importing: boolean,
+) {
   try {
     const workspaceId = String(req.params.workspaceId || req.params.id);
-    const { title, parentId, icon } = createDocumentSchema.parse(req.body);
+    const parsed = importing
+      ? importMarkdownSchema.parse(req.body)
+      : createDocumentSchema.parse(req.body);
+    const { title } = parsed;
+    const parentId = 'parentId' in parsed ? parsed.parentId : undefined;
+    const icon = 'icon' in parsed ? parsed.icon : undefined;
+    const content = 'markdown' in parsed ? markdownToDocument(parsed.markdown) : null;
+    if (content && !richTextSchema.safeParse(content).success)
+      throw new BadRequestError('Markdown exceeds document limits');
     const document = await withWorkspaceAccess(
       req.user!.userId,
       workspaceId,
@@ -103,9 +169,9 @@ export async function createDocument(req: Request, res: Response, next: NextFunc
         idempotentCreate(
           tx,
           req.user!.userId,
-          ['document.create', workspaceId],
+          [importing ? 'document.markdown-import' : 'document.create', workspaceId],
           req.header('idempotency-key'),
-          { title, parentId, icon },
+          { title, parentId, icon, ...(importing ? { content } : {}) },
           async () => {
             if (parentId) {
               const parent = await tx.document.findUnique({
@@ -115,7 +181,7 @@ export async function createDocument(req: Request, res: Response, next: NextFunc
               if (!parent || parent.workspaceId !== workspaceId || parent.isArchived)
                 throw new ForbiddenError('Access denied');
             }
-            const state = legacyDocument(null);
+            const state = legacyDocument(content);
             try {
               const result = await tx.document.create({
                 data: {

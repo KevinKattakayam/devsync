@@ -1,0 +1,13 @@
+{
+  "backend": {
+    "secretConfigured": true,
+    "providerKeyStatus": 200,
+    "providerDateMinusLocalSeconds": -19799
+  },
+  "frontend": {
+    "publishableConfigured": true,
+    "hostEncodingValid": true,
+    "frontendProviderStatus": 200
+  },
+  "realSignIn": "user reported Clerk rejected sign-in or MFA; no successful real session established"
+}

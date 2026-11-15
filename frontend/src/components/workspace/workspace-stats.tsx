@@ -28,7 +28,7 @@ export function WorkspaceStats({ workspace }: WorkspaceStatsProps) {
           </div>
           <div className="flex items-baseline justify-between">
             <p className="text-2xl font-bold text-foreground">{docCount}</p>
-            <span className="text-[10px] text-emerald-400 font-medium flex items-center gap-0.5">
+            <span className="text-[10px] text-foreground font-medium flex items-center gap-0.5">
               <TrendingUp className="w-3 h-3" /> Active
             </span>
           </div>
@@ -44,7 +44,7 @@ export function WorkspaceStats({ workspace }: WorkspaceStatsProps) {
           </div>
           <div className="flex items-baseline justify-between">
             <p className="text-2xl font-bold text-foreground">{boardCount}</p>
-            <span className="text-[10px] text-amber-400 font-medium">Sprint Ready</span>
+            <span className="text-[10px] text-foreground font-medium">Sprint Ready</span>
           </div>
         </div>
 
@@ -58,7 +58,7 @@ export function WorkspaceStats({ workspace }: WorkspaceStatsProps) {
           </div>
           <div className="flex items-baseline justify-between">
             <p className="text-2xl font-bold text-foreground">{snippetCount}</p>
-            <span className="text-[10px] text-emerald-400 font-medium">Shared</span>
+            <span className="text-[10px] text-foreground font-medium">Shared</span>
           </div>
         </div>
 

@@ -1,6 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import { spawn } from 'node:child_process';
+import { assertRuntimeRole } from './runtime-role-guard.mjs';
 const require = createRequire(import.meta.url);
 try {
   if (process.env.DEPLOYMENT_MODE === 'local') {
@@ -13,10 +14,7 @@ try {
   const { PrismaClient } = require('@prisma/client');
   const db = new PrismaClient();
   try {
-    const [role] =
-      await db.$queryRaw`SELECT rolsuper, rolbypassrls FROM pg_roles WHERE rolname=current_user`;
-    if (!role || role.rolsuper || role.rolbypassrls)
-      throw new Error('Unsafe database runtime role');
+    await assertRuntimeRole(db);
   } finally {
     await db.$disconnect();
   }

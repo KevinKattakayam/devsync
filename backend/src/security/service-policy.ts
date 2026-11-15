@@ -67,6 +67,7 @@ export async function withGitHubWebhookAccess<T>(
       !timingSafeEqual(Buffer.from(signature), Buffer.from(expected))
     )
       throw new UnauthorizedError('Invalid webhook signature');
+    if (current.providerDisconnectedAt) throw new ForbiddenError('Repository disconnected');
     return operation(tx, current);
   });
 }
@@ -88,6 +89,7 @@ export async function withRepositoryJobAccess<T>(
     });
     if (!repository || repository.workspaceId !== workspaceId)
       throw new ForbiddenError('Access denied');
+    if (repository.providerDisconnectedAt) throw new ForbiddenError('Repository disconnected');
     return operation(tx, repository);
   });
 }

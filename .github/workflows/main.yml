@@ -57,6 +57,14 @@ jobs:
         working-directory: backend
         env:
           OTEL_SDK_DISABLED: 'true'
+      - name: Staging and runtime role safety regressions
+        if: matrix.service == 'backend'
+        run: |
+          node --test tools/ci/tests/staging-safety.test.mjs
+          node --test tools/ci/tests/staging-config.test.mjs
+          node --test tools/ci/tests/release-source.test.mjs
+          cd backend
+          node --test testing/runtime-role-guard.test.mjs
       - name: Frontend tests and coverage
         if: matrix.service == 'frontend'
         run: npm test
@@ -111,7 +119,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh run download "$GITHUB_RUN_ID" --repo "$GITHUB_REPOSITORY" --name "coverage-${{ matrix.service }}" --dir "coverage/${{ matrix.service }}"
-      - run: node --test tools/ci/coverage.test.mjs
+      - run: node --test tools/ci/coverage.test.mjs tools/ci/baseline-script.test.mjs
       - name: Reject any coverage decrease
         env:
           GH_TOKEN: ${{ github.token }}
@@ -129,18 +137,20 @@ jobs:
           node-version: 22
       - run: mkdir -p security
       - name: Verify narrowly scoped scanner exceptions
-        run: python3 tools/quality/gitleaks-regression.py
+        run: |
+          python3 tools/quality/gitleaks-regression.py
+          python3 tools/quality/gitleaks-history-regression.py
       - name: Gitleaks history (redact before upload)
         run: |
           status=0
-          docker run --rm --user "$(id -u):$(id -g)" -v "$PWD:/repo:ro" -v "$PWD/security:/reports" zricethezav/gitleaks@sha256:691af3c7c5a48b16f187ce3446d5f194838f91238f27270ed36eef6359a574d9 git /repo --config=/repo/.gitleaks.toml --log-opts=--all --redact=100 --report-format=json --report-path=/reports/gitleaks.json || status=$?
+          docker run --rm --user "$(id -u):$(id -g)" -v "$PWD:/repo:ro" -v "$PWD/security:/reports" zricethezav/gitleaks@sha256:691af3c7c5a48b16f187ce3446d5f194838f91238f27270ed36eef6359a574d9 git /repo --config=/repo/.gitleaks.toml --gitleaks-ignore-path=/repo/.gitleaksignore --log-opts=--all --redact=100 --report-format=json --report-path=/reports/gitleaks.json || status=$?
           node tools/ci/redact-report.mjs gitleaks security/gitleaks.json security/gitleaks-redacted.json
           exit "$status"
       - name: Semgrep
         if: always()
         run: |
           status=0
-          docker run --rm --user "$(id -u):$(id -g)" -v "$PWD:/repo:ro" -v "$PWD/security:/reports" -w /repo semgrep/semgrep@sha256:b68f9b68483955b85042dac7b4533757779625a02dcf91e470da4c2df1b430be semgrep scan --config p/typescript --no-git-ignore --metrics=off --disable-version-check --error --json --output /reports/semgrep.json backend/src frontend/src || status=$?
+          docker run --rm --user "$(id -u):$(id -g)" -e HOME=/tmp -e SEMGREP_USER_HOME=/tmp/semgrep -v "$PWD:/repo:ro" -v "$PWD/security:/reports" -w /repo semgrep/semgrep@sha256:b68f9b68483955b85042dac7b4533757779625a02dcf91e470da4c2df1b430be semgrep scan --config p/typescript --no-git-ignore --metrics=off --disable-version-check --error --json --output /reports/semgrep.json backend/src frontend/src || status=$?
           node tools/ci/redact-report.mjs semgrep security/semgrep.json security/semgrep-redacted.json
           exit "$status"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
@@ -162,24 +172,32 @@ jobs:
       matrix:
         include:
           - service: backend
+            artifact: backend
+            target: runner
             image: devsync-api
           - service: frontend
-            image: devsync-web
+            artifact: frontend-ci-scan-only
+            target: ci-runner
+            image: devsync-web-ci-scan-only
+          - service: backend
+            artifact: extractor
+            target: extractor
+            image: devsync-extractor
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           persist-credentials: false
       - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f
-      - name: Build current production image
+      - name: Build scan image (frontend is CI-only and cannot be promoted)
         uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8
         with:
           context: ${{ matrix.service }}
-          target: runner
+          target: ${{ matrix.target }}
           load: true
           push: false
-          tags: devsync-${{ matrix.service }}:ci
-          cache-from: type=gha,scope=${{ matrix.service }}
-          cache-to: type=gha,scope=${{ matrix.service }},mode=max
+          tags: devsync-${{ matrix.artifact }}:ci
+          cache-from: type=gha,scope=${{ matrix.artifact }}
+          cache-to: type=gha,scope=${{ matrix.artifact }},mode=max
           build-args: |
             DEPLOYMENT_MODE=production
             NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=${{ vars.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
@@ -190,37 +208,37 @@ jobs:
       - name: Trivy blocks High and Critical vulnerabilities
         run: |
           mkdir -p security
-          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD/security:/reports" aquasec/trivy@sha256:05d0126976bdedcd0782a0336f77832dbea1c81b9cc5e4b3a5ea5d2ec863aca7 image --scanners vuln --exit-code 1 --severity HIGH,CRITICAL --format json --output /reports/trivy.json "devsync-${{ matrix.service }}:ci"
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD/security:/reports" aquasec/trivy@sha256:05d0126976bdedcd0782a0336f77832dbea1c81b9cc5e4b3a5ea5d2ec863aca7 image --scanners vuln --exit-code 1 --severity HIGH,CRITICAL --format json --output /reports/trivy.json "devsync-${{ matrix.artifact }}:ci"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
-          name: container-security-${{ matrix.service }}
+          name: container-security-${{ matrix.artifact }}
           path: security/trivy.json
           if-no-files-found: warn
       - name: Preserve CycloneDX SBOM
         run: |
-          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD/security:/reports" aquasec/trivy@sha256:05d0126976bdedcd0782a0336f77832dbea1c81b9cc5e4b3a5ea5d2ec863aca7 image --format cyclonedx --output /reports/sbom.cdx.json "devsync-${{ matrix.service }}:ci"
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD/security:/reports" aquasec/trivy@sha256:05d0126976bdedcd0782a0336f77832dbea1c81b9cc5e4b3a5ea5d2ec863aca7 image --format cyclonedx --output /reports/sbom.cdx.json "devsync-${{ matrix.artifact }}:ci"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: sbom-${{ matrix.service }}-${{ github.sha }}
+          name: sbom-${{ matrix.artifact }}-${{ github.sha }}
           path: security/sbom.cdx.json
           if-no-files-found: error
           retention-days: 365
       - name: Publish exactly the scanned image after all gates
-        if: github.event_name == 'push'
+        if: github.event_name == 'push' && matrix.target != 'ci-runner'
         id: publish
         env:
           GHCR_TOKEN: ${{ github.token }}
         run: |
           image="ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/${{ matrix.image }}:${GITHUB_SHA}"
           printf '%s' "$GHCR_TOKEN" | docker login ghcr.io --username "$GITHUB_ACTOR" --password-stdin
-          docker tag "devsync-${{ matrix.service }}:ci" "$image"
+          docker tag "devsync-${{ matrix.artifact }}:ci" "$image"
           docker push "$image"
           reference=$(docker inspect "$image" --format '{{index .RepoDigests 0}}')
           echo "image=${image%:*}" >> "$GITHUB_OUTPUT"
           echo "digest=${reference##*@}" >> "$GITHUB_OUTPUT"
       - name: Preserve build provenance
-        if: github.event_name == 'push'
+        if: github.event_name == 'push' && matrix.target != 'ci-runner'
         uses: actions/attest-build-provenance@96b4a1ef7235a096b17240c259729fdd70c83d45
         with:
           subject-name: ${{ steps.publish.outputs.image }}
@@ -235,6 +253,13 @@ jobs:
         target:
           [
             core,
+            identity,
+            recovery,
+            github-trail,
+            decision-execution,
+            grounded,
+            automation,
+            search,
             ai-cost,
             editor,
             kanban,

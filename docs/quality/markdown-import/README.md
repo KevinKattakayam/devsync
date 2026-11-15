@@ -1,0 +1,11 @@
+# Restricted Markdown import verification
+
+`POST /api/v1/workspaces/{id}/documents/import-markdown` (with the existing `/api` alias) accepts a JSON `markdown` string and optional title. Only authenticated workspace owners/editors can create documents. Input is limited to 256 KiB of UTF-8, rejects control characters and malformed Unicode, and accepts single-line paragraphs and ATX headings separated by blank lines. Other Markdown formatting and raw HTML are rejected, not silently converted. Existing document creation and tenant locking provide Yjs snapshot persistence, activity, indexing and optional idempotency. This route creates a new document; it does not alter an existing journal.
+
+- Focused test-first conversion and database authorization tests: `npm test -- --runTestsByPath src/__tests__/markdown-import.test.ts src/__tests__/resource-mutations.integration.test.ts --testNamePattern='Markdown|restricted' --coverage=false` exit 0, 11 passed; coverage was intentionally disabled for this focused command. Tests cover persisted Yjs content, owner/editor roles, viewer, foreign workspace, absent authentication, unsafe HTML and unsupported syntax. Identity and database are local fixtures.
+- `python3 tools/quality/gates.py backend docs/quality/markdown-import/backend`: exit 0, lint, format, strict types, 40 suites / 383 tests including PostgreSQL integration, and build. Raw outputs and statuses are in `backend/`. An initial attempt targeting `/tmp` failed because the gate requires its output inside the repository; the repository-local rerun passed.
+- `npm run openapi:generate` and `npm run openapi:check` in backend: exit 0.
+- `node tools/ci/coverage.mjs backend backend/coverage/coverage-summary.json tools/ci/coverage-baseline.json`: exit 0; statements 84.78%, branches 75.98%, functions 79.90%, lines 87.22%; thresholds unchanged.
+- Pinned Semgrep and Gitleaks scans: five commands, exit 0 each; see `security.json`.
+
+The import is deliberately limited and is not a full CommonMark parser. Markdown export, arbitrary rich text, CSV, archives, a browser import interface and Phase 13 acceptance remain outstanding. No external provider, production data, push or deployment was involved.

@@ -1,0 +1,56 @@
+[
+  {
+    "gate": "lint",
+    "command": [
+      "npm",
+      "run",
+      "lint"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 2.716,
+    "output": "backend-lint.txt"
+  },
+  {
+    "gate": "format",
+    "command": [
+      "npm",
+      "run",
+      "format:check"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 4.099,
+    "output": "backend-format.txt"
+  },
+  {
+    "gate": "types",
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 27.827,
+    "output": "backend-types.txt"
+  },
+  {
+    "gate": "tests",
+    "command": [
+      "npm",
+      "test"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 99.206,
+    "output": "backend-tests.txt"
+  },
+  {
+    "gate": "build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 10.957,
+    "output": "backend-build.txt"
+  }
+]

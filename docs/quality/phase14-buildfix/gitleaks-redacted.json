@@ -1,0 +1,23 @@
+[
+  {
+    "RuleID": "generic-api-key",
+    "Description": "Detected a Generic API Key, potentially exposing access to various services and sensitive operations.",
+    "StartLine": 5,
+    "EndLine": 5,
+    "StartColumn": 151,
+    "EndColumn": 188,
+    "Match": "[REDACTED]",
+    "Secret": "[REDACTED]",
+    "File": "docs/PROGRESS.md",
+    "SymlinkFile": "",
+    "Commit": "88d10175c7eb5f49a054094a819749be26ce146c",
+    "Link": "https://github.com/Kevinbastin/devsync/blob/88d10175c7eb5f49a054094a819749be26ce146c/docs/PROGRESS.md?plain=1#L5",
+    "Entropy": 3.7028196,
+    "Author": "Kevin Bastin",
+    "Email": "kevinkattakayam@karunya.edu.in",
+    "Date": "2026-11-09T04:20:47Z",
+    "Message": "docs(decisions): record timeline verification and limits",
+    "Tags": [],
+    "Fingerprint": "88d10175c7eb5f49a054094a819749be26ce146c:docs/PROGRESS.md:generic-api-key:5"
+  }
+]

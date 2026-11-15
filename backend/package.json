@@ -8,8 +8,9 @@
     "build": "prisma generate && tsc",
     "start": "node dist/server.js",
     "worker": "tsx src/worker.ts",
-    "test": "jest --runInBand",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand",
     "test:e2e": "playwright test -c playwright.config.ts",
+    "test:load-smoke": "NODE_ENV=test tsx testing/run-load-smoke.ts",
     "postinstall": "prisma generate",
     "db:migrate": "prisma migrate deploy",
     "db:seed": "tsx prisma/seed.ts",
@@ -24,6 +25,7 @@
     "db:migrate:dev": "prisma migrate dev"
   },
   "dependencies": {
+    "@clerk/backend": "3.13.2",
     "@clerk/express": "^2.1.47",
     "@hocuspocus/extension-database": "^4.6.0",
     "@hocuspocus/extension-redis": "^4.8.0",
@@ -36,7 +38,7 @@
     "@opentelemetry/sdk-node": "^0.221.0",
     "@prisma/client": "^5.22.0",
     "@prometheus-io/client": "^0.16.1",
-    "@sentry/node": "^11.10.0",
+    "@sentry/node": "11.11.0",
     "@socket.io/redis-adapter": "^8.3.0",
     "@tiptap/extension-highlight": "^3.32.2",
     "@tiptap/extension-image": "^3.32.2",
@@ -53,27 +55,31 @@
     "express-rate-limit": "^7.4.0",
     "groq-sdk": "^0.7.0",
     "helmet": "^8.0.0",
+    "image-size": "2.1.0",
     "ioredis": "^6.0.0",
     "morgan": "^1.10.0",
     "multer": "^2.5.0",
     "openai": "^6.49.0",
     "opossum": "^9.0.0",
+    "pdf-lib": "1.17.1",
     "pdf-parse": "^2.4.5",
     "pino": "^10.4.0",
     "pino-http": "^11.0.0",
+    "prisma": "^5.22.0",
     "socket.io": "^4.8.0",
     "stripe": "^18.5.0",
     "tesseract.js": "^7.0.0",
     "ws": "^8.21.1",
     "y-protocols": "^1.0.7",
     "y-websocket": "^1.5.4",
+    "yazl": "3.3.1",
     "yjs": "^13.6.31",
-    "zod": "^4.6.7",
-    "prisma": "^5.22.0"
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.5",
     "@playwright/test": "^1.62.1",
+    "@tesseract.js-data/eng": "1.0.0",
     "@testcontainers/postgresql": "^12.2.1",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
@@ -84,6 +90,8 @@
     "@types/pdf-parse": "^1.1.5",
     "@types/pg": "^8.21.0",
     "@types/supertest": "^7.2.1",
+    "@types/yazl": "3.3.1",
+    "axe-core": "4.14.0",
     "eslint": "^9.39.5",
     "jest": "^30.4.2",
     "jest-mock-extended": "^4.0.1",
@@ -93,11 +101,16 @@
     "supertest": "^7.2.2",
     "testcontainers": "^12.2.1",
     "ts-jest": "^29.4.12",
-    "tsx": "^4.19.0",
+    "tsx": "4.23.15",
     "typescript": "^5.6.0",
     "typescript-eslint": "^8.72.1"
   },
   "engines": {
     "node": "^22.12.0 || ^24.0.0 || >=26.0.0"
+  },
+  "overrides": {
+    "gcp-metadata@8.1.4": {
+      "gaxios": "7.3.1"
+    }
   }
 }

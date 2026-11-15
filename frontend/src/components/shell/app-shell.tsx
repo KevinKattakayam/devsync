@@ -26,6 +26,7 @@ import {
   FileText,
   Folder,
   HelpCircle,
+  Inbox,
   Kanban,
   LayoutDashboard,
   Loader2,
@@ -161,6 +162,7 @@ function Shell({
     { path: '', label: 'Overview', icon: LayoutDashboard },
     { path: '/docs', label: 'Documents', icon: FileText },
     { path: '/kanban', label: 'Sprint board', icon: Kanban },
+    { path: '/search', label: 'Search knowledge', icon: Search },
     ...(snippetSafetyEnabled
       ? [{ path: '/snippets/safety', label: 'Snippet safety', icon: Code2 }]
       : []),
@@ -168,7 +170,12 @@ function Shell({
     ...(decisionReceiptsEnabled
       ? [{ path: '/decisions', label: 'Decisions', icon: FileText }]
       : []),
-    ...(asyncDigestEnabled ? [{ path: '/digest', label: 'Async digest', icon: FileText }] : []),
+    ...(asyncDigestEnabled
+      ? [
+          { path: '/inbox', label: 'Inbox', icon: Inbox },
+          { path: '/digest', label: 'Async digest', icon: FileText },
+        ]
+      : []),
     { path: '/settings', label: 'Settings', icon: Settings },
   ];
   const section = sections.find((item) => item.path && pathname.startsWith(base + item.path));

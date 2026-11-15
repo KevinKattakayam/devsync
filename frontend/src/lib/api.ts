@@ -53,10 +53,23 @@ export const workspaceApi = {
     api.delete(`/workspaces/${id}/members/${memberId}`),
   search: (id: string, query: string, limit = 10) =>
     api.get(`/workspaces/${id}/search`, { params: { q: query, limit } }),
+  exportArchive: (id: string) =>
+    api.get<Blob>(`/workspaces/${encodeURIComponent(id)}/archive.zip`, {
+      responseType: 'blob',
+    }),
 };
 
 // Document API
 export const documentApi = {
+  ingest: (workspaceId: string, file: File) => {
+    const body = new FormData();
+    body.append('file', file);
+    return api.post<{ documentId: string }>(
+      `/workspaces/${encodeURIComponent(workspaceId)}/documents/ingest`,
+      body,
+      { headers: { 'Content-Type': undefined } },
+    );
+  },
   list: (workspaceId: string) => api.get(`/workspaces/${workspaceId}/documents`),
   get: (id: string) => api.get(`/documents/${id}`),
   create: (workspaceId: string, data?: { title?: string; parentId?: string }) =>
@@ -66,6 +79,22 @@ export const documentApi = {
     data: Partial<Pick<Document, 'title' | 'content' | 'icon' | 'isPublished' | 'isArchived'>>,
   ) => api.patch(`/documents/${id}`, data),
   delete: (id: string) => api.delete(`/documents/${id}`),
+  importMarkdown: (
+    workspaceId: string,
+    data: { title: string; markdown: string },
+    idempotencyKey: string,
+  ) =>
+    api.post(`/workspaces/${encodeURIComponent(workspaceId)}/documents/import-markdown`, data, {
+      headers: { 'Idempotency-Key': idempotencyKey },
+    }),
+  exportMarkdown: (id: string) =>
+    api.get<Blob>(`/documents/${encodeURIComponent(id)}/export-markdown`, {
+      responseType: 'blob',
+    }),
+  exportPdf: (id: string) =>
+    api.get<Blob>(`/documents/${encodeURIComponent(id)}/export.pdf`, {
+      responseType: 'blob',
+    }),
 };
 
 // Board/Task API
@@ -76,6 +105,16 @@ export const boardApi = {
 };
 
 export const taskApi = {
+  exportCsv: (workspaceId: string) =>
+    api.get<Blob>(`/workspaces/${encodeURIComponent(workspaceId)}/tasks/export-csv`, {
+      responseType: 'blob',
+    }),
+  importCsv: (workspaceId: string, csv: string, idempotencyKey: string) =>
+    api.post(
+      `/workspaces/${encodeURIComponent(workspaceId)}/tasks/import-csv`,
+      { csv },
+      { headers: { 'Idempotency-Key': idempotencyKey } },
+    ),
   createColumn: (boardId: string, data: { name: string }) =>
     api.post(`/tasks/boards/${boardId}/columns`, data),
   updateColumn: (columnId: string, data: { name: string }) =>

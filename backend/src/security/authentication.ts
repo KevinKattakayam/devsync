@@ -1,6 +1,8 @@
 import { AsyncLocalStorage } from 'async_hooks';
 import { clerkClient, getAuth } from '@clerk/express';
 import type { Request } from 'express';
+import type {} from '../middleware/auth.middleware';
+import { providerSessions } from './provider-sessions';
 import { ForbiddenError, UnauthorizedError } from '../utils/errors';
 
 export interface IdentityProfile {
@@ -20,7 +22,12 @@ export function withAuthentication<T>(strategy: AuthenticationStrategy, operatio
 }
 export async function requestSubject(req: Request): Promise<string | null> {
   const strategy = strategyContext.getStore();
-  return strategy ? strategy.identify(req) : getAuth(req).userId;
+  if (strategy) return strategy.identify(req);
+  const auth = getAuth(req);
+  if (!auth.userId) return null;
+  await providerSessions.assertActive(auth.sessionId, auth.userId);
+  req.providerSessionId = auth.sessionId || undefined;
+  return auth.userId;
 }
 export async function identityProfile(clerkId: string): Promise<IdentityProfile> {
   const strategy = strategyContext.getStore();

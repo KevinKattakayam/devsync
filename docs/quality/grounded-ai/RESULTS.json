@@ -1,0 +1,224 @@
+{
+  "branch": "upgrade/enterprise",
+  "baseCommit": "88d1017",
+  "status": "local-preview-implemented-reviewed-evaluation-pending",
+  "backend": {
+    "gates": [
+      {
+        "gate": "lint",
+        "command": [
+          "npm",
+          "run",
+          "lint"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 2.263,
+        "output": "backend-lint.txt"
+      },
+      {
+        "gate": "format",
+        "command": [
+          "npm",
+          "run",
+          "format:check"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 2.655,
+        "output": "backend-format.txt"
+      },
+      {
+        "gate": "types",
+        "command": [
+          "npm",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 14.072,
+        "output": "backend-types.txt"
+      },
+      {
+        "gate": "tests",
+        "command": [
+          "npm",
+          "test"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 82.136,
+        "output": "backend-tests.txt"
+      },
+      {
+        "gate": "build",
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 6.558,
+        "output": "backend-build.txt"
+      }
+    ],
+    "testSuites": 34,
+    "testsPassed": 336,
+    "coverageComparison": {
+      "service": "backend",
+      "status": "passed",
+      "metrics": {
+        "statements": 83.85,
+        "branches": 74.89,
+        "functions": 77.37,
+        "lines": 86.08
+      }
+    },
+    "baselineNote": "Previous phase percentages derived directly from decision-execution/backend-coverage-comparison.json, retained in backend-previous-phase-percentages.json."
+  },
+  "frontend": {
+    "gates": [
+      {
+        "gate": "lint",
+        "command": [
+          "npm",
+          "run",
+          "lint"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 11.034,
+        "output": "frontend-lint.txt"
+      },
+      {
+        "gate": "format",
+        "command": [
+          "npm",
+          "run",
+          "format:check"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 3.418,
+        "output": "frontend-format.txt"
+      },
+      {
+        "gate": "types",
+        "command": [
+          "npm",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 4.059,
+        "output": "frontend-types.txt"
+      },
+      {
+        "gate": "tests",
+        "command": [
+          "npm",
+          "test"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 14.433,
+        "output": "frontend-tests.txt"
+      },
+      {
+        "gate": "build",
+        "command": [
+          "npm",
+          "run",
+          "build",
+          "--",
+          "--webpack"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 36.429,
+        "output": "frontend-build.txt"
+      }
+    ],
+    "componentTestsPassed": 104,
+    "nodeTestsPassed": 9,
+    "coverageComparison": {
+      "service": "frontend",
+      "status": "passed",
+      "metrics": {
+        "statements": 47.87,
+        "branches": 42.89,
+        "functions": 45.3,
+        "lines": 48.75
+      }
+    }
+  },
+  "browser": {
+    "command": "E2E_CHROMIUM_PATH=/opt/google/chrome/chrome node tools/ci/browser.mjs grounded",
+    "exitCode": 0,
+    "passed": 1,
+    "evidence": "browser-accepted.txt",
+    "scope": "actual Chrome, isolated PostgreSQL/Redis and fixture identity, provider keys cleared; unavailable-provider UI and viewer draft denial",
+    "screenshot": null
+  },
+  "otherGates": {
+    "openapiCheck": {
+      "command": "npm run openapi:check --prefix backend",
+      "exitCode": 0,
+      "output": "openapi-check.txt"
+    },
+    "openapiCompatibility": {
+      "priorPathChanges": [],
+      "addedPaths": [
+        "/api/v3/ai/grounded"
+      ]
+    },
+    "workflowYamlParse": 0,
+    "dependencyAudits": [
+      {
+        "cwd": "backend",
+        "command": [
+          "npm",
+          "audit",
+          "--json",
+          "--audit-level=high"
+        ],
+        "exitCode": 0
+      },
+      {
+        "cwd": "frontend",
+        "command": [
+          "npm",
+          "audit",
+          "--json",
+          "--audit-level=high"
+        ],
+        "exitCode": 0
+      }
+    ],
+    "securityRecords": "security-final.json"
+  },
+  "failedAttempts": {
+    "initialMissingModuleRedTest": {
+      "exitCode": 1,
+      "rawLog": "not captured; TS2307 observed in session output"
+    },
+    "backendFormatting": "backend/ and backend-accepted/ gate records",
+    "frontendMatcherTypes": "frontend/ gate records",
+    "browserMissingExecutable": "browser.txt",
+    "browserWrongSetupRoute": "browser-chrome.txt",
+    "missingVerifiedFixtureHeader": "backend-release/ gate records",
+    "previousPhaseFunctionCoverageDecrease": "backend-previous-phase-comparison.stderr"
+  },
+  "limitations": [
+    "User confirmed no reviewed evaluation cases are available. No real model evaluation score or reviewed ground truth corpus exists.",
+    "Citation accessibility and strict schema are enforced; factual truth/entailment and universal injection resistance are not established.",
+    "Drafts require manual creation in existing task/receipt workflows; there is no write or acceptance executor.",
+    "Retrieval is lexical over bounded excerpts; recorded PR briefs do not fetch real PR diffs or independently verify provider/deployment state.",
+    "Gateway does not expose authoritative currency cost; reports use cost unavailable/null. Existing allowances and estimated token policy are not a hard currency ceiling.",
+    "No live provider acceptance, hosted CI, production migration or production capacity validation was performed."
+  ],
+  "operations": {
+    "push": false,
+    "deploy": false,
+    "productionDataChanged": false,
+    "laterPhaseStarted": false,
+    "localImplementationCommits": [
+      "dbfdb72",
+      "b63428e",
+      "5e7ea14"
+    ]
+  }
+}

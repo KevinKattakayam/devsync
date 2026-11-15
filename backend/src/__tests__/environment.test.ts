@@ -9,6 +9,10 @@ const production = {
   CLERK_SECRET_KEY: 'sk_test_synthetic',
   CLERK_PUBLISHABLE_KEY: 'pk_test_synthetic',
 };
+it('requires production NODE_ENV for hosted deployment mode', () => {
+  expect(() => validateEnvironment({ ...production, NODE_ENV: 'test' })).toThrow('NODE_ENV');
+  expect(() => validateEnvironment({ ...production, NODE_ENV: 'development' })).toThrow('NODE_ENV');
+});
 it('accepts explicit production settings and rejects unconfigured/unsafe settings without values', () => {
   expect(() => validateEnvironment(production)).not.toThrow();
   for (const [key, value] of [

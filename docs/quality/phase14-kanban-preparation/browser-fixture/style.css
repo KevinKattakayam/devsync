@@ -1,0 +1,46 @@
+body {
+  margin: 0;
+  background: white;
+  color: #161616;
+  font-family: sans-serif;
+}
+main {
+  padding: 16px;
+}
+.board {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+section {
+  border: 2px solid #555;
+  padding: 12px;
+  width: 260px;
+  min-height: 150px;
+}
+button {
+  color: #111;
+  background: white;
+  padding: 8px;
+}
+.ui-overlay {
+  position: fixed;
+  inset: 0;
+  background: #0008;
+}
+.ui-drawer {
+  position: fixed;
+  right: 16px;
+  top: 16px;
+  padding: 24px;
+  background: white;
+  color: #111;
+  border: 2px solid #444;
+}
+.ui-floating {
+  z-index: 100;
+  background: white;
+  color: #111;
+  border: 1px solid #444;
+  padding: 8px;
+}

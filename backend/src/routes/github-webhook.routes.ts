@@ -1,5 +1,6 @@
 import { Router } from 'express';
-import { randomUUID } from 'crypto';
+import { recordAutomationGitHubEvent } from '../services/automation-execution';
+import { randomUUID, createHash } from 'crypto';
 import { z } from 'zod';
 import { getQueue, QueueNames } from '../lib/queue';
 import { isRedisAvailable } from '../lib/redis';
@@ -8,6 +9,7 @@ import { emitWorkspace } from '../socket';
 import type { PRSummaryJobData } from '../agents/pr-summary.agent';
 import { validate } from '../middleware/validate.middleware';
 import { ConflictError } from '../utils/errors';
+import { recordGitHubExecution } from '../services/github-execution';
 const router = Router();
 const actorSchema = z.object({ login: z.string().max(255).optional() }).passthrough();
 export const githubEnvelopeSchema = z
@@ -83,6 +85,37 @@ router.post('/', validate(githubEnvelopeSchema), async (req, res, next) => {
         >`INSERT INTO "GitHubWebhookDelivery" (id, "deliveryId", event, "receivedAt") VALUES (${randomUUID()}, ${deliveryId}, ${event}, NOW()) ON CONFLICT ("deliveryId") DO NOTHING RETURNING id`;
         if (!inserted.length) return { status: 202, body: { ignored: 'Duplicate delivery' } };
         const workspaceId = repository.workspaceId;
+        const digest = createHash('sha256').update(raw).digest('hex');
+        const proof = await tx.$queryRaw<
+          { digest: string }[]
+        >`INSERT INTO "GitHubWebhookProof" ("repositoryId","workspaceId",digest) VALUES (${repository.id},${repository.workspaceId},${digest}) ON CONFLICT ("repositoryId",digest) DO NOTHING RETURNING digest`;
+        if (!proof.length)
+          return { status: 202, body: { ignored: 'Duplicate authenticated payload' } };
+
+        if (
+          !(await recordGitHubExecution(
+            tx,
+            repository,
+            event,
+            payload.action,
+            event === 'check_run'
+              ? payload.check_run
+              : event === 'pull_request_review'
+                ? { review: payload.review, pull_request: payload.pull_request }
+                : payload.pull_request,
+          ))
+        )
+          return { status: 202, body: { ignored: 'Stale or unversioned execution event' } };
+        await recordAutomationGitHubEvent(
+          tx,
+          repository,
+          event,
+          payload.action,
+          event === 'check_run' ? payload.check_run : payload.pull_request,
+          digest,
+        );
+        if (event === 'check_run' || event === 'pull_request_review')
+          return { status: 200, body: { processed: 'Check evidence recorded' } };
         if (
           event === 'push' ||
           (event === 'issues' && ['opened', 'closed'].includes(payload.action || ''))

@@ -1,3 +1,4 @@
+import { Prisma } from '@prisma/client';
 import { Request, Response, NextFunction } from 'express';
 import { workspaceSearchSchema } from '../schemas/search.schema';
 import { READ_ROLES, withWorkspaceAccess, authorizeWorkspace } from '../security/workspace-policy';
@@ -9,6 +10,7 @@ export { workspaceSearchSchema } from '../schemas/search.schema';
  * fallback keeps search useful before an embedding provider is configured. */
 export async function workspaceSearch(req: Request, res: Response, next: NextFunction) {
   try {
+    res.setHeader('Cache-Control', 'no-store');
     const workspaceId = String(req.params.id);
     const { q, limit } = workspaceSearchSchema.parse(req.query);
     await authorizeWorkspace(req.user!.userId, workspaceId);
@@ -22,15 +24,10 @@ export async function workspaceSearch(req: Request, res: Response, next: NextFun
       READ_ROLES,
       (tx) =>
         Promise.all([
-          tx.document.findMany({
-            where: {
-              workspaceId,
-              isArchived: false,
-              OR: [{ title: contains }, { content: { string_contains: q } }],
-            },
-            select: { id: true, title: true, updatedAt: true },
-            take: limit,
-          }),
+          tx.$queryRaw<{ id: string; title: string; updatedAt: Date }[]>(Prisma.sql`
+            SELECT id,title,"updatedAt" FROM "Document" WHERE "workspaceId"=${workspaceId}
+            AND NOT "isArchived" AND (title ILIKE ${'%' + q + '%'} OR devsync_document_text(content) ILIKE ${'%' + q + '%'})
+            ORDER BY "updatedAt" DESC,id LIMIT ${limit}`),
           tx.snippet.findMany({
             where: {
               workspaceId,

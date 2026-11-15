@@ -1,0 +1,17 @@
+[
+  {
+    "url": "http://localhost:3410/healthz",
+    "status": 200,
+    "scope": "Public health or unauthenticated denial only; no real sign-in claim"
+  },
+  {
+    "url": "http://localhost:5410/api/health",
+    "status": 200,
+    "scope": "Public health or unauthenticated denial only; no real sign-in claim"
+  },
+  {
+    "url": "http://localhost:5410/api/v1/auth/me",
+    "status": 401,
+    "scope": "Public health or unauthenticated denial only; no real sign-in claim"
+  }
+]

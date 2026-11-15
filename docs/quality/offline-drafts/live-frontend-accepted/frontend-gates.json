@@ -1,0 +1,58 @@
+[
+  {
+    "gate": "lint",
+    "command": [
+      "npm",
+      "run",
+      "lint"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 10.841,
+    "output": "frontend-lint.txt"
+  },
+  {
+    "gate": "format",
+    "command": [
+      "npm",
+      "run",
+      "format:check"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 3.046,
+    "output": "frontend-format.txt"
+  },
+  {
+    "gate": "types",
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 2.624,
+    "output": "frontend-types.txt"
+  },
+  {
+    "gate": "tests",
+    "command": [
+      "npm",
+      "test"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 16.04,
+    "output": "frontend-tests.txt"
+  },
+  {
+    "gate": "build",
+    "command": [
+      "npm",
+      "run",
+      "build",
+      "--",
+      "--webpack"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 34.653,
+    "output": "frontend-build.txt"
+  }
+]

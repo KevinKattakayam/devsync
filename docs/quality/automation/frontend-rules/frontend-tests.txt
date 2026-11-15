@@ -1,0 +1,132 @@
+
+> frontend@0.1.0 test
+> node --test tests/*.test.mjs && vitest run
+
+TAP version 13
+# Subtest: I01 Next meets the current critical advisory remediation floor
+ok 1 - I01 Next meets the current critical advisory remediation floor
+  ---
+  duration_ms: 1.510345
+  type: 'test'
+  ...
+# Subtest: I01 unused NextAuth is absent from the installed frontend
+ok 2 - I01 unused NextAuth is absent from the installed frontend
+  ---
+  duration_ms: 1.148387
+  type: 'test'
+  ...
+# Subtest: fixture generator refuses production, development and unset modes
+ok 3 - fixture generator refuses production, development and unset modes
+  ---
+  duration_ms: 1.276992
+  type: 'test'
+  ...
+# Subtest: production source cannot select or import the test authentication adapter
+ok 4 - production source cannot select or import the test authentication adapter
+  ---
+  duration_ms: 39.738884
+  type: 'test'
+  ...
+# Subtest: code blocks and inline code escape HTML
+ok 5 - code blocks and inline code escape HTML
+  ---
+  duration_ms: 1.458822
+  type: 'test'
+  ...
+# Subtest: E02 treats ordinary HTML, handlers and malformed tags as inert text
+ok 6 - E02 treats ordinary HTML, handlers and malformed tags as inert text
+  ---
+  duration_ms: 0.509847
+  type: 'test'
+  ...
+# Subtest: E02 escapes HTML inside headings, lists and table cells
+ok 7 - E02 escapes HTML inside headings, lists and table cells
+  ---
+  duration_ms: 0.305644
+  type: 'test'
+  ...
+# Subtest: :root text, status and control tokens meet their WCAG AA contrast thresholds
+ok 8 - :root text, status and control tokens meet their WCAG AA contrast thresholds
+  ---
+  duration_ms: 2.12199
+  type: 'test'
+  ...
+# Subtest: .dark text, status and control tokens meet their WCAG AA contrast thresholds
+ok 9 - .dark text, status and control tokens meet their WCAG AA contrast thresholds
+  ---
+  duration_ms: 1.58054
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 552.629758
+
+ RUN  v5.0.5 /home/kevin/devsync/frontend
+      Coverage enabled with v8
+
+ ❯ tests/automation-rules.test.tsx (2 tests | 1 failed) 435ms
+   × only owners can create and opt in rules 352ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/automation-rules.test.tsx > only owners can create and opt in rules
+TestingLibraryElementError: Unable to find a label with the text of: Rule name
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div />[39m
+  [36m<div>[39m
+    [36m<section[39m
+      [33maria-label[39m=[32m"Automation rules"[39m
+      [33mclass[39m=[32m"space-y-3 rounded-xl border p-4"[39m
+    [36m>[39m
+      [36m<h2[39m
+        [33mclass[39m=[32m"text-lg font-semibold"[39m
+      [36m>[39m
+        [0mAutomation rules[0m
+      [36m</h2>[39m
+      [36m<p>[39m
+        [0mEvent processing and per-execution approval are not yet available. Rules do not run.[0m
+      [36m</p>[39m
+      [36m<button[39m
+        [33mclass[39m=[32m"ui-button"[39m
+        [33mdata-size[39m=[32m"default"[39m
+        [33mdata-variant[39m=[32m"primary"[39m
+        [33mdisabled[39m=[32m""[39m
+        [33mtype[39m=[32m"button"[39m
+      [36m>[39m
+        [0mLoad automation rules[0m
+      [36m</button>[39m
+    [36m</section>[39m
+  [36m</div>[39m
+[36m</body>[39m
+ ❯ Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ getAllByLabelText node_modules/@testing-library/dom/dist/queries/label-text.js:111:38
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ tests/automation-rules.test.tsx:31:27
+     29|   render(<AutomationRules workspaceId="w" owner />);
+     30|   fireEvent.click(screen.getByRole('button', { name: 'Load automation …
+     31|   fireEvent.change(screen.getByLabelText('Rule name'), { target: { val…
+       |                           ^
+     32|   fireEvent.click(screen.getByRole('button', { name: 'Create disabled …
+     33|   expect(await screen.findByText('Review')).toBeTruthy();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 25 passed (26)
+      Tests  1 failed | 105 passed (106)
+   Start at  12:13:29
+   Duration  12.69s (environment 39%, tests 34%, import 23%, worker 2%, transform 2%)
+
+Environment  jsdom was created 26 times · 29.30s total, 39% of tracked time
+             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+             learn more: https://vitest.dev/guide/improving-performance#test-environments
+

@@ -1,0 +1,7 @@
+
+> devsync-backend@1.0.0 typecheck
+> tsc --noEmit && tsc -p tsconfig.seed.json && tsc -p tsconfig.testing.json
+
+src/security/authentication.ts(39,12): error TS2339: Property 'user' does not exist on type 'Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+src/security/authentication.ts(40,45): error TS2339: Property 'user' does not exist on type 'Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.
+src/security/authentication.ts(41,69): error TS2339: Property 'user' does not exist on type 'Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>'.

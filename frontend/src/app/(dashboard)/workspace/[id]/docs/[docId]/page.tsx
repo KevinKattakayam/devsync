@@ -12,6 +12,8 @@ import { Document } from '@/types';
 import { useEditor } from '@tiptap/react';
 import { EditorSurface } from '@/components/workspace/editor-surface';
 import { DocumentSyncStatus } from '@/components/workspace/document-sync-status';
+import { DraftExport } from '@/components/workspace/draft-export';
+import { LocalDraftStatus } from '@/components/workspace/local-draft-status';
 import StarterKit from '@tiptap/starter-kit';
 import Placeholder from '@tiptap/extension-placeholder';
 import Highlight from '@tiptap/extension-highlight';
@@ -25,10 +27,11 @@ import { CollaborationCursor } from '@/lib/tiptap-collaboration-cursor';
 import { useLocalFirstYDoc } from '@/lib/local-first-yjs';
 import { useCRDTGarbageCollector } from '@/hooks/use-crdt-garbage-collector';
 import { markdownToHtml } from '@/lib/markdown';
-import { Users, Sparkles } from 'lucide-react';
+import { Users } from 'lucide-react';
 import { Button, Dialog, DialogContent, Input, Skeleton } from '@/components/ui';
 import { EditorTools } from '@/components/editor/tools';
 import { toast } from 'sonner';
+import { DocumentExportControls } from '@/components/workspace/portability-controls';
 
 // ── Collaboration cursor colors ──────────────────────────────
 
@@ -307,14 +310,13 @@ function EditorInner({
 
   return (
     <>
-      {editor && <EditorTools editor={editor} canWrite={canWrite} />}
-      {canWrite && (
-        <div className="mb-4 flex justify-end">
-          <Button variant="ghost" disabled={aiLoading} onClick={() => setShowAiMenu(true)}>
-            <Sparkles aria-hidden="true" className="size-4" />
-            {aiLoading ? 'Generating…' : 'AI Assistant'}
-          </Button>
-        </div>
+      {editor && (
+        <EditorTools
+          editor={editor}
+          canWrite={canWrite}
+          onOpenAssistant={() => setShowAiMenu(true)}
+          assistantBusy={aiLoading}
+        />
       )}
       <Dialog open={showAiMenu && canWrite} onOpenChange={setShowAiMenu}>
         <DialogContent
@@ -454,9 +456,13 @@ function DocumentEditor({ workspaceId, docId }: { workspaceId: string; docId: st
     document: ydoc,
     provider,
     localReady,
+    localPersistence,
     syncStatus,
     canWrite,
     pending,
+    accessDenied,
+    serverRejected,
+    purgeLocal,
   } = useLocalFirstYDoc(`document:${workspaceId}:${docId}`, getToken, user?.id);
   useCRDTGarbageCollector(ydoc);
 
@@ -527,6 +533,18 @@ function DocumentEditor({ workspaceId, docId }: { workspaceId: string; docId: st
       setTitleSaving(false);
     }
   };
+  if (localPersistence === 'purged' || localPersistence === 'purging')
+    return (
+      <div className="mx-auto max-w-3xl px-4 py-12">
+        <h1 className="text-xl font-semibold">Local draft recovery</h1>
+        <LocalDraftStatus status={localPersistence} />
+        <p className="my-4">
+          This document is disconnected in this tab. The server document and downloaded exports are
+          unchanged. Close this tab to release its in-memory copy. Automatic local reload remains
+          blocked; recovery-file restoration is disabled.
+        </p>
+      </div>
+    );
   const cachedContent = localReady && ydoc.getXmlFragment('default').length > 0;
   if (loadError && !cachedContent)
     return (
@@ -547,7 +565,7 @@ function DocumentEditor({ workspaceId, docId }: { workspaceId: string; docId: st
     );
 
   return (
-    <div className="w-full min-w-0 max-w-3xl mx-auto px-4 md:px-8 py-8">
+    <div className="w-full min-w-0 max-w-4xl mx-auto px-4 md:px-8 py-8">
       {loadError && (
         <div role="alert" className="mb-6 rounded-lg bg-secondary p-4 text-sm">
           <p>
@@ -566,24 +584,60 @@ function DocumentEditor({ workspaceId, docId }: { workspaceId: string; docId: st
           </Button>
         </div>
       )}
-      {/* Title */}
-      <input
-        aria-label="Document title"
-        readOnly={!canWrite || titleSaving || !doc}
-        type="text"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        onBlur={saveTitle}
-        className="block w-full min-w-0 text-[28px] leading-9 font-semibold text-foreground bg-transparent mb-2 placeholder:text-muted-foreground"
-        placeholder={loadError ? 'Document title unavailable' : 'Untitled'}
-        maxLength={200}
-      />
-      <div className="flex flex-wrap items-center gap-3 mb-6 text-xs text-muted-foreground">
+      <header className="mb-4 flex min-w-0 flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+        <div className="min-w-0 flex-1">
+          <label htmlFor="editor-document-title" className="sr-only">
+            Document title
+          </label>
+          <input
+            id="editor-document-title"
+            aria-label="Document title"
+            readOnly={!canWrite || titleSaving || !doc}
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            onBlur={saveTitle}
+            className="block w-full min-w-0 rounded-md border border-transparent bg-transparent px-0 py-1 text-2xl leading-tight font-semibold text-foreground placeholder:text-muted-foreground hover:border-border focus-visible:border-input sm:text-[28px]"
+            placeholder={loadError ? 'Document title unavailable' : 'Untitled'}
+            maxLength={200}
+          />
+        </div>
+        {doc && (
+          <div className="shrink-0">
+            <DocumentExportControls documentId={docId} archived={doc.isArchived} />
+          </div>
+        )}
+      </header>
+      <div
+        role="group"
+        aria-label="Document status and collaborators"
+        className="mb-5 flex min-w-0 flex-wrap items-center gap-x-3 gap-y-2 border-b border-border pb-4 text-xs text-muted-foreground"
+      >
         <DocumentSyncStatus
           status={syncStatus}
           pending={pending || !localReady}
           canWrite={canWrite}
+          accessDenied={accessDenied}
+          serverRejected={serverRejected}
         />
+        <LocalDraftStatus status={localPersistence} />
+        <span>
+          Server reconciliation:{' '}
+          {accessDenied || serverRejected
+            ? 'blocked'
+            : syncStatus === 'connected'
+              ? 'connection synchronized'
+              : 'awaiting connection'}
+        </span>
+        {localReady && user?.id && (
+          <DraftExport
+            key={`${user.id}:${docId}`}
+            document={ydoc}
+            principal={user.id}
+            room={`document:${workspaceId}:${docId}`}
+            onPurge={purgeLocal}
+          />
+        )}
         {doc?.author && <span>by {doc.author.name}</span>}
         {connectedUsers > 0 && (
           <span className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-success/10 text-success text-[10px] font-medium">
@@ -592,6 +646,7 @@ function DocumentEditor({ workspaceId, docId }: { workspaceId: string; docId: st
           </span>
         )}
         <span
+          aria-hidden="true"
           className={`w-1.5 h-1.5 rounded-full ml-1 ${
             connectionStatus === 'connected'
               ? 'bg-success'

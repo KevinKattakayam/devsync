@@ -1,0 +1,85 @@
+{
+  "phase": "Search correctness and permission-aware knowledge indexing",
+  "status": "local_verified",
+  "baseCommit": "4873ae3",
+  "branch": "upgrade/enterprise",
+  "backend": {
+    "runner": "python3 tools/quality/gates.py backend docs/quality/search-indexing/backend-release",
+    "records": "backend-release/backend-gates.json",
+    "exitCode": 0,
+    "suites": 33,
+    "tests": 326
+  },
+  "frontend": {
+    "runner": "python3 tools/quality/gates.py frontend docs/quality/search-indexing/frontend-release",
+    "records": "frontend-release/frontend-gates.json",
+    "exitCode": 0,
+    "componentTests": 97,
+    "nodeTests": 9
+  },
+  "browser": [
+    {
+      "command": "E2E_CHROMIUM_PATH=/usr/bin/google-chrome node tools/ci/browser.mjs search",
+      "exitCode": 0,
+      "passed": 1,
+      "log": "browser-utc-final.txt",
+      "scope": "Actual Chrome/Postgres/Redis, fixture identities, actual TipTap/Yjs edit; no external providers"
+    },
+    {
+      "command": "E2E_CHROMIUM_PATH=/usr/bin/google-chrome node tools/ci/browser.mjs core",
+      "exitCode": 0,
+      "passed": 12,
+      "log": "browser-core.txt",
+      "scope": "Existing fixture-auth application journeys/contracts"
+    }
+  ],
+  "coverage": "coverage-final.json; preceding phase comparison all metrics pass, no threshold/baseline change",
+  "security": "security-release.json and history-command.json; pinned Semgrep/Gitleaks, no exceptions/rules changed; evidence-final-secrets.json final bundle scan",
+  "audits": "audits.json; unchanged High/Critical gate passes; Moderate/Low retained",
+  "contracts": "openapi-release-check.txt, openapi-compatibility.json: prior operations unchanged, two v2 paths added",
+  "ciSyntax": "ci-syntax.json",
+  "migration": "202611080003_search_text: transactional additive text function + four GIN expression indexes; no source-row updates; no production execution",
+  "freshness": "lexical is current committed projection; indexedAt=retrievedAt is read-time evaluation, not provider/embedding/build time",
+  "semantic": "new UI explicitly lexical/not_requested; existing optional pgvector path separately rejects invalidated hashes",
+  "failureEvidence": [
+    "body-red.txt: sandbox Docker runtime failure, not behavioral evidence",
+    "body-red-runtime.txt: unchanged controller misses acknowledged projection",
+    "vector-red.txt: old predicate returns invalidated vector",
+    "legacy-string-red.txt: implementation compatibility edge caught pre-commit",
+    "ui-red.txt: absent-module scaffold only",
+    "backend-first-tests.txt: new PR name tokenization expectation and ungenerated OpenAPI",
+    "frontend-types-first.txt: existing Button API mismatch",
+    "frontend-final/frontend-lint.txt: ref-cleanup lint warning",
+    "assignee-tests.txt: missing newly added member API mock",
+    "browser-first.txt: title selector matched unrelated sidebar",
+    "browser-verified.txt: fixture used user ID instead of membership ID",
+    "browser-release.txt: concurrent verification startup timeout; isolated accepted run passes",
+    "timezone-red.txt: mixed timestamp types in the new v2 query drop an inclusive boundary under Asia/Kolkata; fixed before delivery"
+  ],
+  "screenshot": {
+    "path": "browser-fixture.png",
+    "sha256": "efe65f261ec02383e800bbeab2c7e70db81f6254a4081a91379d599fe0d28e85",
+    "scope": "Synthetic viewer search, inspected; no credentials/provider success"
+  },
+  "limits": [
+    "No live Clerk/AI/GitHub or hosted CI/production migration/deploy proof",
+    "Simple lexical matching, bounded preview/top50, no fuzzy search or large-scale certification",
+    "Production CREATE INDEX write locks/disk/planner/vector-text limits need operator review",
+    "No bulk repair of preexisting externally inconsistent projections or reembedding",
+    "Existing legacy semantic DTO/navigation/timestamp limits preserved",
+    "Previously disclosed browser/sidebar state cannot be remotely erased; search open always rechecks"
+  ],
+  "existingGitHubRepositoriesAccessedOrModified": false,
+  "liveProviderAttempted": false,
+  "push": false,
+  "deployment": false,
+  "nextPhaseStarted": false,
+  "sourceAndDocumentDiffCheck": "git diff 4873ae3 --check excluding raw terminal logs: exit0",
+  "timezone": "Explicit UTC interpretation of existing naive columns, explicit timestamptz bound casts; tested in a real non-UTC runtime DB session",
+  "implementationCommits": [
+    "6ceabe7 fix(search): normalize mixed timestamps for inclusive UTC filters",
+    "75e4a7c test(search): verify live editor indexing and permission loss in Chrome",
+    "812fbe2 feat(search): expose lexical knowledge search with checked source opens",
+    "1415ae0 fix(search): query current authorized projections and reject stale vectors"
+  ]
+}

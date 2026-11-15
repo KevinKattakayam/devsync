@@ -1,0 +1,45 @@
+[
+  {
+    "command": [
+      "git",
+      "branch",
+      "-vv"
+    ],
+    "exitCode": 0,
+    "output": "  main               9deffe2 [origin/main] feat: enterprise collaborative workspace with Clerk auth, CRDT sync, AI co-pilot, and infra configuration\n* upgrade/enterprise 75e4a7c [origin/upgrade/enterprise: ahead 27] test(search): verify live editor indexing and permission loss in Chrome\n"
+  },
+  {
+    "command": [
+      "git",
+      "rev-list",
+      "--left-right",
+      "--count",
+      "main...4873ae3"
+    ],
+    "exitCode": 0,
+    "output": "0\t88\n"
+  },
+  {
+    "command": [
+      "git",
+      "merge-base",
+      "main",
+      "4873ae3"
+    ],
+    "exitCode": 0,
+    "output": "9deffe28f37cf86905617cb6e4105b6588ed5f56\n"
+  },
+  {
+    "command": [
+      "git",
+      "log",
+      "--oneline",
+      "--graph",
+      "--decorate",
+      "-20",
+      "4873ae3"
+    ],
+    "exitCode": 0,
+    "output": "* 4873ae3 docs(github): record local verification and pending live setup\n* 6fbeec1 test(github): exercise signed PR CI and revocation trail in Chrome\n* 41082f6 feat(github): show timestamped execution evidence and disconnected state\n* 7591313 fix(github): fence replay and ordering and honor App access withdrawal\n* 62faef6 docs(work-graph): record partial foundation and outstanding implementation\n* 4b9b737 feat(work-graph): add isolated GitHub source-proof adapter foundation\n* 3d92625 docs(tasks): audit existing planning boundaries and pending review policy\n* 35142de docs(realtime): record verified recovery and remaining operational limits\n* c5f0d2f test(realtime): verify browser crash recovery and authorization boundaries\n* 91a9ae3 fix(editor): scope acknowledgements and access loss to each replica\n* fadb379 docs(identity): record local verification and real-account acceptance blocker\n* c5d5b72 test(identity): cover lifecycle journeys and preserve provider smoke limits\n* b329f73 feat(identity): add guarded recovery and lifecycle settings\n* 299ed93 fix(identity): enforce provider sessions and transactional lifecycle policies\n* 166085b docs: record verified release fixes and external release gates\n* c7803b3 test(ingestion): preserve authorization across extraction completion\n* 5fe61cb test(deployment): verify isolated extractor in clean-clone startup\n* 1e0b471 fix(ci): classify the public scanner sentinel with exact detection regressions\n* 3dc3eab fix(ingestion): isolate binary parsing and use configured upload transport\n* eb332b5 fix(crdt): atomically schedule indexing under current writer authority\n"
+  }
+]

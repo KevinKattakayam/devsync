@@ -1,0 +1,13 @@
+
+> devsync-backend@1.0.0 test
+> node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand --runTestsByPath src/__tests__/collaboration.integration.test.ts src/__tests__/resource-mutations.integration.test.ts --coverage=false
+
+{"level":40,"time":1794125541920,"service":"devsync-api","requestId":"system","event":"ai_quota_storage_error","count":1}
+{"level":40,"time":1794125541969,"service":"devsync-api","requestId":"system","event":"ai_quota_storage_error","count":1}
+{"level":50,"time":1794125544372,"service":"devsync-api","msg":"Unexpected server error"}
+
+Test Suites: 2 passed, 2 total
+Tests:       128 passed, 128 total
+Snapshots:   0 total
+Time:        54.977 s
+Ran all test suites within paths "src/__tests__/collaboration.integration.test.ts", "src/__tests__/resource-mutations.integration.test.ts".

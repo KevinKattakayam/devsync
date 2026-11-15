@@ -1,0 +1,6 @@
+{
+  "pid": 91423,
+  "scope": "Exact fixture server left by tsx wrapper SIGKILL; port5501 only",
+  "signals": "SIGTERM then SIGKILL if same process remained",
+  "productionStackTouched": false
+}

@@ -1,0 +1,517 @@
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": PostgreSQL database "devsync_e2e_browser", schema "public" at "localhost:32807"
+
+15 migrations found in prisma/migrations
+
+Applying migration `20260729000000_baseline`
+Applying migration `20260729180000_enterprise_platform`
+Applying migration `20260815000000_phase_3_tenant_rls`
+Applying migration `20260815001000_scim_provisioning`
+Applying migration `20260815002000_commercial_billing`
+Applying migration `20261031000000_tenant_indexes`
+Applying migration `20261031010000_crdt_journal`
+Applying migration `202611010001_canonical_revision`
+Applying migration `202611010002_embedding_authority`
+Applying migration `202611010003_atomic_create_idempotency`
+Applying migration `202611010004_workspace_invitations`
+Applying migration `202611020001_decision_receipts`
+Applying migration `202611020002_snippet_safety`
+Applying migration `202611020003_async_digest`
+Applying migration `202611080001_export_requests`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20260729000000_baseline/
+    └─ migration.sql
+  └─ 20260729180000_enterprise_platform/
+    └─ migration.sql
+  └─ 20260815000000_phase_3_tenant_rls/
+    └─ migration.sql
+  └─ 20260815001000_scim_provisioning/
+    └─ migration.sql
+  └─ 20260815002000_commercial_billing/
+    └─ migration.sql
+  └─ 20261031000000_tenant_indexes/
+    └─ migration.sql
+  └─ 20261031010000_crdt_journal/
+    └─ migration.sql
+  └─ 202611010001_canonical_revision/
+    └─ migration.sql
+  └─ 202611010002_embedding_authority/
+    └─ migration.sql
+  └─ 202611010003_atomic_create_idempotency/
+    └─ migration.sql
+  └─ 202611010004_workspace_invitations/
+    └─ migration.sql
+  └─ 202611020001_decision_receipts/
+    └─ migration.sql
+  └─ 202611020002_snippet_safety/
+    └─ migration.sql
+  └─ 202611020003_async_digest/
+    └─ migration.sql
+  └─ 202611080001_export_requests/
+    └─ migration.sql
+      
+All migrations have been successfully applied.
+Sample workspace seeded. Sign in with the supplied Clerk test identities.
+/home/kevin/devsync/.worktrees/frontend-fixture
+Isolated fixture server ready
+▲ Next.js 16.4.3 (webpack)
+- Local:         http://127.0.0.1:3001
+- Network:       http://127.0.0.1:3001
+✓ Ready in 323ms
+✓ Running next.config.ts took 34ms
+
+✓ Generated AGENTS.md for AI agents. Set `agentRules: false` in next.config to disable.
+○ Compiling /(auth)/login/[[...rest]]/page ...
+ GET /login 200 in 452ms (proxy.ts: 75ms)
+ GET /login 200 in 742ms (next.js: 372ms, proxy.ts: 4ms, application-code: 367ms)
+
+Running 1 test using 1 worker
+
+(node:93565) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+○ Compiling /(dashboard)/workspace/[id]/docs/[docId]/page ...
+ GET /workspace/cmw7laa72000487hcpbdb7t8f/docs/cmw7laa95000r87hc4tzc3l2n 200 in 4.8s (next.js: 4.3s, proxy.ts: 17ms, application-code: 422ms)
+ GET /workspace/cmw7laa72000487hcpbdb7t8f/docs/cmw7laa95000r87hc4tzc3l2n 200 in 4.8s (next.js: 4.3s, proxy.ts: 21ms, application-code: 423ms)
+ GET /workspace/cmw7laa72000487hcpbdb7t8f/docs/cmw7laa95000r87hc4tzc3l2n 200 in 4.8s (next.js: 4.3s, proxy.ts: 21ms, application-code: 426ms)
+ GET /workspace/cmw7laa72000487hcpbdb7t8f/docs/cmw7laa95000r87hc4tzc3l2n 200 in 95ms (next.js: 37ms, proxy.ts: 5ms, application-code: 54ms)
+node:events:497
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 127.0.0.1:5501
+    at Server.setupListenHandle [as _listen2] (node:net:1941:16)
+    at listenInCluster (node:net:1998:12)
+    at node:net:2207:7
+    at process.processTicksAndRejections (node:internal/process/task_queues:89:21)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1977:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:89:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '127.0.0.1',
+  port: 5501
+}
+
+Node.js v22.23.2
+  ✘  1 testing/browser/recovery.spec.ts:80:5 › actual browser replicas recover journal and snapshots across latency, offline reload, SIGKILL and revocation (fixture identities) (36.5s)
+
+
+  1) testing/browser/recovery.spec.ts:80:5 › actual browser replicas recover journal and snapshots across latency, offline reload, SIGKILL and revocation (fixture identities) 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+    Call Log:
+    - Timeout 20000ms exceeded while waiting on the predicate
+
+      271 |         { timeout: 20000 },
+      272 |       )
+    > 273 |       .toBe(generation + 1);
+          |        ^
+      274 |     await Promise.all(contexts.map((context, i) => login(context, roles[i]))); // Fixture sessions are process-local, unlike Clerk.
+      275 |     const fresh = await browser.newContext();
+      276 |     contexts.push(fresh);
+        at /home/kevin/devsync/backend/testing/browser/recovery.spec.ts:273:8
+
+    Error Context: test-results/recovery-actual-browser-re-e8c18-ocation-fixture-identities-/error-context.md
+
+  1 failed
+    testing/browser/recovery.spec.ts:80:5 › actual browser replicas recover journal and snapshots across latency, offline reload, SIGKILL and revocation (fixture identities) 
+[?25h
+[ioredis] Unhandled error event: MaxRetriesPerRequestError: Reached the max retries per request limit (which is 1). Refer to "maxRetriesPerRequest" option for details.
+    at Socket.<anonymous> (/home/kevin/devsync/backend/node_modules/@hocuspocus/extension-redis/node_modules/ioredis/built/redis/event_handler.js:182:37)
+    at Object.onceWrapper (node:events:634:26)
+    at Socket.emit (node:events:519:28)
+    at TCP.<anonymous> (node:net:347:12)
+    at TCP.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: MaxRetriesPerRequestError: Reached the max retries per request limit (which is 1). Refer to "maxRetriesPerRequest" option for details.
+    at Socket.<anonymous> (/home/kevin/devsync/backend/node_modules/@hocuspocus/extension-redis/node_modules/ioredis/built/redis/event_handler.js:182:37)
+    at Object.onceWrapper (node:events:634:26)
+    at Socket.emit (node:events:519:28)
+    at TCP.<anonymous> (node:net:347:12)
+    at TCP.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+prisma:error Error in PostgreSQL connection: Error { kind: Db, cause: Some(DbError { severity: "FATAL", parsed_severity: Some(Fatal), code: SqlState(E57P01), message: "terminating connection due to administrator command", detail: None, hint: None, position: None, where_: None, schema: None, table: None, column: None, datatype: None, constraint: None, file: Some("postgres.c"), line: Some(3286), routine: Some("ProcessInterrupts") }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Db, cause: Some(DbError { severity: "FATAL", parsed_severity: Some(Fatal), code: SqlState(E57P01), message: "terminating connection due to administrator command", detail: None, hint: None, position: None, where_: None, schema: None, table: None, column: None, datatype: None, constraint: None, file: Some("postgres.c"), line: Some(3286), routine: Some("ProcessInterrupts") }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Db, cause: Some(DbError { severity: "FATAL", parsed_severity: Some(Fatal), code: SqlState(E57P01), message: "terminating connection due to administrator command", detail: None, hint: None, position: None, where_: None, schema: None, table: None, column: None, datatype: None, constraint: None, file: Some("postgres.c"), line: Some(3286), routine: Some("ProcessInterrupts") }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Db, cause: Some(DbError { severity: "FATAL", parsed_severity: Some(Fatal), code: SqlState(E57P01), message: "terminating connection due to administrator command", detail: None, hint: None, position: None, where_: None, schema: None, table: None, column: None, datatype: None, constraint: None, file: Some("postgres.c"), line: Some(3286), routine: Some("ProcessInterrupts") }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Db, cause: Some(DbError { severity: "FATAL", parsed_severity: Some(Fatal), code: SqlState(E57P01), message: "terminating connection due to administrator command", detail: None, hint: None, position: None, where_: None, schema: None, table: None, column: None, datatype: None, constraint: None, file: Some("postgres.c"), line: Some(3286), routine: Some("ProcessInterrupts") }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Db, cause: Some(DbError { severity: "FATAL", parsed_severity: Some(Fatal), code: SqlState(E57P01), message: "terminating connection due to administrator command", detail: None, hint: None, position: None, where_: None, schema: None, table: None, column: None, datatype: None, constraint: None, file: Some("postgres.c"), line: Some(3286), routine: Some("ProcessInterrupts") }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Db, cause: Some(DbError { severity: "FATAL", parsed_severity: Some(Fatal), code: SqlState(E57P01), message: "terminating connection due to administrator command", detail: None, hint: None, position: None, where_: None, schema: None, table: None, column: None, datatype: None, constraint: None, file: Some("postgres.c"), line: Some(3286), routine: Some("ProcessInterrupts") }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Db, cause: Some(DbError { severity: "FATAL", parsed_severity: Some(Fatal), code: SqlState(E57P01), message: "terminating connection due to administrator command", detail: None, hint: None, position: None, where_: None, schema: None, table: None, column: None, datatype: None, constraint: None, file: Some("postgres.c"), line: Some(3286), routine: Some("ProcessInterrupts") }) }
+prisma:error Error in PostgreSQL connection: Error { kind: Db, cause: Some(DbError { severity: "FATAL", parsed_severity: Some(Fatal), code: SqlState(E57P01), message: "terminating connection due to administrator command", detail: None, hint: None, position: None, where_: None, schema: None, table: None, column: None, datatype: None, constraint: None, file: Some("postgres.c"), line: Some(3286), routine: Some("ProcessInterrupts") }) }
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+Browser orchestration command exited 1
+prisma:error 
+Invalid `db.user.findUnique()` invocation in
+/home/kevin/devsync/backend/src/security/workspace-policy.ts:37:13
+
+  34 if (!userId || !workspaceId || workspaceId.length > 191)
+  35   throw new ForbiddenError('Access denied');
+  36 const [user, workspace, member] = await Promise.all([
+→ 37   db.user.findUnique(
+Server has closed the connection.
+prisma:error 
+Invalid `db.user.findUnique()` invocation in
+/home/kevin/devsync/backend/src/security/workspace-policy.ts:37:13
+
+  34 if (!userId || !workspaceId || workspaceId.length > 191)
+  35   throw new ForbiddenError('Access denied');
+  36 const [user, workspace, member] = await Promise.all([
+→ 37   db.user.findUnique(
+Server has closed the connection.
+prisma:error 
+Invalid `db.user.findUnique()` invocation in
+/home/kevin/devsync/backend/src/security/workspace-policy.ts:37:13
+
+  34 if (!userId || !workspaceId || workspaceId.length > 191)
+  35   throw new ForbiddenError('Access denied');
+  36 const [user, workspace, member] = await Promise.all([
+→ 37   db.user.findUnique(
+Server has closed the connection.
+prisma:error 
+Invalid `db.workspace.findUnique()` invocation in
+/home/kevin/devsync/backend/src/security/workspace-policy.ts:38:18
+
+  35   throw new ForbiddenError('Access denied');
+  36 const [user, workspace, member] = await Promise.all([
+  37   db.user.findUnique({ where: { id: userId }, select: { isActive: true } }),
+→ 38   db.workspace.findUnique(
+Server has closed the connection.
+prisma:error 
+Invalid `db.workspace.findUnique()` invocation in
+/home/kevin/devsync/backend/src/security/workspace-policy.ts:38:18
+
+  35   throw new ForbiddenError('Access denied');
+  36 const [user, workspace, member] = await Promise.all([
+  37   db.user.findUnique({ where: { id: userId }, select: { isActive: true } }),
+→ 38   db.workspace.findUnique(
+Server has closed the connection.
+prisma:error 
+Invalid `db.workspace.findUnique()` invocation in
+/home/kevin/devsync/backend/src/security/workspace-policy.ts:38:18
+
+  35   throw new ForbiddenError('Access denied');
+  36 const [user, workspace, member] = await Promise.all([
+  37   db.user.findUnique({ where: { id: userId }, select: { isActive: true } }),
+→ 38   db.workspace.findUnique(
+Server has closed the connection.
+prisma:error 
+Invalid `db.workspaceMember.findUnique()` invocation in
+/home/kevin/devsync/backend/src/security/workspace-policy.ts:39:24
+
+  36 const [user, workspace, member] = await Promise.all([
+  37   db.user.findUnique({ where: { id: userId }, select: { isActive: true } }),
+  38   db.workspace.findUnique({ where: { id: workspaceId }, select: { suspendedAt: true } }),
+→ 39   db.workspaceMember.findUnique(
+Server has closed the connection.
+prisma:error 
+Invalid `db.workspaceMember.findUnique()` invocation in
+/home/kevin/devsync/backend/src/security/workspace-policy.ts:39:24
+
+  36 const [user, workspace, member] = await Promise.all([
+  37   db.user.findUnique({ where: { id: userId }, select: { isActive: true } }),
+  38   db.workspace.findUnique({ where: { id: workspaceId }, select: { suspendedAt: true } }),
+→ 39   db.workspaceMember.findUnique(
+Server has closed the connection.
+prisma:error 
+Invalid `db.workspaceMember.findUnique()` invocation in
+/home/kevin/devsync/backend/src/security/workspace-policy.ts:39:24
+
+  36 const [user, workspace, member] = await Promise.all([
+  37   db.user.findUnique({ where: { id: userId }, select: { isActive: true } }),
+  38   db.workspace.findUnique({ where: { id: workspaceId }, select: { suspendedAt: true } }),
+→ 39   db.workspaceMember.findUnique(
+Server has closed the connection.
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:32808
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+    at TCPConnectWrap.callbackTrampoline (node:internal/async_hooks:130:17)
+/home/kevin/devsync/backend/node_modules/ioredis/built/Redis.js:360
+            command.reject(new Error(utils_1.CONNECTION_CLOSED_ERROR_MSG));
+                           ^
+
+Error: Connection is closed.
+    at EventEmitter.sendCommand (/home/kevin/devsync/backend/node_modules/ioredis/built/Redis.js:360:28)
+    at EventEmitter.punsubscribe (/home/kevin/devsync/backend/node_modules/ioredis/built/utils/Commander.js:90:25)
+    at RedisAdapter.close (/home/kevin/devsync/backend/node_modules/@socket.io/redis-adapter/dist/index.js:690:28)
+    at /home/kevin/devsync/backend/node_modules/socket.io/dist/index.js:494:31
+    at Array.map (<anonymous>)
+    at Server.close (/home/kevin/devsync/backend/node_modules/socket.io/dist/index.js:490:59)
+    at <anonymous> (/home/kevin/devsync/backend/src/socket/server.ts:264:47)
+    at new Promise (<anonymous>)
+    at <anonymous> (/home/kevin/devsync/backend/src/socket/server.ts:264:13)
+    at Object.stop (/home/kevin/devsync/backend/src/socket/server.ts:268:5)
+
+Node.js v22.23.2

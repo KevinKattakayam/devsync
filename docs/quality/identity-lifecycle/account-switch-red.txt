@@ -1,0 +1,29 @@
+
+ RUN  v5.0.5 /home/kevin/devsync/frontend
+
+ ❯ tests/identity-recovery.test.tsx (3 tests | 1 failed) 279ms
+   × does not restore a former account token getter when delayed sign-out fails after an account switch 27ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/identity-recovery.test.tsx > does not restore a former account token getter when delayed sign-out fails after an account switch
+AssertionError: expected last "vi.fn()" call to have been called with [ [AsyncFunction Mock] ]
+
+Compared values have no visual difference.
+
+ ❯ tests/identity-recovery.test.tsx:70:23
+     68|  reject!(new Error('old signout failure'));
+     69|  await screen.findByText('Sign-out was not confirmed. Retry or use Cle…
+     70|  expect(mocks.getter).toHaveBeenLastCalledWith(mocks.otherToken);
+       |                       ^
+     71| });
+     72|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  13:46:33
+   Duration  2.84s (environment 70%, import 14%, tests 11%, transform 5%)
+

@@ -1,0 +1,10 @@
+{
+  "service": "frontend",
+  "status": "passed",
+  "metrics": {
+    "statements": 46.6,
+    "branches": 42.02,
+    "functions": 43.83,
+    "lines": 47.37
+  }
+}

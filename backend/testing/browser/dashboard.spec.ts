@@ -1,5 +1,5 @@
 import { test, expect, type Page } from '@playwright/test';
-import axe from '../../../frontend/node_modules/axe-core';
+import axe from 'axe-core';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { login } from './identities';
@@ -11,7 +11,9 @@ declare global {
 }
 const api = 'http://127.0.0.1:5501/api';
 const workspace = 'devsync-sample';
-const pass = process.env.E2E_DASHBOARD_PASS === 'final' ? 'final' : 'initial';
+const requestedPass = process.env.E2E_DASHBOARD_PASS;
+const pass =
+  requestedPass && /^[a-z0-9][a-z0-9-]*$/i.test(requestedPass) ? requestedPass : 'initial';
 const output = resolve(__dirname, '../../../docs/ui/after/dashboard', pass);
 
 test.beforeAll(async ({ browser }) => {
@@ -119,7 +121,22 @@ for (const theme of ['dark', 'light'] as const)
         await expect(
           page.getByRole('link', { name: /Review workspace permissions/ }),
         ).toBeVisible();
+        const workspaceLink = page
+          .getByRole('navigation', { name: 'Your workspaces' })
+          .getByRole('link', { name: /^Open Sample workspace,/ });
+        await expect(workspaceLink).toHaveAttribute('href', `/workspace/${workspace}`);
         await capture(page, theme, width, 'ready');
+        await workspaceLink.focus();
+        await expect(workspaceLink).toBeFocused();
+        await page.keyboard.press('Enter');
+        await expect(page).toHaveURL(new RegExp(`/workspace/${workspace}$`));
+        if (width < 768) await page.getByRole('button', { name: 'Open navigation' }).click();
+        await expect(
+          page.getByRole('button', { name: 'Switch workspace: Sample workspace' }),
+        ).toBeVisible();
+        if (width < 768) await page.keyboard.press('Escape');
+        await page.goto('/dashboard');
+        await expect(page.getByRole('link', { name: /Release checklist/ })).toBeVisible();
         await page.getByRole('combobox', { name: 'Dashboard workspace' }).click();
         await page.getByRole('option', { name: 'Sample workspace', exact: true }).click();
         await expect(
@@ -157,6 +174,50 @@ for (const theme of ['dark', 'light'] as const)
       } finally {
         release();
         await context.unrouteAll({ behavior: 'wait' });
+        await context.close();
+      }
+    });
+  }
+
+for (const theme of ['dark', 'light'] as const)
+  for (const width of [1440, 390]) {
+    test(`${theme} ${width} workspace activity filters expose selection to keyboard users`, async ({
+      browser,
+    }) => {
+      const context = await browser.newContext({
+        viewport: { width, height: 1000 },
+        colorScheme: theme,
+        reducedMotion: 'reduce',
+      });
+      try {
+        await context.addInitScript((theme) => localStorage.setItem('theme', theme), theme);
+        await login(context, 'owner');
+        const page = await context.newPage();
+        await page.goto(`/workspace/${workspace}`);
+        await expect(page.getByRole('heading', { name: 'Activity Stream' })).toBeVisible();
+
+        const filters = page.getByRole('group', { name: 'Filter activity events' });
+        const allEvents = filters.getByRole('button', { name: 'All Events' });
+        const docs = filters.getByRole('button', { name: 'Docs' });
+        const tasks = filters.getByRole('button', { name: 'Tasks' });
+        await expect(allEvents).toHaveAttribute('aria-pressed', 'true');
+        await expect(tasks).toHaveAttribute('aria-pressed', 'false');
+
+        await allEvents.focus();
+        await page.keyboard.press('Tab');
+        await expect(docs).toBeFocused();
+        await page.keyboard.press('Shift+Tab');
+        await expect(allEvents).toBeFocused();
+        await page.keyboard.press('Tab');
+        await page.keyboard.press('Tab');
+        await expect(tasks).toBeFocused();
+        await page.keyboard.press('Enter');
+        await expect(tasks).toHaveAttribute('aria-pressed', 'true');
+        await expect(allEvents).toHaveAttribute('aria-pressed', 'false');
+        await expect(tasks).toBeFocused();
+
+        await capture(page, theme, width, 'workspace-activity-filter');
+      } finally {
         await context.close();
       }
     });

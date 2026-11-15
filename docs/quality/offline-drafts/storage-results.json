@@ -1,0 +1,74 @@
+{
+  "status": "primitive-verified-integration-pending",
+  "frontendGates": [
+    {
+      "gate": "lint",
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 10.047,
+      "output": "frontend-lint.txt"
+    },
+    {
+      "gate": "format",
+      "command": [
+        "npm",
+        "run",
+        "format:check"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 2.942,
+      "output": "frontend-format.txt"
+    },
+    {
+      "gate": "types",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 2.827,
+      "output": "frontend-types.txt"
+    },
+    {
+      "gate": "tests",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 16.603,
+      "output": "frontend-tests.txt"
+    },
+    {
+      "gate": "build",
+      "command": [
+        "npm",
+        "run",
+        "build",
+        "--",
+        "--webpack"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 33.683,
+      "output": "frontend-build.txt"
+    }
+  ],
+  "focusedTests": 5,
+  "coverageComparison": 0,
+  "semgrep": 0,
+  "gitleaks": 0,
+  "productionCaller": false,
+  "browserQuotaTested": false,
+  "remaining": [
+    "live adapter integration",
+    "bounded write scheduling and error UI",
+    "coordinated purge",
+    "authorized restoration",
+    "real browser capacity and stale authentication acceptance"
+  ]
+}

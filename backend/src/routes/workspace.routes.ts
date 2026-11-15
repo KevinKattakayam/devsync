@@ -1,5 +1,6 @@
 import { idempotencyKeyHeader } from '../lib/create-idempotency';
 import { Router } from 'express';
+import rateLimit from 'express-rate-limit';
 import { authMiddleware } from '../middleware/auth.middleware';
 import { requireOwner, requireEditor, requireWorkspaceMember } from '../middleware/rbac.middleware';
 import { validate } from '../middleware/validate.middleware';
@@ -25,9 +26,14 @@ import {
   updateDocument,
   deleteDocument,
   createDocumentSchema,
+  importMarkdown,
+  importMarkdownSchema,
 } from '../controllers/document.controller';
 import {
   getBoards,
+  exportTasksCsv,
+  importTasksCsv,
+  taskCsvImportSchema,
   createBoard,
   createColumn,
   updateColumn,
@@ -54,6 +60,7 @@ import {
   updateRepositorySchema,
 } from '../controllers/github-repository.controller';
 import { workspaceSearch } from '../controllers/search.controller';
+import { exportWorkspaceArchive } from '../controllers/workspace-archive.controller';
 import {
   createInvitation,
   acceptPendingInvitation,
@@ -132,7 +139,30 @@ router.post(
   createDocument,
 );
 
+router.post(
+  '/:id/documents/import-markdown',
+  requireEditor(),
+  idempotencyKeyHeader,
+  validate(importMarkdownSchema),
+  importMarkdown,
+);
+
 // Boards & Tasks
+router.get('/:id/archive.zip', requireWorkspaceMember(), exportWorkspaceArchive);
+router.get('/:id/tasks/export-csv', requireWorkspaceMember(), exportTasksCsv);
+const taskCsvImportLimiter = rateLimit({
+  windowMs: 60_000,
+  max: 20,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+router.post(
+  '/:id/tasks/import-csv',
+  requireEditor(),
+  taskCsvImportLimiter,
+  validate(taskCsvImportSchema),
+  importTasksCsv,
+);
 router.get('/:id/boards', requireWorkspaceMember(), getBoards);
 router.post(
   '/:id/boards',

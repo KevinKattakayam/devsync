@@ -1,0 +1,2 @@
+tests/knowledge-search.test.tsx 93ms
+src/components/search/knowledge-search.tsx 84ms (unchanged)

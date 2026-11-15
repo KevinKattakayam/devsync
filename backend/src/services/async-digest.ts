@@ -100,13 +100,13 @@ export async function digestPreference(
     acknowledgedId: record?.acknowledgedId ?? null,
   };
 }
-const eligible = (workspaceId: string) => Prisma.sql`
+const eligible = (workspaceId: string, inboxUser?: string) => Prisma.sql`
  FROM "Activity" a
  LEFT JOIN "Document" d ON a.type='doc_created' AND a.metadata#>>'{digestSource,kind}'='document'
    AND d.id=a.metadata#>>'{digestSource,id}' AND d."workspaceId"=${workspaceId} AND NOT d."isArchived"
  LEFT JOIN "Snippet" s ON a.type='snippet_created' AND a.metadata#>>'{digestSource,kind}'='snippet'
    AND s.id=a.metadata#>>'{digestSource,id}' AND s."workspaceId"=${workspaceId}
- LEFT JOIN "Task" t ON a.type='task_created' AND a.metadata#>>'{digestSource,kind}'='task' AND t.id=a.metadata#>>'{digestSource,id}'
+ LEFT JOIN "Task" t ON (a.type='task_created' ${inboxUser ? Prisma.sql`OR (a.type='task_assigned' AND a.metadata->>'recipientId'=${inboxUser} AND t."assigneeId"=${inboxUser})` : Prisma.empty}) AND a.metadata#>>'{digestSource,kind}'='task' AND t.id=a.metadata#>>'{digestSource,id}'
  LEFT JOIN "Column" c ON c.id=t."columnId"
  LEFT JOIN "Board" b ON b.id=c."boardId" AND b."workspaceId"=${workspaceId}
  WHERE a."workspaceId"=${workspaceId} AND (d.id IS NOT NULL OR s.id IS NOT NULL OR b.id IS NOT NULL)
@@ -117,7 +117,7 @@ const eligible = (workspaceId: string) => Prisma.sql`
 type EvidenceRow = {
   id: string;
   createdAt: Date;
-  type: 'doc_created' | 'snippet_created' | 'task_created';
+  type: 'doc_created' | 'snippet_created' | 'task_created' | 'task_assigned';
   message: string;
   source: Prisma.JsonValue;
 };
@@ -130,6 +130,7 @@ export async function digestPage(
   workspaceId: string,
   userId: string,
   cursor?: string,
+  inbox = false,
 ) {
   const preference = await digestPreference(tx, workspaceId, userId);
   if (!preference.enabled) throw new ConflictError('Opt in to your digest first');
@@ -153,7 +154,7 @@ export async function digestPage(
   const from = acknowledged && acknowledged > horizon ? acknowledged : horizon;
   const rows = await tx.$queryRaw<
     EvidenceRow[]
-  >(Prisma.sql`SELECT a.id,a."createdAt",a.type,a.message,a.metadata->'digestSource' AS source ${eligible(workspaceId)}
+  >(Prisma.sql`SELECT a.id,a."createdAt",a.type,a.message,a.metadata->'digestSource' AS source ${eligible(workspaceId, inbox ? userId : undefined)}
     AND a."createdAt">=${horizon} AND a."createdAt"<=${until}
     ${acknowledged ? Prisma.sql`AND (a."createdAt",a.id)>(${acknowledged},${preference.acknowledgedId})` : Prisma.empty}
     ${key ? Prisma.sql`AND (a."createdAt",a.id)>(${new Date(key.afterAt)},${key.afterId})` : Prisma.empty}
@@ -225,9 +226,14 @@ export async function acknowledgeDigest(
 }
 
 /** Stable evidence permalink; authority is rechecked by the caller on every open. */
-export async function digestEvent(tx: TenantTransaction, workspaceId: string, activityId: string) {
+export async function digestEvent(
+  tx: TenantTransaction,
+  workspaceId: string,
+  activityId: string,
+  inboxUser?: string,
+) {
   const [row] = await tx.$queryRaw<EvidenceRow[]>(
-    Prisma.sql`SELECT a.id,a."createdAt",a.type,a.message,a.metadata->'digestSource' AS source ${eligible(workspaceId)} AND a.id=${activityId}`,
+    Prisma.sql`SELECT a.id,a."createdAt",a.type,a.message,a.metadata->'digestSource' AS source ${eligible(workspaceId, inboxUser)} AND a.id=${activityId}`,
   );
   if (!row) throw new NotFoundError('Activity source unavailable');
   const message = redactSnippetText(row.message).text;

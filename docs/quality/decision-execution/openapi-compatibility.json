@@ -1,0 +1,6 @@
+{
+  "priorOperationChanges": [],
+  "addedPaths": [
+    "/api/v2/workspaces/{workspaceId}/decisions/{receiptId}/timeline"
+  ]
+}

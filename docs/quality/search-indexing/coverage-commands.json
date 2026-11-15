@@ -1,0 +1,22 @@
+[
+  {
+    "command": [
+      "node",
+      "tools/ci/coverage.mjs",
+      "backend",
+      "docs/quality/search-indexing/backend-coverage.json",
+      "docs/quality/github-trail/backend-coverage.json"
+    ],
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "node",
+      "tools/ci/coverage.mjs",
+      "frontend",
+      "docs/quality/search-indexing/frontend-verified/frontend-coverage/coverage-summary.json",
+      "docs/quality/github-trail/frontend-verified/frontend-coverage/coverage-summary.json"
+    ],
+    "exitCode": 0
+  }
+]

@@ -1,0 +1,58 @@
+[
+  {
+    "gate": "lint",
+    "command": [
+      "npm",
+      "run",
+      "lint"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 13.18,
+    "output": "not retained; see sanitized gate status and coverage reports"
+  },
+  {
+    "gate": "format",
+    "command": [
+      "npm",
+      "run",
+      "format:check"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 3.46,
+    "output": "not retained; see sanitized gate status and coverage reports"
+  },
+  {
+    "gate": "types",
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 3.551,
+    "output": "not retained; see sanitized gate status and coverage reports"
+  },
+  {
+    "gate": "tests",
+    "command": [
+      "npm",
+      "test"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 20.945,
+    "output": "not retained; see sanitized gate status and coverage reports"
+  },
+  {
+    "gate": "build",
+    "command": [
+      "npm",
+      "run",
+      "build",
+      "--",
+      "--webpack"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 38.924,
+    "output": "not retained; see sanitized gate status and coverage reports"
+  }
+]

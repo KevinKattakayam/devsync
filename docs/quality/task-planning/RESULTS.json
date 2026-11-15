@@ -1,0 +1,23 @@
+{
+  "phase": "Professional task planning and execution",
+  "status": "preflight_only_pending_review_authority_choice",
+  "baseCommit": "35142de",
+  "applicationChanged": false,
+  "schemaChanged": false,
+  "testsChanged": false,
+  "newWorkflowVerified": false,
+  "baselineGates": {
+    "backend": {
+      "records": "backend-preflight/backend-gates.json",
+      "exitCode": 0
+    },
+    "frontend": {
+      "records": "frontend-preflight/frontend-gates.json",
+      "exitCode": 0
+    }
+  },
+  "scope": "Existing tests/builds only; no new feature or provider success claimed",
+  "pendingDecision": "Who may approve REVIEW to COMPLETED: assigned reviewer plus reasoned owner override, any writer, or optional review",
+  "push": false,
+  "deployment": false
+}

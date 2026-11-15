@@ -1,3 +1,77 @@
+# Phase 12 live editor persistence and coordinated local purge
+
+The atomic adapter is now the live Yjs persistence writer, retaining the existing IndexedDB schema and account/room scoping. It serializes one snapshot plus a dirty bit, merges concurrent snapshots atomically and reports local persistence only after transaction completion. Pending local edits, local storage errors, native server rejection, journal acknowledgement and connection reconciliation have separate indicators. Storage failure stops editing and transport while retaining the in-memory document for explicit export; startup storage failure prevents network admission.
+
+Confirmed local purge writes a transactional tombstone and notifies current-version tabs to disconnect. Subsequent reads/writes refuse the purged replica, preventing immediate repopulation. Purge refuses when coordination is unavailable. Older application tabs must be closed first; older adapters do not honor the marker. In-memory copies require closing their tabs, and exports/server content are unaffected. Live recovery import remains disabled: file metadata is not authority, and safely resetting a purged replica requires fresh authorization and generation fencing.
+
+Verification: full backend gates pass (39 suites / 372 tests, including disposable PostgreSQL); full frontend gates pass (33 files / 145 component tests plus Node tests). Lint, format, strict types, builds, OpenAPI, unchanged coverage comparisons and pinned source/test security checks pass. Four actual Chrome fixture recovery journeys cover concurrent clients, offline reload, compaction/server crash, injected quota with actual recovery download, multi-tab purge and membership revocation while offline. Fixture identity is not real Clerk acceptance; injected quota is not real device capacity measurement. Exact commands, results, retained failures and limitations are in [Phase 12 evidence](quality/offline-drafts/README.md).
+
+Limits: 8 MiB per merged snapshot and bounded legacy reads, not an origin-wide storage quota; no browser eviction, forced termination or physical-disk durability guarantee. Common links and unload warn about unconfirmed changes, but programmatic/history navigation is not comprehensively fenced. Offline edits cannot be uploaded after server membership revocation. No administrative queue, production migration, push, deployment or Phase 13 work. This is bounded offline draft support, not full offline-first acceptance.
+
+# Grounded AI assistant — local preview delivery, evaluation pending
+
+Extended the existing gateway/quota and lexical retrieval with a flagged structured preview endpoint and Copilot panel. Current source authority is rechecked after generation; fabricated references, unknown/executable actions and unrequested drafts reject. Task/decision/link outputs remain manual-review previews and cannot mutate or accept work. Existing receipt immutability and owner-only PR visibility remain in force.
+
+Local verification passes: 34 backend suites/336 tests, 25 frontend files/104 component tests plus9 Node tests, both app lint/format/types/builds, unchanged coverage comparisons, contracts/security and one fixture Chrome journey. Exact commands and retained failures are recorded in [grounded assistant evidence](quality/grounded-ai/README.md). User confirmed no reviewed evaluation cases are available; live model-quality/cost evaluation remains pending. The evaluator adapter requires review attribution and reports diagnostics/latency with cost unavailable, without claiming factual truth. No live provider success, push, deployment or production-data change is claimed.
+
+---
+
+# Evidence-linked decision-to-execution receipts — partial local delivery
+
+Phase 08 extends the existing manually accepted receipt system with timestamped human assertions/outcomes, same-workspace task links and owner-only references to existing GitHub PR/check/review evidence. It preserves accepted receipt immutability and fingerprints, uses additive forced-RLS insertion-only event storage, rechecks source visibility, and labels signed webhook records as unverified live-provider observations. A task/PR timeline is integrated into the existing receipt UI.
+
+Local evidence: 33 backend suites/330 tests, 24 frontend files/102 component tests plus 9 Node tests, lint/format/types/builds, unchanged coverage thresholds, OpenAPI, security scans, high-severity dependency audits, and one actual Chrome fixture flow for owner/viewer visibility. The browser fixture used local PostgreSQL/Redis, fixture identity and a locally signed PR webhook; no real Clerk/GitHub provider flow or screenshot is claimed. The missing trusted deployment-verification policy/adapter is engineering and product work, not merely unavailable credentials. Live GitHub acceptance, hosted CI and production migration remain pending. No push/deployment or Phase 09 work. [Exact commands, logs, failed attempts and limitations](quality/decision-execution/README.md).
+
+---
+
+# Search correctness and knowledge indexing — local phase
+
+The new versioned workspace search reads canonical committed projections using Postgres full text and existing tenant authority. It covers local documents/tasks/snippets, flagged source-visible receipts and owner-only connected recorded PR metadata. Source opens repeat current checks; archive/revocation/foreign IDs do not disclose result titles. Lexical results and read-time timestamps are explicit, with source/assignee/UTC filters and no AI-key requirement. Existing pgvector/AI retrieval remains separate and now excludes invalidated embeddings. Existing CRDT/outbox scheduling is retained; legacy contracts remain unchanged.
+
+Local verification passes:326 backend tests,97 component/9 Node tests, both complete app gate sequences, search Chrome1/core Chrome12, unchanged coverage comparisons, OpenAPI and security checks. Additive transactional function/index DDL requires an operator-reviewed migration window; it does not rewrite source rows. [Verification, exact commands, retained failures and limits](quality/search-indexing/README.md). Fixture browser identities do not establish real Clerk/GitHub/AI success. No hosted CI, production capacity/migration, push, deployment or automatic next phase is claimed.
+
+---
+
+# GitHub execution trail follow-up
+
+Read the existing repository/controller/HMAC/service-policy/schema/tests before changes, starting clean at62faef6 on upgrade/enterprise. Preserved owner-only repository access, tenant task filtering, raw-body signature checks and wire contracts. Added transactionally ordered PR/review/check evidence and authenticated-body replay receipts with forced tenant RLS; signed App withdrawal disables subsequent repository webhook/job admission and hides old evidence. Owner settings show timestamped recorded facts, canonical PR/review links, disconnected state and explicit unknown deployment/live access. No merged→deployed inference.
+
+Final app gates pass:320 backend tests,95 frontend component plus9 Node tests, strict types/lint/format/builds, OpenAPI and security checks. Coverage comparisons pass without lower baselines. Failures and actual browser outcome are retained in [verification](quality/github-trail/README.md) and RESULTS.json. Browser identities/webhook payloads are fixtures, not real GitHub success.
+
+User explicitly instructed skipping live GitHub testing because no separate test repository exists and forbade changing existing repositories. No existing GitHub repository was accessed/modified, no live mutation, push or deployment occurred. Manual separate test-App/repository/webhook setup and individually approved live acceptance actions remain pending. Legacy unversioned events lack ordering guarantees; same-version ambiguity fails conservatively. Production rollout/hosted CI and the existing optional summary outbox gap remain explicit. No automatic next phase.
+
+---
+
+# Real-time editor and recovery — 2026-11-08
+
+The existing journal and snapshot design is retained. Fixed replica-scoped connection/pending display state and added explicit access-loss status, with failing-then-passing regressions. No CRDT replacement, migration, wire/API change, authorization bypass or weakened threshold.
+
+Actual Chrome fixtures now prove concurrent convergence, local IndexedDB reload/partition merge,600ms each-way frame latency with pending versus acknowledged state,70 repeated edits/compaction, actual server SIGKILL recovery from checkpoint plus acknowledged journal, viewer update rejection and member removal through API/Yjs/Socket.IO. A fresh fourth browser verifies recovery without relying on existing client caches. The prior wrapper-kill experiment failed and is retained separately. These results use fixture identity, not real Clerk sign-in.
+
+Both app gate sequences pass:305 backend tests,92 component tests and9 named Node tests; core12 plus recovery1 browser journeys. OpenAPI, RLS/transport regressions, unchanged coverage checks and source-security gates pass. Exact commands/exits, raw failures, scope limits and the inspected fixture screenshot are in [recovery verification](quality/realtime-recovery/README.md) and [RESULTS.json](quality/realtime-recovery/RESULTS.json). General revision history/restore, production disk/database-loss recovery, hosted CI and prior real-Clerk acceptance remain separate unfinished work. No production state/restart, push, deployment or automatic next phase.
+
+---
+
+# Identity lifecycle delivery — 2026-11-08
+
+Local implementation is verified; **real two-account acceptance is not complete**. Existing Clerk forms, invitations, member policy and workspace setup remain. Added production active-session verification across HTTP/Yjs/Socket.IO, guarded identity recovery, own-session settings, owner transfer, export-review recording and deletion planning. All existing OpenAPI operations remain semantically identical; new v2 paths and a forward-only forced-RLS table are additive. There is no automated erasure/export delivery or custom password system.
+
+Final local gates pass for both apps, with300 backend tests,89 frontend component tests and9 Node tests. Core12 and lifecycle1 browser journeys pass with fixture identities; real PostgreSQL/RLS and transport tests pass. Coverage comparisons, OpenAPI, source scans and High/Critical npm gates pass without weakening policy. Full-tree Moderate/Low advisories remain visible. See [phase record](quality/identity-lifecycle/README.md) and [commands/exits](quality/identity-lifecycle/RESULTS.json) for exact scopes, raw failures/retries, coverage, migration/rollback and limitations. No new production runtime-image or hosted CI result is inferred.
+
+The approved real-account attempt was blocked before successful sign-in; the user screenshot shows Google's secure-browser rejection. No real invite/removal/revocation criterion was demonstrated. HTTP200 provider probes are reachability checks only. Historical clock discrepancies were recorded without increasing JWT tolerance or asserting they caused that rejection. The isolated local app remains at localhost3410 for operator verification in normal supported browser profiles; the phase checklist identifies provider configuration/time synchronization and every remaining real-account assertion. No credentials were recorded, accounts deleted, push/deployment performed or next phase started. Earlier report sections below retain their historical scopes.
+
+---
+
+# Release correctness follow-up — 2026-11-08
+
+The release-correctness phase adds red/green authentication handling, a mutation-free legacy reset GET plus exact-Origin POST, bounded credential-free PDF/OCR extraction, configured authenticated uploads and atomic CRDT indexing scheduling with transaction-time revocation closure. No identity bypass, RLS bypass, test/assertion removal, security/coverage threshold reduction, push or deployment. Existing migrated-schema and wire behaviors remain; no new migration was needed.
+
+All three final local runtime images report zero Trivy findings across all severities after fixing the original npm chains and the newly discovered stable zlib advisory. The clean-clone Compose graph passes with separate runtime authority, denied keyless private access and extractor resource/network isolation. Source gates, browser flows, raw failures/retries, exact image IDs and provider limitations are in [release verification](quality/release-correctness/README.md) and its RESULTS.json. Synthetic fixtures establish local correctness; they do not establish real Clerk/GitHub/AI success.
+
+Real sign-in/session revocation, actual GitHub deliveries, hosted CI/coverage artifacts and production extractor/hosting isolation still require operator actions. The GitHub summary enqueue/outbox limit, Stripe replay/order handling, privacy rights/retention, manual accessibility, capacity and recovery remain explicitly open. The historical report below is not relabeled as a fresh measurement.
+
+---
+
 # Runtime and Kanban follow-up
 
 This update supersedes the Phase5c snapshot's44-High runtime and pointer-drag blockers below. Same-database Trivy scans: backend0C/44H/75M/60L/8U → **0C/0H/4M/0L/0U**; frontend0C/44H/71M/60L/8U → **zero findings**. Both runtimes pin the tested official Node22 Alpine variant; musl support/architecture tradeoffs and every remaining package/CVE/fixed version are explicit in [VULNERABILITIES.md](../VULNERABILITIES.md). Four Medium dependency rows remain; their non-exploitability is not verified. No scanner suppression, CI exception or weakened gate.
@@ -106,3 +180,8 @@ Use disposable data and keep private values out of output. These are instruction
 Both applications passed lint, format, strict types, tests and build in this documentation session: backend28 suites/260 tests; frontend17 files/76 component tests and9 separate Node tests. Current backend coverage is statements80.88%, branches71.34%, functions74.69%, lines83.17%; frontend41.19%,38.62%,39.47%,41.67%. The small backend statement/branch variation from the earlier snapshot is retained in the raw tables; no source, test or threshold was changed to force a percentage.
 
 This session's exact commands, gate exits and raw logs are retained in [quality/phase5c](quality/phase5c). The documentation link inventory checks local targets; it is not an external-link uptime, rendered Mermaid, legal or operational validation. No application code, baseline or contract changes were needed. No new performance/security/browser result is claimed.
+
+
+## Phase 10 automation checkpoint
+
+Tenant-scoped opt-in rules and owner-approved local actions now have durable deduplication, bounded retry leases, audit and an owner interface. Task review/blocker is a human assertion; GitHub observations are signed webhook records, not live verification. Trusted CI verification, linked-status mutation and automatic task-state detection remain incomplete. See [the Phase 10 evidence and rollout plan](quality/automation/README.md). No live GitHub test, production migration or deployment was performed.

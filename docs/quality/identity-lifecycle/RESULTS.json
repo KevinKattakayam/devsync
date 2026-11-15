@@ -1,0 +1,178 @@
+{
+  "phase": "Real identity, member roles and account lifecycle",
+  "branch": "upgrade/enterprise",
+  "baseCommit": "166085b",
+  "status": "external_action_required",
+  "localImplementationVerified": true,
+  "realAccountCriteriaMet": false,
+  "applicationGates": {
+    "backend": {
+      "runner": "python3 tools/quality/gates.py backend docs/quality/identity-lifecycle/backend-stable",
+      "records": "backend-stable/backend-gates.json",
+      "allExitCodes": 0,
+      "testSuites": 31,
+      "testsPassed": 300,
+      "database": "Real migrated disposable PostgreSQL with non-bypass runtime RLS, Redis and real transport tests"
+    },
+    "frontend": {
+      "runner": "python3 tools/quality/gates.py frontend docs/quality/identity-lifecycle/frontend-accepted",
+      "records": "frontend-accepted/frontend-gates.json",
+      "allExitCodes": 0,
+      "componentTestFiles": 21,
+      "componentTestsPassed": 89,
+      "nodeTestsPassed": 9
+    }
+  },
+  "browser": [
+    {
+      "command": "node tools/ci/browser.mjs core",
+      "exitCode": 0,
+      "passed": 12,
+      "log": "browser-core-stable.txt",
+      "identity": "seeded fixtures"
+    },
+    {
+      "command": "node tools/ci/browser.mjs identity",
+      "exitCode": 0,
+      "passed": 1,
+      "log": "browser-identity.txt",
+      "identity": "seeded fixtures; provider unavailable honestly surfaced"
+    }
+  ],
+  "coverage": {
+    "backend": {
+      "service": "backend",
+      "status": "passed",
+      "metrics": {
+        "statements": 82.3,
+        "branches": 72.96,
+        "functions": 76.06,
+        "lines": 84.56
+      }
+    },
+    "frontend": {
+      "service": "frontend",
+      "status": "passed",
+      "metrics": {
+        "statements": 44.75,
+        "branches": 41.04,
+        "functions": 42.34,
+        "lines": 45.45
+      }
+    }
+  },
+  "coverageBaseline": "Unchanged tools/ci/coverage-baseline.json; not a hosted base-commit artifact comparison",
+  "security": {
+    "semgrep": {
+      "exitCode": 0,
+      "rules": 74,
+      "targets": 229,
+      "findings": 0,
+      "log": "semgrep.txt",
+      "report": "semgrep.json",
+      "scope": "backend/src frontend/src"
+    },
+    "gitleaks": {
+      "backendExitCode": 0,
+      "frontendExitCode": 0,
+      "findings": 0,
+      "reports": [
+        "gitleaks-backend.json",
+        "gitleaks-frontend.json"
+      ],
+      "additionalRecords": "additional-secret-scans.json",
+      "historyRescanThisPhase": false
+    },
+    "audits": [
+      {
+        "cwd": "backend",
+        "command": "npm audit --json --audit-level=high",
+        "exitCode": 0,
+        "report": "backend-audit-bounded.json",
+        "vulnerabilities": {
+          "info": 0,
+          "low": 2,
+          "moderate": 29,
+          "high": 0,
+          "critical": 0,
+          "total": 31
+        }
+      },
+      {
+        "cwd": "frontend",
+        "command": "npm audit --json --audit-level=high",
+        "exitCode": 0,
+        "report": "frontend-audit-bounded.json",
+        "vulnerabilities": {
+          "info": 0,
+          "low": 0,
+          "moderate": 8,
+          "high": 0,
+          "critical": 0,
+          "total": 8
+        }
+      }
+    ],
+    "runtimeImages": "No new vulnerability/image certification this phase; earlier release-correctness scans retain their own scope"
+  },
+  "additionalChecks": "final-checks.json; workflow-parse.json; openapi-final-retry.json; openapi-compatibility.json; final-diff-check.json (raw terminal whitespace distinguished from source/docs)",
+  "failedAndInterruptedEvidence": {
+    "retained": [
+      "backend-gates",
+      "backend-gates-retry",
+      "backend-accepted",
+      "backend-verified",
+      "backend-final",
+      "frontend-gates",
+      "frontend-final",
+      "browser-core.txt",
+      "backend-audit-incomplete.txt",
+      "openapi-final.txt"
+    ],
+    "classification": "Prior formatting/fixture/setup/type failures and interrupted local-container runs; final accepted gates above supersede them. Empty audit file is an incomplete attempt, not a valid audit report. Final OpenAPI sandbox failure is EPERM for tsx IPC; elevated retry recorded separately.",
+    "redGreen": "session, lifecycle, recovery, clock-cache and account-switch logs retain pre-fix failures and post-fix results"
+  },
+  "provider": {
+    "attempt": "real-provider-smoke.json",
+    "checksPassed": 0,
+    "blocker": "Google secure-browser rejection before successful Clerk sign-in; normal-browser result not confirmed",
+    "reachabilityOnly": "provider-preflight.json",
+    "clock": "clock-preflight.json; clock-after-user-action.json; clerk-clock-after-user-action.json; not a current synchronization certificate",
+    "screenshots": "User screenshot was inspected but not copied or committed; no credentials/MFA screenshots or traces recorded",
+    "manualChecklist": "README.md"
+  },
+  "localStack": {
+    "project": "devsync_identity_20261108",
+    "frontend": "http://localhost:3410",
+    "api": "http://localhost:5410",
+    "records": [
+      "manual-stack.json",
+      "manual-stack-restart.json",
+      "manual-backend-refresh.json",
+      "manual-frontend-refresh.json"
+    ],
+    "volumesPreserved": true,
+    "finalHealthRecord": "final-local-health.json"
+  },
+  "externalActions": [
+    "Stable host time synchronization and private matching Clerk configuration/origins/methods",
+    "Two approved real accounts: sign-in/recovery, VIEWER invite/denials, removal API/Yjs/Socket.IO and provider revocation before JWT expiry",
+    "Hosted CI/production verification require separately authorized publication/deployment"
+  ],
+  "productLimits": [
+    "Export request records review only; no file/job/delivery",
+    "Account deletion is a plan; no erasure endpoint or legal/retention decision",
+    "No claim of production provider capacity, propagation timing, browser-copy erasure or account-wide administrative lifecycle"
+  ],
+  "push": false,
+  "deployment": false,
+  "productionDataMutation": false,
+  "secretsRecorded": false,
+  "nextPhaseStarted": false,
+  "implementationCommits": [
+    "c5d5b72 test(identity): cover lifecycle journeys and preserve provider smoke limits",
+    "b329f73 feat(identity): add guarded recovery and lifecycle settings",
+    "299ed93 fix(identity): enforce provider sessions and transactional lifecycle policies"
+  ],
+  "documentation": "documentation-links.json; CHANGED_PATHS.txt; IMPLEMENTATION_COMMITS.txt"
+}

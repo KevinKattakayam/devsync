@@ -1,0 +1,135 @@
+{
+  "status": "incomplete-export-increment",
+  "backendGates": [
+    {
+      "gate": "lint",
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 4.096,
+      "output": "backend-lint.txt"
+    },
+    {
+      "gate": "format",
+      "command": [
+        "npm",
+        "run",
+        "format:check"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 5.928,
+      "output": "backend-format.txt"
+    },
+    {
+      "gate": "types",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 22.654,
+      "output": "backend-types.txt"
+    },
+    {
+      "gate": "tests",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 85.574,
+      "output": "backend-tests.txt"
+    },
+    {
+      "gate": "build",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 7.846,
+      "output": "backend-build.txt"
+    }
+  ],
+  "frontendGates": [
+    {
+      "gate": "lint",
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 7.972,
+      "output": "frontend-lint.txt"
+    },
+    {
+      "gate": "format",
+      "command": [
+        "npm",
+        "run",
+        "format:check"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 2.15,
+      "output": "frontend-format.txt"
+    },
+    {
+      "gate": "types",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 3.654,
+      "output": "frontend-types.txt"
+    },
+    {
+      "gate": "tests",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 21.488,
+      "output": "frontend-tests.txt"
+    },
+    {
+      "gate": "build",
+      "command": [
+        "npm",
+        "run",
+        "build",
+        "--",
+        "--webpack"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 43.962,
+      "output": "frontend-build.txt"
+    }
+  ],
+  "focusedTests": 4,
+  "browserRecovery": {
+    "exitCode": 0,
+    "fixtureJourneys": 1,
+    "log": "export-recovery-browser.txt"
+  },
+  "openapiCheck": 0,
+  "frontendCoverageComparison": 0,
+  "backendCoverageBaselineComparison": 0,
+  "semgrep": 0,
+  "gitleaksFrontend": 0,
+  "remaining": [
+    "per-edit transaction receipts",
+    "bounded persistent storage and quota handling",
+    "multi-tab purge coordination",
+    "live recovery application",
+    "full-storage and stale-auth acceptance"
+  ]
+}

@@ -1,6 +1,6 @@
 import { Server as HttpServer } from 'http';
 import { prisma } from '../lib/prisma';
-import { identifyRealtimeSession } from '../security/realtime-identity';
+import { identifyRealtimeSession, verifyRealtimeSession } from '../security/realtime-identity';
 import { createSocketServer } from './server';
 let runtime: ReturnType<typeof createSocketServer> | undefined;
 /** Never import the HTTP entrypoint from controllers/workers to emit events. */
@@ -11,6 +11,7 @@ export function setupSocket(httpServer: HttpServer) {
   runtime = createSocketServer(httpServer, {
     db: prisma,
     identify: identifyRealtimeSession,
+    verifySession: verifyRealtimeSession,
     redisUrl: process.env.REDIS_URL,
   });
   return runtime.io;

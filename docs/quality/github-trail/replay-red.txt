@@ -1,0 +1,29 @@
+
+> devsync-backend@1.0.0 test
+> node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand --runTestsByPath src/__tests__/resource-mutations.integration.test.ts --testNamePattern=identical signed payload --coverage=false
+
+FAIL src/__tests__/resource-mutations.integration.test.ts
+  ● Test suite failed to run
+
+    [96msrc/__tests__/resource-mutations.integration.test.ts[0m:[93m2269[0m:[93m10[0m - [91merror[0m[90m TS2339: [0mProperty 'providerDisconnectedAt' does not exist on type '{ id: string; name: string; createdAt: Date; updatedAt: Date; owner: string; workspaceId: string; installationId: string | null; repositoryId: string; webhookSecret: string; prOpenedColumnId: string | null; prMergedColumnId: string | null; }'.
+
+    [7m2269[0m         .providerDisconnectedAt,
+    [7m    [0m [91m         ~~~~~~~~~~~~~~~~~~~~~~[0m
+    [96msrc/__tests__/resource-mutations.integration.test.ts[0m:[93m2275[0m:[93m7[0m - [91merror[0m[90m TS2339: [0mProperty 'providerDisconnectedAt' does not exist on type '{ id: string; name: string; createdAt: Date; updatedAt: Date; owner: string; workspaceId: string; installationId: string | null; repositoryId: string; webhookSecret: string; prOpenedColumnId: string | null; prMergedColumnId: string | null; }'.
+
+    [7m2275[0m     ).providerDisconnectedAt;
+    [7m    [0m [91m      ~~~~~~~~~~~~~~~~~~~~~~[0m
+    [96msrc/__tests__/resource-mutations.integration.test.ts[0m:[93m2280[0m:[93m10[0m - [91merror[0m[90m TS2339: [0mProperty 'providerDisconnectedAt' does not exist on type '{ id: string; name: string; createdAt: Date; updatedAt: Date; owner: string; workspaceId: string; installationId: string | null; repositoryId: string; webhookSecret: string; prOpenedColumnId: string | null; prMergedColumnId: string | null; }'.
+
+    [7m2280[0m         .providerDisconnectedAt,
+    [7m    [0m [91m         ~~~~~~~~~~~~~~~~~~~~~~[0m
+    [96msrc/__tests__/resource-mutations.integration.test.ts[0m:[93m2284[0m:[93m10[0m - [91merror[0m[90m TS2339: [0mProperty 'providerDisconnectedAt' does not exist on type '{ id: string; name: string; createdAt: Date; updatedAt: Date; owner: string; workspaceId: string; installationId: string | null; repositoryId: string; webhookSecret: string; prOpenedColumnId: string | null; prMergedColumnId: string | null; }'.
+
+    [7m2284[0m         .providerDisconnectedAt,
+    [7m    [0m [91m         ~~~~~~~~~~~~~~~~~~~~~~[0m
+
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        6.546 s, estimated 46 s
+Ran all test suites within paths "src/__tests__/resource-mutations.integration.test.ts".

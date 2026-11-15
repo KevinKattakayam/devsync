@@ -1,3 +1,4 @@
+import { plainDocument } from './decision-receipts';
 import { createHash, randomUUID } from 'crypto';
 import OpenAI from 'openai';
 import { boundedProvider, rejectedBeforeAdmission } from './ai-provider';
@@ -22,12 +23,6 @@ const client = process.env.OPENAI_API_KEY
 const model = process.env.EMBEDDING_MODEL || 'text-embedding-3-small';
 const vectorSchema = z.array(z.number().finite()).length(1536);
 export type EmbeddingProvider = (text: string) => Promise<number[] | null>;
-function textFromJson(value: unknown): string {
-  if (typeof value === 'string') return value;
-  if (Array.isArray(value)) return value.map(textFromJson).join(' ');
-  if (value && typeof value === 'object') return Object.values(value).map(textFromJson).join(' ');
-  return '';
-}
 async function embed(text: string, actorId: string, workspaceId: string) {
   if (!client) return null;
   const release = await new AiQuota(redis).acquire(actorId, workspaceId);
@@ -139,7 +134,7 @@ async function embeddingText(tx: TenantTransaction, kind: EmbeddingKind, id: str
   if (kind === 'document') {
     const item = await tx.document.findUniqueOrThrow({ where: { id } });
     return {
-      text: `${item.title}\n${textFromJson(item.content)}`.trim(),
+      text: `${item.title}\n${typeof item.content === 'string' ? item.content : plainDocument(item.content)}`.trim(),
       hash: item.embeddingHash,
     };
   }
@@ -199,10 +194,12 @@ export async function semanticWorkspaceContext(
   query: string,
   limit: number,
   actorId: string,
+  provider?: EmbeddingProvider,
 ) {
   await authorizeWorkspace(actorId, workspaceId);
   try {
-    const values = await embed(query, actorId, workspaceId);
+    const raw = provider ? await provider(query) : await embed(query, actorId, workspaceId);
+    const values = raw ? vectorSchema.parse(raw) : null;
     if (!values) return [];
     const results = await withWorkspaceAccess(
       actorId,
@@ -211,14 +208,14 @@ export async function semanticWorkspaceContext(
       (tx) => tx.$queryRaw<{ type: string; title: string; body: string; score: number }[]>`
       SELECT * FROM (
         SELECT 'document' AS type, d.title, COALESCE(d.content::text, '') AS body, 1 - (d.embedding <=> ${vector(values)}) AS score
-        FROM "Document" d WHERE d."workspaceId" = ${workspaceId} AND d."isArchived" = false AND d.embedding IS NOT NULL
+        FROM "Document" d WHERE d."workspaceId" = ${workspaceId} AND d."isArchived" = false AND d.embedding IS NOT NULL AND d."embeddingHash" IS NOT NULL
         UNION ALL
         SELECT 'snippet', s.title, concat_ws(E'\n', s.description, s.code), 1 - (s.embedding <=> ${vector(values)})
-        FROM "Snippet" s WHERE s."workspaceId" = ${workspaceId} AND s.embedding IS NOT NULL
+        FROM "Snippet" s WHERE s."workspaceId" = ${workspaceId} AND s.embedding IS NOT NULL AND s."embeddingHash" IS NOT NULL
         UNION ALL
         SELECT 'task', t.title, COALESCE(t.description, ''), 1 - (t.embedding <=> ${vector(values)})
         FROM "Task" t JOIN "Column" c ON t."columnId" = c.id JOIN "Board" b ON c."boardId" = b.id
-        WHERE b."workspaceId" = ${workspaceId} AND t.embedding IS NOT NULL
+        WHERE b."workspaceId" = ${workspaceId} AND t.embedding IS NOT NULL AND t."embeddingHash" IS NOT NULL
       ) context ORDER BY score DESC LIMIT ${Math.max(1, Math.min(20, limit))}`,
     );
     return process.env.FEATURE_SNIPPET_SAFETY === 'true'

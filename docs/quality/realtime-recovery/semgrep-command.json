@@ -1,0 +1,28 @@
+{
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "-v",
+    "/home/kevin/devsync:/repo:ro",
+    "-v",
+    "/home/kevin/devsync/docs/quality/realtime-recovery:/reports",
+    "-w",
+    "/repo",
+    "semgrep/semgrep@sha256:b68f9b68483955b85042dac7b4533757779625a02dcf91e470da4c2df1b430be",
+    "semgrep",
+    "scan",
+    "--config",
+    "p/typescript",
+    "--no-git-ignore",
+    "--metrics=off",
+    "--disable-version-check",
+    "--error",
+    "--json",
+    "--output",
+    "/reports/semgrep.json",
+    "backend/src",
+    "frontend/src"
+  ],
+  "exitCode": 0
+}

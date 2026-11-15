@@ -1,12 +1,24 @@
 import { Request, Response, NextFunction } from 'express';
 import { z } from 'zod';
-import { UnauthorizedError } from '../utils/errors';
+import { AppError, UnauthorizedError } from '../utils/errors';
 import { withPrincipalAccess } from '../security/workspace-policy';
 import { prisma } from '../lib/prisma';
 import { syncClerkUser } from '../middleware/auth.middleware';
 
 import { requestSubject } from '../security/authentication';
+import { providerSessions } from '../security/provider-sessions';
 import { verifyToken } from '@clerk/backend';
+import { TokenVerificationError, TokenVerificationErrorReason } from '@clerk/backend/errors';
+
+const invalidTokenReasons = new Set([
+  TokenVerificationErrorReason.TokenExpired,
+  TokenVerificationErrorReason.TokenInvalid,
+  TokenVerificationErrorReason.TokenInvalidAlgorithm,
+  TokenVerificationErrorReason.TokenInvalidAuthorizedParties,
+  TokenVerificationErrorReason.TokenInvalidSignature,
+  TokenVerificationErrorReason.TokenNotActiveYet,
+  TokenVerificationErrorReason.TokenIatInTheFuture,
+]);
 
 export const updateMeSchema = z
   .object({
@@ -23,10 +35,19 @@ export async function syncMe(req: Request, res: Response, next: NextFunction) {
     } catch {}
 
     if (!clerkId) {
-      const token = req.headers.authorization?.replace(/^Bearer\s+/i, '');
-      if (token) {
-        const claims = await verifyToken(token, { secretKey: process.env.CLERK_SECRET_KEY });
-        if (claims.sub) clerkId = String(claims.sub);
+      const match = /^Bearer ([^\s]+)$/i.exec(req.headers.authorization || '');
+      if (!match || match[1].length > 16384) throw new UnauthorizedError('Authentication required');
+      let claims: Awaited<ReturnType<typeof verifyToken>>;
+      try {
+        claims = await verifyToken(match[1], { secretKey: process.env.CLERK_SECRET_KEY });
+      } catch (error) {
+        if (error instanceof TokenVerificationError && invalidTokenReasons.has(error.reason))
+          throw new UnauthorizedError('Invalid or expired session');
+        throw new AppError('Identity verification unavailable', 503);
+      }
+      if (typeof claims.sub === 'string' && claims.sub.length > 0) {
+        await providerSessions.assertActive(claims.sid, claims.sub);
+        clerkId = claims.sub;
       }
     }
 

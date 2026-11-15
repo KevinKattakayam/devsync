@@ -1,0 +1,154 @@
+{
+  "status": "partial-local-delivery",
+  "branch": "upgrade/enterprise",
+  "backendGates": [
+    {
+      "gate": "lint",
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 3.752,
+      "output": "backend-lint.txt"
+    },
+    {
+      "gate": "format",
+      "command": [
+        "npm",
+        "run",
+        "format:check"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 5.382,
+      "output": "backend-format.txt"
+    },
+    {
+      "gate": "types",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 34.699,
+      "output": "backend-types.txt"
+    },
+    {
+      "gate": "tests",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 146.852,
+      "output": "backend-tests.txt"
+    },
+    {
+      "gate": "build",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 30.904,
+      "output": "backend-build.txt"
+    }
+  ],
+  "frontendGates": [
+    {
+      "gate": "lint",
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 13.822,
+      "output": "frontend-lint.txt"
+    },
+    {
+      "gate": "format",
+      "command": [
+        "npm",
+        "run",
+        "format:check"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 5.104,
+      "output": "frontend-format.txt"
+    },
+    {
+      "gate": "types",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 5.979,
+      "output": "frontend-types.txt"
+    },
+    {
+      "gate": "tests",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 26.773,
+      "output": "frontend-tests.txt"
+    },
+    {
+      "gate": "build",
+      "command": [
+        "npm",
+        "run",
+        "build",
+        "--",
+        "--webpack"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 41.677,
+      "output": "frontend-build.txt"
+    }
+  ],
+  "backendCoverageComparison": {
+    "exitCode": 0,
+    "baseline": "previous inbox backend-tests.txt All files",
+    "statements": 84.75,
+    "branches": 75.83,
+    "functions": 79.76,
+    "lines": 87.16
+  },
+  "frontendCoverageComparison": {
+    "exitCode": 0,
+    "baseline": "docs/quality/automation/final-frontend/frontend-coverage/coverage-summary.json",
+    "statements": 50.9,
+    "branches": 45.02,
+    "functions": 47.48,
+    "lines": 51.99
+  },
+  "openapiCheck": 0,
+  "existingOpenapiOperationsChanged": 0,
+  "addedOpenapiPaths": 4,
+  "browser": {
+    "exitCode": 0,
+    "fixtureTests": 1,
+    "output": "phase11-browser-final2.txt",
+    "screenshots": 0
+  },
+  "security": "phase11-security-verified.json",
+  "npmAuditHigh": {
+    "backend": 0,
+    "frontend": 0
+  },
+  "remaining": [
+    "recipient-bound mention/review/owner-decision producers",
+    "durable batch dispatch and approved providers",
+    "live provider acceptance",
+    "hosted CI"
+  ]
+}

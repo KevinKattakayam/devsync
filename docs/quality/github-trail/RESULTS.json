@@ -1,0 +1,69 @@
+{
+  "phase": "Real GitHub PR and CI execution trail",
+  "status": "local_verified_live_pending_by_user_request",
+  "baseCommit": "62faef6",
+  "liveGitHubAttempted": false,
+  "existingGitHubRepositoriesAccessedOrModified": false,
+  "userInstruction": "Skip live testing; no separate test repository yet; do not modify existing repositories",
+  "backend": {
+    "runner": "python3 tools/quality/gates.py backend docs/quality/github-trail/backend-contract-safe",
+    "records": "backend-contract-safe/backend-gates.json",
+    "exitCode": 0,
+    "tests": 320
+  },
+  "frontend": {
+    "runner": "python3 tools/quality/gates.py frontend docs/quality/github-trail/frontend-verified",
+    "records": "frontend-verified/frontend-gates.json",
+    "exitCode": 0,
+    "componentTests": 95,
+    "nodeTests": 9
+  },
+  "browser": {
+    "command": "E2E_CHROMIUM_PATH=/usr/bin/google-chrome node tools/ci/browser.mjs github-trail",
+    "exitCode": 0,
+    "passed": 1,
+    "log": "browser-release.txt",
+    "scope": "Actual Chrome/DB/Redis, seeded identity and signed local fixture webhooks; no real provider request"
+  },
+  "coverage": "coverage-commands.json; all prior-summary metric comparisons pass; thresholds unchanged",
+  "security": "security.json; final-secrets.json; semgrep-final-command.json; no exceptions/thresholds changed",
+  "audits": "audits.json; full-tree Moderate/Low findings retained",
+  "contracts": "contract-checks.json; openapi-final-check.txt; openapi-compatibility.json: existing operations unchanged",
+  "migration": "202611080002_github_execution_state: additive forced-RLS tables, composite repository/workspace FKs, nullable disconnect state; no old data update",
+  "screenshot": {
+    "path": "browser-fixture.png",
+    "sha256": "b5421dc8613376cd4cdf7c1288e5370cfb7882e3cb1066c274e546a16cf21034",
+    "scope": "Disconnected state with synthetic fixture names only; inspected; not provider evidence"
+  },
+  "failuresRetained": [
+    "ordering-red.txt: stale open reverses task",
+    "replay-red-retry.txt: identical body/new delivery ID replays",
+    "replay-red.txt: stale generated client, not behavioral evidence",
+    "backend: initial Express route parameter typing",
+    "backend-final: earlier collaboration timeout",
+    "backend-accepted: new review test expected200 instead of existing202",
+    "frontend-final: existing settings timeout",
+    "browser-first: readiness timeout",
+    "browser-final: seed column assumption",
+    "browser-accepted: native label locator mismatch",
+    "browser-pass: Next route announcer matched alert"
+  ],
+  "limits": [
+    "Legacy unversioned PR payloads preserve compatibility without ordering guarantee",
+    "Equal time/rank ambiguity rejected conservatively; no live reconciliation claim",
+    "Individual reviews are not aggregate branch-protection approval",
+    "Deployment/release status unknown, never inferred from merge/check success",
+    "Global production IP limit retained; real provider rate limits/API failure propagation pending live setup",
+    "Optional PR-summary enqueue still lacks durable outbox",
+    "Hosted CI/production rollout/live provider acceptance not executed"
+  ],
+  "nextPhaseStarted": false,
+  "push": false,
+  "deployment": false,
+  "implementationCommits": [
+    "6fbeec1 test(github): exercise signed PR CI and revocation trail in Chrome",
+    "41082f6 feat(github): show timestamped execution evidence and disconnected state",
+    "7591313 fix(github): fence replay and ordering and honor App access withdrawal"
+  ],
+  "sourceAndDocumentDiffCheck": "git diff 62faef6 --check excluding unedited terminal logs; exit0"
+}

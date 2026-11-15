@@ -1,0 +1,21 @@
+
+> devsync-backend@1.0.0 openapi:generate
+> NODE_ENV=test tsx src/scripts/openapi.ts --write
+
+/home/kevin/devsync/backend/src/openapi.ts:81
+          throw new Error(`Route has no request schema: ${method.toUpperCase()} ${path}`);
+                ^
+
+Error: Route has no request schema: POST /api/auth/reset
+    at generateOpenApi (/home/kevin/devsync/backend/src/openapi.ts:81:17)
+    at scimRoutes (/home/kevin/devsync/backend/src/app.ts:91:28)
+    at Object.<anonymous> (/home/kevin/devsync/backend/src/app.ts:100:16)
+    at Module._compile (node:internal/modules/cjs/loader:1781:14)
+    at Object.transformer (/home/kevin/devsync/backend/node_modules/tsx/dist/register-D46fvsV_.cjs:3:1104)
+    at Module.load (node:internal/modules/cjs/loader:1505:32)
+    at Function._load (node:internal/modules/cjs/loader:1309:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:254:19)
+    at Module.require (node:internal/modules/cjs/loader:1527:12)
+    at require (node:internal/modules/helpers:147:16)
+
+Node.js v22.23.2

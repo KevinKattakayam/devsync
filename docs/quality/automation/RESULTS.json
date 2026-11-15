@@ -1,0 +1,146 @@
+{
+  "status": "local-implementation-incomplete-acceptance",
+  "branch": "upgrade/enterprise",
+  "backendGates": [
+    {
+      "gate": "lint",
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 2.2,
+      "output": "backend-lint.txt"
+    },
+    {
+      "gate": "format",
+      "command": [
+        "npm",
+        "run",
+        "format:check"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 3.071,
+      "output": "backend-format.txt"
+    },
+    {
+      "gate": "types",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 16.264,
+      "output": "backend-types.txt"
+    },
+    {
+      "gate": "tests",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 93.067,
+      "output": "backend-tests.txt"
+    },
+    {
+      "gate": "build",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 8.711,
+      "output": "backend-build.txt"
+    }
+  ],
+  "frontendGates": [
+    {
+      "gate": "lint",
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 14.086,
+      "output": "frontend-lint.txt"
+    },
+    {
+      "gate": "format",
+      "command": [
+        "npm",
+        "run",
+        "format:check"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 5.107,
+      "output": "frontend-format.txt"
+    },
+    {
+      "gate": "types",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 7.15,
+      "output": "frontend-types.txt"
+    },
+    {
+      "gate": "tests",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 26.61,
+      "output": "frontend-tests.txt"
+    },
+    {
+      "gate": "build",
+      "command": [
+        "npm",
+        "run",
+        "build",
+        "--",
+        "--webpack"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 85.387,
+      "output": "frontend-build.txt"
+    }
+  ],
+  "backendCoverageComparison": {
+    "exitCode": 0,
+    "output": "backend-coverage-comparison.txt"
+  },
+  "frontendCoverageComparison": {
+    "exitCode": 0
+  },
+  "browserFixture": {
+    "exitCode": 0,
+    "tests": 1,
+    "output": "browser-final.txt"
+  },
+  "openapiGenerate": 0,
+  "openapiCheck": 0,
+  "security": "security-final.json",
+  "backendNpmAuditHigh": 0,
+  "frontendNpmAuditHigh": 0,
+  "priorCoverageComparisonFailure": {
+    "exitCode": 1,
+    "branches": 74.86,
+    "baseline": 74.89
+  },
+  "liveGitHub": "pending; no disposable repository approved",
+  "remaining": [
+    "trusted CI verifier and linked-work graph integration",
+    "automatic task state detection",
+    "hosted CI and rollout"
+  ]
+}

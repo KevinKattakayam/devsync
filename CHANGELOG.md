@@ -1,3 +1,327 @@
+# CI follow-up — source-security Semgrep permission fix
+
+- Updated the `source-security` Semgrep Docker invocation to run with writable scanner homes (`HOME=/tmp` and `SEMGREP_USER_HOME=/tmp/semgrep`) while still executing as the host UID/GID.
+- This fixes the GitHub Actions failure `PermissionError: [Errno 13] Permission denied: '/.semgrep'` and keeps existing scanner scope, severity policy, and redacted artifact behavior unchanged.
+
+# GitHub CI stabilization — backend browser-spec typecheck
+
+- Fixed the backend CI typecheck failure: under backend-only `npm ci`, 13 browser specs referenced `frontend/node_modules/axe-core`, so TypeScript could not resolve Axe types and reported follow-on implicit-`any` errors. Added pinned dev dependency `axe-core@4.14.0` to the backend and changed those specs to import `axe-core` through normal package resolution.
+- Verified locally: `npm run lint`, `npm run format:check`, and `npm run typecheck` in `backend` pass; the focused `npx tsc -p tsconfig.testing.json --noEmit` also passes. No authorization or application runtime behavior changed.
+- The remote Semgrep fix in `4b50ac2` sets a writable `HOME` and `SEMGREP_USER_HOME`; the subsequent PR run passed `source-security`, including Semgrep. Deployment workflows remain separate and manual; no deployment was triggered.
+
+# GitHub CI stabilization — coverage baseline bootstrap
+
+- The first run after the backend typecheck fix passed `quality (backend)`, `quality (frontend)`, `source-security` and `hosting-config`; its backend coverage job exposed that the base branch has no successful historical coverage artifact. The job intentionally failed closed, leaving no route for the first successful artifact to be established.
+- Updated the baseline script to compare against `tools/ci/coverage-baseline.json` read from the exact PR base commit when that commit has no successful coverage artifact. The PR's working-tree copy is never trusted for bootstrap. The no-decrease comparison remains mandatory for every metric; missing base evidence still fails closed.
+- Added three baseline-script regressions for base-commit selection, real metric decrease rejection and missing-evidence rejection. PR run `43567489681` passed both backend and frontend coverage comparisons against their available baselines.
+- The `80ca752` run also exposed a clean-checkout browser-fixture setup defect: fixture generation created `.worktrees/frontend-fixture` without first creating its absent parent. It now creates only the fixed parent recursively, while exclusive creation of the fixture leaf still refuses stale output; a focused regression covers both behaviors.
+- In run `43567489681` on `d8e5167`, the remaining E2E failures exposed an obsolete core journey selector for native HTML dragging, one interrupted viewer-page navigation, and the editor title's constrained desktop width. The journey now uses the production dnd-kit drag handle with real pointer input, the repeated navigation waits for DOM readiness, and the document header has more width. Existing screenshot baselines remain unchanged; mobile shell screenshot differences require a fresh CI review.
+- PR run `43572702125` on `b8ab86e` passed backend/frontend quality, both coverage gates, source-security, hosting-config, Compose and every E2E target except `shell`. Core drag and decisions navigation now pass. Shell recorded zero axe violations across all four theme/viewport combinations, and the desktop title-width assertion passed; its existing visual snapshot comparisons still differ, so no baselines were updated. The container scan was skipped because the shell target remains required and failed.
+
+# Phase 18 — production Kanban virtualization and Yjs recovery assertion
+
+- Host-verification follow-up (user-reported, 2026-11-15): Kanban browser suite 5/5 passed across light/dark and desktop/mobile, collaboration/recovery suite 4/4 passed, disposable PostgreSQL/Redis drills 2/2 passed, and Gitleaks regression/history checks passed. The prior 1/5 Kanban axe failure is retained as historical evidence; saved post-fix axe reports show zero violations with the incomplete checks recorded separately. Codex did not independently rerun Docker-backed suites because its Docker socket access is denied.
+- Reviewed the eight moderate frontend audit records as one transitive `minimatch` advisory affecting the `typescript-eslint` chain (`minimatch@10.2.6`, required by `@typescript-eslint/typescript-estree@8.72.1` as `^10.2.2`). The advisory's patched minimatch 11 release is outside that range. A fresh registry audit was blocked by `EAI_AGAIN`; no forced override or incompatible downgrade was made.
+- Current focused Kanban tests pass 12/12; frontend lint, Prettier check, and strict types pass after formatting the virtualized board. Phase 18 remains incomplete pending manual screen-reader review, current all-layer vulnerability inventory, and real hosted-provider/real-account checks.
+- Fixed the production virtualized Kanban axe failure. Axe identified `aria-required-children`: the task container declared `role=list`, but React Virtuoso places a focusable scroller `div[tabindex]` directly beneath it. The virtualized column now exposes a named `group` and the row wrapper no longer claims `listitem`; task card groups, controls, drag handles, focus behavior, and move callbacks remain unchanged.
+- At the initial checkpoint, focused tests passed 12/12 and full frontend tests passed (4 Node and 39 component files / 194 tests), with lint/format/types/coverage and the permitted-context build passing. Browser verification was then pending; the subsequent user-reported 5/5 host rerun above resolves that pending status. The original 1/5 axe failure remains historical evidence.
+
+- The production Kanban route now renders tasks through React Virtuoso with bounded measured rows, using one dnd-kit context/DragOverlay for cross-column dragging. It reuses the existing task card, Radix Move, Drawer, current-state move guard, Yjs optimistic record state, task API persistence and refetch-on-rejection path. Added a persistent keyboard focus host, accessible navigation/announcements, writer/viewer/busy restrictions and touch-specific drag handle behavior.
+- Focused tests passed: 2 files / 12 tests, including a 1,000-task bounded-render test, active-drag deletion/cancellation and page integration assertions against the actual Yjs board record and existing task API flow. Full frontend lint, format, strict typecheck, tests (4 Node + 39 component files / 194 tests), coverage comparison and production webpack build passed. Coverage at that recorded full gate: 60.83% statements, 54.86% branches, 55.42% functions, 62.24% lines. The build failed in the restricted subprocess sandbox while parsing `tsc --showConfig`, then passed in the permitted subprocess context after final production-source changes. The later host browser result is recorded above.
+- Traced the reported intermittent “Yjs convergence” failure to the browser assertion: Playwright DOM `toContainText` included a collaborator cursor label inside the marker string. The test uses TipTap `editor.getText()` and retains exact replica equality; the existing successful recovery evidence reports convergence. A separate SIGKILL retry failure was fixture-server `EADDRINUSE`, not Yjs data loss. No Yjs runtime code changed. The later user-reported 4/4 recovery browser rerun is recorded above.
+- Phase 18 remains incomplete pending current dependency/image vulnerability inventory, manual screen-reader review and hosted-provider/real-account acceptance; local browser/recovery results are fixture-backed and user-reported.
+
+# Phase 18 — recovery and scanner follow-up
+
+- Added isolated application-schema PostgreSQL dump/restore and Redis pause/resume drills with synthetic data, Yjs and RLS checks; neither targets hosted infrastructure.
+- Added exact reviewed historical secret-scan fingerprints with detection regressions for newly generated values in the same paths. Added sanitized convergence diagnostics; the historical recovery assertion cause was diagnosed and the host reports the recovery suite passed 4/4.
+- The 2026-11-15 sandbox rerun of container drills was blocked by Docker socket permissions; the prior normal-terminal pass remains recorded without a fresh-pass claim.
+
+# Phase 18 — local audit follow-up
+
+- Corrected backend test formatting and JSX parser compatibility, and replaced an unsupported snippet-execution description. Pinned the development `tsx` runner to a version using patched esbuild.
+- Added a bounded synthetic PostgreSQL/Yjs restore test and isolated recovery-browser evidence output. The recovery journey passed on rerun after an earlier convergence failure, which remains an open risk. Production virtualization and provider acceptance remain incomplete.
+- Corrected three workspace-stat labels that failed light/mobile contrast in an axe fixture. The four-case keyboard/axe rerun passed with incomplete checks recorded separately.
+
+# Independent product evidence audit
+
+- Added a source-linked feature matrix, local benchmark, screenshot provenance, negative-test evidence and open risk register. Corrected stale README vulnerability and portability statements.
+- Recorded full local test results, fixture-only Chrome evidence, incomplete source/secret scans, lower-severity development dependency advisories and high/critical local image scans. Complete image CVEs and real provider acceptance remain unverified.
+
+# Phase 17 — free hosting comparison
+
+- Documented Render Free's worker, sleep and volatile Redis limitations against the existing DevSync topology, and the Oracle Always Free candidate's reliability and verification constraints. No cloud changes or deployment were made.
+
+# Phase 17 — zero-budget staging inventory
+
+- Recorded that read-only Railway build-log queries returned no records and do not establish the cause or cost of fixing its failed services.
+- Documented conditional free-tier architecture, idle-reclamation and production-isolation risks, local verification and unresolved promotion prerequisites. No cloud resources changed; staging remains NO-GO.
+
+# Phase 16 — isolated k6 fixture orchestration
+
+- Extracted disposable PostgreSQL/Redis provisioning, migration/seed and `NOBYPASSRLS` runtime-role setup into a shared test-only lifecycle used by the browser runner and new load runner. Existing browser fixture inputs and execution path are retained.
+- Added an opt-in, local-only k6 smoke orchestration command. It provisions a fresh uniquely named database, starts only the isolated fixture server with an explicit environment allowlist, validates the capability-protected fixture marker, obtains and verifies a short-lived token for the seeded synthetic owner, then launches the fixed two-VU/15-second smoke workload.
+- Added orchestration failure/cancellation/cleanup tests and a numeric-only summary allowlist. Only sanitized measurements can be saved to ignored, mode-0600 result files. No containers, server or k6 workload were started in this session; runtime measurements remain pending.
+
+# Phase 14 — browser accessibility runtime availability
+
+- Confirmed Docker CLI is installed but inaccessible: `docker info` is denied at `/var/run/docker.sock`; socket is `srw-rw----` owned by `nobody:nogroup`. Podman and nerdctl are unavailable. No privileges, services or system configuration were changed.
+- Testcontainers browser verification remains blocked; no new browser/axe results are claimed. Phase 14 remains incomplete.
+
+# Phase 14 — accessibility review: workspace activity filters
+
+- Added an accessible name to the workspace activity filter group and exposed the selected filter with `aria-pressed`; preserved native button keyboard behavior and filtering.
+- Added component regression coverage and a desktop/mobile light/dark browser journey. The component test and full frontend checks pass. The browser journey could not run in this environment because Testcontainers found no working container runtime; no fresh browser or axe result is claimed.
+- Prior Phase 14 axe reports contain zero confirmed violations in the reviewed workflows. Incomplete `aria-hidden-focus`, `color-contrast`, and editor link checks remain inconclusive (focus guards/overlapping content); manual screen-reader and contrast review was not performed. Large-list virtualization remains unresolved and Phase 14 stays open.
+
+# Phase 14 — isolated Kanban Radix move proof corrected
+
+- Fixed the fixture's removed-row range callback so it no longer resets the active task to an ID absent from the list; the move chooses a valid adjacent task and returns focus to the persistent host.
+- Synchronized the browser test on Radix's highlighted “Done” option before Enter, resolving the desktop test-sequence race. The 1,000-task scenario passed twice at 1440px and 390px with bounded rows, valid announcements, preserved order, and zero axe findings. Production Kanban remains unchanged; integration risks remain documented.
+
+# Phase 14 — isolated Kanban accessibility integration proof (failed)
+
+- Added a non-production 1,000-task Virtuoso fixture using the shared Radix Move and Drawer components plus the inline task-title control behavior. Desktop/mobile browser checks preserved host focus on offscreen row unmount and passed ordinary Tab traversal, Drawer restoration/fallback and simulated viewer/revocation states. Initial axe checks reported zero violations/incomplete items.
+- The keyboard Radix move was inconsistent: at 1440px it did not move the row; at 390px it moved the row but left a stale active-task announcement. Production Kanban was not changed; virtualization integration remains blocked. See `docs/quality/phase14-virtualization-draft/interaction-fixture/RESULTS.md`.
+
+# Phase 14 — Kanban virtualization prototype (incomplete)
+
+- Documented the board interaction mapping, unresolved focus/drag integration risks, next isolated proof and proposed flag rollback. No production Kanban change was made in this review.
+- Added an isolated Virtuoso focus-host experiment and browser evidence. The host retains DOM focus, but offscreen announcement and equivalence with the board's per-card controls remain unverified; no integration was made.
+- Added isolated Virtuoso/native-drag and dnd-kit overlay interaction evidence. Offscreen focused-row unmount loses focus; the overlay handles fixture drop/cancel but does not resolve that accessibility blocker. The existing application prototype remains unchanged and uncommitted.
+- Confirmed the original Phase 14 requirement explicitly specifies virtualized large lists. The prototype remains preserved; pagination was not substituted for that requirement.
+- Investigated a direct core adapter and React Virtuoso as alternatives. The core probe failed the React Hooks refs rule; the Virtuoso lint/type/build probe passed under current Next configuration, but compiler and active-item retention guarantees remain unverified. Added focused prototype tests for scroll/resize and reorder focus retention. No replacement or lint bypass was applied.
+- Added a measured Kanban task-window prototype and fixture coverage. The strict lint gate flags the virtualizer as React Compiler incompatible; the work remains uncommitted pending a safe compatible solution and further accessibility verification.
+
+# Phase 14 — acceptance review
+
+- Reviewed the recorded UI evidence and incomplete axe checks; Phase 14 remains open pending manual accessibility review and resolution of large-list virtualization.
+- Changed workspace activity text to semantic foreground tokens after a light-theme contrast finding; a dedicated browser contrast recheck remains outstanding.
+
+# Phase 14 — workspace settings UI
+
+- Grouped existing workspace settings by usage/automation, member access/invitations, and owner-only connections/lifecycle; clarified role boundaries and added searchable owner panels with keyboard-visible navigation. Preserved APIs, role checks and feature gates.
+- Added component and fixture-browser coverage plus 40 responsive/theme screenshots and axe reports. Frontend gates, coverage comparison and pinned Semgrep passed. Twenty axe checks remain incomplete for manual review; see `docs/quality/phase14-settings-ui/README.md`.
+
+# Phase 14 — AI assistant UI
+
+- Refined the feature-flagged grounded preview with clearer citation and source presentation, explicit uncertainty and unsaved-draft states, accessible loading/errors, retry and viewer-denial messaging. Preserved source reauthorization, backend contracts and write guardrails.
+- Added component/browser tests, fixture screenshots and axe evidence in both themes and desktop/mobile widths. Frontend gates, coverage comparison and pinned Semgrep passed. One dialog color-contrast assessment and manual accessibility/provider acceptance remain; see `docs/quality/phase14-ai-assistant/README.md`.
+
+# Phase 13 frontend import/export controls
+
+Added accessible authenticated controls for Markdown import, document Markdown/PDF downloads, task CSV import/export and workspace archive download using the existing API client. Current workspace role controls visibility; task and Markdown imports require owner/editor, exports follow existing member/source access, and the archive requires an explicit privacy confirmation. Added bounded UTF-8 file reads, stable request idempotency for selected imports, loading/error feedback and explicit download-initiated wording. Verification passed: 34 component files / 156 tests, 9 Node tests, frontend lint/format/types/build, coverage comparison, OpenAPI, pinned scoped scans and one Chrome fixture journey. Details: [verification](docs/quality/import-export-controls/README.md). No backend API or dependency changed.
+
+# Phase 13 portability acceptance
+
+Final acceptance review passed the original Phase 13 definition of done based on committed Markdown, PDF, task CSV and workspace ZIP workflows and their recorded backend/frontend tests. Deliberately restricted rich text, archive restore/import, archive encryption/redaction and account-wide export/erasure remain documented non-blocking limitations. The browser journey used fixture identities, not real Clerk accounts, and confirms download initiation only. See [acceptance matrix](docs/quality/phase13-acceptance/README.md). No Phase 14 work, push or deployment occurred.
+
+# Phase 14 — inbox and notification UI
+
+- Reworked existing inbox hierarchy, notification cards, read/unread labels, timestamps, preference controls and loading/empty/error states. Kept the digest-backed API and delivery semantics unchanged; did not add priority or delivery claims absent from the event contract.
+- Added component/browser regression coverage and 14 dark/light responsive screenshots/axe reports. Frontend gates, coverage baseline, backend lint/type checks and pinned Semgrep pass. Manual screen-reader/contrast review remains; see `docs/quality/phase14-inbox/README.md`.
+
+# Phase 14 — connected-work detail UI
+
+- Improved decision receipt source context and execution evidence cards, including relationship type, timestamps and provenance. Kept human assertions distinct from signed webhook records, with explicit no-deployment-inference wording.
+- Added responsive and keyboard navigation coverage, viewer checks, light/dark screenshots and axe reports. Frontend/backend checks, coverage comparison, production build and pinned Semgrep pass; automated accessibility checks still include manual-review items. See `docs/quality/phase14-connected-work/README.md`. Phase 14 remains in progress.
+
+# Phase 14 — dashboard and workspace navigation
+
+- Promoted existing authorized workspace links to a responsive dashboard section with accessible membership-role labels and visible keyboard focus. The section follows the current workspace filter; backend contracts and role-gated actions are unchanged.
+- Added dashboard component and desktop/mobile fixture-browser verification with new dark/light screenshots and axe reports. Frontend gates, coverage comparison, build and pinned Semgrep pass. Phase 14 remains in progress; see `docs/quality/phase14-dashboard/README.md`.
+
+# Phase 14 — document editor UI
+
+- Reorganized the existing editor title, export actions, synchronization metadata and writing controls into a responsive header and single grouped toolbar. Aligned mobile editor content with the title and bounded desktop prose width; added missing group semantics for selection formatting and document exports.
+- Added component and browser coverage for keyboard toolbar access, focus visibility, responsive layout, existing editor commands and viewer restrictions. Captured new dark/light screenshots and axe reports without changing existing screenshot baselines. Full frontend gates and coverage comparison pass; Phase 14 remains in progress. See `docs/quality/phase14-editor/README.md`.
+
+# Phase 14 build diagnosis
+
+- Traced the Next `tsc --showConfig` parse error to restricted sandbox child-process spawning (`EPERM` with empty captured stdout). The unchanged frontend production build and full frontend gates pass when run in the permitted CI-equivalent process context; no dependency or application configuration change was needed.
+- Triaged the single historical Gitleaks match as ordinary prose (false positive); retained only a redacted report and documented the narrow follow-up recommendation. No scanner exception, credential rotation, or history rewrite was made.
+- Phase 14 remains in progress; broader premium UI journeys are not complete. See `docs/quality/phase14-buildfix/README.md`.
+
+# Unreleased — Premium UI increment
+
+- Refined the existing Kanban task-details drawer for narrow and desktop layouts, added explicit form labels/shared input styles, and restored keyboard focus to its opener after closing.
+- Added browser regressions for drawer layout, focus restoration and existing viewer restrictions. Verification is partial: focused fixture-browser, lint, format, type and frontend test gates pass; the production build and some CI-only scans/comparisons remain unresolved. See `docs/ui/phase-premium/README.md`.
+
+# Phase 13 workspace archive export
+
+Authenticated active workspace members can download a bounded workspace-scoped ZIP containing supported document Markdown and task CSV v1. The versioned manifest uses generated paths and SHA-256 hashes, identifies excluded resources and warns that content is not redacted. Current membership and a fresh source fingerprint are checked after compression; unsupported documents or changes reject the request before delivery. Document titles, task keys, labels and other resources are excluded. This is not a complete account backup.
+
+Focused ZIP and PostgreSQL authorization tests passed; full backend gates passed 45 suites / 408 tests, lint, formatting, strict types and build. OpenAPI, unchanged coverage baseline and pinned security scans passed. See [verification](quality/workspace-archive/README.md). Browser controls, workspace restore and remaining Phase 13 portability acceptance are incomplete.
+
+# Phase 13 workspace archive — incomplete
+
+Added an isolated version 1 manifest helper with fixed generated paths, SHA-256 hashes and entry/aggregate input bounds. Two focused unit tests passed with coverage disabled. This helper is not connected to a ZIP writer, authorization, database snapshot, API or OpenAPI; workspace archive export remains unimplemented. No full gate or commit was completed for this partial work.
+
+# Phase 13 bounded document PDF export
+
+Added authenticated PDF export from the currently authorized committed CRDT projection. The in-process `pdf-lib` renderer uses built-in fonts, does not parse HTML or fetch external resources, supports the restricted heading and paragraph format, and rejects unsupported structures and unrenderable characters. Bounds are 256 KiB Markdown input, 40 pages and 2 MiB output.
+
+The full backend gate passed 43 suites / 399 tests, lint, formatting, strict types and build. Focused PDF parsing, access and limit tests, OpenAPI, coverage baseline and pinned security scans passed. `pdf-lib` 1.17.1 is MIT licensed. Installation's bundled npm audit reported 31 low/moderate findings and no high/critical findings; a later standalone audit could not reach the registry. Details: [PDF verification](quality/document-pdf/README.md). Remaining Phase 13 work includes browser portability controls and other archive/retention features.
+
+# Phase 13 atomic task CSV import
+
+Authenticated workspace owners and editors can import version 1 task CSV through one tenant transaction. The codec validates the whole bounded file, then the controller checks every target column and active assignee before creation. Task creation reuses existing activity, assignment and embedding behavior. An Idempotency-Key is required; the existing receipt prevents same-key retries for 24 hours. A per-process IP limiter allows 20 requests per minute. Viewers, revoked members and suspended workspaces are denied.
+
+Focused PostgreSQL tests passed (2 tests; coverage disabled for that focused run), including invalid relationships, idempotency, cross-workspace isolation and an injected post-create failure that rolled the transaction back. The full backend gate passed 42 suites / 394 tests, lint, formatting, strict types and build. OpenAPI, the existing coverage baseline and pinned source/test scans passed. See [verification](quality/task-csv-import/README.md). Workspace archive export, PDF, broader rich text and remaining Phase 13 portability work are incomplete.
+
+# Phase 13 workspace task CSV export
+
+Authenticated current workspace members can export the existing version 1 task CSV schema. The tenant transaction limits results to the requested workspace, rechecks membership and blocks suspended workspaces. The existing codec protects spreadsheet cells; exports exceeding 1,000 tasks or 1 MiB fail instead of truncating. Task keys, labels and other fields outside the codec are not included. Task, column and board models do not currently have an archived state; deleted tasks are absent.
+
+Focused fixture PostgreSQL authorization tests passed (2 tests; coverage disabled only for that focused run). The full backend gate passed 42 suites / 392 tests, lint, formatting, strict types and build. Existing coverage baseline, OpenAPI consistency and pinned source/test security scans passed. See [verification](quality/task-csv-export/README.md). CSV import and other Phase 13 portability features remain incomplete.
+
+# Phase 13 task CSV codec increment
+
+Added a standalone version 1 task CSV codec for column ID, title, description, priority, assignee ID and due date. Files are limited to 1 MiB and 1,000 task rows, with bounded fields and strict UTF-8, header and value validation. All serialized data cells carry a literal apostrophe to prevent spreadsheet formula execution; the parser removes exactly one prefix for round-trip fidelity. Task keys and labels are outside this schema.
+
+Focused codec tests passed (3 tests, coverage disabled); backend lint, format check, strict types and build passed. This is a codec only: task import/export endpoints, authorization, relationship validation, database idempotency and integration tests remain pending. No production data was changed.
+
+# Phase 13 Markdown export increment
+
+Authenticated workspace members can export committed Yjs journal content as Markdown. Export rechecks current membership and archived status under tenant authorization and rejects rich-text structures outside the restricted import subset rather than losing content. Focused tests cover a stale projection, import/export round-trip, revoked and foreign members, archived documents and unsupported formatting. The full backend gate passed 41 suites / 387 tests, lint, formatting, strict types and build; OpenAPI and the existing coverage baseline passed. See [verification](quality/markdown-export/README.md). Other Phase 13 portability features remain incomplete.
+
+# Phase 13 restricted Markdown import — verified increment
+
+Authenticated owners and editors can import bounded Markdown as a new workspace document. The supported subset is single-line paragraphs and ATX headings separated by blank lines; unsupported Markdown and HTML are rejected. The existing tenant transaction creates the Yjs snapshot, activity, indexing request and optional idempotency receipt. No existing document is overwritten. OpenAPI describes the new route.
+
+Focused validation and disposable PostgreSQL authorization/persistence tests pass (11 tests, coverage disabled for that run). The complete backend gate passes lint, formatting, strict types, 40 suites / 383 tests and build; the unchanged coverage baseline, OpenAPI consistency and pinned source/test scans also pass. See [verification](quality/markdown-import/README.md). Markdown export, rich text, CSV, workspace archives and the rest of Phase 13 remain incomplete.
+
+# Phase 13 Markdown increment — incomplete
+
+The existing validator tests pass (3 tests, focused run with coverage disabled). Backend strict types and existing OpenAPI consistency checks exit 0; an initial sandboxed OpenAPI check failed because tsx could not create its local IPC socket, and an authorized retry passed. The requested import/export endpoints and authorization tests have not been implemented. A registry lookup timed out in the restricted environment; no dependency was installed. No commit was created.
+
+# Phase 13 Markdown validation — incomplete
+
+Added an unconnected Markdown input validator with a 256 KiB UTF-8 bound and rejection of control characters and malformed Unicode. Focused tests pass with coverage disabled; this is not a full coverage gate. No import/export endpoints, authorization, OpenAPI changes or browser flows have been implemented. Phase 13 remains incomplete.
+
+# Phase 12 live editor persistence and coordinated local purge
+
+The atomic adapter is now the live Yjs persistence writer, retaining the existing IndexedDB schema and account/room scoping. It serializes one snapshot plus a dirty bit, merges concurrent snapshots atomically and reports local persistence only after transaction completion. Pending local edits, local storage errors, native server rejection, journal acknowledgement and connection reconciliation have separate indicators. Storage failure stops editing and transport while retaining the in-memory document for explicit export; startup storage failure prevents network admission.
+
+Confirmed local purge writes a transactional tombstone and notifies current-version tabs to disconnect. Subsequent reads/writes refuse the purged replica, preventing immediate repopulation. Purge refuses when coordination is unavailable. Older application tabs must be closed first; older adapters do not honor the marker. In-memory copies require closing their tabs, and exports/server content are unaffected. Live recovery import remains disabled: file metadata is not authority, and safely resetting a purged replica requires fresh authorization and generation fencing.
+
+Verification: full backend gates pass (39 suites / 372 tests, including disposable PostgreSQL); full frontend gates pass (33 files / 145 component tests plus Node tests). Lint, format, strict types, builds, OpenAPI, unchanged coverage comparisons and pinned source/test security checks pass. Four actual Chrome fixture recovery journeys cover concurrent clients, offline reload, compaction/server crash, injected quota with actual recovery download, multi-tab purge and membership revocation while offline. Fixture identity is not real Clerk acceptance; injected quota is not real device capacity measurement. Exact commands, results, retained failures and limitations are in [Phase 12 evidence](quality/offline-drafts/README.md).
+
+Limits: 8 MiB per merged snapshot and bounded legacy reads, not an origin-wide storage quota; no browser eviction, forced termination or physical-disk durability guarantee. Common links and unload warn about unconfirmed changes, but programmatic/history navigation is not comprehensively fenced. Offline edits cannot be uploaded after server membership revocation. No administrative queue, production migration, push, deployment or Phase 13 work. This is bounded offline draft support, not full offline-first acceptance.
+
+# Phase 12 atomic storage primitive — integration pending
+
+Added an independently tested IndexedDB snapshot primitive using the existing y-indexeddb store format. A successful promise resolves only after transaction completion. Concurrent database connections merge their persisted Yjs state before atomic compaction; rejected writes preserve the previous snapshot. The primitive bounds merged state to 8 MiB and legacy reads to 1024 records / 16 MiB, with explicit limit, quota, failure and corruption error codes. Tests use fake-indexeddb; quota failure is injected and is not a real browser quota measurement.
+
+Focused storage tests (5), full frontend gates (129 component tests), coverage comparison and source security scans pass. This primitive is not wired into the live editor. Existing persistence and indicators are unchanged. Hook integration, bounded live write scheduling, real browser quota tests, coordinated purge and authorized restoration remain incomplete. No new upload path or administrative queue was introduced.
+
+# Phase 12 local draft export — incomplete
+
+Added a user-confirmed unencrypted Yjs draft export, bounded to 8 MiB of encoded state, with exact account/room metadata and detached inspection support. It makes no server mutation and does not reapply files to the live replica. Download status says requested, not saved. The document UI explicitly states that per-edit local storage confirmation is unavailable. The existing remote journal acknowledgement and access-denial behavior remains intact.
+
+Focused export tests (4), the frontend full gate (124 component tests), unchanged coverage comparison, pinned Semgrep/Gitleaks, and the existing actual-Chrome recovery journey pass. The browser uses fixture identities and real local services; no real provider acceptance is claimed. Backend verification is recorded in `docs/quality/offline-drafts/README.md`.
+
+**Phase 12 remains incomplete:** y-indexeddb integration lacks per-edit transaction receipts/error propagation. Bounded durable storage, quota failure handling, coordinated multi-tab purge, recovery application and stale-auth/full-storage acceptance remain engineering work. Export limits do not bound existing browser storage. Existing room/account scoping and previous malformed-data protections are preserved. No push, deploy or Phase 13 work.
+
+# Explicit offline states and local drafts — in progress
+
+Reproduced and repaired cross-document local board projection carryover and malformed JSON crashes in the existing Yjs record helper. Unreadable local data is retained and automatic replacement is refused; the board displays a recovery warning. Focused frontend tests (8) and strict types passed. Frontend lint, format, types, 120 component tests, build and unchanged coverage comparison pass; five local Chrome Kanban regressions pass. This is verification of the narrow repair, not full offline acceptance. Per-edit IndexedDB transaction confirmation, bounded storage, purge/recovery controls and complete offline acceptance remain unfinished. Existing CRDT and server authorization are preserved.
+
+# Phase 11 inbox — local delivery, incomplete acceptance
+
+- Add an accessible inbox with per-event read controls, owner-only recorded automation failures and cache clearing on disconnect or reconnection checks.
+- Add tenant/user RLS scheduling preferences and a bounded timezone-aware batch preview. No email, push or scheduled delivery is active; remaining categories and production delivery are pending.
+
+# Phase 11 assignment notifications — local increment
+
+- Record actual task assignments at creation or reassignment and expose recipient-scoped Activity in the existing inbox, subject to current task and workspace visibility. Other notification categories remain pending.
+
+Phase 11 increment: added per-user, per-workspace inbox read markers with forced RLS and current source checks. Focused disposable PostgreSQL regression, backend typecheck and OpenAPI check pass. The inbox still uses the digest acknowledgement window; full phase verification and remaining notification features are pending.
+
+# Phase 11 inbox — in progress
+
+- Add a preliminary Activity-backed inbox endpoint, OpenAPI registration, and membership/archive regression; full inbox functionality remains unfinished.
+
+# Rules and approval-based automation — local implementation
+
+- Add tenant-scoped opt-in rules, owner approval and audit, deduplicated/debounced durable events, opaque queue payloads, bounded leases and retries, and local activity actions.
+- Add owner settings and isolated fixture browser coverage. Human task assertions and signed GitHub observations retain distinct provenance; CI updates remain unavailable without trusted verification and linked-work support. See `docs/quality/automation/README.md` for verification and rollout limits.
+
+# Rules and approval-based automation — incomplete foundation
+
+- Add strict internal rule/event preview and automation-only dead-letter/error redaction with local Redis retry tests. No rule API, execution, approval, event hookup, audit UI or frontend exists yet.
+- Record passing backend gates and explicit remaining Phase 10 work in `docs/quality/automation/README.md`. No provider, push or deployment claims.
+
+# Grounded AI assistant — local preview delivery
+
+- Reuse gateway/quota and permission-aware lexical retrieval for structured cited previews; recheck sources after remote calls and reject fabricated reference IDs or executable/unrequested actions.
+- Add optional Copilot draft panel, evaluator adapter, tenant/source regression tests and fixture Chrome outage/role journey. Human-reviewed evaluation data is unavailable; no real model-quality, exact cost or factual-truth claim.
+- Verification, setup, flags and rollback: `docs/quality/grounded-ai/README.md`. No migration, push, deploy or production data change.
+
+# Decision execution timeline — partial local delivery (2026-11-09)
+
+- Extend existing accepted receipts with tenant-scoped, insert-only timestamped human assertion/outcome, task and owner-only existing GitHub PR evidence timeline. Add API contracts, current-source rechecks, frontend linking and provenance labels, DB/API authorization regressions, and fixture-only owner/viewer Chrome flow.
+- Local lint, format, types, tests, builds, coverage, OpenAPI and security gates pass. No production deployment proof is supported; the trusted deployment adapter/policy, live GitHub acceptance, hosted CI and migration rollout remain pending. See `docs/quality/decision-execution/README.md`.
+
+# Permission-aware knowledge search
+
+- Repair committed TipTap-body keyword lookup and exclude invalidated semantic vectors; preserve legacy string bodies and existing CRDT/outbox policy.
+- Add v2 lexical search and permission-checked source opens with source/assignee/UTC filters, receipt-source visibility and owner-only connected PR metadata.
+- Add transactional Postgres text extraction/GIN indexes and a workspace search page with explicit freshness and safe error handling. No source-copy service, mass data update or contract break.
+- Local verification/evidence and migration/rollback limits: docs/quality/search-indexing/README.md. Real providers/hosted rollout remain unverified; no push/deployment.
+
+# GitHub execution trail — local delivery
+
+- Fence stale PR/check/review events and identical signed-body replay inside the existing webhook transaction; add forced-RLS execution metadata and receipt tables with a safe additive migration.
+- Record signed App withdrawal, deny disconnected repository work and expose an owner-only timestamped evidence panel with deployment/live-access limits.
+- Preserve tests, signatures, tenant policy, legacy compatibility and scan/coverage thresholds. Verify320 backend tests and95 component/9 Node tests; retain failures and fixture-browser evidence.
+- Live integration is pending at user request; existing GitHub repositories remain untouched. No push/deployment or automatic next phase.
+
+# Work graph foundation — incomplete
+
+- Audit reusable source references and owner-only repository bindings; add an internal fail-closed GitHub source-proof adapter with fixture tests.
+- Synchronize the existing handshake-budget regression's initial preconditions, preserving its assertions and production limits.
+- Record remaining graph persistence/API/UI/acceptance work explicitly; no unified graph feature or live provider success claimed.
+
+# Task planning preflight — in progress
+
+- Audit existing Kanban schema, tenant policy, drag/keyboard/undo behavior and direct task writers before implementation.
+- Record missing planning features and completion-policy decision; no application/schema/test changes or completed task-planning delivery claimed.
+
+# Real-time editor and recovery — 2026-11-08
+
+- Scope connection/pending acknowledgments to the current Y.Doc and distinguish access loss from reconnectable offline state; retain native journal-acknowledgment semantics and server permissions.
+- Add guarded recovery fault injection and a direct server-process launcher. Verify actual Chrome convergence, IndexedDB reload/merge, repeated edits/compaction, journal plus snapshot recovery after SIGKILL, viewer protocol denial and API/Yjs/Socket.IO revocation.
+- Preserve original CRDT engine, migrations, contracts, tests and limits. Add a CI recovery target without changing scan/coverage gates; do not add a silent-overwrite restore UI.
+- Record305 backend tests,92 frontend component plus9 Node tests,13 browser journeys, both app gates, contracts/security/coverage evidence, retained failed attempts and a fixture-only recovery screenshot. Real Clerk/hosted/production restore limits remain explicit; no push/deployment or next phase.
+
+# Identity, roles and account lifecycle — 2026-11-08
+
+- Verify active provider sessions for production HTTP/Yjs/Socket.IO, with bounded monotonic caching and fail-closed errors; add test-first revocation/clock regressions.
+- Gate workspace rendering on successful identity sync and add explicit recovery, native sign-out failure handling and account-switch race protection.
+- Add own-session settings, account deletion prerequisites, exact-name-confirmed owner transfer and manual workspace export-review requests through compatible v2 routes and additive forced-RLS migration. Preserve existing invitations, roles and source policy; no export delivery or deletion service claimed.
+- Verify300 backend tests,89 frontend component plus9 Node tests, both app gates, real DB/RLS/transport regressions,12 core and1 lifecycle fixture browser journeys, contracts, coverage and source security checks. Preserve failed attempts and unchanged thresholds.
+- Record the Google browser rejection and clock/setup observations honestly: real two-account Clerk acceptance remains external action required. No push, deployment, credential capture, provider-success claim or automatic next phase.
+
+# Release correctness and security — 2026-11-08
+
+- Classify Clerk sync rejection/unavailability without exposing SDK details or relaxing verification; add failing-then-passing regressions.
+- Remove cookie mutation from legacy reset GET while preserving307; add exact-Origin POST/303, proxy canonical-origin configuration, identity-only clearing and genuine browser coverage.
+- Schedule CRDT indexing atomically with writer-authorized journal commits; avoid replay churn and close transaction-time revoked transports. Preserve existing wire/RLS contracts and migration rollback assertions.
+- Isolate bounded PDF/OCR work with offline model and explicit container constraints; fail closed without a worker, retain text ingestion, and recheck writer authority after extraction. Route uploads through the configured authenticated client.
+- Patch runtime dependency chains and newly identified stable zlib advisory. Final local API/extractor/frontend scans report zero vulnerability findings; retain full-tree Moderate/Low advisories, unsuppressed scans and SBOMs. Add the extractor to unchanged CI image security gates.
+- Triage the scanner generator's public test sentinel using an exact non-credential exception and seven detection regressions; preserve thresholds and other-path/new-value detection.
+- Record passing source gates(287 backend tests;83 frontend component plus9 Node tests), browser/security/contracts, actual extractor and clean-clone isolation evidence, failed attempts, provider setup requirements and hosted-CI limitations. No push/deployment, real provider-success claim, production data change or destructive migration.
+
+# Local authentication clock investigation
+
+- Record measured37-second backend/Clerk clock skew, unsynchronized host NTP and successful rolled-back profile-sync database probes. Administrator time synchronization and authenticated retry remain required; no authentication controls relaxed.
+
+# Local Clerk sign-in routing
+
+- Configure local sign-in/sign-up destinations in Clerk provider, proxy and Docker build/runtime so protected-page navigation uses the existing embedded form.
+- Validate current Clerk keys with HTTP200 API responses and verify dashboard-to-local-sign-in navigation in fresh Chrome pages. Real credential submission remains unverified.
+
 # Runtime security and Kanban follow-up
 
 - Compare current Debian and rebuilt pinned Node22 Alpine runtimes with unsuppressed Trivy output: remove44 High entries per runtime; backend4 Medium remain, frontend zero findings. Document musl support limits and every remaining CVE without changing security gates.
@@ -255,3 +579,130 @@ Historical Phase 0 audit: see docs/CHANGELOG.md. No production deployment or key
 - B03/B04/G10: tenant-scoped PostgreSQL CRDT journal committed before acknowledgement, row-locked compaction, Redis fanout, resource limits and durable legacy conversion with guarded rollback.
 - C01/D02/D07: per-message document policy checks, passive member/role/expiry eviction, read-only protocol enforcement and bounded WebSocket admission.
 - H02/I04: account/room-scoped offline replicas, fresh reconnect tokens, editor read-only/status handling, real PostgreSQL/Redis/Yjs collaboration tests and frontend editor/lifecycle component tests. Phase 1b is still in progress; remaining scope is tracked in docs/PROGRESS.md.
+
+# Phase 14 — controlled Kanban integration blocked
+
+- Reviewed the existing uncommitted Kanban prototype against the Virtuoso focus-host proof. Native drag source retention and cancellation remain unverified for Virtuoso, so no production integration or feature flag was added.
+
+# Phase 14 — Kanban virtualization safety boundary
+
+- Restored the committed Kanban page and browser spec as the normal path. Relocated the uncommitted TanStack component and its tests/spec into the Phase 14 draft directory, outside frontend app compilation/lint discovery. The direct dependency change and all experiment evidence remain preserved; production has no import or flag that can enable the experiment.
+- Default Kanban verification passed: frontend lint/types and 34 component files / 175 tests; local browser suite passed 5/5 for moves, drawer, viewer denial and cross-workspace rejection. No production feature flag was added.
+
+# Phase 14 — isolated virtualization checkpoint verified
+
+- Removed experimental `@tanstack/react-virtual@3.14.26` from frontend production manifests; prototype source and setup/version evidence remain isolated under the Phase 14 draft directory. Default Kanban page/spec match HEAD and production has no experimental imports.
+- Frontend lint, format, strict types, 34 test files / 175 tests, default Kanban browser 5/5, and webpack production build passed. This is an incomplete research checkpoint; virtualization and Phase 14 remain open.
+
+# Phase 14 — native drag compatibility follow-up
+
+- Reviewed existing source-unmount and cancellation evidence; no lint-compatible retained native drag source is established. Offline fixture dependency preparation failed with `ENOTCACHED`; no new browser verification is claimed. Production Kanban remains unchanged.
+
+# Phase 14 — Kanban virtualization architecture decision
+
+- Documented a candidate isolated Virtuoso and dnd-kit overlay proof, alternatives, dependency prerequisite and explicit acceptance tests. No production Kanban or dependency changes; virtualization remains incomplete.
+
+# Phase 14 — isolated combined virtualized drag fixture
+
+- Added a synthetic Virtuoso and dnd-kit overlay proof with the existing shared Radix Move and Drawer controls. Focused checks cover bounded rendering, pointer drop/cancel, simulated rejection, access changes and keyboard interactions; real API, concurrency, assistive technology and production integration remain unverified.
+
+# Phase 14 — controlled virtualized board integration review
+
+- Mapped the isolated overlay fixture against the real Yjs-backed board, authorization and move failure paths. Integration remains blocked on a shared card/current-state move adapter and actual permission, rejection and focus/scroll regression coverage. No production behavior or dependency was changed.
+
+# Phase 14 — Kanban card preparation (unverified in browser)
+
+- Extracted existing task-card controls and added a current-rendered-state move guard while retaining the existing Yjs/API/refetch path. Focused and frontend gates pass; real browser drag/focus verification is blocked by Testcontainers access. The changes remain uncommitted and virtualization remains incomplete.
+
+# Phase 14 — Kanban preparation browser fixture
+
+- Verified the actual extracted card and move guard in a standalone Chrome fixture at desktop/mobile widths. Native Escape prevents a drop but leaves the existing drag state set; no Yjs, API or server-authorization acceptance is claimed.
+
+# Phase 14 — native Kanban drag cleanup
+
+- Keep only transient visual drag state in the TaskCard, clear it on native `dragend`, and discard it when the card unmounts. Read the task ID from native `DataTransfer` and re-resolve current task/permission on every drop through the existing move guard. Preserve Yjs/API move semantics. Focused component tests and a standalone real-TaskCard Chrome fixture pass at desktop/mobile sizes, including Escape and a subsequent drag. The fixture is not backend/Yjs acceptance; virtualization and Phase 14 remain incomplete.
+
+# Phase 14 — optional task-card drag adapter
+
+- Added an optional dnd-kit handle and callback-ref adapter to the existing task card. Native drag remains the default; adapter handles respect current write and busy state. Component checks and an isolated real-card/dnd-kit browser fixture pass. Active-drag revocation, server-backed authorization and virtualization still require integration verification.
+
+# Phase 14 — virtualized column follow-up
+
+- Reviewed the real-card adapter against the isolated virtualized drag proof. Focus and scroll preservation across a dnd-kit context reset after deletion or permission revocation remain unverified; no virtualized column or dependency change is delivered.
+
+# Phase 14 — isolated interruption research
+
+- Added a real-card fixture proposing a nested dnd-kit context reset under a persistent Virtuoso host. Focused static and mocked component checks pass; sandbox restrictions blocked Chrome and localhost verification, so the interruption behavior remains unverified and no production virtualization is delivered.
+
+# Phase 14 — isolated two-column fixture
+
+- Added an experimental two-column fixture using the real task card and move guard. Browser drag behavior remains unverified; production Kanban is unchanged.
+
+# Phase 15 — grounded AI isolation regression (pending)
+
+- Added a database integration regression for workspace-scoped GitHub evidence and disconnection during grounded AI generation. User-run disposable PostgreSQL test passed (1 passed, 153 skipped); the focused run reported coverage thresholds unmet. No production behavior changed.
+
+# Load and restore phase — preflight only
+
+- Documented existing metrics and recovery evidence, unavailable local load tools and the container access blocker. No new load or restore results are claimed.
+
+# Phase 16 — fixture load preflight endpoint
+
+- Added a fixture-only capability-protected preflight endpoint for a future load safety gate. The existing workload is not yet connected to it.
+
+# Phase 16 — k6 fixture safety gate
+
+- Connected the existing REST workload to fixture preflight verification in setup and each iteration; local Node tests cover fail-closed request sequencing. k6 runtime and load execution remain pending.
+
+# Phase 16 — isolated k6 child launcher
+
+- Added a bounded fixture k6 child launcher with restricted environment and cancellation handling. Actual k6 and fixture orchestration remain unverified.
+
+# Phase 16 — fixture setup diagnostics
+
+- Added sanitized stage codes for disposable PostgreSQL/Redis startup, migrations, seeding, runtime-role setup, fixture validation, readiness, capability verification and synthetic owner authentication. Added a preflight-only runner mode that verifies and cleans up the disposable fixture without starting k6. The earlier `fixture_setup_failed` result remains unattributed until the stage is observed in the Docker-enabled local environment.
+
+# Phase 16 — fixture PostgreSQL URI compatibility
+
+- Accept the `postgres:` scheme emitted by Testcontainers alongside `postgresql:` in the disposable load fixture guards, retaining local host, database and runtime role validation. Real preflight verification remains pending.
+
+# Phase 16 — k6 summary and cancellation follow-up
+
+- Transfer allowlisted numeric k6 summaries through bounded stdout, report application-only metrics separately, and isolate the fixture server from terminal Ctrl+C on Unix. Real k6 summary and cancellation verification remain pending.
+
+# Phase 16 — k6 summary diagnostics
+
+- Report fixed summary parsing categories and stdout chunk counts without exposing output, and reject incomplete numeric summaries. Real k6 verification remains pending.
+
+# Phase 16 — versioned k6 summary framing
+
+- Frame the allowlisted numeric summary with a versioned line marker and validate a single complete record; real k6 verification remains pending.
+
+# Phase 16 — verified local REST smoke
+
+- Record one successful 2-VU, 15-second k6 2.3.0 run against disposable local services, with application-only metrics separated from preflight-inclusive HTTP totals. This is a local smoke baseline, not production capacity or SLO evidence.
+
+# Phase 17 — staging readiness checkpoint
+
+- Require production NODE_ENV when DEPLOYMENT_MODE is production, and document the unverified staging provider, deployment, role-ownership and release prerequisites. No staging deployment was performed.
+
+# Phase 17 — staging promotion and runtime role safety
+
+- Block preview promotion until staging topology and release identity can be verified, and add a fail-closed, read-only runtime database privilege check with disposable PostgreSQL regression coverage. Staging deployment remains unimplemented and unverified.
+
+# Phase 17 — staging configuration foundation
+
+- Add a locally tested validator for proposed staging targets, credentials and reviewed SHA. It is not wired into deployment; staging promotion remains blocked.
+
+# Phase 17 — cloud inventory and source preparation
+
+- Record read-only Vercel/Railway inventory and conditional free-tier options, and add an isolated reviewed-commit source archive/hash primitive. It is not a built-image attestation or deployment; staging promotion remains blocked.
+- Record the user's $0 budget and protect the existing Neon production branch when evaluating staging options.
+
+# CI — shell stabilization verified on Ubuntu
+
+- Record the user-executed shell suite pass (8/8) with bundled Chromium 151. Preserve strict visual, axe and keyboard assertions; stabilize route masking, Radix menu waits, renderer diagnostics and 31 reviewed snapshots. GitHub verification remains pending. See docs/quality/independent-audit/shell-ci-stabilization.md.
+
+# CI — isolated frontend image build
+
+- Add an independent scan-only frontend Docker target with explicit tagging/labeling and startup refusal. Keep the production runner and strict configuration validation intact; block scan-only publishing and release provenance while retaining Trivy and CycloneDX gates. Local Docker build, refusal and production-negative checks passed; frontend tests passed 195/195, and Trivy found zero High/Critical findings. See docs/quality/independent-audit/ci-frontend-image.md for scope and limitations.

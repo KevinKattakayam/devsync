@@ -1,8 +1,7 @@
 import { createHash } from 'crypto';
 import { z } from 'zod';
 import { idempotentCreate } from '../lib/create-idempotency';
-import { PDFParse } from 'pdf-parse';
-import Tesseract from 'tesseract.js';
+import { extractBinary } from './extraction-client';
 import * as Y from 'yjs';
 import { queueEmbedding } from './embedding.service';
 import { authorizeWorkspace, WRITE_ROLES, withWorkspaceAccess } from '../security/workspace-policy';
@@ -152,31 +151,6 @@ function textToTiptapJson(text: string): PMNode {
   };
 }
 
-// ── PDF extraction ───────────────────────────────────────────
-
-async function extractFromPDF(buffer: Buffer): Promise<string> {
-  const parser = new PDFParse({ data: buffer });
-  try {
-    const data = await parser.getText();
-    return data.text || '';
-  } finally {
-    await parser.destroy();
-  }
-}
-
-// ── Image OCR extraction ─────────────────────────────────────
-
-async function extractFromImage(buffer: Buffer): Promise<string> {
-  const { data } = await Tesseract.recognize(buffer, 'eng', {
-    logger: (info) => {
-      if (info.status === 'recognizing text') {
-        // Progress logging — useful for large images
-      }
-    },
-  });
-  return data.text;
-}
-
 // ── Public API ───────────────────────────────────────────────
 
 export interface IngestResult {
@@ -215,9 +189,9 @@ export async function ingestDocument(
   // Extract text
   let extractedText: string;
   if (isPDF) {
-    extractedText = await extractFromPDF(buffer);
+    extractedText = await extractBinary(buffer, mimeType);
   } else if (isImage) {
-    extractedText = await extractFromImage(buffer);
+    extractedText = await extractBinary(buffer, mimeType);
   } else {
     extractedText = buffer.toString('utf8');
   }

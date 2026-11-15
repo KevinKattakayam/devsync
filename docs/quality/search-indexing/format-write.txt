@@ -1,0 +1,6 @@
+src/services/knowledge-search.ts 134ms
+src/routes/knowledge-search.routes.ts 10ms
+src/services/embedding.service.ts 63ms (unchanged)
+src/__tests__/resource-mutations.integration.test.ts 520ms
+src/contracts.ts 106ms
+src/app.ts 17ms (unchanged)

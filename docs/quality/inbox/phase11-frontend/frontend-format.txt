@@ -1,0 +1,9 @@
+
+> frontend@0.1.0 format:check
+> prettier --check . --ignore-unknown
+
+Checking formatting...
+[warn] src/components/digest/async-digest.tsx
+[warn] src/components/digest/inbox.tsx
+[warn] tests/inbox.test.tsx
+[warn] Code style issues found in 3 files. Run Prettier with --write to fix.

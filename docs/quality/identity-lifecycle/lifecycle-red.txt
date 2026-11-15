@@ -1,0 +1,61 @@
+
+> devsync-backend@1.0.0 test
+> node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand --runTestsByPath src/__tests__/resource-mutations.integration.test.ts --testNamePattern=lifecycle: --coverage=false
+
+FAIL src/__tests__/resource-mutations.integration.test.ts (14.775 s)
+  ● lifecycle: scopes plans and export requests to current owners without exporting content
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 403
+    Received: 404
+
+      1965 |   const {a,b}=await fixture();
+      1966 |   const base=`/api/v2/workspaces/${a}/lifecycle`;
+    > 1967 |   expect((await request(app).get(base).set('x-fixture-actor','viewer')).status).toBe(403);
+           |                                                                                 ^
+      1968 |   expect((await request(app).get(`/api/v2/workspaces/${b}/lifecycle`)).status).toBe(403);
+      1969 |   const plan=await request(app).get(base);
+      1970 |   expect(plan.status).toBe(200);
+
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:1967:81)
+
+  ● lifecycle: ownership transfer is atomic, same-tenant and requires explicit confirmation
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 409
+    Received: 404
+
+      1985 |  const path=`/api/v2/workspaces/${a}/lifecycle/transfer`;
+      1986 |  expect((await request(app).post(path).send({confirmName:a,newOwnerMemberId:foreign.id})).status).toBe(404);
+    > 1987 |  expect((await request(app).post(path).send({confirmName:'wrong',newOwnerMemberId:target.id})).status).toBe(409);
+           |                                                                                                        ^
+      1988 |  expect((await request(app).post(path).set('x-fixture-actor','viewer').send({confirmName:a,newOwnerMemberId:target.id})).status).toBe(403);
+      1989 |  expect((await request(app).post(path).send({confirmName:a,newOwnerMemberId:target.id})).status).toBe(200);
+      1990 |  expect((await admin.workspaceMember.findUniqueOrThrow({where:{id:target.id}})).role).toBe('OWNER');
+
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:1987:104)
+
+  ● lifecycle: account deletion planning never deletes an identity and flags sole ownership
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 404
+
+      1995 |  const {a}=await fixture();
+      1996 |  const plan=await request(app).get('/api/v2/account/deletion-plan');
+    > 1997 |  expect(plan.status).toBe(200);expect(plan.body.deletionAvailable).toBe(false);
+           |                      ^
+      1998 |  expect(plan.body.ownedWorkspaces.find((w:{id:string})=>w.id===a).requiresTransfer).toBe(true);
+      1999 |  expect((await request(app).get('/api/v2/account/deletion-plan').set('x-fixture-actor','inactive')).status).toBe(403);
+      2000 |  expect(await admin.user.findUnique({where:{id:'owner'}})).not.toBeNull();
+
+      at Object.<anonymous> (src/__tests__/resource-mutations.integration.test.ts:1997:22)
+
+Test Suites: 1 failed, 1 total
+Tests:       3 failed, 101 skipped, 104 total
+Snapshots:   0 total
+Time:        15.032 s, estimated 25 s
+Ran all test suites within paths "src/__tests__/resource-mutations.integration.test.ts".

@@ -1,0 +1,12 @@
+{
+  "comparisonBase": "166085b",
+  "priorOperationsChangedOrMissing": [],
+  "addedPaths": [
+    "/api/v2/account/deletion-plan",
+    "/api/v2/account/sessions",
+    "/api/v2/account/sessions/{sessionId}/revoke",
+    "/api/v2/workspaces/{workspaceId}/lifecycle",
+    "/api/v2/workspaces/{workspaceId}/lifecycle/export-requests",
+    "/api/v2/workspaces/{workspaceId}/lifecycle/transfer"
+  ]
+}

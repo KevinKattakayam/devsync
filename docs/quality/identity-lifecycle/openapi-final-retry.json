@@ -1,0 +1,11 @@
+{
+  "command": [
+    "npm",
+    "run",
+    "openapi:check"
+  ],
+  "cwd": "backend",
+  "exitCode": 0,
+  "reasonForRetry": "Sandbox denied tsx local IPC pipe on first final check",
+  "log": "openapi-final-retry.txt"
+}

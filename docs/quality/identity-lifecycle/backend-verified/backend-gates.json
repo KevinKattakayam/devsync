@@ -1,0 +1,24 @@
+[
+  {
+    "gate": "lint",
+    "command": [
+      "npm",
+      "run",
+      "lint"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 3.328,
+    "output": "backend-lint.txt"
+  },
+  {
+    "gate": "format",
+    "command": [
+      "npm",
+      "run",
+      "format:check"
+    ],
+    "exitCode": 1,
+    "elapsedSeconds": 3.979,
+    "output": "backend-format.txt"
+  }
+]

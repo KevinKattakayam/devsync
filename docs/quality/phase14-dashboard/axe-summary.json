@@ -1,0 +1,9 @@
+{
+  "reports": 22,
+  "violations": {},
+  "incompleteOccurrences": {
+    "aria-hidden-focus": 12,
+    "color-contrast": 14
+  },
+  "manualReviewRequired": true
+}

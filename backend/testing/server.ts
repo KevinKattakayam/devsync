@@ -1,4 +1,6 @@
 import { validateFixtureConfiguration } from './fixture-auth';
+import { createRecoveryControls } from './recovery-controls';
+import { createLoadPreflight } from './load-preflight';
 async function main() {
   const { secret } = validateFixtureConfiguration(process.env);
   const [
@@ -29,8 +31,8 @@ async function main() {
   outer.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
   // Product routes own parsing, including their signed-webhook raw-byte capture.
   outer.use('/__test', express.json(), fixtures.router);
+  outer.use('/__fixture', createLoadPreflight(process.env));
   outer.use((_req, _res, next) => withAuthentication(fixtures.strategy, next));
-  outer.use(app, errorMiddleware);
   const http = createServer(outer),
     socket = createSocketServer(http, {
       db: prisma,
@@ -41,7 +43,34 @@ async function main() {
       db: prisma,
       identify: fixtures.identifyRealtime,
       redisUrl: process.env.REDIS_URL,
+      ...(process.env.E2E_RECOVERY === '1' ? { storeDebounceMs: 60000 } : {}),
     });
+  if (process.env.E2E_RECOVERY === '1') {
+    outer.use(
+      '/__test/recovery',
+      express.json(),
+      createRecoveryControls(process.env, {
+        generation: Number(process.env.E2E_GENERATION || 0),
+        crash: () => {
+          process.send?.('recovery:crash');
+        },
+        compact: (room) => crdt.journal.compact(room),
+        state: (room) =>
+          prisma.withTenantTransaction(room.workspaceId, async (tx) => {
+            const record = await tx.document.findUniqueOrThrow({
+              where: { id: room.documentId, workspaceId: room.workspaceId },
+            });
+            return {
+              journalRows: await tx.documentUpdate.count({ where: room }),
+              snapshotBytes: record.yjsState?.length ?? 0,
+              revision: record.crdtRevision,
+            };
+          }),
+      }),
+      errorMiddleware,
+    );
+  }
+  outer.use(app, errorMiddleware);
   await socket.ready;
   await new Promise<void>((resolve) =>
     http.listen(Number(process.env.PORT || 5501), '127.0.0.1', resolve),

@@ -1,5 +1,6 @@
 FROM node:22-alpine@sha256:fe4f6d74e20370acb04ad889077d14d0f64a9c8ea6a42bc60cddf1e844699914 AS base
 WORKDIR /app
+RUN apk add --no-cache zlib=1.4-r0
 
 FROM base AS dependencies
 COPY package.json package-lock.json ./
@@ -19,15 +20,39 @@ ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 ENV NEXT_PUBLIC_SOCKET_URL=$NEXT_PUBLIC_SOCKET_URL
 ENV NEXT_PUBLIC_YJS_URL=$NEXT_PUBLIC_YJS_URL
 ENV BACKEND_URL=$BACKEND_URL
+ENV NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+ENV NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN npm run build -- --webpack
 RUN node -e "require('fs').writeFileSync('build-settings.json', JSON.stringify({mode:process.env.DEPLOYMENT_MODE,clerk:process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || ''}))"
 
-FROM base AS runner
+FROM dependencies AS ci-build
+COPY . .
+# Compile the existing unauthenticated local setup screen, never a hosted configuration.
+# No provider keys or endpoints are accepted in this independent build stage.
+ENV DEPLOYMENT_MODE=local NODE_ENV=production NEXT_TELEMETRY_DISABLED=1
+RUN npm run build -- --webpack
+
+FROM base AS runtime-base
 # Runtime launches Node directly; exclude package managers and unused Debian tool paths.
 # Alpine BusyBox retains multi-call applets; isolation depends on non-root/capability controls.
 # Keep OS package metadata intact so vulnerability scanners report installed packages.
 RUN rm -rf /usr/local/lib/node_modules/npm /opt/yarn-* /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/yarn /usr/local/bin/yarnpkg /usr/bin/mount /usr/bin/umount /usr/bin/nsenter /usr/bin/infocmp
+
+FROM runtime-base AS ci-runner
+LABEL org.devsync.image-purpose="ci-scan-only-not-deployable"
+ENV NODE_ENV=production DEPLOYMENT_MODE=ci-scan-only
+COPY --from=ci-build --chown=node:node /app/public ./public
+COPY --from=ci-build --chown=node:node /app/.next/standalone ./
+COPY --from=ci-build --chown=node:node /app/.next/static ./.next/static
+COPY --chown=node:node docker/ci-refuse-start.mjs ./ci-refuse-start.mjs
+USER node
+ENTRYPOINT ["node", "ci-refuse-start.mjs"]
+
+# Keep the production runner as the default Docker target.
+FROM runtime-base AS runner
+ENV NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+ENV NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
 ENV NODE_ENV=production
 ENV PORT=3000
 ENV HOSTNAME=0.0.0.0

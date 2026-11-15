@@ -1,8 +1,24 @@
-> Current runtime follow-up: the application bases now use pinned Node22/Alpine. Local scans show0 Critical/0 High, backend4 Medium/frontend0 findings; see [current inventory](../VULNERABILITIES.md) for platform tradeoffs and [latest progress](PROGRESS.md). The Debian-specific Phase5a-3 risk section below is historical; capability/no-new-privileges and separate authority requirements still apply.
+> Runtime evidence: release-correctness scans report zero findings in the tested local API/extractor/frontend images after dependency/zlib fixes. No new image scan or production result is inferred from the identity phase. See [current inventory](../VULNERABILITIES.md) and [latest progress](PROGRESS.md). Historical Phase5a-3 risks remain historical; capability/no-new-privileges and separate authority requirements still apply.
 
 # Operations runbook
 
-These are configuration and operating instructions, not a claim that hosted CI, Vercel, Railway, real Clerk login or a production restore was executed here. Current measured results are in [FINAL_REPORT.md](FINAL_REPORT.md) and [Phase5a-3](quality/phase5a-3/README.md); [Phase5b](deployment/RESULTS.md) records the earlier delivery. These are operating procedures, not evidence of hosted execution.
+These are configuration and operating instructions, not a claim that hosted CI, Vercel, Railway, real Clerk login or a production restore was executed here. Current measured results are in [FINAL_REPORT.md](FINAL_REPORT.md); [Phase5a-3](quality/phase5a-3/README.md) and [Phase5b](deployment/RESULTS.md) record earlier delivery. These are operating procedures, not evidence of hosted execution.
+
+## Identity lifecycle acceptance and rollout
+
+The current real two-account smoke is blocked before successful sign-in: Google rejected the controlled browser. HTTP200 key/environment probes and fixture tests do not establish real identity success. Use normal supported Chrome opened by the operator, or an already enabled Clerk-managed email sign-in method; do not spoof automation or weaken verification. The isolated local stack `devsync_identity_20261108` is available at http://localhost:3410/sign-in (API5410). No volume removal or production change is authorized. Exact manual checks, clock observations, evidence and limitations are in [identity lifecycle verification](quality/identity-lifecycle/README.md).
+
+Privately verify matching Clerk instance keys, allowed origins/redirects and two approved distinct accounts with verified email. Restore host time synchronization before trusting fresh-token verification; do not increase JWT tolerance. Complete sign-in/recovery, verified-recipient VIEWER invite acceptance, denied writes/owner operations, removal denial through API/Yjs/Socket.IO, and real own-session revocation before JWT expiry. Passwords, MFA codes, tokens and provider keys must remain private. Record statuses/booleans only; no credential screenshots, traces or exported storage state.
+
+Before enabling the new lifecycle UI in another environment, apply the additive `202611080001_export_requests` migration through the reviewed privileged procedure below, then runtime grants. No existing rows are rewritten. Roll back only to a schema-compatible app while retaining review records and session verification; no table drop or automatic ownership reversal is supplied. Transfer changes real authority, so refresh membership after an ambiguous response and coordinate with the new owner. Export requests are manual review records, not queued deliveries. Account deletion stays a plan requiring operator/legal review of ownership, retention/holds, derivatives, provider records, queues and backups.
+
+Provider session checks add bounded online Clerk dependencies (1500ms deadline; at most5-second positive cache per process plus existing transport audit cadence). Validate actual capacity/latency/revocation propagation before production. A provider outage denies access; do not disable this control to recover service. Local source/application gates pass; hosted Actions, production rollout and two-account provider acceptance remain separate unverified actions.
+
+## Application-server collaboration recovery
+
+Retain the same migrated PostgreSQL data and journal when restarting an application instance. The server rebuilds canonical state from its checkpoint plus committed updates. Native acknowledgments are remote commits; unsent/offline edits need a surviving local replica and successful authorized reconnect. Do not clear browser storage, import cached JSON as a replacement, bypass membership/provider checks or run the legacy conversion rollback to resolve a reconnect problem. Access-unavailable UI requires checking current authority; a snapshot grants no access.
+
+[Local recovery verification](quality/realtime-recovery/README.md) covers actual Chrome clients and application-server SIGKILL with DB/Redis available. It is not production backup/PITR, database/disk-loss recovery or Redis-outage evidence. Retain the existing writer-stopped backup/restore procedures for those separate operations. There is no general revision-history restore UI; conversion originals are not a revision archive. No migration is needed for this client/test patch. Isolated recovery test controls must never be exposed through production app entry points.
 
 ## One-command local stack
 
@@ -19,6 +35,14 @@ Administrative database credentials and API/worker credentials use different nam
 For actual local sign-in, configure private root .env settings CLERK_SECRET_KEY, NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY and three real, distinct SEED_OWNER_CLERK_ID/SEED_EDITOR_CLERK_ID/SEED_VIEWER_CLERK_ID values **before starting a fresh local project**. Configure Clerk's localhost origins and allowed sign-in methods. Run the same command with `--build`. Default seed IDs are deliberately not provider accounts. Changing identity IDs on a previously seeded project can conflict with its reserved sample emails; use a new Compose project name/volumes instead of silently relinking users. Existing data should be migrated deliberately. No fixture login endpoint is enabled by Compose. AI providers are not configured by the default stack.
 
 Compose is a local setup, not an internet-facing production database template. Production uses private managed settings, separate identities, TLS and explicit migration operations below.
+
+## Isolated binary extraction and stale-cookie recovery
+
+Compose now starts a separate extractor with an internal-only network, no API/worker credentials, non-root UID, read-only filesystem,64MiB tmpfs,512MiB memory, one CPU and64 PID limits. It uses a pinned offline English OCR model and kills its child after30 seconds. The API retains pre-buffer and final transactional writer checks. Binary extraction is unavailable503 without INGESTION_EXTRACTOR_URL; there is no in-process fallback. Text ingestion remains supported without the service. Do not connect a public/shared worker or mount runtime database/provider credentials into it.
+
+For hosted operation, build the backend Dockerfile `extractor` target and provision equivalent isolation/private routing before setting API INGESTION_EXTRACTOR_URL to the service's `/extract` endpoint. Verify synthetic PDF/image success, page/pixel/byte limits, timeout and actual host isolation before enabling uploads. `python3 tools/quality/verify-extractor.py` exercises the named local verification artifact only; it is not a hosted deployment command. See [phase evidence/setup](quality/release-correctness/README.md).
+
+Set frontend AUTH_TRUSTED_ORIGIN to its exact browser origin (HTTPS in hosted environments); Compose supplies its localhost origin. GET `/api/auth/reset` preserves its307 redirect without changing cookies; same-origin POST clears only Clerk cookies and redirects303. Missing/foreign Origin denies403. Do not use caller-controlled Host/forwarded headers as a substitute for configuring a normalizing proxy. Cookie clearing is not provider session revocation.
 
 ## Existing Vercel frontend
 

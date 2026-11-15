@@ -1,0 +1,13 @@
+# Atomic task CSV import verification
+
+`POST /api/v1/workspaces/{id}/tasks/import-csv` (and the existing `/api` alias) takes JSON `{ "csv": "..." }` in the existing version 1 task CSV format and requires `Idempotency-Key`. Only active owners and editors can import. The bounded codec rejects malformed UTF-8, unsupported headers/values, files above 1 MiB and more than 1,000 rows. CSV v1 includes column ID, title, description, priority, assignee ID and due date; it does not include task keys or labels. Empty description/assignee/due date map to unset values. Import uses column IDs from the target workspace, so moving between workspaces requires remapping those IDs.
+
+All relationships are checked in the same workspace transaction before any task is created. The existing task creation behavior records task and assignment activity, queues indexing, and assigns positions; failures roll back tasks, audit records, indexing jobs and idempotency receipt together. The response is `{ imported, taskIds }`. Idempotency is per actor, workspace and key, with the existing 24-hour expiry; a different key can create another batch. The dedicated rate limit is 20 requests per minute per IP per application process, not a distributed quota. The tenant transaction has its existing 15-second timeout, so slow large imports may fail atomically and need retrying.
+
+- Focused integration: `npm test -- --runTestsByPath src/__tests__/resource-mutations.integration.test.ts --testNamePattern='task CSV import' --coverage=false`, exit 0, 2 passed. Fixture PostgreSQL checks valid export/import, malformed CSV, foreign columns and assignees, viewers, revoked users, suspended workspaces, required idempotency and conflicting retries. An injected embedding failure after a task write verifies rollback. The coverage-disabled focused run is not the full gate.
+- `python3 tools/quality/gates.py backend docs/quality/task-csv-import/backend`: exit 0; lint, format, strict types, 42 suites / 394 tests including PostgreSQL integration, build.
+- `NODE_ENV=test node --import tsx src/scripts/openapi.ts --write` and `--check`: exit 0. The required key appears once in the contract.
+- `node tools/ci/coverage.mjs backend backend/coverage/coverage-summary.json tools/ci/coverage-baseline.json`: exit 0, statements 85.06%, branches 76.28%, functions 80.54%, lines 87.56%; thresholds unchanged.
+- Pinned Semgrep and Gitleaks source/test scans: five commands, each exit 0; see `security.json`.
+
+The provider and database tests use disposable local fixtures. No production data, deployment or push was involved. PDF, workspace archives, broader rich text, browser controls and Phase 13 acceptance remain outstanding.

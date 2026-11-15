@@ -1,0 +1,45 @@
+
+ RUN  v5.0.5 /home/kevin/devsync/frontend
+
+ ❯ tests/knowledge-search.test.tsx (2 tests | 2 failed) 60ms
+   × labels lexical projection freshness and submits source/time/assignee filters 51ms
+   × rechecks source permission and clears prior titles after denial 7ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/knowledge-search.test.tsx > labels lexical projection freshness and submits source/time/assignee filters
+ FAIL  tests/knowledge-search.test.tsx > rechecks source permission and clears prior titles after denial
+Error: [vitest] No "workspaceApi" export is defined on the "@/lib/api" mock. Did you forget to return it from "vi.mock"?
+If you need to partially mock a module, you can use "importOriginal" helper inside:
+
+vi.mock(import("@/lib/api"), async (importOriginal) => {
+  const actual = await importOriginal()
+  return {
+    ...actual,
+    // your mocked methods
+  }
+})
+
+ ❯ src/components/search/knowledge-search.tsx:42:10
+     40|   useEffect(() => {
+     41|     let disposed = false;
+     42|     void workspaceApi
+       |          ^
+     43|       .get(workspaceId)
+     44|       .then((response) => {
+ ❯ Object.react_stack_bottom_frame node_modules/react-dom/cjs/react-dom-client.development.js:25989:20
+ ❯ runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:874:13
+ ❯ commitHookEffectListMount node_modules/react-dom/cjs/react-dom-client.development.js:13249:29
+ ❯ commitHookPassiveMountEffects node_modules/react-dom/cjs/react-dom-client.development.js:13336:11
+ ❯ commitPassiveMountOnFiber node_modules/react-dom/cjs/react-dom-client.development.js:15484:13
+ ❯ recursivelyTraversePassiveMountEffects node_modules/react-dom/cjs/react-dom-client.development.js:15439:11
+ ❯ commitPassiveMountOnFiber node_modules/react-dom/cjs/react-dom-client.development.js:15519:11
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  19:37:12
+   Duration  1.76s (environment 50%, import 36%, transform 9%, tests 4%)
+

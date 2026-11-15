@@ -1,0 +1,15 @@
+{
+  "sourceAndDocumentation": {
+    "command": [
+      "git",
+      "diff",
+      "fadb379",
+      "--check",
+      "--",
+      ".",
+      ":(exclude)docs/quality/realtime-recovery"
+    ],
+    "exitCode": 0
+  },
+  "rawTerminalLogs": "Retained unedited. Trailing table spaces/final blank lines may trigger Git whitespace diagnostics; source formatting gates remain enabled."
+}

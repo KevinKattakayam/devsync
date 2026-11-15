@@ -1,0 +1,12 @@
+{
+  "frontendPriorPhaseComparisonExitCode": 1,
+  "command": [
+    "node",
+    "tools/ci/coverage.mjs",
+    "frontend",
+    "docs/quality/work-graph/frontend-retry/frontend-coverage/coverage-summary.json",
+    "docs/quality/realtime-recovery/frontend-final/frontend-coverage/coverage-summary.json"
+  ],
+  "output": "frontend-coverage-comparison.txt",
+  "originalFailure": "frontend-coverage-comparison-failed.txt"
+}

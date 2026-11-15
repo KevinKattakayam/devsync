@@ -1,0 +1,267 @@
+
+> devsync-backend@1.0.0 test
+> node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand
+
+{"level":40,"time":1794108629238,"service":"devsync-api","requestId":"system","event":"ai_quota_storage_error","count":1}
+{"level":40,"time":1794108629323,"service":"devsync-api","requestId":"system","event":"ai_quota_storage_error","count":1}
+{"level":50,"time":1794108634141,"service":"devsync-api","msg":"Unexpected server error"}
+(node:135501) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"level":30,"time":1794108671430,"service":"devsync-api","req":{"id":"66832808-d395-4f0a-b5e1-0515c7791a36","method":"GET"},"requestId":"66832808-d395-4f0a-b5e1-0515c7791a36","res":{"statusCode":200},"responseTime":2,"msg":"request completed"}
+{"level":30,"time":1794108671437,"service":"devsync-api","req":{"id":"7f12f3f6-d659-4417-a002-4ba0e292ec2c","method":"GET"},"requestId":"7f12f3f6-d659-4417-a002-4ba0e292ec2c","res":{"statusCode":401},"responseTime":2,"msg":"request completed"}
+{"level":30,"time":1794108671443,"service":"devsync-api","req":{"id":"259109bb-18af-4851-88ab-6ddfbe43b86b","method":"GET"},"requestId":"259109bb-18af-4851-88ab-6ddfbe43b86b","res":{"statusCode":200},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1794108671445,"service":"devsync-api","req":{"id":"20a6231c-a53b-46e2-b82f-8ebeceb9caa3","method":"GET"},"requestId":"20a6231c-a53b-46e2-b82f-8ebeceb9caa3","res":{"statusCode":401},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1794108671448,"service":"devsync-api","req":{"id":"08b57750-acf1-4dcf-af69-328479c7b1e9","method":"GET"},"requestId":"08b57750-acf1-4dcf-af69-328479c7b1e9","res":{"statusCode":404},"responseTime":0,"msg":"request completed"}
+{"level":30,"time":1794108671455,"service":"devsync-api","req":{"id":"eda59772-fbab-4b15-a6ba-b545cfcaad24","method":"POST"},"requestId":"eda59772-fbab-4b15-a6ba-b545cfcaad24","res":{"statusCode":400},"responseTime":5,"msg":"request completed"}
+{"level":30,"time":1794108671462,"service":"devsync-api","req":{"id":"b9528a5d-36ad-4204-862b-5bd6e462e0e0","method":"GET"},"requestId":"b9528a5d-36ad-4204-862b-5bd6e462e0e0","res":{"statusCode":404},"responseTime":0,"msg":"request completed"}
+{"level":30,"time":1794108671464,"service":"devsync-api","req":{"id":"2ee0e235-ba2e-497e-9bb4-db3cc5a769cc","method":"GET"},"requestId":"2ee0e235-ba2e-497e-9bb4-db3cc5a769cc","res":{"statusCode":403},"responseTime":0,"msg":"request completed"}
+{"level":30,"time":1794108671466,"service":"devsync-api","req":{"id":"814f8713-4d68-400e-bf17-d095fb998915","method":"GET"},"requestId":"814f8713-4d68-400e-bf17-d095fb998915","res":{"statusCode":403},"responseTime":0,"msg":"request completed"}
+{"level":30,"time":1794108671469,"service":"devsync-api","req":{"id":"92f8b57c-e155-475f-b27d-1658cbc038ed","method":"GET"},"requestId":"92f8b57c-e155-475f-b27d-1658cbc038ed","res":{"statusCode":200},"responseTime":2,"msg":"request completed"}
+{"level":30,"time":1794108671557,"service":"devsync-api","req":{"id":"169d5911-4a22-4866-84bc-ea2f73903722","method":"GET"},"requestId":"169d5911-4a22-4866-84bc-ea2f73903722","res":{"statusCode":200},"responseTime":3,"msg":"request completed"}
+{"level":30,"time":1794108671612,"service":"devsync-api","req":{"id":"b1658775-0f74-4def-aff8-d117eb190839","method":"POST"},"requestId":"b1658775-0f74-4def-aff8-d117eb190839","res":{"statusCode":404},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1794108671615,"service":"devsync-api","req":{"id":"c1b51fb5-ca64-491b-a794-c59e4c650d22","method":"GET"},"requestId":"c1b51fb5-ca64-491b-a794-c59e4c650d22","res":{"statusCode":401},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1794108672471,"service":"devsync-api","req":{"id":"50e4b7a8-7d40-4010-8997-2dcf923ff5ab","method":"GET"},"requestId":"50e4b7a8-7d40-4010-8997-2dcf923ff5ab","res":{"statusCode":200},"responseTime":2,"msg":"request completed"}
+{"level":30,"time":1794108673928,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794108673928,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794108673928,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794108673929,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794108673929,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794108673929,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794108673929,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794108673929,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794108673929,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794108673929,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794108673929,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794108673929,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794108673929,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794108673930,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794108673930,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794108673930,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794108673930,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794108673930,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794108673930,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794108673930,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794108673934,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794108673934,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794108673935,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794108673937,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794108673938,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794108673938,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794108673943,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794108673944,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794108673945,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794108673946,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794108673946,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"monthly"}
+{"level":30,"time":1794108673947,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794108673947,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"concurrent"}
+{"level":30,"time":1794108673947,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794108673948,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794108673948,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":40,"time":1794108673949,"service":"devsync-api","requestId":"system","event":"ai_quota_storage_error","count":1}
+{"level":30,"time":1794108673951,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794108673951,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794108673951,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794108673953,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794108673953,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794108673953,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"monthly"}
+{"level":30,"time":1794108673955,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794108673955,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794108673955,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794108673958,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794108673958,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794108673958,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"monthly"}
+{"level":30,"time":1794108673960,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794108673960,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"concurrent"}
+{"level":30,"time":1794108673960,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794108673961,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794108673961,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794108673967,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794108673967,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794108673967,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794108673967,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794108673967,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794108673967,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794108673967,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794108673967,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794108673967,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794108673968,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794108673968,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794108673968,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794108673968,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794108673968,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794108673968,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794108673968,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794108673968,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794108673968,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794108673968,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794108673968,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"workspace","period":"daily"}
+{"level":30,"time":1794108673969,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794108673973,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794108673973,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794108673975,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794108673975,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794108673976,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794108673977,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794108673978,"service":"devsync-api","requestId":"system","event":"ai_reservation_refunded","count":1}
+{"level":30,"time":1794108673979,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794108673980,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794108673981,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794108673981,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794108673982,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794108673986,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794108673986,"service":"devsync-api","requestId":"system","event":"ai_reservation_admitted","count":1}
+{"level":30,"time":1794108673986,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794108673986,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794108673986,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794108673986,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794108673986,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794108673986,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794108673987,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794108673987,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794108673987,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794108673987,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794108673987,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794108673987,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794108673987,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794108673987,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794108673987,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794108673987,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794108673987,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794108673987,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794108673987,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794108673987,"service":"devsync-api","requestId":"system","event":"ai_reservation_settled","count":1}
+{"level":30,"time":1794108673988,"service":"devsync-api","requestId":"system","event":"ai_limit_rejected","count":1,"scope":"user","period":"daily"}
+{"level":30,"time":1794108676039,"service":"devsync-api","req":{"id":"b426c511-45bd-4fd0-bc12-fe3e3ff0f4ba","method":"POST"},"requestId":"b426c511-45bd-4fd0-bc12-fe3e3ff0f4ba","res":{"statusCode":401},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1794108676045,"service":"devsync-api","req":{"id":"aa08fff3-6025-4d5e-b356-0ebb6df32381","method":"POST"},"requestId":"aa08fff3-6025-4d5e-b356-0ebb6df32381","res":{"statusCode":401},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1794108676050,"service":"devsync-api","req":{"id":"0c8cb6d6-f976-416d-89c4-7e626b83b7a3","method":"POST"},"requestId":"0c8cb6d6-f976-416d-89c4-7e626b83b7a3","res":{"statusCode":401},"responseTime":0,"msg":"request completed"}
+{"level":30,"time":1794108676053,"service":"devsync-api","req":{"id":"88c72add-51f0-4507-92f3-b3de5ddefd17","method":"POST"},"requestId":"88c72add-51f0-4507-92f3-b3de5ddefd17","res":{"statusCode":401},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1794108676055,"service":"devsync-api","req":{"id":"dc092106-7674-4cca-bf19-270e3c11500f","method":"POST"},"requestId":"dc092106-7674-4cca-bf19-270e3c11500f","res":{"statusCode":401},"responseTime":0,"msg":"request completed"}
+{"level":30,"time":1794108676057,"service":"devsync-api","req":{"id":"ced84436-5328-4e43-a18f-ac63c36ec18f","method":"POST"},"requestId":"ced84436-5328-4e43-a18f-ac63c36ec18f","res":{"statusCode":503},"err":{"type":"HttpError"},"responseTime":0,"msg":"request errored"}
+{"level":30,"time":1794108676064,"service":"devsync-api","req":{"id":"1326ba7e-5118-4b0c-a95f-06803b40bfd4","method":"POST"},"requestId":"1326ba7e-5118-4b0c-a95f-06803b40bfd4","res":{"statusCode":401},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1794108676067,"service":"devsync-api","req":{"id":"cebbfb37-5fb4-4699-995f-c157eef783f9","method":"POST"},"requestId":"cebbfb37-5fb4-4699-995f-c157eef783f9","res":{"statusCode":401},"responseTime":0,"msg":"request completed"}
+{"level":30,"time":1794108676071,"service":"devsync-api","req":{"id":"f9d7a261-7844-4685-a948-8063aae1a8fe","method":"POST"},"requestId":"f9d7a261-7844-4685-a948-8063aae1a8fe","res":{"statusCode":401},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1794108676074,"service":"devsync-api","req":{"id":"1c15ee32-9072-4d3e-8f14-83a4aa030b1c","method":"POST"},"requestId":"1c15ee32-9072-4d3e-8f14-83a4aa030b1c","res":{"statusCode":401},"responseTime":0,"msg":"request completed"}
+{"level":50,"time":1794108676076,"service":"devsync-api","req":{"id":"897a471e-7d17-43a1-bfee-7929fa2ff0a3","method":"POST"},"requestId":"897a471e-7d17-43a1-bfee-7929fa2ff0a3","msg":"Unexpected server error"}
+{"level":30,"time":1794108676077,"service":"devsync-api","req":{"id":"897a471e-7d17-43a1-bfee-7929fa2ff0a3","method":"POST"},"requestId":"897a471e-7d17-43a1-bfee-7929fa2ff0a3","res":{"statusCode":500},"err":{"type":"HttpError"},"responseTime":1,"msg":"request errored"}
+{"level":30,"time":1794108676079,"service":"devsync-api","req":{"id":"653f38c9-7019-4ed9-b412-d28d8666a286","method":"POST"},"requestId":"653f38c9-7019-4ed9-b412-d28d8666a286","res":{"statusCode":200},"responseTime":0,"msg":"request completed"}
+----------------------------------|---------|----------|---------|---------|-------------------------------------------------------------------
+File                              | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s                                                 
+----------------------------------|---------|----------|---------|---------|-------------------------------------------------------------------
+All files                         |   81.67 |     72.6 |   75.14 |   84.01 |                                                                   
+ src                              |   73.16 |    81.87 |   44.44 |   75.22 |                                                                   
+  app.ts                          |   98.66 |       50 |     100 |     100 | 37-50                                                             
+  config-environment.ts           |     100 |    94.73 |     100 |     100 | 11,35                                                             
+  contracts.ts                    |   96.44 |       75 |     100 |     100 | 32,41-61,73,181                                                   
+  openapi.ts                      |   96.51 |     95.4 |    90.9 |   97.43 | 83,158                                                            
+  server.ts                       |       0 |        0 |       0 |       0 | 1-99                                                              
+  worker.ts                       |       0 |        0 |       0 |       0 | 1-103                                                             
+ src/agents                       |   82.53 |       65 |      70 |   87.93 |                                                                   
+  pr-summary.agent.ts             |   81.81 |    66.66 |      75 |      90 | 50,80                                                             
+  task-completion.agent.ts        |   82.92 |    64.28 |   66.66 |   86.84 | 68,78,82,88,118                                                   
+ src/controllers                  |   88.97 |    71.16 |   83.92 |   90.58 |                                                                   
+  ai.controller.ts                |   82.53 |    54.34 |   54.54 |    86.2 | 36,45,54,83,120-121,142-145                                       
+  auth.controller.ts              |   95.65 |       85 |     100 |     100 | 41,49-75                                                          
+  document.controller.ts          |   96.47 |    82.05 |     100 |   97.61 | 177,190                                                           
+  github-repository.controller.ts |     100 |       90 |     100 |     100 | 117                                                               
+  invitation.controller.ts        |   32.35 |        0 |       0 |   33.33 | 14-43,47-52,56-71                                                 
+  search.controller.ts            |   85.71 |       50 |      50 |   89.47 | 55-56                                                             
+  snippet.controller.ts           |   96.49 |    73.68 |   91.66 |   98.21 | 50                                                                
+  task.controller.ts              |    95.1 |    67.39 |     100 |   96.37 | 76,205,303,362-375                                                
+  workspace.controller.ts         |   84.95 |    77.41 |   86.36 |   85.71 | 117-145,170,230,238                                               
+ src/extraction                   |    87.5 |    75.67 |   72.22 |   92.72 |                                                                   
+  extract-child.ts                |   69.04 |    56.66 |      20 |   77.14 | 42-57                                                             
+  server.ts                       |   96.51 |    88.63 |    92.3 |     100 | 27,47-52,63,112                                                   
+ src/lib                          |   53.24 |    51.04 |      42 |   55.05 |                                                                   
+  cache.ts                        |       0 |        0 |       0 |       0 | 1-67                                                              
+  create-idempotency.ts           |   89.79 |    82.92 |     100 |   93.02 | 19,26,59                                                          
+  idempotency.ts                  |       0 |        0 |       0 |       0 | 1-27                                                              
+  lifecycle.ts                    |   91.66 |       60 |      75 |    90.9 | 6,27                                                              
+  prisma.ts                       |   93.75 |       70 |   66.66 |   93.75 | 36                                                                
+  queue.ts                        |   31.25 |        0 |       0 |   31.25 | 41,49-62,72-114,120-124                                           
+  redis.ts                        |   26.31 |    16.66 |    9.09 |   32.25 | 12-20,25-27,41-45,51-64                                           
+  tenant-prisma.ts                |   93.33 |       75 |     100 |   93.33 | 19                                                                
+ src/middleware                   |   74.12 |    58.58 |   73.52 |   75.93 |                                                                   
+  ai-quota.middleware.ts          |   52.77 |    18.18 |   42.85 |   59.37 | 17-33,42-43                                                       
+  auth.middleware.ts              |   51.51 |    42.85 |      25 |   53.33 | 27,48-59,65-69                                                    
+  billing.middleware.ts           |   94.11 |       70 |   66.66 |   94.11 | 35                                                                
+  error.middleware.ts             |      72 |    69.04 |     100 |   70.21 | 37-38,50-51,58-59,62-63,66-67,70-71,74-75                         
+  rate-limit.middleware.ts        |   85.71 |       50 |      50 |   85.71 | 20                                                                
+  rbac.middleware.ts              |   94.73 |    83.33 |     100 |   94.73 | 13                                                                
+  request-context.middleware.ts   |     100 |      100 |     100 |     100 |                                                                   
+  tracing.middleware.ts           |   85.71 |       50 |     100 |     100 | 14-15                                                             
+  validate.middleware.ts          |    92.3 |       50 |     100 |   91.66 | 15                                                                
+ src/observability                |      70 |    57.14 |      48 |   70.52 |                                                                   
+  ai.ts                           |     100 |      100 |     100 |     100 |                                                                   
+  logger.ts                       |     100 |      100 |     100 |     100 |                                                                   
+  metrics.ts                      |   94.73 |    92.85 |   85.71 |   94.28 | 32,77                                                             
+  reporting.ts                    |   31.57 |     12.5 |      25 |   35.29 | 4-27,31,34-35                                                     
+  request-scope.ts                |     100 |      100 |     100 |     100 |                                                                   
+  telemetry.ts                    |   34.78 |        0 |      10 |   34.78 | 9-74,78-79                                                        
+ src/routes                       |   92.91 |    73.52 |   93.82 |   93.81 |                                                                   
+  ai-v3.routes.ts                 |    62.5 |        0 |       0 |   61.29 | 13-19,24-28,41-44                                                 
+  ai.routes.ts                    |     100 |      100 |     100 |     100 |                                                                   
+  async-digest.routes.ts          |   98.11 |    83.33 |     100 |     100 | 95                                                                
+  auth.routes.ts                  |     100 |      100 |     100 |     100 |                                                                   
+  decision-receipts.routes.ts     |   91.66 |     82.5 |   95.23 |   92.85 | 63,69,107-120,161                                                 
+  document.routes.ts              |     100 |      100 |     100 |     100 |                                                                   
+  github-webhook.routes.ts        |   91.42 |    74.68 |     100 |   94.02 | 130,150,163,206                                                   
+  health.routes.ts                |   83.33 |    70.83 |      90 |   84.37 | 16-17,54-56                                                       
+  ingestion.routes.ts             |   93.33 |       60 |     100 |   93.33 | 30,69                                                             
+  scim.routes.ts                  |      92 |    68.18 |     100 |   92.85 | 130-131,161-163                                                   
+  snippet-safety.routes.ts        |     100 |      100 |     100 |     100 |                                                                   
+  snippet.routes.ts               |     100 |      100 |     100 |     100 |                                                                   
+  stripe.webhook.ts               |   91.66 |       75 |     100 |   91.66 | 8                                                                 
+  superadmin.routes.ts            |     100 |       75 |     100 |     100 | 25                                                                
+  task.routes.ts                  |     100 |      100 |     100 |     100 |                                                                   
+  workspace.routes.ts             |     100 |      100 |     100 |     100 |                                                                   
+ src/schemas                      |     100 |      100 |     100 |     100 |                                                                   
+  search.schema.ts                |     100 |      100 |     100 |     100 |                                                                   
+ src/scripts                      |       0 |        0 |       0 |       0 |                                                                   
+  openapi.ts                      |       0 |        0 |       0 |       0 | 1-24                                                              
+ src/security                     |   80.25 |    73.33 |   86.27 |    84.5 |                                                                   
+  authentication.ts               |      44 |    13.33 |      50 |      50 | 27-32,40-44                                                       
+  invitation-policy.ts            |   16.66 |        0 |       0 |   18.18 | 7-54                                                              
+  policy-deadline.ts              |   85.71 |    33.33 |   66.66 |     100 | 2-12                                                              
+  realtime-identity.ts            |   70.58 |       70 |      50 |      75 | 13,19-20,24                                                       
+  rich-text.ts                    |   86.36 |    85.71 |     100 |     100 | 7,11,13-14                                                        
+  service-policy.ts               |   88.33 |    84.21 |     100 |   93.51 | 24,62,82,113,133,207,244                                          
+  snippet-preflight.ts            |     100 |      100 |     100 |     100 |                                                                   
+  workspace-policy.ts             |      92 |     90.9 |     100 |   95.65 | 35,62                                                             
+ src/services                     |   82.04 |    76.55 |    80.5 |   85.16 |                                                                   
+  ai-gateway.service.ts           |       0 |        0 |       0 |       0 | 1-100                                                             
+  ai-prompt.ts                    |     100 |      100 |     100 |     100 |                                                                   
+  ai-provider.ts                  |   96.66 |       90 |   91.66 |     100 | 76,80,83                                                          
+  ai-quota.ts                     |      90 |       86 |   93.75 |    90.9 | 26-29,155,159                                                     
+  ai-schema.ts                    |     100 |      100 |     100 |     100 |                                                                   
+  async-digest.ts                 |   97.36 |    95.23 |     100 |   98.57 | 201                                                               
+  billing.service.ts              |   68.57 |    45.71 |      60 |   70.58 | 10-11,21,29-36,67-73                                              
+  cloudinary.service.ts           |       0 |      100 |       0 |       0 | 1-32                                                              
+  collaboration-acl.ts            |     100 |      100 |     100 |     100 |                                                                   
+  collaboration-server.ts         |    87.5 |    81.72 |   94.44 |   91.55 | 89-90,179-181,224-225,246-248,282-283,337-338,392-393,397-398,426 
+  crdt-journal.ts                 |   87.67 |       70 |     100 |   92.42 | 54-55,82,98-106                                                   
+  crdt-migration.ts               |   86.36 |    76.19 |     100 |   97.22 | 57                                                                
+  crdt-schema.ts                  |     100 |      100 |     100 |     100 |                                                                   
+  crdt-sync.service.ts            |   78.57 |    73.33 |     100 |   84.61 | 30,33,52-63                                                       
+  decision-receipts.ts            |   97.61 |     86.2 |     100 |     100 | 24,26,61,65                                                       
+  embedding-runner.ts             |   93.75 |    66.66 |      80 |   93.33 | 15                                                                
+  embedding.service.ts            |   79.24 |    70.58 |   76.47 |   85.26 | 34-45,206-226                                                     
+  extraction-client.ts            |   89.47 |    83.33 |     100 |   91.17 | 33,57,61                                                          
+  ingestion.service.ts            |   63.63 |    69.69 |   53.33 |   66.31 | 42-50,68-69,74-95,121-130,142-143,173,184,194,200,203             
+  secret.service.ts               |     100 |      100 |     100 |     100 |                                                                   
+  yjs.service.ts                  |   82.35 |       25 |   66.66 |    87.5 | 8-9                                                               
+ src/socket                       |   87.14 |     74.7 |    83.6 |   88.61 |                                                                   
+  index.ts                        |   58.33 |      100 |   33.33 |   58.33 | 11-16,19-21                                                       
+  kanban.handler.ts               |   90.62 |       88 |      75 |   90.62 | 60,64,95                                                          
+  presence-store.ts               |   97.77 |    79.16 |   88.88 |   97.43 | 24                                                                
+  presence.handler.ts             |   78.08 |    45.45 |    90.9 |   81.42 | 51-52,88-92,102-111                                               
+  rate-limiter.ts                 |      96 |     87.5 |     100 |      96 | 66                                                                
+  server.ts                       |   88.34 |    75.82 |   83.87 |   90.47 | 75,78,88,124,140-141,148-149,152-153,162,164,179,204              
+ src/utils                        |     100 |       20 |     100 |     100 |                                                                   
+  errors.ts                       |     100 |       20 |     100 |     100 | 14-26,38                                                          
+----------------------------------|---------|----------|---------|---------|-------------------------------------------------------------------
+
+Test Suites: 30 passed, 30 total
+Tests:       287 passed, 287 total
+Snapshots:   0 total
+Time:        98.209 s
+Ran all test suites.

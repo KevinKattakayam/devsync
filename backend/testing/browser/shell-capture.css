@@ -1,0 +1,11 @@
+/* Preserve layout while keeping portalled shell overlays visible to screenshots. */
+#route-content,
+#route-content * {
+  visibility: hidden !important;
+}
+
+/* Preserve Radix portals, including popper content, without revealing route-local editor floats. */
+body > div > :is(.ui-overlay, .ui-dialog, .ui-drawer),
+body > div [data-radix-popper-content-wrapper] > .ui-floating {
+  visibility: visible !important;
+}

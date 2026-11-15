@@ -350,3 +350,46 @@ test('Zod response contracts match real authenticated resource and service opera
     await viewer.close();
   }
 });
+
+test('stale-session reset preserves cookies on GET/foreign POST and clears identity only on browser POST', async ({
+  browser,
+}) => {
+  const context = await browser.newContext();
+  try {
+    const origin = 'http://127.0.0.1:3001';
+    await context.addCookies([
+      { name: '__session', value: 'synthetic-stale-cookie', url: origin },
+      { name: 'theme', value: 'dark', url: origin },
+    ]);
+    const target = `${origin}/api/auth/reset?redirect=/login`;
+    const get = await context.request.get(target, { maxRedirects: 0 });
+    expect(get.status()).toBe(307);
+    expect(get.headers()['set-cookie']).toBeUndefined();
+    const foreign = await context.request.post(target, {
+      headers: { Origin: 'https://foreign.invalid' },
+      maxRedirects: 0,
+    });
+    expect(foreign.status()).toBe(403);
+    expect((await context.cookies()).some((cookie) => cookie.name === '__session')).toBe(true);
+    const page = await context.newPage();
+    await page.goto(`${origin}/login`);
+    // Real browser navigation supplies its Origin. This does not sign in to Clerk.
+    const posted = page.waitForResponse(
+      (response) => response.request().method() === 'POST' && response.url().startsWith(target),
+    );
+    await page.evaluate((action) => {
+      const form = document.createElement('form');
+      form.action = action;
+      form.method = 'post';
+      document.body.append(form);
+      form.submit();
+    }, target);
+    expect((await posted).status()).toBe(303);
+    await page.waitForURL('**/login');
+    const cookies = await context.cookies();
+    expect(cookies.some((cookie) => cookie.name === '__session')).toBe(false);
+    expect(cookies.find((cookie) => cookie.name === 'theme')?.value).toBe('dark');
+  } finally {
+    await context.close();
+  }
+});

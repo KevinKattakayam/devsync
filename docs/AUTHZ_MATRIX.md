@@ -1,8 +1,25 @@
 > Phase1a status: D01/D02/E01 and D03–D08 application boundaries are repaired and regression-tested; D08 also has a tested composite database constraint. This matrix is not a claim that full Phase1a centralization is complete. Phase1c closes ongoing transport workspace revocation and D09 assignment checks for converted REST handlers. Broader G01 tenant-context coverage, Provider identity provisioning/linking remains open; current actor/service/maintenance policies and limits are listed below. See PROGRESS.md for the complete scope ledger.
 
-# Authorization matrix — updated during Phase 1c
+# Authorization matrix — identity lifecycle additions
+
+Production Clerk authentication now also checks an active provider session bound to the same verified subject/session. The bounded positive cache lasts at most5 seconds; ongoing Socket.IO/Yjs audits recheck provider status as well as existing membership/expiry policies. Provider failure denies access. Local fixture tests exercise adapters and policies; real two-account acceptance is still externally blocked. [Evidence](quality/identity-lifecycle/README.md).
+
+| Additive v2 route | Required authority | Validation / effect |
+|---|---|---|
+| `GET /api/v2/account/deletion-plan` | Active self via central principal policy | Own owned-workspace metadata/sole-active-owner prerequisites; deletes nothing |
+| `GET /api/v2/account/sessions` | Active self; provider subject from authenticated local mapping | At most100 own active sessions; no IP/token; explicit truncation flag |
+| `POST /api/v2/account/sessions/:sessionId/revoke` | Active self; production bearer authentication; same provider session owner | Strict empty body; bounded ID; provider-confirmed revocation, not cookie clearing |
+| `GET /api/v2/workspaces/:workspaceId/lifecycle` | Current active OWNER in central tenant transaction | Retained CRDT backup count and up to100 review records; no content export |
+| `POST /api/v2/workspaces/:workspaceId/lifecycle/export-requests` | Current active OWNER; production bearer authentication | Strict exact-name confirmation; forced tenant RLS; deduplicated REVIEW_REQUIRED record, no delivery |
+| `POST /api/v2/workspaces/:workspaceId/lifecycle/transfer` | Current active OWNER; production bearer authentication | Exact-name confirmation; active same-tenant target member, not self; atomic target OWNER/caller EDITOR and collaboration invalidation |
+
+All new routes send `Cache-Control: no-store`. Existing verified-recipient invitations, owner/editor/viewer permissions, last-owner protections and legacy/v1/transport contracts remain. Source: [lifecycle routes](../backend/src/routes/lifecycle.routes.ts), [session adapter](../backend/src/security/provider-sessions.ts), [real DB policy regressions](../backend/src/__tests__/resource-mutations.integration.test.ts).
 
 Static route-by-route review of every registered REST route and every Socket.io input event. This is not a passing integration-test report. OWNER/EDITOR/VIEWER are database workspace roles; there is no per-document ownership ACL beyond membership. Authz checks do not overcome RLS context failures (G01). Protected application routers retain Helmet, configured CORS, parsing, request correlation and the production global IP limiter. Operational health/readiness and metrics are mounted before parsing/auth/rate limiting. Legacy route evidence line offsets below describe the pre-format Phase1a tree (0cee996); permission behavior remains as listed, with new transport/operational exceptions documented below.
+
+## Real-time recovery verification
+
+The [recovery journey](quality/realtime-recovery/README.md) dispatches a Yjs update through an actual read-only browser TipTap instance and observes native negative acknowledgment with no authoritative persistence. It removes a member while a browser update is delayed, then verifies API denial, disabled editing, Yjs/Socket.IO closure and no later subscription delivery. Existing transaction-time and independent-instance policies remain unchanged. Client access-loss display is feedback, not the authorization boundary. New generation/compaction/crash controls exist only in the isolated testing executable with explicit test mode, isolated database validation, strict inputs and random run capability; no product router mounts them.
 
 ## Phase1b aliases and operational exceptions
 
@@ -27,7 +44,7 @@ Every application `/api/...` router below is also mounted at `/api/v1/...` with 
 | `PATCH /api/documents/:id` | Clerk + local principal | Central resource policy in tenant transaction; active principal, unsuspended tenant; read accepts VIEWER, writes require OWNER/EDITOR | Bounded JSON rich text, safe URL checks; optional revision conflicts; canonical Yjs replacement | `backend/src/routes/document.routes.ts:11` |
 | `DELETE /api/documents/:id` | Clerk + local principal | Central resource policy in tenant transaction; active principal, unsuspended tenant; read accepts VIEWER, writes require OWNER/EDITOR | No body schema / ID format validation | `backend/src/routes/document.routes.ts:12` |
 | `POST /api/webhooks/github` | Repository-specific HMAC signature | Central current repository HMAC, active tenant and bound column/task transaction; delivery record commits with DB effects | Bounded typed Zod envelope/action fields; PostgreSQL delivery fence | `backend/src/routes/github-webhook.routes.ts:26` |
-| `POST /api/workspaces/:id/documents/ingest` | Clerk + local principal | Central writer policy before buffering, before extraction and inside canonical write transaction | Multer25MB/MIME allowlist; filename255 and extracted text256KiB; OCR isolation/page/image budgets remain open | `backend/src/routes/ingestion.routes.ts:42` |
+| `POST /api/workspaces/:id/documents/ingest` | Clerk + local principal | Central writer policy before buffering, before extraction and inside canonical write transaction | Multer25MB/MIME allowlist; filename255 and extracted text256KiB; binary extraction uses the isolated bounded worker; missing worker returns503 | `backend/src/routes/ingestion.routes.ts:42` |
 | `POST /scim/v2/Users` | SHA-256 bearer token lookup + timingSafeEqual | Central scoped token transaction; membership/link only, no global profile mutation; OWNER changes forbidden | Zod custom User or partial; not standard SCIM Operations envelope | `backend/src/routes/scim.routes.ts:38` |
 | `PATCH /scim/v2/Users/:externalId` | SHA-256 bearer token lookup + timingSafeEqual | Central scoped token transaction; membership/link only, no global profile mutation; OWNER changes forbidden | Zod custom User or partial; not standard SCIM Operations envelope | `backend/src/routes/scim.routes.ts:53` |
 | `DELETE /scim/v2/Users/:externalId` | SHA-256 bearer token lookup + timingSafeEqual | Central scoped token transaction; membership/link only, no global profile mutation; OWNER changes forbidden | External ID lookup | `backend/src/routes/scim.routes.ts:68` |
@@ -66,7 +83,7 @@ Every application `/api/...` router below is also mounted at `/api/v1/...` with 
 | `POST /api/workspaces/:id/snippets` | Clerk + local principal | OWNER / EDITOR | Zod body | `backend/src/routes/workspace.routes.ts:59` |
 | `GET /api/health` | Public | None (operational endpoint) | N/A | `backend/src/app.ts:54` |
 | `GET /api/ready` | Public | None (operational endpoint) | N/A | `backend/src/app.ts:60` |
-| `GET /api/auth/reset (Next)` | Public | Public cookie-clearing GET; logout-CSRF/provider revocation unresolved | Same-origin root-relative destination; relative Location header | `frontend/src/app/api/auth/reset/route.ts:4` |
+| `GET /api/auth/reset (Next)` | Public | Redirect only; GET does not mutate cookies. Additive POST requires exact configured canonical Origin and rejects cross-site metadata; provider revocation remains external | Same-origin root-relative destination; relative Location header | `frontend/src/app/api/auth/reset/route.ts:4` |
 | `POST /api/superadmin/workspaces/:workspaceId/kill-switch (Next)` | Clerk currentUser | publicMetadata.systemRole=SUPER_ADMIN; forwards service token | Zod reason; encoded workspace ID | `frontend/src/app/api/superadmin/workspaces/[workspaceId]/kill-switch/route.ts:7` |
 
 ## Socket.io input events
@@ -122,7 +139,7 @@ Resource handlers now enforce their policy independently of route middleware. Pr
 | SCIM create/update/delete | Central locked, non-revoked token/workspace policy; only scoped membership/link effects; OWNER and shared profile changes denied | Foreign identity, revoked token, OWNER and global profile regressions; real Clerk provisioning/linking remains open |
 | Signed Stripe webhook / usage metering | Central signed event policy and customer/subscription bindings; admin suspension preserved; usage requires central actor policy | Real SDK signature/cross-customer/subscription tests; provider ordering, quotas and delivery retries remain open |
 | AI completion / offline AI reservation / embeddings | AI/search/usage/offline reservations use central actor policy; embedding producers require writer/tenant/resource binding and consumers require matching active-tenant outbox scope | Real tenant/role/vector/lease/stale-result tests in resource-mutations.integration.test.ts; quota accuracy remains open |
-| Ingestion / OCR document create | Central writer check before parsing/extraction and in final canonical document/activity/outbox transaction | Real text-upload positive/foreign/viewer/inactive tests; PDF/OCR isolation remains open |
+| Ingestion / OCR document create | Central writer check before parsing/extraction and in final canonical document/activity/outbox transaction | Real text-upload positive/foreign/viewer/inactive tests; PDF/OCR use credential-free bounded extraction; final tenant writer policy is rechecked before persistence |
 | Superadmin kill switch | Central active verified SUPER_ADMIN or constant-time configured service credential of at least32 bytes | Tests deny workspace roles/short credentials and permit explicit global authority |
 | Clerk sync / self profile | Verified Clerk SDK profile sync through central active identity policy; self-profile mutation through central principal policy/exclusive lock | D01 retained, inactive/self-privilege/concurrent-profile tests added; no test-login endpoint in production |
 | Seed / migration / maintenance | Explicit operator access and non-production seed opt-in; outside public user routes | Disposable-database migration and seed tests retained |
@@ -185,3 +202,42 @@ Frontend `GET /healthz` is public liveness only and returns no workspace data. E
 ## Phase 5a-2 CRDT session renewal
 
 The browser periodically requests an uncached access token for an already authenticated Hocuspocus provider and sends it using the existing token-sync protocol. This does not grant authority: the server still verifies the same principal, active session, current workspace membership and writer role; expiry, revocation, principal substitution and viewer write denials remain enforced. Failed renewal clears local write permission and exposes offline status. Network resources and renewal timers are disposed on room/account change or unmount. No new HTTP route or contract version is introduced. Background timer suspension and real Clerk behavior are not certified by the fixture journey.
+
+## Release correctness follow-up
+
+`POST /api/auth/reset` is public stale-cookie recovery, protected by exact `Origin` against `AUTH_TRUSTED_ORIGIN` (or the server URL origin without proxy normalization). Host/forwarding headers cannot select the trusted origin. Missing, foreign or invalid origins deny403 before reading cookies. The handler clears only Clerk cookies and redirects303; legacy GET remains a mutation-free307. This is not provider logout or account deletion.
+
+Document journal appends now acquire the current workspace writer transaction before accepting state and scheduling the indexing outbox. A transaction-time revocation closes the transport with4403; duplicate state does not advance revisions or indexing jobs. Source isolation and current worker maintenance policy remain required at indexing time. Binary extraction runs outside the API in a credential-free bounded service; authorized source/workspace persistence remains in the existing tenant transaction. See [phase evidence](quality/release-correctness/README.md).
+
+## GitHub execution trail additions
+
+`GET /api/v2/workspaces/:workspaceId/github-repositories/:repositoryId/execution` requires active current OWNER authority and rechecks repository tenancy, with forced-RLS evidence queries and no-store responses. A disconnected binding returns no old evidence. `POST /api/v2/webhooks/github-installation` requires a separate strong App HMAC secret, matching App ID and current installation binding; it only withdraws access and never silently reenables it. Existing repository webhook/job policies deny recorded withdrawal. [Evidence and current limits](quality/github-trail/README.md); fixture tests establish no real installation validity.
+
+## Knowledge search and source-open authority
+
+`GET /api/v2/workspaces/:workspaceId/search` and `/search/source` require current active principal, unsuspended workspace and OWNER/EDITOR/VIEWER membership inside the same tenant transaction. Local resource IDs are scoped to the selected tenant; archived documents and receipts with absent/archived/foreign document/task sources are excluded before ranking/limits. Decision receipt flag remains required. Recorded PR metadata additionally requires current OWNER and a connected repository binding. Hidden source IDs return404; revoked workspace membership returns403. Each open repeats these checks with no-store; the browser has no persistent search cache and clears failed/hidden-page results. Source text is not sent to an AI provider by these routes. [Evidence and precise limits](quality/search-indexing/README.md).
+
+## Decision execution evidence
+
+The timeline inherits `FEATURE_DECISION_RECEIPTS` and active workspace policy. OWNER, EDITOR and VIEWER may read visible non-PR events; OWNER and EDITOR may append human assertions, human-confirmed outcomes and same-workspace task references to accepted receipts. PR references require OWNER, an existing connected same-workspace repository and a recorded PR. PR evidence is returned only to OWNER. Every request rechecks receipt source visibility. Tenant RLS permits event SELECT and INSERT, but no direct UPDATE or DELETE; authorized workspace deletion follows the receipt cascade. No route can record a verified deployment. [Phase evidence](quality/decision-execution/README.md).
+
+
+## Grounded assistant previews
+
+`POST /api/v3/ai/grounded` requires authenticated current active workspace membership, billing admission and the grounded AI flag. Read purposes allow current READ_ROLES; task/decision/link proposals additionally require WRITE_ROLES before generation and again before return. Search retains owner-only PR metadata and current-source/archive/receipt flags. No source IDs or URLs supplied by the model determine authority. All citations reference retrieved accessible sources rechecked after I/O. The model has no write/accept capability; explicit manual workflows preserve existing permissions.
+
+
+## Phase 10 automation
+
+| Operation | Owner | Editor / viewer | Source and tenant conditions |
+| --- | --- | --- | --- |
+| Create, enable or approve rule; view execution audit | Allowed | Denied | Active workspace membership, forced tenant RLS, current source and rule checks |
+| List rules | Allowed | Allowed for non-GitHub rules | GitHub configuration and evidence remain owner-only |
+| Submit task review or blocker assertion | Allowed | Editor allowed; viewer denied | Current task in workspace; explicit human assertion and idempotency key |
+| GitHub event admission | Signed webhook pathway | No direct user submission | Connected repository, verified webhook signature and existing delivery proof; live provider access not established |
+
+Worker executions recheck current approver, submitting writer and source; a removed or archived source cannot expose its derivative activity. CI status update fails closed.
+
+## Phase 12 local drafts
+
+Local storage and recovery metadata confer no server authority. The live adapter retains account/room isolation; transport startup waits for successful hydration and still uses current bearer/role checks. Native rejected updates stop editing, and revoked offline users are rejected on reconnect before queued edits can enter the canonical document. Local purge is confined to the current account/room and cannot delete server data. Export is explicit and unencrypted; live recovery import remains disabled. Fixture browser revocation and viewer-negative-ack evidence is in [offline drafts](quality/offline-drafts/README.md); this does not prove real provider session revocation.

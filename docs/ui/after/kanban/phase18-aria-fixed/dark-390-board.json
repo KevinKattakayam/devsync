@@ -1,0 +1,140 @@
+{
+  "violations": [],
+  "incomplete": [
+    {
+      "id": "color-contrast",
+      "impact": "serious",
+      "tags": [
+        "cat.color",
+        "wcag2aa",
+        "wcag143",
+        "TTv5",
+        "TT13.c",
+        "EN-301-549",
+        "EN-9.1.4.3",
+        "ACT",
+        "RGAAv4",
+        "RGAA-3.2.1"
+      ],
+      "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+      "help": "Elements must meet minimum color contrast ratio thresholds",
+      "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/color-contrast?application=axeAPI",
+      "nodes": [
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "contrastRatio": 0,
+                "fontSize": "10.5pt (14px)",
+                "fontWeight": "normal",
+                "messageKey": "elmPartiallyObscured",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<section aria-labelledby=\"_r_g_\" class=\"w-72 min-h-0 flex flex-col rounded-xl bg-muted/30\" data-kanban-column=\"devsync-sample-todo\">",
+                  "target": [
+                    "section[aria-labelledby=\"_r_g_\"]"
+                  ]
+                },
+                {
+                  "html": "<div class=\"app-shell\">",
+                  "target": [
+                    ".app-shell"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element's background color could not be determined because it's partially obscured by another element"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<p class=\"px-2 py-4 text-sm text-muted-foreground\">No tasks in this column.</p>",
+          "target": [
+            "div[aria-label=\"To Do tasks\"] > div[data-testid=\"virtuoso-scroller\"][data-virtuoso-scroller=\"true\"] > div[data-viewport-type=\"element\"] > .py-4"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "contrastRatio": 0,
+                "fontSize": "10.5pt (14px)",
+                "fontWeight": "normal",
+                "messageKey": "elmPartiallyObscured",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<section aria-labelledby=\"_r_i_\" class=\"w-72 min-h-0 flex flex-col rounded-xl bg-muted/30\" data-kanban-column=\"cmwhdyvm9000m118nys3xe396\">",
+                  "target": [
+                    "section[aria-labelledby=\"_r_i_\"]"
+                  ]
+                },
+                {
+                  "html": "<div class=\"app-shell\">",
+                  "target": [
+                    ".app-shell"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element's background color could not be determined because it's partially obscured by another element"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<h2 id=\"_r_i_\" class=\"text-sm font-semibold\">Keyboard target dark 390</h2>",
+          "target": [
+            "#_r_i_"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "contrastRatio": 0,
+                "fontSize": "10.5pt (14px)",
+                "fontWeight": "normal",
+                "messageKey": "elmPartiallyObscured",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<section aria-labelledby=\"_r_i_\" class=\"w-72 min-h-0 flex flex-col rounded-xl bg-muted/30\" data-kanban-column=\"cmwhdyvm9000m118nys3xe396\">",
+                  "target": [
+                    "section[aria-labelledby=\"_r_i_\"]"
+                  ]
+                },
+                {
+                  "html": "<div class=\"app-shell\">",
+                  "target": [
+                    ".app-shell"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element's background color could not be determined because it's partially obscured by another element"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<p class=\"px-2 py-4 text-sm text-muted-foreground\">No tasks in this column.</p>",
+          "target": [
+            "div[aria-label=\"Keyboard target dark 390 tasks\"] > div[data-testid=\"virtuoso-scroller\"][data-virtuoso-scroller=\"true\"] > div[data-viewport-type=\"element\"] > .py-4"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+        }
+      ]
+    }
+  ]
+}

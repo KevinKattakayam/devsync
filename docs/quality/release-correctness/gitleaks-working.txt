@@ -1,0 +1,70 @@
+
+    ○
+    │╲
+    │ ○
+    ○ ░
+    ░    gitleaks
+
+[90m3:10AM[0m [33mWRN[0m [1mskipping file: permission denied[0m [36mpath=[0metc/crontabs/root
+[90m3:10AM[0m [33mWRN[0m [1mskipping file: permission denied[0m [36mpath=[0metc/shadow
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/fd/7: no such file or directory"[0m[0m [36mpath=[0mproc/1/fd/7
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/fdinfo/7: no such file or directory"[0m[0m [36mpath=[0mproc/1/fdinfo/7
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/1/fd/7: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/1/fd/7
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/1/fdinfo/7: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/1/fdinfo/7
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/10/fd/7: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/10/fd/7
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/10/fdinfo/7: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/10/fdinfo/7
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/11/fd/7: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/11/fd/7
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/11/fdinfo/7: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/11/fdinfo/7
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/12/fd/7: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/12/fd/7
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/12/fdinfo/7: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/12/fdinfo/7
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/13/fd/7: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/13/fd/7
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/13/fdinfo/7: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/13/fdinfo/7
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/14/fd/7: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/14/fd/7
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/14/fdinfo/7: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/14/fdinfo/7
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/15/fd/7: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/15/fd/7
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/15/fdinfo/7: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/15/fdinfo/7
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/16/fd/7: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/16/fd/7
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/16/fdinfo/7: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/16/fdinfo/7
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/17/fd/7: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/17/fd/7
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/17/fdinfo/7: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/17/fdinfo/7
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/18/fd/7: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/18/fd/7
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/18/fdinfo/7: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/18/fdinfo/7
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/19/fd/7: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/19/fd/7
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/19/fdinfo/7: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/19/fdinfo/7
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/20/fd/7: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/20/fd/7
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/20/fdinfo/7: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/20/fdinfo/7
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/21/fd/7: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/21/fd/7
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/21/fdinfo/7: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/21/fdinfo/7
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/22/fd/7: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/22/fd/7
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/22/fdinfo/7: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/22/fdinfo/7
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/23/fd/7: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/23/fd/7
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/23/fdinfo/7: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/23/fdinfo/7
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/24/fd/7: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/24/fd/7
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/24/fdinfo/7: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/24/fdinfo/7
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/25/fd/7: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/25/fd/7
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/25/fdinfo/7: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/25/fdinfo/7
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/26/fd/7: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/26/fd/7
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/26/fdinfo/7: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/26/fdinfo/7
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/27/fd/7: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/27/fd/7
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/27/fdinfo/7: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/27/fdinfo/7
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/28/fd/7: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/28/fd/7
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/28/fdinfo/7: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/28/fdinfo/7
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/29/fd/7: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/29/fd/7
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/29/fdinfo/7: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/29/fdinfo/7
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/30/fd/4: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/30/fd/4
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/30/fdinfo/4: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/30/fdinfo/4
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/31/fd/4: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/31/fd/4
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/31/fdinfo/4: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/31/fdinfo/4
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/32/fd/4: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/32/fd/4
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/32/fdinfo/4: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/32/fdinfo/4
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/33/fd/4: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/33/fd/4
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/33/fdinfo/4: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/33/fdinfo/4
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/34/fd/4: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/34/fd/4
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/34/fdinfo/4: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/34/fdinfo/4
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/7/fd/4: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/7/fd/4
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/7/fdinfo/4: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/7/fdinfo/4
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/8/fd/4: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/8/fd/4
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/8/fdinfo/4: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/8/fdinfo/4
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/9/fd/4: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/9/fd/4
+[90m3:10AM[0m [31mERR[0m [1mskipping file: could not get info[0m [36merror=[0m[31m[1m"lstat proc/1/task/9/fdinfo/4: no such file or directory"[0m[0m [36mpath=[0mproc/1/task/9/fdinfo/4
+[90m3:10AM[0m [33mWRN[0m [1mskipping directory[0m [36merror=[0m[31m[1m"permission denied"[0m[0m [36mpath=[0mproc/tty/driver

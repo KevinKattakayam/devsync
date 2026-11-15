@@ -1,0 +1,184 @@
+{
+  "phase": "Real-time editor and recovery",
+  "baseCommit": "fadb379",
+  "branch": "upgrade/enterprise",
+  "status": "local_phase_verified",
+  "realClerkVerified": false,
+  "preflight": "README.md; initial clean upgrade/enterprise at fadb379,14 ahead of cached upstream; no branch mutation/reconciliation",
+  "sourceChanges": [
+    "Replica-scoped connection and pending acknowledgements",
+    "Access-unavailable feedback and remote acknowledgement explanation",
+    "Direct tracked server PID and guarded test-only generation/compaction/crash controls",
+    "CI recovery target and deterministic transaction/limits/checkpoint regressions"
+  ],
+  "engineReplaced": false,
+  "migrationAdded": false,
+  "productApiOrProtocolChanged": false,
+  "thresholdsRelaxed": false,
+  "gates": {
+    "backend": {
+      "command": "python3 tools/quality/gates.py backend docs/quality/realtime-recovery/backend-final-verified",
+      "exitCode": 0,
+      "records": "backend-final-verified/backend-gates.json",
+      "suitesPassed": 32,
+      "testsPassed": 305
+    },
+    "frontend": {
+      "command": "python3 tools/quality/gates.py frontend docs/quality/realtime-recovery/frontend-final",
+      "exitCode": 0,
+      "records": "frontend-final/frontend-gates.json",
+      "componentFilesPassed": 21,
+      "componentTestsPassed": 92,
+      "namedNodeTestsPassed": 9
+    }
+  },
+  "browser": [
+    {
+      "command": "E2E_CHROMIUM_PATH=/usr/bin/google-chrome node tools/ci/browser.mjs recovery",
+      "exitCode": 0,
+      "passed": 1,
+      "log": "browser-direct-process.txt",
+      "results": "browser/RESULTS.json",
+      "identities": "seeded fixtures, not Clerk",
+      "clients": "3 simultaneous contexts plus fresh fourth context after SIGKILL"
+    },
+    {
+      "command": "E2E_CHROMIUM_PATH=/usr/bin/google-chrome node tools/ci/browser.mjs core",
+      "exitCode": 0,
+      "passed": 12,
+      "log": "browser-core.txt",
+      "identities": "seeded fixtures, not Clerk"
+    }
+  ],
+  "coverage": {
+    "backend": {
+      "statements": 82.34,
+      "branches": 72.96,
+      "functions": 76.06,
+      "lines": 84.61
+    },
+    "frontend": {
+      "statements": 45.03,
+      "branches": 41.39,
+      "functions": 42.5,
+      "lines": 45.75
+    }
+  },
+  "coverageComparisons": "coverage-commands.json: unchanged first-adoption baseline and previous-phase summaries; hosted base artifacts unavailable",
+  "security": {
+    "semgrep": {
+      "exitCode": 0,
+      "rules": 74,
+      "targets": 230,
+      "findings": 0,
+      "report": "semgrep-final.json"
+    },
+    "gitleaks": {
+      "allExitCodes": 0,
+      "findings": 0,
+      "records": [
+        "secret-scan-commands.json",
+        "final-security-commands.json"
+      ],
+      "redaction": "100%; existing rules/exceptions unchanged; no history rescan this phase"
+    },
+    "auditCommands": "audit-commands.json",
+    "audits": {
+      "backend": {
+        "info": 0,
+        "low": 2,
+        "moderate": 29,
+        "high": 0,
+        "critical": 0,
+        "total": 31
+      },
+      "frontend": {
+        "info": 0,
+        "low": 0,
+        "moderate": 8,
+        "high": 0,
+        "critical": 0,
+        "total": 8
+      }
+    }
+  },
+  "contractsAndTools": "contract-and-tool-checks.json; latest backend strict types also verify final harness",
+  "redGreen": {
+    "clientState": {
+      "before": "client-state-red.txt",
+      "exitCodeBefore": 1,
+      "failuresBefore": 2,
+      "existingPassedBefore": 4,
+      "after": "client-state-green.txt",
+      "exitCodeAfter": 0
+    },
+    "controlGuards": {
+      "before": "control-guard-red.txt",
+      "exitCodeBefore": 1,
+      "scope": "Absent test-first module, not a production vulnerability",
+      "after": "control-guard-green.txt",
+      "exitCodeAfter": 0
+    }
+  },
+  "retainedFailures": [
+    {
+      "log": "browser-first.txt",
+      "exitCode": 1,
+      "reason": "Cursor decoration text contaminated DOM assertion; switched to TipTap document text and added exact convergence"
+    },
+    {
+      "log": "browser-retry.txt",
+      "exitCode": 1,
+      "reason": "tsx launcher SIGKILL left actual server child alive; EADDRINUSE/generation failed; direct loader and exact orphan cleanup fixed harness"
+    },
+    {
+      "log": "frontend-first/frontend-gates.json",
+      "exitCode": 1,
+      "reason": "Sandboxed Next TypeScript subprocess config parsing; wrapper-only Node output not substituted for final named tests"
+    },
+    {
+      "log": "backend-final/backend-gates.json",
+      "exitCode": 1,
+      "reason": "Shortened launcher array needed formatting"
+    },
+    {
+      "log": "backend-coverage-previous-phase-failed.txt",
+      "exitCode": 1,
+      "reason": "Timing-dependent catch-path coverage; added deterministic real transaction race and resource/compaction boundary regressions"
+    },
+    {
+      "log": "backend-coverage-previous-phase-race-only-failed.txt",
+      "exitCode": 1,
+      "reason": "Statement/branch comparison still below retained prior phase; no requirement relaxed"
+    },
+    {
+      "log": "backend-coverage-previous-phase-before-compaction-failed.txt",
+      "exitCode": 1,
+      "reason": "Added independent journal payload and64-update checkpoint coverage before final comparisons"
+    }
+  ],
+  "screenshot": {
+    "path": "browser/recovered-fixture.png",
+    "sha256": "da1805b9c3cfc051cf7407e18261a5c88bcaa3f9443cd8ff29c19fd178059823",
+    "inspected": true,
+    "scope": "Synthetic markers and fixture names after actual server restart; no credentials/provider proof; not a baseline update"
+  },
+  "limits": [
+    "Application-server SIGKILL while DB/Redis remain available; no disk/database-loss/PITR proof",
+    "Injected600ms each-way Hocuspocus latency, HTTP unchanged; no WAN/load benchmark",
+    "IndexedDB reload with HTTP app shell available, not offline PWA",
+    "No general revision-history/restore UI; conversion rollback still refuses subsequent edits",
+    "Browser storage faults, Redis outage, large offline batches, hosted CI/production restore/rollout remain unverified",
+    "Prior real Clerk acceptance still external action required; fixture sessions reauthenticated after process restart"
+  ],
+  "push": false,
+  "deployment": false,
+  "productionDataChanged": false,
+  "existingIdentityStackTouched": false,
+  "nextPhaseStarted": false,
+  "implementationCommits": [
+    "c5f0d2f test(realtime): verify browser crash recovery and authorization boundaries",
+    "91a9ae3 fix(editor): scope acknowledgements and access loss to each replica"
+  ],
+  "documentation": "README.md; CHANGED_PATHS.txt; documentation-links.json; final-diff-check.json"
+}

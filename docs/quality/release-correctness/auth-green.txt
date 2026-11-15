@@ -1,0 +1,21 @@
+
+> devsync-backend@1.0.0 test
+> jest --runInBand --runTestsByPath src/__tests__/auth-sync.test.ts --coverage=false
+
+{"level":30,"time":1794106536628,"service":"devsync-api","req":{"id":"3dd68b40-1eeb-4f01-994d-e1b558852ede","method":"POST"},"requestId":"3dd68b40-1eeb-4f01-994d-e1b558852ede","res":{"statusCode":401},"responseTime":3,"msg":"request completed"}
+{"level":30,"time":1794106536636,"service":"devsync-api","req":{"id":"4dccdafb-4376-4c54-aaad-5dc3d95a2d4f","method":"POST"},"requestId":"4dccdafb-4376-4c54-aaad-5dc3d95a2d4f","res":{"statusCode":401},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1794106536645,"service":"devsync-api","req":{"id":"708ae7df-d0aa-4283-accb-55b4c01da2aa","method":"POST"},"requestId":"708ae7df-d0aa-4283-accb-55b4c01da2aa","res":{"statusCode":401},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1794106536648,"service":"devsync-api","req":{"id":"927fa172-cdba-47cf-a2fc-9856f614f240","method":"POST"},"requestId":"927fa172-cdba-47cf-a2fc-9856f614f240","res":{"statusCode":401},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1794106536651,"service":"devsync-api","req":{"id":"b44174de-9bea-4fc0-a093-60c04e466b5f","method":"POST"},"requestId":"b44174de-9bea-4fc0-a093-60c04e466b5f","res":{"statusCode":401},"responseTime":1,"msg":"request completed"}
+{"level":30,"time":1794106536653,"service":"devsync-api","req":{"id":"3b43a1f3-397e-438c-815e-2e1399d9628f","method":"POST"},"requestId":"3b43a1f3-397e-438c-815e-2e1399d9628f","res":{"statusCode":503},"err":{"type":"HttpError"},"responseTime":0,"msg":"request errored"}
+{"level":30,"time":1794106536657,"service":"devsync-api","req":{"id":"d70a3002-4149-4cb9-8593-0988c36e2d75","method":"POST"},"requestId":"d70a3002-4149-4cb9-8593-0988c36e2d75","res":{"statusCode":401},"responseTime":0,"msg":"request completed"}
+{"level":30,"time":1794106536659,"service":"devsync-api","req":{"id":"ee204309-1dd7-406d-9a6d-ea21a68287f8","method":"POST"},"requestId":"ee204309-1dd7-406d-9a6d-ea21a68287f8","res":{"statusCode":401},"responseTime":0,"msg":"request completed"}
+{"level":30,"time":1794106536662,"service":"devsync-api","req":{"id":"d9a7ab9d-12e7-4593-8683-e5fcf2e55294","method":"POST"},"requestId":"d9a7ab9d-12e7-4593-8683-e5fcf2e55294","res":{"statusCode":401},"responseTime":0,"msg":"request completed"}
+{"level":30,"time":1794106536665,"service":"devsync-api","req":{"id":"f7d64e89-22e5-4a43-9f26-21069303dbc2","method":"POST"},"requestId":"f7d64e89-22e5-4a43-9f26-21069303dbc2","res":{"statusCode":401},"responseTime":0,"msg":"request completed"}
+{"level":50,"time":1794106536667,"service":"devsync-api","req":{"id":"f35fba43-5ec7-4d71-99fb-a384abafccb9","method":"POST"},"requestId":"f35fba43-5ec7-4d71-99fb-a384abafccb9","msg":"Unexpected server error"}
+{"level":30,"time":1794106536667,"service":"devsync-api","req":{"id":"f35fba43-5ec7-4d71-99fb-a384abafccb9","method":"POST"},"requestId":"f35fba43-5ec7-4d71-99fb-a384abafccb9","res":{"statusCode":500},"err":{"type":"HttpError"},"responseTime":0,"msg":"request errored"}
+Test Suites: 1 passed, 1 total
+Tests:       11 passed, 11 total
+Snapshots:   0 total
+Time:        5.212 s
+Ran all test suites within paths "src/__tests__/auth-sync.test.ts".

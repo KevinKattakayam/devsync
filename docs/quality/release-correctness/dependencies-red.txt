@@ -1,0 +1,27 @@
+
+> devsync-backend@1.0.0 test
+> jest --runInBand --runTestsByPath src/__tests__/dependency-policy.test.ts --coverage=false
+
+FAIL src/__tests__/dependency-policy.test.ts
+  ● keeps every production glob/minimatch copy above the recorded runtime remediation floors
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 14000002
+    Received:    13000006
+
+      33 |     found.push(name);
+      34 |     expect({ path, version: major * 1000000 + minor * 1000 + patch }).toEqual({ path, version: expect.any(Number) });
+    > 35 |     expect(major * 1000000 + minor * 1000 + patch).toBeGreaterThanOrEqual(floors[name]);
+         |                                                    ^
+      36 |   }
+      37 |   expect(found).toContain('glob');
+      38 |   expect(found).toContain('minimatch');
+
+      at Object.<anonymous> (src/__tests__/dependency-policy.test.ts:35:52)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 3 passed, 4 total
+Snapshots:   0 total
+Time:        4.621 s
+Ran all test suites within paths "src/__tests__/dependency-policy.test.ts".

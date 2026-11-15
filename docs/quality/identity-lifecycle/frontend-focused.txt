@@ -1,0 +1,1243 @@
+
+ RUN  v5.0.5 /home/kevin/devsync/frontend
+
+ ❯ tests/settings.test.tsx (10 tests | 3 failed) 5235ms
+   × rolls a denied optimistic role update back and exposes refresh/retry 1227ms
+   × removal requires confirmation and restores the row after failure 1174ms
+   × preserves invitation details and the receipt on failed creation, then allows retry 1222ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/settings.test.tsx > rolls a denied optimistic role update back and exposes refresh/retry
+TestingLibraryElementError: Found multiple elements with the role "alert"
+
+Here are the matching elements:
+
+Ignored nodes: comments, script, style
+[36m<p[39m
+  [33mrole[39m=[32m"alert"[39m
+[36m>[39m
+  [0mLifecycle prerequisites are unavailable. Refresh access before making changes.[0m
+[36m</p>[39m
+
+Ignored nodes: comments, script, style
+[36m<div[39m
+  [33mclass[39m=[32m"mb-4 flex flex-wrap items-center gap-3 rounded-lg bg-secondary p-4"[39m
+  [33mrole[39m=[32m"alert"[39m
+[36m>[39m
+  [36m<p[39m
+    [33mclass[39m=[32m"min-w-0 flex-1 text-sm"[39m
+  [36m>[39m
+    [0mRole could not be changed. Refresh to check permissions, then retry.[0m
+  [36m</p>[39m
+  [36m<button[39m
+    [33mclass[39m=[32m"ui-button"[39m
+    [33mdata-size[39m=[32m"default"[39m
+    [33mdata-variant[39m=[32m"secondary"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m>[39m
+    [0mRefresh access[0m
+  [36m</button>[39m
+[36m</div>[39m
+
+(If this is intentional, then use the `*AllBy*` variant of the query (like `queryAllByText`, `getAllByText`, or `findAllByText`)).
+
+Ignored nodes: comments, script, style
+[36m<body[39m
+  [33mstyle[39m=[32m""[39m
+[36m>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"mx-auto max-w-5xl px-4 pt-8 pb-24 md:px-8"[39m
+      [33mdata-settings[39m=[32m"true"[39m
+    [36m>[39m
+      [36m<header[39m
+        [33mclass[39m=[32m"mb-8 grid grid-cols-[minmax(0,1fr)_auto] items-start gap-4"[39m
+      [36m>[39m
+        [36m<div>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"mb-2 break-words text-xs text-muted-foreground"[39m
+          [36m>[39m
+            [0mEngineering[0m
+          [36m</p>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"text-[28px] font-semibold leading-9"[39m
+          [36m>[39m
+            [0mWorkspace settings[0m
+          [36m</h1>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"mt-3 text-sm leading-6 text-muted-foreground"[39m
+          [36m>[39m
+            [0mManage who can access this workspace and how they join.[0m
+          [36m</p>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"mt-3"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"ui-badge"[39m
+              [33mdata-tone[39m=[32m"neutral"[39m
+            [36m>[39m
+              [0mowner[0m
+            [36m</span>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<button[39m
+          [33maria-label[39m=[32m"Refresh workspace access"[39m
+          [33mclass[39m=[32m"ui-button"[39m
+          [33mdata-size[39m=[32m"default"[39m
+          [33mdata-variant[39m=[32m"ghost"[39m
+          [33mtype[39m=[32m"button"[39m
+        [36m>[39m
+          [36m<svg[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"lucide lucide-refresh-cw size-4"[39m
+            [33mfill[39m=[32m"none"[39m
+            [33mheight[39m=[32m"24"[39m
+            [33mstroke[39m=[32m"currentColor"[39m
+            [33mstroke-linecap[39m=[32m"round"[39m
+            [33mstroke-linejoin[39m=[32m"round"[39m
+            [33mstroke-width[39m=[32m"2"[39m
+            [33mviewBox[39m=[32m"0 0 24 24"[39m
+            [33mwidth[39m=[32m"24"[39m
+            [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+          [36m>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"[39m
+            [36m/>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M21 3v5h-5"[39m
+            [36m/>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"[39m
+            [36m/>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M8 16H3v5"[39m
+            [36m/>[39m
+          [36m</svg>[39m
+        [36m</button>[39m
+      [36m</header>[39m
+      [36m<section[39m
+        [33maria-label[39m=[32m"AI usage"[39m
+        [33mclass[39m=[32m"my-8 space-y-3"[39m
+      [36m>[39m
+        [36m<h2[39m
+          [33mclass[39m=[32m"text-lg font-semibold"[39m
+        [36m>[39m
+          [0mAI usage[0m
+        [36m</h2>[39m
+        [36m<p[39m
+          [33mclass[39m=[32m"text-sm text-muted-foreground"[39m
+        [36m>[39m
+          [0mReserved requests, including ambiguous failures and partial output. Confirmed pre-provider failures are refunded. UTC day/month; this is not token billing. Your allowance is shared across your workspaces.[0m
+        [36m</p>[39m
+        [36m<dl[39m
+          [33mclass[39m=[32m"text-sm space-y-2 break-words"[39m
+        [36m>[39m
+          [36m<dt>[39m
+            [0mYour daily / monthly requests[0m
+          [36m</dt>[39m
+          [36m<dd>[39m
+            [0m0[0m
+            [0m / [0m
+            [0m100[0m
+            [0m today · [0m
+            [0m0[0m
+            [0m /[0m
+            [0m [0m
+            [0m1000[0m
+            [0m this month[0m
+          [36m</dd>[39m
+          [36m<dt>[39m
+            [0mThis workspace daily / monthly requests[0m
+          [36m</dt>[39m
+          [36m<dd>[39m
+            [0m0[0m
+            [0m / [0m
+            [0m1000[0m
+            [0m today · [0m
+            [0m0[0m
+            [0m /[0m
+            [0m [0m
+            [0m10000[0m
+            [0m this month[0m
+          [36m</dd>[39m
+        [36m</dl>[39m
+        [36m<button[39m
+          [33mclass[39m=[32m"ui-button"[39m
+          [33mdata-size[39m=[32m"default"[39m
+          [33mdata-variant[39m=[32m"secondary"[39m
+          [33mtype[39m=[32m"button"[39m
+        [36m>[39m
+          [0mRefresh AI usage[0m
+        [36m</button>[39m
+      [36m</section>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"mb-8"[39m
+      [36m>[39m
+        [36m<label[39m
+          [33mclass[39m=[32m"block space-y-2 text-sm"[39m
+        [36m>[39m
+          [36m<span>[39m
+            [0mSearch settings[0m
+          [36m</span>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"relative"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-search absolute left-3 top-3 size-4 text-muted-foreground"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"24"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"24"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"m21 21-4.34-4.34"[39m
+              [36m/>[39m
+              [36m<circle[39m
+                [33mcx[39m=[32m"11"[39m
+                [33mcy[39m=[32m"11"[39m
+                [33mr[39m=[32m"8"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+            [36m<input[39m
+              [33mclass[39m=[32m"ui-input pl-10"[39m
+              [33mplaceholder[39m=[32m"Sections, names, email addresses or roles"[39m
+              [33mvalue[39m=[32m""[39m
+            [36m/>[39m
+          [36m</div>[39m
+        [36m</label>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"grid min-w-0 gap-8 md:grid-cols-[10rem_minmax(0,1fr)]"[39m
+      [36m>[39m
+        [36m<nav[39m
+          [33maria-label[39m=[32m"Settings sections"[39m
+          [33mclass[39m=[32m"flex flex-wrap content-start gap-2 md:flex-col"[39m
+        [36m>[39m
+          [36m<a[39m
+            [33mclass[39m=[32m"rounded-md px-3 py-2 text-sm hover:bg-secondary"[39m
+            [33mhref[39m=[32m"/settings"[39m
+          [36m>[39m
+            [0mAc...
+
+Ignored nodes: comments, script, style
+[36m<body[39m
+  [33mstyle[39m=[32m""[39m
+[36m>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"mx-auto max-w-5xl px-4 pt-8 pb-24 md:px-8"[39m
+      [33mdata-settings[39m=[32m"true"[39m
+    [36m>[39m
+      [36m<header[39m
+        [33mclass[39m=[32m"mb-8 grid grid-cols-[minmax(0,1fr)_auto] items-start gap-4"[39m
+      [36m>[39m
+        [36m<div>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"mb-2 break-words text-xs text-muted-foreground"[39m
+          [36m>[39m
+            [0mEngineering[0m
+          [36m</p>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"text-[28px] font-semibold leading-9"[39m
+          [36m>[39m
+            [0mWorkspace settings[0m
+          [36m</h1>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"mt-3 text-sm leading-6 text-muted-foreground"[39m
+          [36m>[39m
+            [0mManage who can access this workspace and how they join.[0m
+          [36m</p>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"mt-3"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"ui-badge"[39m
+              [33mdata-tone[39m=[32m"neutral"[39m
+            [36m>[39m
+              [0mowner[0m
+            [36m</span>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<button[39m
+          [33maria-label[39m=[32m"Refresh workspace access"[39m
+          [33mclass[39m=[32m"ui-button"[39m
+          [33mdata-size[39m=[32m"default"[39m
+          [33mdata-variant[39m=[32m"ghost"[39m
+          [33mtype[39m=[32m"button"[39m
+        [36m>[39m
+          [36m<svg[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"lucide lucide-refresh-cw size-4"[39m
+            [33mfill[39m=[32m"none"[39m
+            [33mheight[39m=[32m"24"[39m
+            [33mstroke[39m=[32m"currentColor"[39m
+            [33mstroke-linecap[39m=[32m"round"[39m
+            [33mstroke-linejoin[39m=[32m"round"[39m
+            [33mstroke-width[39m=[32m"2"[39m
+            [33mviewBox[39m=[32m"0 0 24 24"[39m
+            [33mwidth[39m=[32m"24"[39m
+            [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+          [36m>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"[39m
+            [36m/>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M21 3v5h-5"[39m
+            [36m/>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"[39m
+            [36m/>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M8 16H3v5"[39m
+            [36m/>[39m
+          [36m</svg>[39m
+        [36m</button>[39m
+      [36m</header>[39m
+      [36m<section[39m
+        [33maria-label[39m=[32m"AI usage"[39m
+        [33mclass[39m=[32m"my-8 space-y-3"[39m
+      [36m>[39m
+        [36m<h2[39m
+          [33mclass[39m=[32m"text-lg font-semibold"[39m
+        [36m>[39m
+          [0mAI usage[0m
+        [36m</h2>[39m
+        [36m<p[39m
+          [33mclass[39m=[32m"text-sm text-muted-foreground"[39m
+        [36m>[39m
+          [0mReserved requests, including ambiguous failures and partial output. Confirmed pre-provider failures are refunded. UTC day/month; this is not token billing. Your allowance is shared across your workspaces.[0m
+        [36m</p>[39m
+        [36m<dl[39m
+          [33mclass[39m=[32m"text-sm space-y-2 break-words"[39m
+        [36m>[39m
+          [36m<dt>[39m
+            [0mYour daily / monthly requests[0m
+          [36m</dt>[39m
+          [36m<dd>[39m
+            [0m0[0m
+            [0m / [0m
+            [0m100[0m
+            [0m today · [0m
+            [0m0[0m
+            [0m /[0m
+            [0m [0m
+            [0m1000[0m
+            [0m this month[0m
+          [36m</dd>[39m
+          [36m<dt>[39m
+            [0mThis workspace daily / monthly requests[0m
+          [36m</dt>[39m
+          [36m<dd>[39m
+            [0m0[0m
+            [0m / [0m
+            [0m1000[0m
+            [0m today · [0m
+            [0m0[0m
+            [0m /[0m
+            [0m [0m
+            [0m10000[0m
+            [0m this month[0m
+          [36m</dd>[39m
+        [36m</dl>[39m
+        [36m<button[39m
+          [33mclass[39m=[32m"ui-button"[39m
+          [33mdata-size[39m=[32m"default"[39m
+          [33mdata-variant[39m=[32m"secondary"[39m
+          [33mtype[39m=[32m"button"[39m
+        [36m>[39m
+          [0mRefresh AI usage[0m
+        [36m</button>[39m
+      [36m</section>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"mb-8"[39m
+      [36m>[39m
+        [36m<label[39m
+          [33mclass[39m=[32m"block space-y-2 text-sm"[39m
+        [36m>[39m
+          [36m<span>[39m
+            [0mSearch settings[0m
+          [36m</span>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"relative"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-search absolute left-3 top-3 size-4 text-muted-foreground"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"24"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"24"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"m21 21-4.34-4.34"[39m
+              [36m/>[39m
+              [36m<circle[39m
+                [33mcx[39m=[32m"11"[39m
+                [33mcy[39m=[32m"11"[39m
+                [33mr[39m=[32m"8"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+            [36m<input[39m
+              [33mclass[39m=[32m"ui-input pl-10"[39m
+              [33mplaceholder[39m=[32m"Sections, names, email addresses or roles"[39m
+              [33mvalue[39m=[32m""[39m
+            [36m/>[39m
+          [36m</div>[39m
+        [36m</label>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"grid min-w-0 gap-8 md:grid-cols-[10rem_minmax(0,1fr)]"[39m
+      [36m>[39m
+        [36m<nav[39m
+          [33maria-label[39m=[32m"Settings sections"[39m
+          [33mclass[39m=[32m"flex flex-wrap content-start gap-2 md:flex-col"[39m
+        [36m>[39m
+          [36m<a[39m
+            [33mclass[39m=[32m"rounded-md px-3 py-2 text-sm hover:bg-secondary"[39m
+            [33mhref[39m=[32m"/settings"[39m
+          [36m>[39m
+            [0mAc...
+ ❯ waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ tests/settings.test.tsx:173:16
+    171|   await user.keyboard('{Enter}');
+    172|   await user.click(await screen.findByRole('button', { name: 'Confirm …
+    173|   await screen.findByRole('alert');
+       |                ^
+    174|   expect(trigger.textContent).toBe('Editor');
+    175|   expect(screen.getByRole('button', { name: 'Refresh access' })).toBeT…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  tests/settings.test.tsx > removal requires confirmation and restores the row after failure
+TestingLibraryElementError: Found multiple elements with the role "alert"
+
+Here are the matching elements:
+
+Ignored nodes: comments, script, style
+[36m<p[39m
+  [33mrole[39m=[32m"alert"[39m
+[36m>[39m
+  [0mLifecycle prerequisites are unavailable. Refresh access before making changes.[0m
+[36m</p>[39m
+
+Ignored nodes: comments, script, style
+[36m<div[39m
+  [33mclass[39m=[32m"mb-4 flex flex-wrap items-center gap-3 rounded-lg bg-secondary p-4"[39m
+  [33mrole[39m=[32m"alert"[39m
+[36m>[39m
+  [36m<p[39m
+    [33mclass[39m=[32m"min-w-0 flex-1 text-sm"[39m
+  [36m>[39m
+    [0mMember could not be removed. Refresh to check permissions, then retry.[0m
+  [36m</p>[39m
+  [36m<button[39m
+    [33mclass[39m=[32m"ui-button"[39m
+    [33mdata-size[39m=[32m"default"[39m
+    [33mdata-variant[39m=[32m"secondary"[39m
+    [33mtype[39m=[32m"button"[39m
+  [36m>[39m
+    [0mRefresh access[0m
+  [36m</button>[39m
+[36m</div>[39m
+
+(If this is intentional, then use the `*AllBy*` variant of the query (like `queryAllByText`, `getAllByText`, or `findAllByText`)).
+
+Ignored nodes: comments, script, style
+[36m<body[39m
+  [33mstyle[39m=[32m""[39m
+[36m>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"mx-auto max-w-5xl px-4 pt-8 pb-24 md:px-8"[39m
+      [33mdata-settings[39m=[32m"true"[39m
+    [36m>[39m
+      [36m<header[39m
+        [33mclass[39m=[32m"mb-8 grid grid-cols-[minmax(0,1fr)_auto] items-start gap-4"[39m
+      [36m>[39m
+        [36m<div>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"mb-2 break-words text-xs text-muted-foreground"[39m
+          [36m>[39m
+            [0mEngineering[0m
+          [36m</p>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"text-[28px] font-semibold leading-9"[39m
+          [36m>[39m
+            [0mWorkspace settings[0m
+          [36m</h1>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"mt-3 text-sm leading-6 text-muted-foreground"[39m
+          [36m>[39m
+            [0mManage who can access this workspace and how they join.[0m
+          [36m</p>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"mt-3"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"ui-badge"[39m
+              [33mdata-tone[39m=[32m"neutral"[39m
+            [36m>[39m
+              [0mowner[0m
+            [36m</span>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<button[39m
+          [33maria-label[39m=[32m"Refresh workspace access"[39m
+          [33mclass[39m=[32m"ui-button"[39m
+          [33mdata-size[39m=[32m"default"[39m
+          [33mdata-variant[39m=[32m"ghost"[39m
+          [33mtype[39m=[32m"button"[39m
+        [36m>[39m
+          [36m<svg[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"lucide lucide-refresh-cw size-4"[39m
+            [33mfill[39m=[32m"none"[39m
+            [33mheight[39m=[32m"24"[39m
+            [33mstroke[39m=[32m"currentColor"[39m
+            [33mstroke-linecap[39m=[32m"round"[39m
+            [33mstroke-linejoin[39m=[32m"round"[39m
+            [33mstroke-width[39m=[32m"2"[39m
+            [33mviewBox[39m=[32m"0 0 24 24"[39m
+            [33mwidth[39m=[32m"24"[39m
+            [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+          [36m>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"[39m
+            [36m/>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M21 3v5h-5"[39m
+            [36m/>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"[39m
+            [36m/>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M8 16H3v5"[39m
+            [36m/>[39m
+          [36m</svg>[39m
+        [36m</button>[39m
+      [36m</header>[39m
+      [36m<section[39m
+        [33maria-label[39m=[32m"AI usage"[39m
+        [33mclass[39m=[32m"my-8 space-y-3"[39m
+      [36m>[39m
+        [36m<h2[39m
+          [33mclass[39m=[32m"text-lg font-semibold"[39m
+        [36m>[39m
+          [0mAI usage[0m
+        [36m</h2>[39m
+        [36m<p[39m
+          [33mclass[39m=[32m"text-sm text-muted-foreground"[39m
+        [36m>[39m
+          [0mReserved requests, including ambiguous failures and partial output. Confirmed pre-provider failures are refunded. UTC day/month; this is not token billing. Your allowance is shared across your workspaces.[0m
+        [36m</p>[39m
+        [36m<dl[39m
+          [33mclass[39m=[32m"text-sm space-y-2 break-words"[39m
+        [36m>[39m
+          [36m<dt>[39m
+            [0mYour daily / monthly requests[0m
+          [36m</dt>[39m
+          [36m<dd>[39m
+            [0m0[0m
+            [0m / [0m
+            [0m100[0m
+            [0m today · [0m
+            [0m0[0m
+            [0m /[0m
+            [0m [0m
+            [0m1000[0m
+            [0m this month[0m
+          [36m</dd>[39m
+          [36m<dt>[39m
+            [0mThis workspace daily / monthly requests[0m
+          [36m</dt>[39m
+          [36m<dd>[39m
+            [0m0[0m
+            [0m / [0m
+            [0m1000[0m
+            [0m today · [0m
+            [0m0[0m
+            [0m /[0m
+            [0m [0m
+            [0m10000[0m
+            [0m this month[0m
+          [36m</dd>[39m
+        [36m</dl>[39m
+        [36m<button[39m
+          [33mclass[39m=[32m"ui-button"[39m
+          [33mdata-size[39m=[32m"default"[39m
+          [33mdata-variant[39m=[32m"secondary"[39m
+          [33mtype[39m=[32m"button"[39m
+        [36m>[39m
+          [0mRefresh AI usage[0m
+        [36m</button>[39m
+      [36m</section>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"mb-8"[39m
+      [36m>[39m
+        [36m<label[39m
+          [33mclass[39m=[32m"block space-y-2 text-sm"[39m
+        [36m>[39m
+          [36m<span>[39m
+            [0mSearch settings[0m
+          [36m</span>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"relative"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-search absolute left-3 top-3 size-4 text-muted-foreground"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"24"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"24"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"m21 21-4.34-4.34"[39m
+              [36m/>[39m
+              [36m<circle[39m
+                [33mcx[39m=[32m"11"[39m
+                [33mcy[39m=[32m"11"[39m
+                [33mr[39m=[32m"8"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+            [36m<input[39m
+              [33mclass[39m=[32m"ui-input pl-10"[39m
+              [33mplaceholder[39m=[32m"Sections, names, email addresses or roles"[39m
+              [33mvalue[39m=[32m""[39m
+            [36m/>[39m
+          [36m</div>[39m
+        [36m</label>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"grid min-w-0 gap-8 md:grid-cols-[10rem_minmax(0,1fr)]"[39m
+      [36m>[39m
+        [36m<nav[39m
+          [33maria-label[39m=[32m"Settings sections"[39m
+          [33mclass[39m=[32m"flex flex-wrap content-start gap-2 md:flex-col"[39m
+        [36m>[39m
+          [36m<a[39m
+            [33mclass[39m=[32m"rounded-md px-3 py-2 text-sm hover:bg-secondary"[39m
+            [33mhref[39m=[32m"/settings"[39m
+          [36m>[39m
+            [0mAc...
+
+Ignored nodes: comments, script, style
+[36m<body[39m
+  [33mstyle[39m=[32m""[39m
+[36m>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"mx-auto max-w-5xl px-4 pt-8 pb-24 md:px-8"[39m
+      [33mdata-settings[39m=[32m"true"[39m
+    [36m>[39m
+      [36m<header[39m
+        [33mclass[39m=[32m"mb-8 grid grid-cols-[minmax(0,1fr)_auto] items-start gap-4"[39m
+      [36m>[39m
+        [36m<div>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"mb-2 break-words text-xs text-muted-foreground"[39m
+          [36m>[39m
+            [0mEngineering[0m
+          [36m</p>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"text-[28px] font-semibold leading-9"[39m
+          [36m>[39m
+            [0mWorkspace settings[0m
+          [36m</h1>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"mt-3 text-sm leading-6 text-muted-foreground"[39m
+          [36m>[39m
+            [0mManage who can access this workspace and how they join.[0m
+          [36m</p>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"mt-3"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"ui-badge"[39m
+              [33mdata-tone[39m=[32m"neutral"[39m
+            [36m>[39m
+              [0mowner[0m
+            [36m</span>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<button[39m
+          [33maria-label[39m=[32m"Refresh workspace access"[39m
+          [33mclass[39m=[32m"ui-button"[39m
+          [33mdata-size[39m=[32m"default"[39m
+          [33mdata-variant[39m=[32m"ghost"[39m
+          [33mtype[39m=[32m"button"[39m
+        [36m>[39m
+          [36m<svg[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"lucide lucide-refresh-cw size-4"[39m
+            [33mfill[39m=[32m"none"[39m
+            [33mheight[39m=[32m"24"[39m
+            [33mstroke[39m=[32m"currentColor"[39m
+            [33mstroke-linecap[39m=[32m"round"[39m
+            [33mstroke-linejoin[39m=[32m"round"[39m
+            [33mstroke-width[39m=[32m"2"[39m
+            [33mviewBox[39m=[32m"0 0 24 24"[39m
+            [33mwidth[39m=[32m"24"[39m
+            [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+          [36m>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"[39m
+            [36m/>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M21 3v5h-5"[39m
+            [36m/>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"[39m
+            [36m/>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M8 16H3v5"[39m
+            [36m/>[39m
+          [36m</svg>[39m
+        [36m</button>[39m
+      [36m</header>[39m
+      [36m<section[39m
+        [33maria-label[39m=[32m"AI usage"[39m
+        [33mclass[39m=[32m"my-8 space-y-3"[39m
+      [36m>[39m
+        [36m<h2[39m
+          [33mclass[39m=[32m"text-lg font-semibold"[39m
+        [36m>[39m
+          [0mAI usage[0m
+        [36m</h2>[39m
+        [36m<p[39m
+          [33mclass[39m=[32m"text-sm text-muted-foreground"[39m
+        [36m>[39m
+          [0mReserved requests, including ambiguous failures and partial output. Confirmed pre-provider failures are refunded. UTC day/month; this is not token billing. Your allowance is shared across your workspaces.[0m
+        [36m</p>[39m
+        [36m<dl[39m
+          [33mclass[39m=[32m"text-sm space-y-2 break-words"[39m
+        [36m>[39m
+          [36m<dt>[39m
+            [0mYour daily / monthly requests[0m
+          [36m</dt>[39m
+          [36m<dd>[39m
+            [0m0[0m
+            [0m / [0m
+            [0m100[0m
+            [0m today · [0m
+            [0m0[0m
+            [0m /[0m
+            [0m [0m
+            [0m1000[0m
+            [0m this month[0m
+          [36m</dd>[39m
+          [36m<dt>[39m
+            [0mThis workspace daily / monthly requests[0m
+          [36m</dt>[39m
+          [36m<dd>[39m
+            [0m0[0m
+            [0m / [0m
+            [0m1000[0m
+            [0m today · [0m
+            [0m0[0m
+            [0m /[0m
+            [0m [0m
+            [0m10000[0m
+            [0m this month[0m
+          [36m</dd>[39m
+        [36m</dl>[39m
+        [36m<button[39m
+          [33mclass[39m=[32m"ui-button"[39m
+          [33mdata-size[39m=[32m"default"[39m
+          [33mdata-variant[39m=[32m"secondary"[39m
+          [33mtype[39m=[32m"button"[39m
+        [36m>[39m
+          [0mRefresh AI usage[0m
+        [36m</button>[39m
+      [36m</section>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"mb-8"[39m
+      [36m>[39m
+        [36m<label[39m
+          [33mclass[39m=[32m"block space-y-2 text-sm"[39m
+        [36m>[39m
+          [36m<span>[39m
+            [0mSearch settings[0m
+          [36m</span>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"relative"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-search absolute left-3 top-3 size-4 text-muted-foreground"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"24"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"24"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"m21 21-4.34-4.34"[39m
+              [36m/>[39m
+              [36m<circle[39m
+                [33mcx[39m=[32m"11"[39m
+                [33mcy[39m=[32m"11"[39m
+                [33mr[39m=[32m"8"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+            [36m<input[39m
+              [33mclass[39m=[32m"ui-input pl-10"[39m
+              [33mplaceholder[39m=[32m"Sections, names, email addresses or roles"[39m
+              [33mvalue[39m=[32m""[39m
+            [36m/>[39m
+          [36m</div>[39m
+        [36m</label>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"grid min-w-0 gap-8 md:grid-cols-[10rem_minmax(0,1fr)]"[39m
+      [36m>[39m
+        [36m<nav[39m
+          [33maria-label[39m=[32m"Settings sections"[39m
+          [33mclass[39m=[32m"flex flex-wrap content-start gap-2 md:flex-col"[39m
+        [36m>[39m
+          [36m<a[39m
+            [33mclass[39m=[32m"rounded-md px-3 py-2 text-sm hover:bg-secondary"[39m
+            [33mhref[39m=[32m"/settings"[39m
+          [36m>[39m
+            [0mAc...
+ ❯ waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ tests/settings.test.tsx:185:16
+    183|   expect(mocks.delete).not.toHaveBeenCalled();
+    184|   await user.click(screen.getByRole('button', { name: 'Confirm removal…
+    185|   await screen.findByRole('alert');
+       |                ^
+    186|   expect(screen.getByRole('button', { name: 'Remove Editor' })).toBeTr…
+    187| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  tests/settings.test.tsx > preserves invitation details and the receipt on failed creation, then allows retry
+TestingLibraryElementError: Found multiple elements with the role "alert"
+
+Here are the matching elements:
+
+Ignored nodes: comments, script, style
+[36m<p[39m
+  [33mrole[39m=[32m"alert"[39m
+[36m>[39m
+  [0mLifecycle prerequisites are unavailable. Refresh access before making changes.[0m
+[36m</p>[39m
+
+Ignored nodes: comments, script, style
+[36m<p[39m
+  [33mclass[39m=[32m"mb-4 text-sm text-destructive"[39m
+  [33mrole[39m=[32m"alert"[39m
+[36m>[39m
+  [0mInvitation could not be created. Your details are kept; try Create invitation again.[0m
+[36m</p>[39m
+
+(If this is intentional, then use the `*AllBy*` variant of the query (like `queryAllByText`, `getAllByText`, or `findAllByText`)).
+
+Ignored nodes: comments, script, style
+[36m<body[39m
+  [33mstyle[39m=[32m""[39m
+[36m>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"mx-auto max-w-5xl px-4 pt-8 pb-24 md:px-8"[39m
+      [33mdata-settings[39m=[32m"true"[39m
+    [36m>[39m
+      [36m<header[39m
+        [33mclass[39m=[32m"mb-8 grid grid-cols-[minmax(0,1fr)_auto] items-start gap-4"[39m
+      [36m>[39m
+        [36m<div>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"mb-2 break-words text-xs text-muted-foreground"[39m
+          [36m>[39m
+            [0mEngineering[0m
+          [36m</p>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"text-[28px] font-semibold leading-9"[39m
+          [36m>[39m
+            [0mWorkspace settings[0m
+          [36m</h1>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"mt-3 text-sm leading-6 text-muted-foreground"[39m
+          [36m>[39m
+            [0mManage who can access this workspace and how they join.[0m
+          [36m</p>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"mt-3"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"ui-badge"[39m
+              [33mdata-tone[39m=[32m"neutral"[39m
+            [36m>[39m
+              [0mowner[0m
+            [36m</span>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<button[39m
+          [33maria-label[39m=[32m"Refresh workspace access"[39m
+          [33mclass[39m=[32m"ui-button"[39m
+          [33mdata-size[39m=[32m"default"[39m
+          [33mdata-variant[39m=[32m"ghost"[39m
+          [33mtype[39m=[32m"button"[39m
+        [36m>[39m
+          [36m<svg[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"lucide lucide-refresh-cw size-4"[39m
+            [33mfill[39m=[32m"none"[39m
+            [33mheight[39m=[32m"24"[39m
+            [33mstroke[39m=[32m"currentColor"[39m
+            [33mstroke-linecap[39m=[32m"round"[39m
+            [33mstroke-linejoin[39m=[32m"round"[39m
+            [33mstroke-width[39m=[32m"2"[39m
+            [33mviewBox[39m=[32m"0 0 24 24"[39m
+            [33mwidth[39m=[32m"24"[39m
+            [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+          [36m>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"[39m
+            [36m/>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M21 3v5h-5"[39m
+            [36m/>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"[39m
+            [36m/>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M8 16H3v5"[39m
+            [36m/>[39m
+          [36m</svg>[39m
+        [36m</button>[39m
+      [36m</header>[39m
+      [36m<section[39m
+        [33maria-label[39m=[32m"AI usage"[39m
+        [33mclass[39m=[32m"my-8 space-y-3"[39m
+      [36m>[39m
+        [36m<h2[39m
+          [33mclass[39m=[32m"text-lg font-semibold"[39m
+        [36m>[39m
+          [0mAI usage[0m
+        [36m</h2>[39m
+        [36m<p[39m
+          [33mclass[39m=[32m"text-sm text-muted-foreground"[39m
+        [36m>[39m
+          [0mReserved requests, including ambiguous failures and partial output. Confirmed pre-provider failures are refunded. UTC day/month; this is not token billing. Your allowance is shared across your workspaces.[0m
+        [36m</p>[39m
+        [36m<dl[39m
+          [33mclass[39m=[32m"text-sm space-y-2 break-words"[39m
+        [36m>[39m
+          [36m<dt>[39m
+            [0mYour daily / monthly requests[0m
+          [36m</dt>[39m
+          [36m<dd>[39m
+            [0m0[0m
+            [0m / [0m
+            [0m100[0m
+            [0m today · [0m
+            [0m0[0m
+            [0m /[0m
+            [0m [0m
+            [0m1000[0m
+            [0m this month[0m
+          [36m</dd>[39m
+          [36m<dt>[39m
+            [0mThis workspace daily / monthly requests[0m
+          [36m</dt>[39m
+          [36m<dd>[39m
+            [0m0[0m
+            [0m / [0m
+            [0m1000[0m
+            [0m today · [0m
+            [0m0[0m
+            [0m /[0m
+            [0m [0m
+            [0m10000[0m
+            [0m this month[0m
+          [36m</dd>[39m
+        [36m</dl>[39m
+        [36m<button[39m
+          [33mclass[39m=[32m"ui-button"[39m
+          [33mdata-size[39m=[32m"default"[39m
+          [33mdata-variant[39m=[32m"secondary"[39m
+          [33mtype[39m=[32m"button"[39m
+        [36m>[39m
+          [0mRefresh AI usage[0m
+        [36m</button>[39m
+      [36m</section>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"mb-8"[39m
+      [36m>[39m
+        [36m<label[39m
+          [33mclass[39m=[32m"block space-y-2 text-sm"[39m
+        [36m>[39m
+          [36m<span>[39m
+            [0mSearch settings[0m
+          [36m</span>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"relative"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-search absolute left-3 top-3 size-4 text-muted-foreground"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"24"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"24"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"m21 21-4.34-4.34"[39m
+              [36m/>[39m
+              [36m<circle[39m
+                [33mcx[39m=[32m"11"[39m
+                [33mcy[39m=[32m"11"[39m
+                [33mr[39m=[32m"8"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+            [36m<input[39m
+              [33mclass[39m=[32m"ui-input pl-10"[39m
+              [33mplaceholder[39m=[32m"Sections, names, email addresses or roles"[39m
+              [33mvalue[39m=[32m""[39m
+            [36m/>[39m
+          [36m</div>[39m
+        [36m</label>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"grid min-w-0 gap-8 md:grid-cols-[10rem_minmax(0,1fr)]"[39m
+      [36m>[39m
+        [36m<nav[39m
+          [33maria-label[39m=[32m"Settings sections"[39m
+          [33mclass[39m=[32m"flex flex-wrap content-start gap-2 md:flex-col"[39m
+        [36m>[39m
+          [36m<a[39m
+            [33mclass[39m=[32m"rounded-md px-3 py-2 text-sm hover:bg-secondary"[39m
+            [33mhref[39m=[32m"/settings"[39m
+          [36m>[39m
+            [0mAc...
+
+Ignored nodes: comments, script, style
+[36m<body[39m
+  [33mstyle[39m=[32m""[39m
+[36m>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"mx-auto max-w-5xl px-4 pt-8 pb-24 md:px-8"[39m
+      [33mdata-settings[39m=[32m"true"[39m
+    [36m>[39m
+      [36m<header[39m
+        [33mclass[39m=[32m"mb-8 grid grid-cols-[minmax(0,1fr)_auto] items-start gap-4"[39m
+      [36m>[39m
+        [36m<div>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"mb-2 break-words text-xs text-muted-foreground"[39m
+          [36m>[39m
+            [0mEngineering[0m
+          [36m</p>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"text-[28px] font-semibold leading-9"[39m
+          [36m>[39m
+            [0mWorkspace settings[0m
+          [36m</h1>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"mt-3 text-sm leading-6 text-muted-foreground"[39m
+          [36m>[39m
+            [0mManage who can access this workspace and how they join.[0m
+          [36m</p>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"mt-3"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"ui-badge"[39m
+              [33mdata-tone[39m=[32m"neutral"[39m
+            [36m>[39m
+              [0mowner[0m
+            [36m</span>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<button[39m
+          [33maria-label[39m=[32m"Refresh workspace access"[39m
+          [33mclass[39m=[32m"ui-button"[39m
+          [33mdata-size[39m=[32m"default"[39m
+          [33mdata-variant[39m=[32m"ghost"[39m
+          [33mtype[39m=[32m"button"[39m
+        [36m>[39m
+          [36m<svg[39m
+            [33maria-hidden[39m=[32m"true"[39m
+            [33mclass[39m=[32m"lucide lucide-refresh-cw size-4"[39m
+            [33mfill[39m=[32m"none"[39m
+            [33mheight[39m=[32m"24"[39m
+            [33mstroke[39m=[32m"currentColor"[39m
+            [33mstroke-linecap[39m=[32m"round"[39m
+            [33mstroke-linejoin[39m=[32m"round"[39m
+            [33mstroke-width[39m=[32m"2"[39m
+            [33mviewBox[39m=[32m"0 0 24 24"[39m
+            [33mwidth[39m=[32m"24"[39m
+            [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+          [36m>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"[39m
+            [36m/>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M21 3v5h-5"[39m
+            [36m/>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"[39m
+            [36m/>[39m
+            [36m<path[39m
+              [33md[39m=[32m"M8 16H3v5"[39m
+            [36m/>[39m
+          [36m</svg>[39m
+        [36m</button>[39m
+      [36m</header>[39m
+      [36m<section[39m
+        [33maria-label[39m=[32m"AI usage"[39m
+        [33mclass[39m=[32m"my-8 space-y-3"[39m
+      [36m>[39m
+        [36m<h2[39m
+          [33mclass[39m=[32m"text-lg font-semibold"[39m
+        [36m>[39m
+          [0mAI usage[0m
+        [36m</h2>[39m
+        [36m<p[39m
+          [33mclass[39m=[32m"text-sm text-muted-foreground"[39m
+        [36m>[39m
+          [0mReserved requests, including ambiguous failures and partial output. Confirmed pre-provider failures are refunded. UTC day/month; this is not token billing. Your allowance is shared across your workspaces.[0m
+        [36m</p>[39m
+        [36m<dl[39m
+          [33mclass[39m=[32m"text-sm space-y-2 break-words"[39m
+        [36m>[39m
+          [36m<dt>[39m
+            [0mYour daily / monthly requests[0m
+          [36m</dt>[39m
+          [36m<dd>[39m
+            [0m0[0m
+            [0m / [0m
+            [0m100[0m
+            [0m today · [0m
+            [0m0[0m
+            [0m /[0m
+            [0m [0m
+            [0m1000[0m
+            [0m this month[0m
+          [36m</dd>[39m
+          [36m<dt>[39m
+            [0mThis workspace daily / monthly requests[0m
+          [36m</dt>[39m
+          [36m<dd>[39m
+            [0m0[0m
+            [0m / [0m
+            [0m1000[0m
+            [0m today · [0m
+            [0m0[0m
+            [0m /[0m
+            [0m [0m
+            [0m10000[0m
+            [0m this month[0m
+          [36m</dd>[39m
+        [36m</dl>[39m
+        [36m<button[39m
+          [33mclass[39m=[32m"ui-button"[39m
+          [33mdata-size[39m=[32m"default"[39m
+          [33mdata-variant[39m=[32m"secondary"[39m
+          [33mtype[39m=[32m"button"[39m
+        [36m>[39m
+          [0mRefresh AI usage[0m
+        [36m</button>[39m
+      [36m</section>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"mb-8"[39m
+      [36m>[39m
+        [36m<label[39m
+          [33mclass[39m=[32m"block space-y-2 text-sm"[39m
+        [36m>[39m
+          [36m<span>[39m
+            [0mSearch settings[0m
+          [36m</span>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"relative"[39m
+          [36m>[39m
+            [36m<svg[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mclass[39m=[32m"lucide lucide-search absolute left-3 top-3 size-4 text-muted-foreground"[39m
+              [33mfill[39m=[32m"none"[39m
+              [33mheight[39m=[32m"24"[39m
+              [33mstroke[39m=[32m"currentColor"[39m
+              [33mstroke-linecap[39m=[32m"round"[39m
+              [33mstroke-linejoin[39m=[32m"round"[39m
+              [33mstroke-width[39m=[32m"2"[39m
+              [33mviewBox[39m=[32m"0 0 24 24"[39m
+              [33mwidth[39m=[32m"24"[39m
+              [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+            [36m>[39m
+              [36m<path[39m
+                [33md[39m=[32m"m21 21-4.34-4.34"[39m
+              [36m/>[39m
+              [36m<circle[39m
+                [33mcx[39m=[32m"11"[39m
+                [33mcy[39m=[32m"11"[39m
+                [33mr[39m=[32m"8"[39m
+              [36m/>[39m
+            [36m</svg>[39m
+            [36m<input[39m
+              [33mclass[39m=[32m"ui-input pl-10"[39m
+              [33mplaceholder[39m=[32m"Sections, names, email addresses or roles"[39m
+              [33mvalue[39m=[32m""[39m
+            [36m/>[39m
+          [36m</div>[39m
+        [36m</label>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"grid min-w-0 gap-8 md:grid-cols-[10rem_minmax(0,1fr)]"[39m
+      [36m>[39m
+        [36m<nav[39m
+          [33maria-label[39m=[32m"Settings sections"[39m
+          [33mclass[39m=[32m"flex flex-wrap content-start gap-2 md:flex-col"[39m
+        [36m>[39m
+          [36m<a[39m
+            [33mclass[39m=[32m"rounded-md px-3 py-2 text-sm hover:bg-secondary"[39m
+            [33mhref[39m=[32m"/settings"[39m
+          [36m>[39m
+            [0mAc...
+ ❯ waitForWrapper node_modules/@testing-library/dom/dist/wait-for.js:163:27
+ ❯ node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+ ❯ tests/settings.test.tsx:213:16
+    211|   await user.type(screen.getByRole('textbox', { name: 'Recipient email…
+    212|   await user.click(screen.getByRole('button', { name: 'Create invitati…
+    213|   await screen.findByRole('alert');
+       |                ^
+    214|   const first = mocks.post.mock.calls[0][2].headers['Idempotency-Key'];
+    215|   await user.click(screen.getByRole('button', { name: 'Create invitati…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  3 failed | 12 passed (15)
+   Start at  13:23:58
+   Duration  6.76s (tests 62%, environment 22%, import 13%, transform 2%)
+

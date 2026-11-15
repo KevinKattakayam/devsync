@@ -1,6 +1,6 @@
 import { test, expect, type Page } from '@playwright/test';
 import Redis from 'ioredis';
-import axe from '../../../frontend/node_modules/axe-core';
+import axe from 'axe-core';
 import { mkdir, writeFile } from 'fs/promises';
 import { resolve } from 'path';
 import { AiQuota } from '../../src/services/ai-quota';
