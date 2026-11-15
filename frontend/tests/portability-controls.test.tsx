@@ -152,6 +152,9 @@ it('downloads authorized Markdown and PDF with explicit initiation status and bl
   mocked.pdfExport.mockResolvedValueOnce({ data: new Blob(['pdf']) } as never);
   await user.click(screen.getByRole('button', { name: 'Download PDF' }));
   expect(mocked.pdfExport).toHaveBeenCalledWith('doc-1');
+  await waitFor(() => expect(vi.mocked(URL.revokeObjectURL)).toHaveBeenCalledTimes(2), {
+    timeout: 2_000,
+  });
   rerender(<DocumentExportControls documentId="doc-1" archived />);
   expect(screen.getByRole('button', { name: 'Download Markdown' }).hasAttribute('disabled')).toBe(
     true,
@@ -218,6 +221,9 @@ it('requires privacy confirmation for workspace archive and discloses its limits
     'has not confirmed file storage',
   );
   expect(mocked.archive).toHaveBeenCalledWith('workspace-1');
+  await waitFor(() => expect(vi.mocked(URL.revokeObjectURL)).toHaveBeenCalledTimes(1), {
+    timeout: 2_000,
+  });
 });
 
 it('keeps failed export status accessible and does not claim a download', async () => {

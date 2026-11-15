@@ -12,12 +12,26 @@ interface RecoveryActions {
   compact(room: DocumentRoom): Promise<void>;
   state(
     room: DocumentRoom,
-  ): Promise<{ journalRows: number; snapshotBytes: number; revision: number }>;
+    markers?: string[],
+  ): Promise<{
+    journalRows: number;
+    snapshotBytes: number;
+    revision: number;
+    markerPresence?: Record<string, boolean>;
+  }>;
 }
 const roomInput = z
   .object({
     workspaceId: z.string().regex(/^[a-zA-Z0-9_-]{1,191}$/),
     documentId: z.string().regex(/^[a-zA-Z0-9_-]{1,191}$/),
+  })
+  .strict();
+const stateInput = roomInput
+  .extend({
+    markers: z
+      .array(z.string().regex(/^\[[AB]\d{1,2}\]$/))
+      .max(70)
+      .optional(),
   })
   .strict();
 export function createRecoveryControls(environment: NodeJS.ProcessEnv, actions: RecoveryActions) {
@@ -38,7 +52,8 @@ export function createRecoveryControls(environment: NodeJS.ProcessEnv, actions: 
   router.get('/generation', (_req, res) => res.json({ generation: actions.generation }));
   router.post('/state', async (req, res, next) => {
     try {
-      res.json(await actions.state(roomInput.parse(req.body)));
+      const { markers, ...room } = stateInput.parse(req.body);
+      res.json(await actions.state(room, markers));
     } catch (error) {
       next(error);
     }

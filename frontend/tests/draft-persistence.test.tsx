@@ -4,21 +4,38 @@ import { waitFor } from '@testing-library/react';
 import * as Y from 'yjs';
 import { attachDraftPersistence } from '@/lib/draft-persistence';
 import { commitDraftSnapshot } from '@/lib/draft-storage';
+
+// These tests explicitly flush writes; keep the wall-clock debounce from racing
+// their assertions when the full suite is under load.
+const attachManuallyFlushedDraft = (...args: Parameters<typeof attachDraftPersistence>) => {
+  const [document, name, report, options] = args;
+  return attachDraftPersistence(document, name, report, {
+    ...options,
+    delayMs: 60_000,
+  });
+};
+
 it('keeps later edits pending until their own coalesced transaction commits', async () => {
   const document = new Y.Doc();
   const states: string[] = [];
   let release: () => void = () => {};
+  let markWriteStarted: () => void = () => {};
+  const writeStarted = new Promise<void>((resolve) => {
+    markWriteStarted = resolve;
+  });
   let held = false;
-  const session = attachDraftPersistence(
+  const session = attachManuallyFlushedDraft(
     document,
     `devsync:session:${crypto.randomUUID()}`,
     (state) => states.push(state),
     {
       write: async (db, update) => {
-        if (held)
+        if (held) {
+          markWriteStarted();
           await new Promise<void>((resolve) => {
             release = resolve;
           });
+        }
         return commitDraftSnapshot(db, update);
       },
     },
@@ -28,13 +45,13 @@ it('keeps later edits pending until their own coalesced transaction commits', as
   held = true;
   document.getText('draft').insert(0, 'one');
   const writing = session.flush();
-  await Promise.resolve();
+  await writeStarted;
   document.getText('draft').insert(3, 'two');
+  const queuedFlush = session.flush();
   expect(states.at(-1)).toBe('pending');
   held = false;
   release();
-  await writing;
-  await session.flush();
+  await Promise.all([writing, queuedFlush]);
   expect(states.at(-1)).toBe('persisted');
   await session.destroy();
   document.destroy();
@@ -43,15 +60,15 @@ it('merges concurrent tab drafts and reloads them through the live adapter', asy
   const name = `devsync:session:${crypto.randomUUID()}`;
   const a = new Y.Doc(),
     b = new Y.Doc();
-  const first = attachDraftPersistence(a, name, () => {}),
-    second = attachDraftPersistence(b, name, () => {});
+  const first = attachManuallyFlushedDraft(a, name, () => {}),
+    second = attachManuallyFlushedDraft(b, name, () => {});
   await Promise.all([first.ready, second.ready]);
   a.getMap('draft').set('a', 'one');
   b.getMap('draft').set('b', 'two');
   await Promise.all([first.flush(), second.flush()]);
   await Promise.all([first.destroy(), second.destroy()]);
   const recovered = new Y.Doc(),
-    third = attachDraftPersistence(recovered, name, () => {});
+    third = attachManuallyFlushedDraft(recovered, name, () => {});
   await third.ready;
   expect(recovered.getMap('draft').toJSON()).toEqual({ a: 'one', b: 'two' });
   await third.destroy();
@@ -62,7 +79,7 @@ it('merges concurrent tab drafts and reloads them through the live adapter', asy
 it('exposes quota failure and retains the in-memory draft for export', async () => {
   const document = new Y.Doc();
   let status = '';
-  const session = attachDraftPersistence(
+  const session = attachManuallyFlushedDraft(
     document,
     `devsync:session:${crypto.randomUUID()}`,
     (state) => {
@@ -90,8 +107,8 @@ it('coordinates purge across current tabs and refuses repopulation on reload', a
   const a = new Y.Doc(),
     b = new Y.Doc();
   let otherStatus = '';
-  const first = attachDraftPersistence(a, name, () => {}),
-    second = attachDraftPersistence(b, name, (status) => {
+  const first = attachManuallyFlushedDraft(a, name, () => {}),
+    second = attachManuallyFlushedDraft(b, name, (status) => {
       otherStatus = status;
     });
   await Promise.all([first.ready, second.ready]);
@@ -103,7 +120,7 @@ it('coordinates purge across current tabs and refuses repopulation on reload', a
   await second.flush();
   await Promise.all([first.destroy(), second.destroy()]);
   const recovered = new Y.Doc(),
-    third = attachDraftPersistence(recovered, name, () => {});
+    third = attachManuallyFlushedDraft(recovered, name, () => {});
   await expect(third.ready).rejects.toMatchObject({ code: 'purged' });
   expect(recovered.getText('draft').toString()).toBe('');
   await third.destroy();
@@ -115,7 +132,7 @@ it('refuses purge without cross-tab coordination and keeps the stored draft', as
   vi.stubGlobal('BroadcastChannel', undefined);
   const name = `devsync:session:${crypto.randomUUID()}`,
     document = new Y.Doc();
-  const session = attachDraftPersistence(document, name, () => {});
+  const session = attachManuallyFlushedDraft(document, name, () => {});
   try {
     await session.ready;
     document.getText('draft').insert(0, 'keep');
@@ -126,7 +143,7 @@ it('refuses purge without cross-tab coordination and keeps the stored draft', as
     vi.unstubAllGlobals();
   }
   const recovered = new Y.Doc(),
-    other = attachDraftPersistence(recovered, name, () => {});
+    other = attachManuallyFlushedDraft(recovered, name, () => {});
   await other.ready;
   expect(recovered.getText('draft').toString()).toBe('keep');
   await other.destroy();

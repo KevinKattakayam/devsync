@@ -6,6 +6,11 @@ import { VirtualizedKanbanBoard } from '../src/components/kanban/virtualized-boa
 import type { Board, Task } from '../src/types';
 
 beforeEach(() => {
+  animationFrames = [];
+  vi.stubGlobal('requestAnimationFrame', (callback: FrameRequestCallback) => {
+    animationFrames.push(callback);
+    return animationFrames.length;
+  });
   Object.defineProperty(HTMLElement.prototype, 'scrollIntoView', {
     configurable: true,
     value: vi.fn(),
@@ -14,6 +19,8 @@ beforeEach(() => {
 
 afterEach(() => {
   cleanup();
+  animationFrames = [];
+  vi.unstubAllGlobals();
   vi.restoreAllMocks();
 });
 
@@ -35,6 +42,19 @@ function board(count = 4): Board {
       { id: 'done', name: 'Done', position: 1, tasks: [] },
     ],
   };
+}
+
+let animationFrames: FrameRequestCallback[] = [];
+async function flushAnimationFrames() {
+  await act(async () => {
+    let frameCount = 0;
+    while (animationFrames.length && frameCount < 30) {
+      const frame = animationFrames.shift();
+      frame?.(0);
+      frameCount++;
+    }
+    expect(animationFrames).toHaveLength(0);
+  });
 }
 
 function renderBoard(value: Board, canWrite = true, onMove = vi.fn()) {
@@ -91,12 +111,14 @@ it('returns focus from a virtualized row to the stable board host and navigates 
   const host = screen.getByRole('region', { name: 'Kanban task board' });
   host.focus();
   await user.keyboard('{ArrowDown}');
+  await flushAnimationFrames();
   await waitFor(() =>
     expect(document.activeElement).toBe(screen.getByRole('button', { name: 'Task task-0' })),
   );
   expect(host.getAttribute('aria-describedby')).toBe('kanban-keyboard-navigation');
   host.focus();
   await user.keyboard('{ArrowRight}');
+  await flushAnimationFrames();
   await waitFor(() =>
     expect(document.activeElement).toBe(screen.getByRole('button', { name: 'Task done-0' })),
   );
@@ -203,4 +225,8 @@ it('clears drag cancellation state and leaves the Radix Move control usable', as
   await screen.findByRole('option', { name: 'Done' });
   await user.keyboard('{ArrowDown}{Enter}');
   expect(onMove).toHaveBeenCalledWith('task-0', 'done');
+  await flushAnimationFrames();
+  await waitFor(() =>
+    expect(document.activeElement).toBe(screen.getByRole('button', { name: 'Task task-0' })),
+  );
 });

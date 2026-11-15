@@ -591,7 +591,7 @@ it('journals server reconciliation before broadcasting the resulting state', asy
   expect(recovered.getMap('devsync:ai-actions').get('fixture-action')).toBe('authorized');
   recovered.destroy();
 });
-it('rejects foreign-origin and excess WebSocket connections before admission', async () => {
+it('rejects foreign-origin WebSocket connections before admission', async () => {
   const name = await room();
   const node = await server({ maxClients: 1 });
   const rejected = (origin?: string) =>
@@ -605,8 +605,50 @@ it('rejects foreign-origin and excess WebSocket connections before admission', a
     });
   await rejected('https://untrusted.invalid');
   await client(node.url, name);
-  await rejected();
 });
+
+it.each([
+  { limit: 'global', maxClients: 1, maxClientsPerRoom: 32, roomConnections: 1 },
+  { limit: 'per-room', maxClients: 2, maxClientsPerRoom: 1, roomConnections: 2 },
+])(
+  'closes a connection when the $limit client limit is exceeded',
+  async ({ maxClients, maxClientsPerRoom, roomConnections }) => {
+    const name = await room();
+    const node = await server({ maxClients, maxClientsPerRoom });
+    await client(node.url, name);
+    await until(() => node.runtime.connections.size === 1, 'first authenticated connection');
+
+    const close = jest.fn();
+    const webSocketClose = jest.fn();
+    const connection = {
+      document: { getConnectionsCount: () => roomConnections },
+      close,
+      webSocket: { close: webSocketClose },
+    } as unknown as Parameters<
+      NonNullable<typeof node.runtime.hocuspocus.configuration.connected>
+    >[0]['connection'];
+
+    const onConnected = node.runtime.hocuspocus.configuration.connected;
+    if (!onConnected) throw new Error('Connection lifecycle hook is unavailable');
+    const request = new Request('http://localhost');
+    await onConnected({
+      context: {},
+      documentName: name,
+      instance: node.runtime.hocuspocus,
+      request,
+      requestHeaders: request.headers,
+      requestParameters: new URLSearchParams(),
+      socketId: 'connection-limit-fixture',
+      connectionConfig: { readOnly: false, isAuthenticated: true },
+      connection,
+      providerVersion: null,
+    } as Parameters<typeof onConnected>[0]);
+
+    expect(close).toHaveBeenCalledWith({ code: 4403, reason: 'Connection limit' });
+    expect(webSocketClose).toHaveBeenCalledWith(4403, 'Connection limit');
+    expect(node.runtime.connections.has(connection)).toBe(false);
+  },
+);
 
 it('queues current CRDT edits atomically for indexing before acknowledgment', async () => {
   const name = await room();
