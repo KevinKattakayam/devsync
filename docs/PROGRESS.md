@@ -1381,3 +1381,7 @@ Read-only authenticated inventory found Vercel project `devsync` (Next.js, `fron
 The user subsequently identified the existing Neon production project as `devsync` in AWS US East 1 (N. Virginia), with its default branch used for production. This is user-reported, not CLI-verified; a Hyderabad VM would cross regions. No Neon database was contacted or modified, and an independently approved staging target remains required.
 
 The user states the personal pilot has a $0 budget. No paid plan, billable resource or potential overage is authorized without separate approval; actual free quota, capacity, availability and costs remain unverified.
+
+# CI — shell stabilization local acceptance
+
+The user reports the final Ubuntu shell suite passed 8/8 with bundled Chromium 151.0.7922.34; the current Playwright last-run file reports passed with no failed tests. The shell capture mask, Radix portal/menu handling, passive renderer diagnostics and 31 reviewed snapshots are ready for a focused local commit. Threshold 0.002 and accessibility/keyboard assertions remain intact. GitHub CI verification remains pending; no push or deployment performed. See [review and evidence](quality/independent-audit/shell-ci-stabilization.md).

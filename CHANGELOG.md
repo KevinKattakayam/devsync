@@ -698,3 +698,7 @@ Historical Phase 0 audit: see docs/CHANGELOG.md. No production deployment or key
 
 - Record read-only Vercel/Railway inventory and conditional free-tier options, and add an isolated reviewed-commit source archive/hash primitive. It is not a built-image attestation or deployment; staging promotion remains blocked.
 - Record the user's $0 budget and protect the existing Neon production branch when evaluating staging options.
+
+# CI — shell stabilization verified on Ubuntu
+
+- Record the user-executed shell suite pass (8/8) with bundled Chromium 151. Preserve strict visual, axe and keyboard assertions; stabilize route masking, Radix menu waits, renderer diagnostics and 31 reviewed snapshots. GitHub verification remains pending. See docs/quality/independent-audit/shell-ci-stabilization.md.
