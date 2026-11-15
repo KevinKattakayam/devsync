@@ -1,5 +1,5 @@
 import { test, expect, type Page } from '@playwright/test';
-import axe from '../../../frontend/node_modules/axe-core';
+import axe from 'axe-core';
 import { mkdir, writeFile } from 'fs/promises';
 import { resolve } from 'path';
 import { login } from './identities';

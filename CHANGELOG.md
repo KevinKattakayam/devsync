@@ -3,6 +3,12 @@
 - Updated the `source-security` Semgrep Docker invocation to run with writable scanner homes (`HOME=/tmp` and `SEMGREP_USER_HOME=/tmp/semgrep`) while still executing as the host UID/GID.
 - This fixes the GitHub Actions failure `PermissionError: [Errno 13] Permission denied: '/.semgrep'` and keeps existing scanner scope, severity policy, and redacted artifact behavior unchanged.
 
+# GitHub CI stabilization — backend browser-spec typecheck
+
+- Fixed the backend CI typecheck failure: under backend-only `npm ci`, 13 browser specs referenced `frontend/node_modules/axe-core`, so TypeScript could not resolve Axe types and reported follow-on implicit-`any` errors. Added pinned dev dependency `axe-core@4.14.0` to the backend and changed those specs to import `axe-core` through normal package resolution.
+- Verified locally: `npm run lint`, `npm run format:check`, and `npm run typecheck` in `backend` pass; the focused `npx tsc -p tsconfig.testing.json --noEmit` also passes. No authorization or application runtime behavior changed.
+- The remote Semgrep fix in `4b50ac2` sets a writable `HOME` and `SEMGREP_USER_HOME`, but its PR run is still awaiting approval and has no jobs yet. It is not verified effective until that job runs. Deployment workflows remain separate and manual; no deployment was triggered.
+
 # Phase 18 — production Kanban virtualization and Yjs recovery assertion
 
 - Host-verification follow-up (user-reported, 2026-11-15): Kanban browser suite 5/5 passed across light/dark and desktop/mobile, collaboration/recovery suite 4/4 passed, disposable PostgreSQL/Redis drills 2/2 passed, and Gitleaks regression/history checks passed. The prior 1/5 Kanban axe failure is retained as historical evidence; saved post-fix axe reports show zero violations with the incomplete checks recorded separately. Codex did not independently rerun Docker-backed suites because its Docker socket access is denied.
