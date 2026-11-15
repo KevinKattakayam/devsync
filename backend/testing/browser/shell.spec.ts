@@ -26,6 +26,8 @@ const reports: {
   incomplete: axe.Result[];
 }[] = [];
 const measurements: Record<string, unknown>[] = [];
+// Hide dynamic route contents before compositing, so portalled shell overlays remain visible.
+const shellCaptureStyle = resolve(__dirname, 'shell-capture.css');
 
 test.beforeAll(async ({ browser }) => {
   await mkdir(output, { recursive: true });
@@ -227,8 +229,7 @@ for (const theme of ['dark', 'light'] as const)
             // Keep failures fatal to the test, but collect every state for image-by-image review.
             await expect.soft(page).toHaveScreenshot(`${theme}-${width}-${state}.png`, {
               animations: 'disabled',
-              mask: [page.locator('#route-content')],
-              maskColor: await page.evaluate(() => getComputedStyle(document.body).backgroundColor),
+              stylePath: shellCaptureStyle,
               maxDiffPixelRatio: 0.002,
             });
         }
@@ -300,6 +301,31 @@ for (const theme of ['dark', 'light'] as const)
       }
     });
   }
+
+test('shell capture hides changing route content without obscuring a portal', async ({ page }) => {
+  const style = await readFile(shellCaptureStyle, 'utf8');
+  await page.setContent(`
+    <style>body { margin: 0; background: white } #portal { position: fixed; top: 20px; left: 20px; color: black; background: white }</style>
+    <div id="route-content" style="height: 200px; background: red">Dynamic content</div>
+    <div id="portal" role="dialog">First overlay</div>
+  `);
+  const first = await page.screenshot({ style, animations: 'disabled' });
+  await page.locator('#route-content').evaluate((element) => {
+    element.style.height = '400px';
+    element.textContent = 'Changed content';
+  });
+  const changedRoute = await page.screenshot({ style, animations: 'disabled' });
+  expect(changedRoute.equals(first)).toBe(true);
+  await page.locator('#portal').evaluate((element) => {
+    element.textContent = 'Changed overlay';
+  });
+  const changedOverlay = await page.screenshot({
+    style,
+    animations: 'disabled',
+  });
+  expect(changedOverlay.equals(first)).toBe(false);
+  await expect(page.locator('#route-content')).toBeVisible();
+});
 
 test('360px route coverage and viewer commands retain read-only authority', async ({ browser }) => {
   const context = await browser.newContext({

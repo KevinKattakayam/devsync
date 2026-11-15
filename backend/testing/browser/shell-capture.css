@@ -1,0 +1,4 @@
+/* Preserve layout while keeping portalled shell overlays visible to screenshots. */
+#route-content {
+  visibility: hidden !important;
+}
