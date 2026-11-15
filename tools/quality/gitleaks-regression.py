@@ -23,6 +23,8 @@ with tempfile.TemporaryDirectory(prefix='devsync-scanner-regression-') as direct
         'known-sentinel-in-generator': ('tools/quality/gitleaks-regression.py', "webhookSecret: 'fixture-secret-123'", False),
         'new-value-in-generator': ('tools/quality/gitleaks-regression.py', "webhookSecret: '" + secrets.token_hex(32) + "'", True),
         'known-value-elsewhere': ('backend/src/other.ts', "webhookSecret: 'fixture-secret-123'", True),
+        'new-value-in-historical-doc-path': ('docs/PROGRESS.md', "webhookSecret: '" + secrets.token_hex(32) + "'", True),
+        'new-value-in-historical-load-path': ('tools/quality/load.js', "webhookSecret: '" + secrets.token_hex(32) + "'", True),
     }
     for name, (path, content, _) in cases.items():
         target = fixtures / name / path

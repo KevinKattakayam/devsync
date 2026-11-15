@@ -237,16 +237,35 @@ test('actual browser replicas recover journal and snapshots across latency, offl
     const markers = Array.from({ length: 35 }, (_, n) => [`[A${n}]`, `[B${n}]`]);
     for (const pair of markers) await Promise.all(pair.map((value, i) => append(pages[i], value)));
     const allMarkers = markers.flat();
-    for (const page of pages) {
-      await expect
-        .poll(
-          async () => {
-            const value = await editorText(page);
-            return allMarkers.every((marker) => value.includes(marker));
-          },
-          { message: 'all repeated edits converge' },
-        )
-        .toBe(true);
+    try {
+      for (const page of pages) {
+        await expect
+          .poll(
+            async () => {
+              const value = await editorText(page);
+              return allMarkers.every((marker) => value.includes(marker));
+            },
+            { message: 'all repeated edits converge' },
+          )
+          .toBe(true);
+      }
+    } catch (error) {
+      try {
+        const texts = await Promise.all(pages.map(editorText));
+        await writeFile(
+          resolve(output, 'convergence-failure.json'),
+          JSON.stringify({
+            equal: new Set(texts).size === 1,
+            replicas: texts.map((text) => ({
+              length: text.length,
+              missingMarkers: allMarkers.filter((marker) => !text.includes(marker)),
+            })),
+          }),
+        );
+      } catch {
+        console.error('Synthetic convergence diagnostics unavailable');
+      }
+      throw error;
     }
     for (const i of [0, 1]) await expect(saved(pages[i])).toBeVisible();
     await expect.poll(async () => new Set(await Promise.all(pages.map(editorText))).size).toBe(1);
