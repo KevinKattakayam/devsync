@@ -702,3 +702,7 @@ Historical Phase 0 audit: see docs/CHANGELOG.md. No production deployment or key
 # CI — shell stabilization verified on Ubuntu
 
 - Record the user-executed shell suite pass (8/8) with bundled Chromium 151. Preserve strict visual, axe and keyboard assertions; stabilize route masking, Radix menu waits, renderer diagnostics and 31 reviewed snapshots. GitHub verification remains pending. See docs/quality/independent-audit/shell-ci-stabilization.md.
+
+# CI — isolated frontend image build
+
+- Add an independent scan-only frontend Docker target with explicit tagging/labeling and startup refusal. Keep the production runner and strict configuration validation intact; block scan-only publishing and release provenance while retaining Trivy and CycloneDX gates. Local Docker build, refusal and production-negative checks passed; frontend tests passed 195/195, and Trivy found zero High/Critical findings. See docs/quality/independent-audit/ci-frontend-image.md for scope and limitations.

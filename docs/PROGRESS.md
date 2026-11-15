@@ -1385,3 +1385,7 @@ The user states the personal pilot has a $0 budget. No paid plan, billable resou
 # CI — shell stabilization local acceptance
 
 The user reports the final Ubuntu shell suite passed 8/8 with bundled Chromium 151.0.7922.34; the current Playwright last-run file reports passed with no failed tests. The shell capture mask, Radix portal/menu handling, passive renderer diagnostics and 31 reviewed snapshots are ready for a focused local commit. Threshold 0.002 and accessibility/keyboard assertions remain intact. GitHub CI verification remains pending; no push or deployment performed. See [review and evidence](quality/independent-audit/shell-ci-stabilization.md).
+
+# CI — frontend scan-only checkpoint verified locally
+
+Implemented the approved independent CI frontend build with no provider credentials, unconditional startup refusal and no GHCR promotion. Production configuration remains unchanged. Local Docker build, expected startup refusal and production missing-setting rejection passed; four new image/config tests, two deployment component tests and the unchanged staging-safety suite passed. Frontend lint/types/format and 39 files/195 component tests plus five Node test files passed. Pinned Trivy reported zero High/Critical findings and CycloneDX SBOM generation passed using a read-only image archive. One earlier dashboard timeout and scanner limitations are retained in [the verification record](quality/independent-audit/ci-frontend-image.md). GitHub execution remains pending; no variables, provider settings, publishing or deployment changed.
