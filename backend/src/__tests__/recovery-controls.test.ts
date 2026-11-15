@@ -13,7 +13,12 @@ const actions = () => ({
   generation: 2,
   crash: jest.fn(),
   compact: jest.fn(async () => {}),
-  state: jest.fn(async () => ({ journalRows: 3, snapshotBytes: 40, revision: 5 })),
+  state: jest.fn(async () => ({
+    journalRows: 3,
+    snapshotBytes: 40,
+    revision: 5,
+    markerPresence: undefined as Record<string, boolean> | undefined,
+  })),
 });
 it('refuses recovery controls outside an explicit isolated fixture database and mode', () => {
   for (const override of [
@@ -72,4 +77,45 @@ it('requires the run capability and strict fixed actions without executing rejec
         .send(room)
     ).body,
   ).toEqual({ journalRows: 3, snapshotBytes: 40, revision: 5 });
+});
+it('accepts only bounded synthetic marker probes and returns marker-presence metadata', async () => {
+  const calls = actions(),
+    app = express();
+  calls.state.mockResolvedValue({
+    journalRows: 2,
+    snapshotBytes: 40,
+    revision: 8,
+    markerPresence: { '[A0]': true, '[B0]': false },
+  });
+  app.use(express.json(), createRecoveryControls(environment, calls), errorMiddleware);
+  const capability = { 'x-e2e-run-secret': environment.E2E_RUN_SECRET };
+  const room = { workspaceId: 'workspace', documentId: 'document' };
+  const response = await request(app)
+    .post('/state')
+    .set(capability)
+    .send({ ...room, markers: ['[A0]', '[B0]'] });
+  expect(response.status).toBe(200);
+  expect(response.body).toEqual({
+    journalRows: 2,
+    snapshotBytes: 40,
+    revision: 8,
+    markerPresence: { '[A0]': true, '[B0]': false },
+  });
+  expect(calls.state).toHaveBeenCalledWith(room, ['[A0]', '[B0]']);
+  expect(
+    (
+      await request(app)
+        .post('/state')
+        .set(capability)
+        .send({ ...room, markers: ['arbitrary document content'] })
+    ).status,
+  ).toBe(400);
+  expect(
+    (
+      await request(app)
+        .post('/state')
+        .set(capability)
+        .send({ ...room, markers: Array.from({ length: 71 }, (_, i) => `[A${i}]`) })
+    ).status,
+  ).toBe(400);
 });

@@ -1,6 +1,7 @@
 import { validateFixtureConfiguration } from './fixture-auth';
 import { createRecoveryControls } from './recovery-controls';
 import { createLoadPreflight } from './load-preflight';
+import * as Y from 'yjs';
 async function main() {
   const { secret } = validateFixtureConfiguration(process.env);
   const [
@@ -55,15 +56,40 @@ async function main() {
           process.send?.('recovery:crash');
         },
         compact: (room) => crdt.journal.compact(room),
-        state: (room) =>
+        state: (room, markers) =>
           prisma.withTenantTransaction(room.workspaceId, async (tx) => {
             const record = await tx.document.findUniqueOrThrow({
               where: { id: room.documentId, workspaceId: room.workspaceId },
             });
+            const journalUpdates = markers?.length
+              ? await tx.documentUpdate.findMany({
+                  where: room,
+                  orderBy: { id: 'asc' },
+                  select: { update: true },
+                })
+              : undefined;
+            const markerPresence = markers?.length
+              ? (() => {
+                  const document = new Y.Doc();
+                  try {
+                    if (record.yjsState) Y.applyUpdate(document, record.yjsState);
+                    for (const update of journalUpdates ?? [])
+                      Y.applyUpdate(document, update.update);
+                    const xml = document.getXmlFragment('default').toString();
+                    return Object.fromEntries(
+                      markers.map((marker) => [marker, xml.includes(marker)]),
+                    );
+                  } finally {
+                    document.destroy();
+                  }
+                })()
+              : undefined;
             return {
-              journalRows: await tx.documentUpdate.count({ where: room }),
+              journalRows:
+                journalUpdates?.length ?? (await tx.documentUpdate.count({ where: room })),
               snapshotBytes: record.yjsState?.length ?? 0,
               revision: record.crdtRevision,
+              ...(markerPresence ? { markerPresence } : {}),
             };
           }),
       }),

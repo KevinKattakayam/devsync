@@ -98,7 +98,9 @@ test('actual browser replicas recover journal and snapshots across latency, offl
   const delayMs = [0, 0, 0],
     blocked = [false, false, false];
   const acknowledgements = [0, 0, 0],
-    rejections = [0, 0, 0];
+    rejections = [0, 0, 0],
+    clientFrames = [0, 0, 0],
+    serverFrames = [0, 0, 0];
   const links = contexts.map(() => new Set<WebSocketRoute>());
   const report: Record<string, unknown> = {
     identity: 'seeded fixtures; not real Clerk',
@@ -138,6 +140,7 @@ test('actual browser replicas recover journal and snapshots across latency, offl
         let incoming = Promise.resolve(),
           outgoing = Promise.resolve();
         client.onMessage((message) => {
+          clientFrames[i]++;
           const latency = new Promise<void>((done) => setTimeout(done, delayMs[i]));
           outgoing = outgoing
             .then(() => latency)
@@ -146,6 +149,7 @@ test('actual browser replicas recover journal and snapshots across latency, offl
             });
         });
         server.onMessage((message) => {
+          serverFrames[i]++;
           const latency = new Promise<void>((done) => setTimeout(done, delayMs[i]));
           incoming = incoming
             .then(() => latency)
@@ -252,6 +256,37 @@ test('actual browser replicas recover journal and snapshots across latency, offl
     } catch (error) {
       try {
         const texts = await Promise.all(pages.map(editorText));
+        const persisted = await Promise.all(
+          pages.map(async (page) => {
+            try {
+              const text = await indexedText(page, localName);
+              return {
+                available: true,
+                missingMarkers: allMarkers.filter((m) => !text.includes(m)),
+              };
+            } catch {
+              return { available: false, missingMarkers: allMarkers };
+            }
+          }),
+        );
+        let canonical = { available: false, missingMarkers: allMarkers };
+        try {
+          const response = await contexts[0].request.get(`${api}/documents/${documentId}`, {
+            timeout: 5000,
+          });
+          if (response.ok()) {
+            const text = snapshotText(await response.json());
+            canonical = {
+              available: true,
+              missingMarkers: allMarkers.filter((m) => !text.includes(m)),
+            };
+          }
+        } catch {
+          // Diagnostics are best-effort and deliberately contain marker presence only.
+        }
+        const serverState = await control('state', { ...room, markers: allMarkers }).catch(
+          () => null,
+        );
         await writeFile(
           resolve(output, 'convergence-failure.json'),
           JSON.stringify({
@@ -260,6 +295,10 @@ test('actual browser replicas recover journal and snapshots across latency, offl
               length: text.length,
               missingMarkers: allMarkers.filter((marker) => !text.includes(marker)),
             })),
+            indexedDbReplicas: persisted,
+            canonicalSnapshot: canonical,
+            serverState,
+            protocol: { clientFrames, serverFrames, acknowledgements, rejections },
           }),
         );
       } catch {
@@ -398,6 +437,7 @@ test('actual browser replicas recover journal and snapshots across latency, offl
     if (report.status !== 'passed') report.status = 'failed';
     report.nativeAcknowledgements = acknowledgements;
     report.nativeRejectedUpdates = rejections;
+    report.protocolFrames = { client: clientFrames, server: serverFrames };
     await writeFile(resolve(output, 'RESULTS.json'), JSON.stringify(report, null, 2) + '\n');
     presence?.disconnect();
     await Promise.all(contexts.map((context) => context.close()));

@@ -6,9 +6,13 @@ const targets = {
   core: {},
   'decision-execution': { E2E_DECISION_EXECUTION: '1' },
   search: { E2E_SEARCH: '1' },
-  'github-trail': {E2E_GITHUB_TRAIL:'1'},
-  identity: {E2E_IDENTITY:'1'},
-  recovery: { E2E_RECOVERY: '1' },
+  'github-trail': { E2E_GITHUB_TRAIL: '1' },
+  identity: { E2E_IDENTITY: '1' },
+  recovery: {
+    E2E_RECOVERY: '1',
+    // Keep the test's sanitized failure and state summaries inside the uploaded CI artifact.
+    E2E_RECOVERY_OUTPUT_DIR: 'test-results/recovery-evidence',
+  },
   'ai-cost': { E2E_AI_COST: '1' },
   editor: { E2E_EDITOR: '1' },
   kanban: { E2E_KANBAN: '1' },
