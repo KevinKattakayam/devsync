@@ -4,9 +4,8 @@ import { useEffect, useState, useCallback, useMemo, useRef } from 'react';
 import { useParams } from 'next/navigation';
 import { boardApi, taskApi } from '@/lib/api';
 import { Board, Task } from '@/types';
-import { KanbanTaskCard } from '@/components/kanban/task-card';
 import { findMoveTarget } from '@/components/kanban/move-guard';
-import { Plus, Trash2, BarChart3 } from 'lucide-react';
+import { Trash2, BarChart3 } from 'lucide-react';
 import { toast } from 'sonner';
 import { Button, Drawer, DrawerContent, Skeleton } from '@/components/ui';
 import { useLocalFirstRecord, useLocalFirstYDoc } from '@/lib/local-first-yjs';
@@ -15,6 +14,7 @@ import { useCRDTGarbageCollector } from '@/hooks/use-crdt-garbage-collector';
 import { SprintAnalyticsModal } from '@/components/sprint-analytics-modal';
 import { TaskCsvControls } from '@/components/workspace/portability-controls';
 import { loadWorkspaceAccess } from '@/lib/workspace-access';
+import { VirtualizedKanbanBoard } from '@/components/kanban/virtualized-board';
 
 export default function KanbanPage() {
   const { id } = useParams<{ id: string }>();
@@ -47,7 +47,6 @@ export default function KanbanPage() {
   const boardHeading = useRef<HTMLHeadingElement | null>(null);
   const [newTaskTitle, setNewTaskTitle] = useState('');
   const [addingToColumn, setAddingToColumn] = useState<string | null>(null);
-  const [dragOverColumn, setDragOverColumn] = useState<string | null>(null);
 
   useEffect(() => {
     let disposed = false;
@@ -169,21 +168,6 @@ export default function KanbanPage() {
     }
   };
 
-  const handleDragStart = (e: React.DragEvent, task: Task) => {
-    if (!canWrite || busy) {
-      e.preventDefault();
-      return;
-    }
-    e.dataTransfer.effectAllowed = 'move';
-    e.dataTransfer.setData('text/plain', task.id);
-  };
-  const handleDragOver = (e: React.DragEvent, columnId: string) => {
-    e.preventDefault();
-    setDragOverColumn(columnId);
-  };
-  const handleDragEnd = () => {
-    setDragOverColumn(null);
-  };
   const moveTask = async (taskId: string, columnId: string, undo = false) => {
     const task = findMoveTarget(boards, taskId, columnId, canWrite, busy);
     if (!task) return;
@@ -225,12 +209,6 @@ export default function KanbanPage() {
     } finally {
       setBusy(false);
     }
-  };
-  const handleDrop = (e: React.DragEvent, columnId: string) => {
-    e.preventDefault();
-    setDragOverColumn(null);
-    const taskId = e.dataTransfer.getData('text/plain');
-    if (taskId) void moveTask(taskId, columnId);
   };
   if (localBoards.error)
     return (
@@ -309,88 +287,26 @@ export default function KanbanPage() {
         </div>
       </div>
       <div className="flex-1 overflow-x-auto px-6 pb-6">
-        <div className="flex gap-4 h-full min-w-max">
-          {board.columns.map((column) => (
-            <div
-              key={column.id}
-              className={`w-72 flex flex-col rounded-xl ${dragOverColumn === column.id ? 'bg-primary/5 ring-2 ring-primary/30' : 'bg-muted/30'}`}
-              onDragOver={(e) => handleDragOver(e, column.id)}
-              onDragLeave={() => setDragOverColumn(null)}
-              onDrop={(e) => handleDrop(e, column.id)}
-            >
-              <div className="p-3 flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <h2 className="text-sm font-semibold">{column.name}</h2>
-                  <span className="text-xs text-muted-foreground bg-muted px-1.5 py-0.5 rounded-full">
-                    {column.tasks.length}
-                  </span>
-                </div>
-                <button
-                  disabled={!canWrite || busy}
-                  aria-label={`Add task to ${column.name}`}
-                  onClick={() => {
-                    setAddingToColumn(column.id);
-                    setNewTaskTitle('');
-                  }}
-                  className="w-6 h-6 rounded flex items-center justify-center hover:bg-muted text-muted-foreground"
-                >
-                  <Plus className="w-4 h-4" />
-                </button>
-              </div>
-              <div className="flex-1 overflow-y-auto px-2 pb-2 space-y-2">
-                {addingToColumn === column.id && (
-                  <div className="glass-card p-3 animate-scale-in">
-                    <input
-                      type="text"
-                      value={newTaskTitle}
-                      onChange={(e) => setNewTaskTitle(e.target.value)}
-                      className="w-full px-3 py-2 rounded-lg bg-muted/50 border border-border text-sm focus:border-primary outline-none"
-                      placeholder="Task title..."
-                      autoFocus
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter') addTask(column.id);
-                        if (e.key === 'Escape') setAddingToColumn(null);
-                      }}
-                    />
-                    <div className="flex gap-2 mt-2">
-                      <button
-                        onClick={() => addTask(column.id)}
-                        className="px-3 py-1.5 rounded-lg gradient-primary text-white text-xs font-medium"
-                      >
-                        Add
-                      </button>
-                      <button
-                        onClick={() => setAddingToColumn(null)}
-                        className="px-3 py-1.5 text-xs text-muted-foreground"
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  </div>
-                )}
-                {column.tasks.map((task) => (
-                  <KanbanTaskCard
-                    key={task.id}
-                    task={task}
-                    columns={board.columns}
-                    canWrite={canWrite}
-                    busy={busy}
-                    onOpen={(trigger) => {
-                      if (trigger) taskTrigger.current = trigger;
-                      setSelectedTask(task);
-                      setShowTaskModal(true);
-                    }}
-                    onDragStart={(event) => handleDragStart(event, task)}
-                    onDragEnd={handleDragEnd}
-                    onMove={(columnId) => {
-                      void moveTask(task.id, columnId);
-                    }}
-                  />
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
+        <VirtualizedKanbanBoard
+          board={board}
+          canWrite={canWrite}
+          busy={busy}
+          addingToColumn={addingToColumn}
+          newTaskTitle={newTaskTitle}
+          onNewTaskTitleChange={setNewTaskTitle}
+          onStartAdd={(columnId) => {
+            setAddingToColumn(columnId);
+            setNewTaskTitle('');
+          }}
+          onAdd={(columnId) => void addTask(columnId)}
+          onCancelAdd={() => setAddingToColumn(null)}
+          onOpen={(task, trigger) => {
+            if (trigger) taskTrigger.current = trigger;
+            setSelectedTask(task);
+            setShowTaskModal(true);
+          }}
+          onMove={(taskId, columnId) => void moveTask(taskId, columnId)}
+        />
       </div>
       <Drawer open={showTaskModal && !!selectedTask} onOpenChange={setShowTaskModal}>
         <DrawerContent

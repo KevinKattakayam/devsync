@@ -103,7 +103,7 @@ export function KanbanTaskCard({
           disabled={busy || dragAdapter.attributes['aria-disabled']}
           aria-disabled={busy || dragAdapter.attributes['aria-disabled']}
           aria-label={`Drag ${task.title}`}
-          className="mt-2 rounded px-2 py-1 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary disabled:opacity-50"
+          className={`mt-2 rounded px-2 py-1 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary disabled:opacity-50 ${dragAdapter ? 'touch-none' : ''}`}
         >
           Drag
         </button>
