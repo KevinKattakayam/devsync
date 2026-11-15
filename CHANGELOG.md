@@ -7,7 +7,14 @@
 
 - Fixed the backend CI typecheck failure: under backend-only `npm ci`, 13 browser specs referenced `frontend/node_modules/axe-core`, so TypeScript could not resolve Axe types and reported follow-on implicit-`any` errors. Added pinned dev dependency `axe-core@4.14.0` to the backend and changed those specs to import `axe-core` through normal package resolution.
 - Verified locally: `npm run lint`, `npm run format:check`, and `npm run typecheck` in `backend` pass; the focused `npx tsc -p tsconfig.testing.json --noEmit` also passes. No authorization or application runtime behavior changed.
-- The remote Semgrep fix in `4b50ac2` sets a writable `HOME` and `SEMGREP_USER_HOME`, but its PR run is still awaiting approval and has no jobs yet. It is not verified effective until that job runs. Deployment workflows remain separate and manual; no deployment was triggered.
+- The remote Semgrep fix in `4b50ac2` sets a writable `HOME` and `SEMGREP_USER_HOME`; the subsequent PR run passed `source-security`, including Semgrep. Deployment workflows remain separate and manual; no deployment was triggered.
+
+# GitHub CI stabilization — coverage baseline bootstrap
+
+- The first run after the backend typecheck fix passed `quality (backend)`, `quality (frontend)`, `source-security` and `hosting-config`; its backend coverage job exposed that the base branch has no successful historical coverage artifact. The job intentionally failed closed, leaving no route for the first successful artifact to be established.
+- Updated the baseline script to compare against `tools/ci/coverage-baseline.json` read from the exact PR base commit when that commit has no successful coverage artifact. The PR's working-tree copy is never trusted for bootstrap. The no-decrease comparison remains mandatory for every metric; missing base evidence still fails closed.
+- Added three baseline-script regressions for base-commit selection, real metric decrease rejection and missing-evidence rejection. The next PR run must verify the complete gate remotely.
+- The `80ca752` run also exposed a clean-checkout browser-fixture setup defect: fixture generation created `.worktrees/frontend-fixture` without first creating its absent parent. It now creates only the fixed parent recursively, while exclusive creation of the fixture leaf still refuses stale output; a focused regression covers both behaviors.
 
 # Phase 18 — production Kanban virtualization and Yjs recovery assertion
 

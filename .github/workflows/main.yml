@@ -119,7 +119,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh run download "$GITHUB_RUN_ID" --repo "$GITHUB_REPOSITORY" --name "coverage-${{ matrix.service }}" --dir "coverage/${{ matrix.service }}"
-      - run: node --test tools/ci/coverage.test.mjs
+      - run: node --test tools/ci/coverage.test.mjs tools/ci/baseline-script.test.mjs
       - name: Reject any coverage decrease
         env:
           GH_TOKEN: ${{ github.token }}

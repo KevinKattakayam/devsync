@@ -13,9 +13,10 @@ if [[ "$run_id" =~ ^[0-9]+$ ]]; then
   gh run download "$run_id" --repo "$GITHUB_REPOSITORY" --name "coverage-${service}" --dir baseline
   node tools/ci/coverage.mjs "$service" "coverage/${service}/coverage-summary.json" baseline/coverage-summary.json
 elif git cat-file -e "${BASE_SHA}:tools/ci/coverage-baseline.json" 2>/dev/null; then
-  echo 'Base commit has no successful coverage artifact; refusing to silently skip comparison' >&2
-  exit 1
+  echo 'No successful base-commit coverage artifact exists yet; comparing against the measured baseline from the base commit'
+  git show "${BASE_SHA}:tools/ci/coverage-baseline.json" > baseline/coverage-summary.json
+  node tools/ci/coverage.mjs "$service" "coverage/${service}/coverage-summary.json" baseline/coverage-summary.json
 else
-  echo 'First CI adoption: comparing the checked-in measured Phase5a baseline'
-  node tools/ci/coverage.mjs "$service" "coverage/${service}/coverage-summary.json" tools/ci/coverage-baseline.json
+  echo 'No successful base-commit coverage artifact or base-commit measured baseline; refusing to skip comparison' >&2
+  exit 1
 fi

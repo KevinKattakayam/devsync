@@ -6,11 +6,15 @@ const frontend = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 export function assertFixtureMode(mode) {
   if (mode !== 'test') throw new Error('Fixture generation requires NODE_ENV=test');
 }
+export async function createFixtureDirectory(target) {
+  await mkdir(dirname(target), { recursive: true });
+  await mkdir(target); // Refuse an existing artifact rather than reusing stale code.
+}
 export async function prepare() {
   assertFixtureMode(process.env.NODE_ENV);
   // Fixed, ignored destination; no arbitrary overwrite or environment-file copying.
   const target = resolve(frontend, '../.worktrees/frontend-fixture');
-  await mkdir(target); // Refuse an existing artifact rather than reusing stale code.
+  await createFixtureDirectory(target);
   for (const path of [
     'src',
     'public',
