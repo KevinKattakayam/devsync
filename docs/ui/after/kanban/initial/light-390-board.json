@@ -1,5 +1,169 @@
 {
-  "violations": [],
+  "violations": [
+    {
+      "id": "aria-required-children",
+      "impact": "critical",
+      "tags": [
+        "cat.aria",
+        "wcag2a",
+        "wcag131",
+        "EN-301-549",
+        "EN-9.1.3.1",
+        "RGAAv4",
+        "RGAA-9.3.1"
+      ],
+      "description": "Ensure elements with an ARIA role that require child roles contain them",
+      "help": "Certain ARIA roles must contain particular children",
+      "helpUrl": "https://dequeuniversity.com/rules/axe/4.14/aria-required-children?application=axeAPI",
+      "nodes": [
+        {
+          "any": [
+            {
+              "id": "aria-required-children",
+              "data": {
+                "messageKey": "unallowed",
+                "values": "div[tabindex]"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<div data-testid=\"virtuoso-scroller\" data-virtuoso-scroller=\"true\" tabindex=\"0\" style=\"height: 100%; outline: none; overflow-y: auto; position: relative;\">",
+                  "target": [
+                    "div[aria-label=\"To Do task list\"] > div[data-testid=\"virtuoso-scroller\"][data-virtuoso-scroller=\"true\"]"
+                  ]
+                }
+              ],
+              "impact": "critical",
+              "message": "Element has children which are not allowed: div[tabindex]"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "critical",
+          "html": "<div class=\"flex-1 min-h-0 px-2 pb-2\" role=\"list\" aria-label=\"To Do task list\">",
+          "target": [
+            "div[aria-label=\"To Do task list\"]"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has children which are not allowed: div[tabindex]"
+        },
+        {
+          "any": [
+            {
+              "id": "aria-required-children",
+              "data": {
+                "messageKey": "unallowed",
+                "values": "div[tabindex]"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<div data-testid=\"virtuoso-scroller\" data-virtuoso-scroller=\"true\" tabindex=\"0\" style=\"height: 100%; outline: none; overflow-y: auto; position: relative;\">",
+                  "target": [
+                    "section[aria-labelledby=\"_r_h_\"] > .flex-1.pb-2[role=\"list\"] > div[data-testid=\"virtuoso-scroller\"][data-virtuoso-scroller=\"true\"]"
+                  ]
+                }
+              ],
+              "impact": "critical",
+              "message": "Element has children which are not allowed: div[tabindex]"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "critical",
+          "html": "<div class=\"flex-1 min-h-0 px-2 pb-2\" role=\"list\" aria-label=\"Keyboard target dark 1440 task list\">",
+          "target": [
+            "section[aria-labelledby=\"_r_h_\"] > .flex-1.pb-2[role=\"list\"]"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has children which are not allowed: div[tabindex]"
+        },
+        {
+          "any": [
+            {
+              "id": "aria-required-children",
+              "data": {
+                "messageKey": "unallowed",
+                "values": "div[tabindex]"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<div data-testid=\"virtuoso-scroller\" data-virtuoso-scroller=\"true\" tabindex=\"0\" style=\"height: 100%; outline: none; overflow-y: auto; position: relative;\">",
+                  "target": [
+                    "section[aria-labelledby=\"_r_i_\"] > .flex-1.pb-2[role=\"list\"] > div[data-testid=\"virtuoso-scroller\"][data-virtuoso-scroller=\"true\"]"
+                  ]
+                }
+              ],
+              "impact": "critical",
+              "message": "Element has children which are not allowed: div[tabindex]"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "critical",
+          "html": "<div class=\"flex-1 min-h-0 px-2 pb-2\" role=\"list\" aria-label=\"Keyboard target dark 390 task list\">",
+          "target": [
+            "section[aria-labelledby=\"_r_i_\"] > .flex-1.pb-2[role=\"list\"]"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has children which are not allowed: div[tabindex]"
+        },
+        {
+          "any": [
+            {
+              "id": "aria-required-children",
+              "data": {
+                "messageKey": "unallowed",
+                "values": "div[tabindex]"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<div data-testid=\"virtuoso-scroller\" data-virtuoso-scroller=\"true\" tabindex=\"0\" style=\"height: 100%; outline: none; overflow-y: auto; position: relative;\">",
+                  "target": [
+                    "section[aria-labelledby=\"_r_j_\"] > .flex-1.pb-2[role=\"list\"] > div[data-testid=\"virtuoso-scroller\"][data-virtuoso-scroller=\"true\"]"
+                  ]
+                }
+              ],
+              "impact": "critical",
+              "message": "Element has children which are not allowed: div[tabindex]"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "critical",
+          "html": "<div class=\"flex-1 min-h-0 px-2 pb-2\" role=\"list\" aria-label=\"Keyboard target light 1440 task list\">",
+          "target": [
+            "section[aria-labelledby=\"_r_j_\"] > .flex-1.pb-2[role=\"list\"]"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has children which are not allowed: div[tabindex]"
+        },
+        {
+          "any": [
+            {
+              "id": "aria-required-children",
+              "data": {
+                "messageKey": "unallowed",
+                "values": "div[tabindex]"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<div data-testid=\"virtuoso-scroller\" data-virtuoso-scroller=\"true\" tabindex=\"0\" style=\"height: 100%; outline: none; overflow-y: auto; position: relative;\">",
+                  "target": [
+                    "section[aria-labelledby=\"_r_k_\"] > .flex-1.pb-2[role=\"list\"] > div[data-testid=\"virtuoso-scroller\"][data-virtuoso-scroller=\"true\"]"
+                  ]
+                }
+              ],
+              "impact": "critical",
+              "message": "Element has children which are not allowed: div[tabindex]"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "critical",
+          "html": "<div class=\"flex-1 min-h-0 px-2 pb-2\" role=\"list\" aria-label=\"Keyboard target light 390 task list\">",
+          "target": [
+            "section[aria-labelledby=\"_r_k_\"] > .flex-1.pb-2[role=\"list\"]"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element has children which are not allowed: div[tabindex]"
+        }
+      ]
+    }
+  ],
   "incomplete": [
     {
       "id": "color-contrast",
@@ -33,9 +197,9 @@
               },
               "relatedNodes": [
                 {
-                  "html": "<div class=\"w-72 flex flex-col rounded-xl bg-muted/30\">",
+                  "html": "<section aria-labelledby=\"_r_h_\" class=\"w-72 min-h-0 flex flex-col rounded-xl bg-muted/30\" data-kanban-column=\"cmwhd1sih0003vfkv5cx30hb1\">",
                   "target": [
-                    ".w-72.bg-muted\\/30.flex-col:nth-child(5)"
+                    "section[aria-labelledby=\"_r_h_\"]"
                   ]
                 },
                 {
@@ -52,9 +216,275 @@
           "all": [],
           "none": [],
           "impact": "serious",
-          "html": "<h2 class=\"text-sm font-semibold\">Keyboard target light 390</h2>",
+          "html": "<h2 id=\"_r_h_\" class=\"text-sm font-semibold\">Keyboard target dark 1440</h2>",
           "target": [
-            ".w-72.bg-muted\\/30.flex-col:nth-child(5) > .p-3.justify-between.items-center > .gap-2.items-center.flex > h2"
+            "#_r_h_"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "contrastRatio": 0,
+                "fontSize": "10.5pt (14px)",
+                "fontWeight": "normal",
+                "messageKey": "elmPartiallyObscured",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<section aria-labelledby=\"_r_h_\" class=\"w-72 min-h-0 flex flex-col rounded-xl bg-muted/30\" data-kanban-column=\"cmwhd1sih0003vfkv5cx30hb1\">",
+                  "target": [
+                    "section[aria-labelledby=\"_r_h_\"]"
+                  ]
+                },
+                {
+                  "html": "<div class=\"app-shell\">",
+                  "target": [
+                    ".app-shell"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element's background color could not be determined because it's partially obscured by another element"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<p class=\"px-2 py-4 text-sm text-muted-foreground\">No tasks in this column.</p>",
+          "target": [
+            "section[aria-labelledby=\"_r_h_\"] > .flex-1.pb-2[role=\"list\"] > div[data-testid=\"virtuoso-scroller\"][data-virtuoso-scroller=\"true\"] > div[data-viewport-type=\"element\"] > .py-4"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "contrastRatio": 0,
+                "fontSize": "10.5pt (14px)",
+                "fontWeight": "normal",
+                "messageKey": "elmPartiallyObscured",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<section aria-labelledby=\"_r_i_\" class=\"w-72 min-h-0 flex flex-col rounded-xl bg-muted/30\" data-kanban-column=\"cmwhd1x6z000jvfkvisesnox9\">",
+                  "target": [
+                    "section[aria-labelledby=\"_r_i_\"]"
+                  ]
+                },
+                {
+                  "html": "<div class=\"app-shell\">",
+                  "target": [
+                    ".app-shell"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element's background color could not be determined because it's partially obscured by another element"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<h2 id=\"_r_i_\" class=\"text-sm font-semibold\">Keyboard target dark 390</h2>",
+          "target": [
+            "#_r_i_"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "contrastRatio": 0,
+                "fontSize": "10.5pt (14px)",
+                "fontWeight": "normal",
+                "messageKey": "elmPartiallyObscured",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<section aria-labelledby=\"_r_i_\" class=\"w-72 min-h-0 flex flex-col rounded-xl bg-muted/30\" data-kanban-column=\"cmwhd1x6z000jvfkvisesnox9\">",
+                  "target": [
+                    "section[aria-labelledby=\"_r_i_\"]"
+                  ]
+                },
+                {
+                  "html": "<div class=\"app-shell\">",
+                  "target": [
+                    ".app-shell"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element's background color could not be determined because it's partially obscured by another element"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<p class=\"px-2 py-4 text-sm text-muted-foreground\">No tasks in this column.</p>",
+          "target": [
+            "section[aria-labelledby=\"_r_i_\"] > .flex-1.pb-2[role=\"list\"] > div[data-testid=\"virtuoso-scroller\"][data-virtuoso-scroller=\"true\"] > div[data-viewport-type=\"element\"] > .py-4"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "contrastRatio": 0,
+                "fontSize": "10.5pt (14px)",
+                "fontWeight": "normal",
+                "messageKey": "elmPartiallyObscured",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<section aria-labelledby=\"_r_j_\" class=\"w-72 min-h-0 flex flex-col rounded-xl bg-muted/30\" data-kanban-column=\"cmwhd1z5q000zvfkvxccnexmj\">",
+                  "target": [
+                    "section[aria-labelledby=\"_r_j_\"]"
+                  ]
+                },
+                {
+                  "html": "<div class=\"app-shell\">",
+                  "target": [
+                    ".app-shell"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element's background color could not be determined because it's partially obscured by another element"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<h2 id=\"_r_j_\" class=\"text-sm font-semibold\">Keyboard target light 1440</h2>",
+          "target": [
+            "#_r_j_"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "contrastRatio": 0,
+                "fontSize": "10.5pt (14px)",
+                "fontWeight": "normal",
+                "messageKey": "elmPartiallyObscured",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<section aria-labelledby=\"_r_j_\" class=\"w-72 min-h-0 flex flex-col rounded-xl bg-muted/30\" data-kanban-column=\"cmwhd1z5q000zvfkvxccnexmj\">",
+                  "target": [
+                    "section[aria-labelledby=\"_r_j_\"]"
+                  ]
+                },
+                {
+                  "html": "<div class=\"app-shell\">",
+                  "target": [
+                    ".app-shell"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element's background color could not be determined because it's partially obscured by another element"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<p class=\"px-2 py-4 text-sm text-muted-foreground\">No tasks in this column.</p>",
+          "target": [
+            "section[aria-labelledby=\"_r_j_\"] > .flex-1.pb-2[role=\"list\"] > div[data-testid=\"virtuoso-scroller\"][data-virtuoso-scroller=\"true\"] > div[data-viewport-type=\"element\"] > .py-4"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "contrastRatio": 0,
+                "fontSize": "10.5pt (14px)",
+                "fontWeight": "normal",
+                "messageKey": "elmPartiallyObscured",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<section aria-labelledby=\"_r_k_\" class=\"w-72 min-h-0 flex flex-col rounded-xl bg-muted/30\" data-kanban-column=\"cmwhd21ej001fvfkvhzxdyutu\">",
+                  "target": [
+                    "section[aria-labelledby=\"_r_k_\"]"
+                  ]
+                },
+                {
+                  "html": "<div class=\"app-shell\">",
+                  "target": [
+                    ".app-shell"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element's background color could not be determined because it's partially obscured by another element"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<h2 id=\"_r_k_\" class=\"text-sm font-semibold\">Keyboard target light 390</h2>",
+          "target": [
+            "#_r_k_"
+          ],
+          "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+        },
+        {
+          "any": [
+            {
+              "id": "color-contrast",
+              "data": {
+                "contrastRatio": 0,
+                "fontSize": "10.5pt (14px)",
+                "fontWeight": "normal",
+                "messageKey": "elmPartiallyObscured",
+                "expectedContrastRatio": "4.5:1"
+              },
+              "relatedNodes": [
+                {
+                  "html": "<section aria-labelledby=\"_r_k_\" class=\"w-72 min-h-0 flex flex-col rounded-xl bg-muted/30\" data-kanban-column=\"cmwhd21ej001fvfkvhzxdyutu\">",
+                  "target": [
+                    "section[aria-labelledby=\"_r_k_\"]"
+                  ]
+                },
+                {
+                  "html": "<div class=\"app-shell\">",
+                  "target": [
+                    ".app-shell"
+                  ]
+                }
+              ],
+              "impact": "serious",
+              "message": "Element's background color could not be determined because it's partially obscured by another element"
+            }
+          ],
+          "all": [],
+          "none": [],
+          "impact": "serious",
+          "html": "<p class=\"px-2 py-4 text-sm text-muted-foreground\">No tasks in this column.</p>",
+          "target": [
+            "section[aria-labelledby=\"_r_k_\"] > .flex-1.pb-2[role=\"list\"] > div[data-testid=\"virtuoso-scroller\"][data-virtuoso-scroller=\"true\"] > div[data-viewport-type=\"element\"] > .py-4"
           ],
           "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
         }
