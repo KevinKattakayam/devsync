@@ -565,7 +565,7 @@ function DocumentEditor({ workspaceId, docId }: { workspaceId: string; docId: st
     );
 
   return (
-    <div className="w-full min-w-0 max-w-3xl mx-auto px-4 md:px-8 py-8">
+    <div className="w-full min-w-0 max-w-4xl mx-auto px-4 md:px-8 py-8">
       {loadError && (
         <div role="alert" className="mb-6 rounded-lg bg-secondary p-4 text-sm">
           <p>

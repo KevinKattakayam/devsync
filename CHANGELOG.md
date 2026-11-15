@@ -13,8 +13,9 @@
 
 - The first run after the backend typecheck fix passed `quality (backend)`, `quality (frontend)`, `source-security` and `hosting-config`; its backend coverage job exposed that the base branch has no successful historical coverage artifact. The job intentionally failed closed, leaving no route for the first successful artifact to be established.
 - Updated the baseline script to compare against `tools/ci/coverage-baseline.json` read from the exact PR base commit when that commit has no successful coverage artifact. The PR's working-tree copy is never trusted for bootstrap. The no-decrease comparison remains mandatory for every metric; missing base evidence still fails closed.
-- Added three baseline-script regressions for base-commit selection, real metric decrease rejection and missing-evidence rejection. The next PR run must verify the complete gate remotely.
+- Added three baseline-script regressions for base-commit selection, real metric decrease rejection and missing-evidence rejection. PR run `43567489681` passed both backend and frontend coverage comparisons against their available baselines.
 - The `80ca752` run also exposed a clean-checkout browser-fixture setup defect: fixture generation created `.worktrees/frontend-fixture` without first creating its absent parent. It now creates only the fixed parent recursively, while exclusive creation of the fixture leaf still refuses stale output; a focused regression covers both behaviors.
+- In run `43567489681` on `d8e5167`, the remaining E2E failures exposed an obsolete core journey selector for native HTML dragging, one interrupted viewer-page navigation, and the editor title's constrained desktop width. The journey now uses the production dnd-kit drag handle with real pointer input, the repeated navigation waits for DOM readiness, and the document header has more width. Existing screenshot baselines remain unchanged; mobile shell screenshot differences require a fresh CI review.
 
 # Phase 18 — production Kanban virtualization and Yjs recovery assertion
 

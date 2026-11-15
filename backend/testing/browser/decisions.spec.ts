@@ -142,7 +142,9 @@ for (const theme of ['dark', 'light'] as const)
         ).toBeVisible();
         await capture(page, `${label}-draft`);
         const viewerPage = await viewer.newPage();
-        await viewerPage.goto(`/workspace/${workspace}/decisions`);
+        await viewerPage.goto(`/workspace/${workspace}/decisions`, {
+          waitUntil: 'domcontentloaded',
+        });
         await expect(viewerPage.getByRole('heading', { name: title, exact: true })).toBeVisible();
         await expect(viewerPage.getByRole('button', { name: 'New receipt' })).toHaveCount(0);
         await expect(viewerPage.getByRole('button', { name: 'Edit draft' })).toHaveCount(0);
