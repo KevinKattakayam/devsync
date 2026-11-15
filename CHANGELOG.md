@@ -1,3 +1,8 @@
+# GitHub CI stabilization — deterministic frontend coverage
+
+- Stabilized async frontend tests whose timer, animation-frame and overlapping-write callbacks could finish after Vitest collected coverage. Added explicit persistence-write synchronization, awaited heading-focus frames, and verified object-URL cleanup in the related tests.
+- No frontend runtime code, coverage baselines, thresholds, security gates or PR source files were changed. Two consecutive full frontend coverage runs passed the existing comparator: statements 60.81% (baseline 60.77%), branches 54.83% (baseline 54.83%).
+
 # CI follow-up — source-security Semgrep permission fix
 
 - Updated the `source-security` Semgrep Docker invocation to run with writable scanner homes (`HOME=/tmp` and `SEMGREP_USER_HOME=/tmp/semgrep`) while still executing as the host UID/GID.

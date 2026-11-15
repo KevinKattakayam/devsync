@@ -9,6 +9,10 @@ const mocks = vi.hoisted(() => ({
   acknowledge: vi.fn(),
   event: vi.fn(),
 }));
+let animationFrames: FrameRequestCallback[] = [];
+function flushAnimationFrames() {
+  for (const callback of animationFrames.splice(0)) callback(0);
+}
 vi.mock('@/lib/async-digest', () => ({ digestApi: mocks }));
 vi.mock('@/providers/auth-provider', () => ({ useAuth: () => ({ user: { id: 'fixture' } }) }));
 vi.mock('sonner', () => ({ toast: { success: vi.fn(), error: vi.fn() } }));
@@ -30,9 +34,15 @@ const page = {
 };
 afterEach(() => {
   cleanup();
+  vi.unstubAllGlobals();
   vi.resetAllMocks();
 });
 beforeEach(() => {
+  animationFrames = [];
+  vi.stubGlobal('requestAnimationFrame', (callback: FrameRequestCallback) => {
+    animationFrames.push(callback);
+    return animationFrames.length;
+  });
   mocks.preference.mockResolvedValue(preference);
   mocks.items.mockResolvedValue(page);
 });
@@ -49,6 +59,8 @@ it('requires explicit personal opt in and does not load activity while off', asy
   });
   await userEvent.click(button);
   expect(await screen.findByText(item.message)).toBeTruthy();
+  flushAnimationFrames();
+  expect(screen.getByRole('heading', { name: 'Async digest' })).toBe(document.activeElement);
   expect(mocks.setEnabled).toHaveBeenCalledWith('one', true, 0);
 });
 it('renders a stable source link for a real-shaped event and never treats message text as markup', async () => {
@@ -81,6 +93,8 @@ it('marks only the displayed chronological checkpoint after an explicit action',
   await userEvent.click(button);
   expect(mocks.acknowledge).toHaveBeenCalledWith('one', item.activityId, 1);
   expect(await screen.findByText('No eligible events in this window')).toBeTruthy();
+  flushAnimationFrames();
+  expect(screen.getByRole('heading', { name: 'Async digest' })).toBe(document.activeElement);
 });
 it('loads a source proof by ID, retries revoked/unavailable sources and links the current resource', async () => {
   mocks.event.mockRejectedValueOnce(new Error('source unavailable')).mockResolvedValue(item);
@@ -103,6 +117,8 @@ it('uses the returned cursor for the next page and replaces the displayed window
   render(<Digest workspaceId="one" />);
   await userEvent.click(await screen.findByRole('button', { name: 'Next page' }));
   expect(await screen.findByText('Second recorded fixture event')).toBeTruthy();
+  flushAnimationFrames();
+  expect(screen.getByRole('heading', { name: 'Async digest' })).toBe(document.activeElement);
   expect(screen.queryByText(item.message)).toBeNull();
   expect(mocks.items).toHaveBeenLastCalledWith('one', 'scope-bound-cursor');
 });
