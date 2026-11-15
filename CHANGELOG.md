@@ -1,3 +1,8 @@
+# GitHub CI stabilization — backend coverage baseline
+
+- Corrected the collaboration integration coverage gap: the old excess-connection check used an unauthenticated raw socket, so it did not exercise the authenticated `connected` limit hook. Added deterministic coverage of both global and per-room limits after a real fixture client is admitted, asserting over-limit connection cleanup and socket closure. Added regression cases for workspace-policy rejection of empty and overlong identity/resource IDs before database access.
+- Backend lint, formatting, strict TypeScript, build, focused disposable collaboration checks, and two full backend runs passed. Each full run passed 50 suites / 462 tests. Coverage comparison against the exact CI base artifact passed twice; thresholds and baselines are unchanged.
+
 # GitHub CI stabilization — deterministic frontend coverage
 
 - Stabilized async frontend tests whose timer, animation-frame and overlapping-write callbacks could finish after Vitest collected coverage. Added explicit persistence-write synchronization, awaited heading-focus frames, and verified object-URL cleanup in the related tests.
